@@ -1,0 +1,4 @@
+project(minecpp_chunk_storage)
+
+add_executable(minecpp_chunk_storage main.cpp)
+target_link_libraries(minecpp_chunk_storage LINK_PUBLIC minecpp_utils minecpp_game)

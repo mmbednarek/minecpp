@@ -1,0 +1,2 @@
+add_library(minecpp_game_chunk chunk.cpp)
+target_include_directories(minecpp_game_chunk PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
