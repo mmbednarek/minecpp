@@ -13,7 +13,7 @@ class PlayHandler : public Handler {
    PlayHandler(std::shared_ptr<grpc::Channel> &engine_chan);
    void init_player(Packet::Writer &w, Player &p);
 
-   virtual void handle(Packet::Writer &w, Packet::Reader &r) override;
+   virtual void handle(Connection &conn, Packet::Reader &r) override;
 
  private:
    std::shared_ptr<minecpp::engine::PlayerService::Stub> player_service;

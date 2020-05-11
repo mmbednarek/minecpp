@@ -8,7 +8,7 @@ namespace Front::Protocol {
 class StatusHandler : public Handler {
  public:
    StatusHandler();
-   virtual void handle(Packet::Writer &w, Packet::Reader &r) override;
+   virtual void handle(Connection &conn, Packet::Reader &r) override;
 
  private:
    void handle_info(Packet::Writer &w);

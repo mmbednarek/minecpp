@@ -11,7 +11,7 @@ class LoginHandler : public Handler {
  public:
    LoginHandler(PlayerManager &players, PlayHandler &play_handler);
 
-   void handle(Packet::Writer &w, Packet::Reader &r) override;
+   void handle(Connection &conn, Packet::Reader &r) override;
    void handle_login_start(Packet::Writer &w, Packet::Reader &r);
 
    void reject(Packet::Writer &w, std::string_view message);

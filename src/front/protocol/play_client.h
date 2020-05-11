@@ -1,12 +1,18 @@
 #pragma once
-#include "../packet/writer.h"
 #include "handler.h"
+#include "message.h"
 
-namespace Front {
+namespace Front::Protocol {
 
 class PlayClient {
+ public:
+   PlayClient(Connection &c);
+
+   void spawn_object(Message::SpawnObject msg);
+   void spawn_experience_orb(Message::SpawnExperienceOrb msg);
+   void join_game(Message::JoinGame msg);
  private:
-   Packet::Writer &writer;
+   Connection &conn;
 };
 
-} // namespace Front
+} // namespace Front::Protocol

@@ -1476,7 +1476,7 @@ class GTEST_API_ ThreadLocalRegistry {
 
 class GTEST_API_ ThreadWithParamBase {
  public:
-  void Join();
+  void JoinGame();
 
  protected:
   class Runnable {

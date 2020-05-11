@@ -5,7 +5,9 @@ namespace Front::Protocol {
 
 StatusHandler::StatusHandler() {}
 
-void StatusHandler::handle(Packet::Writer &w, Packet::Reader &r) {
+void StatusHandler::handle(Connection &conn, Packet::Reader &r) {
+   Packet::Writer w(conn);
+
    uint8_t op = r.read_byte();
    BOOST_LOG_TRIVIAL(debug) << "[status] handling status op = " << (int)op;
    switch (op) {
@@ -541,7 +543,7 @@ void StatusHandler::handle_ping(Packet::Writer &w, Packet::Reader &r) {
    BOOST_LOG_TRIVIAL(info) << "player time " << player_time;
 
    w.write_byte(1);
-   w.write_be(player_time);
+   w.write_big_endian(player_time);
    w.send_and_disconnect();
 }
 

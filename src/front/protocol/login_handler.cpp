@@ -7,7 +7,9 @@ namespace Front::Protocol {
 LoginHandler::LoginHandler(PlayerManager &players, PlayHandler &play_handler)
     : players(players), play_handler(play_handler) {}
 
-void LoginHandler::handle(Packet::Writer &w, Packet::Reader &r) {
+void LoginHandler::handle(Connection &conn, Packet::Reader &r) {
+   Packet::Writer w(conn);
+
    uint8_t op = r.read_byte();
    BOOST_LOG_TRIVIAL(debug) << "handling status op = " << (int)op;
    switch (op) {
@@ -54,7 +56,6 @@ void LoginHandler::reject(Packet::Writer &w, std::string_view message) {
    ss << R"("}], "text": ""})";
 
    w.write_string(ss.str());
-   w.disconnect();
 }
 
 } // namespace Front::Protocol

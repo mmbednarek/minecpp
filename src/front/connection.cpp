@@ -88,11 +88,8 @@ void Connection::async_read_packet_data(Protocol::Handler &h) {
           }
 
           std::istream s(packet_buff);
-
           Packet::Reader r(s);
-          Packet::Writer w(this);
-
-          h.handle(w, r);
+          h.handle(*this, r);
 
           delete packet_buff;
           packet_buff = nullptr;
@@ -152,7 +149,5 @@ void Connection::async_write_then_disconnect(uint8_t *buff, size_t size) {
           server->drop_connection(id);
        });
 }
-
-void Connection::disconnect() { should_disconnect = true; }
 
 } // namespace Front

@@ -20,6 +20,6 @@ void PlayHandler::init_player(Front::Packet::Writer &w, Front::Player &p) {
    res.game_info();
 }
 
-void PlayHandler::handle(Packet::Writer &w, Packet::Reader &r) {}
+void PlayHandler::handle(Connection &conn, Packet::Reader &r) {}
 
 } // namespace Front::Protocol

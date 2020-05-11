@@ -27,7 +27,6 @@ class Connection {
    void async_write_then_disconnect(uint8_t *buff, size_t size);
    void async_read_packet(Protocol::Handler &h);
    void async_read_packet_data(Protocol::Handler &h);
-   void disconnect();
 
    Protocol::State state();
    void set_state(Protocol::State s);
@@ -40,7 +39,6 @@ class Connection {
    Protocol::State _state;
    uint8_t leading_byte;
    boost::asio::streambuf *packet_buff;
-   bool should_disconnect = false;
    Server *server;
 };
 

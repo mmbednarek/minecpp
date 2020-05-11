@@ -519,10 +519,10 @@ ThreadWithParamBase::ThreadWithParamBase(Runnable *runnable,
 }
 
 ThreadWithParamBase::~ThreadWithParamBase() {
-  Join();
+  JoinGame();
 }
 
-void ThreadWithParamBase::Join() {
+void ThreadWithParamBase::JoinGame() {
   GTEST_CHECK_(::WaitForSingleObject(thread_.Get(), INFINITE) == WAIT_OBJECT_0)
       << "Failed to join the thread with error " << ::GetLastError() << ".";
 }
