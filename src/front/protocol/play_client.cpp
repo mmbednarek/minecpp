@@ -1,12 +1,13 @@
-#include "../packet/writer.h"
+#include "../connection.h"
 #include "play_client.h"
+#include "../../common/packet/writer.h"
 
 namespace Front::Protocol {
 
 PlayClient::PlayClient(Connection &c) : conn(c) {}
 
 void PlayClient::spawn_object(Message::SpawnObject msg) {
-   Packet::Writer w(conn);
+   Packet::Writer w;
    w.write_big_endian<uint16_t>(0x00);
 
    w.write_varint(msg.entity_id);
@@ -22,11 +23,11 @@ void PlayClient::spawn_object(Message::SpawnObject msg) {
    w.write_big_endian(msg.vel_y);
    w.write_big_endian(msg.vel_z);
 
-   w.send();
+   conn.send(w);
 }
 
 void PlayClient::spawn_experience_orb(Message::SpawnExperienceOrb msg) {
-   Packet::Writer w(conn);
+   Packet::Writer w;
    w.write_big_endian<uint16_t>(0x01);
 
    w.write_varint(msg.entity_id);
@@ -35,11 +36,26 @@ void PlayClient::spawn_experience_orb(Message::SpawnExperienceOrb msg) {
    w.write_double(msg.z);
    w.write_big_endian(msg.xp_value);
 
-   w.send();
+   conn.send(w);
+}
+
+void PlayClient::difficulty(uint8_t diff, bool locked) {
+   Packet::Writer w;
+   w.write_byte(diff);
+   w.write_byte(locked);
+   conn.send(w);
+}
+
+void PlayClient::server_brand(std::string_view brand) {
+   Packet::Writer w;
+   w.write_big_endian<uint16_t>(0x19);
+   w.write_string("brand");
+   w.write_string(brand);
+   conn.send(w);
 }
 
 void PlayClient::join_game(Message::JoinGame msg) {
-   Packet::Writer w(conn);
+   Packet::Writer w;
    w.write_big_endian<uint16_t>(0x26);
 
    w.write_big_endian(msg.player_id);
@@ -52,7 +68,24 @@ void PlayClient::join_game(Message::JoinGame msg) {
    w.write_byte(msg.reduced_debug_info);
    w.write_byte(msg.immediate_respawn);
 
-   w.send();
+   conn.send(w);
+}
+void PlayClient::player_abilities(Message::PlayerAbilities msg) {
+   Packet::Writer w;
+   w.write_big_endian<uint16_t>(0x32);
+
+   w.write_byte(msg.flags);
+   w.write_float(msg.fly_speed);
+   w.write_float(msg.walk_speed);
+
+   conn.send(w);
+}
+
+void PlayClient::held_item(uint8_t item) {
+   Packet::Writer w;
+   w.write_big_endian<uint16_t>(0x40);
+   w.write_byte(item);
+   conn.send(w);
 }
 
 }

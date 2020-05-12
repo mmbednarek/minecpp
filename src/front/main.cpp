@@ -1,4 +1,3 @@
-#include "../common/log/log.h"
 #include "players.h"
 #include "protocol/login_handler.h"
 #include "protocol/play_handler.h"
@@ -29,10 +28,13 @@ auto main() -> int {
 
    BOOST_LOG_TRIVIAL(info) << "starting server on port " << port;
 
+
    PlayerManager player_manager;
+   Service service(player_manager, engine_chan);
+
    Protocol::StatusHandler status_handler;
-   Protocol::PlayHandler play_handler(engine_chan);
-   Protocol::LoginHandler login_handler(player_manager, play_handler);
+   Protocol::PlayHandler play_handler;
+   Protocol::LoginHandler login_handler(service);
 
    try {
       boost::asio::io_context ctx;

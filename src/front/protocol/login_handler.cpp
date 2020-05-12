@@ -1,20 +1,18 @@
 #include "login_handler.h"
 #include "../connection.h"
 #include <boost/log/trivial.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 namespace Front::Protocol {
 
-LoginHandler::LoginHandler(PlayerManager &players, PlayHandler &play_handler)
-    : players(players), play_handler(play_handler) {}
+LoginHandler::LoginHandler(Service &service) : service(service) {}
 
 void LoginHandler::handle(Connection &conn, Packet::Reader &r) {
-   Packet::Writer w(conn);
-
    uint8_t op = r.read_byte();
    BOOST_LOG_TRIVIAL(debug) << "handling status op = " << (int)op;
    switch (op) {
    case 0:
-      handle_login_start(w, r);
+      handle_login_start(conn, r);
       break;
    default:
       BOOST_LOG_TRIVIAL(info)
@@ -22,40 +20,38 @@ void LoginHandler::handle(Connection &conn, Packet::Reader &r) {
    }
 }
 
-void LoginHandler::handle_login_start(Packet::Writer &w, Packet::Reader &r) {
+void LoginHandler::handle_login_start(Connection &conn, Packet::Reader &r) {
    std::string user_name = r.read_string();
+
    BOOST_LOG_TRIVIAL(info) << "establishing connection with player "
                            << user_name;
 
-   auto player = new Player(user_name);
-
-   try {
-      players.add_player(player);
-   } catch (PlayerException &e) {
-      BOOST_LOG_TRIVIAL(info)
-          << "rejected player " << player->name() << ", reason: " << e.what();
-      reject(w, e.what());
+   auto response = service.login_player(user_name);
+   if (!response.accepted) {
+      reject(conn, response.refusal_reason);
       return;
    }
 
-   // TODO: Encryption authentication etc.
-
+   Packet::Writer w;
    w.write_byte(2);
-   w.write_string(player->user_id());
-   w.write_string(player->name());
+   w.write_string(response.user_name);
+   w.write_string(boost::uuids::to_string(response.uuid));
+   conn.send(w);
 
-   //	play_handler.init_player(w, *player);
+   service.init_player(conn, response.uuid);
 }
 
-void LoginHandler::reject(Packet::Writer &w, std::string_view message) {
-   w.write_byte(0);
+void LoginHandler::reject(Connection &conn, std::string_view message) {
+   Packet::Writer w;
 
+   w.write_byte(0);
    std::stringstream ss;
    ss << R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": ")";
    ss << message;
    ss << R"("}], "text": ""})";
-
    w.write_string(ss.str());
+
+   conn.send_and_disconnect(w);
 }
 
 } // namespace Front::Protocol

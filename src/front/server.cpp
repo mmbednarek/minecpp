@@ -1,5 +1,5 @@
 #include "server.h"
-#include "packet/reader.h"
+#include "../common/packet/reader.h"
 #include "protocol/protocol.h"
 #include <boost/asio.hpp>
 #include <boost/log/trivial.hpp>
@@ -77,7 +77,7 @@ void Server::handshake(Connection *conn) {
 
    auto protocol_version = r.read_varint();
    auto host = r.read_string();
-   auto port = r.read_be<uint16_t>();
+   auto port = r.read_big_endian<uint16_t>();
    auto request_state = static_cast<Protocol::State>(r.read_varint());
 
    if (request_state != Protocol::Login && request_state != Protocol::Status) {

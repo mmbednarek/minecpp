@@ -24,7 +24,7 @@ class Server {
  private:
    std::vector<Connection *> connections;
    tcp::acceptor acceptor;
-   Protocol::Handler* handlers[3];
+   Protocol::Handler *handlers[3];
 };
 
 } // namespace Front

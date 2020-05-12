@@ -1,3 +1,4 @@
+#include "../connection.h"
 #include "status_handler.h"
 #include <boost/log/trivial.hpp>
 
@@ -6,16 +7,14 @@ namespace Front::Protocol {
 StatusHandler::StatusHandler() {}
 
 void StatusHandler::handle(Connection &conn, Packet::Reader &r) {
-   Packet::Writer w(conn);
-
    uint8_t op = r.read_byte();
    BOOST_LOG_TRIVIAL(debug) << "[status] handling status op = " << (int)op;
    switch (op) {
    case 0:
-      handle_info(w);
+      handle_info(conn);
       break;
    case 1:
-      handle_ping(w, r);
+      handle_ping(conn, r);
       break;
    default:
       BOOST_LOG_TRIVIAL(info) << "[status] invalid op code " << (int)op;
@@ -525,7 +524,8 @@ const char *favicon =
     "E+cw8R67WfoOAP8Dat2F"
     "I20deesAAAAASUVORK5CYII=";
 
-void StatusHandler::handle_info(Packet::Writer &w) {
+void StatusHandler::handle_info(Connection &conn) {
+   Packet::Writer w;
    w.write_byte(0);
 
    std::stringstream ss;
@@ -535,16 +535,17 @@ void StatusHandler::handle_info(Packet::Writer &w) {
    ss << R"("version":{"name": "1.15.2", "protocol": 578}})";
 
    w.write_string(ss.str());
-   w.send_and_read(*this);
+   conn.send_and_read(w, *this);
 }
 
-void StatusHandler::handle_ping(Packet::Writer &w, Packet::Reader &r) {
-   auto player_time = r.read_be<uint64_t>();
+void StatusHandler::handle_ping(Connection &conn, Packet::Reader &r) {
+   auto player_time = r.read_big_endian<uint64_t>();
    BOOST_LOG_TRIVIAL(info) << "player time " << player_time;
 
+   Packet::Writer w;
    w.write_byte(1);
    w.write_big_endian(player_time);
-   w.send_and_disconnect();
+   conn.send_and_disconnect(w);
 }
 
 } // namespace Front::Protocol

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
-#include "../front/packet/reader.h"
+#include "../common/packet/reader.h"
 
-using namespace Front::Packet;
+using namespace Packet;
 
 TEST(PacketReader, VarInt) {
 	char buff[] {(char) 0xe2, (char) 0xde, 0x0b};

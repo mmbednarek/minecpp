@@ -12,8 +12,8 @@ message AcceptPlayerRequest {
 
 message AcceptPlayerResponse {
     PlayerAcceptState state = 1;
-    int32 player_id = 2;
-    int32 node_id = 3;
+    uint32 player_id = 2;
+    uint32 node_id = 3;
     GamePlay game_info = 4;
 }
 
@@ -30,12 +30,19 @@ message GamePlay {
     int32 max_players = 7;
     bool reduced_debug_info = 8;
     bool do_immediate_respawn = 9;
+    Difficulty difficulty = 10;
 }
 
 enum DimensionType {
     Overworld = 0;
     Nether = 1;
     End = 2;
+}
+
+enum Difficulty {
+    Easy = 0;
+    Medium = 1;
+    Hard = 2;
 }
 
 enum GameMode {

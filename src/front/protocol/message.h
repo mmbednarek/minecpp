@@ -38,4 +38,17 @@ struct JoinGame {
    bool immediate_respawn;
 };
 
-}
+enum PlayerAbilityFlag : uint8_t {
+   Invulnerable = 1u << 0u,
+   IsFlying = 1u << 1u,
+   AllowFlying = 1u << 2u,
+   CreativeMode = 1u << 3u,
+};
+
+// 0x32
+struct PlayerAbilities {
+   uint8_t flags;
+   float fly_speed, walk_speed;
+};
+
+} // namespace Front::Protocol::Message

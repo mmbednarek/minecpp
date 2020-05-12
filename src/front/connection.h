@@ -5,6 +5,8 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
 #include <memory>
+#include "../common/packet/writer.h"
+#include "../common/packet/reader.h"
 
 namespace Front {
 
@@ -27,6 +29,10 @@ class Connection {
    void async_write_then_disconnect(uint8_t *buff, size_t size);
    void async_read_packet(Protocol::Handler &h);
    void async_read_packet_data(Protocol::Handler &h);
+
+   void send(Packet::Writer &w);
+   void send_and_read(Packet::Writer &w, Protocol::Handler &h);
+   void send_and_disconnect(Packet::Writer &w);
 
    Protocol::State state();
    void set_state(Protocol::State s);

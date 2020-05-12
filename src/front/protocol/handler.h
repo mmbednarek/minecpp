@@ -1,12 +1,12 @@
 #pragma once
 
-namespace Front {
-
-class Connection;
-
 namespace Packet {
    class Reader;
 }
+
+namespace Front {
+
+class Connection;
 
 namespace Protocol {
 

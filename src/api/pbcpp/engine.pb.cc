@@ -94,7 +94,7 @@ static void InitDefaultsscc_info_PlayerData_engine_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_PlayerData_engine_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_engine_2eproto[4];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_engine_2eproto[4];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_engine_2eproto[5];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_engine_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_engine_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -133,6 +133,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_engine_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::GamePlay, max_players_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::GamePlay, reduced_debug_info_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::GamePlay, do_immediate_respawn_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::GamePlay, difficulty_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::engine::AcceptPlayerRequest)},
@@ -153,25 +154,28 @@ const char descriptor_table_protodef_engine_2eproto[] =
   "PlayerRequest\022\014\n\004name\030\001 \001(\t\022\014\n\004uuid\030\002 \001("
   "\t\"\231\001\n\024AcceptPlayerResponse\0220\n\005state\030\001 \001("
   "\0162!.minecpp.engine.PlayerAcceptState\022\021\n\t"
-  "player_id\030\002 \001(\005\022\017\n\007node_id\030\003 \001(\005\022+\n\tgame"
+  "player_id\030\002 \001(\r\022\017\n\007node_id\030\003 \001(\r\022+\n\tgame"
   "_info\030\004 \001(\0132\030.minecpp.engine.GamePlay\"\014\n"
-  "\nPlayerData\"\224\002\n\010GamePlay\0220\n\tdimension\030\001 "
+  "\nPlayerData\"\304\002\n\010GamePlay\0220\n\tdimension\030\001 "
   "\001(\0162\035.minecpp.engine.DimensionType\022\014\n\004se"
   "ed\030\002 \001(\004\022&\n\004mode\030\003 \001(\0162\030.minecpp.engine."
   "GameMode\022(\n\005world\030\004 \001(\0162\031.minecpp.engine"
   ".WorldType\022\025\n\rview_distance\030\005 \001(\005\022\020\n\010har"
   "dcore\030\006 \001(\010\022\023\n\013max_players\030\007 \001(\005\022\032\n\022redu"
   "ced_debug_info\030\010 \001(\010\022\034\n\024do_immediate_res"
-  "pawn\030\t \001(\010*3\n\rDimensionType\022\r\n\tOverworld"
-  "\020\000\022\n\n\006Nether\020\001\022\007\n\003End\020\002*D\n\010GameMode\022\014\n\010S"
-  "urvival\020\000\022\014\n\010Creative\020\001\022\r\n\tAdventure\020\002\022\r"
-  "\n\tSpectator\020\003*R\n\tWorldType\022\013\n\007Default\020\000\022"
-  "\010\n\004Flat\020\001\022\017\n\013LargeBiomes\020\002\022\r\n\tAmplified\020"
-  "\003\022\016\n\nCustomised\020\004*8\n\021PlayerAcceptState\022\n"
-  "\n\006DENIED\020\000\022\014\n\010ACCEPTED\020\001\022\t\n\005MOVED\020\0022j\n\rP"
-  "layerService\022Y\n\014AcceptPlayer\022#.minecpp.e"
-  "ngine.AcceptPlayerRequest\032$.minecpp.engi"
-  "ne.AcceptPlayerResponseb\006proto3"
+  "pawn\030\t \001(\010\022.\n\ndifficulty\030\n \001(\0162\032.minecpp"
+  ".engine.Difficulty*3\n\rDimensionType\022\r\n\tO"
+  "verworld\020\000\022\n\n\006Nether\020\001\022\007\n\003End\020\002*,\n\nDiffi"
+  "culty\022\010\n\004Easy\020\000\022\n\n\006Medium\020\001\022\010\n\004Hard\020\002*D\n"
+  "\010GameMode\022\014\n\010Survival\020\000\022\014\n\010Creative\020\001\022\r\n"
+  "\tAdventure\020\002\022\r\n\tSpectator\020\003*R\n\tWorldType"
+  "\022\013\n\007Default\020\000\022\010\n\004Flat\020\001\022\017\n\013LargeBiomes\020\002"
+  "\022\r\n\tAmplified\020\003\022\016\n\nCustomised\020\004*8\n\021Playe"
+  "rAcceptState\022\n\n\006DENIED\020\000\022\014\n\010ACCEPTED\020\001\022\t"
+  "\n\005MOVED\020\0022j\n\rPlayerService\022Y\n\014AcceptPlay"
+  "er\022#.minecpp.engine.AcceptPlayerRequest\032"
+  "$.minecpp.engine.AcceptPlayerResponseb\006p"
+  "roto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_engine_2eproto_deps[1] = {
 };
@@ -184,7 +188,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_eng
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_engine_2eproto_once;
 static bool descriptor_table_engine_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_engine_2eproto = {
-  &descriptor_table_engine_2eproto_initialized, descriptor_table_protodef_engine_2eproto, "engine.proto", 911,
+  &descriptor_table_engine_2eproto_initialized, descriptor_table_protodef_engine_2eproto, "engine.proto", 1005,
   &descriptor_table_engine_2eproto_once, descriptor_table_engine_2eproto_sccs, descriptor_table_engine_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_engine_2eproto::offsets,
   file_level_metadata_engine_2eproto, 4, file_level_enum_descriptors_engine_2eproto, file_level_service_descriptors_engine_2eproto,
@@ -209,9 +213,24 @@ bool DimensionType_IsValid(int value) {
   }
 }
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* GameMode_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Difficulty_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_engine_2eproto);
   return file_level_enum_descriptors_engine_2eproto[1];
+}
+bool Difficulty_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* GameMode_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_engine_2eproto);
+  return file_level_enum_descriptors_engine_2eproto[2];
 }
 bool GameMode_IsValid(int value) {
   switch (value) {
@@ -227,7 +246,7 @@ bool GameMode_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* WorldType_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_engine_2eproto);
-  return file_level_enum_descriptors_engine_2eproto[2];
+  return file_level_enum_descriptors_engine_2eproto[3];
 }
 bool WorldType_IsValid(int value) {
   switch (value) {
@@ -244,7 +263,7 @@ bool WorldType_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PlayerAcceptState_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_engine_2eproto);
-  return file_level_enum_descriptors_engine_2eproto[3];
+  return file_level_enum_descriptors_engine_2eproto[4];
 }
 bool PlayerAcceptState_IsValid(int value) {
   switch (value) {
@@ -698,14 +717,14 @@ const char* AcceptPlayerResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAM
           set_state(static_cast<::minecpp::engine::PlayerAcceptState>(val));
         } else goto handle_unusual;
         continue;
-      // int32 player_id = 2;
+      // uint32 player_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           player_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 node_id = 3;
+      // uint32 node_id = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           node_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
@@ -763,12 +782,12 @@ bool AcceptPlayerResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 player_id = 2;
+      // uint32 player_id = 2;
       case 2: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
 
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
                  input, &player_id_)));
         } else {
           goto handle_unusual;
@@ -776,12 +795,12 @@ bool AcceptPlayerResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // int32 node_id = 3;
+      // uint32 node_id = 3;
       case 3: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
 
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                   ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
                  input, &node_id_)));
         } else {
           goto handle_unusual;
@@ -833,14 +852,14 @@ void AcceptPlayerResponse::SerializeWithCachedSizes(
       1, this->state(), output);
   }
 
-  // int32 player_id = 2;
+  // uint32 player_id = 2;
   if (this->player_id() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->player_id(), output);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32(2, this->player_id(), output);
   }
 
-  // int32 node_id = 3;
+  // uint32 node_id = 3;
   if (this->node_id() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(3, this->node_id(), output);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32(3, this->node_id(), output);
   }
 
   // .minecpp.engine.GamePlay game_info = 4;
@@ -868,14 +887,14 @@ void AcceptPlayerResponse::SerializeWithCachedSizes(
       1, this->state(), target);
   }
 
-  // int32 player_id = 2;
+  // uint32 player_id = 2;
   if (this->player_id() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->player_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->player_id(), target);
   }
 
-  // int32 node_id = 3;
+  // uint32 node_id = 3;
   if (this->node_id() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->node_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->node_id(), target);
   }
 
   // .minecpp.engine.GamePlay game_info = 4;
@@ -919,17 +938,17 @@ size_t AcceptPlayerResponse::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->state());
   }
 
-  // int32 player_id = 2;
+  // uint32 player_id = 2;
   if (this->player_id() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->player_id());
   }
 
-  // int32 node_id = 3;
+  // uint32 node_id = 3;
   if (this->node_id() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->node_id());
   }
 
@@ -1234,6 +1253,7 @@ const int GamePlay::kHardcoreFieldNumber;
 const int GamePlay::kMaxPlayersFieldNumber;
 const int GamePlay::kReducedDebugInfoFieldNumber;
 const int GamePlay::kDoImmediateRespawnFieldNumber;
+const int GamePlay::kDifficultyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 GamePlay::GamePlay()
@@ -1246,15 +1266,15 @@ GamePlay::GamePlay(const GamePlay& from)
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::memcpy(&seed_, &from.seed_,
-    static_cast<size_t>(reinterpret_cast<char*>(&do_immediate_respawn_) -
-    reinterpret_cast<char*>(&seed_)) + sizeof(do_immediate_respawn_));
+    static_cast<size_t>(reinterpret_cast<char*>(&difficulty_) -
+    reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
   // @@protoc_insertion_point(copy_constructor:minecpp.engine.GamePlay)
 }
 
 void GamePlay::SharedCtor() {
   ::memset(&seed_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&do_immediate_respawn_) -
-      reinterpret_cast<char*>(&seed_)) + sizeof(do_immediate_respawn_));
+      reinterpret_cast<char*>(&difficulty_) -
+      reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
 }
 
 GamePlay::~GamePlay() {
@@ -1281,8 +1301,8 @@ void GamePlay::Clear() {
   (void) cached_has_bits;
 
   ::memset(&seed_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&do_immediate_respawn_) -
-      reinterpret_cast<char*>(&seed_)) + sizeof(do_immediate_respawn_));
+      reinterpret_cast<char*>(&difficulty_) -
+      reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
   _internal_metadata_.Clear();
 }
 
@@ -1358,6 +1378,14 @@ const char* GamePlay::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
           do_immediate_respawn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // .minecpp.engine.Difficulty difficulty = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          set_difficulty(static_cast<::minecpp::engine::Difficulty>(val));
         } else goto handle_unusual;
         continue;
       default: {
@@ -1510,6 +1538,20 @@ bool GamePlay::MergePartialFromCodedStream(
         break;
       }
 
+      // .minecpp.engine.Difficulty difficulty = 10;
+      case 10: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (80 & 0xFF)) {
+          int value = 0;
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_difficulty(static_cast< ::minecpp::engine::Difficulty >(value));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -1585,6 +1627,12 @@ void GamePlay::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(9, this->do_immediate_respawn(), output);
   }
 
+  // .minecpp.engine.Difficulty difficulty = 10;
+  if (this->difficulty() != 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
+      10, this->difficulty(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -1644,6 +1692,12 @@ void GamePlay::SerializeWithCachedSizes(
   // bool do_immediate_respawn = 9;
   if (this->do_immediate_respawn() != 0) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(9, this->do_immediate_respawn(), target);
+  }
+
+  // .minecpp.engine.Difficulty difficulty = 10;
+  if (this->difficulty() != 0) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      10, this->difficulty(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1721,6 +1775,12 @@ size_t GamePlay::ByteSizeLong() const {
     total_size += 1 + 1;
   }
 
+  // .minecpp.engine.Difficulty difficulty = 10;
+  if (this->difficulty() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->difficulty());
+  }
+
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -1775,6 +1835,9 @@ void GamePlay::MergeFrom(const GamePlay& from) {
   if (from.do_immediate_respawn() != 0) {
     set_do_immediate_respawn(from.do_immediate_respawn());
   }
+  if (from.difficulty() != 0) {
+    set_difficulty(from.difficulty());
+  }
 }
 
 void GamePlay::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -1811,6 +1874,7 @@ void GamePlay::InternalSwap(GamePlay* other) {
   swap(hardcore_, other->hardcore_);
   swap(reduced_debug_info_, other->reduced_debug_info_);
   swap(do_immediate_respawn_, other->do_immediate_respawn_);
+  swap(difficulty_, other->difficulty_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata GamePlay::GetMetadata() const {

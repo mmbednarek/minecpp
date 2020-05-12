@@ -26,7 +26,6 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_subdirectory(src/api/pbcpp)
 add_subdirectory(src/common/utils)
-add_subdirectory(src/common/log)
 add_subdirectory(src/common/nbt)
 add_subdirectory(src/common/region)
 add_subdirectory(src/common/game)

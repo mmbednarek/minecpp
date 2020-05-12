@@ -1,7 +1,7 @@
 #pragma once
-#include "../packet/reader.h"
-#include "../packet/writer.h"
-#include "../players.h"
+#include "../../common/packet/reader.h"
+#include "../../common/packet/writer.h"
+#include "../service.h"
 #include "handler.h"
 #include "play_handler.h"
 
@@ -9,16 +9,15 @@ namespace Front::Protocol {
 
 class LoginHandler : public Handler {
  public:
-   LoginHandler(PlayerManager &players, PlayHandler &play_handler);
+   explicit LoginHandler(Service &service);
 
    void handle(Connection &conn, Packet::Reader &r) override;
-   void handle_login_start(Packet::Writer &w, Packet::Reader &r);
+   void handle_login_start(Connection &conn, Packet::Reader &r);
 
-   void reject(Packet::Writer &w, std::string_view message);
+   void reject(Connection &conn, std::string_view message);
 
  private:
-   PlayerManager &players;
-   PlayHandler &play_handler;
+   Service &service;
 };
 
 } // namespace Front::Protocol

@@ -1,11 +1,8 @@
+#include "connection.h"
+#include "server.h"
 #include <boost/asio.hpp>
 #include <boost/endian/conversion.hpp>
 #include <boost/log/trivial.hpp>
-
-#include "connection.h"
-#include "packet/reader.h"
-#include "packet/writer.h"
-#include "server.h"
 
 namespace Front {
 
@@ -148,6 +145,21 @@ void Connection::async_write_then_disconnect(uint8_t *buff, size_t size) {
 
           server->drop_connection(id);
        });
+}
+
+void Connection::send(Packet::Writer &w) {
+   auto bf = w.buff();
+   async_write(std::get<0>(bf), std::get<1>(bf));
+}
+
+void Connection::send_and_read(Packet::Writer &w, Protocol::Handler &h) {
+   auto bf = w.buff();
+   async_write_then_read(std::get<0>(bf), std::get<1>(bf), h);
+}
+
+void Connection::send_and_disconnect(Packet::Writer &w) {
+   auto bf = w.buff();
+   async_write_then_disconnect(std::get<0>(bf), std::get<1>(bf));
 }
 
 } // namespace Front

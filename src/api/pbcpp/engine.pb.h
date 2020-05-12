@@ -106,6 +106,32 @@ inline bool DimensionType_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<DimensionType>(
     DimensionType_descriptor(), name, value);
 }
+enum Difficulty : int {
+  Easy = 0,
+  Medium = 1,
+  Hard = 2,
+  Difficulty_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  Difficulty_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool Difficulty_IsValid(int value);
+constexpr Difficulty Difficulty_MIN = Easy;
+constexpr Difficulty Difficulty_MAX = Hard;
+constexpr int Difficulty_ARRAYSIZE = Difficulty_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Difficulty_descriptor();
+template<typename T>
+inline const std::string& Difficulty_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, Difficulty>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function Difficulty_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    Difficulty_descriptor(), enum_t_value);
+}
+inline bool Difficulty_Parse(
+    const std::string& name, Difficulty* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Difficulty>(
+    Difficulty_descriptor(), name, value);
+}
 enum GameMode : int {
   Survival = 0,
   Creative = 1,
@@ -458,17 +484,17 @@ class AcceptPlayerResponse :
   ::minecpp::engine::PlayerAcceptState state() const;
   void set_state(::minecpp::engine::PlayerAcceptState value);
 
-  // int32 player_id = 2;
+  // uint32 player_id = 2;
   void clear_player_id();
   static const int kPlayerIdFieldNumber = 2;
-  ::PROTOBUF_NAMESPACE_ID::int32 player_id() const;
-  void set_player_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 player_id() const;
+  void set_player_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
 
-  // int32 node_id = 3;
+  // uint32 node_id = 3;
   void clear_node_id();
   static const int kNodeIdFieldNumber = 3;
-  ::PROTOBUF_NAMESPACE_ID::int32 node_id() const;
-  void set_node_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 node_id() const;
+  void set_node_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
 
   // @@protoc_insertion_point(class_scope:minecpp.engine.AcceptPlayerResponse)
  private:
@@ -477,8 +503,8 @@ class AcceptPlayerResponse :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::minecpp::engine::GamePlay* game_info_;
   int state_;
-  ::PROTOBUF_NAMESPACE_ID::int32 player_id_;
-  ::PROTOBUF_NAMESPACE_ID::int32 node_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 player_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 node_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
@@ -766,6 +792,12 @@ class GamePlay :
   bool do_immediate_respawn() const;
   void set_do_immediate_respawn(bool value);
 
+  // .minecpp.engine.Difficulty difficulty = 10;
+  void clear_difficulty();
+  static const int kDifficultyFieldNumber = 10;
+  ::minecpp::engine::Difficulty difficulty() const;
+  void set_difficulty(::minecpp::engine::Difficulty value);
+
   // @@protoc_insertion_point(class_scope:minecpp.engine.GamePlay)
  private:
   class HasBitSetters;
@@ -780,6 +812,7 @@ class GamePlay :
   bool hardcore_;
   bool reduced_debug_info_;
   bool do_immediate_respawn_;
+  int difficulty_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
@@ -914,29 +947,29 @@ inline void AcceptPlayerResponse::set_state(::minecpp::engine::PlayerAcceptState
   // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerResponse.state)
 }
 
-// int32 player_id = 2;
+// uint32 player_id = 2;
 inline void AcceptPlayerResponse::clear_player_id() {
-  player_id_ = 0;
+  player_id_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AcceptPlayerResponse::player_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AcceptPlayerResponse::player_id() const {
   // @@protoc_insertion_point(field_get:minecpp.engine.AcceptPlayerResponse.player_id)
   return player_id_;
 }
-inline void AcceptPlayerResponse::set_player_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AcceptPlayerResponse::set_player_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   player_id_ = value;
   // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerResponse.player_id)
 }
 
-// int32 node_id = 3;
+// uint32 node_id = 3;
 inline void AcceptPlayerResponse::clear_node_id() {
-  node_id_ = 0;
+  node_id_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AcceptPlayerResponse::node_id() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AcceptPlayerResponse::node_id() const {
   // @@protoc_insertion_point(field_get:minecpp.engine.AcceptPlayerResponse.node_id)
   return node_id_;
 }
-inline void AcceptPlayerResponse::set_node_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AcceptPlayerResponse::set_node_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   node_id_ = value;
   // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerResponse.node_id)
@@ -1127,6 +1160,20 @@ inline void GamePlay::set_do_immediate_respawn(bool value) {
   // @@protoc_insertion_point(field_set:minecpp.engine.GamePlay.do_immediate_respawn)
 }
 
+// .minecpp.engine.Difficulty difficulty = 10;
+inline void GamePlay::clear_difficulty() {
+  difficulty_ = 0;
+}
+inline ::minecpp::engine::Difficulty GamePlay::difficulty() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.GamePlay.difficulty)
+  return static_cast< ::minecpp::engine::Difficulty >(difficulty_);
+}
+inline void GamePlay::set_difficulty(::minecpp::engine::Difficulty value) {
+  
+  difficulty_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.GamePlay.difficulty)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
@@ -1148,6 +1195,11 @@ template <> struct is_proto_enum< ::minecpp::engine::DimensionType> : ::std::tru
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::engine::DimensionType>() {
   return ::minecpp::engine::DimensionType_descriptor();
+}
+template <> struct is_proto_enum< ::minecpp::engine::Difficulty> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::engine::Difficulty>() {
+  return ::minecpp::engine::Difficulty_descriptor();
 }
 template <> struct is_proto_enum< ::minecpp::engine::GameMode> : ::std::true_type {};
 template <>
