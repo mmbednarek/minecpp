@@ -1,12 +1,12 @@
-#include "../connection.h"
 #include "status_handler.h"
+#include "../connection.h"
 #include <boost/log/trivial.hpp>
 
 namespace Front::Protocol {
 
 StatusHandler::StatusHandler() {}
 
-void StatusHandler::handle(Connection &conn, Packet::Reader &r) {
+void StatusHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
    uint8_t op = r.read_byte();
    BOOST_LOG_TRIVIAL(debug) << "[status] handling status op = " << (int)op;
    switch (op) {
@@ -525,7 +525,7 @@ const char *favicon =
     "I20deesAAAAASUVORK5CYII=";
 
 void StatusHandler::handle_info(Connection &conn) {
-   Packet::Writer w;
+   MineNet::Message::Writer w;
    w.write_byte(0);
 
    std::stringstream ss;
@@ -538,11 +538,11 @@ void StatusHandler::handle_info(Connection &conn) {
    conn.send_and_read(w, *this);
 }
 
-void StatusHandler::handle_ping(Connection &conn, Packet::Reader &r) {
+void StatusHandler::handle_ping(Connection &conn, MineNet::Message::Reader &r) {
    auto player_time = r.read_big_endian<uint64_t>();
    BOOST_LOG_TRIVIAL(info) << "player time " << player_time;
 
-   Packet::Writer w;
+   MineNet::Message::Writer w;
    w.write_byte(1);
    w.write_big_endian(player_time);
    conn.send_and_disconnect(w);

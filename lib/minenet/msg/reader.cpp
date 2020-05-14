@@ -1,7 +1,7 @@
 #include "reader.h"
 #include <boost/endian/conversion.hpp>
 
-namespace Packet {
+namespace MineNet::Message {
 
 Reader::Reader(std::istream &s) : s(s) {}
 

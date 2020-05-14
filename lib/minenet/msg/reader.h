@@ -2,7 +2,7 @@
 #include <boost/endian/conversion.hpp>
 #include <iostream>
 
-namespace Packet {
+namespace MineNet::Message {
 
 class Reader {
 public:

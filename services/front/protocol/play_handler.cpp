@@ -5,6 +5,6 @@ namespace Front::Protocol {
 
 PlayHandler::PlayHandler() = default;
 
-void PlayHandler::handle(Connection &conn, Packet::Reader &r) {}
+void PlayHandler::handle(Connection &conn, MineNet::Message::Reader &r) {}
 
 } // namespace Front::Protocol

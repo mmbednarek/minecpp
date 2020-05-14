@@ -4,7 +4,7 @@
 #include <grpcpp/channel.h>
 #include <memory>
 #include <minepb/engine.pb.h>
-#include <packet/writer.h>
+#include <minenet/msg/io.h>
 
 namespace Front::Protocol {
 
@@ -12,7 +12,7 @@ class PlayHandler : public Handler {
  public:
    PlayHandler();
 
-   virtual void handle(Connection &conn, Packet::Reader &r) override;
+   virtual void handle(Connection &conn, MineNet::Message::Reader &r) override;
 };
 
 } // namespace Front::Protocol

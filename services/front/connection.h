@@ -5,7 +5,8 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
 #include <memory>
-#include <packet/packet.h>
+#include <minenet/msg/io.h>
+#include <minenet/msg/message.h>
 
 namespace Front {
 
@@ -29,9 +30,24 @@ class Connection {
    void async_read_packet(Protocol::Handler &h);
    void async_read_packet_data(Protocol::Handler &h);
 
-   void send(Packet::Writer &w);
-   void send_and_read(Packet::Writer &w, Protocol::Handler &h);
-   void send_and_disconnect(Packet::Writer &w);
+   void send(MineNet::Message::Writer &w);
+   void send_and_read(MineNet::Message::Writer &w, Protocol::Handler &h);
+   void send_and_disconnect(MineNet::Message::Writer &w);
+
+   template <typename M> void send(M msg) {
+      auto w = MineNet::Message::serialize(msg);
+      send(w);
+   }
+
+   template <typename M> void send_and_read(M msg, Protocol::Handler &h) {
+      auto w = MineNet::Message::serialize(msg);
+      send_and_read(w, h);
+   }
+
+   template <typename M> void send_and_disconnect(M msg) {
+      auto w = MineNet::Message::serialize(msg);
+      send_and_disconnect(w);
+   }
 
    Protocol::State state();
    void set_state(Protocol::State s);

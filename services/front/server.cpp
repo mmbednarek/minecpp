@@ -2,7 +2,7 @@
 #include "protocol/protocol.h"
 #include <boost/asio.hpp>
 #include <boost/log/trivial.hpp>
-#include <packet/reader.h>
+#include <minenet/msg/reader.h>
 
 namespace Front {
 
@@ -67,7 +67,7 @@ void Server::handshake(Connection *conn) {
    }
 
    std::istream s(&buff);
-   Packet::Reader r(s);
+   MineNet::Message::Reader r(s);
 
    if (r.read_byte() != 0) {
       BOOST_LOG_TRIVIAL(debug) << "invalid handshake request";

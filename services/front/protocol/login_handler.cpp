@@ -6,7 +6,7 @@ namespace Front::Protocol {
 
 LoginHandler::LoginHandler(Service &service) : service(service) {}
 
-void LoginHandler::handle(Connection &conn, Packet::Reader &r) {
+void LoginHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
    uint8_t op = r.read_byte();
    BOOST_LOG_TRIVIAL(debug) << "handling status op = " << (int)op;
    switch (op) {
@@ -19,7 +19,7 @@ void LoginHandler::handle(Connection &conn, Packet::Reader &r) {
    }
 }
 
-void LoginHandler::handle_login_start(Connection &conn, Packet::Reader &r) {
+void LoginHandler::handle_login_start(Connection &conn, MineNet::Message::Reader &r) {
    std::string user_name = r.read_string();
 
    BOOST_LOG_TRIVIAL(info) << "establishing connection with player "
@@ -31,7 +31,7 @@ void LoginHandler::handle_login_start(Connection &conn, Packet::Reader &r) {
       return;
    }
 
-   Packet::Writer w;
+   MineNet::Message::Writer w;
    w.write_byte(2);
    w.write_string(response.user_name);
    w.write_string(boost::uuids::to_string(response.uuid));
@@ -41,7 +41,7 @@ void LoginHandler::handle_login_start(Connection &conn, Packet::Reader &r) {
 }
 
 void LoginHandler::reject(Connection &conn, std::string_view message) {
-   Packet::Writer w;
+   MineNet::Message::Writer w;
 
    w.write_byte(0);
    std::stringstream ss;

@@ -1,7 +1,7 @@
-#include "../common/game/level/level.h"
-#include "../common/utils/compression.h"
 #include <fstream>
+#include <game/level/level.h>
 #include <iostream>
+#include <mineutils/compression.h>
 
 std::string load_path() {
    auto path = std::getenv("MINECPP_PATH");

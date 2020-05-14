@@ -1,5 +1,5 @@
 #pragma once
-#include <packet/reader.h>
+#include <minenet/msg/reader.h>
 
 namespace Front {
 
@@ -9,7 +9,7 @@ namespace Protocol {
 
 class Handler {
  public:
-   virtual void handle(Connection &conn, Packet::Reader &r) = 0;
+   virtual void handle(Connection &conn, MineNet::Message::Reader &r) = 0;
 };
 
 } // namespace Protocol

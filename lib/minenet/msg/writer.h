@@ -4,7 +4,7 @@
 #include <sstream>
 #include <tuple>
 
-namespace Packet {
+namespace MineNet::Message {
 
 class Writer {
  public:

@@ -27,11 +27,11 @@ include_directories(${Boost_INCLUDE_DIRS})
 include_directories(./lib)
 include_directories(./services/protos/include)
 
-add_subdirectory(lib/utils)
+add_subdirectory(lib/mineutils)
 add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
-add_subdirectory(lib/packet)
+add_subdirectory(lib/minenet)
 add_subdirectory(./tests)
 
 add_subdirectory(tools/nbt_viewer)

@@ -3,8 +3,8 @@
 #include <cstdint>
 #include <cstring>
 #include <functional>
-#include <utils/reader.h>
-#include <utils/format.h>
+#include <mineutils/reader.h>
+#include <mineutils/format.h>
 #include "tag.h"
 
 namespace NBT {

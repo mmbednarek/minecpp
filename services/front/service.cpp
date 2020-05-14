@@ -1,5 +1,4 @@
 #include "service.h"
-#include "protocol/play_client.h"
 #include "protocol/protocol.h"
 #include <boost/algorithm/string.hpp>
 #include <grpcpp/client_context.h>
@@ -31,6 +30,8 @@ Service::LoginResponse Service::login_player(std::string &user_name) {
 }
 
 void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
+   using namespace MineNet::Message;
+
    conn.set_state(Protocol::State::Play);
    auto player = players.get_player(id);
 
@@ -42,16 +43,15 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    req.set_uuid(player.user_id_str());
    player_service->AcceptPlayer(&ctx, req, &res);
 
-   Protocol::PlayClient cli(conn);
-
-   cli.join_game(Protocol::Message::JoinGame{
+   conn.send(JoinGame{
        .player_id = res.player_id(),
        .game_mode = static_cast<uint8_t>(res.game_info().mode()),
        .dimension = static_cast<uint32_t>(res.game_info().dimension()),
        .seed = res.game_info().seed(),
        .max_players = static_cast<uint8_t>(res.game_info().max_players()),
        .world_type = ({
-          auto wld_type = minecpp::engine::WorldType_Name(res.game_info().world());
+          auto wld_type =
+              minecpp::engine::WorldType_Name(res.game_info().world());
           boost::algorithm::to_lower(wld_type);
           wld_type;
        }),
@@ -59,12 +59,17 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
        .reduced_debug_info = res.game_info().reduced_debug_info(),
        .immediate_respawn = res.game_info().do_immediate_respawn(),
    });
-   cli.server_brand("minecraft:brand.minecpp");
-   cli.difficulty(res.game_info().difficulty(), false);
-   cli.player_abilities(Protocol::Message::PlayerAbilities{
+
+   conn.send(ServerBrand{"minecraft:brand.minecpp"});
+
+   conn.send(Difficulty{.difficulty =
+                            static_cast<uint8_t>(res.game_info().difficulty()),
+                        .locked = false});
+
+   conn.send(PlayerAbilities{
        .flags = 0,
        .fly_speed = 0.5f,
-       .walk_speed = 0.1f, // TODO: Load actual abilities
+       .walk_speed = 0.1f,
    });
 }
 

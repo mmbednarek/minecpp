@@ -1,7 +1,7 @@
 #include "writer.h"
 #include <boost/uuid/uuid_io.hpp>
 
-namespace Packet {
+namespace MineNet::Message {
 
 Writer::Writer() {}
 
