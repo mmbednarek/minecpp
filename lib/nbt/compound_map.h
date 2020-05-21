@@ -1,25 +1,20 @@
 #pragma once
+#include "reader.h"
+#include "tag.h"
 #include <map>
 #include <string>
-#include "tag.h"
-#include "compound.h"
 
 namespace NBT {
 
-template<TagID t>
-class CompoundMap : public std::map<std::string, tagid_type(t)>, public Compound {
-public:
-	TaggedPtr load_value(TagID tagid, const std::string &name) override {
-		return TaggedPtr{
-			.tagid = t,
-			.ptr = &this->operator[](name),
-		};
-	}
-
-	Compound *load_compound(const std::string &name) override {
-		return nullptr;
-	}
+template <TagID t>
+class CompoundMap : public std::map<std::string, tagid_type(t)> {
+ public:
+   explicit CompoundMap(Reader &r) {
+      r.read_compound([this] (Reader &r, TagID type, std::string name) {
+        assert(t == type);
+        this->operator[](name) = r.read_payload<t>();
+      });
+   }
 };
 
-}
-
+} // namespace NBT

@@ -1,2 +1,5 @@
-engine_address: "127.0.0.1:4600"
+engine_hosts:
+  - "127.0.0.1:4600"
 front_port: 4500
+recipes: research/recipes.dat
+tags: research/tags.dat

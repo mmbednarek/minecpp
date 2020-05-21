@@ -26,9 +26,16 @@ void Writer::write_string(std::string_view s) {
    stream << s;
 }
 
-void Writer::write_uuid(boost::uuids::uuid id) {
-   //   stream.write((char *)id.data, 16); unfortunetly not :/
+void Writer::write_uuid_str(boost::uuids::uuid id) {
    write_string(boost::uuids::to_string(id));
+}
+
+void Writer::write_uuid(boost::uuids::uuid id) {
+   stream.write((char *)id.data, 16);
+}
+
+void Writer::write_bytes(const char *data, size_t size) {
+   stream.write(data, size);
 }
 
 void Writer::write_float(float value) {
@@ -68,4 +75,4 @@ std::tuple<uint8_t *, size_t> Writer::buff() {
    return std::tuple(buff, buff_size + pos);
 }
 
-} // namespace Packet
+} // namespace MineNet::Message

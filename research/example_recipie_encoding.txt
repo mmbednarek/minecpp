@@ -1,0 +1,89 @@
+SHAPED
+
+01 - width:  vint
+02 - height: vint
+00 - group: string
+
+[item 0]
+01 - number of variants: vint
+01 - stack not empty: bool
+ab 05 - item id: vint
+01 - amount : byte
+00 - additional nbt data : nbt
+
+[item 1]
+01 - number of variants: vint
+01 - stack not empty: bool
+b4 06 - item id: vint
+01 - amount : byte
+00 - additional nbt data
+
+[output]
+01 - stack not empty: bool
+93 01 - item id: varint
+04 - amount : byte
+00 - additional nbt data
+
+SHAPELESS
+
+08 6479 6564 5f62 6564 - group: string // dyed_bed
+02 - number of items: varint
+
+[item 0]
+01 - number of variants: varint
+01 - stack not empty: bool
+8e 05 - item id: varint
+01 - amount: varint
+00 - additional nbt data
+
+[item 1]
+01 - number of variants: varint
+01 - stack not empty: bool
+88  05 - item id: varint
+01 - amount
+00 - additional nbt data 
+
+[output]
+01 - stack not empty: bool
+9a 05 - item id: varint
+01 - amount
+00 - additional nbt data
+
+SMELTING
+
+00 - group: string
+
+[item]
+01 - number of variants: varint
+01 - stack not empty: bool
+93 06 - item id: varint
+01 - amount
+00 - additional nbt data
+
+[output]
+01 - stack not empty: bool
+94 06 - item id: varint
+01 - amount
+00 - additional nbt data
+
+2e b3 33 33 - experience: float
+c8 01 - cooking time: varint
+
+STONE CUTTING
+
+00 - group: string
+
+[item]
+
+01 - number of variants: vint
+01 - stack not empty: bool
+03 - item id: varint
+01 - amount
+00 - additional nbt data
+
+[output item]
+
+01 - stack not empty
+ec 03 - item id
+02 - amount 
+00 0 additional nbt data

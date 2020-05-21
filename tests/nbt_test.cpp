@@ -238,8 +238,7 @@ TEST(NBT_Compound, Map) {
    stream.write(buff, sizeof(buff));
    Reader r(stream);
 
-   CompoundMap<Short> m;
-   m.load(r);
+   CompoundMap<Short> m(r);
 
    ASSERT_EQ(m["stuff"], 0x1234);
    ASSERT_EQ(m["test"], 0x4321);
@@ -259,7 +258,7 @@ TEST(NBT_Reader, Int) {
    ASSERT_EQ(tag, 0x10213243);
 }
 
-TEST(NBT_Reader, Compound) {
+TEST(NBT_Reader, Container) {
    char buff[]{0x0a, 0x00, 0x00, 0x03, 0x00, 0x06, 'T',  'e',  's',
                't',  's',  '1',  0x12, 0x34, 0x56, 0x78, 0x0a, 0x00,
                0x06, 'V',  'a',  'l',  'u',  'e',  's',  0x02, 0x00,

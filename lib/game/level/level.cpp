@@ -1,8 +1,8 @@
 #include "level.h"
 
-namespace Game {
+namespace Game::Level {
 
-Level::Level(std::istream &s) {
+Info::Info(std::istream &s) {
 	using Utils::Vec2;
 	NBT::Reader r(s);
 

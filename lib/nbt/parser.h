@@ -15,7 +15,7 @@ public:
     ~Parser();
 
     [[nodiscard]]
-    std::unique_ptr<Tag> read_tag() const;
+    TagPtr read_tag() const;
 
 private:
 	[[nodiscard]] TagMap read_compound() const;
@@ -37,12 +37,12 @@ private:
 	payload_of(TagID::Long, read_bswap<long long>());
 	payload_of(TagID::Float, read_float());
 	payload_of(TagID::Double, read_double());
-	payload_of(TagID::ByteArray, read_byte_array());
+	payload_of(TagID::ByteArray, read_byte_list());
 	payload_of(TagID::String, read_string());
 	payload_of(TagID::List, read_list_payload());
 	payload_of(TagID::Compound, read_compound());
-	payload_of(TagID::IntArray, read_int_array<int>());
-	payload_of(TagID::LongArray, read_int_array<long long>());
+	payload_of(TagID::IntArray, read_int_list<int>());
+	payload_of(TagID::LongArray, read_int_list<long long>());
 
 	template<TagID t>
 	PayloadTag<tagid_type(t)> *make_tag(std::string& name) const {

@@ -36,6 +36,7 @@ add_subdirectory(./tests)
 
 add_subdirectory(tools/nbt_viewer)
 add_subdirectory(tools/chunk_extractor)
+add_subdirectory(tools/recipes)
 add_subdirectory(services/protos/include/minepb)
 add_subdirectory(services/chunk_storage)
 add_subdirectory(services/front)

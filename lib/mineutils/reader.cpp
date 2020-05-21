@@ -5,7 +5,7 @@ namespace Utils {
 Reader::Reader(std::istream& s) : stream(s) {
 }
 
-std::vector<uint8_t> Reader::read_byte_array() const {
+std::vector<uint8_t> Reader::read_byte_list() const {
 	auto size = read_bswap<int>();
 	std::vector<uint8_t> v(size);
 	stream.read((char*) v.data(), size);
