@@ -3,15 +3,11 @@
 #include <cstdint>
 #include <cstring>
 #include <functional>
+#include <mineutils/concepts.h>
 #include <mineutils/format.h>
 #include <mineutils/reader.h>
 #include <numeric>
 #include <string>
-
-template <typename A> concept IndexAssignable = requires(A a, size_t i) {
-   a[i] = (uint8_t)0;
-   a[i] = (uint16_t)0;
-};
 
 namespace NBT {
 
@@ -79,9 +75,9 @@ class Reader : private Utils::Reader {
       return result;
    }
 
-   template <uint16_t bits>
-   size_t read_packed_ints(IndexAssignable auto &result, size_t num_packets) {
-      constexpr uint8_t parts = bits / std::gcd(0x40, bits);
+   void read_packed_ints(IndexAssignable auto &result, uint16_t bits,
+                           size_t num_packets) {
+      uint8_t parts = bits / std::gcd(0x40, bits);
       auto cycles = num_packets / parts;
 
       size_t i = 0;
@@ -103,8 +99,6 @@ class Reader : private Utils::Reader {
             trail_size = (0x40 + trail_size) % bits;
          }
       }
-
-      return i;
    }
 
    void read_compound(

@@ -6,17 +6,6 @@ namespace Game {
 
 inline int expected_data_version = 2230;
 
-Chunk::PaletteItem::PaletteItem(NBT::Reader &r) {
-   r.read_compound([this](NBT::Reader &r, NBT::TagID type, std::string key) {
-      if (key == "Name" && type == NBT::String) {
-         tag_name = r.read_payload<NBT::String>();
-         return;
-      }
-      // TODO: Read properties
-      r.skip_payload(type); // ignore properties for now
-   });
-}
-
 Chunk::Chunk(NBT::Reader &r) {
    r.read_compound([this](NBT::Reader &r, NBT::TagID tagid,
                           const std::string &name) { load(r, tagid, name); });
@@ -80,7 +69,10 @@ void Chunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
       return;
    case NBT::List:
       if (name == "Sections") {
-         r.read_list([this](NBT::Reader &r) { read_section(r); });
+         r.read_list([this](NBT::Reader &r) {
+            auto section = Section(r);
+            sections[section.y] = section;
+         });
          return;
       }
       if (name == "Entities") {
@@ -124,106 +116,26 @@ void Chunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
 }
 
 Chunk::HeightMap Chunk::read_height_map(NBT::Reader &r, NBT::TagID type) {
-   if (type != NBT::LongArray)
-      [[unlikely]] {
-         throw std::runtime_error("height map must be long array type");
-      }
+   if (type != NBT::LongArray) [[unlikely]] {
+      throw std::runtime_error("height map must be long array type");
+   }
 
    int size = r.read_payload<NBT::Int>();
-   if (size != 36)
-      [[unlikely]] {
-         throw std::runtime_error("height map's length must be 36");
-      }
+   if (size != 36) [[unlikely]] {
+      throw std::runtime_error("height map's length must be 36");
+   }
 
    HeightMap result;
-
-   auto i = r.read_packed_ints<9>(result, 36);
-   assert(i == 256);
-
+   r.read_packed_ints(result, 9, 36);
    return result;
 }
 
-void Chunk::read_section(NBT::Reader &r) {
-   auto *section = new Chunk::Section();
-   uint8_t y = 0;
-   r.read_compound([this, section, &y](NBT::Reader &r, NBT::TagID type,
-                                       const std::string &key) {
-      if (type == NBT::Byte && key == "Y") {
-         y = r.read_payload<NBT::Byte>();
-         return;
-      }
-      if (y == 255) {
-         if (type == NBT::ByteArray && key == "SkyLight") {
-            sky_light = r.read_array<2048>();
-            return;
-         }
-         throw std::runtime_error("unexpected nbt tag");
-      }
-      if (type == NBT::ByteArray) {
-         if (key == "BlockLight") {
-            section->light = r.read_array<2048>();
-            return;
-         }
-         if (key == "SkyLight") {
-            section->sky_light = r.read_array<2048>();
-            return;
-         }
-         r.skip_payload(NBT::ByteArray);
-         return;
-      }
-      if (type == NBT::List && key == "Palette") {
-         r.read_list([section](NBT::Reader &r) { // TODO: Preallocate the array
-            section->palette.emplace_back(PaletteItem(r));
-         });
-         return;
-      }
-      if (type == NBT::LongArray && key == "BlockStates") {
-         auto size = r.read_payload<NBT::Int>();
-
-         size_t i;
-         switch (size * 64 / 4096) {
-         case 1:
-            i = r.read_packed_ints<1>(section->block, size);
-            break;
-         case 2:
-            i = r.read_packed_ints<2>(section->block, size);
-            break;
-         case 3:
-            i = r.read_packed_ints<3>(section->block, size);
-            break;
-         case 4:
-            i = r.read_packed_ints<4>(section->block, size);
-            break;
-         case 5:
-            i = r.read_packed_ints<5>(section->block, size);
-            break;
-         case 6:
-            i = r.read_packed_ints<6>(section->block, size);
-            break;
-         case 7:
-            i = r.read_packed_ints<7>(section->block, size);
-            break;
-         case 8:
-            i = r.read_packed_ints<8>(section->block, size);
-            break;
-         case 9:
-            i = r.read_packed_ints<9>(section->block, size);
-            break;
-         case 10:
-            i = r.read_packed_ints<10>(section->block, size);
-            break;
-         default:
-            throw std::runtime_error("chunk section with too many items");
-         }
-
-         assert(i == 4096);
-         return;
-      }
-      throw std::runtime_error("unexpected nbt tag");
-   });
-   if (y > 15)
-      return;
-   sections[y] = std::shared_ptr<Section>(section);
+std::string_view Chunk::block_at(int x, int y, int z) {
+   auto& s = sections[y / 16];
+   if (s.empty()) {
+      return "minecraft:air";
+   }
+   return s.block_at(x, y % 16, z);
 }
 
 } // namespace Game

@@ -1,19 +1,11 @@
 #pragma once
+#include "section.h"
 #include <nbt/reader.h>
+#include <string_view>
 
 namespace Game {
 
 struct Chunk {
-   struct PaletteItem {
-      explicit PaletteItem(NBT::Reader &r);
-      std::string tag_name;
-   };
-   struct Section {
-      std::array<uint8_t, 2048> light;
-      std::array<uint8_t, 2048> sky_light;
-      std::array<uint8_t, 4096> block;
-      std::vector<PaletteItem> palette;
-   };
    typedef std::array<uint16_t, 256> HeightMap;
 
    std::string status;
@@ -31,13 +23,13 @@ struct Chunk {
    int64_t last_update;
 
    std::array<uint8_t, 2048> sky_light;
-   std::array<std::shared_ptr<Section>, 16> sections;
+   std::map<uint8_t, Section> sections;
 
    explicit Chunk(NBT::Reader &r);
 
    void load(NBT::Reader &r, NBT::TagID tagid, const std::string &name);
    HeightMap read_height_map(NBT::Reader &r, NBT::TagID type);
-   void read_section(NBT::Reader &r);
+   std::string_view block_at(int x, int y, int z);
 };
 
 } // namespace Game

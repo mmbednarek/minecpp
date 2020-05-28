@@ -2,6 +2,7 @@
 #include <iostream>
 #include <mineutils/compression.h>
 #include <nbt/parser.h>
+#include <nbt/writer.h>
 #include <nbt/snbt.h>
 #include <game/chunk/chunk.h>
 #include <region/reader.h>
@@ -38,4 +39,7 @@ auto main(int argc, char *argv[]) -> int {
    cr.check_signature();
    cr.find_compound("Level");
    Game::Chunk chunk(cr);
+
+   NBT::Writer w(std::cout);
+   w.write_packed_ints("WORLD_SURFACE", chunk.hm_world_surface, 256, 9);
 }
