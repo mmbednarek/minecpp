@@ -13,8 +13,11 @@ class Writer {
 
    void write_byte(uint8_t b);
    void write_string(std::string_view s);
+   void begin_compound(std::string_view name);
+   void end_compound();
+   void write_long_array(std::string_view name, const long *array, size_t size);
 
-   template <typename I> void write_int(I v) {
+   template <typename I> void write_big_endian(I v) {
       v = boost::endian::native_to_big(v);
       stream.write((char *)&v, sizeof(I));
    }
@@ -28,7 +31,7 @@ class Writer {
       write_string(name);
 
       int num_longs = (int)(len * bits) / 64;
-      write_int(num_longs);
+      write_big_endian(num_longs);
 
       int i = 0;
       uint16_t trail_size = 0;
@@ -54,7 +57,7 @@ class Writer {
             trail_size = 0;
          }
 
-         write_int(result);
+         write_big_endian(result);
       }
    };
 

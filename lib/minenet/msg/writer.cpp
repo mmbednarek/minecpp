@@ -75,4 +75,6 @@ std::tuple<uint8_t *, size_t> Writer::buff() {
    return std::tuple(buff, buff_size + pos);
 }
 
+std::ostream &Writer::raw_stream() { return stream; }
+
 } // namespace MineNet::Message

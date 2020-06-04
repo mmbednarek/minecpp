@@ -1,42 +1,30 @@
-#include <fstream>
+#include "service.h"
 #include <game/level/level.h>
+#include <game/blocks/state.h>
+#include <grpcpp/server_builder.h>
 #include <iostream>
-#include <mineutils/compression.h>
-
-std::string load_path() {
-   auto path = std::getenv("MINECPP_PATH");
-   if (path) {
-      return std::string(path);
-   }
-
-   auto home = std::string(std::getenv("HOME"));
-   home.append("/.minecraft");
-   return home;
-}
 
 auto main() -> int {
-   auto save = std::getenv("SAVE");
-   if (!save) {
-      std::cerr << "SAVE variable required\n";
+   std::cout << "enum states: " << Game::Block::Prop::Facing.num_states() << '\n';
+
+   auto region_path = std::getenv("REGION_PATH");
+   if (!region_path) {
+      std::cerr << "REGION_PATH variable required\n";
       return 1;
    }
 
-   auto path = load_path();
-   path.append("/saves/");
-   path.append(save);
-   path.append("/level.dat");
-
-   std::cerr << "reading file: " << path << "\n";
-
-   std::ifstream level_file;
-   level_file.open(path);
-   if (!level_file.is_open()) {
-      std::cerr << "could not open file " << path << "\n";
-      return 2;
+   std::string listen = std::getenv("LISTEN");
+   if (listen.empty()) {
+      listen = "0.0.0.0:7000";
    }
 
-   Utils::GZipInputStream gzip(level_file);
-   Game::Level::Info level(gzip);
+   Service s(region_path);
 
-   level_file.close();
+   grpc::ServerBuilder builder;
+   builder.AddListeningPort(listen, grpc::InsecureServerCredentials());
+   builder.RegisterService(&s);
+
+   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+   std::cerr << "grpc server started";
+   server->Wait();
 }

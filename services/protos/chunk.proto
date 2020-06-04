@@ -1,0 +1,19 @@
+syntax = "proto3";
+package minecpp.chunk;
+
+message NetChunk {
+    int32 pos_x = 1;
+    int32 pos_z = 2;
+    bool full = 3;
+    repeated int32 biomes = 4 [packed = true];
+    repeated int64 hm_world_surface = 5;
+    repeated int64 hm_motion_blocking = 6;
+    repeated Section sections = 7;
+
+    message Section {
+        int32 y = 1;
+        repeated int32 palette = 2;
+        repeated int64 data = 3;
+    }
+}
+

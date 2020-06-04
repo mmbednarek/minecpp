@@ -76,30 +76,7 @@ class Reader : private Utils::Reader {
    }
 
    void read_packed_ints(IndexAssignable auto &result, uint16_t bits,
-                           size_t num_packets) {
-      uint8_t parts = bits / std::gcd(0x40, bits);
-      auto cycles = num_packets / parts;
-
-      size_t i = 0;
-      for (uint32_t cycle = 0u; cycle < cycles; ++cycle) {
-         uint16_t trail = 0u;
-         uint8_t trail_size = 0u;
-         for (uint8_t part = 0u; part < parts; ++part) {
-            auto values = (0x40 + trail_size) / bits;
-            auto packet = static_cast<uint64_t>(read_payload<NBT::Long>());
-            uint16_t beg_bits = bits - trail_size;
-            result[i++] =
-                trail | ((packet & ((1u << beg_bits) - 1u)) << trail_size);
-            packet >>= beg_bits;
-            for (int n = 1u; n < values; ++n) {
-               result[i++] = packet & ((1u << bits) - 1u);
-               packet >>= bits;
-            }
-            trail = packet;
-            trail_size = (0x40 + trail_size) % bits;
-         }
-      }
-   }
+                           size_t num_packets);
 
    void read_compound(
        std::function<void(Reader &r, TagID type, std::string key)> for_value);
@@ -114,12 +91,16 @@ class Reader : private Utils::Reader {
    TagHeader peek_tag();
    void check_signature();
 
-   template <size_t s> std::array<uint8_t, s> read_array() {
+   template <size_t s> std::array<uint8_t, s> read_array();
+
+   template <size_t s> std::array<int, s> read_int_array();
+
+   template <size_t s> std::array<uint64_t, s> read_long_array() {
       auto size = read_bswap<int>();
       assert(size == s);
 
-      std::array<uint8_t, s> result;
-      get_stream().read((char *)result.data(), s);
+      std::array<uint64_t, s> result;
+      get_stream().read((char *)result.data(), s * sizeof(uint64_t));
       return result;
    }
 
@@ -142,40 +123,88 @@ class Reader : private Utils::Reader {
    payload_of(TagID::IntArray, read_int_list<int>());
    payload_of(TagID::LongArray, read_int_list<long long>());
 
-   template <TagID t> bool seek_tag(std::string &name) {
-      for (;;) {
-         auto type = read_static(TagID::End);
-         if (type == TagID::End) {
-            get_stream().seekg(-sizeof(TagID), std::ios_base::cur);
-            return false;
-         }
+   template <TagID t> bool seek_tag(std::string &name);
 
-         auto name_size = read_bswap<short>();
-         if (type != t || name_size != static_cast<short>(name.size())) {
-            get_stream().seekg(name_size, std::ios_base::cur);
-            skip_payload(type);
-            continue;
-         }
-
-         char tag_name[name_size];
-         get_stream().read(tag_name, name_size);
-
-         if (memcmp(tag_name, name.data(), name_size) != 0) {
-            skip_payload(type);
-            continue;
-         }
-
-         return true;
-      }
-   }
-
-   template <TagID t> void must_seek_tag(std::string &name) {
-      if (!seek_tag<t>(name)) {
-         std::string msg("could not find tag ");
-         msg.append(name);
-         throw Exception(msg);
-      }
-   }
+   template <TagID t> void must_seek_tag(std::string &name);
 };
+
+void Reader::read_packed_ints(IndexAssignable auto &result, uint16_t bits,
+                              size_t num_packets) {
+   uint8_t parts = bits / std::gcd(0x40, bits);
+   auto cycles = num_packets / parts;
+
+   size_t i = 0;
+   for (uint32_t cycle = 0u; cycle < cycles; ++cycle) {
+      uint16_t trail = 0u;
+      uint8_t trail_size = 0u;
+      for (uint8_t part = 0u; part < parts; ++part) {
+         auto values = (0x40 + trail_size) / bits;
+         auto packet = static_cast<uint64_t>(read_payload<NBT::Long>());
+         uint16_t beg_bits = bits - trail_size;
+         result[i++] =
+             trail | ((packet & ((1u << beg_bits) - 1u)) << trail_size);
+         packet >>= beg_bits;
+         for (int n = 1u; n < values; ++n) {
+            result[i++] = packet & ((1u << bits) - 1u);
+            packet >>= bits;
+         }
+         trail = packet;
+         trail_size = (0x40 + trail_size) % bits;
+      }
+   }
+}
+
+template <TagID t> void Reader::must_seek_tag(std::string &name) {
+   if (!seek_tag<t>(name)) {
+      std::string msg("could not find tag ");
+      msg.append(name);
+      throw Exception(msg);
+   }
+}
+
+template <size_t s> std::array<uint8_t, s> Reader::read_array() {
+   auto size = read_bswap<int>();
+   assert(size == s);
+
+   std::array<uint8_t, s> result;
+   get_stream().read((char *)result.data(), s);
+   return result;
+}
+
+template <size_t s> std::array<int, s> Reader::read_int_array() {
+   auto size = read_bswap<int>();
+   assert(size == s);
+
+   std::array<int, s> result;
+   get_stream().read((char *)result.data(), s * sizeof(int));
+   return result;
+}
+
+template <TagID t> bool Reader::seek_tag(std::string &name) {
+   for (;;) {
+      auto type = read_static(TagID::End);
+      if (type == TagID::End) {
+         get_stream().seekg(-sizeof(TagID), std::ios_base::cur);
+         return false;
+      }
+
+      auto name_size = read_bswap<short>();
+      if (type != t || name_size != static_cast<short>(name.size())) {
+         get_stream().seekg(name_size, std::ios_base::cur);
+         skip_payload(type);
+         continue;
+      }
+
+      char tag_name[name_size];
+      get_stream().read(tag_name, name_size);
+
+      if (memcmp(tag_name, name.data(), name_size) != 0) {
+         skip_payload(type);
+         continue;
+      }
+
+      return true;
+   }
+}
 
 } // namespace NBT

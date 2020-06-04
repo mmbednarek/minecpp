@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
-#include <vector>
 #include <string_view>
+#include <vector>
 
 namespace Game {
 
@@ -33,9 +33,11 @@ class Item {
  public:
    Item(ItemId id, std::string_view tag_name, ItemGroup group);
 
-   std::string_view tag();
+   [[nodiscard]] std::string_view tag() const;
+   [[nodiscard]] ItemId id() const;
+
  private:
-   ItemId id;
+   ItemId _id;
    std::string_view tag_name;
    ItemGroup group;
    int max_stack_size;

@@ -1,9 +1,13 @@
 #include "registry.h"
 #include <stdexcept>
+#include <map>
+#include <mineutils/format.h>
 
 namespace Game {
 
-const Item items[] = {
+constexpr int num_items = 884;
+
+const std::array<Item, num_items> items = {
     Item(0, "air", Misc),
     Item(1, "stone", BuildingBlocks),
     Item(2, "granite", BuildingBlocks),
@@ -890,13 +894,33 @@ const Item items[] = {
     Item(883, "honeycomb_block", Decorations),
 };
 
-inline int max_item = 883;
+static std::map<std::string_view, int> read_tags() {
+   std::map<std::string_view, int> result;
+   for(const auto &i : items) {
+      result[i.tag()] = i.id();
+   }
+   return result;
+}
+
+const std::map<std::string_view, int> item_tags = read_tags();
 
 const Item &item_by_id(int id) {
-   if (id < 0 || id > max_item)
+   if (id < 0 || id > num_items)
       throw std::runtime_error("invalid item id");
 
    return items[id];
+}
+
+ItemId item_id_from_tag(std::string_view tag) {
+   if (tag.substr(0, 9) == "minecraft") {
+      tag = tag.substr(10);
+   }
+
+   if (item_tags.find(tag) == item_tags.end()) {
+      throw std::runtime_error(Utils::format("could not find item tag {}", tag));
+   }
+
+   return item_tags.at(tag);
 }
 
 } // namespace Game

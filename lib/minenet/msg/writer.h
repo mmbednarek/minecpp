@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <sstream>
 #include <tuple>
+#include <vector>
 
 namespace MineNet::Message {
 
@@ -17,16 +18,36 @@ class Writer {
    void write_uuid(boost::uuids::uuid id);
    void write_float(float value);
    void write_double(double d);
-   void write_bytes(const char *data, size_t size);
+   void write_bytes(const char *data, std::size_t size);
    std::tuple<uint8_t *, size_t> buff();
+   template <typename T> void write_big_endian(T value);
+   template <typename I> void write_big_endian_array(std::vector<I> vec);
+   template <typename I> void write_big_endian_array(I *data, std::size_t size);
 
-   template <typename T> void write_big_endian(T value) {
-      value = boost::endian::native_to_big(value);
-      stream.write((char *)&value, sizeof(T));
-   }
+   [[nodiscard]] std::ostream &raw_stream();
 
  private:
    std::stringstream stream;
 };
 
-} // namespace Packet
+template <typename T> void Writer::write_big_endian(T value) {
+   value = boost::endian::native_to_big(value);
+   stream.write((char *)&value, sizeof(T));
+}
+
+template <typename I> void Writer::write_big_endian_array(std::vector<I> vec) {
+   write_varint(vec.size());
+   for (auto const &v : vec) {
+      write_big_endian(v);
+   }
+}
+
+template <typename I>
+void Writer::write_big_endian_array(I *data, std::size_t size) {
+   write_varint(size);
+   for (std::size_t i = 0; i < size; ++i) {
+      write_big_endian(data[i]);
+   }
+}
+
+} // namespace MineNet::Message

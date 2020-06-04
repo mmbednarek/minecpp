@@ -1,0 +1,13 @@
+syntax = "proto3";
+package minecpp.chunk_storage;
+
+import "chunk.proto";
+
+service ChunkStorage {
+    rpc LoadChunk(LoadChunkRequest) returns (minecpp.chunk.NetChunk);
+}
+
+message LoadChunkRequest {
+    int32 x = 1;
+    int32 z = 2;
+}

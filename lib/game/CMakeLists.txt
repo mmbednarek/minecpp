@@ -1,2 +1,2 @@
-add_library(minecpp_game rules.cpp level/level.cpp chunk/chunk.cpp level/dimension.h items/recipe.cpp items/item.cpp items/registry.cpp items/registry.h chunk/section.cpp chunk/section.h)
+add_library(minecpp_game rules.cpp level/level.cpp chunk/chunk.cpp level/dimension.h items/recipe.cpp items/item.cpp items/registry.cpp items/registry.h chunk/section.cpp chunk/netchunk.cpp chunk/utils.cpp blocks/block.cpp blocks/block.h blocks/state.h blocks/state.cpp direction.h blocks/bed.h blocks/chest.h blocks/comparator.h blocks/door.h blocks/note_block.h blocks/piston.h blocks/slab.h blocks/stairs.h blocks/structure.h blocks/bamboo.h blocks/registry.cpp blocks/color.h blocks/material.h)
 target_link_libraries(minecpp_game LINK_PUBLIC minecpp_utils minecpp_nbt)

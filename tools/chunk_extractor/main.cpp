@@ -1,10 +1,11 @@
 #include <fstream>
+#include <game/chunk/netchunk.h>
 #include <iostream>
+#include <minenet/msg/chunk.h>
 #include <mineutils/compression.h>
 #include <nbt/parser.h>
-#include <nbt/writer.h>
 #include <nbt/snbt.h>
-#include <game/chunk/chunk.h>
+#include <nbt/writer.h>
 #include <region/reader.h>
 
 auto main(int argc, char *argv[]) -> int {
@@ -38,8 +39,14 @@ auto main(int argc, char *argv[]) -> int {
    NBT::Reader cr(zlib_stream);
    cr.check_signature();
    cr.find_compound("Level");
-   Game::Chunk chunk(cr);
 
-   NBT::Writer w(std::cout);
-   w.write_packed_ints("WORLD_SURFACE", chunk.hm_world_surface, 256, 9);
+   Game::NetChunk chunk(cr);
+   minecpp::chunk::NetChunk proto_chunk;
+   chunk.as_proto(&proto_chunk);
+
+   MineNet::Message::Writer w;
+   MineNet::Message::write_chunk(w, proto_chunk);
+
+   auto buff = w.buff();
+   std::cout.write((char *)std::get<0>(buff), std::get<1>(buff));
 }
