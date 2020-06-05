@@ -5,7 +5,7 @@
 #include <iostream>
 
 auto main() -> int {
-   std::cout << "enum states: " << Game::Block::Prop::Facing.num_states() << '\n';
+   std::cout << "enum states: " << Game::Block::Attrib::Facing.num_states() << '\n';
 
    auto region_path = std::getenv("REGION_PATH");
    if (!region_path) {

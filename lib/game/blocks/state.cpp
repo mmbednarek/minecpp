@@ -3,10 +3,10 @@
 
 namespace Game::Block {
 
-BoolProperty::BoolProperty(std::string_view name) : Property(name) {}
+BoolAttribute::BoolAttribute(std::string_view name) : Attribute(name) {}
 
-int BoolProperty::num_states() const { return 2; }
+int BoolAttribute::num_states() const { return 2; }
 
-bool BoolProperty::value(int state) const { return state; }
+bool BoolAttribute::value(int state) const { return state; }
 
 } // namespace Game::Block
