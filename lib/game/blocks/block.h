@@ -8,11 +8,8 @@ namespace Game::Block {
 
 class Block {
    std::string_view _tag;
-   State _state{};
 
  public:
-   Block(std::string_view tag, State state);
-
    template <typename... T>
    explicit Block(std::string_view tag, T... params) : _tag(tag) {
       if constexpr (sizeof...(T) > 0) {
@@ -22,6 +19,7 @@ class Block {
 
    [[nodiscard]] std::string_view tag() const;
 
+   std::vector<const Attribute *> attributes{};
    const Material *material;
    ColorId color;
    std::string_view loot = "";
@@ -141,9 +139,12 @@ std::function<void(Block &)> with_zero_durability() {
 }
 
 std::function<void(Block &)> with_variable_opacity() {
-   return [](Block &b) {
-     b.variable_opacity = true;
-   };
+   return [](Block &b) { b.variable_opacity = true; };
+}
+
+template <typename... T>
+std::function<void(Block &)> with_attributes(T... attribs) {
+   return [attribs...](Block &b) { b.attributes = {attribs...}; };
 }
 
 struct Properties {

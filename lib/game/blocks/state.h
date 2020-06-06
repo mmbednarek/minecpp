@@ -29,19 +29,11 @@ class Attribute {
    int id{};
 };
 
-class State {
-   std::vector<Attribute *> properties{};
-
- public:
-   template <typename... P> explicit State(P... props) : properties{props...} {}
-   State() = default;
-};
-
 template <int Min, int Max> class IntAttribute : public Attribute {
  public:
    explicit IntAttribute(std::string_view name) : Attribute(name) {}
 
-   int num_states() const override { return Max - Min; }
+   int num_states() const override { return Max + 1 - Min; }
    int value(int state) const { return Min + state; };
 };
 
@@ -107,6 +99,7 @@ const BoolAttribute Unstable("unstable");
 const BoolAttribute Waterlogged("waterlogged");
 const EnumPartAttribute<Axis, Axis::index_of<ENU("X")>(), Axis::index_of<ENU("Y")>()>
     HorizontalAxis("axis");
+const EnumAttribute<Axis> Axis("axis");
 const BoolAttribute Up("up");
 const BoolAttribute Down("down");
 const BoolAttribute North("north");
