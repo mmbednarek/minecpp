@@ -76,7 +76,7 @@ class Reader : private Utils::Reader {
    }
 
    void read_packed_ints(IndexAssignable auto &result, uint16_t bits,
-                           size_t num_packets);
+                         size_t num_packets);
 
    void read_compound(
        std::function<void(Reader &r, TagID type, std::string key)> for_value);
@@ -100,11 +100,15 @@ class Reader : private Utils::Reader {
       assert(size == s);
 
       std::array<uint64_t, s> result;
-      get_stream().read((char *)result.data(), s * sizeof(uint64_t));
+      for (size_t i = 0; i < size; ++i) {
+         result[i] = read_bswap<uint64_t>();
+      }
       return result;
    }
 
    template <TagID t> inline tagid_type(t) read_payload() const = delete;
+
+   inline std::istream &raw_stream();
 
  private:
 #define payload_of(typeid, value)                                              \
@@ -176,7 +180,9 @@ template <size_t s> std::array<int, s> Reader::read_int_array() {
    assert(size == s);
 
    std::array<int, s> result;
-   get_stream().read((char *)result.data(), s * sizeof(int));
+   for (size_t i = 0; i < size; ++i) {
+      result[i] = read_bswap<int>();
+   }
    return result;
 }
 
@@ -206,5 +212,6 @@ template <TagID t> bool Reader::seek_tag(std::string &name) {
       return true;
    }
 }
+std::istream &Reader::raw_stream() { return get_stream(); }
 
 } // namespace NBT

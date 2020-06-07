@@ -6,8 +6,10 @@ namespace Game {
 
 struct PaletteItem {
    std::string tag_name;
+   NBT::TagMap properties;
 
    explicit PaletteItem(NBT::Reader &r);
+   uint32_t to_state_id();
 };
 
 class Section {

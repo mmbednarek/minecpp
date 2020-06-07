@@ -21,6 +21,15 @@ void Writer::write_varint(int value) {
    }
 }
 
+int Writer::len_varint(int value) const {
+   int result = 1;
+   while (value & (~0x7Fu)) {
+      ++result;
+      value >>= 7;
+   }
+   return result;
+}
+
 void Writer::write_string(std::string_view s) {
    write_varint(s.size());
    stream << s;

@@ -7,28 +7,25 @@ namespace MineNet::Message {
 
 constexpr int air_global_id = 0;
 
-static int get_air_id(const minecpp::chunk::NetChunk::Section &sec) {
-   for (int id = 0; auto item : sec.palette()) {
-      if (item == air_global_id) {
-         return id;
-      }
-      ++id;
-   }
-   return -1;
-}
-
 void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    w.write_big_endian(chunk.pos_x());
    w.write_big_endian(chunk.pos_z());
    w.write_byte(chunk.full());
 
-   w.write_varint(({
-      uint32_t available_sections = 0;
-      for (const auto &sec : chunk.sections()) {
+   size_t buff_size = 0;
+
+   uint32_t available_sections = 0;
+   for (const auto &sec : chunk.sections()) {
+      if (sec.data_size() > 0) {
          available_sections |= 1u << (uint32_t)sec.y();
+         buff_size += sizeof(short) + 1 + w.len_varint(sec.palette_size());
+         for (auto item : sec.palette()) {
+            buff_size += w.len_varint(item);
+         }
+         buff_size += w.len_varint(sec.data_size()) + sec.data_size() * 8;
       }
-      available_sections;
-   }));
+   }
+   w.write_varint(available_sections);
 
    NBT::Writer height_maps(w.raw_stream());
    height_maps.begin_compound("");
@@ -40,9 +37,19 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    }
    height_maps.end_compound();
 
+   for (auto biome : chunk.biomes()) {
+      w.write_big_endian(biome);
+   }
+
+   w.write_varint(buff_size);
+
    for (const auto &sec : chunk.sections()) {
-      w.write_varint(Game::calculate_ref_count(
-          get_air_id(sec), sec.data().data(), sec.data_size()));
+      if (sec.data_size() == 0) {
+         continue;
+      }
+
+      w.write_big_endian<short>(sec.ref_count());
+      w.write_byte(sec.bits());
 
       // write palette
       w.write_varint(sec.palette_size());
@@ -55,7 +62,7 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    }
 
    // tile entities, left for now
-   w.write_big_endian<short>(0);
+   w.write_varint(0);
 }
 
 } // namespace MineNet::Message

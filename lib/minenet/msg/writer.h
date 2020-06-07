@@ -13,6 +13,7 @@ class Writer {
 
    void write_byte(uint8_t value);
    void write_varint(int value);
+   int len_varint(int value) const;
    void write_string(std::string_view s);
    void write_uuid_str(boost::uuids::uuid id);
    void write_uuid(boost::uuids::uuid id);

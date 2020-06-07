@@ -182,10 +182,10 @@ class NetChunk_Section :
 
   // accessors -------------------------------------------------------
 
-  // repeated int32 palette = 2;
+  // repeated int32 palette = 4;
   int palette_size() const;
   void clear_palette();
-  static const int kPaletteFieldNumber = 2;
+  static const int kPaletteFieldNumber = 4;
   ::PROTOBUF_NAMESPACE_ID::int32 palette(int index) const;
   void set_palette(int index, ::PROTOBUF_NAMESPACE_ID::int32 value);
   void add_palette(::PROTOBUF_NAMESPACE_ID::int32 value);
@@ -194,10 +194,10 @@ class NetChunk_Section :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int32 >*
       mutable_palette();
 
-  // repeated int64 data = 3;
+  // repeated int64 data = 5;
   int data_size() const;
   void clear_data();
-  static const int kDataFieldNumber = 3;
+  static const int kDataFieldNumber = 5;
   ::PROTOBUF_NAMESPACE_ID::int64 data(int index) const;
   void set_data(int index, ::PROTOBUF_NAMESPACE_ID::int64 value);
   void add_data(::PROTOBUF_NAMESPACE_ID::int64 value);
@@ -212,6 +212,18 @@ class NetChunk_Section :
   ::PROTOBUF_NAMESPACE_ID::int32 y() const;
   void set_y(::PROTOBUF_NAMESPACE_ID::int32 value);
 
+  // int32 bits = 2;
+  void clear_bits();
+  static const int kBitsFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 bits() const;
+  void set_bits(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 ref_count = 3;
+  void clear_ref_count();
+  static const int kRefCountFieldNumber = 3;
+  ::PROTOBUF_NAMESPACE_ID::int32 ref_count() const;
+  void set_ref_count(::PROTOBUF_NAMESPACE_ID::int32 value);
+
   // @@protoc_insertion_point(class_scope:minecpp.chunk.NetChunk.Section)
  private:
   class HasBitSetters;
@@ -222,6 +234,8 @@ class NetChunk_Section :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int64 > data_;
   mutable std::atomic<int> _data_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::int32 y_;
+  ::PROTOBUF_NAMESPACE_ID::int32 bits_;
+  ::PROTOBUF_NAMESPACE_ID::int32 ref_count_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_chunk_2eproto;
 };
@@ -447,7 +461,35 @@ inline void NetChunk_Section::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:minecpp.chunk.NetChunk.Section.y)
 }
 
-// repeated int32 palette = 2;
+// int32 bits = 2;
+inline void NetChunk_Section::clear_bits() {
+  bits_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 NetChunk_Section::bits() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk.NetChunk.Section.bits)
+  return bits_;
+}
+inline void NetChunk_Section::set_bits(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  bits_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk.NetChunk.Section.bits)
+}
+
+// int32 ref_count = 3;
+inline void NetChunk_Section::clear_ref_count() {
+  ref_count_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 NetChunk_Section::ref_count() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk.NetChunk.Section.ref_count)
+  return ref_count_;
+}
+inline void NetChunk_Section::set_ref_count(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  ref_count_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk.NetChunk.Section.ref_count)
+}
+
+// repeated int32 palette = 4;
 inline int NetChunk_Section::palette_size() const {
   return palette_.size();
 }
@@ -477,7 +519,7 @@ NetChunk_Section::mutable_palette() {
   return &palette_;
 }
 
-// repeated int64 data = 3;
+// repeated int64 data = 5;
 inline int NetChunk_Section::data_size() const {
   return data_.size();
 }

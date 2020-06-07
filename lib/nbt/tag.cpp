@@ -12,7 +12,7 @@ TagID Tag::type() {
     return _type;
 }
 
-std::string Tag::name() {
+const std::string &Tag::name() const {
     return _name;
 }
 

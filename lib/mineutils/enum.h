@@ -92,6 +92,6 @@ template <typename... Enums> class Enum {
 
 template <typename... Enums>
 const std::array<std::string, sizeof...(Enums)>
-    Enum<Enums...>::strings = make_enum_array();
+    Enum<Enums...>::strings = make_enum_array<Enums...>();
 
 } // namespace Utils

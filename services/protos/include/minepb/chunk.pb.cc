@@ -68,6 +68,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chunk_2eproto::offsets[] PROTO
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, bits_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, ref_count_),
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, palette_),
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, data_),
   ~0u,  // no _has_bits_
@@ -85,7 +87,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chunk_2eproto::offsets[] PROTO
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::chunk::NetChunk_Section)},
-  { 8, -1, sizeof(::minecpp::chunk::NetChunk)},
+  { 10, -1, sizeof(::minecpp::chunk::NetChunk)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -94,13 +96,14 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_chunk_2eproto[] =
-  "\n\013chunk.proto\022\rminecpp.chunk\"\350\001\n\010NetChun"
+  "\n\013chunk.proto\022\rminecpp.chunk\"\211\002\n\010NetChun"
   "k\022\r\n\005pos_x\030\001 \001(\005\022\r\n\005pos_z\030\002 \001(\005\022\014\n\004full\030"
   "\003 \001(\010\022\022\n\006biomes\030\004 \003(\005B\002\020\001\022\030\n\020hm_world_su"
   "rface\030\005 \003(\003\022\032\n\022hm_motion_blocking\030\006 \003(\003\022"
   "1\n\010sections\030\007 \003(\0132\037.minecpp.chunk.NetChu"
-  "nk.Section\0323\n\007Section\022\t\n\001y\030\001 \001(\005\022\017\n\007pale"
-  "tte\030\002 \003(\005\022\014\n\004data\030\003 \003(\003b\006proto3"
+  "nk.Section\032T\n\007Section\022\t\n\001y\030\001 \001(\005\022\014\n\004bits"
+  "\030\002 \001(\005\022\021\n\tref_count\030\003 \001(\005\022\017\n\007palette\030\004 \003"
+  "(\005\022\014\n\004data\030\005 \003(\003b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_chunk_2eproto_deps[1] = {
 };
@@ -111,7 +114,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_chu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_chunk_2eproto_once;
 static bool descriptor_table_chunk_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chunk_2eproto = {
-  &descriptor_table_chunk_2eproto_initialized, descriptor_table_protodef_chunk_2eproto, "chunk.proto", 271,
+  &descriptor_table_chunk_2eproto_initialized, descriptor_table_protodef_chunk_2eproto, "chunk.proto", 304,
   &descriptor_table_chunk_2eproto_once, descriptor_table_chunk_2eproto_sccs, descriptor_table_chunk_2eproto_deps, 2, 0,
   schemas, file_default_instances, TableStruct_chunk_2eproto::offsets,
   file_level_metadata_chunk_2eproto, 2, file_level_enum_descriptors_chunk_2eproto, file_level_service_descriptors_chunk_2eproto,
@@ -132,6 +135,8 @@ class NetChunk_Section::HasBitSetters {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int NetChunk_Section::kYFieldNumber;
+const int NetChunk_Section::kBitsFieldNumber;
+const int NetChunk_Section::kRefCountFieldNumber;
 const int NetChunk_Section::kPaletteFieldNumber;
 const int NetChunk_Section::kDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -147,12 +152,16 @@ NetChunk_Section::NetChunk_Section(const NetChunk_Section& from)
       palette_(from.palette_),
       data_(from.data_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  y_ = from.y_;
+  ::memcpy(&y_, &from.y_,
+    static_cast<size_t>(reinterpret_cast<char*>(&ref_count_) -
+    reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
   // @@protoc_insertion_point(copy_constructor:minecpp.chunk.NetChunk.Section)
 }
 
 void NetChunk_Section::SharedCtor() {
-  y_ = 0;
+  ::memset(&y_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&ref_count_) -
+      reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
 }
 
 NetChunk_Section::~NetChunk_Section() {
@@ -180,7 +189,9 @@ void NetChunk_Section::Clear() {
 
   palette_.Clear();
   data_.Clear();
-  y_ = 0;
+  ::memset(&y_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&ref_count_) -
+      reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
   _internal_metadata_.Clear();
 }
 
@@ -199,22 +210,36 @@ const char* NetChunk_Section::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int32 palette = 2;
+      // int32 bits = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          bits_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 ref_count = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          ref_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated int32 palette = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(mutable_palette(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32) {
           add_palette(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated int64 data = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+      // repeated int64 data = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(mutable_data(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24) {
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40) {
           add_data(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
@@ -262,32 +287,58 @@ bool NetChunk_Section::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated int32 palette = 2;
+      // int32 bits = 2;
       case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (18 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
+
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
                    ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_palette())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 1, 18u, input, this->mutable_palette())));
+                 input, &bits_)));
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // repeated int64 data = 3;
+      // int32 ref_count = 3;
       case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
+
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 input, &ref_count_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated int32 palette = 4;
+      case 4: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (34 & 0xFF)) {
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_palette())));
+        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (32 & 0xFF)) {
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 1, 34u, input, this->mutable_palette())));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // repeated int64 data = 5;
+      case 5: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (42 & 0xFF)) {
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
                    ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
                  input, this->mutable_data())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
+        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (40 & 0xFF)) {
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 1, 26u, input, this->mutable_data())));
+                 1, 42u, input, this->mutable_data())));
         } else {
           goto handle_unusual;
         }
@@ -326,9 +377,19 @@ void NetChunk_Section::SerializeWithCachedSizes(
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(1, this->y(), output);
   }
 
-  // repeated int32 palette = 2;
+  // int32 bits = 2;
+  if (this->bits() != 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->bits(), output);
+  }
+
+  // int32 ref_count = 3;
+  if (this->ref_count() != 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(3, this->ref_count(), output);
+  }
+
+  // repeated int32 palette = 4;
   if (this->palette_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(2, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(4, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_palette_cached_byte_size_.load(
         std::memory_order_relaxed));
   }
@@ -337,9 +398,9 @@ void NetChunk_Section::SerializeWithCachedSizes(
       this->palette(i), output);
   }
 
-  // repeated int64 data = 3;
+  // repeated int64 data = 5;
   if (this->data_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(3, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(5, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_data_cached_byte_size_.load(
         std::memory_order_relaxed));
   }
@@ -366,10 +427,20 @@ void NetChunk_Section::SerializeWithCachedSizes(
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->y(), target);
   }
 
-  // repeated int32 palette = 2;
+  // int32 bits = 2;
+  if (this->bits() != 0) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->bits(), target);
+  }
+
+  // int32 ref_count = 3;
+  if (this->ref_count() != 0) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->ref_count(), target);
+  }
+
+  // repeated int32 palette = 4;
   if (this->palette_size() > 0) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      2,
+      4,
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
       target);
     target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
@@ -379,10 +450,10 @@ void NetChunk_Section::SerializeWithCachedSizes(
       WriteInt32NoTagToArray(this->palette_, target);
   }
 
-  // repeated int64 data = 3;
+  // repeated int64 data = 5;
   if (this->data_size() > 0) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      3,
+      5,
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
       target);
     target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
@@ -413,7 +484,7 @@ size_t NetChunk_Section::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int32 palette = 2;
+  // repeated int32 palette = 4;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int32Size(this->palette_);
@@ -428,7 +499,7 @@ size_t NetChunk_Section::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int64 data = 3;
+  // repeated int64 data = 5;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       Int64Size(this->data_);
@@ -448,6 +519,20 @@ size_t NetChunk_Section::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->y());
+  }
+
+  // int32 bits = 2;
+  if (this->bits() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->bits());
+  }
+
+  // int32 ref_count = 3;
+  if (this->ref_count() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->ref_count());
   }
 
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
@@ -482,6 +567,12 @@ void NetChunk_Section::MergeFrom(const NetChunk_Section& from) {
   if (from.y() != 0) {
     set_y(from.y());
   }
+  if (from.bits() != 0) {
+    set_bits(from.bits());
+  }
+  if (from.ref_count() != 0) {
+    set_ref_count(from.ref_count());
+  }
 }
 
 void NetChunk_Section::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -512,6 +603,8 @@ void NetChunk_Section::InternalSwap(NetChunk_Section* other) {
   palette_.InternalSwap(&other->palette_);
   data_.InternalSwap(&other->data_);
   swap(y_, other->y_);
+  swap(bits_, other->bits_);
+  swap(ref_count_, other->ref_count_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata NetChunk_Section::GetMetadata() const {

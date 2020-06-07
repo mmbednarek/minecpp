@@ -7,7 +7,7 @@ namespace Game {
 using Direction = Utils::Enum<ENU("down"), ENU("up"), ENU("north"),
                               ENU("south"), ENU("west"), ENU("east")>;
 
-using Axis = Utils::Enum<ENU("X"), ENU("Y"), ENU("Z")>;
+using Axis = Utils::Enum<ENU("x"), ENU("y"), ENU("z")>;
 
 using Face = Utils::Enum<ENU("floor"), ENU("wall"), ENU("ceiling")>;
 

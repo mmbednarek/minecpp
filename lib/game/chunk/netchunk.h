@@ -7,6 +7,8 @@
 namespace Game {
 
 struct NetSection {
+   uint8_t bits;
+   int ref_count;
    std::vector<int> palette;
    std::vector<long long> data;
 };

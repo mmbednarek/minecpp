@@ -56,7 +56,7 @@ template <typename T> constexpr TagID tagid_from_type() {
 class Tag;
 class ListPayload;
 typedef std::shared_ptr<Tag> TagPtr;
-typedef std::map<std::string, std::shared_ptr<Tag>> TagMap;
+typedef std::map<std::string_view, std::shared_ptr<Tag>> TagMap;
 
 tagid_default_of(TagID::Byte, static_cast<uint8_t>(0)) tagid_default_of(
     TagID::Short, static_cast<short>(0)) tagid_default_of(TagID::Int,
@@ -84,7 +84,7 @@ class Tag {
    Tag(TagID t, std::string &s);
 
    TagID type();
-   std::string name();
+   const std::string &name() const;
 
    template <typename T> T &value();
 

@@ -22,9 +22,12 @@ class Attribute {
 
  public:
    explicit Attribute(std::string_view name) : prop_name(name) {}
-   [[nodiscard]] std::string_view name() { return prop_name; }
+   [[nodiscard]] std::string_view name() const { return prop_name; }
 
    virtual int num_states() const = 0;
+
+   virtual int index_from_int(int i) const = 0;
+   virtual int index_from_str(const std::string &s) const = 0;
 
    int id{};
 };
@@ -33,16 +36,24 @@ template <int Min, int Max> class IntAttribute : public Attribute {
  public:
    explicit IntAttribute(std::string_view name) : Attribute(name) {}
 
-   int num_states() const override { return Max + 1 - Min; }
-   int value(int state) const { return Min + state; };
+   [[nodiscard]] int num_states() const override { return Max + 1 - Min; }
+   [[nodiscard]] int value(int state) const { return Min + state; };
+   [[nodiscard]] int index_from_int(int i) const override { return i - Min; }
+   [[nodiscard]] int index_from_str(const std::string &s) const override {
+      return std::stoi(s) - Min;
+   }
 };
 
 class BoolAttribute : public Attribute {
  public:
    explicit BoolAttribute(std::string_view name);
 
-   int num_states() const override;
-   bool value(int state) const;
+   [[nodiscard]] int num_states() const override;
+   [[nodiscard]] bool value(int state) const;
+   [[nodiscard]] int index_from_int(int i) const override { return i ? 0 : 1; }
+   [[nodiscard]] int index_from_str(const std::string &s) const override {
+      return s == "true" ? 0 : 1;
+   }
 };
 
 template <Enumerable E> class EnumAttribute : public Attribute {
@@ -52,6 +63,10 @@ template <Enumerable E> class EnumAttribute : public Attribute {
    int num_states() const override { return E::num(); }
 
    E value(int state) const { return E(state); };
+   int index_from_int(int i) const override { return i; }
+   [[nodiscard]] int index_from_str(const std::string &s) const override {
+      return E(s.c_str()).index();
+   }
 };
 
 template <Enumerable E, uint32_t... Indexes>
@@ -64,6 +79,21 @@ class EnumPartAttribute : public Attribute {
    E value(int state) const {
       return E(std::array<uint32_t, sizeof...(Indexes)>{Indexes...}[state]);
    };
+
+   int index_from_int(int i) const override { return i; }
+
+   [[nodiscard]] int index_from_str(const std::string &s) const override {
+      auto index = E(s.c_str()).index();
+      auto arr = std::array<uint32_t, sizeof...(Indexes)>{Indexes...};
+      int result = 0;
+      for (const auto &i : arr) {
+         if (index == i) {
+            return result;
+         }
+         ++result;
+      }
+      return result;
+   }
 };
 
 namespace Attrib {
@@ -97,7 +127,8 @@ const BoolAttribute Snowy("snowy");
 const BoolAttribute Triggered("triggered");
 const BoolAttribute Unstable("unstable");
 const BoolAttribute Waterlogged("waterlogged");
-const EnumPartAttribute<Axis, Axis::index_of<ENU("X")>(), Axis::index_of<ENU("Y")>()>
+const EnumPartAttribute<Axis, Axis::index_of<ENU("x")>(),
+                        Axis::index_of<ENU("y")>()>
     HorizontalAxis("axis");
 const EnumAttribute<Axis> Axis("axis");
 const BoolAttribute Up("up");
@@ -116,9 +147,9 @@ const EnumPartAttribute<
     FacingExceptUp("facing");
 
 const EnumPartAttribute<Direction, Direction::index_of<ENU("north")>(),
-                 Direction::index_of<ENU("south")>(),
-                 Direction::index_of<ENU("west")>(),
-                 Direction::index_of<ENU("east")>()>
+                        Direction::index_of<ENU("south")>(),
+                        Direction::index_of<ENU("west")>(),
+                        Direction::index_of<ENU("east")>()>
     HorizontalFacing("facing");
 
 const EnumAttribute<Face> Face("face");
@@ -133,11 +164,11 @@ const EnumAttribute<DoubleBlockHalf> DoubleBlockHalf("half");
 const EnumAttribute<Half> Half("half");
 
 const EnumPartAttribute<RailShape, RailShape::index_of<ENU("north_south")>(),
-                 RailShape::index_of<ENU("east_west")>(),
-                 RailShape::index_of<ENU("ascending_east")>(),
-                 RailShape::index_of<ENU("ascending_west")>(),
-                 RailShape::index_of<ENU("ascending_north")>(),
-                 RailShape::index_of<ENU("ascending_south")>()>
+                        RailShape::index_of<ENU("east_west")>(),
+                        RailShape::index_of<ENU("ascending_east")>(),
+                        RailShape::index_of<ENU("ascending_west")>(),
+                        RailShape::index_of<ENU("ascending_north")>(),
+                        RailShape::index_of<ENU("ascending_south")>()>
     RailShapeStraith("shape");
 
 const EnumAttribute<RailShape> RailShape("shape");
@@ -151,6 +182,7 @@ const IntAttribute<0, 15> Age_0_15("age");
 const IntAttribute<0, 25> Age_0_25("age");
 const IntAttribute<0, 6> Bites_0_6("bites");
 const IntAttribute<1, 4> Delay_1_4("delay");
+const IntAttribute<0, 7> Distance_0_7("distance");
 const IntAttribute<1, 7> Distance_1_7("distance");
 const IntAttribute<1, 4> Eggs_1_4("eggs");
 const IntAttribute<0, 2> Hatch_0_2("hatch");
@@ -165,7 +197,6 @@ const IntAttribute<0, 24> Note_0_24("note");
 const IntAttribute<1, 4> Pickles_1_4("pickles");
 const IntAttribute<0, 15> Power_0_15("power");
 const IntAttribute<0, 1> Stage_0_1("stage");
-const IntAttribute<0, 7> Distance_0_7("distance");
 const IntAttribute<0, 15> Rotation_0_15("rotation");
 
 const EnumAttribute<BedPart> BedPart("part");
@@ -179,6 +210,6 @@ const EnumAttribute<StairsShape> StairsShape("shape");
 const EnumAttribute<StructureMode> StructureMode("mode");
 const EnumAttribute<BambooLeaves> BambooLeaves("leaves");
 
-} // namespace Prop
+} // namespace Attrib
 
 } // namespace Game::Block

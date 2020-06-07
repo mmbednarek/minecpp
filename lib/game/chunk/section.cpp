@@ -1,8 +1,6 @@
-//
-// Created by ego on 5/22/20.
-//
-
 #include "section.h"
+#include <nbt/parser.h>
+#include <game/blocks/registry.h>
 
 namespace Game {
 
@@ -67,9 +65,17 @@ PaletteItem::PaletteItem(NBT::Reader &r) {
          tag_name = r.read_payload<NBT::String>();
          return;
       }
-      // TODO: Read properties
+      if (key == "Properties" && type == NBT::Compound) {
+         NBT::Parser p(r.raw_stream());
+         properties = p.read_compound();
+         return;
+      }
       r.skip_payload(type); // ignore properties for now
    });
+}
+
+uint32_t PaletteItem::to_state_id() {
+   return Block::encode_state(tag_name, properties);
 }
 
 } // namespace Game

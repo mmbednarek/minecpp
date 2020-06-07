@@ -1,5 +1,6 @@
 #include <fstream>
 #include <game/chunk/netchunk.h>
+#include <game/blocks/registry.h>
 #include <iostream>
 #include <minenet/msg/chunk.h>
 #include <mineutils/compression.h>

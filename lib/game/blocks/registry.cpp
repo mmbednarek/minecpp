@@ -1,5 +1,9 @@
 #include "block.h"
 #include "state.h"
+#include <cassert>
+#include <iostream>
+#include <map>
+#include <nbt/tag.h>
 
 namespace Game::Block {
 
@@ -231,8 +235,9 @@ auto fence_gate_attribs =
     with_attributes(&Attrib::HorizontalFacing, &Attrib::Open, &Attrib::Powered,
                     &Attrib::InWall);
 
-auto stairs_attribs = with_attributes(
-    &Attrib::Facing, &Attrib::Half, &Attrib::StairsShape, &Attrib::Waterlogged);
+auto stairs_attribs =
+    with_attributes(&Attrib::HorizontalFacing, &Attrib::Half,
+                    &Attrib::StairsShape, &Attrib::Waterlogged);
 
 auto wall_block_attrib =
     with_attributes(&Attrib::Up, &Attrib::North, &Attrib::East, &Attrib::West,
@@ -244,8 +249,8 @@ auto button_attribs =
 auto slab_attribs = with_attributes(&Attrib::SlabType, &Attrib::Waterlogged);
 
 auto door_attribs =
-    with_attributes(&Attrib::Half, &Attrib::HorizontalFacing, &Attrib::Open,
-                    &Attrib::DoorHinge, &Attrib::Powered);
+    with_attributes(&Attrib::DoubleBlockHalf, &Attrib::HorizontalFacing,
+                    &Attrib::Open, &Attrib::DoorHinge, &Attrib::Powered);
 
 std::array<const Block, 680> blocks{
     Block("air", with_material(&Material::Air), with_does_not_block_movement(),
@@ -265,7 +270,8 @@ std::array<const Block, 680> blocks{
     Block("polished_andesite", with_material(&Material::Rock, ColorId::Stone),
           with_durability(1.5F, 6.0F)),
     Block("grass_block", with_material(&Material::Organic),
-          with_ticks_randomly(), with_durability(0.6F)),
+          with_ticks_randomly(), with_durability(0.6F),
+          with_attributes(&Attrib::Snowy)),
     Block("dirt", with_material(&Material::Earth, ColorId::Dirt),
           with_durability(0.5F)),
     Block("coarse_dirt", with_material(&Material::Earth, ColorId::Dirt),
@@ -319,31 +325,31 @@ std::array<const Block, 680> blocks{
     Block("coal_ore", with_material(&Material::Rock),
           with_durability(3.0F, 3.0F)),
     Block("oak_log", with_material(&Material::Wood, ColorId::Obsidian),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("spruce_log", with_material(&Material::Wood, ColorId::Brown),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("birch_log", with_material(&Material::Wood, ColorId::Quartz),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("jungle_log", with_material(&Material::Wood, ColorId::Obsidian),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("acacia_log", with_material(&Material::Wood, ColorId::Stone),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("dark_oak_log", with_material(&Material::Wood, ColorId::Brown),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("stripped_spruce_log",
           with_material(&Material::Wood, ColorId::Obsidian),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("stripped_birch_log", with_material(&Material::Wood, ColorId::Sand),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("stripped_jungle_log", with_material(&Material::Wood, ColorId::Dirt),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("stripped_acacia_log", with_material(&Material::Wood, ColorId::Adobe),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("stripped_dark_oak_log",
-          with_material(&Material::Wood, ColorId::Brown),
-          with_durability(2.0F)),
+          with_material(&Material::Wood, ColorId::Brown), with_durability(2.0F),
+          with_attributes(&Attrib::Axis)),
     Block("stripped_oak_log", with_material(&Material::Wood, ColorId::Wood),
-          with_durability(2.0F)),
+          with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("oak_wood", with_material(&Material::Wood, ColorId::Wood),
           with_durability(2.0F), with_attributes(&Attrib::Axis)),
     Block("spruce_wood", with_material(&Material::Wood, ColorId::Obsidian),
@@ -601,8 +607,9 @@ std::array<const Block, 680> blocks{
                           &Attrib::Waterlogged)),
     Block("redstone_wire", with_material(&Material::Miscellaneous),
           with_does_not_block_movement(), with_zero_durability(),
-          with_attributes(&Attrib::North, &Attrib::East, &Attrib::South,
-                          &Attrib::West, &Attrib::Power_0_15)),
+          with_attributes(&Attrib::RedstoneNorth, &Attrib::RedstoneEast,
+                          &Attrib::RedstoneSouth, &Attrib::RedstoneWest,
+                          &Attrib::Power_0_15)),
     Block("diamond_ore", with_material(&Material::Rock),
           with_durability(3.0F, 3.0F)),
     Block("diamond_block", with_material(&Material::Iron, ColorId::Diamond),
@@ -639,29 +646,35 @@ std::array<const Block, 680> blocks{
           with_durability(3.0F), with_not_solid(), door_attribs),
     Block("ladder", with_material(&Material::Miscellaneous),
           with_durability(0.4F), with_not_solid(),
-          with_attributes(&Attrib::Facing, &Attrib::Waterlogged)),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("rail", with_material(&Material::Miscellaneous),
           with_does_not_block_movement(), with_durability(0.7F),
           with_attributes(&Attrib::RailShape)),
     Block("cobblestone_stairs", with_properties(cobblestone), stairs_attribs),
     Block("oak_wall_sign", with_material(&Material::Wood),
           with_does_not_block_movement(), with_durability(1.0F),
-          with_loot("oak_sign"), with_attributes(&Attrib::Facing)),
+          with_loot("oak_sign"),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("spruce_wall_sign", with_material(&Material::Wood, ColorId::Brown),
           with_does_not_block_movement(), with_durability(1.0F),
-          with_loot("spruce_sign"), with_attributes(&Attrib::Facing)),
+          with_loot("spruce_sign"),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("birch_wall_sign", with_material(&Material::Wood, ColorId::Sand),
           with_does_not_block_movement(), with_durability(1.0F),
-          with_loot("birch_sign"), with_attributes(&Attrib::Facing)),
+          with_loot("birch_sign"),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("acacia_wall_sign", with_material(&Material::Wood, ColorId::Adobe),
           with_does_not_block_movement(), with_durability(1.0F),
-          with_loot("acacia_sign"), with_attributes(&Attrib::Facing)),
+          with_loot("acacia_sign"),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("jungle_wall_sign", with_material(&Material::Wood, ColorId::Obsidian),
           with_does_not_block_movement(), with_durability(1.0F),
-          with_loot("jungle_sign"), with_attributes(&Attrib::Facing)),
+          with_loot("jungle_sign"),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("dark_oak_wall_sign", with_material(&Material::Wood, ColorId::Brown),
           with_does_not_block_movement(), with_durability(1.0F),
-          with_loot("dark_oak_sign"), with_attributes(&Attrib::Facing)),
+          with_loot("dark_oak_sign"),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Waterlogged)),
     Block("lever", with_material(&Material::Miscellaneous),
           with_does_not_block_movement(), with_durability(0.5F),
           with_attributes(&Attrib::Face, &Attrib::HorizontalFacing,
@@ -702,7 +715,7 @@ std::array<const Block, 680> blocks{
     Block("redstone_wall_torch", with_material(&Material::Miscellaneous),
           with_does_not_block_movement(), with_zero_durability(),
           with_light_value(7), with_loot("redstone_torch"),
-          with_attributes(&Attrib::Facing, &Attrib::Lit)),
+          with_attributes(&Attrib::HorizontalFacing, &Attrib::Lit)),
     Block("stone_button", with_material(&Material::Miscellaneous),
           with_does_not_block_movement(), with_durability(0.5F),
           button_attribs),
@@ -721,9 +734,7 @@ std::array<const Block, 680> blocks{
     Block("jukebox", with_material(&Material::Wood, ColorId::Dirt),
           with_durability(2.0F, 6.0F), with_attributes(&Attrib::HasRecord)),
     Block("oak_fence", with_material(&Material::Wood),
-          with_durability(2.0F, 3.0F),
-          with_attributes(&Attrib::North, &Attrib::East, &Attrib::West,
-                          &Attrib::South, &Attrib::Waterlogged)),
+          with_durability(2.0F, 3.0F), four_way_block_attribs),
     Block("pumpkin", with_material(&Material::Gourd, ColorId::Adobe),
           with_durability(1.0F)),
     Block("netherrack", with_material(&Material::Rock, ColorId::Netherrack),
@@ -736,12 +747,12 @@ std::array<const Block, 680> blocks{
     Block("nether_portal", with_material(&Material::Portal),
           with_does_not_block_movement(), with_ticks_randomly(),
           with_durability(-1.0F), with_light_value(11), with_no_drop(),
-          with_attributes(&Attrib::Axis)),
+          with_attributes(&Attrib::HorizontalAxis)),
     Block("carved_pumpkin", with_material(&Material::Gourd, ColorId::Adobe),
-          with_durability(1.0F), with_attributes(&Attrib::Facing)),
+          with_durability(1.0F), with_attributes(&Attrib::HorizontalFacing)),
     Block("jack_o_lantern", with_material(&Material::Gourd, ColorId::Adobe),
           with_durability(1.0F), with_light_value(15),
-          with_attributes(&Attrib::Facing)),
+          with_attributes(&Attrib::HorizontalFacing)),
     Block("cake", with_material(&Material::Cake), with_durability(0.5F),
           with_attributes(&Attrib::Bites_0_6)),
     Block("repeater", with_material(&Material::Miscellaneous),
@@ -861,10 +872,10 @@ std::array<const Block, 680> blocks{
           with_durability(1.0F)),
     Block("attached_pumpkin_stem", with_material(&Material::Plants),
           with_does_not_block_movement(), with_zero_durability(),
-          with_attributes(&Attrib::Facing)),
+          with_attributes(&Attrib::HorizontalFacing)),
     Block("attached_melon_stem", with_material(&Material::Plants),
           with_does_not_block_movement(), with_zero_durability(),
-          with_attributes(&Attrib::Facing)),
+          with_attributes(&Attrib::HorizontalFacing)),
     Block("pumpkin_stem", with_material(&Material::Plants),
           with_does_not_block_movement(), with_ticks_randomly(),
           with_zero_durability(), with_attributes(&Attrib::Age_0_7)),
@@ -921,7 +932,7 @@ std::array<const Block, 680> blocks{
     Block("cocoa", with_material(&Material::Plants), with_ticks_randomly(),
           with_durability(0.2F, 3.0F), with_not_solid(),
           with_attributes(&Attrib::HorizontalFacing, &Attrib::Age_0_2)),
-    Block("sandstone_stairs", with_properties(sandstone)),
+    Block("sandstone_stairs", with_properties(sandstone), stairs_attribs),
     Block("emerald_ore", with_material(&Material::Rock),
           with_durability(3.0F, 3.0F)),
     Block("ender_chest", with_material(&Material::Rock),
@@ -942,7 +953,8 @@ std::array<const Block, 680> blocks{
     Block("birch_stairs", with_properties(birch_planks), stairs_attribs),
     Block("jungle_stairs", with_properties(jungle_planks), stairs_attribs),
     Block("command_block", with_material(&Material::Iron, ColorId::Brown),
-          with_durability(-1.0F, 3600000.0F), with_no_drop()),
+          with_durability(-1.0F, 3600000.0F), with_no_drop(),
+          with_attributes(&Attrib::Facing, &Attrib::Conditional)),
     Block("beacon", with_material(&Material::Glass, ColorId::Diamond),
           with_durability(3.0F), with_light_value(15), with_not_solid()),
     Block("cobblestone_wall", with_properties(cobblestone), wall_block_attrib),
@@ -1769,15 +1781,20 @@ std::array<const Block, 680> blocks{
           with_does_not_block_movement(), with_zero_durability(),
           with_attributes(&Attrib::Waterlogged)),
     Block("tube_coral", with_material(&Material::OceanPlant, ColorId::Blue),
-          with_does_not_block_movement(), with_zero_durability()),
+          with_does_not_block_movement(), with_zero_durability(),
+          with_attributes(&Attrib::Waterlogged)),
     Block("brain_coral", with_material(&Material::OceanPlant, ColorId::Pink),
-          with_does_not_block_movement(), with_zero_durability()),
+          with_does_not_block_movement(), with_zero_durability(),
+          with_attributes(&Attrib::Waterlogged)),
     Block("bubble_coral", with_material(&Material::OceanPlant, ColorId::Purple),
-          with_does_not_block_movement(), with_zero_durability()),
+          with_does_not_block_movement(), with_zero_durability(),
+          with_attributes(&Attrib::Waterlogged)),
     Block("fire_coral", with_material(&Material::OceanPlant, ColorId::Red),
-          with_does_not_block_movement(), with_zero_durability()),
+          with_does_not_block_movement(), with_zero_durability(),
+          with_attributes(&Attrib::Waterlogged)),
     Block("horn_coral", with_material(&Material::OceanPlant, ColorId::Yellow),
-          with_does_not_block_movement(), with_zero_durability()),
+          with_does_not_block_movement(), with_zero_durability(),
+          with_attributes(&Attrib::Waterlogged)),
     Block("dead_tube_coral_fan", with_material(&Material::Rock, ColorId::Gray),
           with_does_not_block_movement(), with_zero_durability(),
           with_attributes(&Attrib::Waterlogged)),
@@ -2010,5 +2027,110 @@ std::array<const Block, 680> blocks{
     Block("honeycomb_block", with_material(&Material::Clay, ColorId::Adobe),
           with_durability(0.6F)),
 };
+
+static std::map<std::string_view, uint32_t> get_state_ids() {
+   std::map<std::string_view, uint32_t> result;
+   uint32_t id = 0;
+   for (const auto &block : blocks) {
+      uint32_t states = 1;
+      for (const auto &attrib : block.attributes) {
+         states *= attrib->num_states();
+      }
+      result[block.tag()] = id;
+      id += states;
+   }
+   return result;
+}
+
+static std::map<std::string_view, int> get_block_ids() {
+   std::map<std::string_view, int> result;
+   int i = 0;
+   for (const auto &block : blocks) {
+      result[block.tag()] = i;
+      ++i;
+   }
+   return result;
+}
+
+const auto state_ids = get_state_ids();
+const auto block_ids = get_block_ids();
+
+static std::map<uint32_t, std::string_view> get_tag_by_state() {
+   std::map<uint32_t, std::string_view> result;
+   for (const auto &pair : state_ids) {
+      result[pair.second] = pair.first;
+   }
+   return result;
+}
+
+const auto tag_by_state = get_tag_by_state();
+
+std::string_view tag_from_state_id(uint32_t state) {
+   while(tag_by_state.find(state) == tag_by_state.end()) {
+      --state;
+   }
+   return tag_by_state.at(state);
+}
+
+const Block &block_by_tag(std::string_view tag) {
+   return blocks.at(block_ids.at(tag));
+}
+
+void debug_block_info() {
+   for (const auto &block : blocks) {
+      int num_states = 1;
+      for (const auto &a : block.attributes) {
+         num_states *= a->num_states();
+      }
+      std::cerr << "minecraft:" << block.tag() << " states: " << num_states
+                << "\n";
+   }
+}
+
+uint32_t encode_state(std::string_view tag, NBT::TagMap &attribs) {
+   if (tag.substr(0, 9) == "minecraft") {
+      tag = tag.substr(10);
+   }
+
+   auto id = block_ids.at(tag);
+   const auto block = blocks[id];
+
+   int found = 0;
+
+   uint32_t state = 0;
+   for (auto const &a : block.attributes) {
+      state *= a->num_states();
+      if (attribs.find(a->name()) != attribs.end()) {
+         ++found;
+         auto nbt_attr = attribs.at(a->name());
+         switch (nbt_attr->type()) {
+         case NBT::String:
+            state += a->index_from_str(nbt_attr->value<std::string>());
+            break;
+         case NBT::Int:
+            state += a->index_from_int(nbt_attr->value<int>());
+            break;
+         default:
+            break;
+         }
+      }
+   }
+
+   assert(attribs.size() == found);
+
+   return state_ids.at(tag) + state;
+}
+
+size_t total_num_states() {
+   size_t total = 0;
+   for (const auto &block : blocks) {
+      size_t states = 1;
+      for (const auto &attrib : block.attributes) {
+         states *= attrib->num_states();
+      }
+      total += states;
+   }
+   return total;
+}
 
 } // namespace Game::Block
