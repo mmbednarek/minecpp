@@ -16,6 +16,8 @@ message NetChunk {
         int32 ref_count = 3;
         repeated int32 palette = 4;
         repeated int64 data = 5;
+        bytes block_light = 6;
+        bytes sky_light = 7;
     }
 }
 

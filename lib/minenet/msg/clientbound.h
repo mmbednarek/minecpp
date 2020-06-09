@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <map>
 #include <mineutils/buffer.h>
+#include <minepb/chunk.pb.h>
 #include <string_view>
 
 namespace MineNet::Message {
@@ -43,6 +44,12 @@ struct ServerBrand {
 };
 Writer serialize(ServerBrand msg);
 
+// 0x1b
+struct Disconnect {
+   std::string_view reason;
+};
+Writer serialize(Disconnect msg);
+
 // 0x1c
 struct EntityStatus {
    uint32_t entity_id;
@@ -50,15 +57,16 @@ struct EntityStatus {
 };
 Writer serialize(EntityStatus msg);
 
+// 0x22
+
+struct ChunkData {
+   minecpp::chunk::NetChunk &chunk;
+};
+Writer serialize(ChunkData msg);
+
 // 0x25
 struct UpdateLight {
-   int chunk_x, chunk_z;
-   int sky_update_mask;
-   int block_update_mask;
-   int sky_reset_mask;
-   int block_reset_mask;
-   Utils::BasicBuffer sky;
-   Utils::BasicBuffer blocks;
+   minecpp::chunk::NetChunk &chunk;
 };
 Writer serialize(UpdateLight msg);
 

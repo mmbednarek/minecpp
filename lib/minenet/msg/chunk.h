@@ -5,5 +5,6 @@
 namespace MineNet::Message {
 
 void write_chunk(MineNet::Message::Writer &w, const minecpp::chunk::NetChunk &chunk);
+void write_light(Writer &w, const minecpp::chunk::NetChunk &chunk);
 
 }

@@ -9,6 +9,7 @@ struct Config {
    uint16_t port;
    std::string recipe_path;
    std::string tags_path;
+   std::string chunk_storage_host;
 };
 
 Config get_config();

@@ -19,6 +19,8 @@ void LoginHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
    }
 }
 
+constexpr int compression_threshold = 256;
+
 void LoginHandler::handle_login_start(Connection &conn, MineNet::Message::Reader &r) {
    std::string user_name = r.read_string();
 
@@ -31,10 +33,17 @@ void LoginHandler::handle_login_start(Connection &conn, MineNet::Message::Reader
       return;
    }
 
+   // set compression
+   MineNet::Message::Writer w_comp;
+   w_comp.write_byte(3);
+   w_comp.write_varint(compression_threshold);
+   conn.send(w_comp);
+   conn.set_compression_threshold(compression_threshold);
+
    MineNet::Message::Writer w;
    w.write_byte(2);
-   w.write_string(response.user_name);
    w.write_string(boost::uuids::to_string(response.uuid));
+   w.write_string(response.user_name);
    conn.send(w);
 
    service.init_player(conn, response.uuid);

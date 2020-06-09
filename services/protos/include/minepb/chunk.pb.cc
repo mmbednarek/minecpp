@@ -72,6 +72,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chunk_2eproto::offsets[] PROTO
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, ref_count_),
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, palette_),
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, data_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, block_light_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk_Section, sky_light_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::chunk::NetChunk, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -87,7 +89,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_chunk_2eproto::offsets[] PROTO
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::chunk::NetChunk_Section)},
-  { 10, -1, sizeof(::minecpp::chunk::NetChunk)},
+  { 12, -1, sizeof(::minecpp::chunk::NetChunk)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -96,14 +98,15 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_chunk_2eproto[] =
-  "\n\013chunk.proto\022\rminecpp.chunk\"\211\002\n\010NetChun"
+  "\n\013chunk.proto\022\rminecpp.chunk\"\261\002\n\010NetChun"
   "k\022\r\n\005pos_x\030\001 \001(\005\022\r\n\005pos_z\030\002 \001(\005\022\014\n\004full\030"
   "\003 \001(\010\022\022\n\006biomes\030\004 \003(\005B\002\020\001\022\030\n\020hm_world_su"
   "rface\030\005 \003(\003\022\032\n\022hm_motion_blocking\030\006 \003(\003\022"
   "1\n\010sections\030\007 \003(\0132\037.minecpp.chunk.NetChu"
-  "nk.Section\032T\n\007Section\022\t\n\001y\030\001 \001(\005\022\014\n\004bits"
+  "nk.Section\032|\n\007Section\022\t\n\001y\030\001 \001(\005\022\014\n\004bits"
   "\030\002 \001(\005\022\021\n\tref_count\030\003 \001(\005\022\017\n\007palette\030\004 \003"
-  "(\005\022\014\n\004data\030\005 \003(\003b\006proto3"
+  "(\005\022\014\n\004data\030\005 \003(\003\022\023\n\013block_light\030\006 \001(\014\022\021\n"
+  "\tsky_light\030\007 \001(\014b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_chunk_2eproto_deps[1] = {
 };
@@ -114,7 +117,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_chu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_chunk_2eproto_once;
 static bool descriptor_table_chunk_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chunk_2eproto = {
-  &descriptor_table_chunk_2eproto_initialized, descriptor_table_protodef_chunk_2eproto, "chunk.proto", 304,
+  &descriptor_table_chunk_2eproto_initialized, descriptor_table_protodef_chunk_2eproto, "chunk.proto", 344,
   &descriptor_table_chunk_2eproto_once, descriptor_table_chunk_2eproto_sccs, descriptor_table_chunk_2eproto_deps, 2, 0,
   schemas, file_default_instances, TableStruct_chunk_2eproto::offsets,
   file_level_metadata_chunk_2eproto, 2, file_level_enum_descriptors_chunk_2eproto, file_level_service_descriptors_chunk_2eproto,
@@ -139,6 +142,8 @@ const int NetChunk_Section::kBitsFieldNumber;
 const int NetChunk_Section::kRefCountFieldNumber;
 const int NetChunk_Section::kPaletteFieldNumber;
 const int NetChunk_Section::kDataFieldNumber;
+const int NetChunk_Section::kBlockLightFieldNumber;
+const int NetChunk_Section::kSkyLightFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 NetChunk_Section::NetChunk_Section()
@@ -152,6 +157,14 @@ NetChunk_Section::NetChunk_Section(const NetChunk_Section& from)
       palette_(from.palette_),
       data_(from.data_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  block_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.block_light().size() > 0) {
+    block_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.block_light_);
+  }
+  sky_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.sky_light().size() > 0) {
+    sky_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.sky_light_);
+  }
   ::memcpy(&y_, &from.y_,
     static_cast<size_t>(reinterpret_cast<char*>(&ref_count_) -
     reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
@@ -159,6 +172,9 @@ NetChunk_Section::NetChunk_Section(const NetChunk_Section& from)
 }
 
 void NetChunk_Section::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NetChunk_Section_chunk_2eproto.base);
+  block_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  sky_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&y_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&ref_count_) -
       reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
@@ -170,6 +186,8 @@ NetChunk_Section::~NetChunk_Section() {
 }
 
 void NetChunk_Section::SharedDtor() {
+  block_light_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  sky_light_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void NetChunk_Section::SetCachedSize(int size) const {
@@ -189,6 +207,8 @@ void NetChunk_Section::Clear() {
 
   palette_.Clear();
   data_.Clear();
+  block_light_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  sky_light_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&y_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&ref_count_) -
       reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
@@ -241,6 +261,20 @@ const char* NetChunk_Section::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40) {
           add_data(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes block_light = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_block_light(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // bytes sky_light = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_sky_light(), ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -345,6 +379,28 @@ bool NetChunk_Section::MergePartialFromCodedStream(
         break;
       }
 
+      // bytes block_light = 6;
+      case 6: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (50 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_block_light()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // bytes sky_light = 7;
+      case 7: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (58 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_sky_light()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -409,6 +465,18 @@ void NetChunk_Section::SerializeWithCachedSizes(
       this->data(i), output);
   }
 
+  // bytes block_light = 6;
+  if (this->block_light().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      6, this->block_light(), output);
+  }
+
+  // bytes sky_light = 7;
+  if (this->sky_light().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      7, this->sky_light(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -463,6 +531,20 @@ void NetChunk_Section::SerializeWithCachedSizes(
       WriteInt64NoTagToArray(this->data_, target);
   }
 
+  // bytes block_light = 6;
+  if (this->block_light().size() > 0) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        6, this->block_light(), target);
+  }
+
+  // bytes sky_light = 7;
+  if (this->sky_light().size() > 0) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        7, this->sky_light(), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
@@ -512,6 +594,20 @@ size_t NetChunk_Section::ByteSizeLong() const {
     _data_cached_byte_size_.store(cached_size,
                                     std::memory_order_relaxed);
     total_size += data_size;
+  }
+
+  // bytes block_light = 6;
+  if (this->block_light().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->block_light());
+  }
+
+  // bytes sky_light = 7;
+  if (this->sky_light().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->sky_light());
   }
 
   // int32 y = 1;
@@ -564,6 +660,14 @@ void NetChunk_Section::MergeFrom(const NetChunk_Section& from) {
 
   palette_.MergeFrom(from.palette_);
   data_.MergeFrom(from.data_);
+  if (from.block_light().size() > 0) {
+
+    block_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.block_light_);
+  }
+  if (from.sky_light().size() > 0) {
+
+    sky_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.sky_light_);
+  }
   if (from.y() != 0) {
     set_y(from.y());
   }
@@ -602,6 +706,10 @@ void NetChunk_Section::InternalSwap(NetChunk_Section* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   palette_.InternalSwap(&other->palette_);
   data_.InternalSwap(&other->data_);
+  block_light_.Swap(&other->block_light_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  sky_light_.Swap(&other->sky_light_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(y_, other->y_);
   swap(bits_, other->bits_);
   swap(ref_count_, other->ref_count_);

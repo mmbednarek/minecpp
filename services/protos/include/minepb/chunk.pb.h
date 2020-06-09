@@ -206,6 +206,30 @@ class NetChunk_Section :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int64 >*
       mutable_data();
 
+  // bytes block_light = 6;
+  void clear_block_light();
+  static const int kBlockLightFieldNumber = 6;
+  const std::string& block_light() const;
+  void set_block_light(const std::string& value);
+  void set_block_light(std::string&& value);
+  void set_block_light(const char* value);
+  void set_block_light(const void* value, size_t size);
+  std::string* mutable_block_light();
+  std::string* release_block_light();
+  void set_allocated_block_light(std::string* block_light);
+
+  // bytes sky_light = 7;
+  void clear_sky_light();
+  static const int kSkyLightFieldNumber = 7;
+  const std::string& sky_light() const;
+  void set_sky_light(const std::string& value);
+  void set_sky_light(std::string&& value);
+  void set_sky_light(const char* value);
+  void set_sky_light(const void* value, size_t size);
+  std::string* mutable_sky_light();
+  std::string* release_sky_light();
+  void set_allocated_sky_light(std::string* sky_light);
+
   // int32 y = 1;
   void clear_y();
   static const int kYFieldNumber = 1;
@@ -233,6 +257,8 @@ class NetChunk_Section :
   mutable std::atomic<int> _palette_cached_byte_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int64 > data_;
   mutable std::atomic<int> _data_cached_byte_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr block_light_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sky_light_;
   ::PROTOBUF_NAMESPACE_ID::int32 y_;
   ::PROTOBUF_NAMESPACE_ID::int32 bits_;
   ::PROTOBUF_NAMESPACE_ID::int32 ref_count_;
@@ -547,6 +573,108 @@ inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< ::PROTOBUF_NAMESPACE_ID::int64 >*
 NetChunk_Section::mutable_data() {
   // @@protoc_insertion_point(field_mutable_list:minecpp.chunk.NetChunk.Section.data)
   return &data_;
+}
+
+// bytes block_light = 6;
+inline void NetChunk_Section::clear_block_light() {
+  block_light_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& NetChunk_Section::block_light() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk.NetChunk.Section.block_light)
+  return block_light_.GetNoArena();
+}
+inline void NetChunk_Section::set_block_light(const std::string& value) {
+  
+  block_light_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.chunk.NetChunk.Section.block_light)
+}
+inline void NetChunk_Section::set_block_light(std::string&& value) {
+  
+  block_light_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.chunk.NetChunk.Section.block_light)
+}
+inline void NetChunk_Section::set_block_light(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  block_light_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.chunk.NetChunk.Section.block_light)
+}
+inline void NetChunk_Section::set_block_light(const void* value, size_t size) {
+  
+  block_light_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.chunk.NetChunk.Section.block_light)
+}
+inline std::string* NetChunk_Section::mutable_block_light() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk.NetChunk.Section.block_light)
+  return block_light_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* NetChunk_Section::release_block_light() {
+  // @@protoc_insertion_point(field_release:minecpp.chunk.NetChunk.Section.block_light)
+  
+  return block_light_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void NetChunk_Section::set_allocated_block_light(std::string* block_light) {
+  if (block_light != nullptr) {
+    
+  } else {
+    
+  }
+  block_light_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), block_light);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.chunk.NetChunk.Section.block_light)
+}
+
+// bytes sky_light = 7;
+inline void NetChunk_Section::clear_sky_light() {
+  sky_light_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& NetChunk_Section::sky_light() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk.NetChunk.Section.sky_light)
+  return sky_light_.GetNoArena();
+}
+inline void NetChunk_Section::set_sky_light(const std::string& value) {
+  
+  sky_light_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.chunk.NetChunk.Section.sky_light)
+}
+inline void NetChunk_Section::set_sky_light(std::string&& value) {
+  
+  sky_light_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.chunk.NetChunk.Section.sky_light)
+}
+inline void NetChunk_Section::set_sky_light(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  sky_light_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.chunk.NetChunk.Section.sky_light)
+}
+inline void NetChunk_Section::set_sky_light(const void* value, size_t size) {
+  
+  sky_light_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.chunk.NetChunk.Section.sky_light)
+}
+inline std::string* NetChunk_Section::mutable_sky_light() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk.NetChunk.Section.sky_light)
+  return sky_light_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* NetChunk_Section::release_sky_light() {
+  // @@protoc_insertion_point(field_release:minecpp.chunk.NetChunk.Section.sky_light)
+  
+  return sky_light_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void NetChunk_Section::set_allocated_sky_light(std::string* sky_light) {
+  if (sky_light != nullptr) {
+    
+  } else {
+    
+  }
+  sky_light_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), sky_light);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.chunk.NetChunk.Section.sky_light)
 }
 
 // -------------------------------------------------------------------

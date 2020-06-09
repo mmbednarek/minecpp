@@ -98,6 +98,9 @@ void Server::handshake(Connection *conn) {
 }
 
 void Server::drop_connection(int id) {
+   if (id >= connections.size())
+      return;
+
    delete connections[id];
    connections[id] = nullptr;
 }

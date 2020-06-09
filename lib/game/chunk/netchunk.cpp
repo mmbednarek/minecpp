@@ -69,22 +69,33 @@ void NetChunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
    case NBT::List:
       if (name == "Sections") {
          r.read_list([this](NBT::Reader &r) {
-            uint8_t y = 0xFF;
-            int ref_count = 0;
+            int8_t y = 0;
             std::vector<long long> data;
+            std::vector<uint8_t> block_light;
+            std::vector<uint8_t> sky_light;
             std::vector<int> palette;
-            r.read_compound([&y, &data, &palette,
-                             &ref_count](NBT::Reader &r, NBT::TagID tag_id,
+            r.read_compound([&y, &data, &palette, &block_light,
+                             &sky_light](NBT::Reader &r, NBT::TagID tag_id,
                                          const std::string &name) {
-               if (name == "Y" && tag_id == NBT::Byte) {
+               if (tag_id == NBT::Byte && name == "Y") {
                   y = r.read_payload<NBT::Byte>();
                   return;
                }
-               if (name == "BlockStates" && tag_id == NBT::LongArray) {
+               if (tag_id == NBT::ByteArray) {
+                  if (name == "BlockLight") {
+                     block_light = r.read_payload<NBT::ByteArray>();
+                     return;
+                  }
+                  if (name == "SkyLight") {
+                     sky_light = r.read_payload<NBT::ByteArray>();
+                     return;
+                  }
+               }
+               if (tag_id == NBT::LongArray && name == "BlockStates") {
                   data = r.read_payload<NBT::LongArray>();
                   return;
                }
-               if (name == "Palette" && tag_id == NBT::List) {
+               if (tag_id == NBT::List && name == "Palette") {
                   r.read_list([&palette](NBT::Reader &r) {
                      palette.emplace_back(PaletteItem(r).to_state_id());
                   });
@@ -92,14 +103,18 @@ void NetChunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
                }
                r.skip_payload(tag_id);
             });
-            if (y < 16) {
-               sections[y] = NetSection{
-                   .bits = static_cast<uint8_t>(data.size() * 64 / 4096),
-                   .ref_count = Game::calculate_ref_count(data, palette),
-                   .palette = palette,
-                   .data = data,
-               };
-            }
+
+            uint8_t bits = data.size() * 64 / 4096;
+            int ref_count = Game::calculate_ref_count(data, palette);
+
+            sections[y] = NetSection{
+                .bits = bits,
+                .ref_count = ref_count,
+                .palette = std::move(palette),
+                .data = std::move(data),
+                .block_light = std::move(block_light),
+                .sky_light = std::move(sky_light),
+            };
          });
          return;
       }
@@ -138,6 +153,10 @@ void NetChunk::as_proto(minecpp::chunk::NetChunk *chunk) {
                                      sec.second.palette.end()};
       *out_sec->mutable_data() = {sec.second.data.begin(),
                                   sec.second.data.end()};
+      *out_sec->mutable_block_light() = {sec.second.block_light.begin(),
+                                         sec.second.block_light.end()};
+      *out_sec->mutable_sky_light() = {sec.second.sky_light.begin(),
+                                       sec.second.sky_light.end()};
    }
 }
 

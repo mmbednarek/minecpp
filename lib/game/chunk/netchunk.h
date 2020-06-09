@@ -11,6 +11,8 @@ struct NetSection {
    int ref_count;
    std::vector<int> palette;
    std::vector<long long> data;
+   std::vector<uint8_t> block_light;
+   std::vector<uint8_t> sky_light;
 };
 
 struct NetChunk {
@@ -19,7 +21,7 @@ struct NetChunk {
    std::array<int, 1024> biomes;
    std::array<uint64_t, 36> hm_motion_blocking;
    std::array<uint64_t, 36> hm_world_surface;
-   std::map<uint8_t, NetSection> sections;
+   std::map<int8_t, NetSection> sections;
 
    explicit NetChunk(NBT::Reader &r);
 

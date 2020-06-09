@@ -12,7 +12,7 @@ class Writer {
    explicit Writer();
 
    void write_byte(uint8_t value);
-   void write_varint(int value);
+   void write_varint(uint32_t value);
    int len_varint(int value) const;
    void write_string(std::string_view s);
    void write_uuid_str(boost::uuids::uuid id);
@@ -20,10 +20,12 @@ class Writer {
    void write_float(float value);
    void write_double(double d);
    void write_bytes(const char *data, std::size_t size);
-   std::tuple<uint8_t *, size_t> buff();
+   std::tuple<uint8_t *, size_t> buff(std::size_t comp_thres = 0);
    template <typename T> void write_big_endian(T value);
    template <typename I> void write_big_endian_array(std::vector<I> vec);
    template <typename I> void write_big_endian_array(I *data, std::size_t size);
+
+   size_t peek_size();
 
    [[nodiscard]] std::ostream &raw_stream();
 

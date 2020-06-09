@@ -1,12 +1,10 @@
 #include "service.h"
+#include <boost/log/trivial.hpp>
 #include <game/level/level.h>
-#include <game/blocks/registry.h>
 #include <grpcpp/server_builder.h>
 #include <iostream>
 
 auto main() -> int {
-   std::cout << "enum states: " << Game::Block::total_num_states() << '\n';
-
    auto region_path = std::getenv("REGION_PATH");
    if (!region_path) {
       std::cerr << "REGION_PATH variable required\n";
@@ -25,6 +23,6 @@ auto main() -> int {
    builder.RegisterService(&s);
 
    std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-   std::cerr << "grpc server started";
+   BOOST_LOG_TRIVIAL(info) << "starting GRPC server";
    server->Wait();
 }

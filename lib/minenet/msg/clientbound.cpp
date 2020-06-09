@@ -1,4 +1,5 @@
 #include "clientbound.h"
+#include "chunk.h"
 
 namespace MineNet::Message {
 
@@ -47,15 +48,17 @@ Writer serialize(EntityStatus msg) {
    return w;
 }
 
+Writer serialize(ChunkData msg) {
+   Writer w;
+   w.write_byte(0x22);
+   write_chunk(w, msg.chunk);
+   return w;
+}
+
 Writer serialize(UpdateLight msg) {
    Writer w;
    w.write_byte(0x25);
-   w.write_varint(msg.chunk_x);
-   w.write_varint(msg.chunk_z);
-   w.write_varint(msg.sky_update_mask);
-   w.write_varint(msg.block_update_mask);
-   w.write_varint(msg.sky_reset_mask);
-   w.write_varint(msg.block_reset_mask);
+   write_light(w, msg.chunk);
    return w;
 }
 
@@ -65,6 +68,14 @@ Writer serialize(ServerBrand msg) {
    w.write_string("brand");
    w.write_string(msg.brand);
    return w;
+}
+
+Writer serialize(Disconnect msg) {
+   Writer w;
+   w.write_byte(0x1b);
+   w.write_string(msg.reason);
+   return w;
+
 }
 
 Writer serialize(JoinGame msg) {
@@ -86,6 +97,7 @@ Writer serialize(AddPlayer msg) {
    Writer w;
    w.write_byte(0x34);
    w.write_byte(0x00);
+   w.write_varint(1);
    w.write_uuid(msg.id);
    w.write_string(msg.name);
 
@@ -126,6 +138,7 @@ Writer serialize(RecipeBook msg) {
    w.write_byte(msg.furnace_filtering_craftable);
    w.write_byte(0x00); // TODO: Support custom recipes
    w.write_byte(0x00);
+   return w;
 }
 
 Writer serialize(PlayerAbilities msg) {

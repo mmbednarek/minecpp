@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <boost/endian/conversion.hpp>
 #include <boost/log/trivial.hpp>
+#include <mineutils/compression.h>
 
 namespace Front {
 
@@ -10,8 +11,15 @@ Connection::Connection(boost::asio::io_context &ctx, Server *server)
     : socket(ctx), _state(Protocol::Handshake), server(server) {}
 
 Connection::~Connection() {
-   socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
-   socket.close();
+   if (!socket.is_open())
+      return;
+
+   try {
+      socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+      socket.close();
+   } catch(std::runtime_error& e) {
+      BOOST_LOG_TRIVIAL(debug) << "could not shutdown connection: " << e.what();
+   }
 }
 
 size_t Connection::read(void *ptr, size_t size) {
@@ -83,10 +91,25 @@ void Connection::async_read_packet_data(Protocol::Handler &h) {
              server->drop_connection(id);
              return;
           }
-
           std::istream s(packet_buff);
-          MineNet::Message::Reader r(s);
-          h.handle(*this, r);
+
+          if (compression_threshold > 0) {
+             // compressed
+             MineNet::Message::Reader r(s);
+             auto decompressed_size = r.read_varint();
+             if (decompressed_size == 0) {
+                // threshold not reached
+                h.handle(*this, r);
+             } else {
+                Utils::ZlibInputStream decompress(s);
+                MineNet::Message::Reader decompress_reader(decompress);
+                h.handle(*this, decompress_reader);
+             }
+          } else {
+             // not compressed
+             MineNet::Message::Reader r(s);
+             h.handle(*this, r);
+          }
 
           delete packet_buff;
           packet_buff = nullptr;
@@ -139,8 +162,7 @@ void Connection::async_write_then_disconnect(uint8_t *buff, size_t size) {
           if (err) {
              BOOST_LOG_TRIVIAL(debug)
                  << "error writing message " << err.message();
-          } else {
-             BOOST_LOG_TRIVIAL(debug) << "wrote " << size << " bytes";
+             return;
           }
 
           server->drop_connection(id);
@@ -148,19 +170,23 @@ void Connection::async_write_then_disconnect(uint8_t *buff, size_t size) {
 }
 
 void Connection::send(MineNet::Message::Writer &w) {
-   auto bf = w.buff();
+   auto bf = w.buff(compression_threshold);
    async_write(std::get<0>(bf), std::get<1>(bf));
 }
 
 void Connection::send_and_read(MineNet::Message::Writer &w,
                                Protocol::Handler &h) {
-   auto bf = w.buff();
+   auto bf = w.buff(compression_threshold);
    async_write_then_read(std::get<0>(bf), std::get<1>(bf), h);
 }
 
 void Connection::send_and_disconnect(MineNet::Message::Writer &w) {
-   auto bf = w.buff();
+   auto bf = w.buff(compression_threshold);
    async_write_then_disconnect(std::get<0>(bf), std::get<1>(bf));
+}
+
+void Connection::set_compression_threshold(std::size_t threshold) {
+   compression_threshold = threshold;
 }
 
 } // namespace Front

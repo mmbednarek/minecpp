@@ -11,7 +11,7 @@ class Reader {
 public:
 	explicit Reader(std::istream& s);
 
-	std::vector<uint8_t> load_chunk(uint32_t x, uint32_t z);
+	std::vector<uint8_t> load_chunk(int x, int z);
 private:
 	std::istream& stream;
 };

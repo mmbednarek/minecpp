@@ -1,11 +1,14 @@
 #include "service.h"
 #include "protocol/protocol.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/log/trivial.hpp>
 #include <fstream>
-#include <grpcpp/client_context.h>
 #include <grpcpp/grpcpp.h>
 
 namespace Front {
+
+const char *internal_reason =
+    R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
 Service::Service(Config &conf) : player_services(conf.engine_hosts.size()) {
    int i = 0;
@@ -15,6 +18,10 @@ Service::Service(Config &conf) : player_services(conf.engine_hosts.size()) {
       player_services[i] = minecpp::engine::PlayerService::NewStub(channel);
       i++;
    }
+
+   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host,
+                                            grpc::InsecureChannelCredentials());
+   chunk_service = minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
 
    std::ifstream recipe_st;
    recipe_st.open(conf.recipe_path);
@@ -70,11 +77,23 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
 
    grpc::ClientContext ctx;
 
+   /*
    minecpp::engine::AcceptPlayerResponse res;
    minecpp::engine::AcceptPlayerRequest req;
    req.set_name(player.name());
    req.set_uuid(player.user_id_str());
    get_player_service()->AcceptPlayer(&ctx, req, &res);
+    */
+   minecpp::engine::AcceptPlayerResponse res;
+   res.set_player_id(1);
+   res.mutable_game_info()->set_mode(minecpp::engine::GameMode::Survival);
+   res.mutable_game_info()->set_dimension(
+       minecpp::engine::DimensionType::Overworld);
+   res.mutable_game_info()->set_seed(1);
+   res.mutable_game_info()->set_max_players(20);
+   res.mutable_game_info()->set_world(minecpp::engine::WorldType::Default);
+   res.mutable_game_info()->set_view_distance(4);
+   res.mutable_game_info()->set_difficulty(minecpp::engine::Difficulty::Easy);
 
    conn.send(JoinGame{
        .player_id = res.player_id(),
@@ -114,6 +133,7 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
        .size = cached_tags_size,
        .data = cached_tags,
    });
+
    conn.send(EntityStatus{
        .entity_id = res.player_id(),
        .opcode = 0x18,
@@ -130,9 +150,9 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    });
 
    conn.send(PlayerPositionLook{
-       .x = 198.0,
-       .y = 70.0,
-       .z = -178.0,
+       .x = 0.0,
+       .y = 81.0,
+       .z = 0.0,
        .yaw = 0.0f,
        .pitch = 0.0f,
        .flags = 0,
@@ -147,15 +167,49 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    });
 
    conn.send(UpdateChunkPosition{
-       .x = 198 / 16,
-       .z = -178 / 16,
+       .x = 0,
+       .z = 0,
    });
+
+   for (int z = -2; z < 2; ++z) {
+      for (int x = -2; x < 2; ++x) {
+         load_chunk(conn, x, z);
+      }
+   }
 }
 
 EnginePlayerService &Service::get_player_service() {
    boost::random::uniform_int_distribution<> dist(0,
                                                   player_services.size() - 1);
    return player_services[dist(rand)];
+}
+void Service::load_chunk(Connection &conn, int x, int z) {
+   using namespace MineNet::Message;
+
+   grpc::ClientContext ctx;
+   minecpp::chunk::NetChunk net_chunk;
+   minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
+   load_chunk_request.set_x(x);
+   load_chunk_request.set_z(z);
+
+   auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &net_chunk);
+   if (!status.ok()) {
+      BOOST_LOG_TRIVIAL(info)
+          << "could not get chunk data: " << status.error_details();
+      conn.send_and_disconnect(Disconnect{
+          .reason = internal_reason,
+      });
+      return;
+   }
+
+   BOOST_LOG_TRIVIAL(info) << "sending chunk to user: x = " << net_chunk.pos_x() << ", z = " << net_chunk.pos_z();
+
+   conn.send(ChunkData{
+       .chunk = net_chunk,
+   });
+   conn.send(UpdateLight{
+       .chunk = net_chunk,
+   });
 }
 
 const char command_list[]{
