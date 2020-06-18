@@ -1,5 +1,6 @@
 #include "block.h"
 #include "state.h"
+#include <boost/range/adaptor/reversed.hpp>
 #include <cassert>
 #include <iostream>
 #include <map>
@@ -2066,7 +2067,7 @@ static std::map<uint32_t, std::string_view> get_tag_by_state() {
 const auto tag_by_state = get_tag_by_state();
 
 std::string_view tag_from_state_id(uint32_t state) {
-   while(tag_by_state.find(state) == tag_by_state.end()) {
+   while (tag_by_state.find(state) == tag_by_state.end()) {
       --state;
    }
    return tag_by_state.at(state);

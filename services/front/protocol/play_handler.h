@@ -3,16 +3,24 @@
 #include "handler.h"
 #include <grpcpp/channel.h>
 #include <memory>
-#include <minepb/engine.pb.h>
 #include <minenet/msg/io.h>
+#include <minepb/engine.pb.h>
+
+namespace Front {
+class Service;
+}
 
 namespace Front::Protocol {
 
-class PlayHandler : public Handler {
- public:
-   PlayHandler();
+using MineNet::Message::Reader;
 
-   virtual void handle(Connection &conn, MineNet::Message::Reader &r) override;
+class PlayHandler : public Handler {
+   Service &service;
+
+ public:
+   PlayHandler(Service &service);
+
+   void handle(Connection &conn, Reader &r) override;
 };
 
 } // namespace Front::Protocol

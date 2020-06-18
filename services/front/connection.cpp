@@ -2,8 +2,8 @@
 #include "server.h"
 #include <boost/asio.hpp>
 #include <boost/endian/conversion.hpp>
-#include <boost/log/trivial.hpp>
 #include <mineutils/compression.h>
+#include <spdlog/spdlog.h>
 
 namespace Front {
 
@@ -17,8 +17,8 @@ Connection::~Connection() {
    try {
       socket.shutdown(boost::asio::ip::tcp::socket::shutdown_both);
       socket.close();
-   } catch(std::runtime_error& e) {
-      BOOST_LOG_TRIVIAL(debug) << "could not shutdown connection: " << e.what();
+   } catch (std::runtime_error &e) {
+      spdlog::info("exception while closing connection: {}", e.what());
    }
 }
 
@@ -63,7 +63,7 @@ void Connection::async_read_packet(Protocol::Handler &h) {
        socket, boost::asio::buffer(&leading_byte, 1),
        [this, &h](const boost::system::error_code &err, size_t size) {
           if (err) {
-             BOOST_LOG_TRIVIAL(debug) << "inbound error " << err.message();
+             spdlog::debug("error reading data from client: {}", err.message());
              server->drop_connection(id);
              return;
           }
@@ -73,9 +73,6 @@ void Connection::async_read_packet(Protocol::Handler &h) {
 }
 
 void Connection::async_read_packet_data(Protocol::Handler &h) {
-   BOOST_LOG_TRIVIAL(debug)
-       << "reading packet data leading_byte =" << (int)leading_byte;
-
    size_t msg_size = read_packet_size(leading_byte);
    if (msg_size > 0) {
       packet_buff = new boost::asio::streambuf(msg_size);
@@ -87,7 +84,7 @@ void Connection::async_read_packet_data(Protocol::Handler &h) {
           if (err) {
              delete packet_buff;
              packet_buff = nullptr;
-             BOOST_LOG_TRIVIAL(debug) << "inbound error " << err.message();
+             spdlog::debug("error reading data from client: {}", err.message());
              server->drop_connection(id);
              return;
           }
@@ -124,13 +121,10 @@ void Connection::async_write_then_read(uint8_t *buff, size_t size,
           delete[] buff;
 
           if (err) {
-             BOOST_LOG_TRIVIAL(debug)
-                 << "error writing message " << err.message();
+             spdlog::debug("error reading data from client: {}", err.message());
              server->drop_connection(id);
              return;
           }
-
-          BOOST_LOG_TRIVIAL(debug) << "wrote " << size << " bytes";
 
           async_read_packet(h);
        });
@@ -143,13 +137,10 @@ void Connection::async_write(uint8_t *buff, size_t size) {
           delete[] buff;
 
           if (err) {
-             BOOST_LOG_TRIVIAL(debug)
-                 << "error writing message " << err.message();
+             spdlog::debug("error reading data from client: {}", err.message());
              server->drop_connection(id);
              return;
           }
-
-          BOOST_LOG_TRIVIAL(debug) << "wrote " << size << " bytes";
        });
 }
 
@@ -160,8 +151,7 @@ void Connection::async_write_then_disconnect(uint8_t *buff, size_t size) {
           delete[] buff;
 
           if (err) {
-             BOOST_LOG_TRIVIAL(debug)
-                 << "error writing message " << err.message();
+             spdlog::debug("error reading data from client: {}", err.message());
              return;
           }
 
@@ -188,5 +178,11 @@ void Connection::send_and_disconnect(MineNet::Message::Writer &w) {
 void Connection::set_compression_threshold(std::size_t threshold) {
    compression_threshold = threshold;
 }
+
+void Connection::set_uuid(boost::uuids::uuid uuid) { player_id = uuid; }
+
+const boost::uuids::uuid &Connection::get_uuid() const { return player_id; }
+
+Server *Connection::get_server() { return server; }
 
 } // namespace Front

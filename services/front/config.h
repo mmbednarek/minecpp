@@ -10,6 +10,7 @@ struct Config {
    std::string recipe_path;
    std::string tags_path;
    std::string chunk_storage_host;
+   std::string kafka_hosts;
 };
 
 Config get_config();

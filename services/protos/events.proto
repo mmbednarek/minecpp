@@ -1,0 +1,38 @@
+syntax = "proto3";
+package minecpp.events;
+
+message SpawnPlayer {
+    bytes uuid = 1;
+    int32 id = 2;
+    double x = 3;
+    double y = 4;
+    double z = 5;
+    float yaw = 6;
+    float pitch = 7;
+}
+
+message EntityMove {
+    bytes uuid = 1;
+    int32 id = 2;
+    int32 x = 3;
+    int32 y = 4;
+    int32 z = 5;
+    float yaw = 6;
+    float pitch = 7;
+}
+
+message EntityLook {
+    bytes uuid = 1;
+    int32 id = 2;
+    float yaw = 3;
+    float pitch = 4;
+}
+
+message PlayerPositionRotation {
+}
+
+message Chat {
+    string message = 1;
+    int32 type = 2;
+}
+

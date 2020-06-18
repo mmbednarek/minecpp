@@ -6,20 +6,36 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+set(RDKAFKA_INCLUDE_DIR)
+
 include(FetchContent)
 FetchContent_Declare(
         gRPC
         GIT_REPOSITORY https://github.com/grpc/grpc
-        GIT_TAG        v1.25.0
+        GIT_TAG v1.25.0
 )
 FetchContent_MakeAvailable(gRPC)
 
 FetchContent_Declare(
         yaml
         GIT_REPOSITORY https://github.com/jbeder/yaml-cpp
-        GIT_TAG        yaml-cpp-0.6.3
+        GIT_TAG yaml-cpp-0.6.3
 )
 FetchContent_MakeAvailable(yaml)
+
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog
+        GIT_TAG v1.6.1
+)
+FetchContent_MakeAvailable(spdlog)
+
+FetchContent_Declare(
+        cppkafka
+        GIT_REPOSITORY https://github.com/mfontanini/cppkafka
+        GIT_TAG v0.3.1
+)
+FetchContent_MakeAvailable(cppkafka)
 
 add_subdirectory(boost-cmake)
 include_directories(${Boost_INCLUDE_DIRS})
@@ -39,4 +55,5 @@ add_subdirectory(tools/chunk_extractor)
 add_subdirectory(tools/recipes)
 add_subdirectory(services/protos/include/minepb)
 add_subdirectory(services/chunk_storage)
+add_subdirectory(services/engine)
 add_subdirectory(services/front)

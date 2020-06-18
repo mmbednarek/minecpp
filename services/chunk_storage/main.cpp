@@ -1,13 +1,16 @@
 #include "service.h"
-#include <boost/log/trivial.hpp>
-#include <game/level/level.h>
 #include <grpcpp/server_builder.h>
 #include <iostream>
+#include <spdlog/spdlog.h>
+#include <mineutils/string.h>
 
 auto main() -> int {
+   std::string str = "";
+   spdlog::info("hash of {} is {}", str, Utils::hash_string(str));
+
    auto region_path = std::getenv("REGION_PATH");
    if (!region_path) {
-      std::cerr << "REGION_PATH variable required\n";
+      spdlog::error("REGION_PATH variable required\n");
       return 1;
    }
 
@@ -23,6 +26,6 @@ auto main() -> int {
    builder.RegisterService(&s);
 
    std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
-   BOOST_LOG_TRIVIAL(info) << "starting GRPC server";
+   spdlog::info("starting grpc server on address {}", listen);
    server->Wait();
 }

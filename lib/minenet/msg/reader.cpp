@@ -45,6 +45,14 @@ float Reader::read_float() {
    return *reinterpret_cast<float *>(&value);
 }
 
+double Reader::read_double() {
+   static_assert(sizeof(uint64_t) == sizeof(double));
+   uint64_t value;
+   s.read((char *)&value, sizeof(uint64_t));
+   value = boost::endian::big_to_native(value);
+   return *reinterpret_cast<double *>(&value);
+}
+
 NBT::TagPtr Reader::read_nbt_tag() {
    NBT::Parser p(s);
    return p.read_tag();
@@ -158,6 +166,29 @@ Game::ItemStack Reader::read_stack() {
        .id = id,
        .amount = amount,
    };
+}
+
+std::string Reader::get_hex_data() {
+   std::string result;
+   unsigned char c;
+   while (s.read((char *)&c, 1)) {
+      auto most = c / 16;
+      auto least = c % 16;
+
+      if (most > 9) {
+         result.push_back(most - 10 + 'a');
+      } else {
+         result.push_back(most + '0');
+      }
+
+      if (least > 9) {
+         result.push_back(least - 10 + 'a');
+      } else {
+         result.push_back(least + '0');
+      }
+   }
+
+   return result;
 }
 
 } // namespace MineNet::Message

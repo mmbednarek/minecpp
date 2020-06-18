@@ -2,7 +2,7 @@
 #include "../mode.h"
 #include "../rules.h"
 #include <istream>
-#include <mineutils/vec2.h>
+#include <mineutils/vec.h>
 
 namespace Game::Level {
 

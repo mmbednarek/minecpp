@@ -116,7 +116,7 @@ SERVERBOUND
 11 PlayerPosition
 12 PlayerPositionRotation
 13 PlayerRotation
-14 Player
+14 PlayerData
 15 MoveVehicle
 16 SteerBoat
 17 PickItem

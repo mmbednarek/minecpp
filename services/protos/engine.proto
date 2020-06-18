@@ -1,67 +1,80 @@
 syntax = "proto3";
 package minecpp.engine;
 
+import "game.proto";
+import "player.proto";
+
 service PlayerService {
     rpc AcceptPlayer (AcceptPlayerRequest) returns (AcceptPlayerResponse);
+    rpc SetPlayerPosition (SetPlayerPositionRequest) returns (EmptyResponse);
+    rpc SetPlayerRotation (SetPlayerRotationRequest) returns (EmptyResponse);
+    rpc ChatMessage (ChatMessageRequest) returns (EmptyResponse);
+    rpc ListPlayers (EmptyRequest) returns (ListPlayersResponse);
+    rpc ListPlayerEntities (EmptyRequest) returns (ListPlayerEntitiesResponse);
 }
 
 message AcceptPlayerRequest {
     string name = 1;
-    string uuid = 2;
+    bytes uuid = 2;
 }
 
 message AcceptPlayerResponse {
     PlayerAcceptState state = 1;
-    uint32 player_id = 2;
-    uint32 node_id = 3;
-    GamePlay game_info = 4;
+    uint32 node_id = 2;
+    minecpp.game.GamePlay game_info = 3;
+    minecpp.player.Data player_data = 4;
+
+    enum PlayerAcceptState {
+        DENIED = 0;
+        ACCEPTED = 1;
+        MOVED = 2;
+    }
+}
+
+message SetPlayerPositionRequest {
+    bytes uuid = 1;
+    double x = 2;
+    double y = 3;
+    double z = 4;
+}
+
+message SetPlayerRotationRequest {
+    bytes uuid = 1;
+    float yaw = 2;
+    float pitch = 3;
+}
+
+message ChatMessageRequest {
+    bytes uuid = 1;
+    string message = 2;
 }
 
 message PlayerData {
+    bytes uuid = 1;
+    string name = 2;
+    minecpp.game.GameMode game_mode = 3;
 }
 
-message GamePlay {
-    DimensionType dimension = 1;
-    uint64 seed = 2;
-    GameMode mode = 3;
-    WorldType world = 4;
-    int32 view_distance = 5;
-    bool hardcore = 6;
-    int32 max_players = 7;
-    bool reduced_debug_info = 8;
-    bool do_immediate_respawn = 9;
-    Difficulty difficulty = 10;
+message ListPlayersResponse {
+    repeated PlayerData list = 1;
 }
 
-enum DimensionType {
-    Overworld = 0;
-    Nether = 1;
-    End = 2;
+message PlayerEntityData {
+    bytes uuid = 1;
+    int32 entity_id = 2;
+    double x = 3;
+    double y = 4;
+    double z = 5;
+    float yaw = 6;
+    float pitch = 7;
 }
 
-enum Difficulty {
-    Easy = 0;
-    Medium = 1;
-    Hard = 2;
+message ListPlayerEntitiesResponse {
+    repeated PlayerEntityData list = 1;
 }
 
-enum GameMode {
-    Survival = 0;
-    Creative = 1;
-    Adventure = 2;
-    Spectator = 3;
+message EmptyRequest {
 }
 
-enum WorldType {
-    Default = 0;
-    Flat = 1;
-    LargeBiomes = 2;
-    Amplified = 3;
-    Customised = 4;
-}
-
-enum PlayerAcceptState {
-    DENIED = 0;
-    ACCEPTED = 1;
-    MOVED = 2;
+message EmptyResponse {
 }

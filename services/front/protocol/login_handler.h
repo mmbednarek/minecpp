@@ -8,7 +8,7 @@ namespace Front::Protocol {
 
 class LoginHandler : public Handler {
  public:
-   explicit LoginHandler(Service &service);
+   explicit LoginHandler(Service &service, PlayHandler &play_handler);
 
    void handle(Connection &conn, MineNet::Message::Reader &r) override;
    void handle_login_start(Connection &conn, MineNet::Message::Reader &r);
@@ -17,6 +17,7 @@ class LoginHandler : public Handler {
 
  private:
    Service &service;
+   PlayHandler &play_handler;
 };
 
 } // namespace Front::Protocol

@@ -32,11 +32,32 @@ Writer serialize(SpawnExperienceOrb msg) {
    return w;
 }
 
+Writer Message::serialize(SpawnPlayer msg) {
+   Writer w;
+   w.write_byte(0x05);
+   w.write_varint(msg.entity_id);
+   w.write_uuid(msg.id);
+   w.write_double(msg.x);
+   w.write_double(msg.y);
+   w.write_double(msg.z);
+   w.write_byte(msg.yaw / 360.0f * 256.0f);
+   w.write_byte(msg.pitch / 360.0f * 256.0f);
+   return w;
+}
+
 Writer serialize(Difficulty msg) {
    Writer w;
    w.write_byte(0x0e);
    w.write_byte(msg.difficulty);
    w.write_byte(msg.locked);
+   return w;
+}
+
+Writer serialize(Chat msg) {
+   Writer w;
+   w.write_byte(0x0f);
+   w.write_string(msg.message);
+   w.write_byte(static_cast<uint8_t>(msg.type));
    return w;
 }
 
@@ -65,7 +86,7 @@ Writer serialize(UpdateLight msg) {
 Writer serialize(ServerBrand msg) {
    Writer w;
    w.write_byte(0x19);
-   w.write_string("brand");
+   w.write_string("minecraft:brand");
    w.write_string(msg.brand);
    return w;
 }
@@ -75,7 +96,6 @@ Writer serialize(Disconnect msg) {
    w.write_byte(0x1b);
    w.write_string(msg.reason);
    return w;
-
 }
 
 Writer serialize(JoinGame msg) {
@@ -90,6 +110,40 @@ Writer serialize(JoinGame msg) {
    w.write_varint(msg.view_distance);
    w.write_byte(msg.reduced_debug_info);
    w.write_byte(msg.immediate_respawn);
+   return w;
+}
+
+Writer Message::serialize(EntityRelativeMove msg) {
+   Writer w;
+   w.write_byte(0x29);
+   w.write_varint(msg.entity_id);
+   w.write_big_endian<short>(msg.x);
+   w.write_big_endian<short>(msg.y);
+   w.write_big_endian<short>(msg.z);
+   w.write_byte(msg.on_ground);
+   return w;
+}
+
+Writer Message::serialize(EntityMove msg) {
+   Writer w;
+   w.write_byte(0x2a);
+   w.write_varint(msg.entity_id);
+   w.write_big_endian<short>(msg.x);
+   w.write_big_endian<short>(msg.y);
+   w.write_big_endian<short>(msg.z);
+   w.write_byte(msg.yaw * 256.0f / 360.0f);
+   w.write_byte(msg.pitch * 256.0f / 360.0f);
+   w.write_byte(msg.on_ground);
+   return w;
+}
+
+Writer Message::serialize(EntityLook msg) {
+   Writer w;
+   w.write_byte(0x2b);
+   w.write_varint(msg.entity_id);
+   w.write_byte(msg.yaw * 256.0f / 360.0f);
+   w.write_byte(msg.pitch * 256.0f / 360.0f);
+   w.write_byte(msg.on_ground);
    return w;
 }
 
@@ -138,6 +192,14 @@ Writer serialize(RecipeBook msg) {
    w.write_byte(msg.furnace_filtering_craftable);
    w.write_byte(0x00); // TODO: Support custom recipes
    w.write_byte(0x00);
+   return w;
+}
+
+Writer Message::serialize(EntityHeadLook msg) {
+   Writer w;
+   w.write_byte(0x3c);
+   w.write_varint(msg.entity_id);
+   w.write_byte(msg.yaw * 256.0f / 360.0f);
    return w;
 }
 

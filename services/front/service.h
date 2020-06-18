@@ -2,9 +2,11 @@
 #include "config.h"
 #include "connection.h"
 #include "players.h"
+#include "protocol/play_handler.h"
 #include <boost/random.hpp>
 #include <grpcpp/channel.h>
 #include <grpcpp/client_context.h>
+#include <minenet/msg/serverbound.h>
 #include <minepb/chunk.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
 #include <minepb/engine.grpc.pb.h>
@@ -18,7 +20,20 @@ typedef std::shared_ptr<grpc::Channel> EngineChannel;
 typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
     ChunkService;
 
+class Server;
+
 class Service {
+   PlayerManager players;
+
+   boost::random::mt19937 rand;
+
+   EnginePlayerService player_service;
+   ChunkService chunk_service;
+
+   char *cached_recipes = nullptr;
+   std::size_t cached_recipes_size;
+   char *cached_tags = nullptr;
+   std::size_t cached_tags_size;
  public:
    explicit Service(Config &conf);
    ~Service();
@@ -34,16 +49,13 @@ class Service {
    void init_player(Connection &conn, boost::uuids::uuid id);
    EnginePlayerService &get_player_service();
 
- private:
-   PlayerManager players;
-   std::vector<EnginePlayerService> player_services;
-   ChunkService chunk_service;
-   boost::random::mt19937 rand;
-   char *cached_recipes = nullptr;
-   size_t cached_recipes_size;
-   char *cached_tags = nullptr;
-   size_t cached_tags_size;
+   void on_message(boost::uuids::uuid player_id, MineNet::Message::ClientSettings msg);
+   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPosition msg);
+   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPositionRotation msg);
+   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerRotation msg);
+   void on_message(boost::uuids::uuid player_id, MineNet::Message::ChatMessage msg);
 
+ private:
    void load_chunk(Connection &conn, int x, int z);
 };
 

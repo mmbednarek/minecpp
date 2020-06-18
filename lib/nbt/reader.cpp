@@ -147,4 +147,24 @@ void Reader::foreach_long(std::function<void(long long value)> for_elem) {
    }
 }
 
+std::istream &Reader::raw_stream() { return get_stream(); }
+
+Utils::Vec3 Reader::read_vec3() {
+   auto tagid = read_static(TagID::End);
+   auto size = read_bswap<int>();
+   if (tagid == TagID::End)
+      return Utils::Vec3();
+
+   if (size != 3) {
+      for (int i = 0; i < size; ++i) {
+         skip_payload(TagID::Double);
+      }
+      return Utils::Vec3();
+   }
+
+   return Utils::Vec3(read_payload<TagID::Double>(),
+                      read_payload<TagID::Double>(),
+                      read_payload<TagID::Double>());
+}
+
 } // namespace NBT

@@ -1,21 +1,19 @@
 #include "login_handler.h"
-#include <boost/log/trivial.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <spdlog/spdlog.h>
 
 namespace Front::Protocol {
 
-LoginHandler::LoginHandler(Service &service) : service(service) {}
+LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler) : service(service), play_handler(play_handler) {}
 
 void LoginHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
    uint8_t op = r.read_byte();
-   BOOST_LOG_TRIVIAL(debug) << "handling status op = " << (int)op;
    switch (op) {
    case 0:
       handle_login_start(conn, r);
       break;
    default:
-      BOOST_LOG_TRIVIAL(info)
-          << "status handler: invalid operation code " << (int)op;
+      spdlog::debug("[login protocol] unknown operation code {}", (int)op);
    }
 }
 
@@ -23,9 +21,6 @@ constexpr int compression_threshold = 256;
 
 void LoginHandler::handle_login_start(Connection &conn, MineNet::Message::Reader &r) {
    std::string user_name = r.read_string();
-
-   BOOST_LOG_TRIVIAL(info) << "establishing connection with player "
-                           << user_name;
 
    auto response = service.login_player(user_name);
    if (!response.accepted) {
@@ -47,6 +42,7 @@ void LoginHandler::handle_login_start(Connection &conn, MineNet::Message::Reader
    conn.send(w);
 
    service.init_player(conn, response.uuid);
+   conn.async_read_packet(play_handler);
 }
 
 void LoginHandler::reject(Connection &conn, std::string_view message) {

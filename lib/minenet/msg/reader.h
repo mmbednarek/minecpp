@@ -15,6 +15,7 @@ class Reader {
    int read_varint();
    std::string read_string();
    float read_float();
+   double read_double();
    NBT::TagPtr read_nbt_tag();
 
    Game::Recipe read_recipe();
@@ -25,6 +26,8 @@ class Reader {
 
    Game::ItemStack read_stack();
    Game::StackVariants read_stack_variants();
+
+   std::string get_hex_data();
 
    template <typename T> T read_big_endian() {
       T result;

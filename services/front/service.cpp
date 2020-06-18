@@ -1,23 +1,22 @@
 #include "service.h"
 #include "protocol/protocol.h"
+#include "server.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/log/trivial.hpp>
 #include <fstream>
+#include <game/player.h>
 #include <grpcpp/grpcpp.h>
+#include <mineutils/uuid.h>
+#include <spdlog/spdlog.h>
 
 namespace Front {
 
 const char *internal_reason =
     R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
-Service::Service(Config &conf) : player_services(conf.engine_hosts.size()) {
-   int i = 0;
-   for (const auto &host : conf.engine_hosts) {
-      auto channel =
-          grpc::CreateChannel(host, grpc::InsecureChannelCredentials());
-      player_services[i] = minecpp::engine::PlayerService::NewStub(channel);
-      i++;
-   }
+Service::Service(Config &conf) {
+   auto channel = grpc::CreateChannel(conf.engine_hosts[0],
+                                      grpc::InsecureChannelCredentials());
+   player_service = minecpp::engine::PlayerService::NewStub(channel);
 
    auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host,
                                             grpc::InsecureChannelCredentials());
@@ -76,34 +75,30 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    auto player = players.get_player(id);
 
    grpc::ClientContext ctx;
-
-   /*
    minecpp::engine::AcceptPlayerResponse res;
    minecpp::engine::AcceptPlayerRequest req;
    req.set_name(player.name());
-   req.set_uuid(player.user_id_str());
-   get_player_service()->AcceptPlayer(&ctx, req, &res);
-    */
-   minecpp::engine::AcceptPlayerResponse res;
-   res.set_player_id(1);
-   res.mutable_game_info()->set_mode(minecpp::engine::GameMode::Survival);
-   res.mutable_game_info()->set_dimension(
-       minecpp::engine::DimensionType::Overworld);
-   res.mutable_game_info()->set_seed(1);
-   res.mutable_game_info()->set_max_players(20);
-   res.mutable_game_info()->set_world(minecpp::engine::WorldType::Default);
-   res.mutable_game_info()->set_view_distance(4);
-   res.mutable_game_info()->set_difficulty(minecpp::engine::Difficulty::Easy);
+   req.set_uuid(id.data, id.size());
+   auto status = get_player_service()->AcceptPlayer(&ctx, req, &res);
+   if (!status.ok()) {
+      spdlog::error("could not join player {}.", status.error_message());
+      conn.send_and_disconnect(Disconnect{
+          .reason = internal_reason,
+      });
+      return;
+   }
+
+   conn.set_uuid(id);
 
    conn.send(JoinGame{
-       .player_id = res.player_id(),
+       .player_id = static_cast<uint32_t>(res.player_data().entity_id()),
        .game_mode = static_cast<uint8_t>(res.game_info().mode()),
        .dimension = static_cast<uint32_t>(res.game_info().dimension()),
        .seed = res.game_info().seed(),
        .max_players = static_cast<uint8_t>(res.game_info().max_players()),
        .world_type = ({
           auto wld_type =
-              minecpp::engine::WorldType_Name(res.game_info().world());
+              minecpp::game::WorldType_Name(res.game_info().world());
           boost::algorithm::to_lower(wld_type);
           wld_type;
        }),
@@ -112,16 +107,19 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
        .immediate_respawn = res.game_info().do_immediate_respawn(),
    });
 
-   conn.send(ServerBrand{"minecraft:brand.minecpp"});
+   conn.send(ServerBrand{"minecpp"});
 
    conn.send(Difficulty{.difficulty =
                             static_cast<uint8_t>(res.game_info().difficulty()),
                         .locked = false});
 
+   Game::Player::Abilities abilities;
+   abilities.from_proto(res.player_data().abilities());
+
    conn.send(PlayerAbilities{
-       .flags = 0,
-       .fly_speed = 0.5f,
-       .walk_speed = 0.1f,
+       .flags = static_cast<uint8_t>(abilities.flags()),
+       .fly_speed = abilities.fly_speed,
+       .walk_speed = abilities.walk_speed,
    });
 
    conn.send(Raw{
@@ -135,7 +133,7 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    });
 
    conn.send(EntityStatus{
-       .entity_id = res.player_id(),
+       .entity_id = static_cast<uint32_t>(res.player_data().entity_id()),
        .opcode = 0x18,
    });
 
@@ -143,46 +141,117 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
 
    conn.send(RecipeBook{
        .state = Init,
-       .gui_open = false,
-       .filtering_craftable = false,
-       .furnace_gui_open = false,
-       .furnace_filtering_craftable = false,
+       .gui_open = res.player_data().recipe_book().gui_open(),
+       .filtering_craftable =
+           res.player_data().recipe_book().filtering_craftable(),
+       .furnace_gui_open = res.player_data().recipe_book().furnace_gui_open(),
+       .furnace_filtering_craftable =
+           res.player_data().recipe_book().furnace_filtering_craftable(),
    });
 
    conn.send(PlayerPositionLook{
-       .x = 0.0,
-       .y = 81.0,
-       .z = 0.0,
-       .yaw = 0.0f,
-       .pitch = 0.0f,
+       .x = res.player_data().x(),
+       .y = res.player_data().y(),
+       .z = res.player_data().z(),
+       .yaw = res.player_data().yaw(),
+       .pitch = res.player_data().pitch(),
        .flags = 0,
        .tp_id = 0,
    });
 
-   conn.send(AddPlayer{
-       .id = player.user_id(),
-       .name = player.name(),
-       .game_mode = 0x00,
-       .ping = 0x00,
+   grpc::ClientContext ctx2;
+   minecpp::engine::EmptyRequest empty;
+   minecpp::engine::ListPlayersResponse player_list;
+   status = get_player_service()->ListPlayers(&ctx2, empty, &player_list);
+   if (!status.ok()) {
+      spdlog::error("could not list players {}.", status.error_message());
+      conn.send_and_disconnect(Disconnect{
+          .reason = internal_reason,
+      });
+      return;
+   }
+
+   conn.get_server()->for_each_connection([id, player, res](Connection *c) {
+      if (!c)
+         return;
+      c->send(AddPlayer{
+          .id = id,
+          .name = player.name(),
+          .game_mode = static_cast<uint8_t>(res.player_data().game_mode()),
+          .ping = 0x00,
+      });
+      if (c->get_uuid() != id) {
+         c->send(SpawnPlayer{
+             .entity_id = res.player_data().entity_id(),
+             .id = id,
+             .x = res.player_data().x(),
+             .y = res.player_data().y(),
+             .z = res.player_data().z(),
+             .yaw = res.player_data().yaw(),
+             .pitch = res.player_data().pitch(),
+         });
+      }
    });
+
+   for (auto const &p : player_list.list()) {
+      boost::uuids::uuid p_id{};
+      Utils::decode_uuid(p_id, p.uuid().data());
+      if (p_id == id) {
+         continue;
+      }
+      conn.send(AddPlayer{
+          .id = p_id,
+          .name = p.name(),
+          .game_mode = static_cast<uint8_t>(p.game_mode()),
+          .ping = 0x00,
+      });
+   }
+
+   spdlog::info("{} has joined the game", player.name());
 
    conn.send(UpdateChunkPosition{
-       .x = 0,
-       .z = 0,
+       .x = static_cast<int>(res.player_data().x() / 16.0),
+       .z = static_cast<int>(res.player_data().z() / 16.0),
    });
 
-   for (int z = -2; z < 2; ++z) {
-      for (int x = -2; x < 2; ++x) {
+   for (int z = -4; z < 4; ++z) {
+      for (int x = -4; x < 4; ++x) {
          load_chunk(conn, x, z);
       }
    }
+
+   grpc::ClientContext ctx3;
+   minecpp::engine::ListPlayerEntitiesResponse player_entities;
+   status =
+       get_player_service()->ListPlayerEntities(&ctx3, empty, &player_entities);
+   if (!status.ok()) {
+      spdlog::error("could not list players {}.", status.error_message());
+      conn.send_and_disconnect(Disconnect{
+          .reason = internal_reason,
+      });
+      return;
+   }
+
+   for (auto const &e : player_entities.list()) {
+      boost::uuids::uuid e_id{};
+      Utils::decode_uuid(e_id, e.uuid().data());
+      if (e_id == id) {
+         continue;
+      }
+      conn.send(SpawnPlayer{
+          .entity_id = e.entity_id(),
+          .id = e_id,
+          .x = e.x(),
+          .y = e.y(),
+          .z = e.z(),
+          .yaw = e.yaw(),
+          .pitch = e.pitch(),
+      });
+   }
 }
 
-EnginePlayerService &Service::get_player_service() {
-   boost::random::uniform_int_distribution<> dist(0,
-                                                  player_services.size() - 1);
-   return player_services[dist(rand)];
-}
+EnginePlayerService &Service::get_player_service() { return player_service; }
+
 void Service::load_chunk(Connection &conn, int x, int z) {
    using namespace MineNet::Message;
 
@@ -194,15 +263,13 @@ void Service::load_chunk(Connection &conn, int x, int z) {
 
    auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &net_chunk);
    if (!status.ok()) {
-      BOOST_LOG_TRIVIAL(info)
-          << "could not get chunk data: " << status.error_details();
+      spdlog::error("error loading chunk: {}", status.error_message());
+
       conn.send_and_disconnect(Disconnect{
           .reason = internal_reason,
       });
       return;
    }
-
-   BOOST_LOG_TRIVIAL(info) << "sending chunk to user: x = " << net_chunk.pos_x() << ", z = " << net_chunk.pos_z();
 
    conn.send(ChunkData{
        .chunk = net_chunk,
@@ -210,6 +277,101 @@ void Service::load_chunk(Connection &conn, int x, int z) {
    conn.send(UpdateLight{
        .chunk = net_chunk,
    });
+}
+
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::ClientSettings msg) {
+   spdlog::info("client language: {}", msg.lang);
+}
+
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::PlayerPosition msg) {
+   char uuid[17];
+   Utils::encode_uuid(uuid, player_id);
+
+   grpc::ClientContext ctx;
+   minecpp::engine::SetPlayerPositionRequest pos;
+   pos.set_uuid(uuid);
+   pos.set_x(msg.x);
+   pos.set_y(msg.y);
+   pos.set_z(msg.z);
+
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->SetPlayerPosition(&ctx, pos, &res);
+   if (!status.ok()) {
+      spdlog::error("could not set player position: {}",
+                    status.error_message());
+      return;
+   }
+}
+
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::PlayerPositionRotation msg) {
+   char uuid[17];
+   Utils::encode_uuid(uuid, player_id);
+
+   grpc::ClientContext ctx;
+   minecpp::engine::SetPlayerPositionRequest pos;
+   pos.set_uuid(uuid);
+   pos.set_x(msg.x);
+   pos.set_y(msg.y);
+   pos.set_z(msg.z);
+
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->SetPlayerPosition(&ctx, pos, &res);
+   if (!status.ok()) {
+      spdlog::error("could not set player position: {}",
+                    status.error_message());
+      return;
+   }
+
+   grpc::ClientContext ctx_rot;
+   minecpp::engine::SetPlayerRotationRequest rot;
+   rot.set_uuid(uuid);
+   rot.set_yaw(msg.yaw);
+   rot.set_pitch(msg.pitch);
+
+   status = get_player_service()->SetPlayerRotation(&ctx_rot, rot, &res);
+   if (!status.ok()) {
+      spdlog::error("could not set player rotation: {}",
+                    status.error_message());
+      return;
+   }
+}
+
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::PlayerRotation msg) {
+   char uuid[17];
+   Utils::encode_uuid(uuid, player_id);
+   grpc::ClientContext ctx_rot;
+   minecpp::engine::SetPlayerRotationRequest rot;
+   rot.set_uuid(uuid);
+   rot.set_yaw(msg.yaw);
+   rot.set_pitch(msg.pitch);
+
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->SetPlayerRotation(&ctx_rot, rot, &res);
+   if (!status.ok()) {
+      spdlog::error("could not set player rotation: {}",
+                    status.error_message());
+      return;
+   }
+}
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::ChatMessage msg) {
+   char uuid[17];
+   Utils::encode_uuid(uuid, player_id);
+   grpc::ClientContext ctx_rot;
+   minecpp::engine::ChatMessageRequest chat;
+   chat.set_uuid(uuid);
+   chat.set_message(msg.message);
+
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->ChatMessage(&ctx_rot, chat, &res);
+   if (!status.ok()) {
+      spdlog::error("could not send chat message: {}", status.error_message());
+      return;
+   }
 }
 
 const char command_list[]{

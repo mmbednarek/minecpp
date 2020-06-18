@@ -1,6 +1,6 @@
 #include "status_handler.h"
 #include "../connection.h"
-#include <boost/log/trivial.hpp>
+#include <spdlog/spdlog.h>
 
 namespace Front::Protocol {
 
@@ -8,7 +8,6 @@ StatusHandler::StatusHandler() {}
 
 void StatusHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
    uint8_t op = r.read_byte();
-   BOOST_LOG_TRIVIAL(debug) << "[status] handling status op = " << (int)op;
    switch (op) {
    case 0:
       handle_info(conn);
@@ -17,7 +16,7 @@ void StatusHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
       handle_ping(conn, r);
       break;
    default:
-      BOOST_LOG_TRIVIAL(info) << "[status] invalid op code " << (int)op;
+      spdlog::debug("[status protocol] unknown operation code {}", (int)op);
    }
 }
 
@@ -540,7 +539,6 @@ void StatusHandler::handle_info(Connection &conn) {
 
 void StatusHandler::handle_ping(Connection &conn, MineNet::Message::Reader &r) {
    auto player_time = r.read_big_endian<uint64_t>();
-   BOOST_LOG_TRIVIAL(info) << "player time " << player_time;
 
    MineNet::Message::Writer w;
    w.write_byte(1);

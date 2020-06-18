@@ -4,10 +4,10 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
+#include <boost/uuid/uuid.hpp>
 #include <memory>
 #include <minenet/msg/io.h>
 #include <minenet/msg/message.h>
-#include <boost/log/trivial.hpp>
 
 namespace Front {
 
@@ -35,9 +35,10 @@ class Connection {
    void send_and_read(MineNet::Message::Writer &w, Protocol::Handler &h);
    void send_and_disconnect(MineNet::Message::Writer &w);
 
+   Server *get_server();
+
    template <typename M> void send(M msg) {
       auto w = MineNet::Message::serialize(msg);
-      BOOST_LOG_TRIVIAL(debug) << "sending " << w.peek_size() << " bytes";
       send(w);
    }
 
@@ -48,7 +49,6 @@ class Connection {
 
    template <typename M> void send_and_disconnect(M msg) {
       auto w = MineNet::Message::serialize(msg);
-      BOOST_LOG_TRIVIAL(debug) << "sending " << w.peek_size() << " bytes and disconnecting";
       send_and_disconnect(w);
    }
 
@@ -56,9 +56,14 @@ class Connection {
    void set_state(Protocol::State s);
    void set_compression_threshold(std::size_t threshold);
 
+   void set_uuid(boost::uuids::uuid uuid);
+   const boost::uuids::uuid &get_uuid() const;
+
+
  private:
    inline size_t read_varint(uint32_t result, uint32_t shift);
 
+   boost::uuids::uuid player_id{};
    int id = -1;
    std::size_t compression_threshold = 0;
    tcp::socket socket;

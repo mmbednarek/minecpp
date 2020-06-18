@@ -1,6 +1,7 @@
 #pragma once
 #include "material.h"
 #include "state.h"
+#include <mineutils/string.h>
 #include <string_view>
 #include <vector>
 
@@ -49,8 +50,7 @@ std::function<void(Block &)> with_material(const Material *mat);
 
 std::function<void(Block &)> with_material(const Material *mat, ColorId color);
 
-std::function<void(Block &)> with_material(const Material *mat,
-                                           DyeColor color);
+std::function<void(Block &)> with_material(const Material *mat, DyeColor color);
 
 std::function<void(Block &)> with_does_not_block_movement();
 
@@ -80,7 +80,13 @@ std::function<void(Block &)> with_variable_opacity();
 
 template <typename... T>
 std::function<void(Block &)> with_attributes(T... attribs) {
-   return [attribs...](Block &b) { b.attributes = {attribs...}; };
+   return [attribs...](Block &b) {
+      b.attributes = {attribs...};
+      std::sort(b.attributes.begin(), b.attributes.end(),
+                [](const Attribute *a, const Attribute *b) {
+                   return a->name() < b->name();
+                });
+   };
 }
 
 struct Properties {

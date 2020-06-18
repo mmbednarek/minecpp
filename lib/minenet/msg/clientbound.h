@@ -3,7 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 #include <map>
-#include <mineutils/buffer.h>
+#include <minenet/chat.h>
 #include <minepb/chunk.pb.h>
 #include <string_view>
 
@@ -31,12 +31,28 @@ struct SpawnExperienceOrb {
 };
 Writer serialize(SpawnExperienceOrb msg);
 
+// 0x05
+struct SpawnPlayer {
+   int entity_id;
+   boost::uuids::uuid id;
+   double x, y, z;
+   float yaw, pitch;
+};
+Writer serialize(SpawnPlayer msg);
+
 // 0x0e
 struct Difficulty {
    uint8_t difficulty;
    bool locked;
 };
 Writer serialize(Difficulty msg);
+
+// 0x0f
+struct Chat {
+   std::string message;
+   ChatType type;
+};
+Writer serialize(Chat msg);
 
 // 0x19
 struct ServerBrand {
@@ -84,6 +100,31 @@ struct JoinGame {
 };
 Writer serialize(JoinGame msg);
 
+// 0x29
+struct EntityRelativeMove {
+   int entity_id;
+   short x, y, z;
+   bool on_ground;
+};
+Writer serialize(EntityRelativeMove msg);
+
+// 0x2a
+struct EntityMove {
+   int entity_id;
+   short x, y, z;
+   float yaw, pitch;
+   bool on_ground;
+};
+Writer serialize(EntityMove msg);
+
+// 0x2b
+struct EntityLook {
+   int entity_id;
+   float yaw, pitch;
+   bool on_ground;
+};
+Writer serialize(EntityLook msg);
+
 enum PlayerAbilityFlag : uint8_t {
    Invulnerable = 1u << 0u,
    IsFlying = 1u << 1u,
@@ -128,6 +169,13 @@ struct RecipeBook {
    bool furnace_filtering_craftable;
 };
 Writer serialize(RecipeBook msg);
+
+// 0x3c
+struct EntityHeadLook {
+   int entity_id;
+   float yaw;
+};
+Writer serialize(EntityHeadLook msg);
 
 // 0x40
 struct HeldItem {

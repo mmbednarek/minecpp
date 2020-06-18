@@ -54,6 +54,41 @@ class PlayerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::AcceptPlayerResponse>> PrepareAsyncAcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::AcceptPlayerResponse>>(PrepareAsyncAcceptPlayerRaw(context, request, cq));
     }
+    virtual ::grpc::Status SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::minecpp::engine::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> AsyncSetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(AsyncSetPlayerPositionRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> PrepareAsyncSetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(PrepareAsyncSetPlayerPositionRaw(context, request, cq));
+    }
+    virtual ::grpc::Status SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::minecpp::engine::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> AsyncSetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(AsyncSetPlayerRotationRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> PrepareAsyncSetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(PrepareAsyncSetPlayerRotationRaw(context, request, cq));
+    }
+    virtual ::grpc::Status ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::minecpp::engine::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> AsyncChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(AsyncChatMessageRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> PrepareAsyncChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(PrepareAsyncChatMessageRaw(context, request, cq));
+    }
+    virtual ::grpc::Status ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::ListPlayersResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayersResponse>> AsyncListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayersResponse>>(AsyncListPlayersRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayersResponse>> PrepareAsyncListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayersResponse>>(PrepareAsyncListPlayersRaw(context, request, cq));
+    }
+    virtual ::grpc::Status ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::ListPlayerEntitiesResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>> AsyncListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>>(AsyncListPlayerEntitiesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>> PrepareAsyncListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>>(PrepareAsyncListPlayerEntitiesRaw(context, request, cq));
+    }
     class experimental_async_interface {
      public:
       virtual ~experimental_async_interface() {}
@@ -61,11 +96,41 @@ class PlayerService final {
       virtual void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       virtual void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
     };
     virtual class experimental_async_interface* experimental_async() { return nullptr; }
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::AcceptPlayerResponse>* AsyncAcceptPlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::AcceptPlayerResponse>* PrepareAsyncAcceptPlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* AsyncSetPlayerPositionRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncSetPlayerPositionRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* AsyncSetPlayerRotationRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncSetPlayerRotationRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* AsyncChatMessageRaw(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncChatMessageRaw(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayersResponse>* AsyncListPlayersRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayersResponse>* PrepareAsyncListPlayersRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>* AsyncListPlayerEntitiesRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>* PrepareAsyncListPlayerEntitiesRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -77,6 +142,41 @@ class PlayerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::AcceptPlayerResponse>> PrepareAsyncAcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::AcceptPlayerResponse>>(PrepareAsyncAcceptPlayerRaw(context, request, cq));
     }
+    ::grpc::Status SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::minecpp::engine::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> AsyncSetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(AsyncSetPlayerPositionRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> PrepareAsyncSetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(PrepareAsyncSetPlayerPositionRaw(context, request, cq));
+    }
+    ::grpc::Status SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::minecpp::engine::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> AsyncSetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(AsyncSetPlayerRotationRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> PrepareAsyncSetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(PrepareAsyncSetPlayerRotationRaw(context, request, cq));
+    }
+    ::grpc::Status ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::minecpp::engine::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> AsyncChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(AsyncChatMessageRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> PrepareAsyncChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(PrepareAsyncChatMessageRaw(context, request, cq));
+    }
+    ::grpc::Status ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::ListPlayersResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayersResponse>> AsyncListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayersResponse>>(AsyncListPlayersRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayersResponse>> PrepareAsyncListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayersResponse>>(PrepareAsyncListPlayersRaw(context, request, cq));
+    }
+    ::grpc::Status ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::ListPlayerEntitiesResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>> AsyncListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>>(AsyncListPlayerEntitiesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>> PrepareAsyncListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>>(PrepareAsyncListPlayerEntitiesRaw(context, request, cq));
+    }
     class experimental_async final :
       public StubInterface::experimental_async_interface {
      public:
@@ -84,6 +184,26 @@ class PlayerService final {
       void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, std::function<void(::grpc::Status)>) override;
       void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) override;
+      void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) override;
+      void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) override;
+      void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) override;
+      void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit experimental_async(Stub* stub): stub_(stub) { }
@@ -97,7 +217,22 @@ class PlayerService final {
     class experimental_async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::AcceptPlayerResponse>* AsyncAcceptPlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::AcceptPlayerResponse>* PrepareAsyncAcceptPlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* AsyncSetPlayerPositionRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncSetPlayerPositionRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* AsyncSetPlayerRotationRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncSetPlayerRotationRaw(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* AsyncChatMessageRaw(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncChatMessageRaw(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayersResponse>* AsyncListPlayersRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayersResponse>* PrepareAsyncListPlayersRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>* AsyncListPlayerEntitiesRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>* PrepareAsyncListPlayerEntitiesRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AcceptPlayer_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetPlayerPosition_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetPlayerRotation_;
+    const ::grpc::internal::RpcMethod rpcmethod_ChatMessage_;
+    const ::grpc::internal::RpcMethod rpcmethod_ListPlayers_;
+    const ::grpc::internal::RpcMethod rpcmethod_ListPlayerEntities_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -106,6 +241,11 @@ class PlayerService final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status AcceptPlayer(::grpc::ServerContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response);
+    virtual ::grpc::Status SetPlayerPosition(::grpc::ServerContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response);
+    virtual ::grpc::Status SetPlayerRotation(::grpc::ServerContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response);
+    virtual ::grpc::Status ChatMessage(::grpc::ServerContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response);
+    virtual ::grpc::Status ListPlayers(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response);
+    virtual ::grpc::Status ListPlayerEntities(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_AcceptPlayer : public BaseClass {
@@ -127,7 +267,107 @@ class PlayerService final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AcceptPlayer<Service > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SetPlayerPosition : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetPlayerPosition() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_SetPlayerPosition() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetPlayerPosition(::grpc::ServerContext* context, ::minecpp::engine::SetPlayerPositionRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_SetPlayerRotation : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetPlayerRotation() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_SetPlayerRotation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetPlayerRotation(::grpc::ServerContext* context, ::minecpp::engine::SetPlayerRotationRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_ChatMessage : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ChatMessage() {
+      ::grpc::Service::MarkMethodAsync(3);
+    }
+    ~WithAsyncMethod_ChatMessage() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestChatMessage(::grpc::ServerContext* context, ::minecpp::engine::ChatMessageRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_ListPlayers : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ListPlayers() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_ListPlayers() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestListPlayers(::grpc::ServerContext* context, ::minecpp::engine::EmptyRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::ListPlayersResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_ListPlayerEntities : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ListPlayerEntities() {
+      ::grpc::Service::MarkMethodAsync(5);
+    }
+    ~WithAsyncMethod_ListPlayerEntities() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestListPlayerEntities(::grpc::ServerContext* context, ::minecpp::engine::EmptyRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::ListPlayerEntitiesResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AcceptPlayer<WithAsyncMethod_SetPlayerPosition<WithAsyncMethod_SetPlayerRotation<WithAsyncMethod_ChatMessage<WithAsyncMethod_ListPlayers<WithAsyncMethod_ListPlayerEntities<Service > > > > > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_AcceptPlayer : public BaseClass {
    private:
@@ -159,7 +399,162 @@ class PlayerService final {
     }
     virtual void AcceptPlayer(::grpc::ServerContext* /*context*/, const ::minecpp::engine::AcceptPlayerRequest* /*request*/, ::minecpp::engine::AcceptPlayerResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
-  typedef ExperimentalWithCallbackMethod_AcceptPlayer<Service > ExperimentalCallbackService;
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_SetPlayerPosition : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_SetPlayerPosition() {
+      ::grpc::Service::experimental().MarkMethodCallback(1,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::SetPlayerPositionRequest* request,
+                 ::minecpp::engine::EmptyResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->SetPlayerPosition(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_SetPlayerPosition(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>*>(
+          ::grpc::Service::experimental().GetHandler(1))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_SetPlayerPosition() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_SetPlayerRotation : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_SetPlayerRotation() {
+      ::grpc::Service::experimental().MarkMethodCallback(2,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::SetPlayerRotationRequest* request,
+                 ::minecpp::engine::EmptyResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->SetPlayerRotation(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_SetPlayerRotation(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>*>(
+          ::grpc::Service::experimental().GetHandler(2))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_SetPlayerRotation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_ChatMessage : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_ChatMessage() {
+      ::grpc::Service::experimental().MarkMethodCallback(3,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::ChatMessageRequest* request,
+                 ::minecpp::engine::EmptyResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->ChatMessage(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_ChatMessage(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>*>(
+          ::grpc::Service::experimental().GetHandler(3))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_ChatMessage() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_ListPlayers : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_ListPlayers() {
+      ::grpc::Service::experimental().MarkMethodCallback(4,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::EmptyRequest* request,
+                 ::minecpp::engine::ListPlayersResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->ListPlayers(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_ListPlayers(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>*>(
+          ::grpc::Service::experimental().GetHandler(4))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_ListPlayers() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_ListPlayerEntities : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_ListPlayerEntities() {
+      ::grpc::Service::experimental().MarkMethodCallback(5,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::EmptyRequest* request,
+                 ::minecpp::engine::ListPlayerEntitiesResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->ListPlayerEntities(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_ListPlayerEntities(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>*>(
+          ::grpc::Service::experimental().GetHandler(5))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_ListPlayerEntities() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<Service > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AcceptPlayer : public BaseClass {
    private:
@@ -173,6 +568,91 @@ class PlayerService final {
     }
     // disable synchronous version of this method
     ::grpc::Status AcceptPlayer(::grpc::ServerContext* /*context*/, const ::minecpp::engine::AcceptPlayerRequest* /*request*/, ::minecpp::engine::AcceptPlayerResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetPlayerPosition : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetPlayerPosition() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_SetPlayerPosition() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetPlayerRotation : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetPlayerRotation() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_SetPlayerRotation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ChatMessage : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ChatMessage() {
+      ::grpc::Service::MarkMethodGeneric(3);
+    }
+    ~WithGenericMethod_ChatMessage() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ListPlayers : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ListPlayers() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_ListPlayers() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ListPlayerEntities : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ListPlayerEntities() {
+      ::grpc::Service::MarkMethodGeneric(5);
+    }
+    ~WithGenericMethod_ListPlayerEntities() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -195,6 +675,106 @@ class PlayerService final {
     }
     void RequestAcceptPlayer(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetPlayerPosition : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetPlayerPosition() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_SetPlayerPosition() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetPlayerPosition(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetPlayerRotation : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetPlayerRotation() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_SetPlayerRotation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetPlayerRotation(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ChatMessage : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ChatMessage() {
+      ::grpc::Service::MarkMethodRaw(3);
+    }
+    ~WithRawMethod_ChatMessage() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestChatMessage(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ListPlayers : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ListPlayers() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_ListPlayers() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestListPlayers(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ListPlayerEntities : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ListPlayerEntities() {
+      ::grpc::Service::MarkMethodRaw(5);
+    }
+    ~WithRawMethod_ListPlayerEntities() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestListPlayerEntities(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -223,6 +803,131 @@ class PlayerService final {
     virtual void AcceptPlayer(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
   template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_SetPlayerPosition : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_SetPlayerPosition() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(1,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->SetPlayerPosition(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_SetPlayerPosition() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_SetPlayerRotation : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_SetPlayerRotation() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(2,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->SetPlayerRotation(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_SetPlayerRotation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_ChatMessage : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_ChatMessage() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(3,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->ChatMessage(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_ChatMessage() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void ChatMessage(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_ListPlayers : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_ListPlayers() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(4,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->ListPlayers(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_ListPlayers() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void ListPlayers(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_ListPlayerEntities : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_ListPlayerEntities() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(5,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->ListPlayerEntities(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_ListPlayerEntities() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_AcceptPlayer : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -242,9 +947,109 @@ class PlayerService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedAcceptPlayer(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::AcceptPlayerRequest,::minecpp::engine::AcceptPlayerResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AcceptPlayer<Service > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetPlayerPosition : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetPlayerPosition() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_SetPlayerPosition<BaseClass>::StreamedSetPlayerPosition, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_SetPlayerPosition() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetPlayerPosition(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::SetPlayerPositionRequest,::minecpp::engine::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetPlayerRotation : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetPlayerRotation() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_SetPlayerRotation<BaseClass>::StreamedSetPlayerRotation, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_SetPlayerRotation() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetPlayerRotation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::SetPlayerRotationRequest,::minecpp::engine::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_ChatMessage : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ChatMessage() {
+      ::grpc::Service::MarkMethodStreamed(3,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_ChatMessage<BaseClass>::StreamedChatMessage, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_ChatMessage() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedChatMessage(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::ChatMessageRequest,::minecpp::engine::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_ListPlayers : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ListPlayers() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>(std::bind(&WithStreamedUnaryMethod_ListPlayers<BaseClass>::StreamedListPlayers, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_ListPlayers() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedListPlayers(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::EmptyRequest,::minecpp::engine::ListPlayersResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_ListPlayerEntities : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ListPlayerEntities() {
+      ::grpc::Service::MarkMethodStreamed(5,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>(std::bind(&WithStreamedUnaryMethod_ListPlayerEntities<BaseClass>::StreamedListPlayerEntities, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_ListPlayerEntities() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedListPlayerEntities(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::EmptyRequest,::minecpp::engine::ListPlayerEntitiesResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<Service > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AcceptPlayer<Service > StreamedService;
+  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<Service > > > > > > StreamedService;
 };
 
 }  // namespace engine

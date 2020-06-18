@@ -6,6 +6,7 @@
 #include <mineutils/concepts.h>
 #include <mineutils/format.h>
 #include <mineutils/reader.h>
+#include <mineutils/vec.h>
 #include <numeric>
 #include <string>
 
@@ -90,17 +91,18 @@ class Reader : private Utils::Reader {
    void skip_payload(TagID tagid);
    TagHeader peek_tag();
    void check_signature();
+   Utils::Vec3 read_vec3();
 
-   template <size_t s> std::array<uint8_t, s> read_array();
+   template <std::size_t s> std::array<uint8_t, s> read_array();
 
-   template <size_t s> std::array<int, s> read_int_array();
+   template <std::size_t s> std::array<int, s> read_int_array();
 
-   template <size_t s> std::array<uint64_t, s> read_long_array() {
-      auto size = read_bswap<int>();
+   template <std::size_t s> std::array<uint64_t, s> read_long_array() {
+      std::size_t size = read_bswap<int>();
       assert(size == s);
 
       std::array<uint64_t, s> result;
-      for (size_t i = 0; i < size; ++i) {
+      for (std::size_t i = 0; i < size; ++i) {
          result[i] = read_bswap<uint64_t>();
       }
       return result;
@@ -108,7 +110,7 @@ class Reader : private Utils::Reader {
 
    template <TagID t> inline tagid_type(t) read_payload() const = delete;
 
-   inline std::istream &raw_stream();
+   std::istream &raw_stream();
 
  private:
 #define payload_of(typeid, value)                                              \
@@ -176,7 +178,7 @@ template <size_t s> std::array<uint8_t, s> Reader::read_array() {
 }
 
 template <size_t s> std::array<int, s> Reader::read_int_array() {
-   auto size = read_bswap<int>();
+   std::size_t size = read_bswap<int>();
    assert(size == s);
 
    std::array<int, s> result;
@@ -212,6 +214,5 @@ template <TagID t> bool Reader::seek_tag(std::string &name) {
       return true;
    }
 }
-std::istream &Reader::raw_stream() { return get_stream(); }
 
 } // namespace NBT

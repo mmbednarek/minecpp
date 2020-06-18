@@ -5,6 +5,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <string>
 #include <vector>
+#include <functional>
 
 namespace Front {
 
@@ -20,6 +21,7 @@ class Server {
    void accept_conn();
    void handshake(Connection *conn);
    void drop_connection(int id);
+   void for_each_connection(std::function<void(Connection *)>);
 
  private:
    std::vector<Connection *> connections;
