@@ -11,6 +11,7 @@ service PlayerService {
     rpc ChatMessage (ChatMessageRequest) returns (EmptyResponse);
     rpc ListPlayers (EmptyRequest) returns (ListPlayersResponse);
     rpc ListPlayerEntities (EmptyRequest) returns (ListPlayerEntitiesResponse);
+    rpc RemovePlayer(RemovePlayerRequest) returns (EmptyResponse);
 }
 
 message AcceptPlayerRequest {
@@ -71,6 +72,10 @@ message PlayerEntityData {
 
 message ListPlayerEntitiesResponse {
     repeated PlayerEntityData list = 1;
+}
+
+message RemovePlayerRequest {
+    bytes uuid = 1;
 }
 
 message EmptyRequest {

@@ -49,6 +49,8 @@ class Service {
    void init_player(Connection &conn, boost::uuids::uuid id);
    EnginePlayerService &get_player_service();
 
+   void on_player_disconnect(boost::uuids::uuid player_id);
+
    void on_message(boost::uuids::uuid player_id, MineNet::Message::ClientSettings msg);
    void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPosition msg);
    void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPositionRotation msg);

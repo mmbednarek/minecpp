@@ -66,6 +66,11 @@ Service::AcceptPlayer(grpc::ServerContext *context,
    player.get_recipe_book().as_proto(
        response->mutable_player_data()->mutable_recipe_book());
 
+   minecpp::events::Chat chat;
+   chat.set_type(1);
+   chat.set_message(MineNet::format_join_message(request->name()));
+   producer.post(chat);
+
    return grpc::Status();
 }
 
@@ -187,6 +192,29 @@ grpc::Status Service::ListPlayerEntities(
       response->mutable_list()->Add(
           std::forward<minecpp::engine::PlayerEntityData>(data));
    });
+   return grpc::Status();
+}
+
+grpc::Status
+Service::RemovePlayer(grpc::ServerContext *context,
+                      const minecpp::engine::RemovePlayerRequest *request,
+                      minecpp::engine::EmptyResponse *response) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, request->uuid().data());
+
+   auto player = players.get_player(id);
+
+   minecpp::events::Chat chat;
+   chat.set_type(1);
+   chat.set_message(MineNet::format_left_message(player.get_player_name()));
+   producer.post(chat);
+
+   minecpp::events::RemovePlayer remove_player;
+   remove_player.set_uuid(request->uuid());
+   remove_player.set_entity_id(player.get_entity_id());
+   producer.post(remove_player);
+
+   players.remove_player(id);
    return grpc::Status();
 }
 

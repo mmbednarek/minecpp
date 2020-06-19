@@ -46,6 +46,11 @@ class Service final : public minecpp::engine::PlayerService::Service {
        grpc::ServerContext *context,
        const minecpp::engine::EmptyRequest *request,
        minecpp::engine::ListPlayerEntitiesResponse *response) override;
+
+   grpc::Status
+   RemovePlayer(grpc::ServerContext *context,
+                const minecpp::engine::RemovePlayerRequest *request,
+                minecpp::engine::EmptyResponse *response) override;
 };
 
 } // namespace Engine

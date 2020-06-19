@@ -1,11 +1,11 @@
 #include "players.h"
-#include <utility>
 #include <boost/uuid/uuid_io.hpp>
 #include <fstream>
 #include <mineutils/compression.h>
 #include <mineutils/format.h>
 #include <mineutils/uuid.h>
 #include <nbt/reader.h>
+#include <utility>
 
 namespace Engine {
 
@@ -56,8 +56,30 @@ Game::Entity::Entity &PlayerManager::get_entity(uuid id) {
    return entities.get_entity(get_player(id).get_entity_id());
 }
 
-void PlayerManager::for_each_player(std::function<void(Game::Player &)> callback) {
+void PlayerManager::for_each_player(
+    std::function<void(Game::Player &)> callback) {
    std::for_each(players.begin(), players.end(), std::move(callback));
+}
+
+void PlayerManager::remove_player(uuid id) {
+   char uuid[17];
+   Utils::encode_uuid(uuid, id);
+   try {
+      auto index = uuid_to_id.at(uuid);
+      players.erase(players.begin() + index);
+      remap_ids();
+   } catch (std::runtime_error &e) {
+   }
+}
+
+void PlayerManager::remap_ids() {
+   uuid_to_id = std::map<std::string, uint32_t>();
+   uint32_t index = 0;
+   for (auto const &p : players) {
+      char uuid[17];
+      Utils::encode_uuid(uuid, p.get_id());
+      uuid_to_id[uuid] = index++;
+   }
 }
 
 } // namespace Engine

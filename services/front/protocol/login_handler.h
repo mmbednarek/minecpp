@@ -12,6 +12,7 @@ class LoginHandler : public Handler {
 
    void handle(Connection &conn, MineNet::Message::Reader &r) override;
    void handle_login_start(Connection &conn, MineNet::Message::Reader &r);
+   void handle_disconnect(Connection &conn) override;
 
    void reject(Connection &conn, std::string_view message);
 

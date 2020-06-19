@@ -47,7 +47,7 @@ struct TableStruct_events_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[5]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -68,6 +68,9 @@ extern EntityMoveDefaultTypeInternal _EntityMove_default_instance_;
 class PlayerPositionRotation;
 class PlayerPositionRotationDefaultTypeInternal;
 extern PlayerPositionRotationDefaultTypeInternal _PlayerPositionRotation_default_instance_;
+class RemovePlayer;
+class RemovePlayerDefaultTypeInternal;
+extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
 class SpawnPlayer;
 class SpawnPlayerDefaultTypeInternal;
 extern SpawnPlayerDefaultTypeInternal _SpawnPlayer_default_instance_;
@@ -78,6 +81,7 @@ template<> ::minecpp::events::Chat* Arena::CreateMaybeMessage<::minecpp::events:
 template<> ::minecpp::events::EntityLook* Arena::CreateMaybeMessage<::minecpp::events::EntityLook>(Arena*);
 template<> ::minecpp::events::EntityMove* Arena::CreateMaybeMessage<::minecpp::events::EntityMove>(Arena*);
 template<> ::minecpp::events::PlayerPositionRotation* Arena::CreateMaybeMessage<::minecpp::events::PlayerPositionRotation>(Arena*);
+template<> ::minecpp::events::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::events::RemovePlayer>(Arena*);
 template<> ::minecpp::events::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::events::SpawnPlayer>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
@@ -842,6 +846,145 @@ class Chat :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_events_2eproto;
 };
+// -------------------------------------------------------------------
+
+class RemovePlayer :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.events.RemovePlayer) */ {
+ public:
+  RemovePlayer();
+  virtual ~RemovePlayer();
+
+  RemovePlayer(const RemovePlayer& from);
+  RemovePlayer(RemovePlayer&& from) noexcept
+    : RemovePlayer() {
+    *this = ::std::move(from);
+  }
+
+  inline RemovePlayer& operator=(const RemovePlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RemovePlayer& operator=(RemovePlayer&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RemovePlayer& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RemovePlayer* internal_default_instance() {
+    return reinterpret_cast<const RemovePlayer*>(
+               &_RemovePlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  void Swap(RemovePlayer* other);
+  friend void swap(RemovePlayer& a, RemovePlayer& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RemovePlayer* New() const final {
+    return CreateMaybeMessage<RemovePlayer>(nullptr);
+  }
+
+  RemovePlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RemovePlayer>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RemovePlayer& from);
+  void MergeFrom(const RemovePlayer& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RemovePlayer* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.events.RemovePlayer";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_events_2eproto);
+    return ::descriptor_table_events_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes uuid = 1;
+  void clear_uuid();
+  static const int kUuidFieldNumber = 1;
+  const std::string& uuid() const;
+  void set_uuid(const std::string& value);
+  void set_uuid(std::string&& value);
+  void set_uuid(const char* value);
+  void set_uuid(const void* value, size_t size);
+  std::string* mutable_uuid();
+  std::string* release_uuid();
+  void set_allocated_uuid(std::string* uuid);
+
+  // int32 entity_id = 2;
+  void clear_entity_id();
+  static const int kEntityIdFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 entity_id() const;
+  void set_entity_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.events.RemovePlayer)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  ::PROTOBUF_NAMESPACE_ID::int32 entity_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_events_2eproto;
+};
 // ===================================================================
 
 
@@ -1297,9 +1440,80 @@ inline void Chat::set_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:minecpp.events.Chat.type)
 }
 
+// -------------------------------------------------------------------
+
+// RemovePlayer
+
+// bytes uuid = 1;
+inline void RemovePlayer::clear_uuid() {
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& RemovePlayer::uuid() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.RemovePlayer.uuid)
+  return uuid_.GetNoArena();
+}
+inline void RemovePlayer::set_uuid(const std::string& value) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.events.RemovePlayer.uuid)
+}
+inline void RemovePlayer::set_uuid(std::string&& value) {
+  
+  uuid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.events.RemovePlayer.uuid)
+}
+inline void RemovePlayer::set_uuid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.events.RemovePlayer.uuid)
+}
+inline void RemovePlayer::set_uuid(const void* value, size_t size) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.events.RemovePlayer.uuid)
+}
+inline std::string* RemovePlayer::mutable_uuid() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.events.RemovePlayer.uuid)
+  return uuid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* RemovePlayer::release_uuid() {
+  // @@protoc_insertion_point(field_release:minecpp.events.RemovePlayer.uuid)
+  
+  return uuid_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void RemovePlayer::set_allocated_uuid(std::string* uuid) {
+  if (uuid != nullptr) {
+    
+  } else {
+    
+  }
+  uuid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uuid);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.events.RemovePlayer.uuid)
+}
+
+// int32 entity_id = 2;
+inline void RemovePlayer::clear_entity_id() {
+  entity_id_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 RemovePlayer::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.RemovePlayer.entity_id)
+  return entity_id_;
+}
+inline void RemovePlayer::set_entity_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  entity_id_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.RemovePlayer.entity_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

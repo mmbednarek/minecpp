@@ -11,4 +11,12 @@ std::string format_chat_message(std::string_view player_name, std::string_view m
    return Utils::format(R"({"extra":[{"color": "yellow", "bold": true, "text": "{}"}, {"color":"gray", "text": " {}"}], "text": ""})", player_name, message);
 }
 
+std::string format_left_message(std::string_view player_name) {
+   return Utils::format(R"({"extra":[{"color": "gold", "bold": true, "text": "Player {} left the server"}], "text": ""})", player_name);
+}
+
+std::string format_join_message(std::string_view player_name) {
+   return Utils::format(R"({"extra":[{"color": "gold", "bold": true, "text": "Player {} joined the server"}], "text": ""})", player_name);
+}
+
 }

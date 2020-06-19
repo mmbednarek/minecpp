@@ -373,6 +373,17 @@ void Service::on_message(boost::uuids::uuid player_id,
       return;
    }
 }
+void Service::on_player_disconnect(boost::uuids::uuid player_id) {
+   minecpp::engine::RemovePlayerRequest req;
+   req.set_uuid(player_id.data, player_id.size());
+   grpc::ClientContext ctx;
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->RemovePlayer(&ctx, req, &res);
+   if (!status.ok()) {
+      spdlog::error("could not remove player: {}", status.error_message());
+      return;
+   }
+}
 
 const char command_list[]{
     0x12, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,

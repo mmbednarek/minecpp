@@ -546,4 +546,6 @@ void StatusHandler::handle_ping(Connection &conn, MineNet::Message::Reader &r) {
    conn.send_and_disconnect(w);
 }
 
+void StatusHandler::handle_disconnect(Connection &conn) {}
+
 } // namespace Front::Protocol

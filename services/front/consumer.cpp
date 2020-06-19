@@ -43,6 +43,10 @@ void Consumer::consume(KafkaHandler handler) {
          EntityLook msg;
          msg.ParseFromString(payload);
          on_event(msg);
+      } else if (key == "RemovePlayer") {
+         RemovePlayer msg;
+         msg.ParseFromString(payload);
+         on_event(msg);
       } else if (key == "Chat") {
          Chat msg;
          msg.ParseFromString(payload);
@@ -120,6 +124,22 @@ void Consumer::on_event(Chat &msg) {
          return;
       conn->send(MineNet::Message::Chat{
           .message = msg.message(),
+      });
+   });
+}
+
+void Consumer::on_event(RemovePlayer &msg) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, msg.uuid().data());
+
+   server.for_each_connection([&msg, id](Connection *conn) {
+      if (!conn)
+         return;
+      conn->send(MineNet::Message::RemovePlayer{
+          .id = id,
+      });
+      conn->send(MineNet::Message::DestroyEntity{
+          .entity_id = static_cast<uint32_t>(msg.entity_id()),
       });
    });
 }

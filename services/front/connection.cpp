@@ -11,6 +11,8 @@ Connection::Connection(boost::asio::io_context &ctx, Server *server)
     : socket(ctx), _state(Protocol::Handshake), server(server) {}
 
 Connection::~Connection() {
+   get_server()->get_handler(_state).handle_disconnect(*this);
+
    if (!socket.is_open())
       return;
 

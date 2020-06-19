@@ -96,4 +96,8 @@ void Server::for_each_connection(std::function<void(Connection *)> f) {
    std::for_each(connections.begin(), connections.end(), f);
 }
 
+Protocol::Handler &Server::get_handler(const Protocol::State state) {
+   return *handlers[state];
+}
+
 } // namespace Front

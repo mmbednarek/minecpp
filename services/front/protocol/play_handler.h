@@ -21,6 +21,7 @@ class PlayHandler : public Handler {
    PlayHandler(Service &service);
 
    void handle(Connection &conn, Reader &r) override;
+   void handle_disconnect(Connection &conn) override ;
 };
 
 } // namespace Front::Protocol

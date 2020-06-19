@@ -7,7 +7,8 @@ namespace Front::Protocol {
 class StatusHandler : public Handler {
  public:
    StatusHandler();
-   virtual void handle(Connection &conn, MineNet::Message::Reader &r) override;
+   void handle(Connection &conn, MineNet::Message::Reader &r) override;
+   void handle_disconnect(Connection &conn) override;
 
  private:
    void handle_info(Connection &conn);

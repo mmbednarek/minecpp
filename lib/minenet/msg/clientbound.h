@@ -149,6 +149,12 @@ struct AddPlayer {
 };
 Writer serialize(AddPlayer msg);
 
+// 0x34 0x04
+struct RemovePlayer {
+   uuid id;
+};
+Writer serialize(RemovePlayer msg);
+
 // 0x36
 struct PlayerPositionLook {
    double x, y, z;
@@ -169,6 +175,12 @@ struct RecipeBook {
    bool furnace_filtering_craftable;
 };
 Writer serialize(RecipeBook msg);
+
+// 0x38 0x01
+struct DestroyEntity {
+   uint32_t entity_id;
+};
+Writer serialize(DestroyEntity msg);
 
 // 0x3c
 struct EntityHeadLook {

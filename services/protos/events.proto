@@ -36,3 +36,7 @@ message Chat {
     int32 type = 2;
 }
 
+message RemovePlayer {
+    bytes uuid = 1;
+    int32 entity_id = 2;
+}

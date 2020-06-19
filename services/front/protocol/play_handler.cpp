@@ -53,4 +53,8 @@ void PlayHandler::handle(Connection &conn, Reader &r) {
    conn.async_read_packet(*this);
 }
 
+void PlayHandler::handle_disconnect(Connection &conn) {
+   service.on_player_disconnect(conn.get_uuid());
+}
+
 } // namespace Front::Protocol

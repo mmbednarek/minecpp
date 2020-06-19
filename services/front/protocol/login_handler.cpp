@@ -58,4 +58,6 @@ void LoginHandler::reject(Connection &conn, std::string_view message) {
    conn.send_and_disconnect(w);
 }
 
+void LoginHandler::handle_disconnect(Connection &conn) {}
+
 } // namespace Front::Protocol

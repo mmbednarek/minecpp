@@ -22,6 +22,7 @@ class Server {
    void handshake(Connection *conn);
    void drop_connection(int id);
    void for_each_connection(std::function<void(Connection *)>);
+   Protocol::Handler &get_handler(const Protocol::State state);
 
  private:
    std::vector<Connection *> connections;

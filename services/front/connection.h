@@ -57,7 +57,7 @@ class Connection {
    void set_compression_threshold(std::size_t threshold);
 
    void set_uuid(boost::uuids::uuid uuid);
-   const boost::uuids::uuid &get_uuid() const;
+   [[nodiscard]] const boost::uuids::uuid &get_uuid() const;
 
 
  private:

@@ -25,6 +25,8 @@ class PlayerManager {
    Game::Player &get_player(uuid id);
    Game::Entity::Entity &get_entity(uuid id);
    void for_each_player(std::function<void(Game::Player &)> callback);
+   void remove_player(uuid id);
+   void remap_ids();
 };
 
 } // namespace Engine

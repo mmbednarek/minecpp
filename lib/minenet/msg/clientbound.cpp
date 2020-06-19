@@ -169,6 +169,15 @@ Writer serialize(AddPlayer msg) {
    return w;
 }
 
+Writer Message::serialize(RemovePlayer msg) {
+   Writer w;
+   w.write_byte(0x34);
+   w.write_byte(0x04);
+   w.write_varint(1);
+   w.write_uuid(msg.id);
+   return w;
+}
+
 Writer serialize(PlayerPositionLook msg) {
    Writer w;
    w.write_byte(0x36);
@@ -192,6 +201,14 @@ Writer serialize(RecipeBook msg) {
    w.write_byte(msg.furnace_filtering_craftable);
    w.write_byte(0x00); // TODO: Support custom recipes
    w.write_byte(0x00);
+   return w;
+}
+
+Writer Message::serialize(DestroyEntity msg) {
+   Writer w;
+   w.write_byte(0x38);
+   w.write_varint(1);
+   w.write_varint(msg.entity_id);
    return w;
 }
 
