@@ -40,6 +40,18 @@ struct SpawnPlayer {
 };
 Writer serialize(SpawnPlayer msg);
 
+// 0x10
+struct MultiBlockChange {
+   struct Change {
+      short offset;
+      uint32_t state;
+   };
+
+   int chunk_x, chunk_z;
+   std::vector<Change> changes;
+};
+Writer serialize(MultiBlockChange msg);
+
 // 0x0e
 struct Difficulty {
    uint8_t difficulty;

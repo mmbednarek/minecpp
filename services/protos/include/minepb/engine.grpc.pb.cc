@@ -27,6 +27,7 @@ static const char* PlayerService_method_names[] = {
   "/minecpp.engine.PlayerService/ListPlayers",
   "/minecpp.engine.PlayerService/ListPlayerEntities",
   "/minecpp.engine.PlayerService/RemovePlayer",
+  "/minecpp.engine.PlayerService/DestroyBlock",
 };
 
 std::unique_ptr< PlayerService::Stub> PlayerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -43,6 +44,7 @@ PlayerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_ListPlayers_(PlayerService_method_names[4], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ListPlayerEntities_(PlayerService_method_names[5], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemovePlayer_(PlayerService_method_names[6], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_DestroyBlock_(PlayerService_method_names[7], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status PlayerService::Stub::AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::minecpp::engine::AcceptPlayerResponse* response) {
@@ -241,6 +243,34 @@ void PlayerService::Stub::experimental_async::RemovePlayer(::grpc::ClientContext
   return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_RemovePlayer_, context, request, false);
 }
 
+::grpc::Status PlayerService::Stub::DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::minecpp::engine::EmptyResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_DestroyBlock_, context, request, response);
+}
+
+void PlayerService::Stub::experimental_async::DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_DestroyBlock_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_DestroyBlock_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_DestroyBlock_, context, request, response, reactor);
+}
+
+void PlayerService::Stub::experimental_async::DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_DestroyBlock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PlayerService::Stub::AsyncDestroyBlockRaw(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_DestroyBlock_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PlayerService::Stub::PrepareAsyncDestroyBlockRaw(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_DestroyBlock_, context, request, false);
+}
+
 PlayerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayerService_method_names[0],
@@ -277,6 +307,11 @@ PlayerService::Service::Service() {
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>(
           std::mem_fn(&PlayerService::Service::RemovePlayer), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayerService_method_names[7],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(
+          std::mem_fn(&PlayerService::Service::DestroyBlock), this)));
 }
 
 PlayerService::Service::~Service() {
@@ -325,6 +360,13 @@ PlayerService::Service::~Service() {
 }
 
 ::grpc::Status PlayerService::Service::RemovePlayer(::grpc::ServerContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayerService::Service::DestroyBlock(::grpc::ServerContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response) {
   (void) context;
   (void) request;
   (void) response;

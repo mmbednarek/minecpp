@@ -29,4 +29,39 @@ void for_each_packed(const std::vector<long long> &data,
    }
 }
 
+void set_packed(std::vector<long long> &data, uint8_t bits, uint32_t index,
+                uint32_t value) {
+   int pack = bits * index / 64;
+   int offset = bits * index % 64;
+
+   uint64_t mask = ((1u << bits) - 1u);
+
+   uint64_t full_pack = data[pack];
+   full_pack &= ~(mask << offset);
+   full_pack |= (value & mask) << offset;
+   data[pack] = full_pack;
+
+   if ((64 - offset) < bits) {
+      auto trailing_bits = bits + offset - 64;
+      full_pack = data[pack + 1];
+      mask = ((1u << trailing_bits)) - 1u;
+      full_pack &= ~mask;
+      full_pack |= (value >> (64 - offset)) & mask;
+      data[pack + 1] = full_pack;
+   }
+}
+
+void resize_pack(std::vector<long long> &data, uint8_t old_bits,
+                 uint8_t new_bits) {
+   std::vector<long long> resized(data.size() / old_bits * new_bits);
+
+   uint32_t index = 0;
+   for_each_packed(data, [&resized, &index, new_bits](uint32_t value) {
+      set_packed(resized, new_bits, index, value);
+      ++index;
+   });
+
+   data = resized;
+}
+
 } // namespace Utils

@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
-#include "../common/utils/format.h"
-#include "../common/utils/random.h"
+#include <gtest/gtest.h>
+#include <mineutils/format.h>
+#include <mineutils/random.h>
 
 TEST(Utils, Format) {
 	auto empty_format = Utils::format("Hello!");

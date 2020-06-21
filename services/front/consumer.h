@@ -38,6 +38,7 @@ class Consumer {
    void on_event(SpawnPlayer &pos);
    void on_event(Chat &pos);
    void on_event(RemovePlayer &pos);
+   void on_event(UpdateBlock &msg);
 };
 
 } // namespace Front

@@ -1,6 +1,7 @@
 #include "netchunk.h"
 #include <game/chunk/utils.h>
 #include <game/items/registry.h>
+#include <mineutils/packed.h>
 #include <stdexcept>
 #include <vector>
 
@@ -158,6 +159,113 @@ void NetChunk::as_proto(minecpp::chunk::NetChunk *chunk) {
       *out_sec->mutable_sky_light() = {sec.second.sky_light.begin(),
                                        sec.second.sky_light.end()};
    }
+}
+
+void NetChunk::create_empty_section(int8_t sec) {
+   Game::NetSection section;
+   section.bits = 4; // start with 4 bits
+   section.data = std::vector<long long>(4096 * 4 / 64);
+   section.ref_count = 4096;
+   section.palette.emplace_back(0);
+   sections[sec] = std::move(section);
+}
+
+void NetChunk::set_block(int x, int y, int z, uint32_t state) {
+   int8_t sec = y / 16;
+   auto iter = sections.find(sec);
+   if (iter == sections.end()) {
+      create_empty_section(sec);
+      iter = sections.find(sec);
+   }
+
+   auto &section = iter->second;
+   auto index =
+       std::find(section.palette.begin(), section.palette.end(), state);
+   int value;
+   if (index == section.palette.end()) {
+      value = section.palette.size();
+      section.palette.emplace_back(state);
+      if (value >= section.bits) {
+         Utils::resize_pack(section.data, section.bits, section.bits + 1);
+         ++section.bits;
+      }
+   } else {
+      value = *index;
+   }
+
+   Utils::set_packed(section.data, section.bits,
+                     (y % 16) * 16 * 16 + z * 16 + x, value);
+
+   set_block_light(x, y, z, 15);
+   set_sky_light(x, y, z, 15);
+}
+
+uint8_t NetChunk::get_block_light(int x, int y, int z) {
+   int8_t sec = y / 16;
+   auto iter = sections.find(sec);
+   if (iter == sections.end()) {
+      return 0;
+   }
+
+   if (iter->second.block_light.empty()) {
+      return 0;
+   }
+
+   int index = (y % 16) * 16 * 16 + z * 16 + x;
+
+   if (index % 2 == 0) {
+      return iter->second.block_light[index / 2] & 15;
+   } else {
+      return iter->second.block_light[index / 2] >> 4;
+   }
+}
+
+void NetChunk::set_block_light(int x, int y, int z, uint8_t value) {
+   int8_t sec = y / 16;
+   auto iter = sections.find(sec);
+   if (iter == sections.end()) {
+      return;
+   }
+
+   if (iter->second.block_light.empty()) {
+      return;
+   }
+
+   int index = (y % 16) * 16 * 16 + z * 16 + x;
+
+   auto pack = iter->second.block_light[index / 2];
+   if (index % 2 == 0) {
+      pack &= 240;
+      pack |= value & 15;
+   } else {
+      pack &= 15;
+      pack |= (value & 15) << 4;
+   }
+   iter->second.block_light[index / 2] = pack;
+}
+
+void NetChunk::set_sky_light(int x, int y, int z, uint8_t value) {
+   int8_t sec = y / 16;
+   auto iter = sections.find(sec);
+   if (iter == sections.end()) {
+      return;
+   }
+
+   if (iter->second.sky_light.empty()) {
+      return;
+   }
+
+   int index = (y % 16) * 16 * 16 + z * 16 + x;
+
+   auto pack = iter->second.sky_light[index / 2];
+   if (index % 2 == 0) {
+      pack &= 240;
+      pack |= value & 15;
+   } else {
+      pack &= 15;
+      pack |= (value & 15) << 4;
+   }
+   iter->second.sky_light[index / 2] = pack;
 }
 
 } // namespace Game

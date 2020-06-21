@@ -58,9 +58,11 @@ constexpr uint32_t find_enum(uint32_t index) {
 
 template <typename... Enums> class Enum {
    static const std::array<std::string, sizeof...(Enums)> strings;
-   const uint32_t i;
+   uint32_t i;
 
  public:
+   Enum() : i(0) {}
+
    explicit constexpr Enum(uint32_t index) : i(index) {
       if (index >= sizeof...(Enums)) {
          throw std::runtime_error("invalid enum index");

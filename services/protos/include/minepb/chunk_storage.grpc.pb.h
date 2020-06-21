@@ -54,6 +54,13 @@ class ChunkStorage final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk::NetChunk>> PrepareAsyncLoadChunk(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk::NetChunk>>(PrepareAsyncLoadChunkRaw(context, request, cq));
     }
+    virtual ::grpc::Status SetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::minecpp::chunk_storage::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk_storage::EmptyResponse>> AsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk_storage::EmptyResponse>>(AsyncSetBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk_storage::EmptyResponse>> PrepareAsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk_storage::EmptyResponse>>(PrepareAsyncSetBlockRaw(context, request, cq));
+    }
     class experimental_async_interface {
      public:
       virtual ~experimental_async_interface() {}
@@ -61,11 +68,17 @@ class ChunkStorage final {
       virtual void LoadChunk(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk::NetChunk* response, std::function<void(::grpc::Status)>) = 0;
       virtual void LoadChunk(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest* request, ::minecpp::chunk::NetChunk* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       virtual void LoadChunk(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk::NetChunk* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void SetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest* request, ::minecpp::chunk_storage::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk_storage::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest* request, ::minecpp::chunk_storage::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void SetBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk_storage::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
     };
     virtual class experimental_async_interface* experimental_async() { return nullptr; }
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk::NetChunk>* AsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk::NetChunk>* PrepareAsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk_storage::EmptyResponse>* AsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::chunk_storage::EmptyResponse>* PrepareAsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -77,6 +90,13 @@ class ChunkStorage final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::chunk::NetChunk>> PrepareAsyncLoadChunk(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::chunk::NetChunk>>(PrepareAsyncLoadChunkRaw(context, request, cq));
     }
+    ::grpc::Status SetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::minecpp::chunk_storage::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::chunk_storage::EmptyResponse>> AsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::chunk_storage::EmptyResponse>>(AsyncSetBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::chunk_storage::EmptyResponse>> PrepareAsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::chunk_storage::EmptyResponse>>(PrepareAsyncSetBlockRaw(context, request, cq));
+    }
     class experimental_async final :
       public StubInterface::experimental_async_interface {
      public:
@@ -84,6 +104,10 @@ class ChunkStorage final {
       void LoadChunk(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk::NetChunk* response, std::function<void(::grpc::Status)>) override;
       void LoadChunk(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest* request, ::minecpp::chunk::NetChunk* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       void LoadChunk(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk::NetChunk* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void SetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest* request, ::minecpp::chunk_storage::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk_storage::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetBlock(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest* request, ::minecpp::chunk_storage::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void SetBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::chunk_storage::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit experimental_async(Stub* stub): stub_(stub) { }
@@ -97,7 +121,10 @@ class ChunkStorage final {
     class experimental_async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::minecpp::chunk::NetChunk>* AsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::chunk::NetChunk>* PrepareAsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::chunk_storage::EmptyResponse>* AsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::chunk_storage::EmptyResponse>* PrepareAsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::chunk_storage::SetBlockRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_LoadChunk_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetBlock_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -106,6 +133,7 @@ class ChunkStorage final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status LoadChunk(::grpc::ServerContext* context, const ::minecpp::chunk_storage::LoadChunkRequest* request, ::minecpp::chunk::NetChunk* response);
+    virtual ::grpc::Status SetBlock(::grpc::ServerContext* context, const ::minecpp::chunk_storage::SetBlockRequest* request, ::minecpp::chunk_storage::EmptyResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_LoadChunk : public BaseClass {
@@ -127,7 +155,27 @@ class ChunkStorage final {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_LoadChunk<Service > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetBlock() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetBlock(::grpc::ServerContext* context, ::minecpp::chunk_storage::SetBlockRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::chunk_storage::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<Service > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_LoadChunk : public BaseClass {
    private:
@@ -159,7 +207,38 @@ class ChunkStorage final {
     }
     virtual void LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::LoadChunkRequest* /*request*/, ::minecpp::chunk::NetChunk* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
-  typedef ExperimentalWithCallbackMethod_LoadChunk<Service > ExperimentalCallbackService;
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_SetBlock() {
+      ::grpc::Service::experimental().MarkMethodCallback(1,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::chunk_storage::SetBlockRequest, ::minecpp::chunk_storage::EmptyResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::chunk_storage::SetBlockRequest* request,
+                 ::minecpp::chunk_storage::EmptyResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->SetBlock(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_SetBlock(
+        ::grpc::experimental::MessageAllocator< ::minecpp::chunk_storage::SetBlockRequest, ::minecpp::chunk_storage::EmptyResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::chunk_storage::SetBlockRequest, ::minecpp::chunk_storage::EmptyResponse>*>(
+          ::grpc::Service::experimental().GetHandler(1))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  typedef ExperimentalWithCallbackMethod_LoadChunk<ExperimentalWithCallbackMethod_SetBlock<Service > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_LoadChunk : public BaseClass {
    private:
@@ -173,6 +252,23 @@ class ChunkStorage final {
     }
     // disable synchronous version of this method
     ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::LoadChunkRequest* /*request*/, ::minecpp::chunk::NetChunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetBlock() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -195,6 +291,26 @@ class ChunkStorage final {
     }
     void RequestLoadChunk(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetBlock() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetBlock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -223,6 +339,31 @@ class ChunkStorage final {
     virtual void LoadChunk(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
   template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_SetBlock() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(1,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->SetBlock(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void SetBlock(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_LoadChunk : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -242,9 +383,29 @@ class ChunkStorage final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedLoadChunk(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::chunk_storage::LoadChunkRequest,::minecpp::chunk::NetChunk>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_LoadChunk<Service > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetBlock() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::chunk_storage::SetBlockRequest, ::minecpp::chunk_storage::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_SetBlock<BaseClass>::StreamedSetBlock, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::chunk_storage::SetBlockRequest* /*request*/, ::minecpp::chunk_storage::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::chunk_storage::SetBlockRequest,::minecpp::chunk_storage::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<Service > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_LoadChunk<Service > StreamedService;
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<Service > > StreamedService;
 };
 
 }  // namespace chunk_storage

@@ -3,6 +3,7 @@
 #include "server.h"
 #include <boost/algorithm/string.hpp>
 #include <fstream>
+#include <game/blocks/position.h>
 #include <game/player.h>
 #include <grpcpp/grpcpp.h>
 #include <mineutils/uuid.h>
@@ -214,9 +215,14 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
        .z = static_cast<int>(res.player_data().z() / 16.0),
    });
 
-   for (int z = -4; z < 4; ++z) {
-      for (int x = -4; x < 4; ++x) {
-         load_chunk(conn, x, z);
+   for (int ring = 1; ring < 6; ++ring) {
+      for (int x = -ring; x < ring; ++x) {
+         load_chunk(conn, x, ring - 1);
+         load_chunk(conn, x, -ring);
+      }
+      for (int z = -ring + 1; z < ring - 1; ++z) {
+         load_chunk(conn, ring - 1, z);
+         load_chunk(conn, -ring, z);
       }
    }
 
@@ -382,6 +388,26 @@ void Service::on_player_disconnect(boost::uuids::uuid player_id) {
    if (!status.ok()) {
       spdlog::error("could not remove player: {}", status.error_message());
       return;
+   }
+}
+
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::PlayerDigging msg) {
+   Game::Block::Position pos(msg.position);
+
+   if (msg.action == MineNet::Message::DiggingAction::StartDestroyBlock) {
+      minecpp::engine::DestroyBlockRequest req;
+      req.set_uuid(player_id.data, player_id.size());
+      req.set_x(pos.x);
+      req.set_y(pos.y);
+      req.set_z(pos.z);
+      grpc::ClientContext ctx;
+      minecpp::engine::EmptyResponse res;
+      auto status = get_player_service()->DestroyBlock(&ctx, req, &res);
+      if (!status.ok()) {
+         spdlog::error("could not destroy block: {}", status.error_message());
+         return;
+      }
    }
 }
 

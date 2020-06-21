@@ -1,6 +1,7 @@
 #include "service.h"
 #include <boost/uuid/uuid.hpp>
 #include <game/dimension.h>
+#include <grpcpp/create_channel.h>
 #include <minenet/chat.h>
 #include <minepb/events.pb.h>
 #include <mineutils/uuid.h>
@@ -11,8 +12,12 @@ namespace Engine {
 Service::~Service() = default;
 
 Service::Service(EntityManager &entities, PlayerManager &players,
-                 Producer &producer)
-    : entities(entities), players(players), producer(producer) {}
+                 Producer &producer, std::string &chunk_store)
+    : entities(entities), players(players), producer(producer) {
+   auto channel =
+       grpc::CreateChannel(chunk_store, grpc::InsecureChannelCredentials());
+   chunk_storage = minecpp::chunk_storage::ChunkStorage::NewStub(channel);
+}
 
 grpc::Status
 Service::AcceptPlayer(grpc::ServerContext *context,
@@ -87,9 +92,6 @@ grpc::Status Service::SetPlayerPosition(
 
       auto movement = e.process_movement();
       if (movement.x != 0 || movement.y != 0 || movement.z != 0) {
-         spdlog::error(
-             "sending movement package entity: {}, movement: {} {} {}",
-             e.get_id(), movement.x, movement.y, movement.z);
          minecpp::events::EntityMove event;
          event.set_id(e.get_id());
          event.set_uuid(player_id.data, player_id.size());
@@ -215,6 +217,35 @@ Service::RemovePlayer(grpc::ServerContext *context,
    producer.post(remove_player);
 
    players.remove_player(id);
+   return grpc::Status();
+}
+grpc::Status
+Service::DestroyBlock(grpc::ServerContext *context,
+                      const minecpp::engine::DestroyBlockRequest *request,
+                      minecpp::engine::EmptyResponse *response) {
+   //   boost::uuids::uuid id{};
+   //   Utils::decode_uuid(id, request->uuid().data());
+   //   auto player = players.get_player(id);
+
+   grpc::ClientContext ctx;
+   minecpp::chunk_storage::SetBlockRequest set_block;
+   set_block.set_x(request->x());
+   set_block.set_y(request->y());
+   set_block.set_z(request->z());
+   set_block.set_state(0);
+   minecpp::chunk_storage::EmptyResponse res;
+   auto status = chunk_storage->SetBlock(&ctx, set_block, &res);
+   if (!status.ok()) {
+      spdlog::error("set block error: {}", status.error_message());
+   }
+
+   minecpp::events::UpdateBlock update_block;
+   update_block.set_x(request->x());
+   update_block.set_y(request->y());
+   update_block.set_z(request->z());
+   update_block.set_state(0);
+   producer.post(update_block);
+
    return grpc::Status();
 }
 

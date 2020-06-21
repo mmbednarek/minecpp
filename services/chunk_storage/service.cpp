@@ -7,54 +7,31 @@
 #include <region/reader.h>
 #include <spdlog/spdlog.h>
 
-Service::Service(std::string_view region_path) : region_path(region_path) {}
+namespace ChunkStorage {
 
-int chunk_to_region(int cord) {
-   if (cord < 0) {
-      return cord / 32 - 1;
-   }
-   return cord / 32;
-}
+Service::Service(std::string_view region_path) : chunks(Regions(region_path)) {}
 
 grpc::Status
 Service::LoadChunk(grpc::ServerContext *context,
                    const minecpp::chunk_storage::LoadChunkRequest *request,
                    minecpp::chunk::NetChunk *response) {
-   auto region_file = load_region_file(chunk_to_region(request->x()),
-                                       chunk_to_region(request->z()));
-   if (!region_file.is_open()) {
-      spdlog::error("no region of chunk x = {} z = {}", request->x(),
-                    request->z());
-      return grpc::Status(grpc::StatusCode::NOT_FOUND,
-                          "could not find region file");
-   }
-
    try {
-      Region::Reader r(region_file);
-      auto compressed_chunk = r.load_chunk(request->x(), request->z());
-      std::istringstream compressed_stream(std::string(
-          (char *)compressed_chunk.data(), compressed_chunk.size()));
-
-      spdlog::info("sending chunk x = {}, z = {}", request->x(), request->z());
-
-      Utils::ZlibInputStream chunk_stream(compressed_stream);
-      NBT::Reader cr(chunk_stream);
-      cr.check_signature();
-      cr.find_compound("Level");
-      Game::NetChunk(cr).as_proto(response);
-      region_file.close();
+      chunks.get_chunk(request->x(), request->z()).as_proto(response);
       return grpc::Status();
    } catch (std::runtime_error &e) {
       spdlog::error("internal error: {}", e.what());
-      region_file.close();
       return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
    }
 }
 
-std::ifstream Service::load_region_file(int x, int z) {
-   std::stringstream path;
-   path << region_path << "/r." << x << "." << z << ".mca";
-   return std::ifstream(path.str());
+grpc::Status
+Service::SetBlock(grpc::ServerContext *context,
+                  const minecpp::chunk_storage::SetBlockRequest *request,
+                  minecpp::chunk_storage::EmptyResponse *response) {
+   chunks.set_block(request->x(), request->y(), request->z(), request->state());
+   return grpc::Status();
 }
 
 Service::~Service() {}
+
+} // namespace ChunkStorage

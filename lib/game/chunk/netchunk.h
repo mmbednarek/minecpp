@@ -1,8 +1,8 @@
 #pragma once
 #include "section.h"
+#include <minepb/chunk.pb.h>
 #include <nbt/reader.h>
 #include <string_view>
-#include <minepb/chunk.pb.h>
 
 namespace Game {
 
@@ -27,6 +27,11 @@ struct NetChunk {
 
    void load(NBT::Reader &r, NBT::TagID tagid, const std::string &name);
    void as_proto(minecpp::chunk::NetChunk *chunk);
+   void create_empty_section(int8_t sec);
+   void set_block(int x, int y, int z, uint32_t state);
+   uint8_t get_block_light(int x, int y, int z);
+   void set_block_light(int x, int y, int z, uint8_t value);
+   void set_sky_light(int x, int y, int z, uint8_t value);
 };
 
 } // namespace Game

@@ -41,6 +41,11 @@ void PlayHandler::handle(Connection &conn, Reader &r) {
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;
+   case 0x1a: {
+      PlayerDigging msg;
+      deserialize(r, msg);
+      service.on_message(conn.get_uuid(), msg);
+   } break;
    default:
       spdlog::info("unknown op {}, packet data: {}", (int)op, r.get_hex_data());
       conn.send(MineNet::Message::Chat{

@@ -12,6 +12,7 @@ service PlayerService {
     rpc ListPlayers (EmptyRequest) returns (ListPlayersResponse);
     rpc ListPlayerEntities (EmptyRequest) returns (ListPlayerEntitiesResponse);
     rpc RemovePlayer(RemovePlayerRequest) returns (EmptyResponse);
+    rpc DestroyBlock(DestroyBlockRequest) returns (EmptyResponse);
 }
 
 message AcceptPlayerRequest {
@@ -82,4 +83,11 @@ message EmptyRequest {
 }
 
 message EmptyResponse {
+}
+
+message DestroyBlockRequest {
+    bytes uuid = 1;
+    int32 x = 2;
+    int32 y = 3;
+    int32 z = 4;
 }

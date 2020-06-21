@@ -5,9 +5,20 @@ import "chunk.proto";
 
 service ChunkStorage {
     rpc LoadChunk(LoadChunkRequest) returns (minecpp.chunk.NetChunk);
+    rpc SetBlock(SetBlockRequest) returns (EmptyResponse);
 }
 
 message LoadChunkRequest {
     int32 x = 1;
     int32 z = 2;
+}
+
+message SetBlockRequest {
+    int32 x = 1;
+    int32 y = 2;
+    int32 z = 3;
+    int32 state = 4;
+}
+
+message EmptyResponse {
 }

@@ -84,7 +84,7 @@ void Server::handshake(Connection *conn) {
    conn->async_read_packet(*handlers[request_state]);
 }
 
-void Server::drop_connection(int id) {
+void Server::drop_connection(std::size_t id) {
    if (id >= connections.size())
       return;
 

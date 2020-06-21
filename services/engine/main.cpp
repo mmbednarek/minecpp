@@ -12,6 +12,12 @@ auto main() -> int {
       return 1;
    }
 
+   std::string chunk_storage_address = std::getenv("CHUNK_STORAGE_ADDRESS");
+   if (chunk_storage_address.empty()) {
+      spdlog::error("empty CHUNK_STORAGE_ADDRESS");
+      return 1;
+   }
+
    auto listen = std::getenv("LISTEN");
    if (!listen) {
       spdlog::error("empty LISTEN env");
@@ -22,7 +28,7 @@ auto main() -> int {
    Engine::PlayerManager players(player_path, entities);
    Engine::Producer producer("localhost:9092");
 
-   Engine::Service service(entities, players, producer);
+   Engine::Service service(entities, players, producer, chunk_storage_address);
 
    grpc::ServerBuilder builder;
    builder.AddListeningPort(listen, grpc::InsecureServerCredentials());

@@ -37,6 +37,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cppkafka)
 
+FetchContent_Declare(
+        gtest
+        GIT_REPOSITORY https://github.com/google/googletest
+        GIT_TAG release-1.10.0
+)
+FetchContent_MakeAvailable(gtest)
+
 add_subdirectory(boost-cmake)
 include_directories(${Boost_INCLUDE_DIRS})
 
@@ -48,7 +55,7 @@ add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
 add_subdirectory(lib/minenet)
-add_subdirectory(./tests)
+add_subdirectory(tests)
 
 add_subdirectory(tools/nbt_viewer)
 add_subdirectory(tools/chunk_extractor)

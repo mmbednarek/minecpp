@@ -40,3 +40,10 @@ message RemovePlayer {
     bytes uuid = 1;
     int32 entity_id = 2;
 }
+
+message UpdateBlock {
+    int32 x = 1;
+    int32 y = 2;
+    int32 z = 3;
+    int32 state = 4;
+}

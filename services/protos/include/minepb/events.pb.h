@@ -47,7 +47,7 @@ struct TableStruct_events_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[7]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -74,6 +74,9 @@ extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
 class SpawnPlayer;
 class SpawnPlayerDefaultTypeInternal;
 extern SpawnPlayerDefaultTypeInternal _SpawnPlayer_default_instance_;
+class UpdateBlock;
+class UpdateBlockDefaultTypeInternal;
+extern UpdateBlockDefaultTypeInternal _UpdateBlock_default_instance_;
 }  // namespace events
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
@@ -83,6 +86,7 @@ template<> ::minecpp::events::EntityMove* Arena::CreateMaybeMessage<::minecpp::e
 template<> ::minecpp::events::PlayerPositionRotation* Arena::CreateMaybeMessage<::minecpp::events::PlayerPositionRotation>(Arena*);
 template<> ::minecpp::events::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::events::RemovePlayer>(Arena*);
 template<> ::minecpp::events::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::events::SpawnPlayer>(Arena*);
+template<> ::minecpp::events::UpdateBlock* Arena::CreateMaybeMessage<::minecpp::events::UpdateBlock>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace events {
@@ -985,6 +989,153 @@ class RemovePlayer :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_events_2eproto;
 };
+// -------------------------------------------------------------------
+
+class UpdateBlock :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.events.UpdateBlock) */ {
+ public:
+  UpdateBlock();
+  virtual ~UpdateBlock();
+
+  UpdateBlock(const UpdateBlock& from);
+  UpdateBlock(UpdateBlock&& from) noexcept
+    : UpdateBlock() {
+    *this = ::std::move(from);
+  }
+
+  inline UpdateBlock& operator=(const UpdateBlock& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdateBlock& operator=(UpdateBlock&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const UpdateBlock& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UpdateBlock* internal_default_instance() {
+    return reinterpret_cast<const UpdateBlock*>(
+               &_UpdateBlock_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(UpdateBlock* other);
+  friend void swap(UpdateBlock& a, UpdateBlock& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UpdateBlock* New() const final {
+    return CreateMaybeMessage<UpdateBlock>(nullptr);
+  }
+
+  UpdateBlock* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<UpdateBlock>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const UpdateBlock& from);
+  void MergeFrom(const UpdateBlock& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdateBlock* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.events.UpdateBlock";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_events_2eproto);
+    return ::descriptor_table_events_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 x = 1;
+  void clear_x();
+  static const int kXFieldNumber = 1;
+  ::PROTOBUF_NAMESPACE_ID::int32 x() const;
+  void set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 y = 2;
+  void clear_y();
+  static const int kYFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 y() const;
+  void set_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 z = 3;
+  void clear_z();
+  static const int kZFieldNumber = 3;
+  ::PROTOBUF_NAMESPACE_ID::int32 z() const;
+  void set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 state = 4;
+  void clear_state();
+  static const int kStateFieldNumber = 4;
+  ::PROTOBUF_NAMESPACE_ID::int32 state() const;
+  void set_state(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.events.UpdateBlock)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 y_;
+  ::PROTOBUF_NAMESPACE_ID::int32 z_;
+  ::PROTOBUF_NAMESPACE_ID::int32 state_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_events_2eproto;
+};
 // ===================================================================
 
 
@@ -1509,9 +1660,71 @@ inline void RemovePlayer::set_entity_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:minecpp.events.RemovePlayer.entity_id)
 }
 
+// -------------------------------------------------------------------
+
+// UpdateBlock
+
+// int32 x = 1;
+inline void UpdateBlock::clear_x() {
+  x_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::x() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.x)
+  return x_;
+}
+inline void UpdateBlock::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  x_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.x)
+}
+
+// int32 y = 2;
+inline void UpdateBlock::clear_y() {
+  y_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::y() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.y)
+  return y_;
+}
+inline void UpdateBlock::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  y_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.y)
+}
+
+// int32 z = 3;
+inline void UpdateBlock::clear_z() {
+  z_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::z() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.z)
+  return z_;
+}
+inline void UpdateBlock::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  z_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.z)
+}
+
+// int32 state = 4;
+inline void UpdateBlock::clear_state() {
+  state_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::state() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.state)
+  return state_;
+}
+inline void UpdateBlock::set_state(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  state_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.state)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -34,4 +34,10 @@ void Message::deserialize(Reader &r, PlayerRotation &msg) {
    msg.pitch = r.read_float();
 }
 
+void Message::deserialize(Reader &r, PlayerDigging &msg) {
+   msg.action = static_cast<DiggingAction>(r.read_varint());
+   msg.position = r.read_big_endian<uint64_t>();
+   msg.facing = Game::Direction(r.read_byte());
+}
+
 } // namespace MineNet::Message

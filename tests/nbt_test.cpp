@@ -1,4 +1,4 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include <nbt/compound_map.h>
 #include <nbt/parser.h>
 #include <nbt/reader.h>

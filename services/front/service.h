@@ -56,6 +56,7 @@ class Service {
    void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPositionRotation msg);
    void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerRotation msg);
    void on_message(boost::uuids::uuid player_id, MineNet::Message::ChatMessage msg);
+   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerDigging msg);
 
  private:
    void load_chunk(Connection &conn, int x, int z);

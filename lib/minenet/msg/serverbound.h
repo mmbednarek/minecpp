@@ -1,8 +1,9 @@
 #pragma once
 #include "../chat.h"
+#include "reader.h"
+#include <game/direction.h>
 #include <game/hand.h>
 #include <string>
-#include "reader.h"
 
 namespace MineNet::Message {
 
@@ -42,5 +43,23 @@ struct PlayerRotation {
    float yaw, pitch;
 };
 void deserialize(Reader &r, PlayerRotation &msg);
+
+enum class DiggingAction : uint8_t {
+   StartDestroyBlock,
+   AbortDestroyBlock,
+   StopDestroyBlock,
+   DropAllItems,
+   DropItem,
+   ReleaseUseItem,
+   SwapHeldItems,
+};
+
+// 0x1a
+struct PlayerDigging {
+   DiggingAction action;
+   uint64_t position;
+   Game::Direction facing;
+};
+void deserialize(Reader &r, PlayerDigging &msg);
 
 } // namespace MineNet::Message

@@ -2,12 +2,8 @@
 #include <grpcpp/server_builder.h>
 #include <iostream>
 #include <spdlog/spdlog.h>
-#include <mineutils/string.h>
 
 auto main() -> int {
-   std::string str = "";
-   spdlog::info("hash of {} is {}", str, Utils::hash_string(str));
-
    auto region_path = std::getenv("REGION_PATH");
    if (!region_path) {
       spdlog::error("REGION_PATH variable required\n");
@@ -19,7 +15,7 @@ auto main() -> int {
       listen = "0.0.0.0:7000";
    }
 
-   Service s(region_path);
+   ChunkStorage::Service s(region_path);
 
    grpc::ServerBuilder builder;
    builder.AddListeningPort(listen, grpc::InsecureServerCredentials());

@@ -20,9 +20,9 @@ class Server {
 
    void accept_conn();
    void handshake(Connection *conn);
-   void drop_connection(int id);
+   void drop_connection(std::size_t id);
    void for_each_connection(std::function<void(Connection *)>);
-   Protocol::Handler &get_handler(const Protocol::State state);
+   Protocol::Handler &get_handler(Protocol::State state);
 
  private:
    std::vector<Connection *> connections;

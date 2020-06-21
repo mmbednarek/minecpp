@@ -8,4 +8,6 @@ enum class Dimension : int8_t { Overworld = 0, Nether = -1, End = 1 };
 
 minecpp::game::DimensionType dimension_to_proto(Dimension d);
 
+constexpr uint32_t world_limit = 30000000;
+
 }

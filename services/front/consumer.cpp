@@ -47,6 +47,10 @@ void Consumer::consume(KafkaHandler handler) {
          RemovePlayer msg;
          msg.ParseFromString(payload);
          on_event(msg);
+      } else if (key == "UpdateBlock") {
+         UpdateBlock msg;
+         msg.ParseFromString(payload);
+         on_event(msg);
       } else if (key == "Chat") {
          Chat msg;
          msg.ParseFromString(payload);
@@ -141,6 +145,33 @@ void Consumer::on_event(RemovePlayer &msg) {
       conn->send(MineNet::Message::DestroyEntity{
           .entity_id = static_cast<uint32_t>(msg.entity_id()),
       });
+   });
+}
+
+void Consumer::on_event(UpdateBlock &msg) {
+   int chunk_x = msg.x() >= 0 ? (msg.x() / 16) : (msg.x() / 16 - 1);
+   int chunk_z = msg.z() >= 0 ? (msg.z() / 16) : (msg.z() / 16 - 1);
+
+   int offset_x = msg.x() % 16;
+   int offset_z = msg.z() % 16;
+
+   short offset = offset_x << 12 | msg.y() | offset_z << 8;
+
+   MineNet::Message::MultiBlockChange change{
+       .chunk_x = chunk_x,
+       .chunk_z = chunk_z,
+       .changes{
+           MineNet::Message::MultiBlockChange::Change{
+               .offset = offset,
+               .state = static_cast<uint32_t>(msg.state()),
+           },
+       },
+   };
+
+   server.for_each_connection([change](Connection *conn) {
+      if (!conn)
+         return;
+      conn->send(change);
    });
 }
 

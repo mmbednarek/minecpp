@@ -96,6 +96,13 @@ class PlayerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> PrepareAsyncRemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(PrepareAsyncRemovePlayerRaw(context, request, cq));
     }
+    virtual ::grpc::Status DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::minecpp::engine::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> AsyncDestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(AsyncDestroyBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> PrepareAsyncDestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(PrepareAsyncDestroyBlockRaw(context, request, cq));
+    }
     class experimental_async_interface {
      public:
       virtual ~experimental_async_interface() {}
@@ -127,6 +134,10 @@ class PlayerService final {
       virtual void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       virtual void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
     };
     virtual class experimental_async_interface* experimental_async() { return nullptr; }
   private:
@@ -144,6 +155,8 @@ class PlayerService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::ListPlayerEntitiesResponse>* PrepareAsyncListPlayerEntitiesRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* AsyncRemovePlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncRemovePlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* AsyncDestroyBlockRaw(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncDestroyBlockRaw(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -197,6 +210,13 @@ class PlayerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> PrepareAsyncRemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(PrepareAsyncRemovePlayerRaw(context, request, cq));
     }
+    ::grpc::Status DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::minecpp::engine::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> AsyncDestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(AsyncDestroyBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> PrepareAsyncDestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(PrepareAsyncDestroyBlockRaw(context, request, cq));
+    }
     class experimental_async final :
       public StubInterface::experimental_async_interface {
      public:
@@ -228,6 +248,10 @@ class PlayerService final {
       void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
       void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit experimental_async(Stub* stub): stub_(stub) { }
@@ -253,6 +277,8 @@ class PlayerService final {
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::ListPlayerEntitiesResponse>* PrepareAsyncListPlayerEntitiesRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* AsyncRemovePlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncRemovePlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* AsyncDestroyBlockRaw(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncDestroyBlockRaw(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AcceptPlayer_;
     const ::grpc::internal::RpcMethod rpcmethod_SetPlayerPosition_;
     const ::grpc::internal::RpcMethod rpcmethod_SetPlayerRotation_;
@@ -260,6 +286,7 @@ class PlayerService final {
     const ::grpc::internal::RpcMethod rpcmethod_ListPlayers_;
     const ::grpc::internal::RpcMethod rpcmethod_ListPlayerEntities_;
     const ::grpc::internal::RpcMethod rpcmethod_RemovePlayer_;
+    const ::grpc::internal::RpcMethod rpcmethod_DestroyBlock_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -274,6 +301,7 @@ class PlayerService final {
     virtual ::grpc::Status ListPlayers(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response);
     virtual ::grpc::Status ListPlayerEntities(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response);
     virtual ::grpc::Status RemovePlayer(::grpc::ServerContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response);
+    virtual ::grpc::Status DestroyBlock(::grpc::ServerContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_AcceptPlayer : public BaseClass {
@@ -415,7 +443,27 @@ class PlayerService final {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AcceptPlayer<WithAsyncMethod_SetPlayerPosition<WithAsyncMethod_SetPlayerRotation<WithAsyncMethod_ChatMessage<WithAsyncMethod_ListPlayers<WithAsyncMethod_ListPlayerEntities<WithAsyncMethod_RemovePlayer<Service > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_DestroyBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_DestroyBlock() {
+      ::grpc::Service::MarkMethodAsync(7);
+    }
+    ~WithAsyncMethod_DestroyBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDestroyBlock(::grpc::ServerContext* context, ::minecpp::engine::DestroyBlockRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AcceptPlayer<WithAsyncMethod_SetPlayerPosition<WithAsyncMethod_SetPlayerRotation<WithAsyncMethod_ChatMessage<WithAsyncMethod_ListPlayers<WithAsyncMethod_ListPlayerEntities<WithAsyncMethod_RemovePlayer<WithAsyncMethod_DestroyBlock<Service > > > > > > > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_AcceptPlayer : public BaseClass {
    private:
@@ -633,7 +681,38 @@ class PlayerService final {
     }
     virtual void RemovePlayer(::grpc::ServerContext* /*context*/, const ::minecpp::engine::RemovePlayerRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
-  typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<ExperimentalWithCallbackMethod_RemovePlayer<Service > > > > > > > ExperimentalCallbackService;
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_DestroyBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_DestroyBlock() {
+      ::grpc::Service::experimental().MarkMethodCallback(7,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::DestroyBlockRequest* request,
+                 ::minecpp::engine::EmptyResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->DestroyBlock(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_DestroyBlock(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>*>(
+          ::grpc::Service::experimental().GetHandler(7))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_DestroyBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<ExperimentalWithCallbackMethod_RemovePlayer<ExperimentalWithCallbackMethod_DestroyBlock<Service > > > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AcceptPlayer : public BaseClass {
    private:
@@ -749,6 +828,23 @@ class PlayerService final {
     }
     // disable synchronous version of this method
     ::grpc::Status RemovePlayer(::grpc::ServerContext* /*context*/, const ::minecpp::engine::RemovePlayerRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_DestroyBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_DestroyBlock() {
+      ::grpc::Service::MarkMethodGeneric(7);
+    }
+    ~WithGenericMethod_DestroyBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -891,6 +987,26 @@ class PlayerService final {
     }
     void RequestRemovePlayer(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_DestroyBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_DestroyBlock() {
+      ::grpc::Service::MarkMethodRaw(7);
+    }
+    ~WithRawMethod_DestroyBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestDestroyBlock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1069,6 +1185,31 @@ class PlayerService final {
     virtual void RemovePlayer(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
   template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_DestroyBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_DestroyBlock() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(7,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->DestroyBlock(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_DestroyBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void DestroyBlock(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_AcceptPlayer : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
@@ -1208,9 +1349,29 @@ class PlayerService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedRemovePlayer(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::RemovePlayerRequest,::minecpp::engine::EmptyResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<Service > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_DestroyBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_DestroyBlock() {
+      ::grpc::Service::MarkMethodStreamed(7,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_DestroyBlock<BaseClass>::StreamedDestroyBlock, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_DestroyBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedDestroyBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::DestroyBlockRequest,::minecpp::engine::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<WithStreamedUnaryMethod_DestroyBlock<Service > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<Service > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<WithStreamedUnaryMethod_DestroyBlock<Service > > > > > > > > StreamedService;
 };
 
 }  // namespace engine

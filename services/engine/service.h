@@ -4,20 +4,25 @@
 #include "producer.h"
 #include <game/difficulty.h>
 #include <minepb/engine.grpc.pb.h>
+#include <minepb/chunk_storage.grpc.pb.h>
 
 namespace Engine {
+
+typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
+    ChunkService;
 
 class Service final : public minecpp::engine::PlayerService::Service {
    EntityManager &entities;
    PlayerManager &players;
    Producer &producer;
+   ChunkService chunk_storage;
 
    int max_players = 10;
    Game::Difficulty difficulty = Game::Difficulty::Normal;
    int view_distance = 16;
 
  public:
-   Service(EntityManager &entities, PlayerManager &players, Producer &producer);
+   Service(EntityManager &entities, PlayerManager &players, Producer &producer, std::string &chunk_store);
    ~Service() override;
    grpc::Status
    AcceptPlayer(grpc::ServerContext *context,
@@ -50,6 +55,11 @@ class Service final : public minecpp::engine::PlayerService::Service {
    grpc::Status
    RemovePlayer(grpc::ServerContext *context,
                 const minecpp::engine::RemovePlayerRequest *request,
+                minecpp::engine::EmptyResponse *response) override;
+
+   grpc::Status
+   DestroyBlock(grpc::ServerContext *context,
+                const minecpp::engine::DestroyBlockRequest *request,
                 minecpp::engine::EmptyResponse *response) override;
 };
 

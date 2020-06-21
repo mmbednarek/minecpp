@@ -45,6 +45,20 @@ Writer Message::serialize(SpawnPlayer msg) {
    return w;
 }
 
+Writer Message::serialize(MultiBlockChange msg) {
+   Writer w;
+   w.write_byte(0x10);
+   w.write_big_endian(msg.chunk_x);
+   w.write_big_endian(msg.chunk_z);
+   w.write_varint(msg.changes.size());
+
+   for (const auto &change: msg.changes) {
+      w.write_big_endian(change.offset);
+      w.write_varint(change.state);
+   }
+   return w;
+}
+
 Writer serialize(Difficulty msg) {
    Writer w;
    w.write_byte(0x0e);
