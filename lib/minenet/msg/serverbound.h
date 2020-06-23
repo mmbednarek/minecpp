@@ -25,6 +25,12 @@ struct ClientSettings {
 };
 void deserialize(Reader &r, ClientSettings &msg);
 
+// 0x0f
+struct KeepAliveClient {
+   uint64_t time;
+};
+void deserialize(Reader &r, KeepAliveClient &msg);
+
 // 0x11
 struct PlayerPosition {
    double x, y, z;

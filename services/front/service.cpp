@@ -6,6 +6,7 @@
 #include <game/blocks/position.h>
 #include <game/player.h>
 #include <grpcpp/grpcpp.h>
+#include <mineutils/time.h>
 #include <mineutils/uuid.h>
 #include <spdlog/spdlog.h>
 
@@ -408,6 +409,20 @@ void Service::on_message(boost::uuids::uuid player_id,
          spdlog::error("could not destroy block: {}", status.error_message());
          return;
       }
+   }
+}
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::KeepAliveClient msg) {
+
+   minecpp::engine::UpdatePingRequest req;
+   req.set_uuid(player_id.data, player_id.size());
+   req.set_ping(Utils::now_milis() - msg.time);
+   grpc::ClientContext ctx;
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->UpdatePing(&ctx, req, &res);
+   if (!status.ok()) {
+      spdlog::error("could not update ping: {}", status.error_message());
+      return;
    }
 }
 

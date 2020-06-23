@@ -13,6 +13,7 @@ service PlayerService {
     rpc ListPlayerEntities (EmptyRequest) returns (ListPlayerEntitiesResponse);
     rpc RemovePlayer(RemovePlayerRequest) returns (EmptyResponse);
     rpc DestroyBlock(DestroyBlockRequest) returns (EmptyResponse);
+    rpc UpdatePing(UpdatePingRequest) returns (EmptyResponse);
 }
 
 message AcceptPlayerRequest {
@@ -54,7 +55,8 @@ message ChatMessageRequest {
 message PlayerData {
     bytes uuid = 1;
     string name = 2;
-    minecpp.game.GameMode game_mode = 3;
+    int32 ping = 3;
+    minecpp.game.GameMode game_mode = 4;
 }
 
 message ListPlayersResponse {
@@ -90,4 +92,9 @@ message DestroyBlockRequest {
     int32 x = 2;
     int32 y = 3;
     int32 z = 4;
+}
+
+message UpdatePingRequest {
+    bytes uuid = 1;
+    int32 ping = 2;
 }

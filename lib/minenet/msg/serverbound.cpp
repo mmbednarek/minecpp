@@ -15,6 +15,10 @@ void deserialize(Reader &r, ClientSettings &msg) {
    msg.hand_side = static_cast<Game::HandSide>(r.read_byte());
 }
 
+void Message::deserialize(Reader &r, KeepAliveClient &msg) {
+   msg.time = r.read_big_endian<uint64_t>();
+}
+
 void deserialize(Reader &r, PlayerPosition &msg) {
    msg.x = r.read_double();
    msg.y = r.read_double();

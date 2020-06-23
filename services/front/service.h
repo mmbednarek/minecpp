@@ -34,6 +34,7 @@ class Service {
    std::size_t cached_recipes_size;
    char *cached_tags = nullptr;
    std::size_t cached_tags_size;
+
  public:
    explicit Service(Config &conf);
    ~Service();
@@ -51,12 +52,20 @@ class Service {
 
    void on_player_disconnect(boost::uuids::uuid player_id);
 
-   void on_message(boost::uuids::uuid player_id, MineNet::Message::ClientSettings msg);
-   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPosition msg);
-   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerPositionRotation msg);
-   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerRotation msg);
-   void on_message(boost::uuids::uuid player_id, MineNet::Message::ChatMessage msg);
-   void on_message(boost::uuids::uuid player_id, MineNet::Message::PlayerDigging msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::ClientSettings msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::PlayerPosition msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::PlayerPositionRotation msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::PlayerRotation msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::ChatMessage msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::PlayerDigging msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::KeepAliveClient msg);
 
  private:
    void load_chunk(Connection &conn, int x, int z);

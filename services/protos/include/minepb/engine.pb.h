@@ -50,7 +50,7 @@ struct TableStruct_engine_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -98,6 +98,9 @@ extern SetPlayerPositionRequestDefaultTypeInternal _SetPlayerPositionRequest_def
 class SetPlayerRotationRequest;
 class SetPlayerRotationRequestDefaultTypeInternal;
 extern SetPlayerRotationRequestDefaultTypeInternal _SetPlayerRotationRequest_default_instance_;
+class UpdatePingRequest;
+class UpdatePingRequestDefaultTypeInternal;
+extern UpdatePingRequestDefaultTypeInternal _UpdatePingRequest_default_instance_;
 }  // namespace engine
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
@@ -114,6 +117,7 @@ template<> ::minecpp::engine::PlayerEntityData* Arena::CreateMaybeMessage<::mine
 template<> ::minecpp::engine::RemovePlayerRequest* Arena::CreateMaybeMessage<::minecpp::engine::RemovePlayerRequest>(Arena*);
 template<> ::minecpp::engine::SetPlayerPositionRequest* Arena::CreateMaybeMessage<::minecpp::engine::SetPlayerPositionRequest>(Arena*);
 template<> ::minecpp::engine::SetPlayerRotationRequest* Arena::CreateMaybeMessage<::minecpp::engine::SetPlayerRotationRequest>(Arena*);
+template<> ::minecpp::engine::UpdatePingRequest* Arena::CreateMaybeMessage<::minecpp::engine::UpdatePingRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace engine {
@@ -1053,9 +1057,15 @@ class PlayerData :
   std::string* release_name();
   void set_allocated_name(std::string* name);
 
-  // .minecpp.game.GameMode game_mode = 3;
+  // int32 ping = 3;
+  void clear_ping();
+  static const int kPingFieldNumber = 3;
+  ::PROTOBUF_NAMESPACE_ID::int32 ping() const;
+  void set_ping(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // .minecpp.game.GameMode game_mode = 4;
   void clear_game_mode();
-  static const int kGameModeFieldNumber = 3;
+  static const int kGameModeFieldNumber = 4;
   ::minecpp::game::GameMode game_mode() const;
   void set_game_mode(::minecpp::game::GameMode value);
 
@@ -1066,6 +1076,7 @@ class PlayerData :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  ::PROTOBUF_NAMESPACE_ID::int32 ping_;
   int game_mode_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
@@ -2031,6 +2042,145 @@ class DestroyBlockRequest :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
+// -------------------------------------------------------------------
+
+class UpdatePingRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.engine.UpdatePingRequest) */ {
+ public:
+  UpdatePingRequest();
+  virtual ~UpdatePingRequest();
+
+  UpdatePingRequest(const UpdatePingRequest& from);
+  UpdatePingRequest(UpdatePingRequest&& from) noexcept
+    : UpdatePingRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline UpdatePingRequest& operator=(const UpdatePingRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdatePingRequest& operator=(UpdatePingRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const UpdatePingRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UpdatePingRequest* internal_default_instance() {
+    return reinterpret_cast<const UpdatePingRequest*>(
+               &_UpdatePingRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  void Swap(UpdatePingRequest* other);
+  friend void swap(UpdatePingRequest& a, UpdatePingRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UpdatePingRequest* New() const final {
+    return CreateMaybeMessage<UpdatePingRequest>(nullptr);
+  }
+
+  UpdatePingRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<UpdatePingRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const UpdatePingRequest& from);
+  void MergeFrom(const UpdatePingRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdatePingRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.engine.UpdatePingRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_engine_2eproto);
+    return ::descriptor_table_engine_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes uuid = 1;
+  void clear_uuid();
+  static const int kUuidFieldNumber = 1;
+  const std::string& uuid() const;
+  void set_uuid(const std::string& value);
+  void set_uuid(std::string&& value);
+  void set_uuid(const char* value);
+  void set_uuid(const void* value, size_t size);
+  std::string* mutable_uuid();
+  std::string* release_uuid();
+  void set_allocated_uuid(std::string* uuid);
+
+  // int32 ping = 2;
+  void clear_ping();
+  static const int kPingFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 ping() const;
+  void set_ping(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.engine.UpdatePingRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  ::PROTOBUF_NAMESPACE_ID::int32 ping_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_engine_2eproto;
+};
 // ===================================================================
 
 
@@ -2658,7 +2808,21 @@ inline void PlayerData::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:minecpp.engine.PlayerData.name)
 }
 
-// .minecpp.game.GameMode game_mode = 3;
+// int32 ping = 3;
+inline void PlayerData::clear_ping() {
+  ping_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 PlayerData::ping() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.PlayerData.ping)
+  return ping_;
+}
+inline void PlayerData::set_ping(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  ping_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.PlayerData.ping)
+}
+
+// .minecpp.game.GameMode game_mode = 4;
 inline void PlayerData::clear_game_mode() {
   game_mode_ = 0;
 }
@@ -3039,9 +3203,80 @@ inline void DestroyBlockRequest::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:minecpp.engine.DestroyBlockRequest.z)
 }
 
+// -------------------------------------------------------------------
+
+// UpdatePingRequest
+
+// bytes uuid = 1;
+inline void UpdatePingRequest::clear_uuid() {
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& UpdatePingRequest::uuid() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.UpdatePingRequest.uuid)
+  return uuid_.GetNoArena();
+}
+inline void UpdatePingRequest::set_uuid(const std::string& value) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.engine.UpdatePingRequest.uuid)
+}
+inline void UpdatePingRequest::set_uuid(std::string&& value) {
+  
+  uuid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.engine.UpdatePingRequest.uuid)
+}
+inline void UpdatePingRequest::set_uuid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.engine.UpdatePingRequest.uuid)
+}
+inline void UpdatePingRequest::set_uuid(const void* value, size_t size) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.engine.UpdatePingRequest.uuid)
+}
+inline std::string* UpdatePingRequest::mutable_uuid() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.engine.UpdatePingRequest.uuid)
+  return uuid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* UpdatePingRequest::release_uuid() {
+  // @@protoc_insertion_point(field_release:minecpp.engine.UpdatePingRequest.uuid)
+  
+  return uuid_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void UpdatePingRequest::set_allocated_uuid(std::string* uuid) {
+  if (uuid != nullptr) {
+    
+  } else {
+    
+  }
+  uuid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uuid);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.engine.UpdatePingRequest.uuid)
+}
+
+// int32 ping = 2;
+inline void UpdatePingRequest::clear_ping() {
+  ping_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdatePingRequest::ping() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.UpdatePingRequest.ping)
+  return ping_;
+}
+inline void UpdatePingRequest::set_ping(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  ping_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.UpdatePingRequest.ping)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

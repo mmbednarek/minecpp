@@ -5,6 +5,7 @@
 #include "protocol/play_handler.h"
 #include "protocol/status_handler.h"
 #include "server.h"
+#include "keepalive.h"
 #include <atomic>
 #include <spdlog/spdlog.h>
 #include <thread>
@@ -36,6 +37,10 @@ auto main() -> int {
            .topics = topics,
        },
        svr);
+
+   std::thread keepalive_thread([&svr] () {
+      keepalive_update(svr);
+   });
 
    std::thread kafka_thread([&consumer, &consume_messages] {
       while (consume_messages.load()) {

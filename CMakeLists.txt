@@ -6,7 +6,8 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-set(RDKAFKA_INCLUDE_DIR)
+add_subdirectory(boost-cmake)
+include_directories(${Boost_INCLUDE_DIRS})
 
 include(FetchContent)
 FetchContent_Declare(
@@ -43,9 +44,6 @@ FetchContent_Declare(
         GIT_TAG release-1.10.0
 )
 FetchContent_MakeAvailable(gtest)
-
-add_subdirectory(boost-cmake)
-include_directories(${Boost_INCLUDE_DIRS})
 
 include_directories(./lib)
 include_directories(./services/protos/include)

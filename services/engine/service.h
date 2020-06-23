@@ -61,6 +61,10 @@ class Service final : public minecpp::engine::PlayerService::Service {
    DestroyBlock(grpc::ServerContext *context,
                 const minecpp::engine::DestroyBlockRequest *request,
                 minecpp::engine::EmptyResponse *response) override;
+
+   grpc::Status UpdatePing(grpc::ServerContext *context,
+                           const minecpp::engine::UpdatePingRequest *request,
+                           minecpp::engine::EmptyResponse *response) override;
 };
 
 } // namespace Engine

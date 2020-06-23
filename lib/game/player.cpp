@@ -17,9 +17,11 @@ const RecipeBook &Player::get_recipe_book() const { return recipe_book; }
 
 std::string_view Player::get_player_name() const { return player_name; }
 
-uuid Player::get_id() const {
-   return id;
-}
+uuid Player::get_id() const { return id; }
+
+int Player::get_ping() const { return ping; }
+
+void Player::set_ping(int ping) { this->ping = ping; }
 
 void Player::Abilities::as_proto(minecpp::player::Abilities *abilities) const {
    abilities->set_fly_speed(fly_speed);

@@ -162,6 +162,7 @@ Service::ListPlayers(grpc::ServerContext *context,
       data.set_uuid(id.data, id.size());
       auto name = p.get_player_name();
       data.set_name(name.data(), name.size());
+      data.set_ping(p.get_ping());
       data.set_game_mode(
           static_cast<minecpp::game::GameMode>(data.game_mode()));
       response->mutable_list()->Add(
@@ -246,6 +247,18 @@ Service::DestroyBlock(grpc::ServerContext *context,
    update_block.set_state(0);
    producer.post(update_block);
 
+   return grpc::Status();
+}
+grpc::Status
+Service::UpdatePing(grpc::ServerContext *context,
+                    const minecpp::engine::UpdatePingRequest *request,
+                    minecpp::engine::EmptyResponse *response) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, request->uuid().data());
+   auto player = players.get_player(id);
+   player.set_ping(request->ping());
+   spdlog::info("player's {} ping is {}", player.get_player_name(),
+                request->ping());
    return grpc::Status();
 }
 

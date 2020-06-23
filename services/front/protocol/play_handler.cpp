@@ -26,6 +26,11 @@ void PlayHandler::handle(Connection &conn, Reader &r) {
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;
+   case 0x0f: {
+      KeepAliveClient msg;
+      deserialize(r, msg);
+      service.on_message(conn.get_uuid(), msg);
+   } break;
    case 0x11: {
       PlayerPosition msg;
       deserialize(r, msg);

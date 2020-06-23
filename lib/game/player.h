@@ -37,6 +37,8 @@ class Player {
    std::string player_name;
    Mode game_mode = Mode::Survival;
 
+   int ping;
+
    int xp_level = 0;
    float xp_points = .0f;
    int xp_seed = 0;
@@ -58,12 +60,14 @@ class Player {
    Player(uuid id, std::string &name);
 
    void set_entity_id(uint32_t entity_id);
+   void set_ping(int ping);
    [[nodiscard]] uuid get_id() const;
    [[nodiscard]] uint32_t get_entity_id() const;
    [[nodiscard]] Mode get_game_mode() const;
    [[nodiscard]] const Abilities &get_abilities() const;
    [[nodiscard]] const RecipeBook &get_recipe_book() const;
    [[nodiscard]] std::string_view get_player_name() const;
+   [[nodiscard]] int get_ping() const;
 };
 
 } // namespace Game

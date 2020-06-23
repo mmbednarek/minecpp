@@ -52,7 +52,7 @@ Writer Message::serialize(MultiBlockChange msg) {
    w.write_big_endian(msg.chunk_z);
    w.write_varint(msg.changes.size());
 
-   for (const auto &change: msg.changes) {
+   for (const auto &change : msg.changes) {
       w.write_big_endian(change.offset);
       w.write_varint(change.state);
    }
@@ -80,6 +80,13 @@ Writer serialize(EntityStatus msg) {
    w.write_byte(0x1c);
    w.write_big_endian(msg.entity_id);
    w.write_byte(msg.opcode);
+   return w;
+}
+
+Writer Message::serialize(KeepAlive msg) {
+   Writer w;
+   w.write_byte(0x21);
+   w.write_big_endian(msg.time);
    return w;
 }
 

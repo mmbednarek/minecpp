@@ -85,8 +85,13 @@ struct EntityStatus {
 };
 Writer serialize(EntityStatus msg);
 
-// 0x22
+// 0x21
+struct KeepAlive {
+   uint64_t time;
+};
+Writer serialize(KeepAlive msg);
 
+// 0x22
 struct ChunkData {
    minecpp::chunk::NetChunk &chunk;
 };
