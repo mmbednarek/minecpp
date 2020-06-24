@@ -152,8 +152,8 @@ void Consumer::on_event(UpdateBlock &msg) {
    int chunk_x = msg.x() >= 0 ? (msg.x() / 16) : (msg.x() / 16 - 1);
    int chunk_z = msg.z() >= 0 ? (msg.z() / 16) : (msg.z() / 16 - 1);
 
-   int offset_x = msg.x() % 16;
-   int offset_z = msg.z() % 16;
+   int offset_x = msg.x() & 15;
+   int offset_z = msg.z() & 15;
 
    short offset = offset_x << 12 | msg.y() | offset_z << 8;
 

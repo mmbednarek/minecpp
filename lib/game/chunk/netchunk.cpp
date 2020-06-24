@@ -161,6 +161,10 @@ void NetChunk::as_proto(minecpp::chunk::NetChunk *chunk) {
    }
 }
 
+constexpr uint32_t coord_to_offset(int x, int y, int z) {
+   return (y % 16) * 16 * 16 + (z & 15) * 16 + (x & 15);
+}
+
 void NetChunk::create_empty_section(int8_t sec) {
    Game::NetSection section;
    section.bits = 4; // start with 4 bits
@@ -193,8 +197,8 @@ void NetChunk::set_block(int x, int y, int z, uint32_t state) {
       value = *index;
    }
 
-   Utils::set_packed(section.data, section.bits,
-                     (y % 16) * 16 * 16 + z * 16 + x, value);
+   Utils::set_packed(section.data, section.bits, coord_to_offset(x, y, z),
+                     value);
 
    set_block_light(x, y, z, 15);
    set_sky_light(x, y, z, 15);
@@ -211,7 +215,7 @@ uint8_t NetChunk::get_block_light(int x, int y, int z) {
       return 0;
    }
 
-   int index = (y % 16) * 16 * 16 + z * 16 + x;
+   auto index = coord_to_offset(x, y, z);
 
    if (index % 2 == 0) {
       return iter->second.block_light[index / 2] & 15;
@@ -231,7 +235,7 @@ void NetChunk::set_block_light(int x, int y, int z, uint8_t value) {
       return;
    }
 
-   int index = (y % 16) * 16 * 16 + z * 16 + x;
+   int index = coord_to_offset(x, y, z);
 
    auto pack = iter->second.block_light[index / 2];
    if (index % 2 == 0) {
@@ -255,7 +259,7 @@ void NetChunk::set_sky_light(int x, int y, int z, uint8_t value) {
       return;
    }
 
-   int index = (y % 16) * 16 * 16 + z * 16 + x;
+   int index = coord_to_offset(x, y, z);
 
    auto pack = iter->second.sky_light[index / 2];
    if (index % 2 == 0) {

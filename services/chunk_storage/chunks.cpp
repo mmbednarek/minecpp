@@ -24,10 +24,7 @@ Game::NetChunk &ChunkManager::get_chunk(int x, int z) {
 }
 
 static constexpr int chunk_to_region(int cord) {
-   if (cord < 0) {
-      return cord / 32 - 1;
-   }
-   return cord / 32;
+   return cord < 0 ? (cord / 32 - 1) : cord / 32;
 }
 
 static constexpr int block_to_chunk(int cord) {
@@ -55,6 +52,11 @@ void ChunkManager::load_chunk(int x, int z) {
 }
 
 void ChunkManager::set_block(int x, int y, int z, uint32_t state) {
+   auto iter = chunks.find(coord(block_to_chunk(x), block_to_chunk(z)));
+   if (iter == chunks.end()) {
+      load_chunk(block_to_chunk(x), block_to_chunk(z));
+   }
+
    chunks[coord(block_to_chunk(x), block_to_chunk(z))]->set_block(
        x % 16, y, z % 16, state);
 }

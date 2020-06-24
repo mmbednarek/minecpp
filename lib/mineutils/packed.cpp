@@ -31,8 +31,8 @@ void for_each_packed(const std::vector<long long> &data,
 
 void set_packed(std::vector<long long> &data, uint8_t bits, uint32_t index,
                 uint32_t value) {
-   int pack = bits * index / 64;
-   int offset = bits * index % 64;
+   uint32_t pack = bits * index / 64;
+   uint32_t offset = bits * index % 64;
 
    uint64_t mask = ((1u << bits) - 1u);
 
