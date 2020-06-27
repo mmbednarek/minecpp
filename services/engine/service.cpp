@@ -1,5 +1,6 @@
 #include "service.h"
 #include <boost/uuid/uuid.hpp>
+#include <game/blocks/position.h>
 #include <game/dimension.h>
 #include <grpcpp/create_channel.h>
 #include <minenet/chat.h>
@@ -12,8 +13,8 @@ namespace Engine {
 Service::~Service() = default;
 
 Service::Service(EntityManager &entities, PlayerManager &players,
-                 Producer &producer, std::string &chunk_store)
-    : entities(entities), players(players), producer(producer) {
+                 std::string &chunk_store)
+    : entities(entities), players(players) {
    auto channel =
        grpc::CreateChannel(chunk_store, grpc::InsecureChannelCredentials());
    chunk_storage = minecpp::chunk_storage::ChunkStorage::NewStub(channel);
@@ -43,7 +44,7 @@ Service::AcceptPlayer(grpc::ServerContext *context,
 
    response->set_state(
        minecpp::engine::AcceptPlayerResponse_PlayerAcceptState_ACCEPTED);
-   response->set_node_id(0); // TODO: Put actual node id
+   response->set_front_id(0); // TODO: Put actual node id
 
    response->mutable_game_info()->set_max_players(max_players);
    response->mutable_game_info()->set_difficulty(
@@ -74,7 +75,7 @@ Service::AcceptPlayer(grpc::ServerContext *context,
    minecpp::events::Chat chat;
    chat.set_type(1);
    chat.set_message(MineNet::format_join_message(request->name()));
-   producer.post(chat);
+   event_manager.post(chat);
 
    return grpc::Status();
 }
@@ -100,7 +101,7 @@ grpc::Status Service::SetPlayerPosition(
          event.set_z(movement.z);
          event.set_yaw(e.get_yaw());
          event.set_pitch(e.get_pitch());
-         producer.post(event);
+         event_manager.post(event);
       }
    } catch (std::runtime_error &e) {
       spdlog::error("error setting player pos: {}", e.what());
@@ -126,7 +127,7 @@ grpc::Status Service::SetPlayerRotation(
       event.set_uuid(player_id.data, player_id.size());
       event.set_yaw(e.get_yaw());
       event.set_pitch(e.get_pitch());
-      producer.post(event);
+      event_manager.post(event);
    } catch (std::runtime_error &e) {
       spdlog::error("error setting player pos: {}", e.what());
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "player not found");
@@ -147,7 +148,7 @@ Service::ChatMessage(grpc::ServerContext *context,
    chat.set_type(0);
    chat.set_message(
        MineNet::format_chat_message(p.get_player_name(), request->message()));
-   producer.post(chat);
+   event_manager.post(chat);
 
    return grpc::Status();
 }
@@ -210,12 +211,12 @@ Service::RemovePlayer(grpc::ServerContext *context,
    minecpp::events::Chat chat;
    chat.set_type(1);
    chat.set_message(MineNet::format_left_message(player.get_player_name()));
-   producer.post(chat);
+   event_manager.post(chat);
 
    minecpp::events::RemovePlayer remove_player;
    remove_player.set_uuid(request->uuid());
    remove_player.set_entity_id(player.get_entity_id());
-   producer.post(remove_player);
+   event_manager.post(remove_player);
 
    players.remove_player(id);
    return grpc::Status();
@@ -224,10 +225,6 @@ grpc::Status
 Service::DestroyBlock(grpc::ServerContext *context,
                       const minecpp::engine::DestroyBlockRequest *request,
                       minecpp::engine::EmptyResponse *response) {
-   //   boost::uuids::uuid id{};
-   //   Utils::decode_uuid(id, request->uuid().data());
-   //   auto player = players.get_player(id);
-
    grpc::ClientContext ctx;
    minecpp::chunk_storage::SetBlockRequest set_block;
    set_block.set_x(request->x());
@@ -240,12 +237,15 @@ Service::DestroyBlock(grpc::ServerContext *context,
       spdlog::error("set block error: {}", status.error_message());
    }
 
+   Game::Block::Position pos(request->x(), request->y(), request->z());
+   auto chunk_pos = pos.chunk_pos();
+
    minecpp::events::UpdateBlock update_block;
-   update_block.set_x(request->x());
-   update_block.set_y(request->y());
-   update_block.set_z(request->z());
+   update_block.set_chunk_x(chunk_pos.x);
+   update_block.set_chunk_z(chunk_pos.z);
+   update_block.set_offset(pos.offset());
    update_block.set_state(0);
-   producer.post(update_block);
+   event_manager.post(update_block);
 
    return grpc::Status();
 }
@@ -257,8 +257,18 @@ Service::UpdatePing(grpc::ServerContext *context,
    Utils::decode_uuid(id, request->uuid().data());
    auto player = players.get_player(id);
    player.set_ping(request->ping());
-   spdlog::info("player's {} ping is {}", player.get_player_name(),
-                request->ping());
+   return grpc::Status();
+}
+
+grpc::Status
+Service::FetchEvents(grpc::ServerContext *context,
+                     const minecpp::engine::FetchEventsRequest *request,
+                     grpc::ServerWriter<minecpp::engine::Event> *writer) {
+   while (!context->IsCancelled()) {
+      while (event_manager.has_events()) {
+         writer->Write(event_manager.pop());
+      }
+   }
    return grpc::Status();
 }
 

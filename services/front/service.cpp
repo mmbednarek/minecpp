@@ -15,11 +15,8 @@ namespace Front {
 const char *internal_reason =
     R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
-Service::Service(Config &conf) {
-   auto channel = grpc::CreateChannel(conf.engine_hosts[0],
-                                      grpc::InsecureChannelCredentials());
-   player_service = minecpp::engine::PlayerService::NewStub(channel);
-
+Service::Service(Config &conf, EnginePlayerService &player_service)
+    : player_service(player_service) {
    auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host,
                                             grpc::InsecureChannelCredentials());
    chunk_service = minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);

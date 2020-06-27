@@ -1100,39 +1100,39 @@ class UpdateBlock :
 
   // accessors -------------------------------------------------------
 
-  // int32 x = 1;
-  void clear_x();
-  static const int kXFieldNumber = 1;
-  ::PROTOBUF_NAMESPACE_ID::int32 x() const;
-  void set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 chunk_x = 1;
+  void clear_chunk_x();
+  static const int kChunkXFieldNumber = 1;
+  ::PROTOBUF_NAMESPACE_ID::int32 chunk_x() const;
+  void set_chunk_x(::PROTOBUF_NAMESPACE_ID::int32 value);
 
-  // int32 y = 2;
-  void clear_y();
-  static const int kYFieldNumber = 2;
-  ::PROTOBUF_NAMESPACE_ID::int32 y() const;
-  void set_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 chunk_z = 2;
+  void clear_chunk_z();
+  static const int kChunkZFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 chunk_z() const;
+  void set_chunk_z(::PROTOBUF_NAMESPACE_ID::int32 value);
 
-  // int32 z = 3;
-  void clear_z();
-  static const int kZFieldNumber = 3;
-  ::PROTOBUF_NAMESPACE_ID::int32 z() const;
-  void set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 offset = 3;
+  void clear_offset();
+  static const int kOffsetFieldNumber = 3;
+  ::PROTOBUF_NAMESPACE_ID::int32 offset() const;
+  void set_offset(::PROTOBUF_NAMESPACE_ID::int32 value);
 
-  // int32 state = 4;
+  // uint32 state = 4;
   void clear_state();
   static const int kStateFieldNumber = 4;
-  ::PROTOBUF_NAMESPACE_ID::int32 state() const;
-  void set_state(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 state() const;
+  void set_state(::PROTOBUF_NAMESPACE_ID::uint32 value);
 
   // @@protoc_insertion_point(class_scope:minecpp.events.UpdateBlock)
  private:
   class HasBitSetters;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::int32 x_;
-  ::PROTOBUF_NAMESPACE_ID::int32 y_;
-  ::PROTOBUF_NAMESPACE_ID::int32 z_;
-  ::PROTOBUF_NAMESPACE_ID::int32 state_;
+  ::PROTOBUF_NAMESPACE_ID::int32 chunk_x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 chunk_z_;
+  ::PROTOBUF_NAMESPACE_ID::int32 offset_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 state_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_events_2eproto;
 };
@@ -1664,57 +1664,57 @@ inline void RemovePlayer::set_entity_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // UpdateBlock
 
-// int32 x = 1;
-inline void UpdateBlock::clear_x() {
-  x_ = 0;
+// int32 chunk_x = 1;
+inline void UpdateBlock::clear_chunk_x() {
+  chunk_x_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::x() const {
-  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.x)
-  return x_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::chunk_x() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.chunk_x)
+  return chunk_x_;
 }
-inline void UpdateBlock::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void UpdateBlock::set_chunk_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  x_ = value;
-  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.x)
+  chunk_x_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.chunk_x)
 }
 
-// int32 y = 2;
-inline void UpdateBlock::clear_y() {
-  y_ = 0;
+// int32 chunk_z = 2;
+inline void UpdateBlock::clear_chunk_z() {
+  chunk_z_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::y() const {
-  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.y)
-  return y_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::chunk_z() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.chunk_z)
+  return chunk_z_;
 }
-inline void UpdateBlock::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void UpdateBlock::set_chunk_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  y_ = value;
-  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.y)
+  chunk_z_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.chunk_z)
 }
 
-// int32 z = 3;
-inline void UpdateBlock::clear_z() {
-  z_ = 0;
+// int32 offset = 3;
+inline void UpdateBlock::clear_offset() {
+  offset_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::z() const {
-  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.z)
-  return z_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::offset() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.offset)
+  return offset_;
 }
-inline void UpdateBlock::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void UpdateBlock::set_offset(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  z_ = value;
-  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.z)
+  offset_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.offset)
 }
 
-// int32 state = 4;
+// uint32 state = 4;
 inline void UpdateBlock::clear_state() {
-  state_ = 0;
+  state_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 UpdateBlock::state() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 UpdateBlock::state() const {
   // @@protoc_insertion_point(field_get:minecpp.events.UpdateBlock.state)
   return state_;
 }
-inline void UpdateBlock::set_state(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void UpdateBlock::set_state(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   state_ = value;
   // @@protoc_insertion_point(field_set:minecpp.events.UpdateBlock.state)

@@ -162,7 +162,7 @@ void NetChunk::as_proto(minecpp::chunk::NetChunk *chunk) {
 }
 
 constexpr uint32_t coord_to_offset(int x, int y, int z) {
-   return (y % 16) * 16 * 16 + (z & 15) * 16 + (x & 15);
+   return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15);
 }
 
 void NetChunk::create_empty_section(int8_t sec) {
@@ -224,20 +224,15 @@ uint8_t NetChunk::get_block_light(int x, int y, int z) {
    }
 }
 
-void NetChunk::set_block_light(int x, int y, int z, uint8_t value) {
-   int8_t sec = y / 16;
-   auto iter = sections.find(sec);
-   if (iter == sections.end()) {
-      return;
-   }
-
-   if (iter->second.block_light.empty()) {
+static void set_light_value(std::vector<uint8_t> &light, int x, int y, int z,
+                            uint8_t value) {
+   if (light.empty()) {
       return;
    }
 
    int index = coord_to_offset(x, y, z);
 
-   auto pack = iter->second.block_light[index / 2];
+   auto pack = light[index / 2];
    if (index % 2 == 0) {
       pack &= 240;
       pack |= value & 15;
@@ -245,7 +240,16 @@ void NetChunk::set_block_light(int x, int y, int z, uint8_t value) {
       pack &= 15;
       pack |= (value & 15) << 4;
    }
-   iter->second.block_light[index / 2] = pack;
+   light[index / 2] = pack;
+}
+
+void NetChunk::set_block_light(int x, int y, int z, uint8_t value) {
+   int8_t sec = y / 16;
+   auto iter = sections.find(sec);
+   if (iter == sections.end()) {
+      return;
+   }
+   set_light_value(iter->second.block_light, x, y, z, value);
 }
 
 void NetChunk::set_sky_light(int x, int y, int z, uint8_t value) {
@@ -254,22 +258,7 @@ void NetChunk::set_sky_light(int x, int y, int z, uint8_t value) {
    if (iter == sections.end()) {
       return;
    }
-
-   if (iter->second.sky_light.empty()) {
-      return;
-   }
-
-   int index = coord_to_offset(x, y, z);
-
-   auto pack = iter->second.sky_light[index / 2];
-   if (index % 2 == 0) {
-      pack &= 240;
-      pack |= value & 15;
-   } else {
-      pack &= 15;
-      pack |= (value & 15) << 4;
-   }
-   iter->second.sky_light[index / 2] = pack;
+   set_light_value(iter->second.sky_light, x, y, z, value);
 }
 
 } // namespace Game

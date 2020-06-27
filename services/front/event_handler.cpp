@@ -1,67 +1,47 @@
-#include "consumer.h"
+#include "event_handler.h"
 #include <boost/uuid/uuid.hpp>
+#include <game/events.h>
 #include <minenet/msg/clientbound.h>
-#include <mineutils/format.h>
-#include <mineutils/hex.h>
 #include <mineutils/uuid.h>
 #include <spdlog/spdlog.h>
-#include <stdexcept>
 
 namespace Front {
 
-Consumer::Consumer(KafkaSettings settings, Server &server) : server(server) {
-   cppkafka::Configuration config = {{"metadata.broker.list", settings.hosts},
-                                     {"enable.auto.commit", false},
-                                     {"queue.buffering.max.ms", 50},
-                                     {"group.id", "front"}};
+EventHandler::EventHandler(Server &server) : server(server) {}
 
-   cppkafka::TopicConfiguration topic_config = {
-       {"auto.offset.reset", "latest"}};
+void EventHandler::accept_event(const minecpp::engine::Event &e) {
+   using Game::Event;
 
-   config.set_default_topic_configuration(topic_config);
-
-   consumer = new cppkafka::Consumer(config);
-   consumer->subscribe(settings.topics);
-}
-
-void Consumer::consume(KafkaHandler handler) {
-   auto message = consumer->poll();
-
-   if (message) {
-      if (message.get_payload().get_size() == 0) {
-         return;
-      }
-
-      std::string key = message.get_key();
-      std::string payload = message.get_payload();
-
-      if (key == "EntityMove") {
-         EntityMove pos;
-         pos.ParseFromString(payload);
-         on_event(pos);
-      } else if (key == "EntityLook") {
-         EntityLook msg;
-         msg.ParseFromString(payload);
-         on_event(msg);
-      } else if (key == "RemovePlayer") {
-         RemovePlayer msg;
-         msg.ParseFromString(payload);
-         on_event(msg);
-      } else if (key == "UpdateBlock") {
-         UpdateBlock msg;
-         msg.ParseFromString(payload);
-         on_event(msg);
-      } else if (key == "Chat") {
-         Chat msg;
-         msg.ParseFromString(payload);
-         on_event(msg);
-      }
-
-      consumer->commit();
+   switch (e.kind()) {
+   case Event::index_of<ENU("EntityMove")>(): {
+      EntityMove pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
+   case Event::index_of<ENU("EntityLook")>(): {
+      EntityLook pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
+   case Event::index_of<ENU("RemovePlayer")>(): {
+      RemovePlayer pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
+   case Event::index_of<ENU("UpdateBlock")>(): {
+      UpdateBlock pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
+   case Event::index_of<ENU("Chat")>(): {
+      Chat pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
    }
 }
 
-void Consumer::on_event(EntityMove &pos) {
+void EventHandler::on_event(EntityMove &pos) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, pos.uuid().data());
    server.for_each_connection([&pos, id](Connection *conn) {
@@ -82,7 +62,7 @@ void Consumer::on_event(EntityMove &pos) {
    });
 }
 
-void Consumer::on_event(EntityLook &pos) {
+void EventHandler::on_event(EntityLook &pos) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, pos.uuid().data());
    server.for_each_connection([&pos, id](Connection *conn) {
@@ -105,7 +85,7 @@ void Consumer::on_event(EntityLook &pos) {
    });
 }
 
-void Consumer::on_event(SpawnPlayer &pos) {
+void EventHandler::on_event(SpawnPlayer &pos) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, pos.uuid().data());
 
@@ -122,7 +102,7 @@ void Consumer::on_event(SpawnPlayer &pos) {
    });
 }
 
-void Consumer::on_event(Chat &msg) {
+void EventHandler::on_event(Chat &msg) {
    server.for_each_connection([&msg](Connection *conn) {
       if (!conn)
          return;
@@ -132,7 +112,7 @@ void Consumer::on_event(Chat &msg) {
    });
 }
 
-void Consumer::on_event(RemovePlayer &msg) {
+void EventHandler::on_event(RemovePlayer &msg) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, msg.uuid().data());
 
@@ -148,22 +128,14 @@ void Consumer::on_event(RemovePlayer &msg) {
    });
 }
 
-void Consumer::on_event(UpdateBlock &msg) {
-   int chunk_x = msg.x() >= 0 ? (msg.x() / 16) : (msg.x() / 16 - 1);
-   int chunk_z = msg.z() >= 0 ? (msg.z() / 16) : (msg.z() / 16 - 1);
-
-   int offset_x = msg.x() & 15;
-   int offset_z = msg.z() & 15;
-
-   short offset = offset_x << 12 | msg.y() | offset_z << 8;
-
+void EventHandler::on_event(UpdateBlock &msg) {
    MineNet::Message::MultiBlockChange change{
-       .chunk_x = chunk_x,
-       .chunk_z = chunk_z,
+       .chunk_x = msg.chunk_x(),
+       .chunk_z = msg.chunk_z(),
        .changes{
            MineNet::Message::MultiBlockChange::Change{
-               .offset = offset,
-               .state = static_cast<uint32_t>(msg.state()),
+               .offset = static_cast<short>(msg.offset()),
+               .state = msg.state(),
            },
        },
    };

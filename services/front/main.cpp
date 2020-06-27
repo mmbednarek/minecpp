@@ -1,12 +1,14 @@
 #include "config.h"
-#include "consumer.h"
+#include "event_handler.h"
+#include "keepalive.h"
 #include "players.h"
 #include "protocol/login_handler.h"
 #include "protocol/play_handler.h"
 #include "protocol/status_handler.h"
 #include "server.h"
-#include "keepalive.h"
 #include <atomic>
+#include <grpcpp/grpcpp.h>
+#include <minepb/engine.grpc.pb.h>
 #include <spdlog/spdlog.h>
 #include <thread>
 
@@ -16,7 +18,11 @@ auto main() -> int {
    auto conf = get_config();
    std::atomic_bool consume_messages = true;
 
-   Service service(conf);
+   auto channel = grpc::CreateChannel(conf.engine_hosts[0],
+                                      grpc::InsecureChannelCredentials());
+   auto player_service = minecpp::engine::PlayerService::NewStub(channel);
+
+   Service service(conf, player_service);
 
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
@@ -29,25 +35,20 @@ auto main() -> int {
               dynamic_cast<Protocol::Handler *>(&status_handler),
               dynamic_cast<Protocol::Handler *>(&login_handler));
 
-   Consumer consumer(
-       KafkaSettings{
-           .client_name = "front",
-           .group = "front",
-           .hosts = conf.kafka_hosts,
-           .topics = topics,
-       },
-       svr);
+   std::thread keepalive_thread([&svr]() { keepalive_update(svr); });
 
-   std::thread keepalive_thread([&svr] () {
-      keepalive_update(svr);
-   });
+   std::thread event_thread([&svr, &player_service] {
+      grpc::ClientContext ctx;
+      minecpp::engine::FetchEventsRequest req;
+      req.set_front_id(0);
 
-   std::thread kafka_thread([&consumer, &consume_messages] {
-      while (consume_messages.load()) {
-         consumer.consume([](KafkaBuff key, KafkaBuff value) {
-            std::string_view contents(value.data, value.size);
-            spdlog::info("received kafka message: ", contents);
-         });
+      auto reader = player_service->FetchEvents(&ctx, req);
+
+      EventHandler consumer(svr);
+
+      minecpp::engine::Event event;
+      while (reader->Read(&event)) {
+         consumer.accept_event(event);
       }
    });
    spdlog::info("starting server on port {}", conf.port);

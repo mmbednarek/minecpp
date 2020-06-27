@@ -14,7 +14,7 @@
 
 namespace Front {
 
-typedef std::shared_ptr<minecpp::engine::PlayerService::Stub>
+typedef std::unique_ptr<minecpp::engine::PlayerService::Stub>
     EnginePlayerService;
 typedef std::shared_ptr<grpc::Channel> EngineChannel;
 typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
@@ -27,7 +27,7 @@ class Service {
 
    boost::random::mt19937 rand;
 
-   EnginePlayerService player_service;
+   EnginePlayerService &player_service;
    ChunkService chunk_service;
 
    char *cached_recipes = nullptr;
@@ -36,7 +36,7 @@ class Service {
    std::size_t cached_tags_size;
 
  public:
-   explicit Service(Config &conf);
+   explicit Service(Config &conf, EnginePlayerService &player_service);
    ~Service();
 
    struct LoginResponse {

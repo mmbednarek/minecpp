@@ -1,4 +1,5 @@
 #include "chunks.h"
+#include <game/blocks/position.h>
 #include <mineutils/compression.h>
 #include <region/reader.h>
 
@@ -8,27 +9,23 @@ ChunkManager::ChunkManager(Regions regions) : regions(std::move(regions)) {}
 
 constexpr int64_t max_z = 1875060;
 
-static constexpr int64_t coord(int x, int z) {
+static constexpr int64_t hash_chunk_pos(int x, int z) {
    return static_cast<int64_t>(z) + max_z * static_cast<int64_t>(x);
 }
 
 Game::NetChunk &ChunkManager::get_chunk(int x, int z) {
-   auto iter = chunks.find(coord(x, z));
+   auto iter = chunks.find(hash_chunk_pos(x, z));
    if (iter != chunks.end()) {
       return *iter->second;
    }
 
    load_chunk(x, z);
 
-   return *chunks.at(coord(x, z));
+   return *chunks.at(hash_chunk_pos(x, z));
 }
 
 static constexpr int chunk_to_region(int cord) {
    return cord < 0 ? (cord / 32 - 1) : cord / 32;
-}
-
-static constexpr int block_to_chunk(int cord) {
-   return cord < 0 ? (cord / 16 - 1) : (cord / 16);
 }
 
 void ChunkManager::load_chunk(int x, int z) {
@@ -48,17 +45,20 @@ void ChunkManager::load_chunk(int x, int z) {
    cr.check_signature();
    cr.find_compound("Level");
 
-   chunks[coord(x, z)] = std::make_unique<Game::NetChunk>(Game::NetChunk(cr));
+   chunks[hash_chunk_pos(x, z)] =
+       std::make_unique<Game::NetChunk>(Game::NetChunk(cr));
 }
 
 void ChunkManager::set_block(int x, int y, int z, uint32_t state) {
-   auto iter = chunks.find(coord(block_to_chunk(x), block_to_chunk(z)));
-   if (iter == chunks.end()) {
-      load_chunk(block_to_chunk(x), block_to_chunk(z));
+   Game::Block::Position pos(x, y, z);
+   auto chunk_pos = pos.chunk_pos();
+   auto hashed_pos = hash_chunk_pos(chunk_pos.x, chunk_pos.z);
+
+   if (auto iter = chunks.find(hashed_pos); iter == chunks.end()) {
+      load_chunk(chunk_pos.x, chunk_pos.z);
    }
 
-   chunks[coord(block_to_chunk(x), block_to_chunk(z))]->set_block(
-       x % 16, y, z % 16, state);
+   chunks[hashed_pos]->set_block(pos.offset_x(), y, pos.offset_z(), state);
 }
 
 } // namespace ChunkStorage

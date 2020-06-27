@@ -32,12 +32,12 @@ Regions::read_region(int x, int z,
 }
 
 constexpr int max_z = 62502; // two regions over world border
-static constexpr int64_t coord(int x, int z) {
+static constexpr int64_t hash_chunk_pos(int x, int z) {
    return static_cast<int64_t>(z) + max_z * static_cast<int64_t>(x);
 }
 
 RegionFile &Regions::get_region(int x, int z) {
-   auto iter = files.find(coord(x, z));
+   auto iter = files.find(hash_chunk_pos(x, z));
    if (iter != files.end()) {
       return *iter->second;
    }
@@ -51,9 +51,9 @@ RegionFile &Regions::load_region(int x, int z) {
 
    spdlog::info("loading region file {}", region_path.str());
 
-   files[coord(x, z)] = std::make_unique<RegionFile>(region_path.str());
+   files[hash_chunk_pos(x, z)] = std::make_unique<RegionFile>(region_path.str());
 
-   return *files[coord(x, z)];
+   return *files[hash_chunk_pos(x, z)];
 }
 
 } // namespace ChunkStorage

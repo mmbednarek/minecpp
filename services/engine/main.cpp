@@ -26,9 +26,8 @@ auto main() -> int {
 
    Engine::EntityManager entities;
    Engine::PlayerManager players(player_path, entities);
-   Engine::Producer producer("localhost:9092");
 
-   Engine::Service service(entities, players, producer, chunk_storage_address);
+   Engine::Service service(entities, players, chunk_storage_address);
 
    grpc::ServerBuilder builder;
    builder.AddListeningPort(listen, grpc::InsecureServerCredentials());

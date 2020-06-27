@@ -11,9 +11,11 @@ service PlayerService {
     rpc ChatMessage (ChatMessageRequest) returns (EmptyResponse);
     rpc ListPlayers (EmptyRequest) returns (ListPlayersResponse);
     rpc ListPlayerEntities (EmptyRequest) returns (ListPlayerEntitiesResponse);
-    rpc RemovePlayer(RemovePlayerRequest) returns (EmptyResponse);
-    rpc DestroyBlock(DestroyBlockRequest) returns (EmptyResponse);
-    rpc UpdatePing(UpdatePingRequest) returns (EmptyResponse);
+    rpc RemovePlayer (RemovePlayerRequest) returns (EmptyResponse);
+    rpc DestroyBlock (DestroyBlockRequest) returns (EmptyResponse);
+    rpc UpdatePing (UpdatePingRequest) returns (EmptyResponse);
+
+    rpc FetchEvents (FetchEventsRequest) returns (stream Event);
 }
 
 message AcceptPlayerRequest {
@@ -23,7 +25,7 @@ message AcceptPlayerRequest {
 
 message AcceptPlayerResponse {
     PlayerAcceptState state = 1;
-    uint32 node_id = 2;
+    uint32 front_id = 2;
     minecpp.game.GamePlay game_info = 3;
     minecpp.player.Data player_data = 4;
 
@@ -97,4 +99,24 @@ message DestroyBlockRequest {
 message UpdatePingRequest {
     bytes uuid = 1;
     int32 ping = 2;
+}
+
+message FetchEventsRequest {
+    int32 front_id = 1;
+}
+
+enum EventRecipient {
+    EVERYONE = 0;
+    AREA = 1;
+    PLAYER = 2;
+}
+
+message Event {
+    int32 kind = 1;
+    EventRecipient recipient = 2;
+    oneof recipient_id {
+        bytes uuid = 3;
+        int32 area_id = 4;
+    }
+    bytes data = 5;
 }

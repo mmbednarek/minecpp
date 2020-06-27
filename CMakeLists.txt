@@ -32,13 +32,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 
 FetchContent_Declare(
-        cppkafka
-        GIT_REPOSITORY https://github.com/mfontanini/cppkafka
-        GIT_TAG v0.3.1
-)
-FetchContent_MakeAvailable(cppkafka)
-
-FetchContent_Declare(
         gtest
         GIT_REPOSITORY https://github.com/google/googletest
         GIT_TAG release-1.10.0

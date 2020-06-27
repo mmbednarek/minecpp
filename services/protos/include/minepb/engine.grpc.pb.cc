@@ -29,6 +29,7 @@ static const char* PlayerService_method_names[] = {
   "/minecpp.engine.PlayerService/RemovePlayer",
   "/minecpp.engine.PlayerService/DestroyBlock",
   "/minecpp.engine.PlayerService/UpdatePing",
+  "/minecpp.engine.PlayerService/FetchEvents",
 };
 
 std::unique_ptr< PlayerService::Stub> PlayerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -47,6 +48,7 @@ PlayerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_RemovePlayer_(PlayerService_method_names[6], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_DestroyBlock_(PlayerService_method_names[7], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_UpdatePing_(PlayerService_method_names[8], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FetchEvents_(PlayerService_method_names[9], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status PlayerService::Stub::AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::minecpp::engine::AcceptPlayerResponse* response) {
@@ -301,6 +303,22 @@ void PlayerService::Stub::experimental_async::UpdatePing(::grpc::ClientContext* 
   return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_UpdatePing_, context, request, false);
 }
 
+::grpc::ClientReader< ::minecpp::engine::Event>* PlayerService::Stub::FetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request) {
+  return ::grpc_impl::internal::ClientReaderFactory< ::minecpp::engine::Event>::Create(channel_.get(), rpcmethod_FetchEvents_, context, request);
+}
+
+void PlayerService::Stub::experimental_async::FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::experimental::ClientReadReactor< ::minecpp::engine::Event>* reactor) {
+  ::grpc_impl::internal::ClientCallbackReaderFactory< ::minecpp::engine::Event>::Create(stub_->channel_.get(), stub_->rpcmethod_FetchEvents_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::minecpp::engine::Event>* PlayerService::Stub::AsyncFetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::minecpp::engine::Event>::Create(channel_.get(), cq, rpcmethod_FetchEvents_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::minecpp::engine::Event>* PlayerService::Stub::PrepareAsyncFetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncReaderFactory< ::minecpp::engine::Event>::Create(channel_.get(), cq, rpcmethod_FetchEvents_, context, request, false, nullptr);
+}
+
 PlayerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayerService_method_names[0],
@@ -347,6 +365,11 @@ PlayerService::Service::Service() {
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>(
           std::mem_fn(&PlayerService::Service::UpdatePing), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayerService_method_names[9],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< PlayerService::Service, ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
+          std::mem_fn(&PlayerService::Service::FetchEvents), this)));
 }
 
 PlayerService::Service::~Service() {
@@ -412,6 +435,13 @@ PlayerService::Service::~Service() {
   (void) context;
   (void) request;
   (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayerService::Service::FetchEvents(::grpc::ServerContext* context, const ::minecpp::engine::FetchEventsRequest* request, ::grpc::ServerWriter< ::minecpp::engine::Event>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

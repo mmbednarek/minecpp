@@ -42,8 +42,8 @@ message RemovePlayer {
 }
 
 message UpdateBlock {
-    int32 x = 1;
-    int32 y = 2;
-    int32 z = 3;
-    int32 state = 4;
+    int32 chunk_x = 1;
+    int32 chunk_z = 2;
+    int32 offset = 3;
+    uint32 state = 4;
 }
