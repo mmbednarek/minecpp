@@ -68,4 +68,14 @@ struct PlayerDigging {
 };
 void deserialize(Reader &r, PlayerDigging &msg);
 
+enum class PlayerHand : uint8_t {
+   Main, Off
+};
+
+// 0x2a
+struct AnimateHandClient {
+   PlayerHand hand;
+};
+void deserialize(Reader &r, AnimateHandClient &msg);
+
 } // namespace MineNet::Message

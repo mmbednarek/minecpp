@@ -3,7 +3,9 @@
 
 namespace Game {
 
-using Event = Utils::Enum<ENU("EntityMove"), ENU("EntityLook"),
-                          ENU("RemovePlayer"), ENU("UpdateBlock"), ENU("Chat")>;
+using Event =
+    Utils::Enum<ENU("AddPlayer"), ENU("SpawnPlayer"), ENU("EntityMove"),
+                ENU("EntityLook"), ENU("RemovePlayer"), ENU("UpdateBlock"),
+                ENU("Chat"), ENU("AnimateHand")>;
 
 } // namespace Game

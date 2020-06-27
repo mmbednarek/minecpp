@@ -77,6 +77,10 @@ class UpdatePingRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UpdatePingRequest> _instance;
 } _UpdatePingRequest_default_instance_;
+class AnimateHandRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<AnimateHandRequest> _instance;
+} _AnimateHandRequest_default_instance_;
 class FetchEventsRequestDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<FetchEventsRequest> _instance;
@@ -118,6 +122,20 @@ static void InitDefaultsscc_info_AcceptPlayerResponse_engine_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 2, InitDefaultsscc_info_AcceptPlayerResponse_engine_2eproto}, {
       &scc_info_GamePlay_game_2eproto.base,
       &scc_info_Data_player_2eproto.base,}};
+
+static void InitDefaultsscc_info_AnimateHandRequest_engine_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::minecpp::engine::_AnimateHandRequest_default_instance_;
+    new (ptr) ::minecpp::engine::AnimateHandRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::minecpp::engine::AnimateHandRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AnimateHandRequest_engine_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_AnimateHandRequest_engine_2eproto}, {}};
 
 static void InitDefaultsscc_info_ChatMessageRequest_engine_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -317,7 +335,7 @@ static void InitDefaultsscc_info_UpdatePingRequest_engine_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UpdatePingRequest_engine_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_UpdatePingRequest_engine_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_engine_2eproto[16];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_engine_2eproto[17];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_engine_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_engine_2eproto = nullptr;
 
@@ -329,13 +347,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_engine_2eproto::offsets[] PROT
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerRequest, name_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerRequest, uuid_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerRequest, front_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerResponse, state_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerResponse, front_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerResponse, area_id_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerResponse, game_info_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::AcceptPlayerResponse, player_data_),
   ~0u,  // no _has_bits_
@@ -428,6 +447,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_engine_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::UpdatePingRequest, uuid_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::UpdatePingRequest, ping_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::AnimateHandRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::AnimateHandRequest, uuid_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::AnimateHandRequest, hand_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::FetchEventsRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -447,21 +473,22 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_engine_2eproto::offsets[] PROT
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::engine::AcceptPlayerRequest)},
-  { 7, -1, sizeof(::minecpp::engine::AcceptPlayerResponse)},
-  { 16, -1, sizeof(::minecpp::engine::SetPlayerPositionRequest)},
-  { 25, -1, sizeof(::minecpp::engine::SetPlayerRotationRequest)},
-  { 33, -1, sizeof(::minecpp::engine::ChatMessageRequest)},
-  { 40, -1, sizeof(::minecpp::engine::PlayerData)},
-  { 49, -1, sizeof(::minecpp::engine::ListPlayersResponse)},
-  { 55, -1, sizeof(::minecpp::engine::PlayerEntityData)},
-  { 67, -1, sizeof(::minecpp::engine::ListPlayerEntitiesResponse)},
-  { 73, -1, sizeof(::minecpp::engine::RemovePlayerRequest)},
-  { 79, -1, sizeof(::minecpp::engine::EmptyRequest)},
-  { 84, -1, sizeof(::minecpp::engine::EmptyResponse)},
-  { 89, -1, sizeof(::minecpp::engine::DestroyBlockRequest)},
-  { 98, -1, sizeof(::minecpp::engine::UpdatePingRequest)},
-  { 105, -1, sizeof(::minecpp::engine::FetchEventsRequest)},
-  { 111, -1, sizeof(::minecpp::engine::Event)},
+  { 8, -1, sizeof(::minecpp::engine::AcceptPlayerResponse)},
+  { 17, -1, sizeof(::minecpp::engine::SetPlayerPositionRequest)},
+  { 26, -1, sizeof(::minecpp::engine::SetPlayerRotationRequest)},
+  { 34, -1, sizeof(::minecpp::engine::ChatMessageRequest)},
+  { 41, -1, sizeof(::minecpp::engine::PlayerData)},
+  { 50, -1, sizeof(::minecpp::engine::ListPlayersResponse)},
+  { 56, -1, sizeof(::minecpp::engine::PlayerEntityData)},
+  { 68, -1, sizeof(::minecpp::engine::ListPlayerEntitiesResponse)},
+  { 74, -1, sizeof(::minecpp::engine::RemovePlayerRequest)},
+  { 80, -1, sizeof(::minecpp::engine::EmptyRequest)},
+  { 85, -1, sizeof(::minecpp::engine::EmptyResponse)},
+  { 90, -1, sizeof(::minecpp::engine::DestroyBlockRequest)},
+  { 99, -1, sizeof(::minecpp::engine::UpdatePingRequest)},
+  { 106, -1, sizeof(::minecpp::engine::AnimateHandRequest)},
+  { 113, -1, sizeof(::minecpp::engine::FetchEventsRequest)},
+  { 119, -1, sizeof(::minecpp::engine::Event)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -479,75 +506,81 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_EmptyResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_DestroyBlockRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_UpdatePingRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_AnimateHandRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_FetchEventsRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_Event_default_instance_),
 };
 
 const char descriptor_table_protodef_engine_2eproto[] =
   "\n\014engine.proto\022\016minecpp.engine\032\ngame.pro"
-  "to\032\014player.proto\"1\n\023AcceptPlayerRequest\022"
-  "\014\n\004name\030\001 \001(\t\022\014\n\004uuid\030\002 \001(\014\"\377\001\n\024AcceptPl"
-  "ayerResponse\022E\n\005state\030\001 \001(\01626.minecpp.en"
-  "gine.AcceptPlayerResponse.PlayerAcceptSt"
-  "ate\022\020\n\010front_id\030\002 \001(\r\022)\n\tgame_info\030\003 \001(\013"
-  "2\026.minecpp.game.GamePlay\022)\n\013player_data\030"
-  "\004 \001(\0132\024.minecpp.player.Data\"8\n\021PlayerAcc"
-  "eptState\022\n\n\006DENIED\020\000\022\014\n\010ACCEPTED\020\001\022\t\n\005MO"
-  "VED\020\002\"I\n\030SetPlayerPositionRequest\022\014\n\004uui"
-  "d\030\001 \001(\014\022\t\n\001x\030\002 \001(\001\022\t\n\001y\030\003 \001(\001\022\t\n\001z\030\004 \001(\001"
-  "\"D\n\030SetPlayerRotationRequest\022\014\n\004uuid\030\001 \001"
-  "(\014\022\013\n\003yaw\030\002 \001(\002\022\r\n\005pitch\030\003 \001(\002\"3\n\022ChatMe"
-  "ssageRequest\022\014\n\004uuid\030\001 \001(\014\022\017\n\007message\030\002 "
-  "\001(\t\"a\n\nPlayerData\022\014\n\004uuid\030\001 \001(\014\022\014\n\004name\030"
-  "\002 \001(\t\022\014\n\004ping\030\003 \001(\005\022)\n\tgame_mode\030\004 \001(\0162\026"
-  ".minecpp.game.GameMode\"\?\n\023ListPlayersRes"
-  "ponse\022(\n\004list\030\001 \003(\0132\032.minecpp.engine.Pla"
-  "yerData\"p\n\020PlayerEntityData\022\014\n\004uuid\030\001 \001("
-  "\014\022\021\n\tentity_id\030\002 \001(\005\022\t\n\001x\030\003 \001(\001\022\t\n\001y\030\004 \001"
-  "(\001\022\t\n\001z\030\005 \001(\001\022\013\n\003yaw\030\006 \001(\002\022\r\n\005pitch\030\007 \001("
-  "\002\"L\n\032ListPlayerEntitiesResponse\022.\n\004list\030"
-  "\001 \003(\0132 .minecpp.engine.PlayerEntityData\""
-  "#\n\023RemovePlayerRequest\022\014\n\004uuid\030\001 \001(\014\"\016\n\014"
-  "EmptyRequest\"\017\n\rEmptyResponse\"D\n\023Destroy"
-  "BlockRequest\022\014\n\004uuid\030\001 \001(\014\022\t\n\001x\030\002 \001(\005\022\t\n"
-  "\001y\030\003 \001(\005\022\t\n\001z\030\004 \001(\005\"/\n\021UpdatePingRequest"
-  "\022\014\n\004uuid\030\001 \001(\014\022\014\n\004ping\030\002 \001(\005\"&\n\022FetchEve"
-  "ntsRequest\022\020\n\010front_id\030\001 \001(\005\"\211\001\n\005Event\022\014"
-  "\n\004kind\030\001 \001(\005\0221\n\trecipient\030\002 \001(\0162\036.minecp"
-  "p.engine.EventRecipient\022\016\n\004uuid\030\003 \001(\014H\000\022"
-  "\021\n\007area_id\030\004 \001(\005H\000\022\014\n\004data\030\005 \001(\014B\016\n\014reci"
-  "pient_id*4\n\016EventRecipient\022\014\n\010EVERYONE\020\000"
-  "\022\010\n\004AREA\020\001\022\n\n\006PLAYER\020\0022\356\006\n\rPlayerService"
-  "\022Y\n\014AcceptPlayer\022#.minecpp.engine.Accept"
-  "PlayerRequest\032$.minecpp.engine.AcceptPla"
-  "yerResponse\022\\\n\021SetPlayerPosition\022(.minec"
-  "pp.engine.SetPlayerPositionRequest\032\035.min"
-  "ecpp.engine.EmptyResponse\022\\\n\021SetPlayerRo"
-  "tation\022(.minecpp.engine.SetPlayerRotatio"
-  "nRequest\032\035.minecpp.engine.EmptyResponse\022"
-  "P\n\013ChatMessage\022\".minecpp.engine.ChatMess"
-  "ageRequest\032\035.minecpp.engine.EmptyRespons"
-  "e\022P\n\013ListPlayers\022\034.minecpp.engine.EmptyR"
-  "equest\032#.minecpp.engine.ListPlayersRespo"
-  "nse\022^\n\022ListPlayerEntities\022\034.minecpp.engi"
-  "ne.EmptyRequest\032*.minecpp.engine.ListPla"
-  "yerEntitiesResponse\022R\n\014RemovePlayer\022#.mi"
-  "necpp.engine.RemovePlayerRequest\032\035.minec"
-  "pp.engine.EmptyResponse\022R\n\014DestroyBlock\022"
-  "#.minecpp.engine.DestroyBlockRequest\032\035.m"
-  "inecpp.engine.EmptyResponse\022N\n\nUpdatePin"
-  "g\022!.minecpp.engine.UpdatePingRequest\032\035.m"
-  "inecpp.engine.EmptyResponse\022J\n\013FetchEven"
-  "ts\022\".minecpp.engine.FetchEventsRequest\032\025"
-  ".minecpp.engine.Event0\001b\006proto3"
+  "to\032\014player.proto\"C\n\023AcceptPlayerRequest\022"
+  "\014\n\004name\030\001 \001(\t\022\014\n\004uuid\030\002 \001(\014\022\020\n\010front_id\030"
+  "\003 \001(\t\"\376\001\n\024AcceptPlayerResponse\022E\n\005state\030"
+  "\001 \001(\01626.minecpp.engine.AcceptPlayerRespo"
+  "nse.PlayerAcceptState\022\017\n\007area_id\030\002 \001(\r\022)"
+  "\n\tgame_info\030\003 \001(\0132\026.minecpp.game.GamePla"
+  "y\022)\n\013player_data\030\004 \001(\0132\024.minecpp.player."
+  "Data\"8\n\021PlayerAcceptState\022\n\n\006DENIED\020\000\022\014\n"
+  "\010ACCEPTED\020\001\022\t\n\005MOVED\020\002\"I\n\030SetPlayerPosit"
+  "ionRequest\022\014\n\004uuid\030\001 \001(\014\022\t\n\001x\030\002 \001(\001\022\t\n\001y"
+  "\030\003 \001(\001\022\t\n\001z\030\004 \001(\001\"D\n\030SetPlayerRotationRe"
+  "quest\022\014\n\004uuid\030\001 \001(\014\022\013\n\003yaw\030\002 \001(\002\022\r\n\005pitc"
+  "h\030\003 \001(\002\"3\n\022ChatMessageRequest\022\014\n\004uuid\030\001 "
+  "\001(\014\022\017\n\007message\030\002 \001(\t\"a\n\nPlayerData\022\014\n\004uu"
+  "id\030\001 \001(\014\022\014\n\004name\030\002 \001(\t\022\014\n\004ping\030\003 \001(\005\022)\n\t"
+  "game_mode\030\004 \001(\0162\026.minecpp.game.GameMode\""
+  "\?\n\023ListPlayersResponse\022(\n\004list\030\001 \003(\0132\032.m"
+  "inecpp.engine.PlayerData\"p\n\020PlayerEntity"
+  "Data\022\014\n\004uuid\030\001 \001(\014\022\021\n\tentity_id\030\002 \001(\005\022\t\n"
+  "\001x\030\003 \001(\001\022\t\n\001y\030\004 \001(\001\022\t\n\001z\030\005 \001(\001\022\013\n\003yaw\030\006 "
+  "\001(\002\022\r\n\005pitch\030\007 \001(\002\"L\n\032ListPlayerEntities"
+  "Response\022.\n\004list\030\001 \003(\0132 .minecpp.engine."
+  "PlayerEntityData\"#\n\023RemovePlayerRequest\022"
+  "\014\n\004uuid\030\001 \001(\014\"\016\n\014EmptyRequest\"\017\n\rEmptyRe"
+  "sponse\"D\n\023DestroyBlockRequest\022\014\n\004uuid\030\001 "
+  "\001(\014\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022\t\n\001z\030\004 \001(\005\"/\n\021"
+  "UpdatePingRequest\022\014\n\004uuid\030\001 \001(\014\022\014\n\004ping\030"
+  "\002 \001(\005\"0\n\022AnimateHandRequest\022\014\n\004uuid\030\001 \001("
+  "\014\022\014\n\004hand\030\002 \001(\005\"&\n\022FetchEventsRequest\022\020\n"
+  "\010front_id\030\001 \001(\t\"\211\001\n\005Event\022\014\n\004kind\030\001 \001(\005\022"
+  "1\n\trecipient\030\002 \001(\0162\036.minecpp.engine.Even"
+  "tRecipient\022\016\n\004uuid\030\003 \001(\014H\000\022\021\n\007area_id\030\004 "
+  "\001(\005H\000\022\014\n\004data\030\005 \001(\014B\016\n\014recipient_id*4\n\016E"
+  "ventRecipient\022\014\n\010EVERYONE\020\000\022\010\n\004AREA\020\001\022\n\n"
+  "\006PLAYER\020\0022\300\007\n\rPlayerService\022Y\n\014AcceptPla"
+  "yer\022#.minecpp.engine.AcceptPlayerRequest"
+  "\032$.minecpp.engine.AcceptPlayerResponse\022\\"
+  "\n\021SetPlayerPosition\022(.minecpp.engine.Set"
+  "PlayerPositionRequest\032\035.minecpp.engine.E"
+  "mptyResponse\022\\\n\021SetPlayerRotation\022(.mine"
+  "cpp.engine.SetPlayerRotationRequest\032\035.mi"
+  "necpp.engine.EmptyResponse\022P\n\013ChatMessag"
+  "e\022\".minecpp.engine.ChatMessageRequest\032\035."
+  "minecpp.engine.EmptyResponse\022P\n\013ListPlay"
+  "ers\022\034.minecpp.engine.EmptyRequest\032#.mine"
+  "cpp.engine.ListPlayersResponse\022^\n\022ListPl"
+  "ayerEntities\022\034.minecpp.engine.EmptyReque"
+  "st\032*.minecpp.engine.ListPlayerEntitiesRe"
+  "sponse\022R\n\014RemovePlayer\022#.minecpp.engine."
+  "RemovePlayerRequest\032\035.minecpp.engine.Emp"
+  "tyResponse\022R\n\014DestroyBlock\022#.minecpp.eng"
+  "ine.DestroyBlockRequest\032\035.minecpp.engine"
+  ".EmptyResponse\022N\n\nUpdatePing\022!.minecpp.e"
+  "ngine.UpdatePingRequest\032\035.minecpp.engine"
+  ".EmptyResponse\022P\n\013AnimateHand\022\".minecpp."
+  "engine.AnimateHandRequest\032\035.minecpp.engi"
+  "ne.EmptyResponse\022J\n\013FetchEvents\022\".minecp"
+  "p.engine.FetchEventsRequest\032\025.minecpp.en"
+  "gine.Event0\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_engine_2eproto_deps[2] = {
   &::descriptor_table_game_2eproto,
   &::descriptor_table_player_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_engine_2eproto_sccs[16] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_engine_2eproto_sccs[17] = {
   &scc_info_AcceptPlayerRequest_engine_2eproto.base,
   &scc_info_AcceptPlayerResponse_engine_2eproto.base,
+  &scc_info_AnimateHandRequest_engine_2eproto.base,
   &scc_info_ChatMessageRequest_engine_2eproto.base,
   &scc_info_DestroyBlockRequest_engine_2eproto.base,
   &scc_info_EmptyRequest_engine_2eproto.base,
@@ -566,10 +599,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_eng
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_engine_2eproto_once;
 static bool descriptor_table_engine_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_engine_2eproto = {
-  &descriptor_table_engine_2eproto_initialized, descriptor_table_protodef_engine_2eproto, "engine.proto", 2231,
-  &descriptor_table_engine_2eproto_once, descriptor_table_engine_2eproto_sccs, descriptor_table_engine_2eproto_deps, 16, 2,
+  &descriptor_table_engine_2eproto_initialized, descriptor_table_protodef_engine_2eproto, "engine.proto", 2380,
+  &descriptor_table_engine_2eproto_once, descriptor_table_engine_2eproto_sccs, descriptor_table_engine_2eproto_deps, 17, 2,
   schemas, file_default_instances, TableStruct_engine_2eproto::offsets,
-  file_level_metadata_engine_2eproto, 16, file_level_enum_descriptors_engine_2eproto, file_level_service_descriptors_engine_2eproto,
+  file_level_metadata_engine_2eproto, 17, file_level_enum_descriptors_engine_2eproto, file_level_service_descriptors_engine_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -626,6 +659,7 @@ class AcceptPlayerRequest::HasBitSetters {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int AcceptPlayerRequest::kNameFieldNumber;
 const int AcceptPlayerRequest::kUuidFieldNumber;
+const int AcceptPlayerRequest::kFrontIdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 AcceptPlayerRequest::AcceptPlayerRequest()
@@ -645,6 +679,10 @@ AcceptPlayerRequest::AcceptPlayerRequest(const AcceptPlayerRequest& from)
   if (from.uuid().size() > 0) {
     uuid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.uuid_);
   }
+  front_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.front_id().size() > 0) {
+    front_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.front_id_);
+  }
   // @@protoc_insertion_point(copy_constructor:minecpp.engine.AcceptPlayerRequest)
 }
 
@@ -652,6 +690,7 @@ void AcceptPlayerRequest::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AcceptPlayerRequest_engine_2eproto.base);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  front_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 AcceptPlayerRequest::~AcceptPlayerRequest() {
@@ -662,6 +701,7 @@ AcceptPlayerRequest::~AcceptPlayerRequest() {
 void AcceptPlayerRequest::SharedDtor() {
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   uuid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  front_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void AcceptPlayerRequest::SetCachedSize(int size) const {
@@ -681,6 +721,7 @@ void AcceptPlayerRequest::Clear() {
 
   name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  front_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   _internal_metadata_.Clear();
 }
 
@@ -703,6 +744,13 @@ const char* AcceptPlayerRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAME
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_uuid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // string front_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(mutable_front_id(), ptr, ctx, "minecpp.engine.AcceptPlayerRequest.front_id");
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -762,6 +810,21 @@ bool AcceptPlayerRequest::MergePartialFromCodedStream(
         break;
       }
 
+      // string front_id = 3;
+      case 3: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (26 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_front_id()));
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+            this->front_id().data(), static_cast<int>(this->front_id().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE,
+            "minecpp.engine.AcceptPlayerRequest.front_id"));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -805,6 +868,16 @@ void AcceptPlayerRequest::SerializeWithCachedSizes(
       2, this->uuid(), output);
   }
 
+  // string front_id = 3;
+  if (this->front_id().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->front_id().data(), static_cast<int>(this->front_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.engine.AcceptPlayerRequest.front_id");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      3, this->front_id(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -834,6 +907,17 @@ void AcceptPlayerRequest::SerializeWithCachedSizes(
     target =
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
         2, this->uuid(), target);
+  }
+
+  // string front_id = 3;
+  if (this->front_id().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->front_id().data(), static_cast<int>(this->front_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.engine.AcceptPlayerRequest.front_id");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        3, this->front_id(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -871,6 +955,13 @@ size_t AcceptPlayerRequest::ByteSizeLong() const {
         this->uuid());
   }
 
+  // string front_id = 3;
+  if (this->front_id().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->front_id());
+  }
+
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -906,6 +997,10 @@ void AcceptPlayerRequest::MergeFrom(const AcceptPlayerRequest& from) {
 
     uuid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.uuid_);
   }
+  if (from.front_id().size() > 0) {
+
+    front_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.front_id_);
+  }
 }
 
 void AcceptPlayerRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
@@ -936,6 +1031,8 @@ void AcceptPlayerRequest::InternalSwap(AcceptPlayerRequest* other) {
   name_.Swap(&other->name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   uuid_.Swap(&other->uuid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  front_id_.Swap(&other->front_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
 }
 
@@ -980,7 +1077,7 @@ void AcceptPlayerResponse::clear_player_data() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int AcceptPlayerResponse::kStateFieldNumber;
-const int AcceptPlayerResponse::kFrontIdFieldNumber;
+const int AcceptPlayerResponse::kAreaIdFieldNumber;
 const int AcceptPlayerResponse::kGameInfoFieldNumber;
 const int AcceptPlayerResponse::kPlayerDataFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -1005,16 +1102,16 @@ AcceptPlayerResponse::AcceptPlayerResponse(const AcceptPlayerResponse& from)
     player_data_ = nullptr;
   }
   ::memcpy(&state_, &from.state_,
-    static_cast<size_t>(reinterpret_cast<char*>(&front_id_) -
-    reinterpret_cast<char*>(&state_)) + sizeof(front_id_));
+    static_cast<size_t>(reinterpret_cast<char*>(&area_id_) -
+    reinterpret_cast<char*>(&state_)) + sizeof(area_id_));
   // @@protoc_insertion_point(copy_constructor:minecpp.engine.AcceptPlayerResponse)
 }
 
 void AcceptPlayerResponse::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AcceptPlayerResponse_engine_2eproto.base);
   ::memset(&game_info_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&front_id_) -
-      reinterpret_cast<char*>(&game_info_)) + sizeof(front_id_));
+      reinterpret_cast<char*>(&area_id_) -
+      reinterpret_cast<char*>(&game_info_)) + sizeof(area_id_));
 }
 
 AcceptPlayerResponse::~AcceptPlayerResponse() {
@@ -1051,8 +1148,8 @@ void AcceptPlayerResponse::Clear() {
   }
   player_data_ = nullptr;
   ::memset(&state_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&front_id_) -
-      reinterpret_cast<char*>(&state_)) + sizeof(front_id_));
+      reinterpret_cast<char*>(&area_id_) -
+      reinterpret_cast<char*>(&state_)) + sizeof(area_id_));
   _internal_metadata_.Clear();
 }
 
@@ -1072,10 +1169,10 @@ const char* AcceptPlayerResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAM
           set_state(static_cast<::minecpp::engine::AcceptPlayerResponse_PlayerAcceptState>(val));
         } else goto handle_unusual;
         continue;
-      // uint32 front_id = 2;
+      // uint32 area_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          front_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          area_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1137,13 +1234,13 @@ bool AcceptPlayerResponse::MergePartialFromCodedStream(
         break;
       }
 
-      // uint32 front_id = 2;
+      // uint32 area_id = 2;
       case 2: {
         if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
 
           DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
                    ::PROTOBUF_NAMESPACE_ID::uint32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &front_id_)));
+                 input, &area_id_)));
         } else {
           goto handle_unusual;
         }
@@ -1205,9 +1302,9 @@ void AcceptPlayerResponse::SerializeWithCachedSizes(
       1, this->state(), output);
   }
 
-  // uint32 front_id = 2;
-  if (this->front_id() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32(2, this->front_id(), output);
+  // uint32 area_id = 2;
+  if (this->area_id() != 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32(2, this->area_id(), output);
   }
 
   // .minecpp.game.GamePlay game_info = 3;
@@ -1241,9 +1338,9 @@ void AcceptPlayerResponse::SerializeWithCachedSizes(
       1, this->state(), target);
   }
 
-  // uint32 front_id = 2;
-  if (this->front_id() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->front_id(), target);
+  // uint32 area_id = 2;
+  if (this->area_id() != 0) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->area_id(), target);
   }
 
   // .minecpp.game.GamePlay game_info = 3;
@@ -1301,11 +1398,11 @@ size_t AcceptPlayerResponse::ByteSizeLong() const {
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->state());
   }
 
-  // uint32 front_id = 2;
-  if (this->front_id() != 0) {
+  // uint32 area_id = 2;
+  if (this->area_id() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->front_id());
+        this->area_id());
   }
 
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
@@ -1344,8 +1441,8 @@ void AcceptPlayerResponse::MergeFrom(const AcceptPlayerResponse& from) {
   if (from.state() != 0) {
     set_state(from.state());
   }
-  if (from.front_id() != 0) {
-    set_front_id(from.front_id());
+  if (from.area_id() != 0) {
+    set_area_id(from.area_id());
   }
 }
 
@@ -1377,7 +1474,7 @@ void AcceptPlayerResponse::InternalSwap(AcceptPlayerResponse* other) {
   swap(game_info_, other->game_info_);
   swap(player_data_, other->player_data_);
   swap(state_, other->state_);
-  swap(front_id_, other->front_id_);
+  swap(area_id_, other->area_id_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata AcceptPlayerResponse::GetMetadata() const {
@@ -5330,6 +5427,316 @@ void UpdatePingRequest::InternalSwap(UpdatePingRequest* other) {
 
 // ===================================================================
 
+void AnimateHandRequest::InitAsDefaultInstance() {
+}
+class AnimateHandRequest::HasBitSetters {
+ public:
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int AnimateHandRequest::kUuidFieldNumber;
+const int AnimateHandRequest::kHandFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+AnimateHandRequest::AnimateHandRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:minecpp.engine.AnimateHandRequest)
+}
+AnimateHandRequest::AnimateHandRequest(const AnimateHandRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.uuid().size() > 0) {
+    uuid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.uuid_);
+  }
+  hand_ = from.hand_;
+  // @@protoc_insertion_point(copy_constructor:minecpp.engine.AnimateHandRequest)
+}
+
+void AnimateHandRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_AnimateHandRequest_engine_2eproto.base);
+  uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  hand_ = 0;
+}
+
+AnimateHandRequest::~AnimateHandRequest() {
+  // @@protoc_insertion_point(destructor:minecpp.engine.AnimateHandRequest)
+  SharedDtor();
+}
+
+void AnimateHandRequest::SharedDtor() {
+  uuid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void AnimateHandRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const AnimateHandRequest& AnimateHandRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_AnimateHandRequest_engine_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void AnimateHandRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.engine.AnimateHandRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  hand_ = 0;
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* AnimateHandRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // bytes uuid = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_uuid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 hand = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          hand_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool AnimateHandRequest::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:minecpp.engine.AnimateHandRequest)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // bytes uuid = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_uuid()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // int32 hand = 2;
+      case 2: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
+
+          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
+                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
+                 input, &hand_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:minecpp.engine.AnimateHandRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:minecpp.engine.AnimateHandRequest)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void AnimateHandRequest::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:minecpp.engine.AnimateHandRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      1, this->uuid(), output);
+  }
+
+  // int32 hand = 2;
+  if (this->hand() != 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->hand(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:minecpp.engine.AnimateHandRequest)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* AnimateHandRequest::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.engine.AnimateHandRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        1, this->uuid(), target);
+  }
+
+  // int32 hand = 2;
+  if (this->hand() != 0) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->hand(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.engine.AnimateHandRequest)
+  return target;
+}
+
+size_t AnimateHandRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.engine.AnimateHandRequest)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->uuid());
+  }
+
+  // int32 hand = 2;
+  if (this->hand() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->hand());
+  }
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void AnimateHandRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:minecpp.engine.AnimateHandRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const AnimateHandRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<AnimateHandRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:minecpp.engine.AnimateHandRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:minecpp.engine.AnimateHandRequest)
+    MergeFrom(*source);
+  }
+}
+
+void AnimateHandRequest::MergeFrom(const AnimateHandRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.engine.AnimateHandRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.uuid().size() > 0) {
+
+    uuid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.uuid_);
+  }
+  if (from.hand() != 0) {
+    set_hand(from.hand());
+  }
+}
+
+void AnimateHandRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:minecpp.engine.AnimateHandRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void AnimateHandRequest::CopyFrom(const AnimateHandRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.engine.AnimateHandRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool AnimateHandRequest::IsInitialized() const {
+  return true;
+}
+
+void AnimateHandRequest::Swap(AnimateHandRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void AnimateHandRequest::InternalSwap(AnimateHandRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  uuid_.Swap(&other->uuid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(hand_, other->hand_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata AnimateHandRequest::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 void FetchEventsRequest::InitAsDefaultInstance() {
 }
 class FetchEventsRequest::HasBitSetters {
@@ -5349,12 +5756,16 @@ FetchEventsRequest::FetchEventsRequest(const FetchEventsRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  front_id_ = from.front_id_;
+  front_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.front_id().size() > 0) {
+    front_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.front_id_);
+  }
   // @@protoc_insertion_point(copy_constructor:minecpp.engine.FetchEventsRequest)
 }
 
 void FetchEventsRequest::SharedCtor() {
-  front_id_ = 0;
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_FetchEventsRequest_engine_2eproto.base);
+  front_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 FetchEventsRequest::~FetchEventsRequest() {
@@ -5363,6 +5774,7 @@ FetchEventsRequest::~FetchEventsRequest() {
 }
 
 void FetchEventsRequest::SharedDtor() {
+  front_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void FetchEventsRequest::SetCachedSize(int size) const {
@@ -5380,7 +5792,7 @@ void FetchEventsRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  front_id_ = 0;
+  front_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   _internal_metadata_.Clear();
 }
 
@@ -5392,10 +5804,10 @@ const char* FetchEventsRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // int32 front_id = 1;
+      // string front_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          front_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParserUTF8(mutable_front_id(), ptr, ctx, "minecpp.engine.FetchEventsRequest.front_id");
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -5429,13 +5841,15 @@ bool FetchEventsRequest::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int32 front_id = 1;
+      // string front_id = 1;
       case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &front_id_)));
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadString(
+                input, this->mutable_front_id()));
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+            this->front_id().data(), static_cast<int>(this->front_id().length()),
+            ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::PARSE,
+            "minecpp.engine.FetchEventsRequest.front_id"));
         } else {
           goto handle_unusual;
         }
@@ -5469,9 +5883,14 @@ void FetchEventsRequest::SerializeWithCachedSizes(
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 front_id = 1;
-  if (this->front_id() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(1, this->front_id(), output);
+  // string front_id = 1;
+  if (this->front_id().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->front_id().data(), static_cast<int>(this->front_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.engine.FetchEventsRequest.front_id");
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringMaybeAliased(
+      1, this->front_id(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -5487,9 +5906,15 @@ void FetchEventsRequest::SerializeWithCachedSizes(
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 front_id = 1;
-  if (this->front_id() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->front_id(), target);
+  // string front_id = 1;
+  if (this->front_id().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->front_id().data(), static_cast<int>(this->front_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.engine.FetchEventsRequest.front_id");
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteStringToArray(
+        1, this->front_id(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -5513,10 +5938,10 @@ size_t FetchEventsRequest::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int32 front_id = 1;
-  if (this->front_id() != 0) {
+  // string front_id = 1;
+  if (this->front_id().size() > 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->front_id());
   }
 
@@ -5547,8 +5972,9 @@ void FetchEventsRequest::MergeFrom(const FetchEventsRequest& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from.front_id() != 0) {
-    set_front_id(from.front_id());
+  if (from.front_id().size() > 0) {
+
+    front_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.front_id_);
   }
 }
 
@@ -5577,7 +6003,8 @@ void FetchEventsRequest::Swap(FetchEventsRequest* other) {
 void FetchEventsRequest::InternalSwap(FetchEventsRequest* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(front_id_, other->front_id_);
+  front_id_.Swap(&other->front_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata FetchEventsRequest::GetMetadata() const {
@@ -6130,6 +6557,9 @@ template<> PROTOBUF_NOINLINE ::minecpp::engine::DestroyBlockRequest* Arena::Crea
 }
 template<> PROTOBUF_NOINLINE ::minecpp::engine::UpdatePingRequest* Arena::CreateMaybeMessage< ::minecpp::engine::UpdatePingRequest >(Arena* arena) {
   return Arena::CreateInternal< ::minecpp::engine::UpdatePingRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::engine::AnimateHandRequest* Arena::CreateMaybeMessage< ::minecpp::engine::AnimateHandRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::minecpp::engine::AnimateHandRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::minecpp::engine::FetchEventsRequest* Arena::CreateMaybeMessage< ::minecpp::engine::FetchEventsRequest >(Arena* arena) {
   return Arena::CreateInternal< ::minecpp::engine::FetchEventsRequest >(arena);

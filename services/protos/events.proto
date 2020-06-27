@@ -1,6 +1,13 @@
 syntax = "proto3";
 package minecpp.events;
 
+message AddPlayer {
+    bytes uuid = 1;
+    string name = 2;
+    int32 game_mode = 3;
+    int32 ping = 4;
+}
+
 message SpawnPlayer {
     bytes uuid = 1;
     int32 id = 2;
@@ -46,4 +53,10 @@ message UpdateBlock {
     int32 chunk_z = 2;
     int32 offset = 3;
     uint32 state = 4;
+}
+
+message AnimateHand {
+    bytes uuid = 1;
+    int32 entity_id = 2;
+    int32 hand = 3;
 }

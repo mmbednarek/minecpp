@@ -66,6 +66,8 @@ class Service {
                    MineNet::Message::PlayerDigging msg);
    void on_message(boost::uuids::uuid player_id,
                    MineNet::Message::KeepAliveClient msg);
+   void on_message(boost::uuids::uuid player_id,
+                   MineNet::Message::AnimateHandClient msg);
 
  private:
    void load_chunk(Connection &conn, int x, int z);

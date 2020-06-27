@@ -170,34 +170,9 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
       return;
    }
 
-   conn.get_server()->for_each_connection([id, player, res](Connection *c) {
-      if (!c)
-         return;
-      c->send(AddPlayer{
-          .id = id,
-          .name = player.name(),
-          .game_mode = static_cast<uint8_t>(res.player_data().game_mode()),
-          .ping = 0x00,
-      });
-      if (c->get_uuid() != id) {
-         c->send(SpawnPlayer{
-             .entity_id = res.player_data().entity_id(),
-             .id = id,
-             .x = res.player_data().x(),
-             .y = res.player_data().y(),
-             .z = res.player_data().z(),
-             .yaw = res.player_data().yaw(),
-             .pitch = res.player_data().pitch(),
-         });
-      }
-   });
-
    for (auto const &p : player_list.list()) {
       boost::uuids::uuid p_id{};
       Utils::decode_uuid(p_id, p.uuid().data());
-      if (p_id == id) {
-         continue;
-      }
       conn.send(AddPlayer{
           .id = p_id,
           .name = p.name(),
@@ -419,6 +394,19 @@ void Service::on_message(boost::uuids::uuid player_id,
    auto status = get_player_service()->UpdatePing(&ctx, req, &res);
    if (!status.ok()) {
       spdlog::error("could not update ping: {}", status.error_message());
+      return;
+   }
+}
+void Service::on_message(boost::uuids::uuid player_id,
+                         MineNet::Message::AnimateHandClient msg) {
+   minecpp::engine::AnimateHandRequest req;
+   req.set_uuid(player_id.data, player_id.size());
+   req.set_hand(static_cast<int>(msg.hand));
+   grpc::ClientContext ctx;
+   minecpp::engine::EmptyResponse res;
+   auto status = get_player_service()->AnimateHand(&ctx, req, &res);
+   if (!status.ok()) {
+      spdlog::error("could not animate hand: {}", status.error_message());
       return;
    }
 }

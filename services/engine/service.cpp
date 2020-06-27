@@ -44,7 +44,7 @@ Service::AcceptPlayer(grpc::ServerContext *context,
 
    response->set_state(
        minecpp::engine::AcceptPlayerResponse_PlayerAcceptState_ACCEPTED);
-   response->set_front_id(0); // TODO: Put actual node id
+   response->set_area_id(0); // TODO: Put actual node id
 
    response->mutable_game_info()->set_max_players(max_players);
    response->mutable_game_info()->set_difficulty(
@@ -71,6 +71,22 @@ Service::AcceptPlayer(grpc::ServerContext *context,
        response->mutable_player_data()->mutable_abilities());
    player.get_recipe_book().as_proto(
        response->mutable_player_data()->mutable_recipe_book());
+
+   minecpp::events::AddPlayer add_player;
+   add_player.set_uuid(player_id.data, player_id.size());
+   add_player.set_name(request->name());
+   add_player.set_ping(player.get_ping());
+   event_manager.post(add_player);
+
+   minecpp::events::SpawnPlayer spawn_player;
+   spawn_player.set_uuid(player_id.data, player_id.size());
+   spawn_player.set_id(player.get_entity_id());
+   spawn_player.set_x(player_pos.x);
+   spawn_player.set_y(player_pos.y);
+   spawn_player.set_z(player_pos.z);
+   spawn_player.set_yaw(player_entity.get_yaw());
+   spawn_player.set_z(player_entity.get_pitch());
+   event_manager.post(spawn_player);
 
    minecpp::events::Chat chat;
    chat.set_type(1);
@@ -261,12 +277,31 @@ Service::UpdatePing(grpc::ServerContext *context,
 }
 
 grpc::Status
+Service::AnimateHand(grpc::ServerContext *context,
+                     const minecpp::engine::AnimateHandRequest *request,
+                     minecpp::engine::EmptyResponse *response) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, request->uuid().data());
+   auto player = players.get_player(id);
+
+   minecpp::events::AnimateHand animate;
+   animate.set_uuid(request->uuid());
+   animate.set_entity_id(player.get_entity_id());
+   animate.set_hand(request->hand());
+   event_manager.post(animate);
+
+   return grpc::Status();
+}
+
+grpc::Status
 Service::FetchEvents(grpc::ServerContext *context,
                      const minecpp::engine::FetchEventsRequest *request,
                      grpc::ServerWriter<minecpp::engine::Event> *writer) {
+   auto &queue = event_manager.create_queue(request->front_id());
    while (!context->IsCancelled()) {
-      while (event_manager.has_events()) {
-         writer->Write(event_manager.pop());
+      while (!queue.empty()) {
+         writer->Write(queue.front());
+         queue.pop();
       }
    }
    return grpc::Status();

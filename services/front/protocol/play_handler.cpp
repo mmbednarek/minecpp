@@ -27,27 +27,32 @@ void PlayHandler::handle(Connection &conn, Reader &r) {
       service.on_message(conn.get_uuid(), msg);
    } break;
    case 0x0f: {
-      KeepAliveClient msg;
+      KeepAliveClient msg{};
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;
    case 0x11: {
-      PlayerPosition msg;
+      PlayerPosition msg{};
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;
    case 0x12: {
-      PlayerPositionRotation msg;
+      PlayerPositionRotation msg{};
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;
    case 0x13: {
-      PlayerRotation msg;
+      PlayerRotation msg{};
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;
    case 0x1a: {
       PlayerDigging msg;
+      deserialize(r, msg);
+      service.on_message(conn.get_uuid(), msg);
+   } break;
+   case 0x2a: {
+      AnimateHandClient msg{};
       deserialize(r, msg);
       service.on_message(conn.get_uuid(), msg);
    } break;

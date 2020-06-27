@@ -50,7 +50,7 @@ struct TableStruct_engine_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[17]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -65,6 +65,9 @@ extern AcceptPlayerRequestDefaultTypeInternal _AcceptPlayerRequest_default_insta
 class AcceptPlayerResponse;
 class AcceptPlayerResponseDefaultTypeInternal;
 extern AcceptPlayerResponseDefaultTypeInternal _AcceptPlayerResponse_default_instance_;
+class AnimateHandRequest;
+class AnimateHandRequestDefaultTypeInternal;
+extern AnimateHandRequestDefaultTypeInternal _AnimateHandRequest_default_instance_;
 class ChatMessageRequest;
 class ChatMessageRequestDefaultTypeInternal;
 extern ChatMessageRequestDefaultTypeInternal _ChatMessageRequest_default_instance_;
@@ -112,6 +115,7 @@ extern UpdatePingRequestDefaultTypeInternal _UpdatePingRequest_default_instance_
 PROTOBUF_NAMESPACE_OPEN
 template<> ::minecpp::engine::AcceptPlayerRequest* Arena::CreateMaybeMessage<::minecpp::engine::AcceptPlayerRequest>(Arena*);
 template<> ::minecpp::engine::AcceptPlayerResponse* Arena::CreateMaybeMessage<::minecpp::engine::AcceptPlayerResponse>(Arena*);
+template<> ::minecpp::engine::AnimateHandRequest* Arena::CreateMaybeMessage<::minecpp::engine::AnimateHandRequest>(Arena*);
 template<> ::minecpp::engine::ChatMessageRequest* Arena::CreateMaybeMessage<::minecpp::engine::ChatMessageRequest>(Arena*);
 template<> ::minecpp::engine::DestroyBlockRequest* Arena::CreateMaybeMessage<::minecpp::engine::DestroyBlockRequest>(Arena*);
 template<> ::minecpp::engine::EmptyRequest* Arena::CreateMaybeMessage<::minecpp::engine::EmptyRequest>(Arena*);
@@ -317,6 +321,18 @@ class AcceptPlayerRequest :
   std::string* release_uuid();
   void set_allocated_uuid(std::string* uuid);
 
+  // string front_id = 3;
+  void clear_front_id();
+  static const int kFrontIdFieldNumber = 3;
+  const std::string& front_id() const;
+  void set_front_id(const std::string& value);
+  void set_front_id(std::string&& value);
+  void set_front_id(const char* value);
+  void set_front_id(const char* value, size_t size);
+  std::string* mutable_front_id();
+  std::string* release_front_id();
+  void set_allocated_front_id(std::string* front_id);
+
   // @@protoc_insertion_point(class_scope:minecpp.engine.AcceptPlayerRequest)
  private:
   class HasBitSetters;
@@ -324,6 +340,7 @@ class AcceptPlayerRequest :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr front_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
@@ -494,11 +511,11 @@ class AcceptPlayerResponse :
   ::minecpp::engine::AcceptPlayerResponse_PlayerAcceptState state() const;
   void set_state(::minecpp::engine::AcceptPlayerResponse_PlayerAcceptState value);
 
-  // uint32 front_id = 2;
-  void clear_front_id();
-  static const int kFrontIdFieldNumber = 2;
-  ::PROTOBUF_NAMESPACE_ID::uint32 front_id() const;
-  void set_front_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  // uint32 area_id = 2;
+  void clear_area_id();
+  static const int kAreaIdFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::uint32 area_id() const;
+  void set_area_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
 
   // @@protoc_insertion_point(class_scope:minecpp.engine.AcceptPlayerResponse)
  private:
@@ -508,7 +525,7 @@ class AcceptPlayerResponse :
   ::minecpp::game::GamePlay* game_info_;
   ::minecpp::player::Data* player_data_;
   int state_;
-  ::PROTOBUF_NAMESPACE_ID::uint32 front_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 area_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
@@ -2217,6 +2234,145 @@ class UpdatePingRequest :
 };
 // -------------------------------------------------------------------
 
+class AnimateHandRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.engine.AnimateHandRequest) */ {
+ public:
+  AnimateHandRequest();
+  virtual ~AnimateHandRequest();
+
+  AnimateHandRequest(const AnimateHandRequest& from);
+  AnimateHandRequest(AnimateHandRequest&& from) noexcept
+    : AnimateHandRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline AnimateHandRequest& operator=(const AnimateHandRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AnimateHandRequest& operator=(AnimateHandRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const AnimateHandRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AnimateHandRequest* internal_default_instance() {
+    return reinterpret_cast<const AnimateHandRequest*>(
+               &_AnimateHandRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  void Swap(AnimateHandRequest* other);
+  friend void swap(AnimateHandRequest& a, AnimateHandRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AnimateHandRequest* New() const final {
+    return CreateMaybeMessage<AnimateHandRequest>(nullptr);
+  }
+
+  AnimateHandRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AnimateHandRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const AnimateHandRequest& from);
+  void MergeFrom(const AnimateHandRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AnimateHandRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.engine.AnimateHandRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_engine_2eproto);
+    return ::descriptor_table_engine_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes uuid = 1;
+  void clear_uuid();
+  static const int kUuidFieldNumber = 1;
+  const std::string& uuid() const;
+  void set_uuid(const std::string& value);
+  void set_uuid(std::string&& value);
+  void set_uuid(const char* value);
+  void set_uuid(const void* value, size_t size);
+  std::string* mutable_uuid();
+  std::string* release_uuid();
+  void set_allocated_uuid(std::string* uuid);
+
+  // int32 hand = 2;
+  void clear_hand();
+  static const int kHandFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 hand() const;
+  void set_hand(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.engine.AnimateHandRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  ::PROTOBUF_NAMESPACE_ID::int32 hand_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_engine_2eproto;
+};
+// -------------------------------------------------------------------
+
 class FetchEventsRequest :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.engine.FetchEventsRequest) */ {
  public:
@@ -2259,7 +2415,7 @@ class FetchEventsRequest :
                &_FetchEventsRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   void Swap(FetchEventsRequest* other);
   friend void swap(FetchEventsRequest& a, FetchEventsRequest& b) {
@@ -2326,18 +2482,24 @@ class FetchEventsRequest :
 
   // accessors -------------------------------------------------------
 
-  // int32 front_id = 1;
+  // string front_id = 1;
   void clear_front_id();
   static const int kFrontIdFieldNumber = 1;
-  ::PROTOBUF_NAMESPACE_ID::int32 front_id() const;
-  void set_front_id(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const std::string& front_id() const;
+  void set_front_id(const std::string& value);
+  void set_front_id(std::string&& value);
+  void set_front_id(const char* value);
+  void set_front_id(const char* value, size_t size);
+  std::string* mutable_front_id();
+  std::string* release_front_id();
+  void set_allocated_front_id(std::string* front_id);
 
   // @@protoc_insertion_point(class_scope:minecpp.engine.FetchEventsRequest)
  private:
   class HasBitSetters;
 
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::int32 front_id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr front_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
@@ -2391,7 +2553,7 @@ class Event :
                &_Event_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   void Swap(Event* other);
   friend void swap(Event& a, Event& b) {
@@ -2644,6 +2806,57 @@ inline void AcceptPlayerRequest::set_allocated_uuid(std::string* uuid) {
   // @@protoc_insertion_point(field_set_allocated:minecpp.engine.AcceptPlayerRequest.uuid)
 }
 
+// string front_id = 3;
+inline void AcceptPlayerRequest::clear_front_id() {
+  front_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& AcceptPlayerRequest::front_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.AcceptPlayerRequest.front_id)
+  return front_id_.GetNoArena();
+}
+inline void AcceptPlayerRequest::set_front_id(const std::string& value) {
+  
+  front_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerRequest.front_id)
+}
+inline void AcceptPlayerRequest::set_front_id(std::string&& value) {
+  
+  front_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.engine.AcceptPlayerRequest.front_id)
+}
+inline void AcceptPlayerRequest::set_front_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  front_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.engine.AcceptPlayerRequest.front_id)
+}
+inline void AcceptPlayerRequest::set_front_id(const char* value, size_t size) {
+  
+  front_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.engine.AcceptPlayerRequest.front_id)
+}
+inline std::string* AcceptPlayerRequest::mutable_front_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.engine.AcceptPlayerRequest.front_id)
+  return front_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* AcceptPlayerRequest::release_front_id() {
+  // @@protoc_insertion_point(field_release:minecpp.engine.AcceptPlayerRequest.front_id)
+  
+  return front_id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void AcceptPlayerRequest::set_allocated_front_id(std::string* front_id) {
+  if (front_id != nullptr) {
+    
+  } else {
+    
+  }
+  front_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), front_id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.engine.AcceptPlayerRequest.front_id)
+}
+
 // -------------------------------------------------------------------
 
 // AcceptPlayerResponse
@@ -2662,18 +2875,18 @@ inline void AcceptPlayerResponse::set_state(::minecpp::engine::AcceptPlayerRespo
   // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerResponse.state)
 }
 
-// uint32 front_id = 2;
-inline void AcceptPlayerResponse::clear_front_id() {
-  front_id_ = 0u;
+// uint32 area_id = 2;
+inline void AcceptPlayerResponse::clear_area_id() {
+  area_id_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::uint32 AcceptPlayerResponse::front_id() const {
-  // @@protoc_insertion_point(field_get:minecpp.engine.AcceptPlayerResponse.front_id)
-  return front_id_;
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AcceptPlayerResponse::area_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.AcceptPlayerResponse.area_id)
+  return area_id_;
 }
-inline void AcceptPlayerResponse::set_front_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+inline void AcceptPlayerResponse::set_area_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  front_id_ = value;
-  // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerResponse.front_id)
+  area_id_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.AcceptPlayerResponse.area_id)
 }
 
 // .minecpp.game.GamePlay game_info = 3;
@@ -3624,20 +3837,126 @@ inline void UpdatePingRequest::set_ping(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // -------------------------------------------------------------------
 
+// AnimateHandRequest
+
+// bytes uuid = 1;
+inline void AnimateHandRequest::clear_uuid() {
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& AnimateHandRequest::uuid() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.AnimateHandRequest.uuid)
+  return uuid_.GetNoArena();
+}
+inline void AnimateHandRequest::set_uuid(const std::string& value) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.engine.AnimateHandRequest.uuid)
+}
+inline void AnimateHandRequest::set_uuid(std::string&& value) {
+  
+  uuid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.engine.AnimateHandRequest.uuid)
+}
+inline void AnimateHandRequest::set_uuid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.engine.AnimateHandRequest.uuid)
+}
+inline void AnimateHandRequest::set_uuid(const void* value, size_t size) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.engine.AnimateHandRequest.uuid)
+}
+inline std::string* AnimateHandRequest::mutable_uuid() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.engine.AnimateHandRequest.uuid)
+  return uuid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* AnimateHandRequest::release_uuid() {
+  // @@protoc_insertion_point(field_release:minecpp.engine.AnimateHandRequest.uuid)
+  
+  return uuid_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void AnimateHandRequest::set_allocated_uuid(std::string* uuid) {
+  if (uuid != nullptr) {
+    
+  } else {
+    
+  }
+  uuid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uuid);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.engine.AnimateHandRequest.uuid)
+}
+
+// int32 hand = 2;
+inline void AnimateHandRequest::clear_hand() {
+  hand_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 AnimateHandRequest::hand() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.AnimateHandRequest.hand)
+  return hand_;
+}
+inline void AnimateHandRequest::set_hand(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  hand_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.AnimateHandRequest.hand)
+}
+
+// -------------------------------------------------------------------
+
 // FetchEventsRequest
 
-// int32 front_id = 1;
+// string front_id = 1;
 inline void FetchEventsRequest::clear_front_id() {
-  front_id_ = 0;
+  front_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 FetchEventsRequest::front_id() const {
+inline const std::string& FetchEventsRequest::front_id() const {
   // @@protoc_insertion_point(field_get:minecpp.engine.FetchEventsRequest.front_id)
-  return front_id_;
+  return front_id_.GetNoArena();
 }
-inline void FetchEventsRequest::set_front_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void FetchEventsRequest::set_front_id(const std::string& value) {
   
-  front_id_ = value;
+  front_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:minecpp.engine.FetchEventsRequest.front_id)
+}
+inline void FetchEventsRequest::set_front_id(std::string&& value) {
+  
+  front_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.engine.FetchEventsRequest.front_id)
+}
+inline void FetchEventsRequest::set_front_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  front_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.engine.FetchEventsRequest.front_id)
+}
+inline void FetchEventsRequest::set_front_id(const char* value, size_t size) {
+  
+  front_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.engine.FetchEventsRequest.front_id)
+}
+inline std::string* FetchEventsRequest::mutable_front_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.engine.FetchEventsRequest.front_id)
+  return front_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* FetchEventsRequest::release_front_id() {
+  // @@protoc_insertion_point(field_release:minecpp.engine.FetchEventsRequest.front_id)
+  
+  return front_id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void FetchEventsRequest::set_allocated_front_id(std::string* front_id) {
+  if (front_id != nullptr) {
+    
+  } else {
+    
+  }
+  front_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), front_id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.engine.FetchEventsRequest.front_id)
 }
 
 // -------------------------------------------------------------------
@@ -3854,6 +4173,8 @@ inline Event::RecipientIdCase Event::recipient_id_case() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

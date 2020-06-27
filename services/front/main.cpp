@@ -37,10 +37,10 @@ auto main() -> int {
 
    std::thread keepalive_thread([&svr]() { keepalive_update(svr); });
 
-   std::thread event_thread([&svr, &player_service] {
+   std::thread event_thread([conf, &svr, &player_service] {
       grpc::ClientContext ctx;
       minecpp::engine::FetchEventsRequest req;
-      req.set_front_id(0);
+      req.set_front_id(conf.front_id);
 
       auto reader = player_service->FetchEvents(&ctx, req);
 

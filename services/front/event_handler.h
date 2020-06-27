@@ -17,12 +17,14 @@ class EventHandler {
 
    void accept_event(const minecpp::engine::Event &e);
 
+   void on_event(AddPlayer &msg);
+   void on_event(SpawnPlayer &pos);
    void on_event(EntityMove &pos);
    void on_event(EntityLook &pos);
-   void on_event(SpawnPlayer &pos);
    void on_event(Chat &pos);
    void on_event(RemovePlayer &pos);
    void on_event(UpdateBlock &msg);
+   void on_event(AnimateHand &msg);
 };
 
 } // namespace Front

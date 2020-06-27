@@ -21,6 +21,8 @@ class Connection {
    explicit Connection(boost::asio::io_context &ctx, Server *server);
    ~Connection();
 
+   void set_non_blocking();
+
    size_t read_packet_size();
    size_t read_packet_size(uint8_t leading);
    size_t read(void *ptr, size_t size);

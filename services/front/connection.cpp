@@ -1,6 +1,7 @@
 #include "connection.h"
 #include "server.h"
 #include <boost/asio.hpp>
+#include <boost/asio/socket_base.hpp>
 #include <boost/endian/conversion.hpp>
 #include <mineutils/compression.h>
 #include <spdlog/spdlog.h>
@@ -11,7 +12,9 @@ Connection::Connection(boost::asio::io_context &ctx, Server *server)
     : socket(ctx), _state(Protocol::Handshake), server(server) {}
 
 Connection::~Connection() {
-   get_server()->get_handler(_state).handle_disconnect(*this);
+   if (server && state() != Protocol::State::Handshake) {
+      server->get_handler(_state).handle_disconnect(*this);
+   }
 
    if (!socket.is_open())
       return;
@@ -186,5 +189,7 @@ void Connection::set_uuid(boost::uuids::uuid uuid) { player_id = uuid; }
 const boost::uuids::uuid &Connection::get_uuid() const { return player_id; }
 
 Server *Connection::get_server() { return server; }
+
+void Connection::set_non_blocking() { socket.non_blocking(true); }
 
 } // namespace Front

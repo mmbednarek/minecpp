@@ -45,6 +45,14 @@ Writer Message::serialize(SpawnPlayer msg) {
    return w;
 }
 
+Writer Message::serialize(AnimateHand msg) {
+   Writer w;
+   w.write_byte(0x06);
+   w.write_varint(msg.entity_id);
+   w.write_byte(msg.type);
+   return w;
+}
+
 Writer Message::serialize(MultiBlockChange msg) {
    Writer w;
    w.write_byte(0x10);

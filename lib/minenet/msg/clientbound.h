@@ -40,6 +40,13 @@ struct SpawnPlayer {
 };
 Writer serialize(SpawnPlayer msg);
 
+// 0x06
+struct AnimateHand {
+   int entity_id;
+   uint8_t type;
+};
+Writer serialize(AnimateHand msg);
+
 // 0x10
 struct MultiBlockChange {
    struct Change {

@@ -81,6 +81,8 @@ void Server::handshake(Connection *conn) {
    conn->set_state(request_state);
    conn->id = connections.size();
    connections.emplace_back(conn);
+
+   conn->set_non_blocking();
    conn->async_read_packet(*handlers[request_state]);
 }
 

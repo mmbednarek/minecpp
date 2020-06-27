@@ -3,12 +3,9 @@
 
 namespace Engine {
 
-minecpp::engine::Event EventManager::pop() {
-   auto front = event_queue.front();
-   event_queue.pop();
-   return front;
+EventManager::Queue &EventManager::create_queue(const std::string &front_id) {
+   queues[front_id] = Queue();
+   return queues[front_id];
 }
-
-bool EventManager::has_events() { return !event_queue.empty(); }
 
 } // namespace Engine

@@ -44,4 +44,8 @@ void Message::deserialize(Reader &r, PlayerDigging &msg) {
    msg.facing = Game::Direction(r.read_byte());
 }
 
+void Message::deserialize(Reader &r, AnimateHandClient &msg) {
+   msg.hand = static_cast<PlayerHand>(r.read_varint());
+}
+
 } // namespace MineNet::Message

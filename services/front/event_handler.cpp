@@ -13,6 +13,16 @@ void EventHandler::accept_event(const minecpp::engine::Event &e) {
    using Game::Event;
 
    switch (e.kind()) {
+   case Event::index_of<ENU("AddPlayer")>(): {
+      AddPlayer pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
+   case Event::index_of<ENU("SpawnPlayer")>(): {
+      SpawnPlayer pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
    case Event::index_of<ENU("EntityMove")>(): {
       EntityMove pos;
       pos.ParseFromString(e.data());
@@ -38,7 +48,54 @@ void EventHandler::accept_event(const minecpp::engine::Event &e) {
       pos.ParseFromString(e.data());
       on_event(pos);
    } break;
+   case Event::index_of<ENU("AnimateHand")>(): {
+      AnimateHand pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
    }
+}
+
+void EventHandler::on_event(AddPlayer &msg) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, msg.uuid().data());
+
+   auto add_player = MineNet::Message::AddPlayer{
+       .id = id,
+       .name = msg.name(),
+       .game_mode = static_cast<uint8_t>(msg.game_mode()),
+       .ping = static_cast<uint32_t>(msg.ping()),
+   };
+   server.for_each_connection([id, add_player](Connection *conn) {
+      if (!conn)
+         return;
+      if (id == conn->get_uuid())
+         return;
+      conn->send(add_player);
+   });
+}
+
+void EventHandler::on_event(SpawnPlayer &msg) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, msg.uuid().data());
+
+   auto spawn_player = MineNet::Message::SpawnPlayer{
+       .entity_id = msg.id(),
+       .id = id,
+       .x = msg.x(),
+       .y = msg.y(),
+       .z = msg.z(),
+       .yaw = msg.yaw(),
+       .pitch = msg.pitch(),
+   };
+
+   server.for_each_connection([spawn_player, id](Connection *conn) {
+      if (!conn)
+         return;
+      if (id == conn->get_uuid())
+         return;
+      conn->send(spawn_player);
+   });
 }
 
 void EventHandler::on_event(EntityMove &pos) {
@@ -85,23 +142,6 @@ void EventHandler::on_event(EntityLook &pos) {
    });
 }
 
-void EventHandler::on_event(SpawnPlayer &pos) {
-   boost::uuids::uuid id{};
-   Utils::decode_uuid(id, pos.uuid().data());
-
-   server.for_each_connection([&pos, id](Connection *conn) {
-      conn->send(MineNet::Message::SpawnPlayer{
-          .entity_id = pos.id(),
-          .id = id,
-          .x = pos.x(),
-          .y = pos.y(),
-          .z = pos.z(),
-          .yaw = pos.yaw(),
-          .pitch = pos.pitch(),
-      });
-   });
-}
-
 void EventHandler::on_event(Chat &msg) {
    server.for_each_connection([&msg](Connection *conn) {
       if (!conn)
@@ -144,6 +184,23 @@ void EventHandler::on_event(UpdateBlock &msg) {
       if (!conn)
          return;
       conn->send(change);
+   });
+}
+
+void EventHandler::on_event(AnimateHand &msg) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, msg.uuid().data());
+
+   MineNet::Message::AnimateHand animate{
+       .entity_id = msg.entity_id(),
+       .type = static_cast<uint8_t>(msg.hand()),
+   };
+   server.for_each_connection([id, animate](Connection *conn) {
+      if (!conn)
+         return;
+      if (conn->get_uuid() == id)
+         return;
+      conn->send(animate);
    });
 }
 

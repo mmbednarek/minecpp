@@ -72,6 +72,11 @@ class Service final : public minecpp::engine::PlayerService::Service {
    FetchEvents(grpc::ServerContext *context,
                const minecpp::engine::FetchEventsRequest *request,
                grpc::ServerWriter<::minecpp::engine::Event> *writer) override;
+
+   grpc::Status
+   AnimateHand(grpc::ServerContext *context,
+               const minecpp::engine::AnimateHandRequest *request,
+               minecpp::engine::EmptyResponse *response) override;
 };
 
 } // namespace Engine
