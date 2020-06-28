@@ -270,4 +270,8 @@ const Material Material::Cake{
     .push_reaction = PushReaction::Destroy,
 };
 
-}
+const Material Material::NetherWood{
+    .color = ColorId::Wood,
+};
+
+} // namespace Game::Block

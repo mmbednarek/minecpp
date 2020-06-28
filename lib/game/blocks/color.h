@@ -60,6 +60,13 @@ enum class ColorId : uint8_t {
    GreenTerracotta,
    RedTerracotta,
    BlackTerracotta,
+   CrimsonNylium,
+   CrimsonStem,
+   CrimsonHyphae,
+   WarpedNylium,
+   WarpedStem,
+   WarpedHyphae,
+   WarpedWart,
 };
 
 using DyeColor =
