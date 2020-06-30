@@ -47,7 +47,7 @@ class Service {
    };
    LoginResponse login_player(std::string &user_name);
 
-   void init_player(Connection &conn, boost::uuids::uuid id);
+   void init_player(const std::shared_ptr<Connection> &conn, boost::uuids::uuid id);
    EnginePlayerService &get_player_service();
 
    void on_player_disconnect(boost::uuids::uuid player_id);
@@ -70,7 +70,7 @@ class Service {
                    MineNet::Message::AnimateHandClient msg);
 
  private:
-   void load_chunk(Connection &conn, int x, int z);
+   void load_chunk(const std::shared_ptr<Connection> &conn, int x, int z);
 };
 
 } // namespace Front

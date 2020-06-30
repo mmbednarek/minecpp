@@ -20,8 +20,8 @@ class PlayHandler : public Handler {
  public:
    PlayHandler(Service &service);
 
-   void handle(Connection &conn, Reader &r) override;
-   void handle_disconnect(Connection &conn) override ;
+   void handle(const std::shared_ptr<Connection> &conn, Reader &r) override;
+   void handle_disconnect(Connection &conn) override;
 };
 
 } // namespace Front::Protocol

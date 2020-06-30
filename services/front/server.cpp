@@ -3,6 +3,7 @@
 #include <boost/asio.hpp>
 #include <minenet/msg/reader.h>
 #include <spdlog/spdlog.h>
+#include <utility>
 
 namespace Front {
 
@@ -14,19 +15,12 @@ Server::Server(boost::asio::io_context &ctx, short port,
    accept_conn();
 }
 
-Server::~Server() {
-   for (auto conn : connections) {
-      delete conn;
-   }
-}
-
 void Server::accept_conn() {
-   auto conn = new Connection(
+   auto conn = std::make_shared<Connection>(
        (boost::asio::io_context &)acceptor.get_executor().context(), this);
    acceptor.async_accept(
        conn->socket, [this, conn](const boost::system::error_code &err) {
           if (err) {
-             delete conn;
              spdlog::error("error accepting connection: {}", err.message());
              accept_conn();
              return;
@@ -37,17 +31,15 @@ void Server::accept_conn() {
        });
 }
 
-void Server::handshake(Connection *conn) {
+void Server::handshake(const std::shared_ptr<Connection> &conn) {
    uint8_t packet_size;
    try {
       packet_size = conn->read_packet_size();
    } catch (std::exception &e) {
-      delete conn;
       return;
    }
 
    if (packet_size == 0) {
-      delete conn;
       return;
    }
 
@@ -56,7 +48,6 @@ void Server::handshake(Connection *conn) {
    try {
       conn->read(buff);
    } catch (std::exception &e) {
-      delete conn;
       return;
    }
 
@@ -64,7 +55,6 @@ void Server::handshake(Connection *conn) {
    MineNet::Message::Reader r(s);
 
    if (r.read_byte() != 0) {
-      delete conn;
       return;
    }
 
@@ -74,28 +64,28 @@ void Server::handshake(Connection *conn) {
    auto request_state = static_cast<Protocol::State>(r.read_varint());
 
    if (request_state != Protocol::Login && request_state != Protocol::Status) {
-      delete conn;
       return;
    }
 
+   conn->set_non_blocking();
+
    conn->set_state(request_state);
+
    conn->id = connections.size();
    connections.emplace_back(conn);
 
-   conn->set_non_blocking();
-   conn->async_read_packet(*handlers[request_state]);
+   conn->async_read_packet(conn, *handlers[request_state]);
 }
 
 void Server::drop_connection(std::size_t id) {
    if (id >= connections.size())
       return;
-
-   delete connections[id];
    connections[id] = nullptr;
 }
 
-void Server::for_each_connection(std::function<void(Connection *)> f) {
-   std::for_each(connections.begin(), connections.end(), f);
+void Server::for_each_connection(
+    std::function<void(const std::shared_ptr<Connection> &)> f) {
+   std::for_each(connections.begin(), connections.end(), std::move(f));
 }
 
 Protocol::Handler &Server::get_handler(const Protocol::State state) {

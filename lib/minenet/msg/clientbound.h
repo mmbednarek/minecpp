@@ -70,6 +70,7 @@ Writer serialize(Difficulty msg);
 struct Chat {
    std::string message;
    ChatType type;
+   uuid user_id;
 };
 Writer serialize(Chat msg);
 
@@ -114,10 +115,13 @@ Writer serialize(UpdateLight msg);
 struct JoinGame {
    uint32_t player_id{};
    uint8_t game_mode{};
-   uint32_t dimension{};
+   uint8_t player_game_mode{};
+   std::vector<std::string> available_dimensions{};
+   std::string dimension_type{};
+   std::string dimension{};
+   std::string dimension_props;
    uint64_t seed{};
    uint8_t max_players{};
-   std::string_view world_type{};
    uint32_t view_distance{};
    bool reduced_debug_info{};
    bool immediate_respawn{};
