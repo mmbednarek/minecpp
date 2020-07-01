@@ -1,4 +1,5 @@
 #include "utils.h"
+#include <cassert>
 #include <game/blocks/material.h>
 #include <game/blocks/registry.h>
 #include <mineutils/packed.h>
@@ -12,7 +13,8 @@ int calculate_ref_count(const std::vector<long long> &data,
    }
    int count = 0;
    Utils::for_each_packed(data, [&count, palette](uint32_t value) {
-      auto block = Block::block_by_tag(Block::tag_from_state_id(palette[value]));
+//      assert(value < palette.size());
+      auto block = Block::block_by_tag(Block::tag_from_state_id(palette[value % palette.size()]));
       if (block.material != &Block::Material::Air) {
          ++count;
       }

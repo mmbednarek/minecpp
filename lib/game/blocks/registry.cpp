@@ -4,7 +4,9 @@
 #include <cassert>
 #include <iostream>
 #include <map>
+#include <mineutils/format.h>
 #include <nbt/tag.h>
+#include <stdexcept>
 
 namespace Game::Block {
 
@@ -2251,6 +2253,8 @@ std::array<const Block, 763> blocks{
           with_durability(2.0f, 6.0f)),
 };
 
+static uint32_t max_state_id = 0;
+
 static std::map<std::string_view, uint32_t> get_state_ids() {
    std::map<std::string_view, uint32_t> result;
    uint32_t id = 0;
@@ -2262,6 +2266,7 @@ static std::map<std::string_view, uint32_t> get_state_ids() {
       result[block.tag()] = id;
       id += states;
    }
+   max_state_id = id;
    return result;
 }
 
@@ -2289,6 +2294,12 @@ static std::map<uint32_t, std::string_view> get_tag_by_state() {
 const auto tag_by_state = get_tag_by_state();
 
 std::string_view tag_from_state_id(uint32_t state) {
+   if (state >= max_state_id) {
+      throw std::runtime_error(
+          Utils::format("invalid state id: {} (maximal state id is {})", state,
+                        max_state_id));
+   }
+
    while (tag_by_state.find(state) == tag_by_state.end()) {
       --state;
    }
@@ -2340,6 +2351,7 @@ uint32_t encode_state(std::string_view tag, NBT::TagMap &attribs) {
    }
 
    assert(attribs.size() == found);
+   assert((state_ids.at(tag) + state) < max_state_id);
 
    return state_ids.at(tag) + state;
 }

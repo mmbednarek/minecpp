@@ -12,8 +12,6 @@ PlayHandler::PlayHandler(Service &service) : service(service) {}
 void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
    using namespace MineNet::Message;
 
-   conn->async_read_packet(conn, *this);
-
    auto op = r.read_byte();
    switch (op) {
    case 0x00:
@@ -66,6 +64,8 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
                      .type = MineNet::ChatType::System,
                  });
    }
+
+   conn->async_read_packet(conn, *this);
 }
 
 void PlayHandler::handle_disconnect(Connection &conn) {

@@ -19,8 +19,8 @@ struct NetChunk {
    int pos_x, pos_z;
    bool full = false;
    std::array<int, 1024> biomes;
-   std::array<uint64_t, 36> hm_motion_blocking;
-   std::array<uint64_t, 36> hm_world_surface;
+   std::array<uint64_t, 37> hm_motion_blocking;
+   std::array<uint64_t, 37> hm_world_surface;
    std::map<int8_t, NetSection> sections;
 
    explicit NetChunk(NBT::Reader &r);
