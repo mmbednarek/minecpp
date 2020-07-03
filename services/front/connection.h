@@ -18,6 +18,8 @@ class Connection {
    friend Server;
 
  public:
+   using Ptr = std::shared_ptr<Connection>;
+
    explicit Connection(boost::asio::io_context &ctx, Server *server);
    ~Connection();
 
@@ -27,32 +29,20 @@ class Connection {
    size_t read_packet_size(uint8_t leading);
    size_t read(void *ptr, size_t size);
    size_t read(boost::asio::streambuf &buff);
-   void async_write_then_read(uint8_t *buff, size_t size, Protocol::Handler &h);
-   void async_write(uint8_t *buff, size_t size);
-   void async_write_then_disconnect(uint8_t *buff, size_t size);
-   void async_read_packet(Protocol::Handler &h);
-   void async_read_packet_data(Protocol::Handler &h);
+   void async_write_then_read(const Ptr &conn, uint8_t *buff, size_t size,
+                              Protocol::Handler &h);
+   void async_write(const Ptr &conn, uint8_t *buff, size_t size);
+   void async_write_then_disconnect(const Ptr &conn, uint8_t *buff,
+                                    size_t size);
+   void async_read_packet(const Ptr &conn, Protocol::Handler &h);
+   void async_read_packet_data(const Ptr &conn, Protocol::Handler &h);
 
-   void send(MineNet::Message::Writer &w);
-   void send_and_read(MineNet::Message::Writer &w, Protocol::Handler &h);
-   void send_and_disconnect(MineNet::Message::Writer &w);
+   void send(const Ptr &conn, MineNet::Message::Writer &w);
+   void send_and_read(const Ptr &conn, MineNet::Message::Writer &w,
+                      Protocol::Handler &h);
+   void send_and_disconnect(const Ptr &conn, MineNet::Message::Writer &w);
 
    Server *get_server();
-
-   template <typename M> void send(M msg) {
-      auto w = MineNet::Message::serialize(msg);
-      send(w);
-   }
-
-   template <typename M> void send_and_read(M msg, Protocol::Handler &h) {
-      auto w = MineNet::Message::serialize(msg);
-      send_and_read(w, h);
-   }
-
-   template <typename M> void send_and_disconnect(M msg) {
-      auto w = MineNet::Message::serialize(msg);
-      send_and_disconnect(w);
-   }
 
    Protocol::State state();
    void set_state(Protocol::State s);
@@ -60,7 +50,6 @@ class Connection {
 
    void set_uuid(boost::uuids::uuid uuid);
    [[nodiscard]] const boost::uuids::uuid &get_uuid() const;
-
 
  private:
    inline size_t read_varint(uint32_t result, uint32_t shift);
@@ -74,5 +63,22 @@ class Connection {
    boost::asio::streambuf *packet_buff;
    Server *server;
 };
+
+template <typename M> void send(const Connection::Ptr &conn, M msg) {
+   auto w = MineNet::Message::serialize(msg);
+   conn->send(conn, w);
+}
+
+template <typename M>
+void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h) {
+   auto w = MineNet::Message::serialize(msg);
+   conn->send_and_read(conn, w, h);
+}
+
+template <typename M>
+void send_and_disconnect(const Connection::Ptr &conn, M msg) {
+   auto w = MineNet::Message::serialize(msg);
+   conn->send_and_disconnect(conn, w);
+}
 
 } // namespace Front

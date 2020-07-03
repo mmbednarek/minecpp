@@ -6,7 +6,8 @@ namespace Front::Protocol {
 
 StatusHandler::StatusHandler() {}
 
-void StatusHandler::handle(Connection &conn, MineNet::Message::Reader &r) {
+void StatusHandler::handle(const std::shared_ptr<Connection> &conn,
+                           MineNet::Message::Reader &r) {
    uint8_t op = r.read_byte();
    switch (op) {
    case 0:
@@ -523,7 +524,7 @@ const char *favicon =
     "E+cw8R67WfoOAP8Dat2F"
     "I20deesAAAAASUVORK5CYII=";
 
-void StatusHandler::handle_info(Connection &conn) {
+void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn) {
    MineNet::Message::Writer w;
    w.write_byte(0);
 
@@ -531,19 +532,20 @@ void StatusHandler::handle_info(Connection &conn) {
    ss << R"({"description":{"extra":[{"color": "red", "bold": true, "text": "Mine"}, {"color": "gold", "bold": true, "text": "C++"}, {"color":"gray", "text": "\nA minecraft server backend written in C++"}], "text": ""},)";
    ss << R"("favicon":"data:image/png;base64,)" << favicon << R"(",)";
    ss << R"("players":{"max":34,"online":2},)";
-   ss << R"("version":{"name": "1.15.2", "protocol": 578}})";
+   ss << R"("version":{"name": "1.16.1", "protocol": 736}})";
 
    w.write_string(ss.str());
-   conn.send_and_read(w, *this);
+   conn->send_and_read(conn, w, *this);
 }
 
-void StatusHandler::handle_ping(Connection &conn, MineNet::Message::Reader &r) {
+void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn,
+                                MineNet::Message::Reader &r) {
    auto player_time = r.read_big_endian<uint64_t>();
 
    MineNet::Message::Writer w;
    w.write_byte(1);
    w.write_big_endian(player_time);
-   conn.send_and_disconnect(w);
+   conn->send_and_disconnect(conn, w);
 }
 
 void StatusHandler::handle_disconnect(Connection &conn) {}

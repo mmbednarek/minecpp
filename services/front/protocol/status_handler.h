@@ -7,12 +7,14 @@ namespace Front::Protocol {
 class StatusHandler : public Handler {
  public:
    StatusHandler();
-   void handle(Connection &conn, MineNet::Message::Reader &r) override;
+   void handle(const std::shared_ptr<Connection> &conn,
+               MineNet::Message::Reader &r) override;
    void handle_disconnect(Connection &conn) override;
 
  private:
-   void handle_info(Connection &conn);
-   void handle_ping(Connection &conn, MineNet::Message::Reader &r);
+   void handle_info(const std::shared_ptr<Connection> &conn);
+   void handle_ping(const std::shared_ptr<Connection> &conn,
+                    MineNet::Message::Reader &r);
 };
 
 } // namespace Front::Protocol

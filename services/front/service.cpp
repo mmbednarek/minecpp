@@ -4,6 +4,7 @@
 #include <boost/algorithm/string.hpp>
 #include <fstream>
 #include <game/blocks/position.h>
+#include <game/dimension.h>
 #include <game/player.h>
 #include <grpcpp/grpcpp.h>
 #include <mineutils/time.h>
@@ -67,10 +68,11 @@ Service::LoginResponse Service::login_player(std::string &user_name) {
 
 MineNet::Message::Raw get_command_list();
 
-void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
+void Service::init_player(const std::shared_ptr<Connection> &conn,
+                          boost::uuids::uuid id) {
    using namespace MineNet::Message;
 
-   conn.set_state(Protocol::State::Play);
+   conn->set_state(Protocol::State::Play);
    auto player = players.get_player(id);
 
    grpc::ClientContext ctx;
@@ -81,82 +83,91 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    auto status = get_player_service()->AcceptPlayer(&ctx, req, &res);
    if (!status.ok()) {
       spdlog::error("could not join player {}.", status.error_message());
-      conn.send_and_disconnect(Disconnect{
-          .reason = internal_reason,
-      });
+      send_and_disconnect(conn, Disconnect{
+                                    .reason = internal_reason,
+                                });
       return;
    }
 
-   conn.set_uuid(id);
+   conn->set_uuid(id);
 
-   conn.send(JoinGame{
-       .player_id = static_cast<uint32_t>(res.player_data().entity_id()),
-       .game_mode = static_cast<uint8_t>(res.game_info().mode()),
-       .dimension = static_cast<uint32_t>(res.game_info().dimension()),
-       .seed = res.game_info().seed(),
-       .max_players = static_cast<uint8_t>(res.game_info().max_players()),
-       .world_type = ({
-          auto wld_type =
-              minecpp::game::WorldType_Name(res.game_info().world());
-          boost::algorithm::to_lower(wld_type);
-          wld_type;
-       }),
-       .view_distance = static_cast<uint32_t>(res.game_info().view_distance()),
-       .reduced_debug_info = res.game_info().reduced_debug_info(),
-       .immediate_respawn = res.game_info().do_immediate_respawn(),
-   });
+   std::stringstream dimension_props;
+   NBT::Writer dimension_props_w(dimension_props);
+   Game::write_dimensions(dimension_props_w);
 
-   conn.send(ServerBrand{"minecpp"});
+   send(conn,
+        JoinGame{
+            .player_id = static_cast<uint32_t>(res.player_data().entity_id()),
+            .game_mode = static_cast<uint8_t>(res.game_info().mode()),
+            .available_dimensions{"overworld", "the_nether", "the_end"},
+            .dimension_type = "overworld",
+            .dimension = "overworld",
+            .dimension_props = dimension_props.str(),
+            .seed = res.game_info().seed(),
+            .max_players = static_cast<uint8_t>(res.game_info().max_players()),
+            .view_distance =
+                static_cast<uint32_t>(res.game_info().view_distance()),
+            .reduced_debug_info = res.game_info().reduced_debug_info(),
+            .immediate_respawn = res.game_info().do_immediate_respawn(),
+        });
 
-   conn.send(Difficulty{.difficulty =
-                            static_cast<uint8_t>(res.game_info().difficulty()),
-                        .locked = false});
+   send(conn, ServerBrand{"minecpp"});
+
+   send(conn, Difficulty{.difficulty =
+                             static_cast<uint8_t>(res.game_info().difficulty()),
+                         .locked = false});
 
    Game::Player::Abilities abilities;
    abilities.from_proto(res.player_data().abilities());
 
-   conn.send(PlayerAbilities{
-       .flags = static_cast<uint8_t>(abilities.flags()),
-       .fly_speed = abilities.fly_speed,
-       .walk_speed = abilities.walk_speed,
-   });
+   send(conn, PlayerAbilities{
+                  .flags = static_cast<uint8_t>(abilities.flags()),
+                  .fly_speed = abilities.fly_speed,
+                  .walk_speed = abilities.walk_speed,
+              });
 
-   conn.send(Raw{
-       .size = cached_recipes_size,
-       .data = cached_recipes,
-   });
+   /*
+   send(conn, Raw{
+                  .size = cached_recipes_size,
+                  .data = cached_recipes,
+              });
 
-   conn.send(Raw{
-       .size = cached_tags_size,
-       .data = cached_tags,
-   });
+   send(conn, Raw{
+                  .size = cached_tags_size,
+                  .data = cached_tags,
+              });
+              */
 
-   conn.send(EntityStatus{
-       .entity_id = static_cast<uint32_t>(res.player_data().entity_id()),
-       .opcode = 0x18,
-   });
 
-   conn.send(get_command_list());
+   send(conn,
+        EntityStatus{
+            .entity_id = static_cast<uint32_t>(res.player_data().entity_id()),
+            .opcode = 0x18,
+        });
 
-   conn.send(RecipeBook{
-       .state = Init,
-       .gui_open = res.player_data().recipe_book().gui_open(),
-       .filtering_craftable =
-           res.player_data().recipe_book().filtering_craftable(),
-       .furnace_gui_open = res.player_data().recipe_book().furnace_gui_open(),
-       .furnace_filtering_craftable =
-           res.player_data().recipe_book().furnace_filtering_craftable(),
-   });
+   send(conn, get_command_list());
 
-   conn.send(PlayerPositionLook{
-       .x = res.player_data().x(),
-       .y = res.player_data().y(),
-       .z = res.player_data().z(),
-       .yaw = res.player_data().yaw(),
-       .pitch = res.player_data().pitch(),
-       .flags = 0,
-       .tp_id = 0,
-   });
+   send(conn,
+        RecipeBook{
+            .state = Init,
+            .gui_open = res.player_data().recipe_book().gui_open(),
+            .filtering_craftable =
+                res.player_data().recipe_book().filtering_craftable(),
+            .furnace_gui_open =
+                res.player_data().recipe_book().furnace_gui_open(),
+            .furnace_filtering_craftable =
+                res.player_data().recipe_book().furnace_filtering_craftable(),
+        });
+
+   send(conn, PlayerPositionLook{
+                  .x = res.player_data().x(),
+                  .y = res.player_data().y(),
+                  .z = res.player_data().z(),
+                  .yaw = res.player_data().yaw(),
+                  .pitch = res.player_data().pitch(),
+                  .flags = 0,
+                  .tp_id = 0,
+              });
 
    grpc::ClientContext ctx2;
    minecpp::engine::EmptyRequest empty;
@@ -164,29 +175,29 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
    status = get_player_service()->ListPlayers(&ctx2, empty, &player_list);
    if (!status.ok()) {
       spdlog::error("could not list players {}.", status.error_message());
-      conn.send_and_disconnect(Disconnect{
-          .reason = internal_reason,
-      });
+      send_and_disconnect(conn, Disconnect{
+                                    .reason = internal_reason,
+                                });
       return;
    }
 
    for (auto const &p : player_list.list()) {
       boost::uuids::uuid p_id{};
       Utils::decode_uuid(p_id, p.uuid().data());
-      conn.send(AddPlayer{
-          .id = p_id,
-          .name = p.name(),
-          .game_mode = static_cast<uint8_t>(p.game_mode()),
-          .ping = 0x00,
-      });
+      send(conn, AddPlayer{
+                     .id = p_id,
+                     .name = p.name(),
+                     .game_mode = static_cast<uint8_t>(p.game_mode()),
+                     .ping = 0x00,
+                 });
    }
 
    spdlog::info("{} has joined the game", player.name());
 
-   conn.send(UpdateChunkPosition{
-       .x = static_cast<int>(res.player_data().x() / 16.0),
-       .z = static_cast<int>(res.player_data().z() / 16.0),
-   });
+   send(conn, UpdateChunkPosition{
+                  .x = static_cast<int>(res.player_data().x() / 16.0),
+                  .z = static_cast<int>(res.player_data().z() / 16.0),
+              });
 
    for (int ring = 1; ring < 6; ++ring) {
       for (int x = -ring; x < ring; ++x) {
@@ -205,9 +216,9 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
        get_player_service()->ListPlayerEntities(&ctx3, empty, &player_entities);
    if (!status.ok()) {
       spdlog::error("could not list players {}.", status.error_message());
-      conn.send_and_disconnect(Disconnect{
-          .reason = internal_reason,
-      });
+      send_and_disconnect(conn, Disconnect{
+                                    .reason = internal_reason,
+                                });
       return;
    }
 
@@ -217,21 +228,22 @@ void Service::init_player(Front::Connection &conn, boost::uuids::uuid id) {
       if (e_id == id) {
          continue;
       }
-      conn.send(SpawnPlayer{
-          .entity_id = e.entity_id(),
-          .id = e_id,
-          .x = e.x(),
-          .y = e.y(),
-          .z = e.z(),
-          .yaw = e.yaw(),
-          .pitch = e.pitch(),
-      });
+      send(conn, SpawnPlayer{
+                     .entity_id = e.entity_id(),
+                     .id = e_id,
+                     .x = e.x(),
+                     .y = e.y(),
+                     .z = e.z(),
+                     .yaw = e.yaw(),
+                     .pitch = e.pitch(),
+                 });
    }
 }
 
 EnginePlayerService &Service::get_player_service() { return player_service; }
 
-void Service::load_chunk(Connection &conn, int x, int z) {
+void Service::load_chunk(const std::shared_ptr<Connection> &conn, int x,
+                         int z) {
    using namespace MineNet::Message;
 
    grpc::ClientContext ctx;
@@ -244,18 +256,18 @@ void Service::load_chunk(Connection &conn, int x, int z) {
    if (!status.ok()) {
       spdlog::error("error loading chunk: {}", status.error_message());
 
-      conn.send_and_disconnect(Disconnect{
-          .reason = internal_reason,
-      });
+      send_and_disconnect(conn, Disconnect{
+                                    .reason = internal_reason,
+                                });
       return;
    }
 
-   conn.send(ChunkData{
-       .chunk = net_chunk,
-   });
-   conn.send(UpdateLight{
-       .chunk = net_chunk,
-   });
+   send(conn, ChunkData{
+                  .chunk = net_chunk,
+              });
+   send(conn, UpdateLight{
+                  .chunk = net_chunk,
+              });
 }
 
 void Service::on_message(boost::uuids::uuid player_id,
@@ -412,7 +424,7 @@ void Service::on_message(boost::uuids::uuid player_id,
 }
 
 const char command_list[]{
-    0x12, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+    0x11, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
     0x09, 0x05, 0x01, 0x0a, 0x04, 0x68, 0x65, 0x6c, 0x70, 0x05, 0x01, 0x0b,
     0x04, 0x6c, 0x69, 0x73, 0x74, 0x01, 0x01, 0x0c, 0x02, 0x6d, 0x65, 0x01,
     0x01, 0x0d, 0x03, 0x6d, 0x73, 0x67, 0x01, 0x01, 0x0e, 0x07, 0x74, 0x65,

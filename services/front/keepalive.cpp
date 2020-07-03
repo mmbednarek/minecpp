@@ -5,10 +5,10 @@
 namespace Front {
 
 static void keep_alive_process(Server &server) {
-   server.for_each_connection([](Connection *conn) {
+   server.for_each_connection([](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      conn->send(MineNet::Message::KeepAlive{
+      send(conn, MineNet::Message::KeepAlive{
           .time = Utils::now_milis(),
       });
    });

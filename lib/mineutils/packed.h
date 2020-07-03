@@ -4,7 +4,10 @@
 
 namespace Utils {
 
-void for_each_packed(const std::vector<long long> &data,
+uint32_t log2(uint32_t x);
+
+void for_each_packed(const std::vector<long long> &data, uint8_t bits,
+                     uint32_t array_size,
                      std::function<void(uint32_t)> callback);
 
 void set_packed(std::vector<long long> &data, uint8_t bits, uint32_t index,

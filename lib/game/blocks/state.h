@@ -28,6 +28,7 @@ class Attribute {
 
    virtual int index_from_int(int i) const = 0;
    virtual int index_from_str(const std::string &s) const = 0;
+   [[nodiscard]] virtual std::string name_of(int i) const = 0;
 
    int id{};
 };
@@ -42,6 +43,9 @@ template <int Min, int Max> class IntAttribute : public Attribute {
    [[nodiscard]] int index_from_str(const std::string &s) const override {
       return std::stoi(s) - Min;
    }
+   [[nodiscard]] std::string name_of(int i) const override {
+      return std::to_string(i + Min);
+   }
 };
 
 class BoolAttribute : public Attribute {
@@ -53,6 +57,9 @@ class BoolAttribute : public Attribute {
    [[nodiscard]] int index_from_int(int i) const override { return i ? 0 : 1; }
    [[nodiscard]] int index_from_str(const std::string &s) const override {
       return s == "true" ? 0 : 1;
+   }
+   [[nodiscard]] std::string name_of(int i) const override {
+      return i == 1 ? "false" : "true";
    }
 };
 
@@ -66,6 +73,9 @@ template <Enumerable E> class EnumAttribute : public Attribute {
    int index_from_int(int i) const override { return i; }
    [[nodiscard]] int index_from_str(const std::string &s) const override {
       return E(s.c_str()).index();
+   }
+   [[nodiscard]] std::string name_of(int i) const override {
+      return std::string(E(i).str());
    }
 };
 
@@ -93,6 +103,10 @@ class EnumPartAttribute : public Attribute {
          ++result;
       }
       return result;
+   }
+   [[nodiscard]] std::string name_of(int i) const override {
+      auto arr = std::array<uint32_t, sizeof...(Indexes)>{Indexes...};
+      return std::string(E(arr[i]).str());
    }
 };
 
@@ -128,7 +142,7 @@ const BoolAttribute Triggered("triggered");
 const BoolAttribute Unstable("unstable");
 const BoolAttribute Waterlogged("waterlogged");
 const EnumPartAttribute<Axis, Axis::index_of<ENU("x")>(),
-                        Axis::index_of<ENU("y")>()>
+                        Axis::index_of<ENU("z")>()>
     HorizontalAxis("axis");
 const EnumAttribute<Axis> Axis("axis");
 const BoolAttribute Up("up");
@@ -137,6 +151,11 @@ const BoolAttribute North("north");
 const BoolAttribute East("east");
 const BoolAttribute South("south");
 const BoolAttribute West("west");
+
+const EnumAttribute<WallHeight> WallNorth("north");
+const EnumAttribute<WallHeight> WallEast("east");
+const EnumAttribute<WallHeight> WallSouth("south");
+const EnumAttribute<WallHeight> WallWest("west");
 
 const EnumAttribute<Direction> Facing("facing");
 
@@ -198,6 +217,7 @@ const IntAttribute<1, 4> Pickles_1_4("pickles");
 const IntAttribute<0, 15> Power_0_15("power");
 const IntAttribute<0, 1> Stage_0_1("stage");
 const IntAttribute<0, 15> Rotation_0_15("rotation");
+const IntAttribute<0, 4> Charges("charges");
 
 const EnumAttribute<BedPart> BedPart("part");
 const EnumAttribute<ChestType> ChestType("type");
@@ -209,6 +229,7 @@ const EnumAttribute<SlabType> SlabType("type");
 const EnumAttribute<StairsShape> StairsShape("shape");
 const EnumAttribute<StructureMode> StructureMode("mode");
 const EnumAttribute<BambooLeaves> BambooLeaves("leaves");
+const EnumAttribute<JigsawOrientation> JigsawOrientation("orientation");
 
 } // namespace Attrib
 

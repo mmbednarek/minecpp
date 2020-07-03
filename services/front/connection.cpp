@@ -63,21 +63,22 @@ Protocol::State Connection::state() { return _state; }
 
 void Connection::set_state(Protocol::State s) { _state = s; }
 
-void Connection::async_read_packet(Protocol::Handler &h) {
+// we need to make sure
+void Connection::async_read_packet(const Ptr &conn, Protocol::Handler &h) {
    boost::asio::async_read(
        socket, boost::asio::buffer(&leading_byte, 1),
-       [this, &h](const boost::system::error_code &err, size_t size) {
+       [conn, &h](const boost::system::error_code &err, size_t size) {
           if (err) {
              spdlog::debug("error reading data from client: {}", err.message());
-             server->drop_connection(id);
+             conn->get_server()->drop_connection(conn->id);
              return;
           }
 
-          async_read_packet_data(h);
+          conn->async_read_packet_data(conn, h);
        });
 }
 
-void Connection::async_read_packet_data(Protocol::Handler &h) {
+void Connection::async_read_packet_data(const Ptr &conn, Protocol::Handler &h) {
    size_t msg_size = read_packet_size(leading_byte);
    if (msg_size > 0) {
       packet_buff = new boost::asio::streambuf(msg_size);
@@ -85,99 +86,100 @@ void Connection::async_read_packet_data(Protocol::Handler &h) {
 
    boost::asio::async_read(
        socket, *packet_buff,
-       [this, &h](const boost::system::error_code &err, size_t size) {
+       [conn, &h](const boost::system::error_code &err, size_t size) {
           if (err) {
-             delete packet_buff;
-             packet_buff = nullptr;
+             delete conn->packet_buff;
+             conn->packet_buff = nullptr;
              spdlog::debug("error reading data from client: {}", err.message());
-             server->drop_connection(id);
+             conn->get_server()->drop_connection(conn->id);
              return;
           }
-          std::istream s(packet_buff);
+          std::istream s(conn->packet_buff);
 
-          if (compression_threshold > 0) {
+          if (conn->compression_threshold > 0) {
              // compressed
              MineNet::Message::Reader r(s);
              auto decompressed_size = r.read_varint();
              if (decompressed_size == 0) {
                 // threshold not reached
-                h.handle(*this, r);
+                h.handle(conn, r);
              } else {
                 Utils::ZlibInputStream decompress(s);
                 MineNet::Message::Reader decompress_reader(decompress);
-                h.handle(*this, decompress_reader);
+                h.handle(conn, decompress_reader);
              }
           } else {
              // not compressed
              MineNet::Message::Reader r(s);
-             h.handle(*this, r);
+             h.handle(conn, r);
           }
 
-          delete packet_buff;
-          packet_buff = nullptr;
+          delete conn->packet_buff;
+          conn->packet_buff = nullptr;
        });
 }
 
-void Connection::async_write_then_read(uint8_t *buff, size_t size,
-                                       Protocol::Handler &h) {
+void Connection::async_write_then_read(const Ptr &conn, uint8_t *buff,
+                                       size_t size, Protocol::Handler &h) {
    boost::asio::async_write(
        socket, boost::asio::buffer(buff, size),
-       [this, buff, &h](const boost::system::error_code &err, size_t size) {
+       [conn, buff, &h](const boost::system::error_code &err, size_t size) {
           delete[] buff;
 
           if (err) {
              spdlog::debug("error reading data from client: {}", err.message());
-             server->drop_connection(id);
+             conn->get_server()->drop_connection(conn->id);
              return;
           }
 
-          async_read_packet(h);
+          conn->async_read_packet(conn, h);
        });
 }
 
-void Connection::async_write(uint8_t *buff, size_t size) {
+void Connection::async_write(const Ptr &conn, uint8_t *buff, size_t size) {
    boost::asio::async_write(
        socket, boost::asio::buffer(buff, size),
-       [this, buff](const boost::system::error_code &err, size_t size) {
+       [conn, buff](const boost::system::error_code &err, size_t size) {
           delete[] buff;
 
           if (err) {
              spdlog::debug("error reading data from client: {}", err.message());
-             server->drop_connection(id);
+             conn->get_server()->drop_connection(conn->id);
              return;
           }
        });
 }
 
-void Connection::async_write_then_disconnect(uint8_t *buff, size_t size) {
+void Connection::async_write_then_disconnect(const Ptr &conn, uint8_t *buff,
+                                             size_t size) {
    boost::asio::async_write(
        socket, boost::asio::buffer(buff, size),
-       [this, buff](const boost::system::error_code &err, size_t size) {
+       [conn, buff](const boost::system::error_code &err, size_t size) {
           delete[] buff;
 
           if (err) {
              spdlog::debug("error reading data from client: {}", err.message());
-             return;
           }
 
-          server->drop_connection(id);
+          conn->get_server()->drop_connection(conn->id);
        });
 }
 
-void Connection::send(MineNet::Message::Writer &w) {
+void Connection::send(const Ptr &conn, MineNet::Message::Writer &w) {
    auto bf = w.buff(compression_threshold);
-   async_write(std::get<0>(bf), std::get<1>(bf));
+   async_write(conn, std::get<0>(bf), std::get<1>(bf));
 }
 
-void Connection::send_and_read(MineNet::Message::Writer &w,
+void Connection::send_and_read(const Ptr &conn, MineNet::Message::Writer &w,
                                Protocol::Handler &h) {
    auto bf = w.buff(compression_threshold);
-   async_write_then_read(std::get<0>(bf), std::get<1>(bf), h);
+   async_write_then_read(conn, std::get<0>(bf), std::get<1>(bf), h);
 }
 
-void Connection::send_and_disconnect(MineNet::Message::Writer &w) {
+void Connection::send_and_disconnect(const Ptr &conn,
+                                     MineNet::Message::Writer &w) {
    auto bf = w.buff(compression_threshold);
-   async_write_then_disconnect(std::get<0>(bf), std::get<1>(bf));
+   async_write_then_disconnect(conn, std::get<0>(bf), std::get<1>(bf));
 }
 
 void Connection::set_compression_threshold(std::size_t threshold) {

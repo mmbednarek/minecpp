@@ -58,6 +58,7 @@ struct Material {
    static const Material Gourd;
    static const Material DragonEgg;
    static const Material Cake;
+   static const Material NetherWood;
 };
 
 } // namespace Game::Block

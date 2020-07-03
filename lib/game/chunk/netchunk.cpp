@@ -46,11 +46,11 @@ void NetChunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
                        "height map expected to be a long array");
 
                 if (name == "MOTION_BLOCKING") {
-                   hm_motion_blocking = r.read_long_array<36>();
+                   hm_motion_blocking = r.read_long_array<37>();
                    return;
                 }
                 if (name == "WORLD_SURFACE") {
-                   hm_world_surface = r.read_long_array<36>();
+                   hm_world_surface = r.read_long_array<37>();
                    return;
                 }
 

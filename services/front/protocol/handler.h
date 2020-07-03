@@ -9,7 +9,7 @@ namespace Protocol {
 
 class Handler {
  public:
-   virtual void handle(Connection &conn, MineNet::Message::Reader &r) = 0;
+   virtual void handle(const std::shared_ptr<Connection> &conn, MineNet::Message::Reader &r) = 0;
    virtual void handle_disconnect(Connection &conn) = 0;
 };
 
