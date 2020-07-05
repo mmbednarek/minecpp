@@ -2,29 +2,40 @@
 #include "entities.h"
 #include "players.h"
 #include "event_manager.h"
+#include "world.h"
+#include "dispatcher.h"
 #include <game/difficulty.h>
 #include <minepb/engine.grpc.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
 #include <queue>
+#include <random>
 
 namespace Engine {
 
 typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
     ChunkService;
 
+using boost::uuids::uuid;
+
 class Service final : public minecpp::engine::PlayerService::Service {
+   uuid service_id;
    EntityManager &entities;
    PlayerManager &players;
-   ChunkService chunk_storage;
+   const ChunkService &chunk_storage;
    EventManager event_manager;
+   Dispatcher dispatcher;
+   World world;
+   std::default_random_engine rand;
 
    int max_players = 10;
    Game::Difficulty difficulty = Game::Difficulty::Normal;
    int view_distance = 16;
 
  public:
-   Service(EntityManager &entities, PlayerManager &players, std::string &chunk_store);
+   Service(EntityManager &entities, PlayerManager &players, const ChunkService &chunk_store);
    ~Service() override;
+
+   void handle_command(uuid id, std::string cmd);
 
    grpc::Status
    AcceptPlayer(grpc::ServerContext *context,
@@ -77,6 +88,14 @@ class Service final : public minecpp::engine::PlayerService::Service {
    AnimateHand(grpc::ServerContext *context,
                const minecpp::engine::AnimateHandRequest *request,
                minecpp::engine::EmptyResponse *response) override;
+
+   grpc::Status
+   GetServiceId(grpc::ServerContext *context,
+                const minecpp::engine::EmptyRequest *request,
+                minecpp::engine::GetServiceIdResponse *response) override;
+   grpc::Status GetServiceStatus(
+       grpc::ServerContext *context, const minecpp::engine::EmptyRequest *request,
+       minecpp::engine::GetServiceStatusResponse *response) override;
 };
 
 } // namespace Engine

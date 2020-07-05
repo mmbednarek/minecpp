@@ -1,13 +1,16 @@
 #include "event_handler.h"
 #include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_io.hpp>
 #include <game/events.h>
 #include <minenet/msg/clientbound.h>
+#include <mineutils/time.h>
 #include <mineutils/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {
 
-EventHandler::EventHandler(Server &server) : server(server) {}
+EventHandler::EventHandler(Server &server, const ChunkService &chunk_service)
+    : server(server), chunk_service(chunk_service) {}
 
 void EventHandler::accept_event(const minecpp::engine::Event &e) {
    using Game::Event;
@@ -53,6 +56,16 @@ void EventHandler::accept_event(const minecpp::engine::Event &e) {
       pos.ParseFromString(e.data());
       on_event(pos);
    } break;
+   case Event::index_of<ENU("LoadTerrain")>(): {
+      LoadTerrain pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
+   case Event::index_of<ENU("TransferPlayer")>(): {
+      TransferPlayer pos;
+      pos.ParseFromString(e.data());
+      on_event(pos);
+   } break;
    }
 }
 
@@ -66,14 +79,13 @@ void EventHandler::on_event(AddPlayer &msg) {
        .game_mode = static_cast<uint8_t>(msg.game_mode()),
        .ping = static_cast<uint32_t>(msg.ping()),
    };
-   server.for_each_connection(
-       [id, add_player](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          if (id == conn->get_uuid())
-             return;
-          send(conn, add_player);
-       });
+   server.for_each_connection([id, add_player](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      if (id == conn->get_uuid())
+         return;
+      send(conn, add_player);
+   });
 }
 
 void EventHandler::on_event(SpawnPlayer &msg) {
@@ -90,60 +102,57 @@ void EventHandler::on_event(SpawnPlayer &msg) {
        .pitch = msg.pitch(),
    };
 
-   server.for_each_connection(
-       [spawn_player, id](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          if (id == conn->get_uuid())
-             return;
-          send(conn, spawn_player);
-       });
+   server.for_each_connection([spawn_player, id](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      if (id == conn->get_uuid())
+         return;
+      send(conn, spawn_player);
+   });
 }
 
 void EventHandler::on_event(EntityMove &pos) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, pos.uuid().data());
-   server.for_each_connection(
-       [&pos, id](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          if (conn->get_uuid() == id) {
-             return;
-          }
-          send(conn, MineNet::Message::EntityMove{
-                         .entity_id = pos.id(),
-                         .x = static_cast<short>(pos.x()),
-                         .y = static_cast<short>(pos.y()),
-                         .z = static_cast<short>(pos.z()),
-                         .yaw = pos.yaw(),
-                         .pitch = pos.pitch(),
-                         .on_ground = true,
-                     });
-       });
+   server.for_each_connection([&pos, id](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      if (conn->get_uuid() == id) {
+         return;
+      }
+      send(conn, MineNet::Message::EntityMove{
+                     .entity_id = pos.id(),
+                     .x = static_cast<short>(pos.x()),
+                     .y = static_cast<short>(pos.y()),
+                     .z = static_cast<short>(pos.z()),
+                     .yaw = pos.yaw(),
+                     .pitch = pos.pitch(),
+                     .on_ground = true,
+                 });
+   });
 }
 
 void EventHandler::on_event(EntityLook &pos) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, pos.uuid().data());
-   server.for_each_connection(
-       [&pos, id](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          if (conn->get_uuid() == id) {
-             return;
-          }
-          spdlog::info("rot yaw: {}, pitch: {}", pos.yaw(), pos.pitch());
-          send(conn, MineNet::Message::EntityLook{
-                         .entity_id = pos.id(),
-                         .yaw = pos.yaw(),
-                         .pitch = pos.pitch(),
-                         .on_ground = true,
-                     });
-          send(conn, MineNet::Message::EntityHeadLook{
-                         .entity_id = pos.id(),
-                         .yaw = pos.yaw(),
-                     });
-       });
+   server.for_each_connection([&pos, id](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      if (conn->get_uuid() == id) {
+         return;
+      }
+      spdlog::info("rot yaw: {}, pitch: {}", pos.yaw(), pos.pitch());
+      send(conn, MineNet::Message::EntityLook{
+                     .entity_id = pos.id(),
+                     .yaw = pos.yaw(),
+                     .pitch = pos.pitch(),
+                     .on_ground = true,
+                 });
+      send(conn, MineNet::Message::EntityHeadLook{
+                     .entity_id = pos.id(),
+                     .yaw = pos.yaw(),
+                 });
+   });
 }
 
 void EventHandler::on_event(Chat &msg) {
@@ -162,17 +171,16 @@ void EventHandler::on_event(RemovePlayer &msg) {
    boost::uuids::uuid id{};
    Utils::decode_uuid(id, msg.uuid().data());
 
-   server.for_each_connection(
-       [&msg, id](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          send(conn, MineNet::Message::RemovePlayer{
-                         .id = id,
-                     });
-          send(conn, MineNet::Message::DestroyEntity{
-                         .entity_id = static_cast<uint32_t>(msg.entity_id()),
-                     });
-       });
+   server.for_each_connection([&msg, id](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      send(conn, MineNet::Message::RemovePlayer{
+                     .id = id,
+                 });
+      send(conn, MineNet::Message::DestroyEntity{
+                     .entity_id = static_cast<uint32_t>(msg.entity_id()),
+                 });
+   });
 }
 
 void EventHandler::on_event(UpdateBlock &msg) {
@@ -187,12 +195,11 @@ void EventHandler::on_event(UpdateBlock &msg) {
        },
    };
 
-   server.for_each_connection(
-       [change](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          send(conn, change);
-       });
+   server.for_each_connection([change](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      send(conn, change);
+   });
 }
 
 void EventHandler::on_event(AnimateHand &msg) {
@@ -203,14 +210,86 @@ void EventHandler::on_event(AnimateHand &msg) {
        .entity_id = msg.entity_id(),
        .type = static_cast<uint8_t>(msg.hand()),
    };
-   server.for_each_connection(
-       [id, animate](const std::shared_ptr<Connection> &conn) {
-          if (!conn)
-             return;
-          if (conn->get_uuid() == id)
-             return;
-          send(conn, animate);
-       });
+   server.for_each_connection([id, animate](const std::shared_ptr<Connection> &conn) {
+      if (!conn)
+         return;
+      if (conn->get_uuid() == id)
+         return;
+      send(conn, animate);
+   });
+}
+
+const char *chunk_load_error =
+    R"({"extra":[{"color": "red", "bold": true, "text": "Internal Error"}, {"color":"gray", "text": " error loading chunk"}], "text": ""})";
+
+const char *new_chunks = R"({"extra":[{"color": "green", "bold": true, "text": "new chunks"}], "text": ""})";
+
+void EventHandler::on_event(LoadTerrain &msg) {
+   boost::uuids::uuid player_id{};
+   Utils::decode_uuid(player_id, msg.uuid().data());
+
+   if (!server.has_connection(player_id)) {
+      spdlog::error("connection {} not found", boost::uuids::to_string(player_id));
+      return;
+   }
+
+   auto conn = server.connection_by_id(player_id);
+   if (!conn) {
+      spdlog::error("connection {} is null", boost::uuids::to_string(player_id));
+      return;
+   }
+
+   send(conn, MineNet::Message::UpdateChunkPosition{
+                  .x = msg.central_chunk().x(),
+                  .z = msg.central_chunk().z(),
+              });
+
+   auto start = Utils::now_milis();
+   for (const auto &coord : msg.coords()) {
+      grpc::ClientContext ctx;
+      minecpp::chunk::NetChunk net_chunk;
+      minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
+      load_chunk_request.set_x(coord.x());
+      load_chunk_request.set_z(coord.z());
+
+      auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &net_chunk);
+      if (!status.ok()) {
+         spdlog::error("error loading chunk: {}", status.error_message());
+
+         send(conn, MineNet::Message::Chat{
+                        .message = chunk_load_error,
+                    });
+         return;
+      }
+
+      send(conn, MineNet::Message::ChunkData{
+                     .chunk = net_chunk,
+                 });
+      send(conn, MineNet::Message::UpdateLight{
+                     .chunk = net_chunk,
+                 });
+   }
+   send(conn, MineNet::Message::Chat{
+                  .message = new_chunks,
+              });
+
+   spdlog::info("loaded {} new chunks in {} ms", msg.coords_size(), Utils::now_milis() - start);
+}
+
+const char *player_transfer_message = R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";
+
+void EventHandler::on_event(TransferPlayer &msg) {
+   boost::uuids::uuid player_id{};
+   Utils::decode_uuid(player_id, msg.player().data());
+
+   if (!server.has_connection(player_id))
+      return;
+
+   auto conn = server.connection_by_id(player_id);
+
+   send(conn, MineNet::Message::Chat{
+                  .message = player_transfer_message,
+              });
 }
 
 } // namespace Front

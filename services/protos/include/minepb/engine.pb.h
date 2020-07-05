@@ -50,7 +50,7 @@ struct TableStruct_engine_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[17]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[19]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -86,6 +86,12 @@ extern EventDefaultTypeInternal _Event_default_instance_;
 class FetchEventsRequest;
 class FetchEventsRequestDefaultTypeInternal;
 extern FetchEventsRequestDefaultTypeInternal _FetchEventsRequest_default_instance_;
+class GetServiceIdResponse;
+class GetServiceIdResponseDefaultTypeInternal;
+extern GetServiceIdResponseDefaultTypeInternal _GetServiceIdResponse_default_instance_;
+class GetServiceStatusResponse;
+class GetServiceStatusResponseDefaultTypeInternal;
+extern GetServiceStatusResponseDefaultTypeInternal _GetServiceStatusResponse_default_instance_;
 class ListPlayerEntitiesResponse;
 class ListPlayerEntitiesResponseDefaultTypeInternal;
 extern ListPlayerEntitiesResponseDefaultTypeInternal _ListPlayerEntitiesResponse_default_instance_;
@@ -122,6 +128,8 @@ template<> ::minecpp::engine::EmptyRequest* Arena::CreateMaybeMessage<::minecpp:
 template<> ::minecpp::engine::EmptyResponse* Arena::CreateMaybeMessage<::minecpp::engine::EmptyResponse>(Arena*);
 template<> ::minecpp::engine::Event* Arena::CreateMaybeMessage<::minecpp::engine::Event>(Arena*);
 template<> ::minecpp::engine::FetchEventsRequest* Arena::CreateMaybeMessage<::minecpp::engine::FetchEventsRequest>(Arena*);
+template<> ::minecpp::engine::GetServiceIdResponse* Arena::CreateMaybeMessage<::minecpp::engine::GetServiceIdResponse>(Arena*);
+template<> ::minecpp::engine::GetServiceStatusResponse* Arena::CreateMaybeMessage<::minecpp::engine::GetServiceStatusResponse>(Arena*);
 template<> ::minecpp::engine::ListPlayerEntitiesResponse* Arena::CreateMaybeMessage<::minecpp::engine::ListPlayerEntitiesResponse>(Arena*);
 template<> ::minecpp::engine::ListPlayersResponse* Arena::CreateMaybeMessage<::minecpp::engine::ListPlayersResponse>(Arena*);
 template<> ::minecpp::engine::PlayerData* Arena::CreateMaybeMessage<::minecpp::engine::PlayerData>(Arena*);
@@ -2693,6 +2701,278 @@ class Event :
 
   friend struct ::TableStruct_engine_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GetServiceIdResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.engine.GetServiceIdResponse) */ {
+ public:
+  GetServiceIdResponse();
+  virtual ~GetServiceIdResponse();
+
+  GetServiceIdResponse(const GetServiceIdResponse& from);
+  GetServiceIdResponse(GetServiceIdResponse&& from) noexcept
+    : GetServiceIdResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetServiceIdResponse& operator=(const GetServiceIdResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetServiceIdResponse& operator=(GetServiceIdResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetServiceIdResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetServiceIdResponse* internal_default_instance() {
+    return reinterpret_cast<const GetServiceIdResponse*>(
+               &_GetServiceIdResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  void Swap(GetServiceIdResponse* other);
+  friend void swap(GetServiceIdResponse& a, GetServiceIdResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetServiceIdResponse* New() const final {
+    return CreateMaybeMessage<GetServiceIdResponse>(nullptr);
+  }
+
+  GetServiceIdResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetServiceIdResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetServiceIdResponse& from);
+  void MergeFrom(const GetServiceIdResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetServiceIdResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.engine.GetServiceIdResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_engine_2eproto);
+    return ::descriptor_table_engine_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  const std::string& id() const;
+  void set_id(const std::string& value);
+  void set_id(std::string&& value);
+  void set_id(const char* value);
+  void set_id(const void* value, size_t size);
+  std::string* mutable_id();
+  std::string* release_id();
+  void set_allocated_id(std::string* id);
+
+  // @@protoc_insertion_point(class_scope:minecpp.engine.GetServiceIdResponse)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_engine_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetServiceStatusResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.engine.GetServiceStatusResponse) */ {
+ public:
+  GetServiceStatusResponse();
+  virtual ~GetServiceStatusResponse();
+
+  GetServiceStatusResponse(const GetServiceStatusResponse& from);
+  GetServiceStatusResponse(GetServiceStatusResponse&& from) noexcept
+    : GetServiceStatusResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline GetServiceStatusResponse& operator=(const GetServiceStatusResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetServiceStatusResponse& operator=(GetServiceStatusResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetServiceStatusResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetServiceStatusResponse* internal_default_instance() {
+    return reinterpret_cast<const GetServiceStatusResponse*>(
+               &_GetServiceStatusResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    18;
+
+  void Swap(GetServiceStatusResponse* other);
+  friend void swap(GetServiceStatusResponse& a, GetServiceStatusResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetServiceStatusResponse* New() const final {
+    return CreateMaybeMessage<GetServiceStatusResponse>(nullptr);
+  }
+
+  GetServiceStatusResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetServiceStatusResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetServiceStatusResponse& from);
+  void MergeFrom(const GetServiceStatusResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetServiceStatusResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.engine.GetServiceStatusResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_engine_2eproto);
+    return ::descriptor_table_engine_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 players = 1;
+  void clear_players();
+  static const int kPlayersFieldNumber = 1;
+  ::PROTOBUF_NAMESPACE_ID::int32 players() const;
+  void set_players(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 chunk_updates = 2;
+  void clear_chunk_updates();
+  static const int kChunkUpdatesFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 chunk_updates() const;
+  void set_chunk_updates(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 tps = 3;
+  void clear_tps();
+  static const int kTpsFieldNumber = 3;
+  ::PROTOBUF_NAMESPACE_ID::int32 tps() const;
+  void set_tps(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.engine.GetServiceStatusResponse)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 players_;
+  ::PROTOBUF_NAMESPACE_ID::int32 chunk_updates_;
+  ::PROTOBUF_NAMESPACE_ID::int32 tps_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_engine_2eproto;
+};
 // ===================================================================
 
 
@@ -4170,9 +4450,114 @@ inline void Event::clear_has_recipient_id() {
 inline Event::RecipientIdCase Event::recipient_id_case() const {
   return Event::RecipientIdCase(_oneof_case_[0]);
 }
+// -------------------------------------------------------------------
+
+// GetServiceIdResponse
+
+// bytes id = 1;
+inline void GetServiceIdResponse::clear_id() {
+  id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& GetServiceIdResponse::id() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.GetServiceIdResponse.id)
+  return id_.GetNoArena();
+}
+inline void GetServiceIdResponse::set_id(const std::string& value) {
+  
+  id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.engine.GetServiceIdResponse.id)
+}
+inline void GetServiceIdResponse::set_id(std::string&& value) {
+  
+  id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.engine.GetServiceIdResponse.id)
+}
+inline void GetServiceIdResponse::set_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.engine.GetServiceIdResponse.id)
+}
+inline void GetServiceIdResponse::set_id(const void* value, size_t size) {
+  
+  id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.engine.GetServiceIdResponse.id)
+}
+inline std::string* GetServiceIdResponse::mutable_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.engine.GetServiceIdResponse.id)
+  return id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* GetServiceIdResponse::release_id() {
+  // @@protoc_insertion_point(field_release:minecpp.engine.GetServiceIdResponse.id)
+  
+  return id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void GetServiceIdResponse::set_allocated_id(std::string* id) {
+  if (id != nullptr) {
+    
+  } else {
+    
+  }
+  id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.engine.GetServiceIdResponse.id)
+}
+
+// -------------------------------------------------------------------
+
+// GetServiceStatusResponse
+
+// int32 players = 1;
+inline void GetServiceStatusResponse::clear_players() {
+  players_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetServiceStatusResponse::players() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.GetServiceStatusResponse.players)
+  return players_;
+}
+inline void GetServiceStatusResponse::set_players(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  players_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.GetServiceStatusResponse.players)
+}
+
+// int32 chunk_updates = 2;
+inline void GetServiceStatusResponse::clear_chunk_updates() {
+  chunk_updates_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetServiceStatusResponse::chunk_updates() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.GetServiceStatusResponse.chunk_updates)
+  return chunk_updates_;
+}
+inline void GetServiceStatusResponse::set_chunk_updates(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  chunk_updates_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.GetServiceStatusResponse.chunk_updates)
+}
+
+// int32 tps = 3;
+inline void GetServiceStatusResponse::clear_tps() {
+  tps_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetServiceStatusResponse::tps() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.GetServiceStatusResponse.tps)
+  return tps_;
+}
+inline void GetServiceStatusResponse::set_tps(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  tps_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.engine.GetServiceStatusResponse.tps)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

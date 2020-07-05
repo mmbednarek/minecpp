@@ -2,6 +2,7 @@
 #include "inventory.h"
 #include "mode.h"
 #include "recipe_book.h"
+#include "tracking.h"
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 #include <minepb/player.pb.h>
@@ -33,11 +34,12 @@ class Player {
 
  private:
    uuid id;
-   uint32_t entity_id;
+   uint32_t entity_id{};
    std::string player_name;
    Mode game_mode = Mode::Survival;
+   Tracking tracking;
 
-   int ping;
+   int ping{};
 
    int xp_level = 0;
    float xp_points = .0f;
@@ -57,7 +59,7 @@ class Player {
    std::vector<InventoryItem> inventory;
 
  public:
-   Player(uuid id, std::string &name);
+   Player(uuid id, std::string &name, Vec3 pos);
 
    void set_entity_id(uint32_t entity_id);
    void set_ping(int ping);
@@ -68,6 +70,9 @@ class Player {
    [[nodiscard]] const RecipeBook &get_recipe_book() const;
    [[nodiscard]] std::string_view get_player_name() const;
    [[nodiscard]] int get_ping() const;
+
+   void on_movement(World &w, Vec3 pos);
+   void load_chunks(World &w);
 };
 
 } // namespace Game

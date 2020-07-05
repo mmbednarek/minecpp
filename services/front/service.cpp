@@ -2,6 +2,7 @@
 #include "protocol/protocol.h"
 #include "server.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/uuid/name_generator.hpp>
 #include <fstream>
 #include <game/blocks/position.h>
 #include <game/dimension.h>
@@ -16,12 +17,8 @@ namespace Front {
 const char *internal_reason =
     R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
-Service::Service(Config &conf, EnginePlayerService &player_service)
-    : player_service(player_service) {
-   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host,
-                                            grpc::InsecureChannelCredentials());
-   chunk_service = minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
-
+Service::Service(Config &conf, Engine::Client::Provider &engine_provider, ChunkService chunk_service)
+    : engine_provider(engine_provider), chunk_service(std::move(chunk_service)) {
    std::ifstream recipe_st;
    recipe_st.open(conf.recipe_path);
    if (!recipe_st.is_open()) {
@@ -48,39 +45,30 @@ Service::Service(Config &conf, EnginePlayerService &player_service)
 Service::~Service() { delete[] cached_recipes; }
 
 Service::LoginResponse Service::login_player(std::string &user_name) {
-   auto player = new Player(user_name);
-
-   try {
-      players.add_player(player);
-   } catch (PlayerException &e) {
-      return Service::LoginResponse{
-          .accepted = false,
-          .refusal_reason = "invalid player data",
-      };
-   }
-
    // TODO: Encryption authentication etc.
+   boost::uuids::name_generator gen(player_uuid_namespace);
 
-   return Service::LoginResponse{.accepted = true,
-                                 .user_name = player->name(),
-                                 .uuid = player->user_id()};
+   return Service::LoginResponse{.accepted = true, .user_name = user_name, .uuid = gen(user_name)};
 }
 
 MineNet::Message::Raw get_command_list();
 
-void Service::init_player(const std::shared_ptr<Connection> &conn,
-                          boost::uuids::uuid id) {
+void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name) {
    using namespace MineNet::Message;
 
    conn->set_state(Protocol::State::Play);
-   auto player = players.get_player(id);
 
    grpc::ClientContext ctx;
    minecpp::engine::AcceptPlayerResponse res;
    minecpp::engine::AcceptPlayerRequest req;
-   req.set_name(player.name());
+   req.set_name(std::string(name));
    req.set_uuid(id.data, id.size());
-   auto status = get_player_service()->AcceptPlayer(&ctx, req, &res);
+
+   auto &engine = engine_provider.get_random_service();
+   conn->set_service_id(engine.id);
+   conn->set_uuid(id);
+
+   auto status = engine.service->AcceptPlayer(&ctx, req, &res);
    if (!status.ok()) {
       spdlog::error("could not join player {}.", status.error_message());
       send_and_disconnect(conn, Disconnect{
@@ -89,33 +77,27 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
       return;
    }
 
-   conn->set_uuid(id);
-
    std::stringstream dimension_props;
    NBT::Writer dimension_props_w(dimension_props);
    Game::write_dimensions(dimension_props_w);
 
-   send(conn,
-        JoinGame{
-            .player_id = static_cast<uint32_t>(res.player_data().entity_id()),
-            .game_mode = static_cast<uint8_t>(res.game_info().mode()),
-            .available_dimensions{"overworld", "the_nether", "the_end"},
-            .dimension_type = "overworld",
-            .dimension = "overworld",
-            .dimension_props = dimension_props.str(),
-            .seed = res.game_info().seed(),
-            .max_players = static_cast<uint8_t>(res.game_info().max_players()),
-            .view_distance =
-                static_cast<uint32_t>(res.game_info().view_distance()),
-            .reduced_debug_info = res.game_info().reduced_debug_info(),
-            .immediate_respawn = res.game_info().do_immediate_respawn(),
-        });
+   send(conn, JoinGame{
+                  .player_id = static_cast<uint32_t>(res.player_data().entity_id()),
+                  .game_mode = static_cast<uint8_t>(res.game_info().mode()),
+                  .available_dimensions{"overworld", "the_nether", "the_end"},
+                  .dimension_type = "overworld",
+                  .dimension = "overworld",
+                  .dimension_props = dimension_props.str(),
+                  .seed = res.game_info().seed(),
+                  .max_players = static_cast<uint8_t>(res.game_info().max_players()),
+                  .view_distance = static_cast<uint32_t>(res.game_info().view_distance()),
+                  .reduced_debug_info = res.game_info().reduced_debug_info(),
+                  .immediate_respawn = res.game_info().do_immediate_respawn(),
+              });
 
    send(conn, ServerBrand{"minecpp"});
 
-   send(conn, Difficulty{.difficulty =
-                             static_cast<uint8_t>(res.game_info().difficulty()),
-                         .locked = false});
+   send(conn, Difficulty{.difficulty = static_cast<uint8_t>(res.game_info().difficulty()), .locked = false});
 
    Game::Player::Abilities abilities;
    abilities.from_proto(res.player_data().abilities());
@@ -138,26 +120,20 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
               });
               */
 
-
-   send(conn,
-        EntityStatus{
-            .entity_id = static_cast<uint32_t>(res.player_data().entity_id()),
-            .opcode = 0x18,
-        });
+   send(conn, EntityStatus{
+                  .entity_id = static_cast<uint32_t>(res.player_data().entity_id()),
+                  .opcode = 0x18,
+              });
 
    send(conn, get_command_list());
 
-   send(conn,
-        RecipeBook{
-            .state = Init,
-            .gui_open = res.player_data().recipe_book().gui_open(),
-            .filtering_craftable =
-                res.player_data().recipe_book().filtering_craftable(),
-            .furnace_gui_open =
-                res.player_data().recipe_book().furnace_gui_open(),
-            .furnace_filtering_craftable =
-                res.player_data().recipe_book().furnace_filtering_craftable(),
-        });
+   send(conn, RecipeBook{
+                  .state = Init,
+                  .gui_open = res.player_data().recipe_book().gui_open(),
+                  .filtering_craftable = res.player_data().recipe_book().filtering_craftable(),
+                  .furnace_gui_open = res.player_data().recipe_book().furnace_gui_open(),
+                  .furnace_filtering_craftable = res.player_data().recipe_book().furnace_filtering_craftable(),
+              });
 
    send(conn, PlayerPositionLook{
                   .x = res.player_data().x(),
@@ -172,7 +148,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
    grpc::ClientContext ctx2;
    minecpp::engine::EmptyRequest empty;
    minecpp::engine::ListPlayersResponse player_list;
-   status = get_player_service()->ListPlayers(&ctx2, empty, &player_list);
+   status = engine.service->ListPlayers(&ctx2, empty, &player_list);
    if (!status.ok()) {
       spdlog::error("could not list players {}.", status.error_message());
       send_and_disconnect(conn, Disconnect{
@@ -182,7 +158,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
    }
 
    for (auto const &p : player_list.list()) {
-      boost::uuids::uuid p_id{};
+      uuid p_id{};
       Utils::decode_uuid(p_id, p.uuid().data());
       send(conn, AddPlayer{
                      .id = p_id,
@@ -192,28 +168,11 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
                  });
    }
 
-   spdlog::info("{} has joined the game", player.name());
-
-   send(conn, UpdateChunkPosition{
-                  .x = static_cast<int>(res.player_data().x() / 16.0),
-                  .z = static_cast<int>(res.player_data().z() / 16.0),
-              });
-
-   for (int ring = 1; ring < 6; ++ring) {
-      for (int x = -ring; x < ring; ++x) {
-         load_chunk(conn, x, ring - 1);
-         load_chunk(conn, x, -ring);
-      }
-      for (int z = -ring + 1; z < ring - 1; ++z) {
-         load_chunk(conn, ring - 1, z);
-         load_chunk(conn, -ring, z);
-      }
-   }
+   spdlog::info("{} has joined the game", name);
 
    grpc::ClientContext ctx3;
    minecpp::engine::ListPlayerEntitiesResponse player_entities;
-   status =
-       get_player_service()->ListPlayerEntities(&ctx3, empty, &player_entities);
+   status = engine.service->ListPlayerEntities(&ctx3, empty, &player_entities);
    if (!status.ok()) {
       spdlog::error("could not list players {}.", status.error_message());
       send_and_disconnect(conn, Disconnect{
@@ -223,7 +182,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
    }
 
    for (auto const &e : player_entities.list()) {
-      boost::uuids::uuid e_id{};
+      uuid e_id{};
       Utils::decode_uuid(e_id, e.uuid().data());
       if (e_id == id) {
          continue;
@@ -240,43 +199,23 @@ void Service::init_player(const std::shared_ptr<Connection> &conn,
    }
 }
 
-EnginePlayerService &Service::get_player_service() { return player_service; }
-
-void Service::load_chunk(const std::shared_ptr<Connection> &conn, int x,
-                         int z) {
-   using namespace MineNet::Message;
-
+void Service::on_player_disconnect(uuid engine_id, uuid player_id) {
+   minecpp::engine::RemovePlayerRequest req;
+   req.set_uuid(player_id.data, player_id.size());
    grpc::ClientContext ctx;
-   minecpp::chunk::NetChunk net_chunk;
-   minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
-   load_chunk_request.set_x(x);
-   load_chunk_request.set_z(z);
-
-   auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &net_chunk);
+   minecpp::engine::EmptyResponse res;
+   auto status = engine_provider.get_service_by_id(engine_id)->RemovePlayer(&ctx, req, &res);
    if (!status.ok()) {
-      spdlog::error("error loading chunk: {}", status.error_message());
-
-      send_and_disconnect(conn, Disconnect{
-                                    .reason = internal_reason,
-                                });
+      spdlog::error("could not remove player: {}", status.error_message());
       return;
    }
-
-   send(conn, ChunkData{
-                  .chunk = net_chunk,
-              });
-   send(conn, UpdateLight{
-                  .chunk = net_chunk,
-              });
 }
 
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::ClientSettings msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::ClientSettings msg) {
    spdlog::info("client language: {}", msg.lang);
 }
 
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::PlayerPosition msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerPosition msg) {
    char uuid[17];
    Utils::encode_uuid(uuid, player_id);
 
@@ -288,16 +227,14 @@ void Service::on_message(boost::uuids::uuid player_id,
    pos.set_z(msg.z);
 
    minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->SetPlayerPosition(&ctx, pos, &res);
+   auto status = engine_provider.get_service_by_id(engine_id)->SetPlayerPosition(&ctx, pos, &res);
    if (!status.ok()) {
-      spdlog::error("could not set player position: {}",
-                    status.error_message());
+      spdlog::error("could not set player position: {}", status.error_message());
       return;
    }
 }
 
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::PlayerPositionRotation msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerPositionRotation msg) {
    char uuid[17];
    Utils::encode_uuid(uuid, player_id);
 
@@ -309,10 +246,9 @@ void Service::on_message(boost::uuids::uuid player_id,
    pos.set_z(msg.z);
 
    minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->SetPlayerPosition(&ctx, pos, &res);
+   auto status = engine_provider.get_service_by_id(engine_id)->SetPlayerPosition(&ctx, pos, &res);
    if (!status.ok()) {
-      spdlog::error("could not set player position: {}",
-                    status.error_message());
+      spdlog::error("could not set player position: {}", status.error_message());
       return;
    }
 
@@ -322,16 +258,14 @@ void Service::on_message(boost::uuids::uuid player_id,
    rot.set_yaw(msg.yaw);
    rot.set_pitch(msg.pitch);
 
-   status = get_player_service()->SetPlayerRotation(&ctx_rot, rot, &res);
+   status = engine_provider.get_service_by_id(engine_id)->SetPlayerRotation(&ctx_rot, rot, &res);
    if (!status.ok()) {
-      spdlog::error("could not set player rotation: {}",
-                    status.error_message());
+      spdlog::error("could not set player rotation: {}", status.error_message());
       return;
    }
 }
 
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::PlayerRotation msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerRotation msg) {
    char uuid[17];
    Utils::encode_uuid(uuid, player_id);
    grpc::ClientContext ctx_rot;
@@ -341,15 +275,13 @@ void Service::on_message(boost::uuids::uuid player_id,
    rot.set_pitch(msg.pitch);
 
    minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->SetPlayerRotation(&ctx_rot, rot, &res);
+   auto status = engine_provider.get_service_by_id(engine_id)->SetPlayerRotation(&ctx_rot, rot, &res);
    if (!status.ok()) {
-      spdlog::error("could not set player rotation: {}",
-                    status.error_message());
+      spdlog::error("could not set player rotation: {}", status.error_message());
       return;
    }
 }
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::ChatMessage msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::ChatMessage msg) {
    char uuid[17];
    Utils::encode_uuid(uuid, player_id);
    grpc::ClientContext ctx_rot;
@@ -358,26 +290,14 @@ void Service::on_message(boost::uuids::uuid player_id,
    chat.set_message(msg.message);
 
    minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->ChatMessage(&ctx_rot, chat, &res);
+   auto status = engine_provider.get_service_by_id(engine_id)->ChatMessage(&ctx_rot, chat, &res);
    if (!status.ok()) {
       spdlog::error("could not send chat message: {}", status.error_message());
       return;
    }
 }
-void Service::on_player_disconnect(boost::uuids::uuid player_id) {
-   minecpp::engine::RemovePlayerRequest req;
-   req.set_uuid(player_id.data, player_id.size());
-   grpc::ClientContext ctx;
-   minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->RemovePlayer(&ctx, req, &res);
-   if (!status.ok()) {
-      spdlog::error("could not remove player: {}", status.error_message());
-      return;
-   }
-}
 
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::PlayerDigging msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerDigging msg) {
    Game::Block::Position pos(msg.position);
 
    if (msg.action == MineNet::Message::DiggingAction::StartDestroyBlock) {
@@ -388,35 +308,33 @@ void Service::on_message(boost::uuids::uuid player_id,
       req.set_z(pos.z);
       grpc::ClientContext ctx;
       minecpp::engine::EmptyResponse res;
-      auto status = get_player_service()->DestroyBlock(&ctx, req, &res);
+      auto status = engine_provider.get_service_by_id(engine_id)->DestroyBlock(&ctx, req, &res);
       if (!status.ok()) {
          spdlog::error("could not destroy block: {}", status.error_message());
          return;
       }
    }
 }
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::KeepAliveClient msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::KeepAliveClient msg) {
 
    minecpp::engine::UpdatePingRequest req;
    req.set_uuid(player_id.data, player_id.size());
    req.set_ping(Utils::now_milis() - msg.time);
    grpc::ClientContext ctx;
    minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->UpdatePing(&ctx, req, &res);
+   auto status = engine_provider.get_service_by_id(engine_id)->UpdatePing(&ctx, req, &res);
    if (!status.ok()) {
       spdlog::error("could not update ping: {}", status.error_message());
       return;
    }
 }
-void Service::on_message(boost::uuids::uuid player_id,
-                         MineNet::Message::AnimateHandClient msg) {
+void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::AnimateHandClient msg) {
    minecpp::engine::AnimateHandRequest req;
    req.set_uuid(player_id.data, player_id.size());
    req.set_hand(static_cast<int>(msg.hand));
    grpc::ClientContext ctx;
    minecpp::engine::EmptyResponse res;
-   auto status = get_player_service()->AnimateHand(&ctx, req, &res);
+   auto status = engine_provider.get_service_by_id(engine_id)->AnimateHand(&ctx, req, &res);
    if (!status.ok()) {
       spdlog::error("could not animate hand: {}", status.error_message());
       return;
@@ -424,34 +342,24 @@ void Service::on_message(boost::uuids::uuid player_id,
 }
 
 const char command_list[]{
-    0x11, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-    0x09, 0x05, 0x01, 0x0a, 0x04, 0x68, 0x65, 0x6c, 0x70, 0x05, 0x01, 0x0b,
-    0x04, 0x6c, 0x69, 0x73, 0x74, 0x01, 0x01, 0x0c, 0x02, 0x6d, 0x65, 0x01,
-    0x01, 0x0d, 0x03, 0x6d, 0x73, 0x67, 0x01, 0x01, 0x0e, 0x07, 0x74, 0x65,
-    0x61, 0x6d, 0x6d, 0x73, 0x67, 0x09, 0x00, 0x04, 0x04, 0x74, 0x65, 0x6c,
-    0x6c, 0x09, 0x00, 0x05, 0x02, 0x74, 0x6d, 0x01, 0x01, 0x0f, 0x07, 0x74,
-    0x72, 0x69, 0x67, 0x67, 0x65, 0x72, 0x09, 0x00, 0x04, 0x01, 0x77, 0x06,
-    0x00, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x10, 0x62, 0x72,
-    0x69, 0x67, 0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x73, 0x74, 0x72, 0x69,
-    0x6e, 0x67, 0x02, 0x05, 0x00, 0x05, 0x75, 0x75, 0x69, 0x64, 0x73, 0x06,
-    0x00, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x10, 0x62, 0x72, 0x69,
-    0x67, 0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x73, 0x74, 0x72, 0x69, 0x6e,
-    0x67, 0x02, 0x02, 0x01, 0x10, 0x07, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74,
-    0x73, 0x10, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a,
-    0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x02, 0x06, 0x00, 0x07, 0x6d, 0x65,
-    0x73, 0x73, 0x61, 0x67, 0x65, 0x11, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72,
-    0x61, 0x66, 0x74, 0x3a, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x16,
-    0x02, 0x11, 0x12, 0x09, 0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x76,
-    0x65, 0x13, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a,
-    0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x76, 0x65, 0x14, 0x6d, 0x69,
-    0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x61, 0x73, 0x6b, 0x5f,
-    0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x06, 0x00, 0x07, 0x6d, 0x65, 0x73,
-    0x73, 0x61, 0x67, 0x65, 0x11, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61,
-    0x66, 0x74, 0x3a, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x01, 0x01,
-    0x13, 0x03, 0x61, 0x64, 0x64, 0x01, 0x01, 0x13, 0x03, 0x73, 0x65, 0x74,
-    0x06, 0x00, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x11, 0x62, 0x72, 0x69,
-    0x67, 0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x69, 0x6e, 0x74, 0x65, 0x67,
-    0x65, 0x72, 0x00, 0x00};
+    0x11, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x05, 0x01, 0x0a, 0x04, 0x68, 0x65,
+    0x6c, 0x70, 0x05, 0x01, 0x0b, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x01, 0x01, 0x0c, 0x02, 0x6d, 0x65, 0x01, 0x01, 0x0d,
+    0x03, 0x6d, 0x73, 0x67, 0x01, 0x01, 0x0e, 0x07, 0x74, 0x65, 0x61, 0x6d, 0x6d, 0x73, 0x67, 0x09, 0x00, 0x04, 0x04,
+    0x74, 0x65, 0x6c, 0x6c, 0x09, 0x00, 0x05, 0x02, 0x74, 0x6d, 0x01, 0x01, 0x0f, 0x07, 0x74, 0x72, 0x69, 0x67, 0x67,
+    0x65, 0x72, 0x09, 0x00, 0x04, 0x01, 0x77, 0x06, 0x00, 0x07, 0x63, 0x6f, 0x6d, 0x6d, 0x61, 0x6e, 0x64, 0x10, 0x62,
+    0x72, 0x69, 0x67, 0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x02, 0x05, 0x00, 0x05,
+    0x75, 0x75, 0x69, 0x64, 0x73, 0x06, 0x00, 0x06, 0x61, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x10, 0x62, 0x72, 0x69, 0x67,
+    0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x02, 0x02, 0x01, 0x10, 0x07, 0x74, 0x61,
+    0x72, 0x67, 0x65, 0x74, 0x73, 0x10, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x65, 0x6e, 0x74,
+    0x69, 0x74, 0x79, 0x02, 0x06, 0x00, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x11, 0x6d, 0x69, 0x6e, 0x65,
+    0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x16, 0x02, 0x11, 0x12, 0x09, 0x6f,
+    0x62, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x76, 0x65, 0x13, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a,
+    0x6f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x69, 0x76, 0x65, 0x14, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74,
+    0x3a, 0x61, 0x73, 0x6b, 0x5f, 0x73, 0x65, 0x72, 0x76, 0x65, 0x72, 0x06, 0x00, 0x07, 0x6d, 0x65, 0x73, 0x73, 0x61,
+    0x67, 0x65, 0x11, 0x6d, 0x69, 0x6e, 0x65, 0x63, 0x72, 0x61, 0x66, 0x74, 0x3a, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+    0x65, 0x01, 0x01, 0x13, 0x03, 0x61, 0x64, 0x64, 0x01, 0x01, 0x13, 0x03, 0x73, 0x65, 0x74, 0x06, 0x00, 0x05, 0x76,
+    0x61, 0x6c, 0x75, 0x65, 0x11, 0x62, 0x72, 0x69, 0x67, 0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x69, 0x6e, 0x74, 0x65,
+    0x67, 0x65, 0x72, 0x00, 0x00};
 
 MineNet::Message::Raw get_command_list() {
    return MineNet::Message::Raw{

@@ -1,7 +1,7 @@
+#include "../engine/client/provider.h"
 #include "config.h"
 #include "event_handler.h"
 #include "keepalive.h"
-#include "players.h"
 #include "protocol/login_handler.h"
 #include "protocol/play_handler.h"
 #include "protocol/status_handler.h"
@@ -18,11 +18,17 @@ auto main() -> int {
    auto conf = get_config();
    std::atomic_bool consume_messages = true;
 
-   auto channel = grpc::CreateChannel(conf.engine_hosts[0],
-                                      grpc::InsecureChannelCredentials());
-   auto player_service = minecpp::engine::PlayerService::NewStub(channel);
+   Engine::Client::Config engine_cfg{
+       .addresses = conf.engine_hosts,
+   };
+   Engine::Client::Provider engine_provider(engine_cfg);
 
-   Service service(conf, player_service);
+   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host,
+                                            grpc::InsecureChannelCredentials());
+   std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_service =
+       minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
+
+   Service service(conf, engine_provider, chunk_service);
 
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
@@ -37,20 +43,22 @@ auto main() -> int {
 
    std::thread keepalive_thread([&svr]() { keepalive_update(svr); });
 
-   std::thread event_thread([conf, &svr, &player_service] {
-      grpc::ClientContext ctx;
-      minecpp::engine::FetchEventsRequest req;
-      req.set_front_id(conf.front_id);
+   std::vector<std::thread> event_threads;
+   EventHandler consumer(svr, chunk_service);
+   minecpp::engine::FetchEventsRequest req{};
+   req.set_front_id(conf.front_id);
+   for (auto const &engine : engine_provider.get_services()) {
+      event_threads.emplace_back(std::thread([&engine, &consumer, req] {
+         grpc::ClientContext ctx{};
+         auto reader = engine.service->FetchEvents(&ctx, req);
 
-      auto reader = player_service->FetchEvents(&ctx, req);
+         minecpp::engine::Event event{};
+         while (reader->Read(&event)) {
+            consumer.accept_event(event);
+         }
+      }));
+   }
 
-      EventHandler consumer(svr);
-
-      minecpp::engine::Event event;
-      while (reader->Read(&event)) {
-         consumer.accept_event(event);
-      }
-   });
    spdlog::info("starting server on port {}", conf.port);
 
    try {

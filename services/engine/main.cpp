@@ -1,6 +1,8 @@
 #include "entities.h"
 #include "players.h"
 #include "service.h"
+#include <grpcpp/create_channel.h>
+#include <grpcpp/security/credentials.h>
 #include <grpcpp/server_builder.h>
 #include <iostream>
 #include <spdlog/spdlog.h>
@@ -27,7 +29,12 @@ auto main() -> int {
    Engine::EntityManager entities;
    Engine::PlayerManager players(player_path, entities);
 
-   Engine::Service service(entities, players, chunk_storage_address);
+   auto channel = grpc::CreateChannel(chunk_storage_address,
+                                      grpc::InsecureChannelCredentials());
+   std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_storage =
+       minecpp::chunk_storage::ChunkStorage::NewStub(channel);
+
+   Engine::Service service(entities, players, chunk_storage);
 
    grpc::ServerBuilder builder;
    builder.AddListeningPort(listen, grpc::InsecureServerCredentials());

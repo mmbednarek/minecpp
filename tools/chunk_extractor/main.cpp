@@ -1,6 +1,6 @@
 #include <fstream>
-#include <game/chunk/netchunk.h>
 #include <game/blocks/registry.h>
+#include <game/chunk/chunk.h>
 #include <iostream>
 #include <minenet/msg/chunk.h>
 #include <mineutils/compression.h>
@@ -41,7 +41,7 @@ auto main(int argc, char *argv[]) -> int {
    cr.check_signature();
    cr.find_compound("Level");
 
-   Game::NetChunk chunk(cr);
+   Game::Chunk chunk(cr);
    minecpp::chunk::NetChunk proto_chunk;
    chunk.as_proto(&proto_chunk);
 

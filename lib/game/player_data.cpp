@@ -240,7 +240,7 @@ Entity::Entity PlayerData::to_entity() {
 }
 
 Player PlayerData::to_player(std::string &name) {
-   Player player(id, name);
+   Player player(id, name, pos);
    player.xp_total = xp_total;
    player.xp_points = xp_points;
    player.xp_seed = xp_seed;

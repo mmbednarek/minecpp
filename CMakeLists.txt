@@ -41,6 +41,8 @@ FetchContent_MakeAvailable(gtest)
 include_directories(./lib)
 include_directories(./services/protos/include)
 
+add_subdirectory(lib/chat)
+add_subdirectory(lib/format)
 add_subdirectory(lib/mineutils)
 add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)

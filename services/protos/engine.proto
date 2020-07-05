@@ -16,6 +16,9 @@ service PlayerService {
     rpc UpdatePing (UpdatePingRequest) returns (EmptyResponse);
     rpc AnimateHand (AnimateHandRequest) returns (EmptyResponse);
 
+    rpc GetServiceId(EmptyRequest) returns(GetServiceIdResponse);
+    rpc GetServiceStatus(EmptyRequest) returns(GetServiceStatusResponse);
+
     rpc FetchEvents (FetchEventsRequest) returns (stream Event);
 }
 
@@ -126,4 +129,14 @@ message Event {
         int32 area_id = 4;
     }
     bytes data = 5;
+}
+
+message GetServiceIdResponse {
+    bytes id = 1;
+}
+
+message GetServiceStatusResponse {
+    int32 players = 1;
+    int32 chunk_updates = 2;
+    int32 tps = 3;
 }

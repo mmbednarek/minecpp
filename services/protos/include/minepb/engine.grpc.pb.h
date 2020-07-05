@@ -117,6 +117,20 @@ class PlayerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>> PrepareAsyncAnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>>(PrepareAsyncAnimateHandRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceIdResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceIdResponse>> AsyncGetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceIdResponse>>(AsyncGetServiceIdRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceIdResponse>> PrepareAsyncGetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceIdResponse>>(PrepareAsyncGetServiceIdRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceStatusResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceStatusResponse>> AsyncGetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceStatusResponse>>(AsyncGetServiceStatusRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceStatusResponse>> PrepareAsyncGetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceStatusResponse>>(PrepareAsyncGetServiceStatusRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReaderInterface< ::minecpp::engine::Event>> FetchEvents(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::minecpp::engine::Event>>(FetchEventsRaw(context, request));
     }
@@ -169,6 +183,14 @@ class PlayerService final {
       virtual void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       virtual void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
       virtual void FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::experimental::ClientReadReactor< ::minecpp::engine::Event>* reactor) = 0;
     };
     virtual class experimental_async_interface* experimental_async() { return nullptr; }
@@ -193,6 +215,10 @@ class PlayerService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncUpdatePingRaw(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* AsyncAnimateHandRaw(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::EmptyResponse>* PrepareAsyncAnimateHandRaw(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceIdResponse>* AsyncGetServiceIdRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceIdResponse>* PrepareAsyncGetServiceIdRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceStatusResponse>* AsyncGetServiceStatusRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::GetServiceStatusResponse>* PrepareAsyncGetServiceStatusRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::minecpp::engine::Event>* FetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::minecpp::engine::Event>* AsyncFetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::minecpp::engine::Event>* PrepareAsyncFetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -270,6 +296,20 @@ class PlayerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>> PrepareAsyncAnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>>(PrepareAsyncAnimateHandRaw(context, request, cq));
     }
+    ::grpc::Status GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceIdResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>> AsyncGetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>>(AsyncGetServiceIdRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>> PrepareAsyncGetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>>(PrepareAsyncGetServiceIdRaw(context, request, cq));
+    }
+    ::grpc::Status GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceStatusResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>> AsyncGetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>>(AsyncGetServiceStatusRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>> PrepareAsyncGetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>>(PrepareAsyncGetServiceStatusRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReader< ::minecpp::engine::Event>> FetchEvents(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::minecpp::engine::Event>>(FetchEventsRaw(context, request));
     }
@@ -322,6 +362,14 @@ class PlayerService final {
       void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
       void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) override;
+      void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
       void FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::experimental::ClientReadReactor< ::minecpp::engine::Event>* reactor) override;
      private:
       friend class Stub;
@@ -354,6 +402,10 @@ class PlayerService final {
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncUpdatePingRaw(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* AsyncAnimateHandRaw(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PrepareAsyncAnimateHandRaw(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>* AsyncGetServiceIdRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>* PrepareAsyncGetServiceIdRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>* AsyncGetServiceStatusRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>* PrepareAsyncGetServiceStatusRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::minecpp::engine::Event>* FetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request) override;
     ::grpc::ClientAsyncReader< ::minecpp::engine::Event>* AsyncFetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::minecpp::engine::Event>* PrepareAsyncFetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request, ::grpc::CompletionQueue* cq) override;
@@ -367,6 +419,8 @@ class PlayerService final {
     const ::grpc::internal::RpcMethod rpcmethod_DestroyBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_UpdatePing_;
     const ::grpc::internal::RpcMethod rpcmethod_AnimateHand_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetServiceId_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetServiceStatus_;
     const ::grpc::internal::RpcMethod rpcmethod_FetchEvents_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
@@ -385,6 +439,8 @@ class PlayerService final {
     virtual ::grpc::Status DestroyBlock(::grpc::ServerContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response);
     virtual ::grpc::Status UpdatePing(::grpc::ServerContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response);
     virtual ::grpc::Status AnimateHand(::grpc::ServerContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response);
+    virtual ::grpc::Status GetServiceId(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response);
+    virtual ::grpc::Status GetServiceStatus(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response);
     virtual ::grpc::Status FetchEvents(::grpc::ServerContext* context, const ::minecpp::engine::FetchEventsRequest* request, ::grpc::ServerWriter< ::minecpp::engine::Event>* writer);
   };
   template <class BaseClass>
@@ -588,12 +644,52 @@ class PlayerService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_GetServiceId : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetServiceId() {
+      ::grpc::Service::MarkMethodAsync(10);
+    }
+    ~WithAsyncMethod_GetServiceId() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetServiceId(::grpc::ServerContext* context, ::minecpp::engine::EmptyRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::GetServiceIdResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetServiceStatus : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetServiceStatus() {
+      ::grpc::Service::MarkMethodAsync(11);
+    }
+    ~WithAsyncMethod_GetServiceStatus() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetServiceStatus(::grpc::ServerContext* context, ::minecpp::engine::EmptyRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::engine::GetServiceStatusResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_FetchEvents : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_FetchEvents() {
-      ::grpc::Service::MarkMethodAsync(10);
+      ::grpc::Service::MarkMethodAsync(12);
     }
     ~WithAsyncMethod_FetchEvents() override {
       BaseClassMustBeDerivedFromService(this);
@@ -604,10 +700,10 @@ class PlayerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestFetchEvents(::grpc::ServerContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::ServerAsyncWriter< ::minecpp::engine::Event>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(10, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(12, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AcceptPlayer<WithAsyncMethod_SetPlayerPosition<WithAsyncMethod_SetPlayerRotation<WithAsyncMethod_ChatMessage<WithAsyncMethod_ListPlayers<WithAsyncMethod_ListPlayerEntities<WithAsyncMethod_RemovePlayer<WithAsyncMethod_DestroyBlock<WithAsyncMethod_UpdatePing<WithAsyncMethod_AnimateHand<WithAsyncMethod_FetchEvents<Service > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_AcceptPlayer<WithAsyncMethod_SetPlayerPosition<WithAsyncMethod_SetPlayerRotation<WithAsyncMethod_ChatMessage<WithAsyncMethod_ListPlayers<WithAsyncMethod_ListPlayerEntities<WithAsyncMethod_RemovePlayer<WithAsyncMethod_DestroyBlock<WithAsyncMethod_UpdatePing<WithAsyncMethod_AnimateHand<WithAsyncMethod_GetServiceId<WithAsyncMethod_GetServiceStatus<WithAsyncMethod_FetchEvents<Service > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_AcceptPlayer : public BaseClass {
    private:
@@ -919,12 +1015,74 @@ class PlayerService final {
     virtual void AnimateHand(::grpc::ServerContext* /*context*/, const ::minecpp::engine::AnimateHandRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
   template <class BaseClass>
+  class ExperimentalWithCallbackMethod_GetServiceId : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_GetServiceId() {
+      ::grpc::Service::experimental().MarkMethodCallback(10,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::EmptyRequest* request,
+                 ::minecpp::engine::GetServiceIdResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->GetServiceId(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_GetServiceId(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>*>(
+          ::grpc::Service::experimental().GetHandler(10))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_GetServiceId() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithCallbackMethod_GetServiceStatus : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithCallbackMethod_GetServiceStatus() {
+      ::grpc::Service::experimental().MarkMethodCallback(11,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(
+          [this](::grpc::ServerContext* context,
+                 const ::minecpp::engine::EmptyRequest* request,
+                 ::minecpp::engine::GetServiceStatusResponse* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   return this->GetServiceStatus(context, request, response, controller);
+                 }));
+    }
+    void SetMessageAllocatorFor_GetServiceStatus(
+        ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>* allocator) {
+      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>*>(
+          ::grpc::Service::experimental().GetHandler(11))
+              ->SetMessageAllocator(allocator);
+    }
+    ~ExperimentalWithCallbackMethod_GetServiceStatus() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
   class ExperimentalWithCallbackMethod_FetchEvents : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_FetchEvents() {
-      ::grpc::Service::experimental().MarkMethodCallback(10,
+      ::grpc::Service::experimental().MarkMethodCallback(12,
         new ::grpc_impl::internal::CallbackServerStreamingHandler< ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
           [this] { return this->FetchEvents(); }));
     }
@@ -940,7 +1098,7 @@ class PlayerService final {
       return new ::grpc_impl::internal::UnimplementedWriteReactor<
         ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>;}
   };
-  typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<ExperimentalWithCallbackMethod_RemovePlayer<ExperimentalWithCallbackMethod_DestroyBlock<ExperimentalWithCallbackMethod_UpdatePing<ExperimentalWithCallbackMethod_AnimateHand<ExperimentalWithCallbackMethod_FetchEvents<Service > > > > > > > > > > > ExperimentalCallbackService;
+  typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<ExperimentalWithCallbackMethod_RemovePlayer<ExperimentalWithCallbackMethod_DestroyBlock<ExperimentalWithCallbackMethod_UpdatePing<ExperimentalWithCallbackMethod_AnimateHand<ExperimentalWithCallbackMethod_GetServiceId<ExperimentalWithCallbackMethod_GetServiceStatus<ExperimentalWithCallbackMethod_FetchEvents<Service > > > > > > > > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AcceptPlayer : public BaseClass {
    private:
@@ -1112,12 +1270,46 @@ class PlayerService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_GetServiceId : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetServiceId() {
+      ::grpc::Service::MarkMethodGeneric(10);
+    }
+    ~WithGenericMethod_GetServiceId() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetServiceStatus : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetServiceStatus() {
+      ::grpc::Service::MarkMethodGeneric(11);
+    }
+    ~WithGenericMethod_GetServiceStatus() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_FetchEvents : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_FetchEvents() {
-      ::grpc::Service::MarkMethodGeneric(10);
+      ::grpc::Service::MarkMethodGeneric(12);
     }
     ~WithGenericMethod_FetchEvents() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1329,12 +1521,52 @@ class PlayerService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_GetServiceId : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetServiceId() {
+      ::grpc::Service::MarkMethodRaw(10);
+    }
+    ~WithRawMethod_GetServiceId() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetServiceId(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetServiceStatus : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetServiceStatus() {
+      ::grpc::Service::MarkMethodRaw(11);
+    }
+    ~WithRawMethod_GetServiceStatus() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetServiceStatus(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_FetchEvents : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_FetchEvents() {
-      ::grpc::Service::MarkMethodRaw(10);
+      ::grpc::Service::MarkMethodRaw(12);
     }
     ~WithRawMethod_FetchEvents() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1345,7 +1577,7 @@ class PlayerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestFetchEvents(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(10, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(12, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1599,12 +1831,62 @@ class PlayerService final {
     virtual void AnimateHand(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
   };
   template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_GetServiceId : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_GetServiceId() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(10,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->GetServiceId(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_GetServiceId() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void GetServiceId(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
+  class ExperimentalWithRawCallbackMethod_GetServiceStatus : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    ExperimentalWithRawCallbackMethod_GetServiceStatus() {
+      ::grpc::Service::experimental().MarkMethodRawCallback(11,
+        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+          [this](::grpc::ServerContext* context,
+                 const ::grpc::ByteBuffer* request,
+                 ::grpc::ByteBuffer* response,
+                 ::grpc::experimental::ServerCallbackRpcController* controller) {
+                   this->GetServiceStatus(context, request, response, controller);
+                 }));
+    }
+    ~ExperimentalWithRawCallbackMethod_GetServiceStatus() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual void GetServiceStatus(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+  };
+  template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_FetchEvents : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_FetchEvents() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(10,
+      ::grpc::Service::experimental().MarkMethodRawCallback(12,
         new ::grpc_impl::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
           [this] { return this->FetchEvents(); }));
     }
@@ -1820,14 +2102,54 @@ class PlayerService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedAnimateHand(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::AnimateHandRequest,::minecpp::engine::EmptyResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<WithStreamedUnaryMethod_DestroyBlock<WithStreamedUnaryMethod_UpdatePing<WithStreamedUnaryMethod_AnimateHand<Service > > > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetServiceId : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetServiceId() {
+      ::grpc::Service::MarkMethodStreamed(10,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(std::bind(&WithStreamedUnaryMethod_GetServiceId<BaseClass>::StreamedGetServiceId, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_GetServiceId() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetServiceId(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::EmptyRequest,::minecpp::engine::GetServiceIdResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetServiceStatus : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetServiceStatus() {
+      ::grpc::Service::MarkMethodStreamed(11,
+        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(std::bind(&WithStreamedUnaryMethod_GetServiceStatus<BaseClass>::StreamedGetServiceStatus, this, std::placeholders::_1, std::placeholders::_2)));
+    }
+    ~WithStreamedUnaryMethod_GetServiceStatus() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetServiceStatus(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::engine::EmptyRequest,::minecpp::engine::GetServiceStatusResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<WithStreamedUnaryMethod_DestroyBlock<WithStreamedUnaryMethod_UpdatePing<WithStreamedUnaryMethod_AnimateHand<WithStreamedUnaryMethod_GetServiceId<WithStreamedUnaryMethod_GetServiceStatus<Service > > > > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_FetchEvents : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_FetchEvents() {
-      ::grpc::Service::MarkMethodStreamed(10,
+      ::grpc::Service::MarkMethodStreamed(12,
         new ::grpc::internal::SplitServerStreamingHandler< ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(std::bind(&WithSplitStreamingMethod_FetchEvents<BaseClass>::StreamedFetchEvents, this, std::placeholders::_1, std::placeholders::_2)));
     }
     ~WithSplitStreamingMethod_FetchEvents() override {
@@ -1842,7 +2164,7 @@ class PlayerService final {
     virtual ::grpc::Status StreamedFetchEvents(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::minecpp::engine::FetchEventsRequest,::minecpp::engine::Event>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_FetchEvents<Service > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<WithStreamedUnaryMethod_DestroyBlock<WithStreamedUnaryMethod_UpdatePing<WithStreamedUnaryMethod_AnimateHand<WithSplitStreamingMethod_FetchEvents<Service > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AcceptPlayer<WithStreamedUnaryMethod_SetPlayerPosition<WithStreamedUnaryMethod_SetPlayerRotation<WithStreamedUnaryMethod_ChatMessage<WithStreamedUnaryMethod_ListPlayers<WithStreamedUnaryMethod_ListPlayerEntities<WithStreamedUnaryMethod_RemovePlayer<WithStreamedUnaryMethod_DestroyBlock<WithStreamedUnaryMethod_UpdatePing<WithStreamedUnaryMethod_AnimateHand<WithStreamedUnaryMethod_GetServiceId<WithStreamedUnaryMethod_GetServiceStatus<WithSplitStreamingMethod_FetchEvents<Service > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace engine

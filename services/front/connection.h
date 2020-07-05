@@ -47,6 +47,8 @@ class Connection {
    Protocol::State state();
    void set_state(Protocol::State s);
    void set_compression_threshold(std::size_t threshold);
+   void set_service_id(boost::uuids::uuid id);
+   boost::uuids::uuid service_id();
 
    void set_uuid(boost::uuids::uuid uuid);
    [[nodiscard]] const boost::uuids::uuid &get_uuid() const;
@@ -55,6 +57,7 @@ class Connection {
    inline size_t read_varint(uint32_t result, uint32_t shift);
 
    boost::uuids::uuid player_id{};
+   boost::uuids::uuid engine_service_id{};
    int id = -1;
    std::size_t compression_threshold = 0;
    tcp::socket socket;

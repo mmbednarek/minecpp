@@ -31,6 +31,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include "chunk.pb.h"
 // @@protoc_insertion_point(includes)
@@ -48,7 +49,7 @@ struct TableStruct_chunk_5fstorage_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -57,25 +58,74 @@ struct TableStruct_chunk_5fstorage_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chunk_5fstorage_2eproto;
 namespace minecpp {
 namespace chunk_storage {
+class AddReferencesRequest;
+class AddReferencesRequestDefaultTypeInternal;
+extern AddReferencesRequestDefaultTypeInternal _AddReferencesRequest_default_instance_;
+class AddReferencesResponse;
+class AddReferencesResponseDefaultTypeInternal;
+extern AddReferencesResponseDefaultTypeInternal _AddReferencesResponse_default_instance_;
+class Coord;
+class CoordDefaultTypeInternal;
+extern CoordDefaultTypeInternal _Coord_default_instance_;
 class EmptyResponse;
 class EmptyResponseDefaultTypeInternal;
 extern EmptyResponseDefaultTypeInternal _EmptyResponse_default_instance_;
+class HeightAtRequest;
+class HeightAtRequestDefaultTypeInternal;
+extern HeightAtRequestDefaultTypeInternal _HeightAtRequest_default_instance_;
+class HeightAtResponse;
+class HeightAtResponseDefaultTypeInternal;
+extern HeightAtResponseDefaultTypeInternal _HeightAtResponse_default_instance_;
 class LoadChunkRequest;
 class LoadChunkRequestDefaultTypeInternal;
 extern LoadChunkRequestDefaultTypeInternal _LoadChunkRequest_default_instance_;
+class RemoveReferencesRequest;
+class RemoveReferencesRequestDefaultTypeInternal;
+extern RemoveReferencesRequestDefaultTypeInternal _RemoveReferencesRequest_default_instance_;
 class SetBlockRequest;
 class SetBlockRequestDefaultTypeInternal;
 extern SetBlockRequestDefaultTypeInternal _SetBlockRequest_default_instance_;
 }  // namespace chunk_storage
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
+template<> ::minecpp::chunk_storage::AddReferencesRequest* Arena::CreateMaybeMessage<::minecpp::chunk_storage::AddReferencesRequest>(Arena*);
+template<> ::minecpp::chunk_storage::AddReferencesResponse* Arena::CreateMaybeMessage<::minecpp::chunk_storage::AddReferencesResponse>(Arena*);
+template<> ::minecpp::chunk_storage::Coord* Arena::CreateMaybeMessage<::minecpp::chunk_storage::Coord>(Arena*);
 template<> ::minecpp::chunk_storage::EmptyResponse* Arena::CreateMaybeMessage<::minecpp::chunk_storage::EmptyResponse>(Arena*);
+template<> ::minecpp::chunk_storage::HeightAtRequest* Arena::CreateMaybeMessage<::minecpp::chunk_storage::HeightAtRequest>(Arena*);
+template<> ::minecpp::chunk_storage::HeightAtResponse* Arena::CreateMaybeMessage<::minecpp::chunk_storage::HeightAtResponse>(Arena*);
 template<> ::minecpp::chunk_storage::LoadChunkRequest* Arena::CreateMaybeMessage<::minecpp::chunk_storage::LoadChunkRequest>(Arena*);
+template<> ::minecpp::chunk_storage::RemoveReferencesRequest* Arena::CreateMaybeMessage<::minecpp::chunk_storage::RemoveReferencesRequest>(Arena*);
 template<> ::minecpp::chunk_storage::SetBlockRequest* Arena::CreateMaybeMessage<::minecpp::chunk_storage::SetBlockRequest>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace chunk_storage {
 
+enum ReferenceStatus : int {
+  OK = 0,
+  MUST_MOVE = 1,
+  ReferenceStatus_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  ReferenceStatus_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool ReferenceStatus_IsValid(int value);
+constexpr ReferenceStatus ReferenceStatus_MIN = OK;
+constexpr ReferenceStatus ReferenceStatus_MAX = MUST_MOVE;
+constexpr int ReferenceStatus_ARRAYSIZE = ReferenceStatus_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ReferenceStatus_descriptor();
+template<typename T>
+inline const std::string& ReferenceStatus_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ReferenceStatus>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function ReferenceStatus_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    ReferenceStatus_descriptor(), enum_t_value);
+}
+inline bool ReferenceStatus_Parse(
+    const std::string& name, ReferenceStatus* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ReferenceStatus>(
+    ReferenceStatus_descriptor(), name, value);
+}
 // ===================================================================
 
 class LoadChunkRequest :
@@ -358,6 +408,840 @@ class SetBlockRequest :
 };
 // -------------------------------------------------------------------
 
+class Coord :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.Coord) */ {
+ public:
+  Coord();
+  virtual ~Coord();
+
+  Coord(const Coord& from);
+  Coord(Coord&& from) noexcept
+    : Coord() {
+    *this = ::std::move(from);
+  }
+
+  inline Coord& operator=(const Coord& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Coord& operator=(Coord&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const Coord& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Coord* internal_default_instance() {
+    return reinterpret_cast<const Coord*>(
+               &_Coord_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  void Swap(Coord* other);
+  friend void swap(Coord& a, Coord& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Coord* New() const final {
+    return CreateMaybeMessage<Coord>(nullptr);
+  }
+
+  Coord* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Coord>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Coord& from);
+  void MergeFrom(const Coord& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Coord* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.chunk_storage.Coord";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_chunk_5fstorage_2eproto);
+    return ::descriptor_table_chunk_5fstorage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 x = 1;
+  void clear_x();
+  static const int kXFieldNumber = 1;
+  ::PROTOBUF_NAMESPACE_ID::int32 x() const;
+  void set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 z = 2;
+  void clear_z();
+  static const int kZFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 z() const;
+  void set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.chunk_storage.Coord)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 z_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_chunk_5fstorage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class AddReferencesRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.AddReferencesRequest) */ {
+ public:
+  AddReferencesRequest();
+  virtual ~AddReferencesRequest();
+
+  AddReferencesRequest(const AddReferencesRequest& from);
+  AddReferencesRequest(AddReferencesRequest&& from) noexcept
+    : AddReferencesRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline AddReferencesRequest& operator=(const AddReferencesRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddReferencesRequest& operator=(AddReferencesRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const AddReferencesRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddReferencesRequest* internal_default_instance() {
+    return reinterpret_cast<const AddReferencesRequest*>(
+               &_AddReferencesRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  void Swap(AddReferencesRequest* other);
+  friend void swap(AddReferencesRequest& a, AddReferencesRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddReferencesRequest* New() const final {
+    return CreateMaybeMessage<AddReferencesRequest>(nullptr);
+  }
+
+  AddReferencesRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AddReferencesRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const AddReferencesRequest& from);
+  void MergeFrom(const AddReferencesRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddReferencesRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.chunk_storage.AddReferencesRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_chunk_5fstorage_2eproto);
+    return ::descriptor_table_chunk_5fstorage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .minecpp.chunk_storage.Coord coords = 3;
+  int coords_size() const;
+  void clear_coords();
+  static const int kCoordsFieldNumber = 3;
+  ::minecpp::chunk_storage::Coord* mutable_coords(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >*
+      mutable_coords();
+  const ::minecpp::chunk_storage::Coord& coords(int index) const;
+  ::minecpp::chunk_storage::Coord* add_coords();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >&
+      coords() const;
+
+  // bytes engine_id = 1;
+  void clear_engine_id();
+  static const int kEngineIdFieldNumber = 1;
+  const std::string& engine_id() const;
+  void set_engine_id(const std::string& value);
+  void set_engine_id(std::string&& value);
+  void set_engine_id(const char* value);
+  void set_engine_id(const void* value, size_t size);
+  std::string* mutable_engine_id();
+  std::string* release_engine_id();
+  void set_allocated_engine_id(std::string* engine_id);
+
+  // bytes player_id = 2;
+  void clear_player_id();
+  static const int kPlayerIdFieldNumber = 2;
+  const std::string& player_id() const;
+  void set_player_id(const std::string& value);
+  void set_player_id(std::string&& value);
+  void set_player_id(const char* value);
+  void set_player_id(const void* value, size_t size);
+  std::string* mutable_player_id();
+  std::string* release_player_id();
+  void set_allocated_player_id(std::string* player_id);
+
+  // @@protoc_insertion_point(class_scope:minecpp.chunk_storage.AddReferencesRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord > coords_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr engine_id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr player_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_chunk_5fstorage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class AddReferencesResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.AddReferencesResponse) */ {
+ public:
+  AddReferencesResponse();
+  virtual ~AddReferencesResponse();
+
+  AddReferencesResponse(const AddReferencesResponse& from);
+  AddReferencesResponse(AddReferencesResponse&& from) noexcept
+    : AddReferencesResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline AddReferencesResponse& operator=(const AddReferencesResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddReferencesResponse& operator=(AddReferencesResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const AddReferencesResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AddReferencesResponse* internal_default_instance() {
+    return reinterpret_cast<const AddReferencesResponse*>(
+               &_AddReferencesResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  void Swap(AddReferencesResponse* other);
+  friend void swap(AddReferencesResponse& a, AddReferencesResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AddReferencesResponse* New() const final {
+    return CreateMaybeMessage<AddReferencesResponse>(nullptr);
+  }
+
+  AddReferencesResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AddReferencesResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const AddReferencesResponse& from);
+  void MergeFrom(const AddReferencesResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddReferencesResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.chunk_storage.AddReferencesResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_chunk_5fstorage_2eproto);
+    return ::descriptor_table_chunk_5fstorage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes target_engine_id = 2;
+  void clear_target_engine_id();
+  static const int kTargetEngineIdFieldNumber = 2;
+  const std::string& target_engine_id() const;
+  void set_target_engine_id(const std::string& value);
+  void set_target_engine_id(std::string&& value);
+  void set_target_engine_id(const char* value);
+  void set_target_engine_id(const void* value, size_t size);
+  std::string* mutable_target_engine_id();
+  std::string* release_target_engine_id();
+  void set_allocated_target_engine_id(std::string* target_engine_id);
+
+  // .minecpp.chunk_storage.ReferenceStatus status = 1;
+  void clear_status();
+  static const int kStatusFieldNumber = 1;
+  ::minecpp::chunk_storage::ReferenceStatus status() const;
+  void set_status(::minecpp::chunk_storage::ReferenceStatus value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.chunk_storage.AddReferencesResponse)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr target_engine_id_;
+  int status_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_chunk_5fstorage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class RemoveReferencesRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.RemoveReferencesRequest) */ {
+ public:
+  RemoveReferencesRequest();
+  virtual ~RemoveReferencesRequest();
+
+  RemoveReferencesRequest(const RemoveReferencesRequest& from);
+  RemoveReferencesRequest(RemoveReferencesRequest&& from) noexcept
+    : RemoveReferencesRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline RemoveReferencesRequest& operator=(const RemoveReferencesRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RemoveReferencesRequest& operator=(RemoveReferencesRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RemoveReferencesRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RemoveReferencesRequest* internal_default_instance() {
+    return reinterpret_cast<const RemoveReferencesRequest*>(
+               &_RemoveReferencesRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  void Swap(RemoveReferencesRequest* other);
+  friend void swap(RemoveReferencesRequest& a, RemoveReferencesRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RemoveReferencesRequest* New() const final {
+    return CreateMaybeMessage<RemoveReferencesRequest>(nullptr);
+  }
+
+  RemoveReferencesRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RemoveReferencesRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RemoveReferencesRequest& from);
+  void MergeFrom(const RemoveReferencesRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RemoveReferencesRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.chunk_storage.RemoveReferencesRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_chunk_5fstorage_2eproto);
+    return ::descriptor_table_chunk_5fstorage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .minecpp.chunk_storage.Coord coords = 2;
+  int coords_size() const;
+  void clear_coords();
+  static const int kCoordsFieldNumber = 2;
+  ::minecpp::chunk_storage::Coord* mutable_coords(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >*
+      mutable_coords();
+  const ::minecpp::chunk_storage::Coord& coords(int index) const;
+  ::minecpp::chunk_storage::Coord* add_coords();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >&
+      coords() const;
+
+  // bytes player_id = 1;
+  void clear_player_id();
+  static const int kPlayerIdFieldNumber = 1;
+  const std::string& player_id() const;
+  void set_player_id(const std::string& value);
+  void set_player_id(std::string&& value);
+  void set_player_id(const char* value);
+  void set_player_id(const void* value, size_t size);
+  std::string* mutable_player_id();
+  std::string* release_player_id();
+  void set_allocated_player_id(std::string* player_id);
+
+  // @@protoc_insertion_point(class_scope:minecpp.chunk_storage.RemoveReferencesRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord > coords_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr player_id_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_chunk_5fstorage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class HeightAtRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.HeightAtRequest) */ {
+ public:
+  HeightAtRequest();
+  virtual ~HeightAtRequest();
+
+  HeightAtRequest(const HeightAtRequest& from);
+  HeightAtRequest(HeightAtRequest&& from) noexcept
+    : HeightAtRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline HeightAtRequest& operator=(const HeightAtRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline HeightAtRequest& operator=(HeightAtRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const HeightAtRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const HeightAtRequest* internal_default_instance() {
+    return reinterpret_cast<const HeightAtRequest*>(
+               &_HeightAtRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  void Swap(HeightAtRequest* other);
+  friend void swap(HeightAtRequest& a, HeightAtRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline HeightAtRequest* New() const final {
+    return CreateMaybeMessage<HeightAtRequest>(nullptr);
+  }
+
+  HeightAtRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<HeightAtRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const HeightAtRequest& from);
+  void MergeFrom(const HeightAtRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(HeightAtRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.chunk_storage.HeightAtRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_chunk_5fstorage_2eproto);
+    return ::descriptor_table_chunk_5fstorage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 x = 1;
+  void clear_x();
+  static const int kXFieldNumber = 1;
+  ::PROTOBUF_NAMESPACE_ID::int32 x() const;
+  void set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // int32 z = 2;
+  void clear_z();
+  static const int kZFieldNumber = 2;
+  ::PROTOBUF_NAMESPACE_ID::int32 z() const;
+  void set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.chunk_storage.HeightAtRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 z_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_chunk_5fstorage_2eproto;
+};
+// -------------------------------------------------------------------
+
+class HeightAtResponse :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.HeightAtResponse) */ {
+ public:
+  HeightAtResponse();
+  virtual ~HeightAtResponse();
+
+  HeightAtResponse(const HeightAtResponse& from);
+  HeightAtResponse(HeightAtResponse&& from) noexcept
+    : HeightAtResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline HeightAtResponse& operator=(const HeightAtResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline HeightAtResponse& operator=(HeightAtResponse&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const HeightAtResponse& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const HeightAtResponse* internal_default_instance() {
+    return reinterpret_cast<const HeightAtResponse*>(
+               &_HeightAtResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
+
+  void Swap(HeightAtResponse* other);
+  friend void swap(HeightAtResponse& a, HeightAtResponse& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline HeightAtResponse* New() const final {
+    return CreateMaybeMessage<HeightAtResponse>(nullptr);
+  }
+
+  HeightAtResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<HeightAtResponse>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const HeightAtResponse& from);
+  void MergeFrom(const HeightAtResponse& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(HeightAtResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.chunk_storage.HeightAtResponse";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_chunk_5fstorage_2eproto);
+    return ::descriptor_table_chunk_5fstorage_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // int32 height = 1;
+  void clear_height();
+  static const int kHeightFieldNumber = 1;
+  ::PROTOBUF_NAMESPACE_ID::int32 height() const;
+  void set_height(::PROTOBUF_NAMESPACE_ID::int32 value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.chunk_storage.HeightAtResponse)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::int32 height_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_chunk_5fstorage_2eproto;
+};
+// -------------------------------------------------------------------
+
 class EmptyResponse :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.chunk_storage.EmptyResponse) */ {
  public:
@@ -400,7 +1284,7 @@ class EmptyResponse :
                &_EmptyResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    8;
 
   void Swap(EmptyResponse* other);
   friend void swap(EmptyResponse& a, EmptyResponse& b) {
@@ -576,6 +1460,378 @@ inline void SetBlockRequest::set_state(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // -------------------------------------------------------------------
 
+// Coord
+
+// int32 x = 1;
+inline void Coord::clear_x() {
+  x_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Coord::x() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.Coord.x)
+  return x_;
+}
+inline void Coord::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  x_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.Coord.x)
+}
+
+// int32 z = 2;
+inline void Coord::clear_z() {
+  z_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Coord::z() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.Coord.z)
+  return z_;
+}
+inline void Coord::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  z_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.Coord.z)
+}
+
+// -------------------------------------------------------------------
+
+// AddReferencesRequest
+
+// bytes engine_id = 1;
+inline void AddReferencesRequest::clear_engine_id() {
+  engine_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& AddReferencesRequest::engine_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+  return engine_id_.GetNoArena();
+}
+inline void AddReferencesRequest::set_engine_id(const std::string& value) {
+  
+  engine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+}
+inline void AddReferencesRequest::set_engine_id(std::string&& value) {
+  
+  engine_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+}
+inline void AddReferencesRequest::set_engine_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  engine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+}
+inline void AddReferencesRequest::set_engine_id(const void* value, size_t size) {
+  
+  engine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+}
+inline std::string* AddReferencesRequest::mutable_engine_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+  return engine_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* AddReferencesRequest::release_engine_id() {
+  // @@protoc_insertion_point(field_release:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+  
+  return engine_id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddReferencesRequest::set_allocated_engine_id(std::string* engine_id) {
+  if (engine_id != nullptr) {
+    
+  } else {
+    
+  }
+  engine_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), engine_id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.chunk_storage.AddReferencesRequest.engine_id)
+}
+
+// bytes player_id = 2;
+inline void AddReferencesRequest::clear_player_id() {
+  player_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& AddReferencesRequest::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.AddReferencesRequest.player_id)
+  return player_id_.GetNoArena();
+}
+inline void AddReferencesRequest::set_player_id(const std::string& value) {
+  
+  player_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.AddReferencesRequest.player_id)
+}
+inline void AddReferencesRequest::set_player_id(std::string&& value) {
+  
+  player_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.chunk_storage.AddReferencesRequest.player_id)
+}
+inline void AddReferencesRequest::set_player_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  player_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.chunk_storage.AddReferencesRequest.player_id)
+}
+inline void AddReferencesRequest::set_player_id(const void* value, size_t size) {
+  
+  player_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.chunk_storage.AddReferencesRequest.player_id)
+}
+inline std::string* AddReferencesRequest::mutable_player_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk_storage.AddReferencesRequest.player_id)
+  return player_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* AddReferencesRequest::release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.chunk_storage.AddReferencesRequest.player_id)
+  
+  return player_id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddReferencesRequest::set_allocated_player_id(std::string* player_id) {
+  if (player_id != nullptr) {
+    
+  } else {
+    
+  }
+  player_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), player_id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.chunk_storage.AddReferencesRequest.player_id)
+}
+
+// repeated .minecpp.chunk_storage.Coord coords = 3;
+inline int AddReferencesRequest::coords_size() const {
+  return coords_.size();
+}
+inline void AddReferencesRequest::clear_coords() {
+  coords_.Clear();
+}
+inline ::minecpp::chunk_storage::Coord* AddReferencesRequest::mutable_coords(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk_storage.AddReferencesRequest.coords)
+  return coords_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >*
+AddReferencesRequest::mutable_coords() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.chunk_storage.AddReferencesRequest.coords)
+  return &coords_;
+}
+inline const ::minecpp::chunk_storage::Coord& AddReferencesRequest::coords(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.AddReferencesRequest.coords)
+  return coords_.Get(index);
+}
+inline ::minecpp::chunk_storage::Coord* AddReferencesRequest::add_coords() {
+  // @@protoc_insertion_point(field_add:minecpp.chunk_storage.AddReferencesRequest.coords)
+  return coords_.Add();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >&
+AddReferencesRequest::coords() const {
+  // @@protoc_insertion_point(field_list:minecpp.chunk_storage.AddReferencesRequest.coords)
+  return coords_;
+}
+
+// -------------------------------------------------------------------
+
+// AddReferencesResponse
+
+// .minecpp.chunk_storage.ReferenceStatus status = 1;
+inline void AddReferencesResponse::clear_status() {
+  status_ = 0;
+}
+inline ::minecpp::chunk_storage::ReferenceStatus AddReferencesResponse::status() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.AddReferencesResponse.status)
+  return static_cast< ::minecpp::chunk_storage::ReferenceStatus >(status_);
+}
+inline void AddReferencesResponse::set_status(::minecpp::chunk_storage::ReferenceStatus value) {
+  
+  status_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.AddReferencesResponse.status)
+}
+
+// bytes target_engine_id = 2;
+inline void AddReferencesResponse::clear_target_engine_id() {
+  target_engine_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& AddReferencesResponse::target_engine_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+  return target_engine_id_.GetNoArena();
+}
+inline void AddReferencesResponse::set_target_engine_id(const std::string& value) {
+  
+  target_engine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+}
+inline void AddReferencesResponse::set_target_engine_id(std::string&& value) {
+  
+  target_engine_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+}
+inline void AddReferencesResponse::set_target_engine_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  target_engine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+}
+inline void AddReferencesResponse::set_target_engine_id(const void* value, size_t size) {
+  
+  target_engine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+}
+inline std::string* AddReferencesResponse::mutable_target_engine_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+  return target_engine_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* AddReferencesResponse::release_target_engine_id() {
+  // @@protoc_insertion_point(field_release:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+  
+  return target_engine_id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void AddReferencesResponse::set_allocated_target_engine_id(std::string* target_engine_id) {
+  if (target_engine_id != nullptr) {
+    
+  } else {
+    
+  }
+  target_engine_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), target_engine_id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.chunk_storage.AddReferencesResponse.target_engine_id)
+}
+
+// -------------------------------------------------------------------
+
+// RemoveReferencesRequest
+
+// bytes player_id = 1;
+inline void RemoveReferencesRequest::clear_player_id() {
+  player_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& RemoveReferencesRequest::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+  return player_id_.GetNoArena();
+}
+inline void RemoveReferencesRequest::set_player_id(const std::string& value) {
+  
+  player_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+}
+inline void RemoveReferencesRequest::set_player_id(std::string&& value) {
+  
+  player_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+}
+inline void RemoveReferencesRequest::set_player_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  player_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+}
+inline void RemoveReferencesRequest::set_player_id(const void* value, size_t size) {
+  
+  player_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+}
+inline std::string* RemoveReferencesRequest::mutable_player_id() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+  return player_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* RemoveReferencesRequest::release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+  
+  return player_id_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void RemoveReferencesRequest::set_allocated_player_id(std::string* player_id) {
+  if (player_id != nullptr) {
+    
+  } else {
+    
+  }
+  player_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), player_id);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.chunk_storage.RemoveReferencesRequest.player_id)
+}
+
+// repeated .minecpp.chunk_storage.Coord coords = 2;
+inline int RemoveReferencesRequest::coords_size() const {
+  return coords_.size();
+}
+inline void RemoveReferencesRequest::clear_coords() {
+  coords_.Clear();
+}
+inline ::minecpp::chunk_storage::Coord* RemoveReferencesRequest::mutable_coords(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.chunk_storage.RemoveReferencesRequest.coords)
+  return coords_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >*
+RemoveReferencesRequest::mutable_coords() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.chunk_storage.RemoveReferencesRequest.coords)
+  return &coords_;
+}
+inline const ::minecpp::chunk_storage::Coord& RemoveReferencesRequest::coords(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.RemoveReferencesRequest.coords)
+  return coords_.Get(index);
+}
+inline ::minecpp::chunk_storage::Coord* RemoveReferencesRequest::add_coords() {
+  // @@protoc_insertion_point(field_add:minecpp.chunk_storage.RemoveReferencesRequest.coords)
+  return coords_.Add();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::chunk_storage::Coord >&
+RemoveReferencesRequest::coords() const {
+  // @@protoc_insertion_point(field_list:minecpp.chunk_storage.RemoveReferencesRequest.coords)
+  return coords_;
+}
+
+// -------------------------------------------------------------------
+
+// HeightAtRequest
+
+// int32 x = 1;
+inline void HeightAtRequest::clear_x() {
+  x_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 HeightAtRequest::x() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.HeightAtRequest.x)
+  return x_;
+}
+inline void HeightAtRequest::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  x_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.HeightAtRequest.x)
+}
+
+// int32 z = 2;
+inline void HeightAtRequest::clear_z() {
+  z_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 HeightAtRequest::z() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.HeightAtRequest.z)
+  return z_;
+}
+inline void HeightAtRequest::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  z_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.HeightAtRequest.z)
+}
+
+// -------------------------------------------------------------------
+
+// HeightAtResponse
+
+// int32 height = 1;
+inline void HeightAtResponse::clear_height() {
+  height_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 HeightAtResponse::height() const {
+  // @@protoc_insertion_point(field_get:minecpp.chunk_storage.HeightAtResponse.height)
+  return height_;
+}
+inline void HeightAtResponse::set_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  height_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.chunk_storage.HeightAtResponse.height)
+}
+
+// -------------------------------------------------------------------
+
 // EmptyResponse
 
 #ifdef __GNUC__
@@ -585,11 +1841,33 @@ inline void SetBlockRequest::set_state(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace chunk_storage
 }  // namespace minecpp
+
+PROTOBUF_NAMESPACE_OPEN
+
+template <> struct is_proto_enum< ::minecpp::chunk_storage::ReferenceStatus> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::chunk_storage::ReferenceStatus>() {
+  return ::minecpp::chunk_storage::ReferenceStatus_descriptor();
+}
+
+PROTOBUF_NAMESPACE_CLOSE
 
 // @@protoc_insertion_point(global_scope)
 

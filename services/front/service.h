@@ -1,7 +1,7 @@
 #pragma once
+#include "../engine/client/provider.h"
 #include "config.h"
 #include "connection.h"
-#include "players.h"
 #include "protocol/play_handler.h"
 #include <boost/random.hpp>
 #include <grpcpp/channel.h>
@@ -14,20 +14,16 @@
 
 namespace Front {
 
-typedef std::unique_ptr<minecpp::engine::PlayerService::Stub>
-    EnginePlayerService;
-typedef std::shared_ptr<grpc::Channel> EngineChannel;
 typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
     ChunkService;
 
 class Server;
+using boost::uuids::uuid;
 
 class Service {
-   PlayerManager players;
-
    boost::random::mt19937 rand;
+   Engine::Client::Provider &engine_provider;
 
-   EnginePlayerService &player_service;
    ChunkService chunk_service;
 
    char *cached_recipes = nullptr;
@@ -35,42 +31,45 @@ class Service {
    char *cached_tags = nullptr;
    std::size_t cached_tags_size;
 
+   uuid player_uuid_namespace{
+       .data{0xe3, 0x35, 0xd4, 0xb4, 0x8d, 0x91, 0x4c, 0x5b, 0x8a, 0x7c, 0x23,
+             0x08, 0xf3, 0x0e, 0x29, 0x52},
+   };
+
  public:
-   explicit Service(Config &conf, EnginePlayerService &player_service);
+   explicit Service(Config &conf, Engine::Client::Provider &engine_provider,
+                    ChunkService chunk_service);
    ~Service();
 
    struct LoginResponse {
       bool accepted;
       std::string_view refusal_reason;
       std::string_view user_name;
-      boost::uuids::uuid uuid;
+      uuid uuid;
    };
    LoginResponse login_player(std::string &user_name);
 
-   void init_player(const std::shared_ptr<Connection> &conn, boost::uuids::uuid id);
-   EnginePlayerService &get_player_service();
+   void init_player(const std::shared_ptr<Connection> &conn, uuid id,
+                    std::string_view name);
 
-   void on_player_disconnect(boost::uuids::uuid player_id);
+   void on_player_disconnect(uuid engine_id, uuid player_id);
 
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::ClientSettings msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::PlayerPosition msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::PlayerPositionRotation msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::PlayerRotation msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::ChatMessage msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::PlayerDigging msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::KeepAliveClient msg);
-   void on_message(boost::uuids::uuid player_id,
+   void on_message(uuid engine_id, uuid player_id,
                    MineNet::Message::AnimateHandClient msg);
-
- private:
-   void load_chunk(const std::shared_ptr<Connection> &conn, int x, int z);
 };
 
 } // namespace Front

@@ -31,7 +31,7 @@ struct SpawnExperienceOrb {
 };
 Writer serialize(SpawnExperienceOrb msg);
 
-// 0x05
+// 0x04
 struct SpawnPlayer {
    int entity_id;
    boost::uuids::uuid id;
@@ -40,14 +40,14 @@ struct SpawnPlayer {
 };
 Writer serialize(SpawnPlayer msg);
 
-// 0x06
+// 0x05
 struct AnimateHand {
    int entity_id;
    uint8_t type;
 };
 Writer serialize(AnimateHand msg);
 
-// 0x10
+// 0x0f
 struct MultiBlockChange {
    struct Change {
       short offset;
@@ -59,14 +59,14 @@ struct MultiBlockChange {
 };
 Writer serialize(MultiBlockChange msg);
 
-// 0x0e
+// 0x0d
 struct Difficulty {
    uint8_t difficulty;
    bool locked;
 };
 Writer serialize(Difficulty msg);
 
-// 0x0f
+// 0x0e
 struct Chat {
    std::string message;
    ChatType type;
@@ -74,32 +74,32 @@ struct Chat {
 };
 Writer serialize(Chat msg);
 
-// 0x19
+// 0x18
 struct ServerBrand {
    std::string_view brand;
 };
 Writer serialize(ServerBrand msg);
 
-// 0x1b
+// 0x1a
 struct Disconnect {
    std::string_view reason;
 };
 Writer serialize(Disconnect msg);
 
-// 0x1c
+// 0x1b
 struct EntityStatus {
    uint32_t entity_id;
    uint8_t opcode;
 };
 Writer serialize(EntityStatus msg);
 
-// 0x21
+// 0x20
 struct KeepAlive {
    uint64_t time;
 };
 Writer serialize(KeepAlive msg);
 
-// 0x22
+// 0x21
 struct ChunkData {
    minecpp::chunk::NetChunk &chunk;
 };

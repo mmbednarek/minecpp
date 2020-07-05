@@ -1,5 +1,4 @@
 #pragma once
-#include "../players.h"
 #include "handler.h"
 #include <grpcpp/channel.h>
 #include <memory>

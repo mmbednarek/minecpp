@@ -27,6 +27,7 @@ class PlayerManager {
    void for_each_player(std::function<void(Game::Player &)> callback);
    void remove_player(uuid id);
    void remap_ids();
+   std::size_t player_count();
 };
 
 } // namespace Engine

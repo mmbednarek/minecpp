@@ -82,4 +82,8 @@ void PlayerManager::remap_ids() {
    }
 }
 
+std::size_t PlayerManager::player_count() {
+   return players.size();
+}
+
 } // namespace Engine

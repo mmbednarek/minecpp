@@ -30,6 +30,8 @@ static const char* PlayerService_method_names[] = {
   "/minecpp.engine.PlayerService/DestroyBlock",
   "/minecpp.engine.PlayerService/UpdatePing",
   "/minecpp.engine.PlayerService/AnimateHand",
+  "/minecpp.engine.PlayerService/GetServiceId",
+  "/minecpp.engine.PlayerService/GetServiceStatus",
   "/minecpp.engine.PlayerService/FetchEvents",
 };
 
@@ -50,7 +52,9 @@ PlayerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_DestroyBlock_(PlayerService_method_names[7], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_UpdatePing_(PlayerService_method_names[8], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_AnimateHand_(PlayerService_method_names[9], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_FetchEvents_(PlayerService_method_names[10], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_GetServiceId_(PlayerService_method_names[10], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetServiceStatus_(PlayerService_method_names[11], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FetchEvents_(PlayerService_method_names[12], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status PlayerService::Stub::AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::minecpp::engine::AcceptPlayerResponse* response) {
@@ -333,6 +337,62 @@ void PlayerService::Stub::experimental_async::AnimateHand(::grpc::ClientContext*
   return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_AnimateHand_, context, request, false);
 }
 
+::grpc::Status PlayerService::Stub::GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceIdResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_GetServiceId_, context, request, response);
+}
+
+void PlayerService::Stub::experimental_async::GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_GetServiceId_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_GetServiceId_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_GetServiceId_, context, request, response, reactor);
+}
+
+void PlayerService::Stub::experimental_async::GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_GetServiceId_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>* PlayerService::Stub::AsyncGetServiceIdRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::GetServiceIdResponse>::Create(channel_.get(), cq, rpcmethod_GetServiceId_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceIdResponse>* PlayerService::Stub::PrepareAsyncGetServiceIdRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::GetServiceIdResponse>::Create(channel_.get(), cq, rpcmethod_GetServiceId_, context, request, false);
+}
+
+::grpc::Status PlayerService::Stub::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceStatusResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_GetServiceStatus_, context, request, response);
+}
+
+void PlayerService::Stub::experimental_async::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_GetServiceStatus_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_GetServiceStatus_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_GetServiceStatus_, context, request, response, reactor);
+}
+
+void PlayerService::Stub::experimental_async::GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_GetServiceStatus_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>* PlayerService::Stub::AsyncGetServiceStatusRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::GetServiceStatusResponse>::Create(channel_.get(), cq, rpcmethod_GetServiceStatus_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::GetServiceStatusResponse>* PlayerService::Stub::PrepareAsyncGetServiceStatusRaw(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::GetServiceStatusResponse>::Create(channel_.get(), cq, rpcmethod_GetServiceStatus_, context, request, false);
+}
+
 ::grpc::ClientReader< ::minecpp::engine::Event>* PlayerService::Stub::FetchEventsRaw(::grpc::ClientContext* context, const ::minecpp::engine::FetchEventsRequest& request) {
   return ::grpc_impl::internal::ClientReaderFactory< ::minecpp::engine::Event>::Create(channel_.get(), rpcmethod_FetchEvents_, context, request);
 }
@@ -402,6 +462,16 @@ PlayerService::Service::Service() {
           std::mem_fn(&PlayerService::Service::AnimateHand), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayerService_method_names[10],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(
+          std::mem_fn(&PlayerService::Service::GetServiceId), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayerService_method_names[11],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(
+          std::mem_fn(&PlayerService::Service::GetServiceStatus), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayerService_method_names[12],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< PlayerService::Service, ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
           std::mem_fn(&PlayerService::Service::FetchEvents), this)));
@@ -474,6 +544,20 @@ PlayerService::Service::~Service() {
 }
 
 ::grpc::Status PlayerService::Service::AnimateHand(::grpc::ServerContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayerService::Service::GetServiceId(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayerService::Service::GetServiceStatus(::grpc::ServerContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response) {
   (void) context;
   (void) request;
   (void) response;

@@ -186,12 +186,23 @@ void Connection::set_compression_threshold(std::size_t threshold) {
    compression_threshold = threshold;
 }
 
-void Connection::set_uuid(boost::uuids::uuid uuid) { player_id = uuid; }
+void Connection::set_uuid(boost::uuids::uuid uuid) {
+   player_id = uuid;
+   server->index_connection(uuid, id);
+}
 
 const boost::uuids::uuid &Connection::get_uuid() const { return player_id; }
 
 Server *Connection::get_server() { return server; }
 
 void Connection::set_non_blocking() { socket.non_blocking(true); }
+
+void Connection::set_service_id(boost::uuids::uuid id) {
+   this->engine_service_id = id;
+}
+
+boost::uuids::uuid Connection::service_id() {
+   return this->engine_service_id;
+}
 
 } // namespace Front

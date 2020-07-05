@@ -8,6 +8,7 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    w.write_big_endian(chunk.pos_x());
    w.write_big_endian(chunk.pos_z());
    w.write_byte(chunk.full());
+   w.write_byte(0);
 
    size_t buff_size = 0;
 

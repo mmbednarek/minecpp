@@ -60,3 +60,19 @@ message AnimateHand {
     int32 entity_id = 2;
     int32 hand = 3;
 }
+
+message ChunkCoord {
+    int32 x = 1;
+    int32 z = 2;
+}
+
+message LoadTerrain {
+    bytes uuid = 1;
+    ChunkCoord central_chunk = 2;
+    repeated ChunkCoord coords = 3;
+}
+
+message TransferPlayer {
+    bytes player = 1;
+    bytes target_engine = 2;
+}

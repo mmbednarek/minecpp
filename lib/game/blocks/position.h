@@ -5,7 +5,10 @@ namespace Game::Block {
 
 struct ChunkPos {
    int x = 0, z = 0;
+   ChunkPos operator+(ChunkPos &other) const;
 };
+
+bool operator==(const ChunkPos &a, const ChunkPos &b);
 
 struct Position {
    int x = 0, y = 0, z = 0;
