@@ -22,7 +22,7 @@ class World : public Game::World {
    Game::Notifier &notifier() override;
    void add_refs(uuid player, std::vector<ChunkPos> refs) override;
    void free_refs(uuid player, std::vector<ChunkPos> refs) override;
-   int height_at(int x, int z);
+   int height_at(int x, int z) override;
 };
 
 } // namespace Engine

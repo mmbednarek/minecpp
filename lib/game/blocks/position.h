@@ -1,10 +1,14 @@
 #pragma once
 #include <cstdint>
+#include <mineutils/vec.h>
 
 namespace Game::Block {
 
 struct ChunkPos {
    int x = 0, z = 0;
+   ChunkPos() = default;
+   ChunkPos(int x, int z);
+   explicit ChunkPos(Utils::Vec2 v);
    ChunkPos operator+(ChunkPos &other) const;
 };
 

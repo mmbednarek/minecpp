@@ -1,11 +1,11 @@
 #include "../engine/client/provider.h"
 #include "config.h"
 #include "event_handler.h"
-#include "keepalive.h"
 #include "protocol/login_handler.h"
 #include "protocol/play_handler.h"
 #include "protocol/status_handler.h"
 #include "server.h"
+#include "ticks.h"
 #include <atomic>
 #include <grpcpp/grpcpp.h>
 #include <minepb/engine.grpc.pb.h>
@@ -23,8 +23,7 @@ auto main() -> int {
    };
    Engine::Client::Provider engine_provider(engine_cfg);
 
-   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host,
-                                            grpc::InsecureChannelCredentials());
+   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());
    std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_service =
        minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
 
@@ -38,13 +37,14 @@ auto main() -> int {
 
    boost::asio::io_context ctx;
    Server svr(ctx, conf.port, dynamic_cast<Protocol::Handler *>(&play_handler),
-              dynamic_cast<Protocol::Handler *>(&status_handler),
-              dynamic_cast<Protocol::Handler *>(&login_handler));
+              dynamic_cast<Protocol::Handler *>(&status_handler), dynamic_cast<Protocol::Handler *>(&login_handler));
 
-   std::thread keepalive_thread([&svr]() { keepalive_update(svr); });
+   TickManager ticks(svr, chunk_service);
+
+   std::thread ticks_thread([&ticks]() { ticks.tick(); });
 
    std::vector<std::thread> event_threads;
-   EventHandler consumer(svr, chunk_service);
+   EventHandler consumer(svr);
    minecpp::engine::FetchEventsRequest req{};
    req.set_front_id(conf.front_id);
    for (auto const &engine : engine_provider.get_services()) {

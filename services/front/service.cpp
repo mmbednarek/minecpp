@@ -197,6 +197,12 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
                      .pitch = e.pitch(),
                  });
    }
+
+   grpc::ClientContext ctx4;
+   minecpp::engine::LoadInitialChunksRequest load_chunks_req;
+   minecpp::engine::EmptyResponse empty_res;
+   load_chunks_req.set_uuid(id.data, id.size());
+   engine.service->LoadInitialChunks(&ctx4, load_chunks_req, &empty_res);
 }
 
 void Service::on_player_disconnect(uuid engine_id, uuid player_id) {

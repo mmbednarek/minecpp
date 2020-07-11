@@ -30,6 +30,7 @@ static const char* PlayerService_method_names[] = {
   "/minecpp.engine.PlayerService/DestroyBlock",
   "/minecpp.engine.PlayerService/UpdatePing",
   "/minecpp.engine.PlayerService/AnimateHand",
+  "/minecpp.engine.PlayerService/LoadInitialChunks",
   "/minecpp.engine.PlayerService/GetServiceId",
   "/minecpp.engine.PlayerService/GetServiceStatus",
   "/minecpp.engine.PlayerService/FetchEvents",
@@ -52,9 +53,10 @@ PlayerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_DestroyBlock_(PlayerService_method_names[7], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_UpdatePing_(PlayerService_method_names[8], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_AnimateHand_(PlayerService_method_names[9], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetServiceId_(PlayerService_method_names[10], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetServiceStatus_(PlayerService_method_names[11], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_FetchEvents_(PlayerService_method_names[12], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_LoadInitialChunks_(PlayerService_method_names[10], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetServiceId_(PlayerService_method_names[11], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetServiceStatus_(PlayerService_method_names[12], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FetchEvents_(PlayerService_method_names[13], ::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status PlayerService::Stub::AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::minecpp::engine::AcceptPlayerResponse* response) {
@@ -337,6 +339,34 @@ void PlayerService::Stub::experimental_async::AnimateHand(::grpc::ClientContext*
   return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_AnimateHand_, context, request, false);
 }
 
+::grpc::Status PlayerService::Stub::LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest& request, ::minecpp::engine::EmptyResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_LoadInitialChunks_, context, request, response);
+}
+
+void PlayerService::Stub::experimental_async::LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_LoadInitialChunks_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::LoadInitialChunks(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_LoadInitialChunks_, context, request, response, std::move(f));
+}
+
+void PlayerService::Stub::experimental_async::LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_LoadInitialChunks_, context, request, response, reactor);
+}
+
+void PlayerService::Stub::experimental_async::LoadInitialChunks(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_LoadInitialChunks_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PlayerService::Stub::AsyncLoadInitialChunksRaw(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_LoadInitialChunks_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::engine::EmptyResponse>* PlayerService::Stub::PrepareAsyncLoadInitialChunksRaw(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::minecpp::engine::EmptyResponse>::Create(channel_.get(), cq, rpcmethod_LoadInitialChunks_, context, request, false);
+}
+
 ::grpc::Status PlayerService::Stub::GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest& request, ::minecpp::engine::GetServiceIdResponse* response) {
   return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_GetServiceId_, context, request, response);
 }
@@ -463,15 +493,20 @@ PlayerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayerService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>(
+          std::mem_fn(&PlayerService::Service::LoadInitialChunks), this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayerService_method_names[11],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(
           std::mem_fn(&PlayerService::Service::GetServiceId), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      PlayerService_method_names[11],
+      PlayerService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< PlayerService::Service, ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(
           std::mem_fn(&PlayerService::Service::GetServiceStatus), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      PlayerService_method_names[12],
+      PlayerService_method_names[13],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< PlayerService::Service, ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
           std::mem_fn(&PlayerService::Service::FetchEvents), this)));
@@ -544,6 +579,13 @@ PlayerService::Service::~Service() {
 }
 
 ::grpc::Status PlayerService::Service::AnimateHand(::grpc::ServerContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayerService::Service::LoadInitialChunks(::grpc::ServerContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response) {
   (void) context;
   (void) request;
   (void) response;

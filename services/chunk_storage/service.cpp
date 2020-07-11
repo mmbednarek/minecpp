@@ -38,10 +38,7 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
    std::vector<Game::Block::ChunkPos> coords(request->coords_size());
    std::size_t i = 0;
    for (const auto &coord : request->coords()) {
-      coords[i] = {
-          .x = coord.x(),
-          .z = coord.z(),
-      };
+      coords[i] = Game::Block::ChunkPos(coord.x(), coord.z());
       ++i;
    }
 

@@ -10,15 +10,11 @@ namespace Front {
 
 using namespace minecpp::events;
 
-typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
-    ChunkService;
-
 class EventHandler {
    Server &server;
-   const ChunkService &chunk_service;
 
  public:
-   explicit EventHandler(Server &server, const ChunkService &chunk_service);
+   explicit EventHandler(Server &server);
 
    void accept_event(const minecpp::engine::Event &e);
 

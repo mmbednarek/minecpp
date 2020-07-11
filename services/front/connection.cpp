@@ -205,4 +205,16 @@ boost::uuids::uuid Connection::service_id() {
    return this->engine_service_id;
 }
 
+void Connection::push_chunk(int x, int z) {
+   chunk_queue.push(std::make_tuple(x, z));
+}
+
+std::tuple<int, int> Connection::pop_chunk() {
+   auto chunk = chunk_queue.front();
+   chunk_queue.pop();
+   return chunk;
+}
+
+bool Connection::has_chunks() { return !chunk_queue.empty(); }
+
 } // namespace Front

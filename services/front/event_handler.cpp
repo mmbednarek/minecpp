@@ -9,8 +9,7 @@
 
 namespace Front {
 
-EventHandler::EventHandler(Server &server, const ChunkService &chunk_service)
-    : server(server), chunk_service(chunk_service) {}
+EventHandler::EventHandler(Server &server) : server(server) {}
 
 void EventHandler::accept_event(const minecpp::engine::Event &e) {
    using Game::Event;
@@ -219,11 +218,6 @@ void EventHandler::on_event(AnimateHand &msg) {
    });
 }
 
-const char *chunk_load_error =
-    R"({"extra":[{"color": "red", "bold": true, "text": "Internal Error"}, {"color":"gray", "text": " error loading chunk"}], "text": ""})";
-
-const char *new_chunks = R"({"extra":[{"color": "green", "bold": true, "text": "new chunks"}], "text": ""})";
-
 void EventHandler::on_event(LoadTerrain &msg) {
    boost::uuids::uuid player_id{};
    Utils::decode_uuid(player_id, msg.uuid().data());
@@ -244,36 +238,9 @@ void EventHandler::on_event(LoadTerrain &msg) {
                   .z = msg.central_chunk().z(),
               });
 
-   auto start = Utils::now_milis();
    for (const auto &coord : msg.coords()) {
-      grpc::ClientContext ctx;
-      minecpp::chunk::NetChunk net_chunk;
-      minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
-      load_chunk_request.set_x(coord.x());
-      load_chunk_request.set_z(coord.z());
-
-      auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &net_chunk);
-      if (!status.ok()) {
-         spdlog::error("error loading chunk: {}", status.error_message());
-
-         send(conn, MineNet::Message::Chat{
-                        .message = chunk_load_error,
-                    });
-         return;
-      }
-
-      send(conn, MineNet::Message::ChunkData{
-                     .chunk = net_chunk,
-                 });
-      send(conn, MineNet::Message::UpdateLight{
-                     .chunk = net_chunk,
-                 });
+      conn->push_chunk(coord.x(), coord.z());
    }
-   send(conn, MineNet::Message::Chat{
-                  .message = new_chunks,
-              });
-
-   spdlog::info("loaded {} new chunks in {} ms", msg.coords_size(), Utils::now_milis() - start);
 }
 
 const char *player_transfer_message = R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";

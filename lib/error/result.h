@@ -1,5 +1,7 @@
 #pragma once
 #include <optional>
+#include <string>
+#include <stdexcept>
 
 template <typename T> class Result {
    std::optional<T> result;

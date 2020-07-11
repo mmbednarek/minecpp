@@ -27,10 +27,7 @@ uint64_t Position::as_long() {
 }
 
 ChunkPos Position::chunk_pos() const {
-   return ChunkPos{
-       .x = x >= 0 ? (x / 16) : ((x + 1) / 16 - 1),
-       .z = z >= 0 ? (z / 16) : ((z + 1) / 16 - 1),
-   };
+   return ChunkPos(x >= 0 ? (x / 16) : ((x + 1) / 16 - 1), z >= 0 ? (z / 16) : ((z + 1) / 16 - 1));
 }
 
 uint16_t Position::offset() const { return offset_x() << 12 | y | offset_z() << 8; }
@@ -41,5 +38,9 @@ inline uint8_t Position::offset_z() const { return z & 15; }
 bool operator==(const ChunkPos &a, const ChunkPos &b) { return a.x == b.x && a.z == b.z; }
 
 ChunkPos ChunkPos::operator+(ChunkPos &other) const { return ChunkPos{x + other.x, z + other.z}; }
+
+ChunkPos::ChunkPos(int x, int z) : x(x), z(z) {}
+
+ChunkPos::ChunkPos(Utils::Vec2 v) : x(v.x), z(v.z) {}
 
 } // namespace Game::Block

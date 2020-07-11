@@ -99,6 +99,10 @@ class GetServiceStatusResponseDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetServiceStatusResponse> _instance;
 } _GetServiceStatusResponse_default_instance_;
+class LoadInitialChunksRequestDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<LoadInitialChunksRequest> _instance;
+} _LoadInitialChunksRequest_default_instance_;
 }  // namespace engine
 }  // namespace minecpp
 static void InitDefaultsscc_info_AcceptPlayerRequest_engine_2eproto() {
@@ -287,6 +291,20 @@ static void InitDefaultsscc_info_ListPlayersResponse_engine_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsscc_info_ListPlayersResponse_engine_2eproto}, {
       &scc_info_PlayerData_engine_2eproto.base,}};
 
+static void InitDefaultsscc_info_LoadInitialChunksRequest_engine_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::minecpp::engine::_LoadInitialChunksRequest_default_instance_;
+    new (ptr) ::minecpp::engine::LoadInitialChunksRequest();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::minecpp::engine::LoadInitialChunksRequest::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_LoadInitialChunksRequest_engine_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_LoadInitialChunksRequest_engine_2eproto}, {}};
+
 static void InitDefaultsscc_info_PlayerData_engine_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -371,7 +389,7 @@ static void InitDefaultsscc_info_UpdatePingRequest_engine_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UpdatePingRequest_engine_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_UpdatePingRequest_engine_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_engine_2eproto[19];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_engine_2eproto[20];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_engine_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_engine_2eproto = nullptr;
 
@@ -520,6 +538,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_engine_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::GetServiceStatusResponse, players_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::GetServiceStatusResponse, chunk_updates_),
   PROTOBUF_FIELD_OFFSET(::minecpp::engine::GetServiceStatusResponse, tps_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::LoadInitialChunksRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::minecpp::engine::LoadInitialChunksRequest, uuid_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::engine::AcceptPlayerRequest)},
@@ -541,6 +565,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 119, -1, sizeof(::minecpp::engine::Event)},
   { 130, -1, sizeof(::minecpp::engine::GetServiceIdResponse)},
   { 136, -1, sizeof(::minecpp::engine::GetServiceStatusResponse)},
+  { 144, -1, sizeof(::minecpp::engine::LoadInitialChunksRequest)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -563,6 +588,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_Event_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_GetServiceIdResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_GetServiceStatusResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::engine::_LoadInitialChunksRequest_default_instance_),
 };
 
 const char descriptor_table_protodef_engine_2eproto[] =
@@ -602,43 +628,47 @@ const char descriptor_table_protodef_engine_2eproto[] =
   "\001(\005H\000\022\014\n\004data\030\005 \001(\014B\016\n\014recipient_id\"\"\n\024G"
   "etServiceIdResponse\022\n\n\002id\030\001 \001(\014\"O\n\030GetSe"
   "rviceStatusResponse\022\017\n\007players\030\001 \001(\005\022\025\n\r"
-  "chunk_updates\030\002 \001(\005\022\013\n\003tps\030\003 \001(\005*4\n\016Even"
-  "tRecipient\022\014\n\010EVERYONE\020\000\022\010\n\004AREA\020\001\022\n\n\006PL"
-  "AYER\020\0022\360\010\n\rPlayerService\022Y\n\014AcceptPlayer"
-  "\022#.minecpp.engine.AcceptPlayerRequest\032$."
-  "minecpp.engine.AcceptPlayerResponse\022\\\n\021S"
-  "etPlayerPosition\022(.minecpp.engine.SetPla"
-  "yerPositionRequest\032\035.minecpp.engine.Empt"
-  "yResponse\022\\\n\021SetPlayerRotation\022(.minecpp"
-  ".engine.SetPlayerRotationRequest\032\035.minec"
-  "pp.engine.EmptyResponse\022P\n\013ChatMessage\022\""
-  ".minecpp.engine.ChatMessageRequest\032\035.min"
-  "ecpp.engine.EmptyResponse\022P\n\013ListPlayers"
-  "\022\034.minecpp.engine.EmptyRequest\032#.minecpp"
-  ".engine.ListPlayersResponse\022^\n\022ListPlaye"
-  "rEntities\022\034.minecpp.engine.EmptyRequest\032"
-  "*.minecpp.engine.ListPlayerEntitiesRespo"
-  "nse\022R\n\014RemovePlayer\022#.minecpp.engine.Rem"
-  "ovePlayerRequest\032\035.minecpp.engine.EmptyR"
-  "esponse\022R\n\014DestroyBlock\022#.minecpp.engine"
-  ".DestroyBlockRequest\032\035.minecpp.engine.Em"
-  "ptyResponse\022N\n\nUpdatePing\022!.minecpp.engi"
-  "ne.UpdatePingRequest\032\035.minecpp.engine.Em"
-  "ptyResponse\022P\n\013AnimateHand\022\".minecpp.eng"
-  "ine.AnimateHandRequest\032\035.minecpp.engine."
-  "EmptyResponse\022R\n\014GetServiceId\022\034.minecpp."
-  "engine.EmptyRequest\032$.minecpp.engine.Get"
-  "ServiceIdResponse\022Z\n\020GetServiceStatus\022\034."
-  "minecpp.engine.EmptyRequest\032(.minecpp.en"
-  "gine.GetServiceStatusResponse\022J\n\013FetchEv"
-  "ents\022\".minecpp.engine.FetchEventsRequest"
-  "\032\025.minecpp.engine.Event0\001b\006proto3"
+  "chunk_updates\030\002 \001(\005\022\013\n\003tps\030\003 \001(\005\"(\n\030Load"
+  "InitialChunksRequest\022\014\n\004uuid\030\001 \001(\014*4\n\016Ev"
+  "entRecipient\022\014\n\010EVERYONE\020\000\022\010\n\004AREA\020\001\022\n\n\006"
+  "PLAYER\020\0022\316\t\n\rPlayerService\022Y\n\014AcceptPlay"
+  "er\022#.minecpp.engine.AcceptPlayerRequest\032"
+  "$.minecpp.engine.AcceptPlayerResponse\022\\\n"
+  "\021SetPlayerPosition\022(.minecpp.engine.SetP"
+  "layerPositionRequest\032\035.minecpp.engine.Em"
+  "ptyResponse\022\\\n\021SetPlayerRotation\022(.minec"
+  "pp.engine.SetPlayerRotationRequest\032\035.min"
+  "ecpp.engine.EmptyResponse\022P\n\013ChatMessage"
+  "\022\".minecpp.engine.ChatMessageRequest\032\035.m"
+  "inecpp.engine.EmptyResponse\022P\n\013ListPlaye"
+  "rs\022\034.minecpp.engine.EmptyRequest\032#.minec"
+  "pp.engine.ListPlayersResponse\022^\n\022ListPla"
+  "yerEntities\022\034.minecpp.engine.EmptyReques"
+  "t\032*.minecpp.engine.ListPlayerEntitiesRes"
+  "ponse\022R\n\014RemovePlayer\022#.minecpp.engine.R"
+  "emovePlayerRequest\032\035.minecpp.engine.Empt"
+  "yResponse\022R\n\014DestroyBlock\022#.minecpp.engi"
+  "ne.DestroyBlockRequest\032\035.minecpp.engine."
+  "EmptyResponse\022N\n\nUpdatePing\022!.minecpp.en"
+  "gine.UpdatePingRequest\032\035.minecpp.engine."
+  "EmptyResponse\022P\n\013AnimateHand\022\".minecpp.e"
+  "ngine.AnimateHandRequest\032\035.minecpp.engin"
+  "e.EmptyResponse\022\\\n\021LoadInitialChunks\022(.m"
+  "inecpp.engine.LoadInitialChunksRequest\032\035"
+  ".minecpp.engine.EmptyResponse\022R\n\014GetServ"
+  "iceId\022\034.minecpp.engine.EmptyRequest\032$.mi"
+  "necpp.engine.GetServiceIdResponse\022Z\n\020Get"
+  "ServiceStatus\022\034.minecpp.engine.EmptyRequ"
+  "est\032(.minecpp.engine.GetServiceStatusRes"
+  "ponse\022J\n\013FetchEvents\022\".minecpp.engine.Fe"
+  "tchEventsRequest\032\025.minecpp.engine.Event0"
+  "\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_engine_2eproto_deps[2] = {
   &::descriptor_table_game_2eproto,
   &::descriptor_table_player_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_engine_2eproto_sccs[19] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_engine_2eproto_sccs[20] = {
   &scc_info_AcceptPlayerRequest_engine_2eproto.base,
   &scc_info_AcceptPlayerResponse_engine_2eproto.base,
   &scc_info_AnimateHandRequest_engine_2eproto.base,
@@ -652,6 +682,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_eng
   &scc_info_GetServiceStatusResponse_engine_2eproto.base,
   &scc_info_ListPlayerEntitiesResponse_engine_2eproto.base,
   &scc_info_ListPlayersResponse_engine_2eproto.base,
+  &scc_info_LoadInitialChunksRequest_engine_2eproto.base,
   &scc_info_PlayerData_engine_2eproto.base,
   &scc_info_PlayerEntityData_engine_2eproto.base,
   &scc_info_RemovePlayerRequest_engine_2eproto.base,
@@ -662,10 +693,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_eng
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_engine_2eproto_once;
 static bool descriptor_table_engine_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_engine_2eproto = {
-  &descriptor_table_engine_2eproto_initialized, descriptor_table_protodef_engine_2eproto, "engine.proto", 2673,
-  &descriptor_table_engine_2eproto_once, descriptor_table_engine_2eproto_sccs, descriptor_table_engine_2eproto_deps, 19, 2,
+  &descriptor_table_engine_2eproto_initialized, descriptor_table_protodef_engine_2eproto, "engine.proto", 2809,
+  &descriptor_table_engine_2eproto_once, descriptor_table_engine_2eproto_sccs, descriptor_table_engine_2eproto_deps, 20, 2,
   schemas, file_default_instances, TableStruct_engine_2eproto::offsets,
-  file_level_metadata_engine_2eproto, 19, file_level_enum_descriptors_engine_2eproto, file_level_service_descriptors_engine_2eproto,
+  file_level_metadata_engine_2eproto, 20, file_level_enum_descriptors_engine_2eproto, file_level_service_descriptors_engine_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -7187,6 +7218,271 @@ void GetServiceStatusResponse::InternalSwap(GetServiceStatusResponse* other) {
 }
 
 
+// ===================================================================
+
+void LoadInitialChunksRequest::InitAsDefaultInstance() {
+}
+class LoadInitialChunksRequest::HasBitSetters {
+ public:
+};
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int LoadInitialChunksRequest::kUuidFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+LoadInitialChunksRequest::LoadInitialChunksRequest()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:minecpp.engine.LoadInitialChunksRequest)
+}
+LoadInitialChunksRequest::LoadInitialChunksRequest(const LoadInitialChunksRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from.uuid().size() > 0) {
+    uuid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.uuid_);
+  }
+  // @@protoc_insertion_point(copy_constructor:minecpp.engine.LoadInitialChunksRequest)
+}
+
+void LoadInitialChunksRequest::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_LoadInitialChunksRequest_engine_2eproto.base);
+  uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+LoadInitialChunksRequest::~LoadInitialChunksRequest() {
+  // @@protoc_insertion_point(destructor:minecpp.engine.LoadInitialChunksRequest)
+  SharedDtor();
+}
+
+void LoadInitialChunksRequest::SharedDtor() {
+  uuid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void LoadInitialChunksRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const LoadInitialChunksRequest& LoadInitialChunksRequest::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_LoadInitialChunksRequest_engine_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void LoadInitialChunksRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.engine.LoadInitialChunksRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _internal_metadata_.Clear();
+}
+
+#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+const char* LoadInitialChunksRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // bytes uuid = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_uuid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+bool LoadInitialChunksRequest::MergePartialFromCodedStream(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+  // @@protoc_insertion_point(parse_start:minecpp.engine.LoadInitialChunksRequest)
+  for (;;) {
+    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // bytes uuid = 1;
+      case 1: {
+        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (10 & 0xFF)) {
+          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
+                input, this->mutable_uuid()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:minecpp.engine.LoadInitialChunksRequest)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:minecpp.engine.LoadInitialChunksRequest)
+  return false;
+#undef DO_
+}
+#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+
+void LoadInitialChunksRequest::SerializeWithCachedSizes(
+    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:minecpp.engine.LoadInitialChunksRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
+      1, this->uuid(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:minecpp.engine.LoadInitialChunksRequest)
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* LoadInitialChunksRequest::InternalSerializeWithCachedSizesToArray(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.engine.LoadInitialChunksRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    target =
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
+        1, this->uuid(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.engine.LoadInitialChunksRequest)
+  return target;
+}
+
+size_t LoadInitialChunksRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.engine.LoadInitialChunksRequest)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->uuid());
+  }
+
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void LoadInitialChunksRequest::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:minecpp.engine.LoadInitialChunksRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  const LoadInitialChunksRequest* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<LoadInitialChunksRequest>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:minecpp.engine.LoadInitialChunksRequest)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:minecpp.engine.LoadInitialChunksRequest)
+    MergeFrom(*source);
+  }
+}
+
+void LoadInitialChunksRequest::MergeFrom(const LoadInitialChunksRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.engine.LoadInitialChunksRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.uuid().size() > 0) {
+
+    uuid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.uuid_);
+  }
+}
+
+void LoadInitialChunksRequest::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:minecpp.engine.LoadInitialChunksRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void LoadInitialChunksRequest::CopyFrom(const LoadInitialChunksRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.engine.LoadInitialChunksRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool LoadInitialChunksRequest::IsInitialized() const {
+  return true;
+}
+
+void LoadInitialChunksRequest::Swap(LoadInitialChunksRequest* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void LoadInitialChunksRequest::InternalSwap(LoadInitialChunksRequest* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  uuid_.Swap(&other->uuid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata LoadInitialChunksRequest::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace engine
 }  // namespace minecpp
@@ -7247,6 +7543,9 @@ template<> PROTOBUF_NOINLINE ::minecpp::engine::GetServiceIdResponse* Arena::Cre
 }
 template<> PROTOBUF_NOINLINE ::minecpp::engine::GetServiceStatusResponse* Arena::CreateMaybeMessage< ::minecpp::engine::GetServiceStatusResponse >(Arena* arena) {
   return Arena::CreateInternal< ::minecpp::engine::GetServiceStatusResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::engine::LoadInitialChunksRequest* Arena::CreateMaybeMessage< ::minecpp::engine::LoadInitialChunksRequest >(Arena* arena) {
+  return Arena::CreateInternal< ::minecpp::engine::LoadInitialChunksRequest >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

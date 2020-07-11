@@ -8,6 +8,7 @@ class World {
    virtual Notifier &notifier() = 0;
    virtual void add_refs(uuid player, std::vector<Block::ChunkPos> refs) = 0;
    virtual void free_refs(uuid player, std::vector<Block::ChunkPos> refs) = 0;
+   virtual int height_at(int x, int z) = 0;
 };
 
 }

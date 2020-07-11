@@ -31,7 +31,7 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
    Utils::decode_uuid(player_id, request->uuid().data());
 
    try {
-      players.join_player(request->name(), player_id);
+      players.join_player(world, request->name(), player_id);
    } catch (std::runtime_error &e) {
       spdlog::error("could not join player: {}", e.what());
       return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
@@ -40,12 +40,6 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
    auto &player = players.get_player(player_id);
    auto &player_entity = entities.get_entity(player.get_entity_id());
 
-   std::uniform_int_distribution<int> dist(-200, 200);
-   auto x = dist(rand);
-   auto z = dist(rand);
-   auto y = world.height_at(x, z) + 2;
-
-   player_entity.set_pos(Utils::Vec3(x, y, z));
 
    response->set_state(minecpp::engine::AcceptPlayerResponse_PlayerAcceptState_ACCEPTED);
    response->set_area_id(0); // TODO: Put actual node id
@@ -69,8 +63,6 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
    response->mutable_player_data()->set_pitch(player_entity.get_pitch());
    player.get_abilities().as_proto(response->mutable_player_data()->mutable_abilities());
    player.get_recipe_book().as_proto(response->mutable_player_data()->mutable_recipe_book());
-
-   player.load_chunks(world);
 
    minecpp::events::AddPlayer add_player;
    add_player.set_uuid(player_id.data, player_id.size());
@@ -356,6 +348,16 @@ void Service::handle_command(uuid id, std::string cmd) {
       chat.set_message(b.build());
       event_manager.post(chat);
    }
+}
+
+grpc::Status Service::LoadInitialChunks(grpc::ServerContext *context,
+                                        const minecpp::engine::LoadInitialChunksRequest *request,
+                                        minecpp::engine::EmptyResponse *response) {
+   boost::uuids::uuid id{};
+   Utils::decode_uuid(id, request->uuid().data());
+   auto player = players.get_player(id);
+   player.load_chunks(world);
+   return grpc::Status();
 }
 
 } // namespace Engine

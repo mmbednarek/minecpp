@@ -6,10 +6,11 @@
 namespace Game {
 
 using Utils::Vec3;
+using Utils::Vec2;
 class Player;
 
 class Tracking {
-   Block::ChunkPos last_chunk_pos;
+   Vec2 last_chunk_pos;
    int radius_sq;
    int radius;
    int move_dist_sq;

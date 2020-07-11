@@ -50,7 +50,7 @@ struct TableStruct_engine_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[19]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[20]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -98,6 +98,9 @@ extern ListPlayerEntitiesResponseDefaultTypeInternal _ListPlayerEntitiesResponse
 class ListPlayersResponse;
 class ListPlayersResponseDefaultTypeInternal;
 extern ListPlayersResponseDefaultTypeInternal _ListPlayersResponse_default_instance_;
+class LoadInitialChunksRequest;
+class LoadInitialChunksRequestDefaultTypeInternal;
+extern LoadInitialChunksRequestDefaultTypeInternal _LoadInitialChunksRequest_default_instance_;
 class PlayerData;
 class PlayerDataDefaultTypeInternal;
 extern PlayerDataDefaultTypeInternal _PlayerData_default_instance_;
@@ -132,6 +135,7 @@ template<> ::minecpp::engine::GetServiceIdResponse* Arena::CreateMaybeMessage<::
 template<> ::minecpp::engine::GetServiceStatusResponse* Arena::CreateMaybeMessage<::minecpp::engine::GetServiceStatusResponse>(Arena*);
 template<> ::minecpp::engine::ListPlayerEntitiesResponse* Arena::CreateMaybeMessage<::minecpp::engine::ListPlayerEntitiesResponse>(Arena*);
 template<> ::minecpp::engine::ListPlayersResponse* Arena::CreateMaybeMessage<::minecpp::engine::ListPlayersResponse>(Arena*);
+template<> ::minecpp::engine::LoadInitialChunksRequest* Arena::CreateMaybeMessage<::minecpp::engine::LoadInitialChunksRequest>(Arena*);
 template<> ::minecpp::engine::PlayerData* Arena::CreateMaybeMessage<::minecpp::engine::PlayerData>(Arena*);
 template<> ::minecpp::engine::PlayerEntityData* Arena::CreateMaybeMessage<::minecpp::engine::PlayerEntityData>(Arena*);
 template<> ::minecpp::engine::RemovePlayerRequest* Arena::CreateMaybeMessage<::minecpp::engine::RemovePlayerRequest>(Arena*);
@@ -2973,6 +2977,138 @@ class GetServiceStatusResponse :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_engine_2eproto;
 };
+// -------------------------------------------------------------------
+
+class LoadInitialChunksRequest :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.engine.LoadInitialChunksRequest) */ {
+ public:
+  LoadInitialChunksRequest();
+  virtual ~LoadInitialChunksRequest();
+
+  LoadInitialChunksRequest(const LoadInitialChunksRequest& from);
+  LoadInitialChunksRequest(LoadInitialChunksRequest&& from) noexcept
+    : LoadInitialChunksRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline LoadInitialChunksRequest& operator=(const LoadInitialChunksRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline LoadInitialChunksRequest& operator=(LoadInitialChunksRequest&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const LoadInitialChunksRequest& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const LoadInitialChunksRequest* internal_default_instance() {
+    return reinterpret_cast<const LoadInitialChunksRequest*>(
+               &_LoadInitialChunksRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  void Swap(LoadInitialChunksRequest* other);
+  friend void swap(LoadInitialChunksRequest& a, LoadInitialChunksRequest& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline LoadInitialChunksRequest* New() const final {
+    return CreateMaybeMessage<LoadInitialChunksRequest>(nullptr);
+  }
+
+  LoadInitialChunksRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<LoadInitialChunksRequest>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const LoadInitialChunksRequest& from);
+  void MergeFrom(const LoadInitialChunksRequest& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LoadInitialChunksRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.engine.LoadInitialChunksRequest";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_engine_2eproto);
+    return ::descriptor_table_engine_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes uuid = 1;
+  void clear_uuid();
+  static const int kUuidFieldNumber = 1;
+  const std::string& uuid() const;
+  void set_uuid(const std::string& value);
+  void set_uuid(std::string&& value);
+  void set_uuid(const char* value);
+  void set_uuid(const void* value, size_t size);
+  std::string* mutable_uuid();
+  std::string* release_uuid();
+  void set_allocated_uuid(std::string* uuid);
+
+  // @@protoc_insertion_point(class_scope:minecpp.engine.LoadInitialChunksRequest)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_engine_2eproto;
+};
 // ===================================================================
 
 
@@ -4551,9 +4687,66 @@ inline void GetServiceStatusResponse::set_tps(::PROTOBUF_NAMESPACE_ID::int32 val
   // @@protoc_insertion_point(field_set:minecpp.engine.GetServiceStatusResponse.tps)
 }
 
+// -------------------------------------------------------------------
+
+// LoadInitialChunksRequest
+
+// bytes uuid = 1;
+inline void LoadInitialChunksRequest::clear_uuid() {
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& LoadInitialChunksRequest::uuid() const {
+  // @@protoc_insertion_point(field_get:minecpp.engine.LoadInitialChunksRequest.uuid)
+  return uuid_.GetNoArena();
+}
+inline void LoadInitialChunksRequest::set_uuid(const std::string& value) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.engine.LoadInitialChunksRequest.uuid)
+}
+inline void LoadInitialChunksRequest::set_uuid(std::string&& value) {
+  
+  uuid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.engine.LoadInitialChunksRequest.uuid)
+}
+inline void LoadInitialChunksRequest::set_uuid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.engine.LoadInitialChunksRequest.uuid)
+}
+inline void LoadInitialChunksRequest::set_uuid(const void* value, size_t size) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.engine.LoadInitialChunksRequest.uuid)
+}
+inline std::string* LoadInitialChunksRequest::mutable_uuid() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.engine.LoadInitialChunksRequest.uuid)
+  return uuid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LoadInitialChunksRequest::release_uuid() {
+  // @@protoc_insertion_point(field_release:minecpp.engine.LoadInitialChunksRequest.uuid)
+  
+  return uuid_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LoadInitialChunksRequest::set_allocated_uuid(std::string* uuid) {
+  if (uuid != nullptr) {
+    
+  } else {
+    
+  }
+  uuid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uuid);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.engine.LoadInitialChunksRequest.uuid)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -3,11 +3,16 @@
 namespace Utils {
 
 class Vec2 {
-public:
-	Vec2();
-	Vec2(double x, double z);
+ public:
+   Vec2();
+   Vec2(double x, double z);
 
-	double x, z;
+   Vec2 operator*(double value) const;
+   Vec2 operator/(double value) const;
+   Vec2 operator+(Vec2 other) const;
+   Vec2 truncate() const;
+
+   double x, z;
 };
 
 class Vec3 {
@@ -17,11 +22,15 @@ class Vec3 {
 
    void mul(double x, double y, double z);
 
-   Vec3 operator *(double value) const;
-   Vec3 operator /(double value) const;
-   Vec3 operator -(Vec3 value) const;
+   Vec3 operator*(double value) const;
+   Vec3 operator/(double value) const;
+   Vec3 operator-(Vec3 value) const;
+
+   Vec2 flat() const;
 
    double x, y, z;
 };
 
-}
+double distance(Vec2 a, Vec2 b);
+
+} // namespace Utils

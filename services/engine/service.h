@@ -25,7 +25,6 @@ class Service final : public minecpp::engine::PlayerService::Service {
    EventManager event_manager;
    Dispatcher dispatcher;
    World world;
-   std::default_random_engine rand;
 
    int max_players = 10;
    Game::Difficulty difficulty = Game::Difficulty::Normal;
@@ -93,9 +92,13 @@ class Service final : public minecpp::engine::PlayerService::Service {
    GetServiceId(grpc::ServerContext *context,
                 const minecpp::engine::EmptyRequest *request,
                 minecpp::engine::GetServiceIdResponse *response) override;
+
    grpc::Status GetServiceStatus(
        grpc::ServerContext *context, const minecpp::engine::EmptyRequest *request,
        minecpp::engine::GetServiceStatusResponse *response) override;
+
+   grpc::Status LoadInitialChunks(grpc::ServerContext *context, const minecpp::engine::LoadInitialChunksRequest *request,
+                                  minecpp::engine::EmptyResponse *response) override;
 };
 
 } // namespace Engine

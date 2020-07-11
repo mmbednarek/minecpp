@@ -8,6 +8,8 @@
 #include <memory>
 #include <minenet/msg/io.h>
 #include <minenet/msg/message.h>
+#include <tuple>
+#include <queue>
 
 namespace Front {
 
@@ -53,8 +55,13 @@ class Connection {
    void set_uuid(boost::uuids::uuid uuid);
    [[nodiscard]] const boost::uuids::uuid &get_uuid() const;
 
+   void push_chunk(int x, int z);
+   std::tuple<int, int> pop_chunk();
+   bool has_chunks();
+
  private:
    inline size_t read_varint(uint32_t result, uint32_t shift);
+   std::queue<std::tuple<int, int>> chunk_queue;
 
    boost::uuids::uuid player_id{};
    boost::uuids::uuid engine_service_id{};
