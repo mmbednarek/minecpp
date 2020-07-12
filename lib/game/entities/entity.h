@@ -1,4 +1,5 @@
 #pragma once
+#include "../notifier.h"
 #include <boost/uuid/uuid.hpp>
 #include <game/dimension.h>
 #include <map>
@@ -34,6 +35,8 @@ struct Tracking {
 
 struct Movement {
    short x, y, z;
+
+   bool nil();
 };
 
 class Entity {
@@ -75,7 +78,7 @@ class Entity {
    [[nodiscard]] Vec3 get_pos() const;
    [[nodiscard]] float get_yaw() const;
    [[nodiscard]] float get_pitch() const;
-   void set_pos(Vec3 pos);
+   void set_pos(Notifier &n, Vec3 pos);
    void set_rot(float yaw, float pitch);
    void set_id(uint32_t id);
    uint32_t get_id();

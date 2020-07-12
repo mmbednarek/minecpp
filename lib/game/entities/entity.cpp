@@ -4,10 +4,8 @@
 namespace Game::Entity {
 
 std::array<std::string, 7> known_attributes{
-    "generic.maxHealth",       "generic.knockbackResistance",
-    "generic.movementSpeed",   "generic.armor",
-    "generic.armorToughness",  "generic.followRange",
-    "generic.attackKnockback",
+    "generic.maxHealth",      "generic.knockbackResistance", "generic.movementSpeed",   "generic.armor",
+    "generic.armorToughness", "generic.followRange",         "generic.attackKnockback",
 };
 
 AttributeName to_attribute_name(const std::string &s) {
@@ -26,7 +24,13 @@ float Entity::get_yaw() const { return yaw; }
 
 float Entity::get_pitch() const { return pitch; }
 
-void Entity::set_pos(Vec3 pos) { this->pos = pos; }
+void Entity::set_pos(Notifier &n, Vec3 pos) {
+   this->pos = pos;
+   auto movement = process_movement();
+   if (!movement.nil()) {
+      n.entity_move(id, uid, movement, yaw, pitch);
+   }
+}
 
 void Entity::set_rot(float yaw, float pitch) {
    this->yaw = yaw;
@@ -60,8 +64,7 @@ void Entity::sync_tracking() {
    tracking.z = pos.z * 4096.0;
 }
 
-void Attributes::set_attribute(AttributeName name, double value) {
-   attributes[name] = value;
-}
+void Attributes::set_attribute(AttributeName name, double value) { attributes[name] = value; }
 
+bool Movement::nil() { return x == 0 && y == 0 && z == 0; }
 } // namespace Game::Entity

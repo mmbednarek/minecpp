@@ -27,6 +27,7 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
       return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "invalid uuid length");
    }
 
+
    boost::uuids::uuid player_id{};
    Utils::decode_uuid(player_id, request->uuid().data());
 
@@ -39,7 +40,6 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
 
    auto &player = players.get_player(player_id);
    auto &player_entity = entities.get_entity(player.get_entity_id());
-
 
    response->set_state(minecpp::engine::AcceptPlayerResponse_PlayerAcceptState_ACCEPTED);
    response->set_area_id(0); // TODO: Put actual node id
@@ -97,21 +97,8 @@ grpc::Status Service::SetPlayerPosition(grpc::ServerContext *context,
    try {
       auto &e = players.get_entity(player_id);
       auto pos = Utils::Vec3(request->x(), request->y(), request->z());
-      e.set_pos(pos);
+      e.set_pos(dispatcher, pos);
       players.get_player(player_id).on_movement(world, pos);
-
-      auto movement = e.process_movement();
-      if (movement.x != 0 || movement.y != 0 || movement.z != 0) {
-         minecpp::events::EntityMove event;
-         event.set_id(e.get_id());
-         event.set_uuid(player_id.data, player_id.size());
-         event.set_x(movement.x);
-         event.set_y(movement.y);
-         event.set_z(movement.z);
-         event.set_yaw(e.get_yaw());
-         event.set_pitch(e.get_pitch());
-         event_manager.post(event);
-      }
    } catch (std::runtime_error &e) {
       spdlog::error("error setting player pos: {}", e.what());
       return grpc::Status(grpc::StatusCode::NOT_FOUND, "player not found");
