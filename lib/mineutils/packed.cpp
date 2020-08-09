@@ -8,7 +8,7 @@ uint32_t log2(const uint32_t x) {
    return y;
 }
 
-void for_each_packed(const std::vector<long long> &data, uint8_t bits, uint32_t array_size,
+void for_each_packed(const std::vector<int64_t> &data, uint8_t bits, uint32_t array_size,
                      std::function<void(uint32_t)> callback) {
    uint32_t i = 0;
    uint32_t parts = 64 / bits;
@@ -26,7 +26,7 @@ void for_each_packed(const std::vector<long long> &data, uint8_t bits, uint32_t 
    }
 }
 
-void set_packed(std::vector<long long> &data, uint8_t bits, uint32_t index, uint32_t value) {
+void set_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index, uint32_t value) {
    uint32_t parts = 64 / bits;
    auto pack = index / parts;
    uint32_t offset = (index % parts) * bits;
@@ -38,7 +38,7 @@ void set_packed(std::vector<long long> &data, uint8_t bits, uint32_t index, uint
    data[pack] = full_pack;
 }
 
-uint32_t get_packed(std::vector<long long> &data, uint8_t bits, uint32_t index) {
+uint32_t get_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index) {
    uint32_t parts = 64 / bits;
    auto pack = index / parts;
    uint32_t offset = (index % parts) * bits;
@@ -47,8 +47,8 @@ uint32_t get_packed(std::vector<long long> &data, uint8_t bits, uint32_t index) 
    return (full_pack >> offset) & mask;
 }
 
-void resize_pack(std::vector<long long> &data, uint8_t old_bits, uint8_t new_bits) {
-   std::vector<long long> resized(data.size() / old_bits * new_bits);
+void resize_pack(std::vector<int64_t> &data, uint8_t old_bits, uint8_t new_bits) {
+   std::vector<int64_t> resized(data.size() / old_bits * new_bits);
 
    uint32_t index = 0;
    for_each_packed(data, old_bits, 4096, [&resized, &index, new_bits](uint32_t value) {

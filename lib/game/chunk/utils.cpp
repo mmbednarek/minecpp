@@ -6,7 +6,7 @@
 
 namespace Game {
 
-int calculate_ref_count(const std::vector<long long> &data,
+int calculate_ref_count(const std::vector<int64_t> &data,
                         const std::vector<int> &palette) {
    if (data.empty()) {
       return 0;

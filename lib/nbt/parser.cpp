@@ -1,122 +1,124 @@
 #include "parser.h"
-#include "exception.h"
-#include <signal.h>
-#include <stdexcept>
 
 namespace NBT {
 
-Parser::Parser(std::istream &s) : Utils::Reader(s) {}
+Parser::Parser(std::istream &stream) : reader(stream) {}
 
-Parser::~Parser() = default;
-
-TagPtr Parser::read_tag() const {
-   auto type = read_static<TagID>(TagID::End);
-   if (type == TagID::End)
-      return std::unique_ptr<Tag>{};
-
-   auto name = read_string();
-
-   Tag *tag;
-   switch (type) {
-   case Byte:
-      tag = make_tag<TagID::Byte>(name);
-      break;
-   case Short:
-      tag = make_tag<TagID::Short>(name);
-      break;
-   case Int:
-      tag = make_tag<TagID::Int>(name);
-      break;
-   case Long:
-      tag = make_tag<TagID::Long>(name);
-      break;
-   case Float:
-      tag = make_tag<TagID::Float>(name);
-      break;
-   case Double:
-      tag = make_tag<TagID::Double>(name);
-      break;
-   case ByteArray:
-      tag = make_tag<TagID::ByteArray>(name);
-      break;
-   case String:
-      tag = make_tag<TagID::String>(name);
-      break;
-   case List:
-      tag = make_tag<TagID::List>(name);
-      break;
-   case Compound:
-      tag = make_tag<TagID::Compound>(name);
-      break;
-   case IntArray:
-      tag = make_tag<TagID::IntArray>(name);
-      break;
-   case LongArray:
-      tag = make_tag<TagID::LongArray>(name);
-      break;
-   default:
-      throw Exception("invalid tag id");
+NamedTag Parser::read_tag() {
+   auto tag_id = read_tag_id();
+   if (tag_id == TagId::End) {
+      return NamedTag("", TagId::End, std::any());
    }
-
-   return std::shared_ptr<Tag>(tag);
+   auto name = read_content_string();
+   auto content = read_content(tag_id);
+   return NamedTag(name, tag_id, content);
 }
 
-TagMap Parser::read_compound() const {
-   TagMap result;
-   for (auto tag = read_tag(); tag; tag = read_tag()) {
-      result[tag->name()] = std::move(tag);
+TagId Parser::read_tag_id() {
+   return reader.read_static(TagId::End);
+}
+
+std::any Parser::read_content(const TagId id) {
+   return content_reader(id)();
+}
+
+std::function<std::any()> Parser::content_reader(const TagId id) {
+   switch (id) {
+      case TagId::Byte:
+         return [this]() { return read_content_byte(); };
+      case TagId::Short:
+         return [this]() { return read_content_short(); };
+      case TagId::Int:
+         return [this]() { return read_content_int(); };
+      case TagId::Long:
+         return [this]() { return read_content_long(); };
+      case TagId::Float:
+         return [this]() { return read_content_float(); };
+      case TagId::Double:
+         return [this]() { return read_content_double(); };
+      case TagId::ByteArray:
+         return [this]() { return read_content_byte_array(); };
+      case TagId::String:
+         return [this]() { return read_content_string(); };
+      case TagId::List:
+         return [this]() { return read_content_list(); };
+      case TagId::Compound:
+         return [this]() { return read_compound(); };
+      case TagId::IntArray:
+         return [this]() { return read_content_int_array(); };
+      case TagId::LongArray:
+         return [this]() { return read_content_long_array(); };
+      default:
+         return []() { return nullptr; };
    }
+}
+
+std::vector<std::any> Parser::read_content_n(const TagId id, std::size_t amount) {
+   std::vector<std::any> result(amount);
+   auto content = content_reader(id);
+   std::for_each(result.begin(), result.end(), [content](auto &element) {
+      element = content();
+   });
    return result;
 }
 
-ListPayload Parser::read_list_payload() const {
-   auto tagid = read_static(TagID::End);
-   auto size = read_bswap<int>();
-
-   switch (tagid) {
-   case End:
-      if (size > 0)
-         throw Exception("list of type end with size > 0");
-      return ListPayload(tagid, nullptr);
-   case Byte:
-      return ListPayload(
-          tagid, new std::vector<uint8_t>(read_payload_array<Byte>(size)));
-   case Short:
-      return ListPayload(
-          tagid, new std::vector<short>(read_payload_array<Short>(size)));
-   case Int:
-      return ListPayload(tagid,
-                         new std::vector<int>(read_payload_array<Int>(size)));
-   case Long:
-      return ListPayload(
-          tagid, new std::vector<long long>(read_payload_array<Long>(size)));
-   case Float:
-      return ListPayload(
-          tagid, new std::vector<float>(read_payload_array<Float>(size)));
-   case Double:
-      return ListPayload(
-          tagid, new std::vector<double>(read_payload_array<Double>(size)));
-   case ByteArray:
-      return ListPayload(tagid, new std::vector<std::vector<uint8_t>>(
-                                    read_payload_array<ByteArray>(size)));
-   case String:
-      return ListPayload(tagid, new std::vector<std::string>(
-                                    read_payload_array<String>(size)));
-   case Compound:
-      return ListPayload(
-          tagid, new std::vector<TagMap>(read_payload_array<Compound>(size)));
-   case IntArray:
-      return ListPayload(tagid, new std::vector<std::vector<int>>(
-                                    read_payload_array<IntArray>(size)));
-   case LongArray:
-      return ListPayload(tagid, new std::vector<std::vector<long long>>(
-                                    read_payload_array<LongArray>(size)));
-   case List:
-      return ListPayload(
-          tagid, new std::vector<ListPayload>(read_payload_array<List>(size)));
-   }
-
-   throw Exception("invalid tag");
+int8_t Parser::read_content_byte() {
+   return reader.read_static(static_cast<int8_t>(0));
 }
 
-} // namespace NBT
+int16_t Parser::read_content_short() {
+   return reader.read_bswap<short>();
+}
+
+int32_t Parser::read_content_int() {
+   return reader.read_bswap<int>();
+}
+
+int64_t Parser::read_content_long() {
+   return reader.read_bswap<uint64_t>();
+}
+
+float Parser::read_content_float() {
+   return reader.read_float();
+}
+
+double Parser::read_content_double() {
+   return reader.read_double();
+}
+
+std::vector<uint8_t> Parser::read_content_byte_array() {
+   return reader.read_byte_vec();
+}
+
+std::string Parser::read_content_string() {
+   return reader.read_string();
+}
+
+ListContent Parser::read_content_list() {
+   auto tag_id = read_tag_id();
+   std::size_t size = read_content_int();
+   return ListContent{
+           .tag_id = tag_id,
+           .elements = read_content_n(tag_id, size)};
+}
+
+std::vector<int32_t> Parser::read_content_int_array() {
+   return reader.read_int_list<int32_t>();
+}
+
+std::vector<int64_t> Parser::read_content_long_array() {
+   return reader.read_int_list<int64_t>();
+}
+
+std::map<std::string, Content> Parser::read_compound() {
+   std::map<std::string, Content> result;
+   for (;;) {
+      auto content = read_tag();
+      if (content.content.tag_id == TagId::End) {
+         return result;
+      }
+      result[content.name] = content.content;
+   }
+}
+
+}// namespace NewNBT

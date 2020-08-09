@@ -2,7 +2,6 @@
 #include <iostream>
 #include <mineutils/compression.h>
 #include <nbt/parser.h>
-#include <nbt/snbt.h>
 
 auto main(int argc, char *argv[]) -> int {
    std::string filename;
@@ -45,17 +44,11 @@ auto main(int argc, char *argv[]) -> int {
    }
 
    NBT::Parser parser(*stream);
-   try {
-      NBT::TagPtr tag;
-      for (;;) {
-         tag = parser.read_tag();
-         if (tag == nullptr)
-            break;
-         NBT::encode_snbt(std::cout, tag);
-      }
-   } catch (NBT::Exception &e) {
-      std::cerr << "nbt error: " << e.what() << '\n';
-      return 3;
+   for (;;) {
+      auto tag = parser.read_tag();
+      if (tag.content.empty())
+         break;
+      std::cout << tag.content.to_string();
    }
    return 0;
 }

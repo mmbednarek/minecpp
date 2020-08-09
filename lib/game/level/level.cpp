@@ -1,52 +1,26 @@
 #include "level.h"
+#include <nbt/parser.h>
 
 namespace Game::Level {
 
 Info::Info(std::istream &s) {
 	using Utils::Vec2;
-	NBT::Reader r(s);
+   NBT::Parser r(s);
 
-	r.find_compound("Data");
+   auto data = r.read_tag().content.as<NBT::CompoundContent>();
 	border.center = Vec2(
-		r.expect_tag<NBT::Double>("BorderCenterX"),
-		r.expect_tag<NBT::Double>("BorderCenterZ")
+		data["BorderCenterX"].as<double>(),
+      data["BorderCenterZ"].as<double>()
 	);
-	border.damage_per_block = r.expect_tag<NBT::Double>("BorderDamagePerBlock");
-	border.size_lerp_target = r.expect_tag<NBT::Double>("BorderSizeLerpTarget");
-	border.size_lerp_time = r.expect_tag<NBT::Long>("BorderSizeLerpTime");
-	border.warning_blocks = r.expect_tag<NBT::Double>("BorderWarningBlocks");
+	border.damage_per_block = data["BorderDamagePerBlock"].as<double>();
+	border.size_lerp_target = data["BorderSizeLerpTarget"].as<double>();
+	border.size_lerp_time = data["BorderSizeLerpTime"].as<int64_t>();
+	border.warning_blocks = data["BorderWarningBlocks"].as<double>();
 
 	// TODO: CustomBossEvents
 
-	day_time = r.expect_tag<NBT::Long>("DayTime");
-	difficulty = r.expect_tag<NBT::Byte>("Difficulty");
-
-	r.iter_compound("DimensionData", [](NBT::Reader& r, const NBT::TagID type, const std::string& name) {
-		// TODO: Read dimension data
-		r.skip_payload(type);
-	});
-
-	r.find_compound("GameRules");
-	rules = read_rules(r);
-	r.leave_compound();
-
-	mode = static_cast<Game::Mode>(r.expect_tag<NBT::Int>("GameType"));
-
-	features = r.expect_tag<NBT::Byte>("MapFeatures");
-
-	// TODO: Read player data
-
-	seed = r.expect_tag<NBT::Long>("RandomSeed");
-	server_brands = r.find_list<NBT::String>("ServerBrands");
-
-	size_on_disk = r.expect_tag<NBT::Long>("SizeOnDisk");
-	time = r.expect_tag<NBT::Long>("Time");
-
-	r.find_compound("Version");
-	version_id = r.expect_tag<NBT::Int>("Id");
-	version = r.expect_tag<NBT::String>("Name");
-	snapshot = r.expect_tag<NBT::Byte>("Snapshot");
-	r.leave_compound();
+	day_time = data["DayTime"].as<int64_t>();
+	difficulty = data["Difficulty"].as<int8_t>();
 }
 
 }

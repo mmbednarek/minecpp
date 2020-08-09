@@ -9,7 +9,7 @@ Reader::Reader(std::istream &s) : s(s) {}
 
 uint8_t Reader::read_byte() {
    uint8_t result;
-   s.read((char *)&result, sizeof(uint8_t));
+   s.read((char *) &result, sizeof(uint8_t));
    return result;
 }
 
@@ -40,7 +40,7 @@ std::string Reader::read_string() {
 float Reader::read_float() {
    static_assert(sizeof(uint32_t) == sizeof(float));
    uint32_t value;
-   s.read((char *)&value, sizeof(uint32_t));
+   s.read((char *) &value, sizeof(uint32_t));
    value = boost::endian::big_to_native(value);
    return *reinterpret_cast<float *>(&value);
 }
@@ -48,14 +48,14 @@ float Reader::read_float() {
 double Reader::read_double() {
    static_assert(sizeof(uint64_t) == sizeof(double));
    uint64_t value;
-   s.read((char *)&value, sizeof(uint64_t));
+   s.read((char *) &value, sizeof(uint64_t));
    value = boost::endian::big_to_native(value);
    return *reinterpret_cast<double *>(&value);
 }
 
-NBT::TagPtr Reader::read_nbt_tag() {
+NBT::CompoundContent Reader::read_nbt_tag() {
    NBT::Parser p(s);
-   return p.read_tag();
+   return p.read_tag().content.as<NBT::CompoundContent>();
 }
 
 Game::Recipe Reader::read_recipe() {
@@ -96,9 +96,9 @@ Game::Recipe Reader::read_recipe_shaped() {
 
    return Game::Recipe(crafted, group,
                        Game::Recipe::CraftingShaped{
-                           .width = width,
-                           .height = height,
-                           .ingredients = std::move(ingredients),
+                               .width = width,
+                               .height = height,
+                               .ingredients = std::move(ingredients),
                        });
 }
 
@@ -114,7 +114,7 @@ Game::Recipe Reader::read_recipe_shapeless() {
 
    return Game::Recipe(outcome, group,
                        Game::Recipe::CraftingShapeless{
-                           .ingredients = std::move(ingredients),
+                               .ingredients = std::move(ingredients),
                        });
 }
 
@@ -126,9 +126,9 @@ Game::Recipe Reader::read_recipe_heat_treatment(Game::RecipeType type) {
    auto cooking_time = read_varint();
    return Game::Recipe(outcome, group, type,
                        Game::Recipe::HeatTreatment{
-                           .ingredient = std::move(ingredient),
-                           .experience = experience,
-                           .cooking_time = cooking_time,
+                               .ingredient = std::move(ingredient),
+                               .experience = experience,
+                               .cooking_time = cooking_time,
                        });
 }
 
@@ -138,7 +138,7 @@ Game::Recipe Reader::read_recipe_stone_cutting() {
    auto outcome = read_stack();
    return Game::Recipe(outcome, group,
                        Game::Recipe::StoneCutting{
-                           .ingredient = std::move(ingredient),
+                               .ingredient = std::move(ingredient),
                        });
 }
 
@@ -155,23 +155,23 @@ Game::ItemStack Reader::read_stack() {
    auto not_empty = read_byte();
    if (!not_empty) {
       return Game::ItemStack{
-          .id = 0,
-          .amount = 0,
+              .id = 0,
+              .amount = 0,
       };
    }
    auto id = read_varint();
    auto amount = read_byte();
    auto additional_data = read_nbt_tag();
    return Game::ItemStack{
-       .id = id,
-       .amount = amount,
+           .id = id,
+           .amount = amount,
    };
 }
 
 std::string Reader::get_hex_data() {
    std::string result;
    unsigned char c;
-   while (s.read((char *)&c, 1)) {
+   while (s.read((char *) &c, 1)) {
       auto most = c / 16;
       auto least = c % 16;
 
@@ -191,4 +191,4 @@ std::string Reader::get_hex_data() {
    return result;
 }
 
-} // namespace MineNet::Message
+}// namespace MineNet::Message

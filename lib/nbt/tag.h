@@ -1,15 +1,16 @@
 #pragma once
-#include "exception.h"
+#include <algorithm>
+#include <any>
 #include <cstdint>
 #include <map>
 #include <memory>
-#include <stdexcept>
 #include <string>
+#include <variant>
 #include <vector>
 
 namespace NBT {
 
-enum TagID : uint8_t {
+enum class TagId : uint8_t {
    End,
    Byte,
    Short,
@@ -25,96 +26,140 @@ enum TagID : uint8_t {
    LongArray,
 };
 
-class ListPayload {
- public:
-   ListPayload();
-   ListPayload(TagID type, void *ptr);
-   TagID type();
+struct Content {
+   TagId tag_id;
+   std::any content;
 
-   template <typename T> std::vector<T> &value();
+   template<typename T>
+   [[nodiscard]] T as() const {
+      if (typeid(T) == content.type()) {
+         return std::any_cast<T>(content);
+      }
+      if constexpr (std::is_same<T, std::string>::value) {
+         return to_string();
+      }
+      return T{};
+   }
 
- private:
-   TagID _type;
-   void *ptr;
+   template<typename T>
+   [[nodiscard]] T as_or(T alt) const {
+      if (typeid(T) == content.type()) {
+         return std::any_cast<T>(content);
+      }
+      return alt;
+   }
+
+   template<typename T>
+   std::vector<T> as_vec();
+
+   std::string to_string(int padding = 0) const;
+   bool empty() const;
 };
 
-std::string tagid_to_str(TagID tagid);
+using CompoundContent = std::map<std::string, Content>;
 
-template <TagID t> inline auto tagid_default() = delete;
-template <typename T> constexpr TagID tagid_from_type() {
-   return TagID::List; // list is the only not specified type
-}
+struct ListContent {
+   TagId tag_id;
+   std::vector<std::any> elements;
+   class Iterator {
+      ListContent &list;
+      std::size_t at;
 
-#define tagid_type(tagid) decltype(tagid_default<tagid>())
+    public:
+      explicit Iterator(ListContent &list, std::size_t at = 0) : list(list), at(at) {}
 
-#define tagid_default_of(tagid, ...)                                           \
-   template <> inline auto tagid_default<tagid>() { return __VA_ARGS__; };     \
-   template <> constexpr TagID tagid_from_type<tagid_type(tagid)>() {          \
-      return tagid;                                                            \
+      Iterator &operator++() {
+         if (at >= list.elements.size()) {
+            return *this;
+         }
+         at++;
+         return *this;
+      }
+
+      Iterator operator++(int) {
+         auto value = *this;
+         ++(*this);
+         return value;
+      }
+
+      bool operator==(Iterator other) const {
+         return at == other.at;
+      }
+
+      bool operator!=(Iterator other) const {
+         return at != other.at;
+      }
+
+      Content operator*() const {
+         return Content{
+                 .tag_id = list.tag_id,
+                 .content = list.elements.at(at),
+         };
+      }
+
+      using difference_type = Content;
+      using value_type = Content;
+      using pointer = const Content *;
+      using reference = const Content &;
+      using iterator_category = std::forward_iterator_tag;
    };
 
-class Tag;
-class ListPayload;
-typedef std::shared_ptr<Tag> TagPtr;
-typedef std::map<std::string_view, std::shared_ptr<Tag>> TagMap;
+   Content operator[](const std::size_t index) {
+      return Content{
+              .tag_id = tag_id,
+              .content = elements[index],
+      };
+   }
 
-tagid_default_of(TagID::Byte, static_cast<uint8_t>(0)) tagid_default_of(
-    TagID::Short, static_cast<short>(0)) tagid_default_of(TagID::Int,
-                                                          static_cast<int>(0))
- tagid_default_of(TagID::Long, static_cast<long long>(0))
+   Iterator begin() {
+      return Iterator(*this, 0);
+   }
 
-tagid_default_of(TagID::Float, static_cast<float>(0.0f))
+   Iterator end() {
+      return Iterator(*this, elements.size());
+   }
 
-tagid_default_of(TagID::Double, static_cast<double>(0))
-
-tagid_default_of(TagID::ByteArray, std::vector<uint8_t>())
-
-tagid_default_of(TagID::String, std::string())
-
-tagid_default_of(TagID::List, ListPayload(End, nullptr))
-
-tagid_default_of(TagID::Compound, TagMap())
-
-tagid_default_of(TagID::IntArray, std::vector<int>())
-
-tagid_default_of(TagID::LongArray, std::vector<long long>())
-
-class Tag {
- public:
-   Tag(TagID t, std::string &s);
-
-   TagID type();
-   const std::string &name() const;
-
-   template <typename T> T &value();
-
- private:
-   TagID _type;
-   std::string _name;
+   template<typename T>
+   std::vector<T> as_vec() {
+      std::vector<T> result(elements.size());
+      std::transform(begin(), end(), result.begin(), [](const NBT::Content &el) {
+         return el.as<T>();
+      });
+      return result;
+   }
 };
 
-template <typename P> class PayloadTag : public Tag {
- public:
-   PayloadTag(std::string &name, P payload)
-       : Tag(tagid_from_type<P>(), name), _payload(std::move(payload)) {}
+struct NamedTag {
+   std::string name;
+   Content content;
 
-   P &payload() { return _payload; }
-
- private:
-   P _payload;
+   NamedTag(std::string name, TagId tag_id, std::any content);
 };
 
-template <typename T> T &Tag::value() {
-   if (tagid_from_type<T>() != _type)
-      throw Exception("incorrect type");
-
-   return static_cast<PayloadTag<T> *>(this)->payload();
+template<typename T>
+std::vector<T> Content::as_vec() {
+   switch (tag_id) {
+   case TagId::List:
+      return as<ListContent>().as_vec<T>();
+   case TagId::ByteArray:
+      if constexpr (std::is_same<T, uint8_t>::value) {
+         return as<std::vector<T>>();
+      }
+      break;
+   case TagId::IntArray:
+      if constexpr (std::is_same<T, int32_t>::value) {
+         return as<std::vector<T>>();
+      }
+      break;
+   case TagId::LongArray:
+      if constexpr (std::is_same<T, int64_t>::value) {
+         return as<std::vector<T>>();
+      }
+      break;
+   default:
+      break;
+   }
+   return std::vector<T>();
 }
 
-template <typename T> std::vector<T> &ListPayload::value() {
-   if (tagid_from_type<T>() != _type)
-      throw Exception("invalid list payload type");
-   return *reinterpret_cast<std::vector<T> *>(ptr);
-}
-
-} // namespace NBT
+}// namespace NBT

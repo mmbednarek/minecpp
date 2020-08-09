@@ -1,59 +1,36 @@
 #pragma once
 #include "tag.h"
-#include <istream>
-#include <memory>
+#include <functional>
 #include <mineutils/reader.h>
-#include <optional>
-#include <stdexcept>
-#include <vector>
 
 namespace NBT {
 
-class Parser : private Utils::Reader {
+class Parser {
+   Utils::Reader reader;
+
  public:
-   explicit Parser(std::istream &s);
-   ~Parser();
+   explicit Parser(std::istream &stream);
 
-   [[nodiscard]] TagPtr read_tag() const;
-
-   [[nodiscard]] TagMap read_compound() const;
+   NamedTag read_tag();
+   std::map<std::string, Content> read_compound();
 
  private:
-   ListPayload read_list_payload() const;
+   TagId read_tag_id();
+   std::any read_content(TagId id);
+   std::vector<std::any> read_content_n(TagId id, std::size_t amount);
+   std::function<std::any()> content_reader(TagId id);
 
-   template <TagID t> inline tagid_type(t) read_payload() const = delete;
-
-#define payload_of(typeid, value)                                              \
-   template <> inline tagid_type(typeid) read_payload<typeid>() const {        \
-      return value;                                                            \
-   }
-
-   payload_of(TagID::Byte, read_static<uint8_t>(0));
-   payload_of(TagID::Short, read_bswap<short>());
-   payload_of(TagID::Int, read_bswap<int>());
-   payload_of(TagID::Long, read_bswap<long long>());
-   payload_of(TagID::Float, read_float());
-   payload_of(TagID::Double, read_double());
-   payload_of(TagID::ByteArray, read_byte_list());
-   payload_of(TagID::String, read_string());
-   payload_of(TagID::List, read_list_payload());
-   payload_of(TagID::Compound, read_compound());
-   payload_of(TagID::IntArray, read_int_list<int>());
-   payload_of(TagID::LongArray, read_int_list<long long>());
-
-   template <TagID t>
-   PayloadTag<tagid_type(t)> *make_tag(std::string &name) const {
-      return new PayloadTag<tagid_type(t)>(name, read_payload<t>());
-   }
-
-   template <TagID t>
-   std::vector<tagid_type(t)> read_payload_array(int size) const {
-      std::vector<tagid_type(t)> result(size);
-      for (int i = 0; i < size; i++) {
-         result[i] = read_payload<t>();
-      }
-      return std::move(result);
-   }
+   int8_t read_content_byte();
+   int16_t read_content_short();
+   int32_t read_content_int();
+   int64_t read_content_long();
+   float read_content_float();
+   double read_content_double();
+   std::vector<uint8_t> read_content_byte_array();
+   std::string read_content_string();
+   ListContent read_content_list();
+   std::vector<int32_t> read_content_int_array();
+   std::vector<int64_t> read_content_long_array();
 };
 
-} // namespace NBT
+}// namespace NewNBT

@@ -32,7 +32,7 @@ void DimensionProperties::to_nbt(NBT::Writer &w) const {
 
 void write_dimensions(NBT::Writer &w) {
    w.begin_compound("");
-   w.begin_list("dimension", NBT::Compound, 4);
+   w.begin_list("dimension", NBT::TagId::Compound, 4);
    {
       OverworldProps.to_nbt(w);
       w.end_compound();
@@ -46,4 +46,4 @@ void write_dimensions(NBT::Writer &w) {
    w.end_compound();
 }
 
-} // namespace Game
+}// namespace Game

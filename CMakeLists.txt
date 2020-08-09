@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(minecpp)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -41,7 +41,11 @@ FetchContent_MakeAvailable(gtest)
 include_directories(./lib)
 include_directories(./services/protos/include)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -fconcepts")
+
 add_subdirectory(lib/chat)
+add_subdirectory(lib/error)
 add_subdirectory(lib/format)
 add_subdirectory(lib/mineutils)
 add_subdirectory(lib/nbt)

@@ -4,4 +4,4 @@ engine_hosts:
 front_port: 4500
 recipes: research/recipes.dat
 tags: research/tags.dat
-chunk_storage_test: 127.0.0.1:7600
+chunk_storage_host: 127.0.0.1:7600

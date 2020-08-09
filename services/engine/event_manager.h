@@ -5,11 +5,6 @@
 #include <queue>
 #include <string>
 
-template <typename T> concept Event = requires(T msg, std::string s) {
-   s = msg.GetTypeName();
-   s = msg.SerializeAsString();
-};
-
 namespace Engine {
 
 class EventManager {
@@ -19,7 +14,7 @@ class EventManager {
  public:
    EventManager() = default;
 
-   void post(Event auto &e) {
+   void post(auto &e) {
       minecpp::engine::Event event;
       event.set_recipient(minecpp::engine::EventRecipient::EVERYONE);
       event.set_kind(Game::Event(e.GetTypeName().substr(15).c_str()).index());

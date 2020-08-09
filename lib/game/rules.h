@@ -37,6 +37,4 @@ struct Rules {
 	bool spectator_generate_chunks;
 };
 
-Rules read_rules(NBT::Reader &r);
-
 }

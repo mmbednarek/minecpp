@@ -1,6 +1,7 @@
 #pragma once
 #include <any>
 #include <cstdint>
+#include <error/result.h>
 #include <fstream>
 #include <functional>
 #include <map>
@@ -12,9 +13,12 @@ namespace ChunkStorage {
 
 struct RegionFile {
    std::fstream file;
+   std::string path;
    std::mutex m;
 
-   explicit RegionFile(const std::string &filename);
+   explicit RegionFile(std::fstream stream, const std::string &path);
+   ~RegionFile();
+   static result<std::unique_ptr<RegionFile>> load(const std::string &path);
 };
 
 class Regions {
@@ -25,12 +29,11 @@ class Regions {
  public:
    explicit Regions(std::string_view path);
 
-   std::any read_region(int x, int z,
-                        const std::function<std::any(std::fstream &file)> &f);
+   result<std::vector<uint8_t>> read_chunk(int x, int z);
 
  private:
-   RegionFile &get_region(int x, int z);
-   RegionFile &load_region(int x, int z);
+   result<RegionFile &> get_region(int x, int z);
+   result<RegionFile &> load_region(int x, int z);
 };
 
-} // namespace ChunkStorage
+}// namespace ChunkStorage

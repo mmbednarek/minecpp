@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <error/result.h>
 #include <istream>
 #include <memory>
 #include <vector>
@@ -10,10 +11,10 @@ class Reader {
  public:
    explicit Reader(std::istream &s);
 
-   std::vector<uint8_t> load_chunk(int x, int z);
+   result<std::vector<uint8_t>> load_chunk(int x, int z);
 
  private:
    std::istream &stream;
 };
 
-} // namespace Region
+}// namespace Region

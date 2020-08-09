@@ -35,7 +35,7 @@ class Reader {
    [[nodiscard]] float read_float() const;
    [[nodiscard]] double read_double() const;
    [[nodiscard]] std::string read_string() const;
-   [[nodiscard]] std::vector<uint8_t> read_byte_list() const;
+   [[nodiscard]] std::vector<uint8_t> read_byte_vec() const;
 
    std::istream &get_stream();
 

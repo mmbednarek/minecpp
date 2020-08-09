@@ -30,7 +30,7 @@ class PlayerData {
    explicit PlayerData(NBT::Reader &r);
    explicit PlayerData(boost::uuids::uuid id);
 
-   void load(NBT::Reader &r, NBT::TagID tagid, const std::string &name);
+   void load(NBT::Reader &r, NBT::TagId tagid, const std::string &name);
 
    Entity::Entity to_entity();
    // NOTICE: ender chest and inventory is moved

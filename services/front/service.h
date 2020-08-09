@@ -45,7 +45,7 @@ class Service {
       bool accepted;
       std::string_view refusal_reason;
       std::string_view user_name;
-      uuid uuid;
+      uuid id;
    };
    LoginResponse login_player(std::string &user_name);
 

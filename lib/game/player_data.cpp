@@ -1,212 +1,211 @@
 #include "player_data.h"
 #include <game/items/registry.h>
-#include <nbt/parser.h>
 
 namespace Game {
 
-using NBT::TagID;
+using NBT::TagId;
 
 PlayerData::PlayerData(boost::uuids::uuid id) : id(id) {}
 
 PlayerData::PlayerData(NBT::Reader &r) : id() {
-   r.read_compound([this](NBT::Reader &r, NBT::TagID tagid,
+   r.read_compound([this](NBT::Reader &r, NBT::TagId tagid,
                           const std::string &name) { load(r, tagid, name); });
 }
 
-void PlayerData::load(NBT::Reader &r, NBT::TagID tagid,
+void PlayerData::load(NBT::Reader &r, NBT::TagId tagid,
                       const std::string &name) {
    switch (tagid) {
-   case TagID::Float:
-      if (name == "AbsorptionAmount") {
-         absorption_amount = r.read_payload<TagID::Float>();
-         return;
-      }
-      if (name == "FallDistance") {
-         fall_distance = r.read_payload<TagID::Float>();
-         return;
-      }
-      if (name == "Health") {
-         health = r.read_payload<TagID::Float>();
-         return;
-      }
-      if (name == "XpP") {
-         xp_points = r.read_payload<TagID::Float>();
-         return;
-      }
-      if (name == "foodExhaustionLevel") {
-         food_exhaustion_level = r.read_payload<TagID::Float>();
-         return;
-      }
-      if (name == "foodSaturationLevel") {
-         food_saturation_level = r.read_payload<TagID::Float>();
-         return;
-      }
-      break;
-   case TagID::Int:
-      if (name == "playerGameType") {
-         game_type = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "Dimension") {
-         dimension = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "HurtByTimestamp") {
-         hurt_by_timestamp = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "Score") {
-         score = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "SelectedItemSlot") {
-         slot = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "XpLevel") {
-         xp_level = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "XpSeed") {
-         xp_seed = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "XpTotal") {
-         xp_total = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "foodLevel") {
-         food_level = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "foodTickTimer") {
-         food_tick_timer = r.read_payload<TagID::Int>();
-         return;
-      }
-      if (name == "PortalCooldown") {
-         portal_cooldown = r.read_payload<TagID::Int>();
-         return;
-      }
-      break;
-   case TagID::Short:
-      if (name == "Air") {
-         air = r.read_payload<TagID::Short>();
-         return;
-      }
-      if (name == "DeathTime") {
-         death_time = r.read_payload<TagID::Short>();
-         return;
-      }
-      if (name == "Fire") {
-         fire = r.read_payload<TagID::Short>();
-         return;
-      }
-      if (name == "HurtTime") {
-         hurt_time = r.read_payload<TagID::Short>();
-         return;
-      }
-      if (name == "SleepTimer") {
-         sleep_timer = r.read_payload<TagID::Short>();
-         return;
-      }
-      if (name == "SleepTimer") {
-         sleep_timer = r.read_payload<TagID::Short>();
-         return;
-      }
-      break;
-   case TagID::Byte:
-      if (name == "FallFlying") {
-         fall_flying = r.read_payload<TagID::Byte>();
-         return;
-      }
-      if (name == "Invulnerable") {
-         invulnerable = r.read_payload<TagID::Byte>();
-         return;
-      }
-      if (name == "OnGround") {
-         on_ground = r.read_payload<TagID::Byte>();
-         return;
-      }
-      if (name == "seenCredits") {
-         seen_credits = r.read_payload<TagID::Byte>();
-         return;
-      }
-      break;
-   case TagID::List:
-      if (name == "Motion") {
-         motion = r.read_vec3();
-         return;
-      }
-      if (name == "Pos") {
-         motion = r.read_vec3();
-         return;
-      }
-      if (name == "Rotation") {
-         auto rot = r.read_list_payload<TagID::Float>();
-         if (rot.size() == 2) {
-            yaw = rot[0];
-            pitch = rot[1];
+      case TagId::Float:
+         if (name == "AbsorptionAmount") {
+            absorption_amount = r.read_float32();
+            return;
          }
-         return;
-      }
-      if (name == "EnderItems") {
-         r.read_list([this](NBT::Reader &r) {
-            ender_chest.emplace_back(InventoryItem(r));
-         });
-         return;
-      }
-      if (name == "Inventory") {
-         r.read_list([this](NBT::Reader &r) {
-            inventory.emplace_back(InventoryItem(r));
-         });
-         return;
-      }
-      if (name == "Attributes") {
-         r.read_list([this](NBT::Reader &r) {
-            double base = 0.0;
-            std::string name;
-            r.read_compound([&base, &name](NBT::Reader &r, NBT::TagID tagid,
-                                           const std::string &key) {
-               if (tagid == NBT::Double && key == "Base") {
-                  base = r.read_payload<NBT::Double>();
-                  return;
-               }
-               if (tagid == NBT::String && key == "Name") {
-                  name = r.read_payload<NBT::String>();
-                  return;
-               }
-               r.skip_payload(tagid);
+         if (name == "FallDistance") {
+            fall_distance = r.read_float32();
+            return;
+         }
+         if (name == "Health") {
+            health = r.read_float32();
+            return;
+         }
+         if (name == "XpP") {
+            xp_points = r.read_float32();
+            return;
+         }
+         if (name == "foodExhaustionLevel") {
+            food_exhaustion_level = r.read_float32();
+            return;
+         }
+         if (name == "foodSaturationLevel") {
+            food_saturation_level = r.read_float32();
+            return;
+         }
+         break;
+      case TagId::Int:
+         if (name == "playerGameType") {
+            game_type = r.read_int();
+            return;
+         }
+         if (name == "Dimension") {
+            dimension = r.read_int();
+            return;
+         }
+         if (name == "HurtByTimestamp") {
+            hurt_by_timestamp = r.read_int();
+            return;
+         }
+         if (name == "Score") {
+            score = r.read_int();
+            return;
+         }
+         if (name == "SelectedItemSlot") {
+            slot = r.read_int();
+            return;
+         }
+         if (name == "XpLevel") {
+            xp_level = r.read_int();
+            return;
+         }
+         if (name == "XpSeed") {
+            xp_seed = r.read_int();
+            return;
+         }
+         if (name == "XpTotal") {
+            xp_total = r.read_int();
+            return;
+         }
+         if (name == "foodLevel") {
+            food_level = r.read_int();
+            return;
+         }
+         if (name == "foodTickTimer") {
+            food_tick_timer = r.read_int();
+            return;
+         }
+         if (name == "PortalCooldown") {
+            portal_cooldown = r.read_int();
+            return;
+         }
+         break;
+      case TagId::Short:
+         if (name == "Air") {
+            air = r.read_short();
+            return;
+         }
+         if (name == "DeathTime") {
+            death_time = r.read_short();
+            return;
+         }
+         if (name == "Fire") {
+            fire = r.read_short();
+            return;
+         }
+         if (name == "HurtTime") {
+            hurt_time = r.read_short();
+            return;
+         }
+         if (name == "SleepTimer") {
+            sleep_timer = r.read_short();
+            return;
+         }
+         if (name == "SleepTimer") {
+            sleep_timer = r.read_short();
+            return;
+         }
+         break;
+      case TagId::Byte:
+         if (name == "FallFlying") {
+            fall_flying = r.read_byte();
+            return;
+         }
+         if (name == "Invulnerable") {
+            invulnerable = r.read_byte();
+            return;
+         }
+         if (name == "OnGround") {
+            on_ground = r.read_byte();
+            return;
+         }
+         if (name == "seenCredits") {
+            seen_credits = r.read_byte();
+            return;
+         }
+         break;
+      case TagId::List:
+         if (name == "Motion") {
+            motion = r.read_vec3();
+            return;
+         }
+         if (name == "Pos") {
+            motion = r.read_vec3();
+            return;
+         }
+         if (name == "Rotation") {
+            auto rot = r.read_float_list();
+            if (rot.size() == 2) {
+               yaw = rot[0];
+               pitch = rot[1];
+            }
+            return;
+         }
+         if (name == "EnderItems") {
+            r.read_list([this](NBT::Reader &r) {
+               ender_chest.emplace_back(InventoryItem(r));
             });
-            attributes[name] = base;
-         });
-         return;
-      }
-      break;
-   case TagID::Compound:
-      if (name == "abilities") {
-         abilities = Abilities(r);
-         return;
-      }
-      if (name == "recipeBook") {
-         recipe_book = RecipeBook(r);
-         return;
-      }
-      break;
-   case TagID::Long:
-      if (name == "UUIDLeast") {
-         uint64_t value = r.read_payload<NBT::Long>();
-         std::memcpy(id.data, (char *)&value, sizeof(uint64_t));
-         return;
-      }
-      if (name == "UUIDMost") {
-         uint64_t value = r.read_payload<NBT::Long>();
-         std::memcpy(id.data + sizeof(uint64_t), (char *)&value,
-                     sizeof(uint64_t));
-         return;
-      }
-      break;
-   default:
-      break;
+            return;
+         }
+         if (name == "Inventory") {
+            r.read_list([this](NBT::Reader &r) {
+               inventory.emplace_back(InventoryItem(r));
+            });
+            return;
+         }
+         if (name == "Attributes") {
+            r.read_list([this](NBT::Reader &r) {
+               double base = 0.0;
+               std::string name;
+               r.read_compound([&base, &name](NBT::Reader &r, NBT::TagId tagid,
+                                              const std::string &key) {
+                  if (tagid == NBT::TagId::Double && key == "Base") {
+                     base = r.read_float64();
+                     return;
+                  }
+                  if (tagid == NBT::TagId::String && key == "Name") {
+                     name = r.read_str();
+                     return;
+                  }
+                  r.skip_payload(tagid);
+               });
+               attributes[name] = base;
+            });
+            return;
+         }
+         break;
+      case TagId::Compound:
+         if (name == "abilities") {
+            abilities = Abilities(r);
+            return;
+         }
+         if (name == "recipeBook") {
+            recipe_book = RecipeBook(r);
+            return;
+         }
+         break;
+      case TagId::Long:
+         if (name == "UUIDLeast") {
+            uint64_t value = r.read_long();
+            std::memcpy(id.data, (char *) &value, sizeof(uint64_t));
+            return;
+         }
+         if (name == "UUIDMost") {
+            uint64_t value = r.read_long();
+            std::memcpy(id.data + sizeof(uint64_t), (char *) &value,
+                        sizeof(uint64_t));
+            return;
+         }
+         break;
+      default:
+         break;
    }
 
    r.skip_payload(tagid);
@@ -216,7 +215,7 @@ Entity::Entity PlayerData::to_entity() {
    Entity::Entity player_entity(id, Entity::player_type);
    for (const auto &at : attributes) {
       player_entity.attributes.set_attribute(
-          Entity::to_attribute_name(at.first), at.second);
+              Entity::to_attribute_name(at.first), at.second);
    }
    player_entity.dimension = static_cast<Dimension>(dimension);
    player_entity.health = health;
@@ -264,45 +263,45 @@ Player PlayerData::to_player(std::string &name) {
 
 PlayerData::Abilities::Abilities(NBT::Reader &r) {
    r.read_compound(
-       [this](NBT::Reader &r, TagID tagid, const std::string &name) {
-          switch (tagid) {
-          case TagID::Float:
-             if (name == "flySpeed") {
-                fly_speed = r.read_payload<TagID::Float>();
-                return;
-             }
-             if (name == "walkSpeed") {
-                walk_speed = r.read_payload<TagID::Float>();
-                return;
-             }
-             break;
-          case TagID::Byte:
-             if (name == "flying") {
-                flying = r.read_payload<TagID::Byte>();
-                return;
-             }
-             if (name == "instabuild") {
-                instant_build = r.read_payload<TagID::Byte>();
-                return;
-             }
-             if (name == "invulnerable") {
-                invulnerable = r.read_payload<TagID::Byte>();
-                return;
-             }
-             if (name == "may_build") {
-                may_build = r.read_payload<TagID::Byte>();
-                return;
-             }
-             if (name == "may_fly") {
-                may_fly = r.read_payload<TagID::Byte>();
-                return;
-             }
-             break;
-          default:
-             break;
-          }
-          r.skip_payload(tagid);
-       });
+           [this](NBT::Reader &r, TagId tagid, const std::string &name) {
+              switch (tagid) {
+                 case TagId::Float:
+                    if (name == "flySpeed") {
+                       fly_speed = r.read_float32();
+                       return;
+                    }
+                    if (name == "walkSpeed") {
+                       walk_speed = r.read_float32();
+                       return;
+                    }
+                    break;
+                 case TagId::Byte:
+                    if (name == "flying") {
+                       flying = r.read_byte();
+                       return;
+                    }
+                    if (name == "instabuild") {
+                       instant_build = r.read_byte();
+                       return;
+                    }
+                    if (name == "invulnerable") {
+                       invulnerable = r.read_byte();
+                       return;
+                    }
+                    if (name == "may_build") {
+                       may_build = r.read_byte();
+                       return;
+                    }
+                    if (name == "may_fly") {
+                       may_fly = r.read_byte();
+                       return;
+                    }
+                    break;
+                 default:
+                    break;
+              }
+              r.skip_payload(tagid);
+           });
 }
 
-} // namespace Game
+}// namespace Game

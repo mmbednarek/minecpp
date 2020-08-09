@@ -76,3 +76,13 @@ message TransferPlayer {
     bytes player = 1;
     bytes target_engine = 2;
 }
+
+message UpdatePlayerAbilities {
+    bytes uuid = 1;
+    bool invulnerable = 2;
+    bool is_flying = 3;
+    bool allow_flying = 4;
+    bool creative_mode = 5;
+    float walk_speed = 7;
+    float fly_speed = 8;
+}

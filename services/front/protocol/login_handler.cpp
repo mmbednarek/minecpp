@@ -40,11 +40,11 @@ void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
 
    MineNet::Message::Writer w;
    w.write_byte(2);
-   w.write_uuid(response.uuid);
+   w.write_uuid(response.id);
    w.write_string(response.user_name);
    conn->send(conn, w);
 
-   service.init_player(conn, response.uuid, response.user_name);
+   service.init_player(conn, response.id, response.user_name);
    conn->async_read_packet(conn, play_handler);
 }
 

@@ -27,7 +27,6 @@ void Dispatcher::transfer_player(boost::uuids::uuid player, boost::uuids::uuid t
 }
 
 void Dispatcher::entity_move(int eid, uuid id, Game::Entity::Movement movement, float yaw, float pitch) {
-   std::allocator<void>::
    minecpp::events::EntityMove event;
    event.set_id(eid);
    event.set_uuid(id.data, id.size());

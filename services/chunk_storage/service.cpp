@@ -15,7 +15,11 @@ Service::Service(std::string_view region_path) : chunks(Regions(region_path)) {}
 grpc::Status Service::LoadChunk(grpc::ServerContext *context, const minecpp::chunk_storage::LoadChunkRequest *request,
                                 minecpp::chunk::NetChunk *response) {
    try {
-      chunks.get_chunk(request->x(), request->z()).as_proto(response);
+      auto res = chunks.get_chunk(request->x(), request->z());
+      if (!res.ok()) {
+         return res.err()->grpc_status();
+      }
+      res.unwrap().as_proto(response);
       return grpc::Status();
    } catch (std::runtime_error &e) {
       spdlog::error("internal error: {}", e.what());
@@ -25,7 +29,10 @@ grpc::Status Service::LoadChunk(grpc::ServerContext *context, const minecpp::chu
 
 grpc::Status Service::SetBlock(grpc::ServerContext *context, const minecpp::chunk_storage::SetBlockRequest *request,
                                minecpp::chunk_storage::EmptyResponse *response) {
-   chunks.set_block(request->x(), request->y(), request->z(), request->state());
+   auto res = chunks.set_block(request->x(), request->y(), request->z(), request->state());
+   if (!res.ok()) {
+      return res.err()->grpc_status();
+   }
    return grpc::Status();
 }
 
@@ -34,7 +41,6 @@ Service::~Service() {}
 grpc::Status Service::AddReferences(grpc::ServerContext *context,
                                     const minecpp::chunk_storage::AddReferencesRequest *request,
                                     minecpp::chunk_storage::AddReferencesResponse *response) {
-
    std::vector<Game::Block::ChunkPos> coords(request->coords_size());
    std::size_t i = 0;
    for (const auto &coord : request->coords()) {
@@ -47,8 +53,11 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
    uuid player_id;
    Utils::decode_uuid(player_id, request->player_id().data());
 
-   auto target = chunks.add_refs(engine_id, player_id, coords);
-
+   auto res = chunks.add_refs(engine_id, player_id, coords);
+   if (!res.ok()) {
+      return res.err()->grpc_status();
+   }
+   auto target = res.unwrap();
    if (target.is_nil()) {
       response->set_status(minecpp::chunk_storage::ReferenceStatus::OK);
       return grpc::Status();
@@ -65,8 +74,12 @@ grpc::Status Service::RemoveReference(grpc::ServerContext *context,
 }
 grpc::Status Service::HeightAt(grpc::ServerContext *context, const minecpp::chunk_storage::HeightAtRequest *request,
                                minecpp::chunk_storage::HeightAtResponse *response) {
-   response->set_height(chunks.height_at(request->x(), request->z()));
+   auto height_res = chunks.height_at(request->x(), request->z());
+   if (!height_res.ok()) {
+      return height_res.err()->grpc_status();
+   }
+   response->set_height(height_res.unwrap(0));
    return grpc::Status();
 }
 
-} // namespace ChunkStorage
+}// namespace ChunkStorage

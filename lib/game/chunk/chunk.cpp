@@ -11,90 +11,102 @@ namespace Game {
 
 inline int expected_data_version = 2230;
 
-Chunk::Chunk(NBT::Reader &r) {
-   r.read_compound([this](NBT::Reader &r, NBT::TagID tagid, const std::string &name) { load(r, tagid, name); });
+Chunk::Chunk() = default;
+
+result<std::unique_ptr<Chunk>> Chunk::from_nbt(NBT::Reader &r) {
+   auto chunk = std::make_unique<Chunk>();
+   try {
+      tryget(r.try_read_compound([&chunk](NBT::Reader &r, NBT::TagId tagid, const std::string &name) -> result<empty> {
+         return chunk->load(r, tagid, name);
+      }));
+      return result<std::unique_ptr<Chunk>>(std::move(chunk));
+   } catch (std::exception &e) {
+      return errorf("exception while reading nbt tag: ", e.what());
+   }
 }
 
-void Chunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
+result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
    switch (tagid) {
-   case NBT::String:
+   case NBT::TagId::String:
       if (name == "Status") {
-         if (auto status = r.read_payload<NBT::String>(); status == "full") {
+         if (auto status = r.read_str(); status == "full") {
             full = true;
          }
-         return;
+         return result_ok;
       }
 
-      r.skip_payload(NBT::String);
-      return;
-   case NBT::Int:
+      r.skip_payload(NBT::TagId::String);
+      return result_ok;
+   case NBT::TagId::Int:
       if (name == "xPos") {
-         pos_x = r.read_payload<NBT::Int>();
-         return;
+         pos_x = r.read_int();
+         return result_ok;
       }
       if (name == "zPos") {
-         pos_z = r.read_payload<NBT::Int>();
-         return;
+         pos_z = r.read_int();
+         return result_ok;
       }
-      r.skip_payload(NBT::Int);
-      return;
-   case NBT::Compound:
+      r.skip_payload(NBT::TagId::Int);
+      return result_ok;
+   case NBT::TagId::Compound:
       if (name == "Heightmaps") {
-         r.read_compound([this](NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
-            if (tagid != NBT::LongArray)
-               throw std::runtime_error("height map expected to be a long array");
+         tryget(r.try_read_compound([this](NBT::Reader &r, NBT::TagId tagid, const std::string &name) -> result<empty> {
+            if (tagid != NBT::TagId::LongArray) {
+               return error(error_class::Internal, "height map expected to be a long array");
+            }
 
             if (name == "MOTION_BLOCKING") {
                hm_motion_blocking = r.read_long_array<37>();
-               return;
+               return result_ok;
             }
             if (name == "WORLD_SURFACE") {
                hm_world_surface = r.read_long_array<37>();
-               return;
+               return result_ok;
             }
 
             r.skip_payload(tagid);
-         });
-         return;
+            return result_ok;
+         }));
+         return result_ok;
       }
       r.skip_payload(tagid);
-      return;
-   case NBT::IntArray:
+      return result_ok;
+   case NBT::TagId::IntArray:
       if (name == "Biomes") {
          biomes = r.read_int_array<1024>();
-         return;
+         return result_ok;
       }
-      r.skip_payload(NBT::IntArray);
-      return;
-   case NBT::List:
+      r.skip_payload(NBT::TagId::IntArray);
+      return result_ok;
+   case NBT::TagId::List:
       if (name == "Sections") {
          r.read_list([this](NBT::Reader &r) {
             int8_t y = 0;
-            std::vector<long long> data;
+            std::vector<int64_t> data;
             std::vector<uint8_t> block_light;
             std::vector<uint8_t> sky_light;
             std::vector<int> palette;
-            r.read_compound([&y, &data, &palette, &block_light, &sky_light](NBT::Reader &r, NBT::TagID tag_id,
+            r.read_compound([&y, &data, &palette, &block_light, &sky_light](NBT::Reader &r, NBT::TagId tag_id,
                                                                             const std::string &name) {
-               if (tag_id == NBT::Byte && name == "Y") {
-                  y = r.read_payload<NBT::Byte>();
+               if (tag_id == NBT::TagId::Byte && name == "Y") {
+                  y = r.read_byte();
                   return;
                }
-               if (tag_id == NBT::ByteArray) {
+               if (tag_id == NBT::TagId::ByteArray) {
                   if (name == "BlockLight") {
-                     block_light = r.read_payload<NBT::ByteArray>();
+                     block_light = r.read_byte_vector();
                      return;
                   }
                   if (name == "SkyLight") {
-                     sky_light = r.read_payload<NBT::ByteArray>();
+                     sky_light = r.read_byte_vector();
                      return;
                   }
                }
-               if (tag_id == NBT::LongArray && name == "BlockStates") {
-                  data = r.read_payload<NBT::LongArray>();
+               if (tag_id == NBT::TagId::LongArray && name == "BlockStates") {
+                  data = r.read_long_vec();
                   return;
                }
-               if (tag_id == NBT::List && name == "Palette") {
+               if (tag_id == NBT::TagId::List && name == "Palette") {
                   r.read_list([&palette](NBT::Reader &r) { palette.emplace_back(PaletteItem(r).to_state_id()); });
                   return;
                }
@@ -105,26 +117,26 @@ void Chunk::load(NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
             int ref_count = Game::calculate_ref_count(data, palette);
 
             sections[y] = Section{
-                .bits = bits,
-                .ref_count = ref_count,
-                .palette = std::move(palette),
-                .data = std::move(data),
-                .block_light = std::move(block_light),
-                .sky_light = std::move(sky_light),
+                    .bits = bits,
+                    .ref_count = ref_count,
+                    .palette = std::move(palette),
+                    .data = std::move(data),
+                    .block_light = std::move(block_light),
+                    .sky_light = std::move(sky_light),
             };
          });
-         return;
+         return result_ok;
       }
-      r.skip_payload(NBT::List);
-      return;
-   case NBT::Long:
-      r.skip_payload(NBT::Long);
-      return;
-   case NBT::Byte:
-      r.skip_payload(NBT::Byte);
-      return;
+      r.skip_payload(NBT::TagId::List);
+      return result_ok;
+   case NBT::TagId::Long:
+      r.skip_payload(NBT::TagId::Long);
+      return result_ok;
+   case NBT::TagId::Byte:
+      r.skip_payload(NBT::TagId::Byte);
+      return result_ok;
    default:
-      throw std::runtime_error("invalid tag");
+      return error(error_class::Internal, "invalid nbt tag");
    }
 }
 
@@ -155,8 +167,8 @@ constexpr uint32_t coord_to_offset(int x, int y, int z) { return (y & 15) * 16 *
 
 void Chunk::create_empty_section(int8_t sec) {
    Game::Section section;
-   section.bits = 4; // start with 4 bits
-   section.data = std::vector<long long>(4096 * 4 / 64);
+   section.bits = 4;// start with 4 bits
+   section.data = std::vector<int64_t>(4096 * 4 / 64);
    section.ref_count = 4096;
    section.palette.emplace_back(0);
    sections[sec] = std::move(section);
@@ -259,7 +271,7 @@ bool Chunk::add_ref(uuid engine_id, uuid player_id) {
 }
 
 void Chunk::free_ref(uuid player_id) {
-   assert(refs.contains(player_id));
+   assert(refs.find(player_id) != refs.end());
    refs.erase(player_id);
    if (refs.empty()) {
       engine_lock = {};
@@ -271,20 +283,20 @@ uuid Chunk::get_lock() const { return engine_lock; }
 int Chunk::height_at(int x, int z) { return Utils::get_packed(hm_world_surface, 9, 16 * (z & 15) + (x & 15)); }
 
 PaletteItem::PaletteItem(NBT::Reader &r) {
-   r.read_compound([this](NBT::Reader &r, NBT::TagID type, std::string key) {
-      if (key == "Name" && type == NBT::String) {
-         tag_name = r.read_payload<NBT::String>();
+   r.read_compound([this](NBT::Reader &r, NBT::TagId type, std::string key) {
+      if (key == "Name" && type == NBT::TagId::String) {
+         tag_name = r.read_str();
          return;
       }
-      if (key == "Properties" && type == NBT::Compound) {
+      if (key == "Properties" && type == NBT::TagId::Compound) {
          NBT::Parser p(r.raw_stream());
          properties = p.read_compound();
          return;
       }
-      r.skip_payload(type); // ignore properties for now
+      r.skip_payload(type);// ignore properties for now
    });
 }
 
 uint32_t PaletteItem::to_state_id() { return Block::encode_state(tag_name, properties); }
 
-} // namespace Game
+}// namespace Game

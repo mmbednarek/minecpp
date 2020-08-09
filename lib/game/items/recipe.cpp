@@ -13,24 +13,10 @@ Recipe::Recipe(ItemStack item, std::string group,
     : _outcome_item(item), _type(RecipeType::CraftingShaped),
       _details(std::move(details)), _group(std::move(group)) {}
 
-template <> Recipe::CraftingShaped Recipe::details() const {
-   if (_type != RecipeType::CraftingShaped)
-      throw std::runtime_error("invalid recipe type");
-
-   return std::get<Recipe::CraftingShaped>(_details);
-}
-
 Recipe::Recipe(ItemStack item, std::string group,
                Recipe::CraftingShapeless details)
     : _outcome_item(item), _type(RecipeType::CraftingShapeless),
       _details(std::move(details)), _group(std::move(group)) {}
-
-template <> Recipe::CraftingShapeless Recipe::details() const {
-   if (_type != RecipeType::CraftingShapeless)
-      throw std::runtime_error("invalid recipe type");
-
-   return std::get<Recipe::CraftingShapeless>(_details);
-}
 
 Recipe::Recipe(ItemStack item, RecipeType method)
     : _outcome_item(item), _type(method), _details(Recipe::Special{}),
@@ -49,13 +35,6 @@ Recipe::Recipe(ItemStack item, std::string group, RecipeType method,
    default:
       throw std::runtime_error("invalid method for heat treatment");
    }
-}
-
-template <> Recipe::HeatTreatment Recipe::details() const {
-   if (_type != RecipeType::Smelting)
-      throw std::runtime_error("invalid recipe type");
-
-   return std::get<Recipe::HeatTreatment>(_details);
 }
 
 Recipe::Recipe(ItemStack item, std::string group, Recipe::StoneCutting details)

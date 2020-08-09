@@ -48,7 +48,7 @@ Service::LoginResponse Service::login_player(std::string &user_name) {
    // TODO: Encryption authentication etc.
    boost::uuids::name_generator gen(player_uuid_namespace);
 
-   return Service::LoginResponse{.accepted = true, .user_name = user_name, .uuid = gen(user_name)};
+   return Service::LoginResponse{.accepted = true, .user_name = user_name, .id = gen(user_name)};
 }
 
 MineNet::Message::Raw get_command_list();

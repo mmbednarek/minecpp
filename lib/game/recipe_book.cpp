@@ -2,26 +2,26 @@
 
 namespace Game {
 
-using NBT::TagID;
+using NBT::TagId;
 
 RecipeBook::RecipeBook(NBT::Reader &r) {
    r.read_compound(
-       [this](NBT::Reader &r, NBT::TagID tagid, const std::string &name) {
-          if (tagid == TagID::Byte) {
+       [this](NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+          if (tagid == TagId::Byte) {
              if (name == "isFilteringCraftable") {
-                filtering_craftable = r.read_payload<NBT::Byte>();
+                filtering_craftable = r.read_byte();
                 return;
              }
              if (name == "isFurnaceFilteringCraftable") {
-                furnace_filtering_craftable = r.read_payload<NBT::Byte>();
+                furnace_filtering_craftable = r.read_byte();
                 return;
              }
              if (name == "isFurnaceGuiOpen") {
-                furnace_gui_open = r.read_payload<NBT::Byte>();
+                furnace_gui_open = r.read_byte();
                 return;
              }
              if (name == "isGuiOpen") {
-                gui_open = r.read_payload<NBT::Byte>();
+                gui_open = r.read_byte();
                 return;
              }
           }

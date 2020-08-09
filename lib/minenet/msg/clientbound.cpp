@@ -32,7 +32,7 @@ Writer serialize(SpawnExperienceOrb msg) {
    return w;
 }
 
-Writer Message::serialize(SpawnPlayer msg) {
+Writer serialize(SpawnPlayer msg) {
    Writer w;
    w.write_byte(0x04);
    w.write_varint(msg.entity_id);
@@ -45,7 +45,7 @@ Writer Message::serialize(SpawnPlayer msg) {
    return w;
 }
 
-Writer Message::serialize(AnimateHand msg) {
+Writer serialize(AnimateHand msg) {
    Writer w;
    w.write_byte(0x05);
    w.write_varint(msg.entity_id);
@@ -53,7 +53,7 @@ Writer Message::serialize(AnimateHand msg) {
    return w;
 }
 
-Writer Message::serialize(MultiBlockChange msg) {
+Writer serialize(MultiBlockChange msg) {
    Writer w;
    w.write_byte(0x0f);
    w.write_big_endian(msg.chunk_x);
@@ -92,7 +92,7 @@ Writer serialize(EntityStatus msg) {
    return w;
 }
 
-Writer Message::serialize(KeepAlive msg) {
+Writer serialize(KeepAlive msg) {
    Writer w;
    w.write_byte(0x20);
    w.write_big_endian(msg.time);
@@ -152,7 +152,7 @@ Writer serialize(JoinGame msg) {
    return w;
 }
 
-Writer Message::serialize(EntityRelativeMove msg) {
+Writer serialize(EntityRelativeMove msg) {
    Writer w;
    w.write_byte(0x28);
    w.write_varint(msg.entity_id);
@@ -163,7 +163,7 @@ Writer Message::serialize(EntityRelativeMove msg) {
    return w;
 }
 
-Writer Message::serialize(EntityMove msg) {
+Writer serialize(EntityMove msg) {
    Writer w;
    w.write_byte(0x29);
    w.write_varint(msg.entity_id);
@@ -176,7 +176,7 @@ Writer Message::serialize(EntityMove msg) {
    return w;
 }
 
-Writer Message::serialize(EntityLook msg) {
+Writer serialize(EntityLook msg) {
    Writer w;
    w.write_byte(0x2a);
    w.write_varint(msg.entity_id);
@@ -208,7 +208,7 @@ Writer serialize(AddPlayer msg) {
    return w;
 }
 
-Writer Message::serialize(RemovePlayer msg) {
+Writer serialize(RemovePlayer msg) {
    Writer w;
    w.write_byte(0x33);
    w.write_byte(0x04);
@@ -243,7 +243,7 @@ Writer serialize(RecipeBook msg) {
    return w;
 }
 
-Writer Message::serialize(DestroyEntity msg) {
+Writer serialize(DestroyEntity msg) {
    Writer w;
    w.write_byte(0x37);
    w.write_varint(1);
@@ -251,7 +251,7 @@ Writer Message::serialize(DestroyEntity msg) {
    return w;
 }
 
-Writer Message::serialize(EntityHeadLook msg) {
+Writer serialize(EntityHeadLook msg) {
    Writer w;
    w.write_byte(0x3b);
    w.write_varint(msg.entity_id);

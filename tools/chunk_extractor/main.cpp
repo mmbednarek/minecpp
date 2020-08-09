@@ -1,12 +1,8 @@
 #include <fstream>
-#include <game/blocks/registry.h>
 #include <game/chunk/chunk.h>
 #include <iostream>
 #include <minenet/msg/chunk.h>
 #include <mineutils/compression.h>
-#include <nbt/parser.h>
-#include <nbt/snbt.h>
-#include <nbt/writer.h>
 #include <region/reader.h>
 
 auto main(int argc, char *argv[]) -> int {
@@ -30,13 +26,7 @@ auto main(int argc, char *argv[]) -> int {
 
    std::istringstream ss(std::string((char *)data.data(), data.size()));
    Utils::ZlibInputStream zlib_stream(ss);
-   /* NBT::Parser parser(zlib_stream);
-   try {
-      auto tag = parser.read_tag();
-      NBT::encode_snbt(std::cout, tag);
-   } catch (NBT::Exception &e) {
-      std::cerr << "NBT error: " << e.what();
-   } */
+
    NBT::Reader cr(zlib_stream);
    cr.check_signature();
    cr.find_compound("Level");

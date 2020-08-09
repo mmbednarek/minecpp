@@ -2,7 +2,7 @@
 
 namespace MineNet::Message {
 
-void Message::deserialize(Reader &r, ChatMessage &msg) {
+void deserialize(Reader &r, ChatMessage &msg) {
    msg.message = r.read_string();
 }
 
@@ -15,7 +15,7 @@ void deserialize(Reader &r, ClientSettings &msg) {
    msg.hand_side = static_cast<Game::HandSide>(r.read_byte());
 }
 
-void Message::deserialize(Reader &r, KeepAliveClient &msg) {
+void deserialize(Reader &r, KeepAliveClient &msg) {
    msg.time = r.read_big_endian<uint64_t>();
 }
 
@@ -33,18 +33,18 @@ void deserialize(Reader &r, PlayerPositionRotation &msg) {
    msg.pitch = r.read_float();
 }
 
-void Message::deserialize(Reader &r, PlayerRotation &msg) {
+void deserialize(Reader &r, PlayerRotation &msg) {
    msg.yaw = r.read_float();
    msg.pitch = r.read_float();
 }
 
-void Message::deserialize(Reader &r, PlayerDigging &msg) {
+void deserialize(Reader &r, PlayerDigging &msg) {
    msg.action = static_cast<DiggingAction>(r.read_varint());
    msg.position = r.read_big_endian<uint64_t>();
    msg.facing = Game::Direction(r.read_byte());
 }
 
-void Message::deserialize(Reader &r, AnimateHandClient &msg) {
+void deserialize(Reader &r, AnimateHandClient &msg) {
    msg.hand = static_cast<PlayerHand>(r.read_varint());
 }
 

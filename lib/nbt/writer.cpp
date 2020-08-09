@@ -5,25 +5,25 @@ namespace NBT {
 Writer::Writer(std::ostream &s) : stream(s) {}
 
 void Writer::write_string(std::string_view name, std::string_view str) {
-   put_byte(NBT::String);
+   put_byte(static_cast<uint8_t>(TagId::String));
    put_string(name);
    put_string(str);
 }
 
 void Writer::write_byte(std::string_view name, uint8_t byte) {
-   put_byte(NBT::Byte);
+   put_byte(static_cast<uint8_t>(TagId::Byte));
    put_string(name);
    put_byte(byte);
 }
 
 void Writer::write_int(std::string_view name, int value) {
-   put_byte(NBT::Int);
+   put_byte(static_cast<uint8_t>(TagId::Int));
    put_string(name);
    put_big_endian(value);
 }
 
 void Writer::write_long(std::string_view name, long long value) {
-   put_byte(NBT::Long);
+   put_byte(static_cast<uint8_t>(TagId::Long));
    put_string(name);
    put_big_endian(value);
 }
@@ -36,7 +36,7 @@ void Writer::put_string(std::string_view s) {
 }
 
 void Writer::begin_compound(std::string_view name) {
-   put_byte(NBT::Compound);
+   put_byte(static_cast<uint8_t>(TagId::Compound));
    put_string(name);
 }
 
@@ -44,7 +44,7 @@ void Writer::end_compound() { put_byte(0x00); }
 
 void Writer::write_long_array(std::string_view name, const long *array,
                               size_t size) {
-   put_byte(NBT::LongArray);
+   put_byte(static_cast<uint8_t>(TagId::LongArray));
    put_string(name);
    put_big_endian<int32_t>(size);
    for (size_t i = 0; i < size; ++i) {
@@ -55,17 +55,17 @@ void Writer::write_long_array(std::string_view name, const long *array,
 void Writer::write_float(std::string_view name, float value) {
    static_assert(sizeof(float) == sizeof(uint32_t));
 
-   put_byte(NBT::Float);
+   put_byte(static_cast<uint8_t>(TagId::Float));
    put_string(name);
    uint32_t v = *reinterpret_cast<uint32_t *>(&value);
    put_big_endian(v);
 }
 
-void Writer::begin_list(std::string_view name, NBT::TagID tag,
+void Writer::begin_list(std::string_view name, NBT::TagId tag,
                         int num_elements) {
-   put_byte(NBT::List);
+   put_byte(static_cast<uint8_t>(TagId::List));
    put_string(name);
-   put_byte(tag);
+   put_byte(static_cast<uint8_t>(tag));
    put_big_endian(num_elements);
 }
 

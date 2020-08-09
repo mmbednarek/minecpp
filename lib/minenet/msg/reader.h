@@ -16,7 +16,7 @@ class Reader {
    std::string read_string();
    float read_float();
    double read_double();
-   NBT::TagPtr read_nbt_tag();
+   NBT::CompoundContent read_nbt_tag();
 
    Game::Recipe read_recipe();
    Game::Recipe read_recipe_shaped();

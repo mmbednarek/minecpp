@@ -20,17 +20,18 @@ class Writer {
    void write_string(std::string_view name, std::string_view str);
    void write_float(std::string_view name, float value);
    void write_long(std::string_view name, long long value);
-   void begin_list(std::string_view name, NBT::TagID tag, int num_elements);
+   void begin_list(std::string_view name, NBT::TagId tag, int num_elements);
 
  private:
    void put_byte(uint8_t b);
    void put_string(std::string_view s);
-   template <typename I> void put_big_endian(I v) {
+   template<typename I>
+   void put_big_endian(I v) {
       v = boost::endian::native_to_big(v);
-      stream.write((char *)&v, sizeof(I));
+      stream.write((char *) &v, sizeof(I));
    }
 
    std::ostream &stream;
 };
 
-} // namespace NBT
+}// namespace NBT

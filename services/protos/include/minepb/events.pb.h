@@ -47,7 +47,7 @@ struct TableStruct_events_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[12]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -92,6 +92,9 @@ extern TransferPlayerDefaultTypeInternal _TransferPlayer_default_instance_;
 class UpdateBlock;
 class UpdateBlockDefaultTypeInternal;
 extern UpdateBlockDefaultTypeInternal _UpdateBlock_default_instance_;
+class UpdatePlayerAbilities;
+class UpdatePlayerAbilitiesDefaultTypeInternal;
+extern UpdatePlayerAbilitiesDefaultTypeInternal _UpdatePlayerAbilities_default_instance_;
 }  // namespace events
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
@@ -107,6 +110,7 @@ template<> ::minecpp::events::RemovePlayer* Arena::CreateMaybeMessage<::minecpp:
 template<> ::minecpp::events::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::events::SpawnPlayer>(Arena*);
 template<> ::minecpp::events::TransferPlayer* Arena::CreateMaybeMessage<::minecpp::events::TransferPlayer>(Arena*);
 template<> ::minecpp::events::UpdateBlock* Arena::CreateMaybeMessage<::minecpp::events::UpdateBlock>(Arena*);
+template<> ::minecpp::events::UpdatePlayerAbilities* Arena::CreateMaybeMessage<::minecpp::events::UpdatePlayerAbilities>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace events {
@@ -1894,6 +1898,180 @@ class TransferPlayer :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_events_2eproto;
 };
+// -------------------------------------------------------------------
+
+class UpdatePlayerAbilities :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.events.UpdatePlayerAbilities) */ {
+ public:
+  UpdatePlayerAbilities();
+  virtual ~UpdatePlayerAbilities();
+
+  UpdatePlayerAbilities(const UpdatePlayerAbilities& from);
+  UpdatePlayerAbilities(UpdatePlayerAbilities&& from) noexcept
+    : UpdatePlayerAbilities() {
+    *this = ::std::move(from);
+  }
+
+  inline UpdatePlayerAbilities& operator=(const UpdatePlayerAbilities& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdatePlayerAbilities& operator=(UpdatePlayerAbilities&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const UpdatePlayerAbilities& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UpdatePlayerAbilities* internal_default_instance() {
+    return reinterpret_cast<const UpdatePlayerAbilities*>(
+               &_UpdatePlayerAbilities_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  void Swap(UpdatePlayerAbilities* other);
+  friend void swap(UpdatePlayerAbilities& a, UpdatePlayerAbilities& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UpdatePlayerAbilities* New() const final {
+    return CreateMaybeMessage<UpdatePlayerAbilities>(nullptr);
+  }
+
+  UpdatePlayerAbilities* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<UpdatePlayerAbilities>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const UpdatePlayerAbilities& from);
+  void MergeFrom(const UpdatePlayerAbilities& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  #if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  #else
+  bool MergePartialFromCodedStream(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) final;
+  #endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
+  void SerializeWithCachedSizes(
+      ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* InternalSerializeWithCachedSizesToArray(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdatePlayerAbilities* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.events.UpdatePlayerAbilities";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_events_2eproto);
+    return ::descriptor_table_events_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // bytes uuid = 1;
+  void clear_uuid();
+  static const int kUuidFieldNumber = 1;
+  const std::string& uuid() const;
+  void set_uuid(const std::string& value);
+  void set_uuid(std::string&& value);
+  void set_uuid(const char* value);
+  void set_uuid(const void* value, size_t size);
+  std::string* mutable_uuid();
+  std::string* release_uuid();
+  void set_allocated_uuid(std::string* uuid);
+
+  // bool invulnerable = 2;
+  void clear_invulnerable();
+  static const int kInvulnerableFieldNumber = 2;
+  bool invulnerable() const;
+  void set_invulnerable(bool value);
+
+  // bool is_flying = 3;
+  void clear_is_flying();
+  static const int kIsFlyingFieldNumber = 3;
+  bool is_flying() const;
+  void set_is_flying(bool value);
+
+  // bool allow_flying = 4;
+  void clear_allow_flying();
+  static const int kAllowFlyingFieldNumber = 4;
+  bool allow_flying() const;
+  void set_allow_flying(bool value);
+
+  // bool creative_mode = 5;
+  void clear_creative_mode();
+  static const int kCreativeModeFieldNumber = 5;
+  bool creative_mode() const;
+  void set_creative_mode(bool value);
+
+  // float walk_speed = 7;
+  void clear_walk_speed();
+  static const int kWalkSpeedFieldNumber = 7;
+  float walk_speed() const;
+  void set_walk_speed(float value);
+
+  // float fly_speed = 8;
+  void clear_fly_speed();
+  static const int kFlySpeedFieldNumber = 8;
+  float fly_speed() const;
+  void set_fly_speed(float value);
+
+  // @@protoc_insertion_point(class_scope:minecpp.events.UpdatePlayerAbilities)
+ private:
+  class HasBitSetters;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  bool invulnerable_;
+  bool is_flying_;
+  bool allow_flying_;
+  bool creative_mode_;
+  float walk_speed_;
+  float fly_speed_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_events_2eproto;
+};
 // ===================================================================
 
 
@@ -2969,9 +3147,150 @@ inline void TransferPlayer::set_allocated_target_engine(std::string* target_engi
   // @@protoc_insertion_point(field_set_allocated:minecpp.events.TransferPlayer.target_engine)
 }
 
+// -------------------------------------------------------------------
+
+// UpdatePlayerAbilities
+
+// bytes uuid = 1;
+inline void UpdatePlayerAbilities::clear_uuid() {
+  uuid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline const std::string& UpdatePlayerAbilities::uuid() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.uuid)
+  return uuid_.GetNoArena();
+}
+inline void UpdatePlayerAbilities::set_uuid(const std::string& value) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.uuid)
+}
+inline void UpdatePlayerAbilities::set_uuid(std::string&& value) {
+  
+  uuid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.events.UpdatePlayerAbilities.uuid)
+}
+inline void UpdatePlayerAbilities::set_uuid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:minecpp.events.UpdatePlayerAbilities.uuid)
+}
+inline void UpdatePlayerAbilities::set_uuid(const void* value, size_t size) {
+  
+  uuid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:minecpp.events.UpdatePlayerAbilities.uuid)
+}
+inline std::string* UpdatePlayerAbilities::mutable_uuid() {
+  
+  // @@protoc_insertion_point(field_mutable:minecpp.events.UpdatePlayerAbilities.uuid)
+  return uuid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* UpdatePlayerAbilities::release_uuid() {
+  // @@protoc_insertion_point(field_release:minecpp.events.UpdatePlayerAbilities.uuid)
+  
+  return uuid_.ReleaseNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void UpdatePlayerAbilities::set_allocated_uuid(std::string* uuid) {
+  if (uuid != nullptr) {
+    
+  } else {
+    
+  }
+  uuid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uuid);
+  // @@protoc_insertion_point(field_set_allocated:minecpp.events.UpdatePlayerAbilities.uuid)
+}
+
+// bool invulnerable = 2;
+inline void UpdatePlayerAbilities::clear_invulnerable() {
+  invulnerable_ = false;
+}
+inline bool UpdatePlayerAbilities::invulnerable() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.invulnerable)
+  return invulnerable_;
+}
+inline void UpdatePlayerAbilities::set_invulnerable(bool value) {
+  
+  invulnerable_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.invulnerable)
+}
+
+// bool is_flying = 3;
+inline void UpdatePlayerAbilities::clear_is_flying() {
+  is_flying_ = false;
+}
+inline bool UpdatePlayerAbilities::is_flying() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.is_flying)
+  return is_flying_;
+}
+inline void UpdatePlayerAbilities::set_is_flying(bool value) {
+  
+  is_flying_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.is_flying)
+}
+
+// bool allow_flying = 4;
+inline void UpdatePlayerAbilities::clear_allow_flying() {
+  allow_flying_ = false;
+}
+inline bool UpdatePlayerAbilities::allow_flying() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.allow_flying)
+  return allow_flying_;
+}
+inline void UpdatePlayerAbilities::set_allow_flying(bool value) {
+  
+  allow_flying_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.allow_flying)
+}
+
+// bool creative_mode = 5;
+inline void UpdatePlayerAbilities::clear_creative_mode() {
+  creative_mode_ = false;
+}
+inline bool UpdatePlayerAbilities::creative_mode() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.creative_mode)
+  return creative_mode_;
+}
+inline void UpdatePlayerAbilities::set_creative_mode(bool value) {
+  
+  creative_mode_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.creative_mode)
+}
+
+// float walk_speed = 7;
+inline void UpdatePlayerAbilities::clear_walk_speed() {
+  walk_speed_ = 0;
+}
+inline float UpdatePlayerAbilities::walk_speed() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.walk_speed)
+  return walk_speed_;
+}
+inline void UpdatePlayerAbilities::set_walk_speed(float value) {
+  
+  walk_speed_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.walk_speed)
+}
+
+// float fly_speed = 8;
+inline void UpdatePlayerAbilities::clear_fly_speed() {
+  fly_speed_ = 0;
+}
+inline float UpdatePlayerAbilities::fly_speed() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UpdatePlayerAbilities.fly_speed)
+  return fly_speed_;
+}
+inline void UpdatePlayerAbilities::set_fly_speed(float value) {
+  
+  fly_speed_ = value;
+  // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.fly_speed)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

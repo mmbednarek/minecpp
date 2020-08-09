@@ -1,8 +1,10 @@
 #pragma once
+#include <boost/uuid/uuid.hpp>
+#include <error/result.h>
 #include <minepb/chunk.pb.h>
 #include <nbt/reader.h>
+#include <nbt/tag.h>
 #include <string_view>
-#include <boost/uuid/uuid.hpp>
 
 namespace Game {
 
@@ -10,7 +12,7 @@ struct Section {
    uint8_t bits;
    int ref_count;
    std::vector<int> palette;
-   std::vector<long long> data;
+   std::vector<int64_t> data;
    std::vector<uint8_t> block_light;
    std::vector<uint8_t> sky_light;
 };
@@ -27,9 +29,9 @@ struct Chunk {
    std::set<uuid> refs;
    uuid engine_lock{};
 
-   explicit Chunk(NBT::Reader &r);
+   Chunk();
 
-   void load(NBT::Reader &r, NBT::TagID tagid, const std::string &name);
+   result<empty> load(NBT::Reader &r, NBT::TagId tagid, const std::string &name);
    void as_proto(minecpp::chunk::NetChunk *chunk);
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, uint32_t state);
@@ -41,14 +43,16 @@ struct Chunk {
    [[nodiscard]] uuid get_lock() const;
    bool add_ref(uuid engine_id, uuid player_id);
    void free_ref(uuid player_id);
+
+   static result<std::unique_ptr<Chunk>> from_nbt(NBT::Reader &r);
 };
 
 struct PaletteItem {
    std::string tag_name;
-   NBT::TagMap properties;
+   NBT::CompoundContent properties;
 
    explicit PaletteItem(NBT::Reader &r);
    uint32_t to_state_id();
 };
 
-} // namespace Game
+}// namespace Game

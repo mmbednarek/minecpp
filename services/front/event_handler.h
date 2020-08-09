@@ -28,6 +28,7 @@ class EventHandler {
    void on_event(AnimateHand &msg);
    void on_event(LoadTerrain &msg);
    void on_event(TransferPlayer &msg);
+   void on_event(UpdatePlayerAbilities &msg);
 };
 
 } // namespace Front
