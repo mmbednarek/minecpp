@@ -2,7 +2,7 @@
 
 namespace Game {
 
-Player::Player(uuid id, std::string &name, Vec3 pos) : id(id), player_name(std::move(name)), tracking(pos, 6) {}
+Player::Player(uuid id, std::string &name, Vec3 pos) : id(id), player_name(std::move(name)), tracking(pos, 4) {}
 
 void Player::set_entity_id(uint32_t entity_id) { this->entity_id = entity_id; }
 

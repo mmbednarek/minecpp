@@ -2,7 +2,7 @@
 #include <error/result.h>
 #include <gtest/gtest.h>
 #include <mineutils/format.h>
-#include <mineutils/random.h>
+#include <mineutils/packed.h>
 
 TEST(Utils, Format) {
    auto empty_format = Utils::format("Hello!");
@@ -11,26 +11,6 @@ TEST(Utils, Format) {
    ASSERT_EQ(format_one, "Hello World!");
    auto format_many = Utils::format("Many values {}, {}, {}.", "something", 14, 23.567);
    ASSERT_EQ(format_many, "Many values something, 14, 23.567.");
-}
-
-TEST(Utils, Random) {
-   Utils::Random r(1234);
-   int v;
-   v = r.next_int(12);
-   ASSERT_EQ(v, 8);
-   v = r.next_int(34);
-   ASSERT_EQ(v, 23);
-   v = r.next_int(67);
-   ASSERT_EQ(v, 29);
-}
-
-
-TEST(Utils, RandomTwins) {
-   Utils::Random a(2151901553968352745);
-   Utils::Random b(8091867987493326313);
-   for (int i = 0; i < 256; ++i) {
-      ASSERT_EQ(a.next_int(), b.next_int());
-   }
 }
 
 TEST(Utils, result) {
@@ -100,4 +80,14 @@ TEST(Utils, result) {
    auto resTest3 = get_test(4, 0);
    ASSERT_FALSE(resTest3.ok());
    ASSERT_EQ(resTest3.msg(), "b can't be zero");
+}
+
+TEST(Utils, PackingTest) {
+   int i = 0;
+   auto data = Utils::generate_packed(12, 4096, [&i]() -> uint32_t { return i++; });
+
+   i = 0;
+   Utils::for_each_packed(data, 12, 4096, [&i](uint32_t v) {
+      ASSERT_EQ(v, i++);
+   });
 }

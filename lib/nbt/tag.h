@@ -56,6 +56,8 @@ struct Content {
    bool empty() const;
 };
 
+Content make_string(std::string s);
+
 using CompoundContent = std::map<std::string, Content>;
 
 struct ListContent {

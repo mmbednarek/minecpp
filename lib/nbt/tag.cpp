@@ -80,32 +80,32 @@ static std::string format_compound(std::map<std::string, Content> compound, int 
 
 std::string Content::to_string(int padding) const {
    switch (tag_id) {
-      case TagId::End:
-         return "<end>";
-      case TagId::Byte:
-         return Utils::format("{}b", static_cast<int32_t>(as<int8_t>()));
-      case TagId::Short:
-         return Utils::format("{}s", as<int16_t>());
-      case TagId::Int:
-         return std::to_string(as<int32_t>());
-      case TagId::Long:
-         return Utils::format("{}l", as<int64_t>());
-      case TagId::Float:
-         return Utils::format("{}f", as<float>());
-      case TagId::Double:
-         return Utils::format("{}d", as<double>());
-      case TagId::ByteArray:
-         return format_int_vec<uint8_t, 'B'>(as<std::vector<uint8_t>>(), padding);
-      case TagId::String:
-         return Utils::format("\"{}\"", as<std::string>());
-      case TagId::List:
-         return format_list(as<ListContent>(), padding);
-      case TagId::Compound:
-         return format_compound(as<std::map<std::string, Content>>(), padding);
-      case TagId::IntArray:
-         return format_int_vec<int32_t, 'I'>(as<std::vector<int32_t>>(), padding);
-      case TagId::LongArray:
-         return format_int_vec<int64_t, 'L'>(as<std::vector<int64_t>>(), padding);
+   case TagId::End:
+      return "<end>";
+   case TagId::Byte:
+      return Utils::format("{}b", static_cast<int32_t>(as<int8_t>()));
+   case TagId::Short:
+      return Utils::format("{}s", as<int16_t>());
+   case TagId::Int:
+      return std::to_string(as<int32_t>());
+   case TagId::Long:
+      return Utils::format("{}l", as<int64_t>());
+   case TagId::Float:
+      return Utils::format("{}f", as<float>());
+   case TagId::Double:
+      return Utils::format("{}d", as<double>());
+   case TagId::ByteArray:
+      return format_int_vec<uint8_t, 'B'>(as<std::vector<uint8_t>>(), padding);
+   case TagId::String:
+      return Utils::format("\"{}\"", as<std::string>());
+   case TagId::List:
+      return format_list(as<ListContent>(), padding);
+   case TagId::Compound:
+      return format_compound(as<std::map<std::string, Content>>(), padding);
+   case TagId::IntArray:
+      return format_int_vec<int32_t, 'I'>(as<std::vector<int32_t>>(), padding);
+   case TagId::LongArray:
+      return format_int_vec<int64_t, 'L'>(as<std::vector<int64_t>>(), padding);
    }
    return std::string();
 }
@@ -114,4 +114,11 @@ bool Content::empty() const {
    return tag_id == TagId::End;
 }
 
-}// namespace NewNBT
+Content make_string(std::string s) {
+   return Content{
+           .tag_id = TagId::String,
+           .content = std::move(s),
+   };
+}
+
+}// namespace NBT

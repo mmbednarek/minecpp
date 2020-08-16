@@ -3,7 +3,7 @@
 #include <memory>
 #include <mineutils/format.h>
 
-enum class error_class {
+enum class errclass {
    Internal = 0,
    InvalidArgument = 1,
    NotFound = 2,
@@ -13,17 +13,17 @@ enum class error_class {
 
 class error {
    std::string message;
-   error_class _class = error_class::InvalidArgument;
+   errclass _class = errclass::InvalidArgument;
 
  public:
    typedef std::unique_ptr<error> ptr;
 
-   explicit error(std::string message);
-   error(error_class cl, std::string message);
+   explicit error(std::string message) noexcept;
+   error(errclass cl, std::string message);
 
    [[nodiscard]] virtual const std::string &msg() const;
 
-   [[nodiscard]] virtual error_class err_class() const;
+   [[nodiscard]] virtual errclass err_class() const;
 
    [[nodiscard]] grpc::Status grpc_status() const;
 };

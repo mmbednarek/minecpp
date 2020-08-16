@@ -6,7 +6,7 @@
 
 namespace ChunkStorage {
 
-ChunkManager::ChunkManager(Regions regions) : regions(std::move(regions)) {}
+ChunkManager::ChunkManager(Regions regions) : regions(std::move(regions)), rand(23423465343), perlin(rand), population(rand) {}
 
 constexpr int64_t max_z = 1875060;
 
@@ -28,6 +28,7 @@ result<Game::Chunk &> ChunkManager::get_chunk(Game::Block::ChunkPos pos) {
 }
 
 result<Game::Chunk &> ChunkManager::load_chunk(int x, int z) {
+   /*
    auto data = tryget(regions.read_chunk(x, z));
    auto chunk_data = std::any_cast<std::vector<uint8_t>>(data);
    std::istringstream compressed_stream(std::string((char *) chunk_data.data(), chunk_data.size()));
@@ -37,8 +38,11 @@ result<Game::Chunk &> ChunkManager::load_chunk(int x, int z) {
    cr.check_signature();
    cr.find_compound("Level");
 
-   auto hash = hash_chunk_pos(x, z);
    auto chunk = tryget(Game::Chunk::from_nbt(cr));
+    */
+   auto hash = hash_chunk_pos(x, z);
+   Game::WorldGen::ChunkGenerator gen(population, 8091867987493326313, x, z);
+   auto chunk = gen.generate();
    auto &chunk_ref = *chunk;
    chunks[hash] = std::move(chunk);
    return chunk_ref;
@@ -70,11 +74,12 @@ result<uuid> ChunkManager::add_refs(uuid engine_id, uuid player_id, std::vector<
    return target_engine;
 }
 
-result<uuid> ChunkManager::free_refs(uuid player_id, std::vector<Game::Block::ChunkPos> coords) {
+result<empty> ChunkManager::free_refs(uuid player_id, std::vector<Game::Block::ChunkPos> coords) {
    for (const auto &coord : coords) {
       auto chunk = tryget(get_chunk(coord.x, coord.z));
       chunk.free_ref(player_id);
    }
+   return result_ok;
 }
 
 result<int> ChunkManager::height_at(int x, int z) {

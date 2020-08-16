@@ -10,6 +10,7 @@ class Vec2 {
    Vec2 operator*(double value) const;
    Vec2 operator/(double value) const;
    Vec2 operator+(Vec2 other) const;
+   Vec2 operator-(Vec2 other) const;
    Vec2 truncate() const;
 
    double x, z;
@@ -27,6 +28,7 @@ class Vec3 {
    Vec3 operator-(Vec3 value) const;
 
    Vec2 flat() const;
+   Vec3 truncate() const;
 
    double x, y, z;
 };

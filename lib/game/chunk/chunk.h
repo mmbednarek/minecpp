@@ -5,17 +5,9 @@
 #include <nbt/reader.h>
 #include <nbt/tag.h>
 #include <string_view>
+#include "section.h"
 
 namespace Game {
-
-struct Section {
-   uint8_t bits;
-   int ref_count;
-   std::vector<int> palette;
-   std::vector<int64_t> data;
-   std::vector<uint8_t> block_light;
-   std::vector<uint8_t> sky_light;
-};
 
 using boost::uuids::uuid;
 
@@ -30,6 +22,7 @@ struct Chunk {
    uuid engine_lock{};
 
    Chunk();
+   Chunk(int x, int z, std::array<short, 256> &height_map);
 
    result<empty> load(NBT::Reader &r, NBT::TagId tagid, const std::string &name);
    void as_proto(minecpp::chunk::NetChunk *chunk);
@@ -39,6 +32,7 @@ struct Chunk {
    void set_block_light(int x, int y, int z, uint8_t value);
    void set_sky_light(int x, int y, int z, uint8_t value);
    int height_at(int x, int z);
+   void put_section(int8_t level, Section sec);
 
    [[nodiscard]] uuid get_lock() const;
    bool add_ref(uuid engine_id, uuid player_id);

@@ -38,6 +38,36 @@ void set_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index, uint32
    data[pack] = full_pack;
 }
 
+
+std::vector<int64_t> generate_packed(uint8_t bits, uint32_t array_size, const std::function<uint32_t()>& generator) {
+   int packs = bits * array_size / 64;
+   if (64 % bits != 0) {
+      ++packs;
+   }
+   int per_pack = 64 / bits;
+   uint32_t mask = (1u << bits) - 1u;
+   std::vector<int64_t> result(packs);
+
+   uint32_t i = 0;
+   for (auto &out : result) {
+      uint64_t pack = 0;
+      uint32_t shift = 0;
+      for (int j = 1; j < per_pack; ++j) {
+         pack |= static_cast<uint64_t>(generator() & mask) << shift;
+         ++i;
+         if (i >= array_size) {
+            out = pack;
+            return result;
+         }
+         shift += bits;
+      }
+      pack |= static_cast<uint64_t>(generator() & mask) << shift;
+      out = pack;
+   }
+
+   return result;
+}
+
 uint32_t get_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index) {
    uint32_t parts = 64 / bits;
    auto pack = index / parts;

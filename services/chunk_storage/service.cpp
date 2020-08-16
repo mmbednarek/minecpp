@@ -14,17 +14,12 @@ Service::Service(std::string_view region_path) : chunks(Regions(region_path)) {}
 
 grpc::Status Service::LoadChunk(grpc::ServerContext *context, const minecpp::chunk_storage::LoadChunkRequest *request,
                                 minecpp::chunk::NetChunk *response) {
-   try {
-      auto res = chunks.get_chunk(request->x(), request->z());
-      if (!res.ok()) {
-         return res.err()->grpc_status();
-      }
-      res.unwrap().as_proto(response);
-      return grpc::Status();
-   } catch (std::runtime_error &e) {
-      spdlog::error("internal error: {}", e.what());
-      return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
+   auto res = chunks.get_chunk(request->x(), request->z());
+   if (!res.ok()) {
+      return res.err()->grpc_status();
    }
+   res.unwrap().as_proto(response);
+   return grpc::Status();
 }
 
 grpc::Status Service::SetBlock(grpc::ServerContext *context, const minecpp::chunk_storage::SetBlockRequest *request,
@@ -42,16 +37,12 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
                                     const minecpp::chunk_storage::AddReferencesRequest *request,
                                     minecpp::chunk_storage::AddReferencesResponse *response) {
    std::vector<Game::Block::ChunkPos> coords(request->coords_size());
-   std::size_t i = 0;
-   for (const auto &coord : request->coords()) {
-      coords[i] = Game::Block::ChunkPos(coord.x(), coord.z());
-      ++i;
-   }
+   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> Game::Block::ChunkPos {
+      return Game::Block::ChunkPos(in_coord.x(), in_coord.z());
+   });
 
-   uuid engine_id;
-   Utils::decode_uuid(engine_id, request->engine_id().data());
-   uuid player_id;
-   Utils::decode_uuid(player_id, request->player_id().data());
+   auto engine_id = Utils::make_uuid(request->engine_id().data());
+   auto player_id = Utils::make_uuid(request->player_id().data());
 
    auto res = chunks.add_refs(engine_id, player_id, coords);
    if (!res.ok()) {
@@ -70,6 +61,17 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
 grpc::Status Service::RemoveReference(grpc::ServerContext *context,
                                       const minecpp::chunk_storage::RemoveReferencesRequest *request,
                                       minecpp::chunk_storage::EmptyResponse *response) {
+   std::vector<Game::Block::ChunkPos> coords(request->coords_size());
+   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> Game::Block::ChunkPos {
+     return Game::Block::ChunkPos(in_coord.x(), in_coord.z());
+   });
+   auto player_id = Utils::make_uuid(request->player_id().data());
+
+   auto res = chunks.free_refs(player_id, coords);
+   if (!res.ok()) {
+      return res.err()->grpc_status();
+   }
+
    return grpc::Status();
 }
 grpc::Status Service::HeightAt(grpc::ServerContext *context, const minecpp::chunk_storage::HeightAtRequest *request,

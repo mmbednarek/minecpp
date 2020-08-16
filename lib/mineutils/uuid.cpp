@@ -12,4 +12,10 @@ void decode_uuid(boost::uuids::uuid &dst, const char *src) {
    std::memcpy(dst.data, src, 16);
 }
 
+boost::uuids::uuid make_uuid(const char *src) {
+   boost::uuids::uuid result;
+   decode_uuid(result, src);
+   return result;
+}
+
 }

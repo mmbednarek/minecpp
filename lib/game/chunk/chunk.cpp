@@ -13,6 +13,18 @@ inline int expected_data_version = 2230;
 
 Chunk::Chunk() = default;
 
+Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z(z), full(true) {
+   int i = 0;
+   auto arr = Utils::generate_packed(9, 256, [&height_map, &i]() {
+      return height_map[i++];
+   });
+
+   std::copy(arr.begin(), arr.end(), hm_motion_blocking.begin());
+   std::copy(arr.begin(), arr.end(), hm_world_surface.begin());
+
+   std::fill(biomes.begin(), biomes.end(), 4);
+}
+
 result<std::unique_ptr<Chunk>> Chunk::from_nbt(NBT::Reader &r) {
    auto chunk = std::make_unique<Chunk>();
    try {
@@ -52,7 +64,7 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
       if (name == "Heightmaps") {
          tryget(r.try_read_compound([this](NBT::Reader &r, NBT::TagId tagid, const std::string &name) -> result<empty> {
             if (tagid != NBT::TagId::LongArray) {
-               return error(error_class::Internal, "height map expected to be a long array");
+               return error(errclass::Internal, "height map expected to be a long array");
             }
 
             if (name == "MOTION_BLOCKING") {
@@ -136,7 +148,7 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
       r.skip_payload(NBT::TagId::Byte);
       return result_ok;
    default:
-      return error(error_class::Internal, "invalid nbt tag");
+      return error(errclass::Internal, "invalid nbt tag");
    }
 }
 
@@ -271,7 +283,9 @@ bool Chunk::add_ref(uuid engine_id, uuid player_id) {
 }
 
 void Chunk::free_ref(uuid player_id) {
-   assert(refs.find(player_id) != refs.end());
+   if (refs.find(player_id) == refs.end()) {
+      return;
+   }
    refs.erase(player_id);
    if (refs.empty()) {
       engine_lock = {};
@@ -281,6 +295,10 @@ void Chunk::free_ref(uuid player_id) {
 uuid Chunk::get_lock() const { return engine_lock; }
 
 int Chunk::height_at(int x, int z) { return Utils::get_packed(hm_world_surface, 9, 16 * (z & 15) + (x & 15)); }
+
+void Chunk::put_section(int8_t level, Section sec) {
+   sections[level] = std::move(sec);
+}
 
 PaletteItem::PaletteItem(NBT::Reader &r) {
    r.read_compound([this](NBT::Reader &r, NBT::TagId type, std::string key) {

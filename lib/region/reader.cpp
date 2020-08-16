@@ -17,7 +17,7 @@ result<std::vector<uint8_t>> Reader::load_chunk(int x, int z) {
    uint32_t location;
    stream.read((char *) &location, sizeof(uint32_t));
    if (location == 0) {
-      return error(error_class::NotFound, "no chunk at given location");
+      return error(errclass::NotFound, "no chunk at given location");
    }
 
    uint32_t offset = location << 8u;

@@ -13,7 +13,7 @@ result<std::unique_ptr<RegionFile>> RegionFile::load(const std::string &path) {
    std::fstream file;
    file.open(path);
    if (!file.is_open()) {
-      return error(error_class::NotFound, "file not found");
+      return error(errclass::NotFound, "file not found");
    }
    return std::make_unique<RegionFile>(std::move(file), path);
 }

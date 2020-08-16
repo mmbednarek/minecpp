@@ -10,7 +10,7 @@ namespace Front {
 TickManager::TickManager(Server &server, const ChunkService &chunks) : server(server), chunk_service(chunks) {}
 
 constexpr int keep_alive_interval = 8000;
-constexpr int load_chunks_interval = 100;
+constexpr int load_chunks_interval = 300;
 
 [[noreturn]] void TickManager::tick() {
    uint64_t last_keep_alive = 0;

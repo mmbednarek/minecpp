@@ -13,7 +13,7 @@ Tracking::Tracking(Vec3 position, int radius)
 
 void Tracking::on_movement(World &w, Player &p, Vec3 position) {
    auto next_chunk_pos = (position.flat() / 16.0).truncate();
-   if (distance(next_chunk_pos, last_chunk_pos) < 0.25) {
+   if (distance(next_chunk_pos, last_chunk_pos) < 1.0) {
       return; // no new chunks if didn't travel enough
    }
 
