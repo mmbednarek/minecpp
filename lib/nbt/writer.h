@@ -15,12 +15,21 @@ class Writer {
    void end_compound();
    void write_long_array(std::string_view name, const long *array, size_t size);
 
+   void write_byte_content(uint8_t byte);
+   void write_int_content(int value);
+   void write_string_content(std::string_view str);
+   void write_float_content(float value);
+   void write_long_content(long long value);
+   void write_bytes_content(const std::vector<uint8_t> &values);
+
    void write_byte(std::string_view name, uint8_t byte);
    void write_int(std::string_view name, int value);
    void write_string(std::string_view name, std::string_view str);
    void write_float(std::string_view name, float value);
    void write_long(std::string_view name, long long value);
+   void write_bytes(std::string_view name, const std::vector<uint8_t> &values);
    void begin_list(std::string_view name, NBT::TagId tag, int num_elements);
+   void begin_list_no_header(NBT::TagId tag, int num_elements);
 
  private:
    void put_byte(uint8_t b);

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package Game.NBT.Level;
+
+message Level {
+  LevelData Data = 1;
+}
+
+message LevelData {
+  double BorderCenterX = 1;
+}

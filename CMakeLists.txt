@@ -38,6 +38,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(gtest)
 
+FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY https://github.com/fmtlib/fmt
+        GIT_TAG 7.0.3
+)
+FetchContent_MakeAvailable(fmt)
+
 include_directories(./lib)
 include_directories(./services/protos/include)
 
@@ -59,6 +66,7 @@ add_subdirectory(tools/nbt_viewer)
 add_subdirectory(tools/chunk_extractor)
 add_subdirectory(tools/recipes)
 add_subdirectory(tools/statelist)
+add_subdirectory(tools/protonbt)
 add_subdirectory(services/protos/include/minepb)
 add_subdirectory(services/chunk_storage)
 add_subdirectory(services/engine)

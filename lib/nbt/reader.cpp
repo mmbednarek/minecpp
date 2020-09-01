@@ -179,4 +179,8 @@ Utils::Vec3 Reader::read_vec3() {
                       read_float64());
 }
 
+ListHeader  Reader::peek_list() {
+   return ListHeader{read_static(NBT::TagId::End), static_cast<std::size_t>(read_bswap<int>())};
+}
+
 }// namespace NBT

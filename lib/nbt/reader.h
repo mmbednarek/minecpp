@@ -18,6 +18,11 @@ struct TagHeader {
    std::string name;
 };
 
+struct ListHeader {
+   TagId tagid;
+   std::size_t size;
+};
+
 class Reader : private Utils::Reader {
  public:
    explicit Reader(std::istream &s);
@@ -53,6 +58,7 @@ class Reader : private Utils::Reader {
    void iter_compound(std::string name, const IterCallback &callback);
    void skip_payload(TagId tagid);
    TagHeader peek_tag();
+   ListHeader peek_list();
    void check_signature();
    Utils::Vec3 read_vec3();
 

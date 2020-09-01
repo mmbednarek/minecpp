@@ -17,7 +17,22 @@ int hash_string(std::string_view s) {
       --n;
       result += static_cast<int>(c * pow(31, n));
    }
-   return result/* ^ (result >> 16)*/;
+   return result /* ^ (result >> 16)*/;
 }
 
-} // namespace Utils
+std::string repeat_string(std::string_view s, std::size_t n) {
+   if (n == 1) {
+      return std::string(s);
+   }
+   std::string result;
+   auto full_size = s.size() * n;
+   result.reserve(full_size);
+
+   for (std::size_t i = 0; i < full_size; i++) {
+      result.push_back(s.at(i % s.size()));
+   }
+
+   return result;
+}
+
+}// namespace Utils

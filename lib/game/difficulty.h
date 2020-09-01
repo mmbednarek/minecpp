@@ -3,6 +3,6 @@
 
 namespace Game {
 
-enum class Difficulty : uint8_t { Easy, Normal, Hard };
+enum class Difficulty : std::uint8_t { Easy, Normal, Hard };
 
 }
