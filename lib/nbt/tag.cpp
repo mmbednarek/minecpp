@@ -1,4 +1,5 @@
 #include "tag.h"
+#include "writer.h"
 
 #include <mineutils/format.h>
 #include <utility>
@@ -112,6 +113,68 @@ std::string Content::to_string(int padding) const {
 
 bool Content::empty() const {
    return tag_id == TagId::End;
+}
+
+void serialize_compound_content(NBT::Writer &w, const CompoundContent &cc) {
+   for (auto pair : cc) {
+      w.write_header(pair.second.tag_id, pair.first);
+      serialize_content(w, &pair.second);
+   }
+   w.end_compound();
+}
+
+void serialize_content(NBT::Writer &w, const Content *c) {
+   switch (c->tag_id) {
+   case TagId::Byte:
+      w.write_byte_content(c->as<int8_t>());
+      return;
+   case TagId::Short:
+      w.write_short_content(c->as<int16_t>());
+      return;
+   case TagId::Int:
+      w.write_int_content(c->as<int32_t>());
+      return;
+   case TagId::Long:
+      w.write_long_content(c->as<int64_t>());
+      return;
+   case TagId::Float:
+      w.write_float_content(c->as<float>());
+      return;
+   case TagId::Double:
+      w.write_double_content(c->as<double>());
+      return;
+   case TagId::ByteArray:
+      w.write_bytes_content(c->as<std::vector<uint8_t>>());
+      return;
+   case TagId::String:
+      w.write_string_content(c->as<std::string>());
+      return;
+   case TagId::List: {
+      auto list = c->as<ListContent>();
+      w.begin_list_no_header(list.tag_id, list.elements.size());
+      for (auto elm : list) {
+         serialize_content(w, &elm);
+      }
+      return;
+   }
+   case TagId::Compound: {
+      auto compound = c->as<CompoundContent>();
+      serialize_compound_content(w, compound);
+      return;
+   }
+   case TagId::IntArray:
+      w.write_ints_content(c->as<std::vector<int32_t>>());
+      return;
+   case TagId::LongArray:
+      w.write_longs_content(c->as<std::vector<int64_t>>());
+      return;
+   }
+}
+
+void Content::serialize(const std::string_view name, std::ostream &s) const {
+   Writer w(s);
+   w.write_header(tag_id, name);
+   serialize_content(w, this);
 }
 
 Content make_string(std::string s) {

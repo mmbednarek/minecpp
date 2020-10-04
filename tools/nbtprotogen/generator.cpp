@@ -73,7 +73,7 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes) {
          std::transform(astMsg.attributes.begin(), astMsg.attributes.end(), msg.attribs.begin(), [](const Syntax::Ast::Attribute &attrib) {
             return Attribute(Type(attrib.type, attrib.repeated), attrib.name, attrib.label, attrib.pos);
          });
-         messages[msg.name] = std::move(msg);
+         messages.emplace_back(msg);
       }
    }
 }
@@ -119,6 +119,10 @@ Type::Type(std::string name, int repeated) : repeated(repeated), name(name) {
       variant = TypeVariant::Longs;
       return;
    }
+   if (name == "map") {
+      variant = TypeVariant::Map;
+      return;
+   }
 }
 std::string Type::to_cpp() const {
    auto result = [](const TypeVariant variant, const std::string &name) -> std::string {
@@ -133,6 +137,7 @@ std::string Type::to_cpp() const {
       case TypeVariant::Bytes: return "std::vector<std::uint8_t>";
       case TypeVariant::Ints: return "std::vector<std::int32_t>";
       case TypeVariant::Longs: return "std::vector<std::int64_t>";
+      case TypeVariant::Map: return "NBT::CompoundContent";
       }
       return name;
    }(variant, name);
@@ -191,6 +196,9 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
       case TypeVariant::Longs:
          w.line("w.write_longs_content(val{});", repeated - 1);
          break;
+      case TypeVariant::Map:
+         w.line("NBT::serialize_compound_content(w, val{});", repeated - 1);
+         break;
       default:
          w.line("val{}.serialize_no_header(w);", repeated - 1);
       }
@@ -232,7 +240,8 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
       w.line("w.write_longs(\"{1}\", {0});", name, label);
       break;
    default:
-      w.line("this->{0}.serialize(out, \"{1}\");", name, label);
+      w.line("w.begin_compound(\"{}\");", label);
+      w.line("this->{0}.serialize_no_header(w);", name);
    }
 }
 
@@ -435,7 +444,7 @@ static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWri
             for (const auto &el : deser.elems) {
                w.line("case {}:", el.id);
                w.ident();
-               w.line("res._xx_put(name, {})", el.typeName);
+               w.line("res.__xx_put(name, {}::deserialize_no_header(r));", el.typeName);
                w.line("return;");
                w.deindent();
             }
@@ -479,26 +488,26 @@ void generate_header(Structure &s, std::ostream &output) {
    w.line("struct __nbt_offset { std::size_t offset, size; int id; };");
    w.line();
    std::for_each(s.messages.begin(), s.messages.end(), [&w](const auto &el) {
-      w.line("struct {};", el.first);
+      w.line("struct {};", el.name);
    });
    w.line();
    std::for_each(s.messages.begin(), s.messages.end(), [&w](const auto &el) {
-      w.scope("struct {}", el.first);
-      std::for_each(el.second.attribs.begin(), el.second.attribs.end(), [&w](const Attribute &attrib) {
+      w.scope("struct {}", el.name);
+      std::for_each(el.attribs.begin(), el.attribs.end(), [&w](const Attribute &attrib) {
          w.line("{} {}{};", attrib.t.to_cpp(), attrib.name, "{}");
       });
 
       w.line();
-      w.line("{}() = default;", el.first);
+      w.line("{}() = default;", el.name);
       w.line();
       w.line("void serialize_no_header(NBT::Writer &w) const;");
       w.line("void serialize(std::ostream &out, std::string_view name = \"\") const;");
       w.line();
-      w.line("static {} deserialize_no_header(NBT::Reader &r);", el.first);
-      w.line("static {} deserialize(std::istream &in);", el.first);
+      w.line("static {} deserialize_no_header(NBT::Reader &r);", el.name);
+      w.line("static {} deserialize(std::istream &in);", el.name);
       w.line();
       w.line_ignore("private:");
-      w.line("static std::map<std::string, __nbt_offset> __xx_offsets;");
+      w.line("static std::unordered_map<std::string, __nbt_offset> __xx_offsets;");
       w.line("int __xx_get_id(const std::string &name) const;");
       w.line();
       w.line("template<typename T>");
@@ -526,7 +535,7 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
    w.flat_scope("namespace {}", s.package);
    w.line();
    for (const auto &el : s.messages) {
-      w.scope("int {}::__xx_get_id(const std::string &name) const", el.first);
+      w.scope("int {}::__xx_get_id(const std::string &name) const", el.name);
       {
          w.line("auto it = __xx_offsets.find(name);");
          w.line("if (it == __xx_offsets.end()) return -1;");
@@ -534,16 +543,16 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       }
       w.descope();
       w.line();
-      w.scope("void {}::serialize_no_header(NBT::Writer &w) const", el.first);
+      w.scope("void {}::serialize_no_header(NBT::Writer &w) const", el.name);
       {
-         std::for_each(el.second.attribs.begin(), el.second.attribs.end(), [&w](const Attribute &attrib) {
+         std::for_each(el.attribs.begin(), el.attribs.end(), [&w](const Attribute &attrib) {
             attrib.t.write_value(w, attrib.name, attrib.label);
          });
          w.line("w.end_compound();");
       }
       w.descope();
       w.line();
-      w.scope("void {}::serialize(std::ostream &out, const std::string_view name) const", el.first);
+      w.scope("void {}::serialize(std::ostream &out, const std::string_view name) const", el.name);
       {
          w.line("NBT::Writer w(out);");
          w.line("w.begin_compound(name);");
@@ -551,18 +560,18 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       }
       w.descope();
       w.line();
-      w.scope("std::map<std::string, __nbt_offset> {}::__xx_offsets", el.first);
-      std::for_each(el.second.attribs.begin(), el.second.attribs.end(), [&w, el](const Attribute &attrib) {
-         w.line("{{\"{0}\", {{offsetof({2}, {1}), sizeof({2}::{1}), {3}}}}},", attrib.label, attrib.name, el.first, attrib.id);
+      w.scope("std::unordered_map<std::string, __nbt_offset> {}::__xx_offsets", el.name);
+      std::for_each(el.attribs.begin(), el.attribs.end(), [&w, el](const Attribute &attrib) {
+         w.line("{{\"{0}\", {{offsetof({2}, {1}), sizeof({2}::{1}), {3}}}}},", attrib.label, attrib.name, el.name, attrib.id);
       });
       w.descope(";");
       w.line();
-      w.scope("{0} {0}::deserialize_no_header(NBT::Reader &r)", el.first);
+      w.scope("{0} {0}::deserialize_no_header(NBT::Reader &r)", el.name);
       {
-         w.line("{} res;", el.first);
+         w.line("{} res;", el.name);
          w.scope("r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name)");
          {
-            auto deser = make_message_des(el.second.attribs);
+            auto deser = make_message_des(el.attribs);
             put_deserializer(deser, w);
          }
          w.descope(");");
@@ -571,16 +580,16 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       }
       w.descope();
       w.line();
-      w.scope("{0} {0}::deserialize(std::istream &in)", el.first);
+      w.scope("{0} {0}::deserialize(std::istream &in)", el.name);
       {
          w.line("NBT::Reader r(in);");
          w.line("auto peek = r.peek_tag();");
          w.scope("if (peek.id != NBT::TagId::Compound)");
          {
-            w.line("return {}();", el.first);
+            w.line("return {}();", el.name);
          }
          w.descope();
-         w.line("return {}::deserialize_no_header(r);", el.first);
+         w.line("return {}::deserialize_no_header(r);", el.name);
       }
       w.descope();
       w.line();

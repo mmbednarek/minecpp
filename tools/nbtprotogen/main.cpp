@@ -7,7 +7,7 @@
 #include <mineutils/time.h>
 #include <nbt/parser.h>
 
-#define TEST
+//#define TEST
 
 #ifdef TEST
 #include "test.h"

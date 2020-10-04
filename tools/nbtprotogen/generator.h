@@ -23,6 +23,7 @@ enum class TypeVariant {
    Longs,
    Compound,
    List,
+   Map
 };
 
 struct Type {
@@ -61,7 +62,7 @@ struct Message {
 struct Structure {
    std::string version;
    std::string package;
-   std::map<std::string, Message> messages;
+   std::vector<Message> messages;
 
    explicit Structure(std::vector<Syntax::Ast::Node> nodes);
 };

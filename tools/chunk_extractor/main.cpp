@@ -22,22 +22,27 @@ auto main(int argc, char *argv[]) -> int {
 
    uint32_t x = std::stoi(argv[2]);
    uint32_t z = std::stoi(argv[3]);
-   auto data = r.load_chunk(x, z);
+   auto data = r.load_chunk(x, z).unwrap();
 
    std::istringstream ss(std::string((char *)data.data(), data.size()));
    Utils::ZlibInputStream zlib_stream(ss);
 
-   NBT::Reader cr(zlib_stream);
-   cr.check_signature();
-   cr.find_compound("Level");
+   char buff[256];
+   while(zlib_stream.read(buff, 256)) {
+      std::cout.write(buff, 256);
+   }
 
-   Game::Chunk chunk(cr);
-   minecpp::chunk::NetChunk proto_chunk;
-   chunk.as_proto(&proto_chunk);
+//   NBT::Reader cr(zlib_stream);
+//   cr.check_signature();
+//   cr.find_compound("Level");
 
-   MineNet::Message::Writer w;
-   MineNet::Message::write_chunk(w, proto_chunk);
-
-   auto buff = w.buff();
-   std::cout.write((char *)std::get<0>(buff), std::get<1>(buff));
+//   Game::Chunk chunk(cr);
+//   minecpp::chunk::NetChunk proto_chunk;
+//   chunk.as_proto(&proto_chunk);
+//
+//   MineNet::Message::Writer w;
+//   MineNet::Message::write_chunk(w, proto_chunk);
+//
+//   auto buff = w.buff();
+//   std::cout.write((char *)std::get<0>(buff), std::get<1>(buff));
 }

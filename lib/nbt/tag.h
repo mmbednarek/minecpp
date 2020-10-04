@@ -52,8 +52,9 @@ struct Content {
    template<typename T>
    std::vector<T> as_vec();
 
-   std::string to_string(int padding = 0) const;
-   bool empty() const;
+   [[nodiscard]] std::string to_string(int padding = 0) const;
+   [[nodiscard]] bool empty() const;
+   void serialize(std::string_view name, std::ostream &s) const;
 };
 
 Content make_string(std::string s);
@@ -163,5 +164,9 @@ std::vector<T> Content::as_vec() {
    }
    return std::vector<T>();
 }
+
+class Writer;
+void serialize_compound_content(NBT::Writer &w, const CompoundContent &cc);
+void serialize_content(NBT::Writer &w, const Content *c);
 
 }// namespace NBT

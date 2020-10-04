@@ -20,6 +20,16 @@ void Writer::write_byte(std::string_view name, uint8_t byte) {
    put_byte(byte);
 }
 
+void Writer::write_short_content(short value) {
+   put_big_endian(value);
+}
+
+void Writer::write_short(std::string_view name, short value) {
+   put_byte(static_cast<uint8_t>(TagId::Short));
+   put_string(name);
+   put_big_endian(value);
+}
+
 void Writer::write_int_content(int value) {
    put_big_endian(value);
 }
@@ -40,7 +50,7 @@ void Writer::write_long(std::string_view name, long long value) {
    put_big_endian(value);
 }
 
-void Writer::put_byte(uint8_t b) { stream.write((char *)&b, sizeof(uint8_t)); }
+void Writer::put_byte(uint8_t b) { stream.write((char *) &b, sizeof(uint8_t)); }
 
 
 void Writer::write_string_content(std::string_view str) {
@@ -49,7 +59,7 @@ void Writer::write_string_content(std::string_view str) {
 
 void Writer::put_string(const std::string_view s) {
    put_big_endian<short>(s.length());
-   stream.write((char *)s.data(), s.length());
+   stream.write((char *) s.data(), s.length());
 }
 
 void Writer::begin_compound(const std::string_view name) {
@@ -83,6 +93,20 @@ void Writer::write_float(std::string_view name, float value) {
    put_big_endian(v);
 }
 
+void Writer::write_double_content(float value) {
+   uint32_t v = *reinterpret_cast<uint32_t *>(&value);
+   put_big_endian(v);
+}
+
+void Writer::write_double(std::string_view name, double value) {
+   static_assert(sizeof(double) == sizeof(uint64_t));
+
+   put_byte(static_cast<uint8_t>(TagId::Double));
+   put_string(name);
+   uint64_t v = *reinterpret_cast<uint64_t *>(&value);
+   put_big_endian(v);
+}
+
 void Writer::begin_list(std::string_view name, NBT::TagId tag,
                         int num_elements) {
    put_byte(static_cast<uint8_t>(TagId::List));
@@ -112,4 +136,41 @@ void Writer::write_bytes(std::string_view name, const std::vector<uint8_t> &valu
    }
 }
 
-} // namespace NBT
+void Writer::write_ints_content(const std::vector<int> &values) {
+   put_big_endian<int32_t>(values.size());
+   for (const auto &val : values) {
+      put_big_endian<uint8_t>(val);
+   }
+}
+
+void Writer::write_ints(std::string_view name, const std::vector<int> &values) {
+   put_byte(static_cast<uint8_t>(TagId::IntArray));
+   put_string(name);
+   put_big_endian<int32_t>(values.size());
+   for (const auto &val : values) {
+      put_big_endian<int>(val);
+   }
+}
+
+void Writer::write_longs_content(const std::vector<int64_t> &values) {
+   put_big_endian<int32_t>(values.size());
+   for (const auto &val : values) {
+      put_big_endian<int64_t>(val);
+   }
+}
+
+void Writer::write_longs(std::string_view name, const std::vector<int64_t> &values) {
+   put_byte(static_cast<uint8_t>(TagId::LongArray));
+   put_string(name);
+   put_big_endian<int32_t>(values.size());
+   for (const auto &val : values) {
+      put_big_endian<int64_t>(val);
+   }
+}
+
+void Writer::write_header(TagId tag, std::string_view name) {
+   put_byte(static_cast<uint8_t>(tag));
+   put_string(name);
+}
+
+}// namespace NBT
