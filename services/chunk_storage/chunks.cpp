@@ -6,17 +6,28 @@
 
 namespace ChunkStorage {
 
-ChunkManager::ChunkManager(Regions regions) : regions(std::move(regions)), rand(23423465343), perlin(rand), population(rand) {}
+ChunkManager::ChunkManager(Regions regions) : regions(std::move(regions)), gen(*this, 43254124543534345) {}
 
 constexpr int64_t max_z = 1875060;
-
 static constexpr int64_t hash_chunk_pos(int x, int z) {
    return static_cast<int64_t>(z) + max_z * static_cast<int64_t>(x);
 }
 
+Game::Chunk &ChunkManager::get_incomplete_chunk(int x, int z) {
+   auto hash = hash_chunk_pos(x, z);
+   auto iter = chunks.find(hash);
+   if (iter != chunks.end()) {
+      return *iter->second;
+   }
+
+   gen.generate_terrain(x, z);
+   iter = chunks.find(hash);
+   return *iter->second;
+}
+
 result<Game::Chunk &> ChunkManager::get_chunk(int x, int z) {
    auto iter = chunks.find(hash_chunk_pos(x, z));
-   if (iter != chunks.end()) {
+   if (iter != chunks.end() && iter->second->full) {
       return *iter->second;
    }
 
@@ -40,12 +51,9 @@ result<Game::Chunk &> ChunkManager::load_chunk(int x, int z) {
 
    auto chunk = tryget(Game::Chunk::from_nbt(cr));
     */
-   auto hash = hash_chunk_pos(x, z);
-   Game::WorldGen::ChunkGenerator gen(population, 8091867987493326313, x, z);
-   auto chunk = gen.generate();
-   auto &chunk_ref = *chunk;
-   chunks[hash] = std::move(chunk);
-   return chunk_ref;
+   gen.generate_chunk(x, z);
+   auto iter = chunks.find(hash_chunk_pos(x, z));
+   return *iter->second;
 }
 
 result<empty> ChunkManager::set_block(int x, int y, int z, uint32_t state) {
@@ -83,7 +91,29 @@ result<empty> ChunkManager::free_refs(uuid player_id, std::vector<Game::Block::C
 }
 
 result<int> ChunkManager::height_at(int x, int z) {
-   return tryget(get_chunk(Game::Block::Position(x, 0, z).chunk_pos())).height_at(x, z);
+   auto res = get_chunk(Game::Block::Position(x, 0, z).chunk_pos());
+   if (!res.ok()) {
+      return res.err();
+   }
+   return res.unwrap().height_at(x, z);
+}
+
+result<empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<Game::Chunk> chunk) {
+   chunks[hash_chunk_pos(x, z)] = std::move(chunk);
+   return result_ok;
+}
+
+result<Game::ChunkState> ChunkManager::get_chunk_state(int x, int z) {
+   auto iter = chunks.find(hash_chunk_pos(x, z));
+   if (iter == chunks.end()) {
+      return Game::ChunkState::ABSENT;
+   }
+
+   if (iter->second->full) {
+      return Game::ChunkState::COMPLETE;
+   }
+
+   return Game::ChunkState::TERRAIN;
 }
 
 }// namespace ChunkStorage

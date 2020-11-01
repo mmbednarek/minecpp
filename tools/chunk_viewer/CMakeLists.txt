@@ -1,0 +1,4 @@
+project(minecpp_chunk_viewer)
+
+add_executable(minecpp_chunk_viewer main.cpp)
+target_link_libraries(minecpp_chunk_viewer LINK_PUBLIC minecpp_game minecpp_nbt minecpp_utils fmt)

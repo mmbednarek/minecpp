@@ -71,21 +71,6 @@ message Section {
   repeated PaletteItem palette = 5 [label = "Palette"];
 }
 
-message References {
-  longs bastion_remnant = 1;
-  longs buried_treasure = 2;
-  longs desert_pyramid = 3;
-  longs fortress = 4;
-  longs jungle_pyramid = 5;
-  longs mineshaft = 6;
-  longs monument = 7;
-  longs nether_fossil = 8;
-  longs ocean_ruin = 9;
-  longs pillager_outpost = 10;
-  longs shipwreck = 11;
-  longs swamp_hut = 12;
-}
-
 message StartId {
   string id = 1;
 }
@@ -97,7 +82,6 @@ message Starts {
 }
 
 message Structures {
-  References references = 1 [label = "References"];
   Starts starts = 2 [label = "Starts"];
 }
 

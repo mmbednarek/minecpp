@@ -390,7 +390,10 @@ Entity Entity::deserialize_no_header(NBT::Reader &r) {
             break;
          }
          }
-         break;
+         for (std::size_t i = 0; i < list_info0.size; ++i) {
+            r.skip_payload(list_info0.tagid);
+         }
+         return;
       }
       }
       r.skip_payload(tagid);
@@ -466,8 +469,8 @@ int PaletteItem::__xx_get_id(const std::string &name) const {
 
 void PaletteItem::serialize_no_header(NBT::Writer &w) const {
    w.write_string("Name", this->name);
-   w.begin_compound("Properties");
-   this->properties.serialize_no_header(w);
+   w.write_header(NBT::TagId::Compound, "Properties");
+   NBT::serialize_compound_content(w, properties);
    w.end_compound();
 }
 
@@ -489,14 +492,9 @@ PaletteItem PaletteItem::deserialize_no_header(NBT::Reader &r) {
       case NBT::TagId::String: 
          res.__xx_put(name, r.read_str());
          return;
-      case NBT::TagId::Compound: {
-         switch(res.__xx_get_id(name)) {
-            case 2:
-               res.__xx_put(name, map::deserialize_no_header(r));
-               return;
-         }
-         break;
-      }
+      case NBT::TagId::Compound: 
+         res.__xx_put(name, r.read_compound_content());
+         return;
       }
       r.skip_payload(tagid);
    });
@@ -573,7 +571,10 @@ Section Section::deserialize_no_header(NBT::Reader &r) {
             break;
          }
          }
-         break;
+         for (std::size_t i = 0; i < list_info0.size; ++i) {
+            r.skip_payload(list_info0.tagid);
+         }
+         return;
       }
       }
       r.skip_payload(tagid);
@@ -589,72 +590,6 @@ Section Section::deserialize(std::istream &in) {
       return Section();
    }
    return Section::deserialize_no_header(r);
-}
-
-int References::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) return -1;
-   return it->second.id;
-}
-
-void References::serialize_no_header(NBT::Writer &w) const {
-   w.write_longs("bastion_remnant", bastion_remnant);
-   w.write_longs("buried_treasure", buried_treasure);
-   w.write_longs("desert_pyramid", desert_pyramid);
-   w.write_longs("fortress", fortress);
-   w.write_longs("jungle_pyramid", jungle_pyramid);
-   w.write_longs("mineshaft", mineshaft);
-   w.write_longs("monument", monument);
-   w.write_longs("nether_fossil", nether_fossil);
-   w.write_longs("ocean_ruin", ocean_ruin);
-   w.write_longs("pillager_outpost", pillager_outpost);
-   w.write_longs("shipwreck", shipwreck);
-   w.write_longs("swamp_hut", swamp_hut);
-   w.end_compound();
-}
-
-void References::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
-   w.begin_compound(name);
-   this->serialize_no_header(w);
-}
-
-std::unordered_map<std::string, __nbt_offset> References::__xx_offsets {
-   {"bastion_remnant", {offsetof(References, bastion_remnant), sizeof(References::bastion_remnant), 1}},
-   {"buried_treasure", {offsetof(References, buried_treasure), sizeof(References::buried_treasure), 2}},
-   {"desert_pyramid", {offsetof(References, desert_pyramid), sizeof(References::desert_pyramid), 3}},
-   {"fortress", {offsetof(References, fortress), sizeof(References::fortress), 4}},
-   {"jungle_pyramid", {offsetof(References, jungle_pyramid), sizeof(References::jungle_pyramid), 5}},
-   {"mineshaft", {offsetof(References, mineshaft), sizeof(References::mineshaft), 6}},
-   {"monument", {offsetof(References, monument), sizeof(References::monument), 7}},
-   {"nether_fossil", {offsetof(References, nether_fossil), sizeof(References::nether_fossil), 8}},
-   {"ocean_ruin", {offsetof(References, ocean_ruin), sizeof(References::ocean_ruin), 9}},
-   {"pillager_outpost", {offsetof(References, pillager_outpost), sizeof(References::pillager_outpost), 10}},
-   {"shipwreck", {offsetof(References, shipwreck), sizeof(References::shipwreck), 11}},
-   {"swamp_hut", {offsetof(References, swamp_hut), sizeof(References::swamp_hut), 12}},
-};
-
-References References::deserialize_no_header(NBT::Reader &r) {
-   References res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
-      switch (tagid) {
-      case NBT::TagId::LongArray: 
-         res.__xx_put(name, r.read_long_vec());
-         return;
-      }
-      r.skip_payload(tagid);
-   });
-
-   return res;
-}
-
-References References::deserialize(std::istream &in) {
-   NBT::Reader r(in);
-   auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
-      return References();
-   }
-   return References::deserialize_no_header(r);
 }
 
 int StartId::__xx_get_id(const std::string &name) const {
@@ -770,8 +705,6 @@ int Structures::__xx_get_id(const std::string &name) const {
 }
 
 void Structures::serialize_no_header(NBT::Writer &w) const {
-   w.begin_compound("References");
-   this->references.serialize_no_header(w);
    w.begin_compound("Starts");
    this->starts.serialize_no_header(w);
    w.end_compound();
@@ -784,7 +717,6 @@ void Structures::serialize(std::ostream &out, const std::string_view name) const
 }
 
 std::unordered_map<std::string, __nbt_offset> Structures::__xx_offsets {
-   {"References", {offsetof(Structures, references), sizeof(Structures::references), 1}},
    {"Starts", {offsetof(Structures, starts), sizeof(Structures::starts), 2}},
 };
 
@@ -794,9 +726,6 @@ Structures Structures::deserialize_no_header(NBT::Reader &r) {
       switch (tagid) {
       case NBT::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
-            case 1:
-               res.__xx_put(name, References::deserialize_no_header(r));
-               return;
             case 2:
                res.__xx_put(name, Starts::deserialize_no_header(r));
                return;
@@ -919,7 +848,10 @@ Level Level::deserialize_no_header(NBT::Reader &r) {
             break;
          }
          }
-         break;
+         for (std::size_t i = 0; i < list_info0.size; ++i) {
+            r.skip_payload(list_info0.tagid);
+         }
+         return;
       }
       }
       r.skip_payload(tagid);

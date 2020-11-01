@@ -110,6 +110,7 @@ class Reader : private Utils::Reader {
    std::vector<int64_t> read_long_vec() {
       return read_int_list<int64_t>();
    }
+   CompoundContent read_compound_content();
 
    std::istream &raw_stream();
 

@@ -3,7 +3,11 @@
 #include <cassert>
 #include <tuple>
 
-namespace Game::WorldGen {
+namespace Game::WorldGen::Population {
+
+struct Pos {
+   int x, z;
+};
 
 class PopObject {
  public:
@@ -11,7 +15,7 @@ class PopObject {
    virtual int height() const = 0;
    virtual int length() const = 0;
    virtual int occurrence() const = 0;
-   virtual std::tuple<int, int> center() const = 0;
+   virtual Pos center() const = 0;
    virtual int block_at(int x, int y, int z) const = 0;
 };
 
@@ -35,8 +39,8 @@ class ShapedObject : public PopObject {
    [[nodiscard]] int occurrence() const override {
        return occurr;
    };
-   [[nodiscard]] std::tuple<int, int> center() const override {
-           return {2, 2};
+   [[nodiscard]] Pos center() const override {
+           return Pos{.x = w / 2, .z = l / 2};
    };
    [[nodiscard]] int block_at(int x, int y, int z) const override {
       assert(x >= 0 && x < w);
@@ -46,7 +50,7 @@ class ShapedObject : public PopObject {
    }
 };
 
-extern std::array<const PopObject *, 1> pop_objects;
+extern std::array<const PopObject *, 7> pop_objects;
 
 int find_object_id(int value);
 

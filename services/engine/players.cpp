@@ -45,7 +45,7 @@ Utils::Vec3 PlayerManager::get_spawn_position(Game::World &w) {
    std::uniform_int_distribution<int> dist(-200, 200);
    auto x = dist(rand_engine);
    auto z = dist(rand_engine);
-   auto y = w.height_at(x, z) + 2;
+   auto y = w.height_at(x, z).unwrap(0) + 2;
    return Utils::Vec3(x, y, z);
 }
 

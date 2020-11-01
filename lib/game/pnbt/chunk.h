@@ -21,7 +21,6 @@ struct Entity;
 struct Heightmaps;
 struct PaletteItem;
 struct Section;
-struct References;
 struct StartId;
 struct Starts;
 struct Structures;
@@ -296,43 +295,6 @@ private:
    }
 };
 
-struct References {
-   std::vector<std::int64_t> bastion_remnant{};
-   std::vector<std::int64_t> buried_treasure{};
-   std::vector<std::int64_t> desert_pyramid{};
-   std::vector<std::int64_t> fortress{};
-   std::vector<std::int64_t> jungle_pyramid{};
-   std::vector<std::int64_t> mineshaft{};
-   std::vector<std::int64_t> monument{};
-   std::vector<std::int64_t> nether_fossil{};
-   std::vector<std::int64_t> ocean_ruin{};
-   std::vector<std::int64_t> pillager_outpost{};
-   std::vector<std::int64_t> shipwreck{};
-   std::vector<std::int64_t> swamp_hut{};
-
-   References() = default;
-
-   void serialize_no_header(NBT::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name = "") const;
-
-   static References deserialize_no_header(NBT::Reader &r);
-   static References deserialize(std::istream &in);
-
-private:
-   static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
-
-   template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
-   }
-};
-
 struct StartId {
    std::string id{};
 
@@ -388,7 +350,6 @@ private:
 };
 
 struct Structures {
-   References references{};
    Starts starts{};
 
    Structures() = default;

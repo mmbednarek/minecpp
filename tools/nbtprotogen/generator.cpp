@@ -239,6 +239,10 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
    case TypeVariant::Longs:
       w.line("w.write_longs(\"{1}\", {0});", name, label);
       break;
+   case TypeVariant::Map:
+      w.line("w.write_header(NBT::TagId::Compound, \"{}\");", label);
+      w.line("NBT::serialize_compound_content(w, {});", name);
+      break;
    default:
       w.line("w.begin_compound(\"{}\");", label);
       w.line("this->{0}.serialize_no_header(w);", name);
@@ -335,6 +339,8 @@ static std::string_view put_static_read(StaticDeserializer des) {
       return "r.read_int_vec()";
    case TypeVariant::Longs:
       return "r.read_long_vec()";
+   case TypeVariant::Map:
+      return "r.read_compound_content()";
    default:
       break;
    }
@@ -413,12 +419,15 @@ static void put_list_read(std::map<TypeVariant, std::any> &attribs, ScriptWriter
          auto deser = std::any_cast<ListDeserializer>(pair.second);
          w.scope("case NBT::TagId::List:");
          put_list_read(deser.elems, w, level + 1);
-         w.line("break;");
+         w.line("return;");
          w.descope();
          continue;
       }
    }
    w.line("}");
+   w.scope("for (std::size_t i = 0; i < list_info{}.size; ++i)", level);
+   w.line("r.skip_payload(list_info{}.tagid);", level);
+   w.descope();
 }
 
 static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWriter &w) {
@@ -459,7 +468,7 @@ static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWri
          w.scope("case NBT::TagId::List:");
          auto deser = std::any_cast<ListDeserializer>(pair.second);
          put_list_read(deser.elems, w);
-         w.line("break;");
+         w.line("return;");
          w.descope();
       }
    }

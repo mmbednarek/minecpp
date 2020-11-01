@@ -1,5 +1,5 @@
 #pragma once
-#include "heightgen.h"
+#include "height.h"
 #include <cstdint>
 #include <game/chunk/chunk.h>
 #include <game/chunk/section.h>
@@ -8,18 +8,14 @@
 #include <minerandom/perlin.h>
 #include <minerandom/perlin3d.h>
 #include <minerandom/random.h>
-#include "population.h"
 
-namespace Game::WorldGen {
+namespace Game::WorldGen::Terrain {
 
 inline constexpr int chunk_size = 16;
 
-class ChunkGenerator {
+class Terrain {
    HeightGenerator height_gen;
    Rand::JavaRandom rand;
-   Rand::Perlin cave_shape;
-   Rand::Perlin cave_level;
-   Population &population;
    int x, z;
    std::array<short, 256> height_map;
    std::array<short, 256> orig_height_map;
@@ -31,7 +27,7 @@ class ChunkGenerator {
    int sand_id;
    int water_id;
  public:
-   ChunkGenerator(Population &population, uint64_t seed, int x, int z);
+   Terrain(uint64_t seed, int x, int z);
 
    std::unique_ptr<Chunk> generate();
  private:

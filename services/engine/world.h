@@ -3,6 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <game/world.h>
 #include <minepb/chunk_storage.grpc.pb.h>
+#include <error/result.h>
 
 namespace Engine {
 
@@ -20,9 +21,9 @@ class World : public Game::World {
    World(uuid engine_id, const ChunkService &service, Dispatcher &dispatcher);
 
    Game::Notifier &notifier() override;
-   void add_refs(uuid player, std::vector<ChunkPos> refs) override;
-   void free_refs(uuid player, std::vector<ChunkPos> refs) override;
-   int height_at(int x, int z) override;
+   result<empty> add_refs(uuid player, std::vector<ChunkPos> refs) override;
+   result<empty> free_refs(uuid player, std::vector<ChunkPos> refs) override;
+   result<int> height_at(int x, int z) override;
 };
 
 } // namespace Engine

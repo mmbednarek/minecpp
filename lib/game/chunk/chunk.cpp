@@ -13,7 +13,7 @@ inline int expected_data_version = 2230;
 
 Chunk::Chunk() = default;
 
-Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z(z), full(true) {
+Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z(z), full(false) {
    int i = 0;
    auto arr = Utils::generate_packed(9, 256, [&height_map, &i]() {
       return height_map[i++];
@@ -97,7 +97,7 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
             std::vector<int64_t> data;
             std::vector<uint8_t> block_light;
             std::vector<uint8_t> sky_light;
-            std::vector<int> palette;
+            std::vector<std::uint32_t> palette;
             r.read_compound([&y, &data, &palette, &block_light, &sky_light](NBT::Reader &r, NBT::TagId tag_id,
                                                                             const std::string &name) {
                if (tag_id == NBT::TagId::Byte && name == "Y") {
@@ -129,10 +129,9 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
             int ref_count = Game::calculate_ref_count(data, palette);
 
             sections[y] = Section{
-                    .bits = bits,
                     .ref_count = ref_count,
                     .palette = std::move(palette),
-                    .data = std::move(data),
+                    .data = Squeeze::Vector(bits, 4096, data),
                     .block_light = std::move(block_light),
                     .sky_light = std::move(sky_light),
             };
@@ -166,10 +165,10 @@ void Chunk::as_proto(minecpp::chunk::NetChunk *chunk) {
    for (auto const &sec : sections) {
       auto *out_sec = chunk->add_sections();
       out_sec->set_y(sec.first);
-      out_sec->set_bits(sec.second.bits);
+      out_sec->set_bits(sec.second.data.bits());
       out_sec->set_ref_count(sec.second.ref_count);
       *out_sec->mutable_palette() = {sec.second.palette.begin(), sec.second.palette.end()};
-      *out_sec->mutable_data() = {sec.second.data.begin(), sec.second.data.end()};
+      *out_sec->mutable_data() = {sec.second.data.raw().begin(), sec.second.data.raw().end()};
       *out_sec->mutable_block_light() = {sec.second.block_light.begin(), sec.second.block_light.end()};
       *out_sec->mutable_sky_light() = {sec.second.sky_light.begin(), sec.second.sky_light.end()};
    }
@@ -178,12 +177,11 @@ void Chunk::as_proto(minecpp::chunk::NetChunk *chunk) {
 constexpr uint32_t coord_to_offset(int x, int y, int z) { return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15); }
 
 void Chunk::create_empty_section(int8_t sec) {
-   Game::Section section;
-   section.bits = 4;// start with 4 bits
-   section.data = std::vector<int64_t>(4096 * 4 / 64);
-   section.ref_count = 4096;
-   section.palette.emplace_back(0);
-   sections[sec] = std::move(section);
+   sections[sec] = Game::Section{
+           .ref_count = 4096,
+           .palette{0},
+           .data{4, 4096, []() {return 0;}},
+    };
 }
 
 void Chunk::set_block(int x, int y, int z, uint32_t state) {
@@ -200,15 +198,11 @@ void Chunk::set_block(int x, int y, int z, uint32_t state) {
    if (index == section.palette.end()) {
       value = section.palette.size();
       section.palette.emplace_back(state);
-      if (value >= section.bits) {
-         Utils::resize_pack(section.data, section.bits, section.bits + 1);
-         ++section.bits;
-      }
    } else {
-      value = *index;
+      value = std::distance(section.palette.begin(), index);
    }
 
-   Utils::set_packed(section.data, section.bits, coord_to_offset(x, y, z), value);
+   section.data.set(coord_to_offset(x, y, z), value);
 
    set_block_light(x, y, z, 15);
    set_sky_light(x, y, z, 15);
@@ -298,6 +292,20 @@ int Chunk::height_at(int x, int z) { return Utils::get_packed(hm_world_surface, 
 
 void Chunk::put_section(int8_t level, Section sec) {
    sections[level] = std::move(sec);
+}
+
+std::array<short, 256> Chunk::get_height_map() {
+   std::array<short, 256> result;
+   for (int z = 0; z < 16; ++z) {
+      for (int x = 0; x < 16; ++x) {
+         result[z * 16 + x] = height_at(x, z);
+      }
+   }
+   return result;
+}
+
+Block::ChunkPos Chunk::pos() const {
+   return Block::ChunkPos(pos_x, pos_z);
 }
 
 PaletteItem::PaletteItem(NBT::Reader &r) {

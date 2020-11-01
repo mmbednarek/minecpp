@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <mineutils/format.h>
 #include <mineutils/packed.h>
+#include <mineutils/loop.h>
 
 TEST(Utils, Format) {
    auto empty_format = Utils::format("Hello!");
@@ -90,4 +91,21 @@ TEST(Utils, PackingTest) {
    Utils::for_each_packed(data, 12, 4096, [&i](uint32_t v) {
       ASSERT_EQ(v, i++);
    });
+}
+
+TEST(Utils, Around) {
+   char values[9];
+   memset(values, 0, sizeof(char) * 9);
+
+   Utils::around(1, 1, [&values] (int x, int z) {
+      values[z * 3 + x] = 1;
+   });
+
+   ASSERT_EQ(values[4], 0);
+   for (int x = 0; x < 4; ++x) {
+      ASSERT_EQ(values[x], 1);
+   }
+   for (int x = 5; x < 9; ++x) {
+      ASSERT_EQ(values[x], 1);
+   }
 }

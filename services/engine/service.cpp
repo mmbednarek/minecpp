@@ -322,7 +322,7 @@ void Service::handle_command(uuid id, std::string cmd) {
       auto &e = players.get_entity(id);
       Format::Builder b;
       b.text(Color::Green, "Height ");
-      b.text(std::to_string(world.height_at(e.get_pos().x, e.get_pos().z)));
+      b.text(std::to_string(world.height_at(e.get_pos().x, e.get_pos().z).unwrap(0)));
       minecpp::events::Chat chat;
       chat.set_type(0);
       chat.set_message(b.build());

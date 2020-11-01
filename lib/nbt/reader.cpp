@@ -1,4 +1,5 @@
 #include "reader.h"
+#include "parser.h"
 #include <cassert>
 
 namespace NBT {
@@ -179,8 +180,13 @@ Utils::Vec3 Reader::read_vec3() {
                       read_float64());
 }
 
-ListHeader  Reader::peek_list() {
+ListHeader Reader::peek_list() {
    return ListHeader{read_static(NBT::TagId::End), static_cast<std::size_t>(read_bswap<int>())};
+}
+
+CompoundContent Reader::read_compound_content() {
+   Parser p(raw_stream());
+   return p.read_compound();
 }
 
 }// namespace NBT

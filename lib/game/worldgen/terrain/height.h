@@ -3,7 +3,7 @@
 #include <minerandom/mersenne.h>
 #include <minerandom/perlin.h>
 
-namespace Game::WorldGen {
+namespace Game::WorldGen::Terrain {
 
 class HeightGenerator {
    Rand::Mersenne rand;

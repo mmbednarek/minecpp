@@ -48,7 +48,10 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position) {
    Block::ChunkPos chunk_pos(next_chunk_pos);
 
    if (!chunks_to_free.empty()) {
-      w.free_refs(p.get_id(), chunks_to_free);
+      auto res = w.free_refs(p.get_id(), chunks_to_free);
+      if (!res.ok()) {
+         return;
+      }
    }
 
    if (!chunks_to_load.empty()) {
@@ -57,7 +60,7 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position) {
                 [chunk_pos](const Block::ChunkPos &a, const Block::ChunkPos &b) {
                    return dist_sq(chunk_pos, a) < dist_sq(chunk_pos, b);
                 });
-      w.add_refs(p.get_id(), chunks_to_load);
+      w.add_refs(p.get_id(), chunks_to_load).unwrap();
       w.notifier().load_terrain(p.get_id(), chunk_pos, chunks_to_load);
    }
 }
@@ -81,7 +84,7 @@ void Tracking::load_chunks(World &w, Player &p) {
                 return dist_sq(chunk_pos, a) < dist_sq(chunk_pos, b);
              });
 
-   w.add_refs(p.get_id(), chunks_to_load);
+   w.add_refs(p.get_id(), chunks_to_load).unwrap();
    w.notifier().load_terrain(p.get_id(), chunk_pos, chunks_to_load);
 }
 

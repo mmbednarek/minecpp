@@ -38,7 +38,6 @@ void set_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index, uint32
    data[pack] = full_pack;
 }
 
-
 std::vector<int64_t> generate_packed(uint8_t bits, uint32_t array_size, const std::function<uint32_t()>& generator) {
    int packs = bits * array_size / 64;
    if (64 % bits != 0) {
@@ -86,7 +85,7 @@ void resize_pack(std::vector<int64_t> &data, uint8_t old_bits, uint8_t new_bits)
       ++index;
    });
 
-   data = resized;
+   data = std::move(resized);
 }
 
 } // namespace Utils

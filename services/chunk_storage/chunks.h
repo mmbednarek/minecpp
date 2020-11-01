@@ -5,8 +5,9 @@
 #include <error/result.h>
 #include <game/blocks/position.h>
 #include <game/chunk/chunk.h>
-#include <game/worldgen/worldgen.h>
-#include <game/worldgen/population.h>
+#include <game/chunks.h>
+#include <game/worldgen/generator.h>
+#include <game/worldgen/terrain/terrain.h>
 #include <map>
 #include <memory>
 #include <minerandom/java_random.h>
@@ -15,16 +16,18 @@ namespace ChunkStorage {
 
 using uuid = boost::uuids::uuid;
 
-class ChunkManager {
+class ChunkManager : public Game::Chunks {
    std::map<int64_t, std::unique_ptr<Game::Chunk>> chunks;
    Regions regions;
-   Rand::JavaRandom rand;
-   Rand::Perlin perlin;
-   Game::WorldGen::Population population;
+   Game::WorldGen::Generator gen;
+
 
  public:
    explicit ChunkManager(Regions regions);
 
+   Game::Chunk &get_incomplete_chunk(int x, int z) override;
+   result<empty> put_chunk(int x, int z, std::unique_ptr<Game::Chunk> chunk) override;
+   result<Game::ChunkState> get_chunk_state(int x, int z) override;
    result<Game::Chunk &> get_chunk(int x, int y);
    result<Game::Chunk &> get_chunk(Game::Block::ChunkPos pos);
    result<Game::Chunk &> load_chunk(int x, int y);

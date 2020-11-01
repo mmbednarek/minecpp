@@ -51,7 +51,7 @@ Section SectionBuilder::build() {
    auto light = std::vector<uint8_t>(2048);
    std::fill(light.begin(), light.end(), 255);
 
-   std::vector<int> out_palette(top_item);
+   std::vector<std::uint32_t> out_palette(top_item);
    std::for_each(palette.begin(), palette.end(), [&out_palette](auto &item) {
       out_palette[item.second] = item.first;
    });
@@ -59,10 +59,9 @@ Section SectionBuilder::build() {
    int ref_count = Game::calculate_ref_count(data, out_palette);
 
    return Section{
-           .bits = static_cast<uint8_t>(bits),
            .ref_count = ref_count,
            .palette = std::move(out_palette),
-           .data = std::move(data),
+           .data{static_cast<uint8_t>(bits), 4096, data},
            .block_light = light,
            .sky_light = light,
    };

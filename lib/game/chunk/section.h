@@ -3,16 +3,16 @@
 #include <vector>
 #include <map>
 #include <functional>
+#include <squeeze/vector.h>
 
 namespace Game {
 
 struct Section {
-   uint8_t bits;
    int ref_count;
-   std::vector<int> palette;
-   std::vector<int64_t> data;
-   std::vector<uint8_t> block_light;
-   std::vector<uint8_t> sky_light;
+   std::vector<std::uint32_t> palette;
+   Squeeze::Vector data;
+   std::vector<std::uint8_t> block_light;
+   std::vector<std::uint8_t> sky_light;
 };
 
 class SectionBuilder {

@@ -4,7 +4,7 @@
 
 namespace Game {
 
-int calculate_ref_count(const std::vector<int64_t> &data,
-                        const std::vector<int> &palette);
+int calculate_ref_count(const std::vector<std::int64_t> &data,
+                        const std::vector<std::uint32_t> &palette);
 
 }

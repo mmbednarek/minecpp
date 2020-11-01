@@ -9,7 +9,7 @@ World::World(uuid engine_id, const Engine::ChunkService &service, Dispatcher &di
 
 Game::Notifier &World::notifier() { return dispatcher; }
 
-void World::add_refs(uuid player, std::vector<ChunkPos> refs) {
+result<empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
    using minecpp::chunk_storage::ReferenceStatus;
 
    grpc::ClientContext ctx;
@@ -24,7 +24,7 @@ void World::add_refs(uuid player, std::vector<ChunkPos> refs) {
    }
    auto status = service->AddReferences(&ctx, req, &res);
    if (!status.ok()) {
-      throw std::runtime_error(status.error_message());
+      return error(errclass::Internal, status.error_message());
    }
 
    if (res.status() == ReferenceStatus::MUST_MOVE) {
@@ -32,9 +32,11 @@ void World::add_refs(uuid player, std::vector<ChunkPos> refs) {
       Utils::decode_uuid(target_engine, res.target_engine_id().data());
       dispatcher.transfer_player(player, target_engine);
    }
+
+   return result_ok;
 }
 
-void World::free_refs(uuid player, std::vector<ChunkPos> refs) {
+result<empty> World::free_refs(uuid player, std::vector<ChunkPos> refs) {
    grpc::ClientContext ctx;
    minecpp::chunk_storage::RemoveReferencesRequest req;
    minecpp::chunk_storage::EmptyResponse res;
@@ -48,11 +50,13 @@ void World::free_refs(uuid player, std::vector<ChunkPos> refs) {
 
    auto status = service->RemoveReference(&ctx, req, &res);
    if (!status.ok()) {
-      throw std::runtime_error(status.error_message());
+      return error(errclass::Internal, status.error_message());
    }
+
+   return result_ok;
 }
 
-int World::height_at(int x, int z) {
+result<int> World::height_at(int x, int z) {
    grpc::ClientContext ctx;
    minecpp::chunk_storage::HeightAtRequest req;
    minecpp::chunk_storage::HeightAtResponse res;
@@ -60,7 +64,7 @@ int World::height_at(int x, int z) {
    req.set_z(z);
    auto status = service->HeightAt(&ctx, req, &res);
    if (!status.ok()) {
-      return 0;
+      return error(status.error_message());
    }
    return res.height();
 }

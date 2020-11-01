@@ -222,6 +222,8 @@ int main(int argc, char **argv) {
    NBT::Parser p(file);
    auto tag = p.read_tag();
 
+   std::cout << tag.content.to_string();
+
    NameProvider np;
 
    Utils::ScriptWriter w(std::cout);

@@ -1,11 +1,12 @@
 #pragma once
+#include "section.h"
 #include <boost/uuid/uuid.hpp>
 #include <error/result.h>
+#include <game/blocks/position.h>
 #include <minepb/chunk.pb.h>
 #include <nbt/reader.h>
 #include <nbt/tag.h>
 #include <string_view>
-#include "section.h"
 
 namespace Game {
 
@@ -33,10 +34,12 @@ struct Chunk {
    void set_sky_light(int x, int y, int z, uint8_t value);
    int height_at(int x, int z);
    void put_section(int8_t level, Section sec);
+   std::array<short, 256> get_height_map();
 
    [[nodiscard]] uuid get_lock() const;
    bool add_ref(uuid engine_id, uuid player_id);
    void free_ref(uuid player_id);
+   Block::ChunkPos pos() const;
 
    static result<std::unique_ptr<Chunk>> from_nbt(NBT::Reader &r);
 };
