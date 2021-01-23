@@ -21,18 +21,20 @@ enum class TypeVariant {
    Bytes,
    Ints,
    Longs,
-   Compound,
+   Struct,
    List,
-   Map
+   Compound
 };
 
 struct Type {
-   TypeVariant variant = TypeVariant::Compound;
-   int repeated = 0;
+   TypeVariant variant = TypeVariant::Struct;
+   std::unique_ptr<Type> m_subtype;
+   int m_repeated = 0;
    std::string name;
 
    Type() = default;
    Type(std::string name, int repeated);
+   Type(std::unique_ptr<Type> subtype, int repeated);
 
    bool operator==(const Type &other) const;
    bool operator<(const Type &other) const;

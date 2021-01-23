@@ -26,6 +26,8 @@ class Terrain {
    int grass_id;
    int sand_id;
    int water_id;
+   int snow_id;
+   int snow_block_id;
  public:
    Terrain(uint64_t seed, int x, int z);
 

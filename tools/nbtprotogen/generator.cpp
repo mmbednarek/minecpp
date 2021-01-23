@@ -78,7 +78,7 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes) {
    }
 }
 
-Type::Type(std::string name, int repeated) : repeated(repeated), name(name) {
+Type::Type(std::string name, int repeated) : m_repeated(repeated), name(name) {
    if (name == "int8") {
       variant = TypeVariant::Int8;
       return;
@@ -119,8 +119,8 @@ Type::Type(std::string name, int repeated) : repeated(repeated), name(name) {
       variant = TypeVariant::Longs;
       return;
    }
-   if (name == "map") {
-      variant = TypeVariant::Map;
+   if (name == "compound") {
+      variant = TypeVariant::Compound;
       return;
    }
 }
@@ -137,72 +137,72 @@ std::string Type::to_cpp() const {
       case TypeVariant::Bytes: return "std::vector<std::uint8_t>";
       case TypeVariant::Ints: return "std::vector<std::int32_t>";
       case TypeVariant::Longs: return "std::vector<std::int64_t>";
-      case TypeVariant::Map: return "NBT::CompoundContent";
+      case TypeVariant::Compound: return "NBT::CompoundContent";
       }
       return name;
    }(variant, name);
 
-   if (repeated == 0) {
+   if (m_repeated == 0) {
       return result;
    }
 
    std::stringstream ss;
-   for (int i = 0; i < repeated; ++i) {
+   for (int i = 0; i < m_repeated; ++i) {
       ss << "std::vector<";
    }
    ss << result;
-   for (int i = 0; i < repeated; ++i) {
+   for (int i = 0; i < m_repeated; ++i) {
       ss << ">";
    }
    return ss.str();
 }
 
 void Type::write_value(ScriptWriter &w, const std::string_view name, const std::string_view label) const {
-   if (repeated > 0) {
-      w.line("w.begin_list(\"{1}\", {2}, {0}.size());", name, label, (repeated == 1 ? variant_to_nbt_tag(variant) : "NBT::TagId::List"));
+   if (m_repeated > 0) {
+      w.line("w.begin_list(\"{1}\", {2}, {0}.size());", name, label, (m_repeated == 1 ? variant_to_nbt_tag(variant) : "NBT::TagId::List"));
       w.scope("for (const auto &val0 : {})", name);
-      for (int i = 1; i < repeated; ++i) {
-         w.line("w.begin_list_no_header({}, val{}.size());", (repeated == (i + 1) ? variant_to_nbt_tag(variant) : "NBT::TagId::List"), (i - 1));
+      for (int i = 1; i < m_repeated; ++i) {
+         w.line("w.begin_list_no_header({}, val{}.size());", (m_repeated == (i + 1) ? variant_to_nbt_tag(variant) : "NBT::TagId::List"), (i - 1));
          w.scope("for (const auto &val{} : val{})", i, i - 1);
       }
       switch (variant) {
       case TypeVariant::Int8:
-         w.line("w.write_byte_content(val{});", repeated - 1);
+         w.line("w.write_byte_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Int16:
-         w.line("w.write_short_content(val{});", repeated - 1);
+         w.line("w.write_short_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Int32:
-         w.line("w.write_int_content(val{});", repeated - 1);
+         w.line("w.write_int_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Int64:
-         w.line("w.write_long_content(val{});", repeated - 1);
+         w.line("w.write_long_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::String:
-         w.line("w.write_string_content(val{});", repeated - 1);
+         w.line("w.write_string_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Float:
-         w.line("w.write_float_content(val{});", repeated - 1);
+         w.line("w.write_float_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Double:
-         w.line("w.write_double_content(val{});", repeated - 1);
+         w.line("w.write_double_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Bytes:
-         w.line("w.write_bytes_content(val{});", repeated - 1);
+         w.line("w.write_bytes_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Ints:
-         w.line("w.write_ints_content(val{});", repeated - 1);
+         w.line("w.write_ints_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Longs:
-         w.line("w.write_longs_content(val{});", repeated - 1);
+         w.line("w.write_longs_content(val{});", m_repeated - 1);
          break;
-      case TypeVariant::Map:
-         w.line("NBT::serialize_compound_content(w, val{});", repeated - 1);
+      case TypeVariant::Compound:
+         w.line("NBT::serialize_compound_content(w, val{});", m_repeated - 1);
          break;
       default:
-         w.line("val{}.serialize_no_header(w);", repeated - 1);
+         w.line("val{}.serialize_no_header(w);", m_repeated - 1);
       }
-      for (int i = 0; i < repeated; ++i) {
+      for (int i = 0; i < m_repeated; ++i) {
          w.descope();
       }
       return;
@@ -239,7 +239,7 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
    case TypeVariant::Longs:
       w.line("w.write_longs(\"{1}\", {0});", name, label);
       break;
-   case TypeVariant::Map:
+   case TypeVariant::Compound:
       w.line("w.write_header(NBT::TagId::Compound, \"{}\");", label);
       w.line("NBT::serialize_compound_content(w, {});", name);
       break;
@@ -250,7 +250,7 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
 }
 
 std::string Type::nbt_tagid() const {
-   if (repeated) {
+   if (m_repeated) {
       return "NBT::TagId::List";
    }
    switch (variant) {
@@ -276,19 +276,22 @@ bool Type::operator<(const Type &other) const {
    return variant < other.variant;
 }
 
+Type::Type(std::unique_ptr<Type> subtype, int repeated) : m_subtype(std::move(subtype)) {
+}
+
 std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &attribs) {
    std::map<TypeVariant, std::any> res;
    std::vector<Attribute> list;
 
    for (const auto &att : attribs) {
-      if (att.t.repeated > 0) {
+      if (att.t.m_repeated > 0) {
          auto copied = att;
-         --copied.t.repeated;
+         --copied.t.m_repeated;
          list.emplace_back(std::move(copied));
          continue;
       }
-      if (att.t.variant == TypeVariant::Compound) {
-         auto it = res.find(TypeVariant::Compound);
+      if (att.t.variant == TypeVariant::Struct) {
+         auto it = res.find(TypeVariant::Struct);
          if (it == res.end()) {
             res[att.t.variant] = CompoundDeserializer{.elems{
                     {
@@ -339,7 +342,7 @@ static std::string_view put_static_read(StaticDeserializer des) {
       return "r.read_int_vec()";
    case TypeVariant::Longs:
       return "r.read_long_vec()";
-   case TypeVariant::Map:
+   case TypeVariant::Compound:
       return "r.read_compound_content()";
    default:
       break;

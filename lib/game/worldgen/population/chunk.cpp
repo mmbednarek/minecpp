@@ -30,7 +30,7 @@ void ChunkPlacements::prepare_chunk(Game::Chunk &chunk) {
             continue;
          }
          short height = chunk.height_at(_x, _z) + 1;
-         if (height < 69)
+         if (height < 69 || height > 90)
             continue;
 
          std::uint32_t value = rand.next_int(10000);

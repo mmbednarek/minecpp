@@ -22,7 +22,7 @@ Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z
    std::copy(arr.begin(), arr.end(), hm_motion_blocking.begin());
    std::copy(arr.begin(), arr.end(), hm_world_surface.begin());
 
-   std::fill(biomes.begin(), biomes.end(), 4);
+   std::fill(biomes.begin(), biomes.end(), 34);
 }
 
 result<std::unique_ptr<Chunk>> Chunk::from_nbt(NBT::Reader &r) {
@@ -132,8 +132,8 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
                     .ref_count = ref_count,
                     .palette = std::move(palette),
                     .data = Squeeze::Vector(bits, 4096, data),
-                    .block_light = std::move(block_light),
-                    .sky_light = std::move(sky_light),
+                    .block_light = Squeeze::TinyVec<4>(std::move(block_light)),
+                    .sky_light = Squeeze::TinyVec<4>(std::move(sky_light)),
             };
          });
          return result_ok;
@@ -169,8 +169,8 @@ void Chunk::as_proto(minecpp::chunk::NetChunk *chunk) {
       out_sec->set_ref_count(sec.second.ref_count);
       *out_sec->mutable_palette() = {sec.second.palette.begin(), sec.second.palette.end()};
       *out_sec->mutable_data() = {sec.second.data.raw().begin(), sec.second.data.raw().end()};
-      *out_sec->mutable_block_light() = {sec.second.block_light.begin(), sec.second.block_light.end()};
-      *out_sec->mutable_sky_light() = {sec.second.sky_light.begin(), sec.second.sky_light.end()};
+      *out_sec->mutable_block_light() = {sec.second.block_light.raw().begin(), sec.second.block_light.raw().end()};
+      *out_sec->mutable_sky_light() = {sec.second.sky_light.raw().begin(), sec.second.sky_light.raw().end()};
    }
 }
 
@@ -219,31 +219,7 @@ uint8_t Chunk::get_block_light(int x, int y, int z) {
       return 0;
    }
 
-   auto index = coord_to_offset(x, y, z);
-
-   if (index % 2 == 0) {
-      return iter->second.block_light[index / 2] & 15;
-   } else {
-      return iter->second.block_light[index / 2] >> 4;
-   }
-}
-
-static void set_light_value(std::vector<uint8_t> &light, int x, int y, int z, uint8_t value) {
-   if (light.empty()) {
-      return;
-   }
-
-   int index = coord_to_offset(x, y, z);
-
-   auto pack = light[index / 2];
-   if (index % 2 == 0) {
-      pack &= 240;
-      pack |= value & 15;
-   } else {
-      pack &= 15;
-      pack |= (value & 15) << 4;
-   }
-   light[index / 2] = pack;
+   return iter->second.block_light.at(coord_to_offset(x, y, z));
 }
 
 void Chunk::set_block_light(int x, int y, int z, uint8_t value) {
@@ -252,7 +228,12 @@ void Chunk::set_block_light(int x, int y, int z, uint8_t value) {
    if (iter == sections.end()) {
       return;
    }
-   set_light_value(iter->second.block_light, x, y, z, value);
+
+   if (iter->second.block_light.empty()) {
+      iter->second.block_light = Squeeze::TinyVec<4>(4096);
+   }
+
+   iter->second.block_light.set(coord_to_offset(x, y, z), value);
 }
 
 void Chunk::set_sky_light(int x, int y, int z, uint8_t value) {
@@ -261,7 +242,12 @@ void Chunk::set_sky_light(int x, int y, int z, uint8_t value) {
    if (iter == sections.end()) {
       return;
    }
-   set_light_value(iter->second.sky_light, x, y, z, value);
+
+   if (iter->second.block_light.empty()) {
+      iter->second.block_light = Squeeze::TinyVec<4>(4096);
+   }
+
+   iter->second.sky_light.set(coord_to_offset(x, y, z), value);
 }
 
 bool Chunk::add_ref(uuid engine_id, uuid player_id) {

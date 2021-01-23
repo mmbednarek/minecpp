@@ -62,8 +62,8 @@ Section SectionBuilder::build() {
            .ref_count = ref_count,
            .palette = std::move(out_palette),
            .data{static_cast<uint8_t>(bits), 4096, data},
-           .block_light = light,
-           .sky_light = light,
+           .block_light{Squeeze::TinyVec<4>(light)},
+           .sky_light{Squeeze::TinyVec<4>(std::move(light))},
    };
 }
 

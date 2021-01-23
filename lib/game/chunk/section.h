@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include <squeeze/vector.h>
+#include <squeeze/tiny.h>
 
 namespace Game {
 
@@ -11,8 +12,8 @@ struct Section {
    int ref_count;
    std::vector<std::uint32_t> palette;
    Squeeze::Vector data;
-   std::vector<std::uint8_t> block_light;
-   std::vector<std::uint8_t> sky_light;
+   Squeeze::TinyVec<4> block_light;
+   Squeeze::TinyVec<4> sky_light;
 };
 
 class SectionBuilder {

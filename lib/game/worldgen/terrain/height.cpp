@@ -10,8 +10,8 @@ short HeightGenerator::at(int x, int z) {
    auto perlin_pos = Utils::Vec2(x, z);
 
    result += base_perlin.at(perlin_pos / 128.0) * 64;
-   result += perlin_detail0.at(perlin_pos / 36.0 + Utils::Vec2(0.1, 0.3)) * 48;
-   result += perlin_detail1.at(perlin_pos / 16.0 + Utils::Vec2(0.6, 0.32)) * 16;
+   result += perlin_detail0.at(perlin_pos / 80.0 + Utils::Vec2(0.1, 0.3)) * 120;
+   result += perlin_detail1.at(perlin_pos / 20.0 + Utils::Vec2(0.6, 0.32)) * 28;
 
    return static_cast<short>(result);
 }
