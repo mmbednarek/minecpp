@@ -1,3 +1,0 @@
-/home/ego/projects/minecpp/build/_deps/grpc-subbuild/CMakeFiles/rebuild_cache.dir
-/home/ego/projects/minecpp/build/_deps/grpc-subbuild/CMakeFiles/edit_cache.dir
-/home/ego/projects/minecpp/build/_deps/grpc-subbuild/CMakeFiles/grpc-populate.dir

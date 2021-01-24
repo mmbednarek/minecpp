@@ -1,2 +1,0 @@
-/usr/bin/ar qc libminecpp_rand.a CMakeFiles/minecpp_rand.dir/java_random.cpp.o CMakeFiles/minecpp_rand.dir/perlin.cpp.o CMakeFiles/minecpp_rand.dir/mersenne.cpp.o CMakeFiles/minecpp_rand.dir/perlin3d.cpp.o
-/usr/bin/ranlib libminecpp_rand.a

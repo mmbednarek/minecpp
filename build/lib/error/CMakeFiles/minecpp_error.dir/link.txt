@@ -1,2 +1,0 @@
-/usr/bin/ar qc libminecpp_error.a CMakeFiles/minecpp_error.dir/error.cpp.o
-/usr/bin/ranlib libminecpp_error.a

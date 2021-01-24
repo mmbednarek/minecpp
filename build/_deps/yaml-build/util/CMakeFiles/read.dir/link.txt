@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 CMakeFiles/read.dir/read.cpp.o -o read  ../libyaml-cpp.a 

@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 CMakeFiles/exhaustive1_test.dir/re2/testing/exhaustive1_test.cc.o CMakeFiles/exhaustive1_test.dir/util/test.cc.o -o exhaustive1_test  libtesting.a libre2.a -pthread 

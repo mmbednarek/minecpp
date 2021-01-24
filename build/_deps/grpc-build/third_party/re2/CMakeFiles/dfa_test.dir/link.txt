@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 CMakeFiles/dfa_test.dir/re2/testing/dfa_test.cc.o CMakeFiles/dfa_test.dir/util/test.cc.o -o dfa_test  libtesting.a libre2.a -pthread 

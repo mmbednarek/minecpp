@@ -1,2 +1,0 @@
-/usr/bin/ar qc libminecpp_net.a CMakeFiles/minecpp_net.dir/msg/reader.cpp.o CMakeFiles/minecpp_net.dir/msg/writer.cpp.o CMakeFiles/minecpp_net.dir/msg/clientbound.cpp.o CMakeFiles/minecpp_net.dir/msg/chunk.cpp.o CMakeFiles/minecpp_net.dir/msg/serverbound.cpp.o CMakeFiles/minecpp_net.dir/chat.cpp.o
-/usr/bin/ranlib libminecpp_net.a
