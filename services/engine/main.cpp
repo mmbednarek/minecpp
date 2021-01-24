@@ -5,26 +5,13 @@
 #include <grpcpp/security/credentials.h>
 #include <grpcpp/server_builder.h>
 #include <iostream>
+#include <mb/core.h>
 #include <spdlog/spdlog.h>
 
 auto main() -> int {
-   auto player_path = std::getenv("PLAYERS_PATH");
-   if (!player_path) {
-      spdlog::error("empty PLAYERS_PATH");
-      return 1;
-   }
-
-   std::string chunk_storage_address = std::getenv("CHUNK_STORAGE_ADDRESS");
-   if (chunk_storage_address.empty()) {
-      spdlog::error("empty CHUNK_STORAGE_ADDRESS");
-      return 1;
-   }
-
-   auto listen = std::getenv("LISTEN");
-   if (!listen) {
-      spdlog::error("empty LISTEN env");
-      return 1;
-   }
+   auto player_path = mb::getenv("PLAYERS_PATH").unwrap("world/playerdata");
+   auto chunk_storage_address = mb::getenv("CHUNK_STORAGE_ADDRESS").unwrap("127.0.0.1:7000");
+   auto listen = mb::getenv("LISTEN").unwrap("0.0.0.0:7800");
 
    Engine::EntityManager entities;
    Engine::PlayerManager players(player_path, entities);
@@ -32,7 +19,7 @@ auto main() -> int {
    auto channel = grpc::CreateChannel(chunk_storage_address,
                                       grpc::InsecureChannelCredentials());
    std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_storage =
-       minecpp::chunk_storage::ChunkStorage::NewStub(channel);
+           minecpp::chunk_storage::ChunkStorage::NewStub(channel);
 
    Engine::Service service(entities, players, chunk_storage);
 

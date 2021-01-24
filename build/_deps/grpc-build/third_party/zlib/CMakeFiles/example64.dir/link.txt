@@ -1,0 +1,1 @@
+/usr/bin/cc -O3 -DNDEBUG -rdynamic CMakeFiles/example64.dir/test/example.o -o example64  -Wl,-rpath,/home/ego/projects/minecpp/build/_deps/grpc-build/third_party/zlib libz.so.1.2.11 

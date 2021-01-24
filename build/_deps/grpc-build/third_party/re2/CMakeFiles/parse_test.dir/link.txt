@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 CMakeFiles/parse_test.dir/re2/testing/parse_test.cc.o CMakeFiles/parse_test.dir/util/test.cc.o -o parse_test  libtesting.a libre2.a -pthread 

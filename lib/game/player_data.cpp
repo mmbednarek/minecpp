@@ -254,8 +254,10 @@ Player PlayerData::to_player(std::string &name) {
    player.abilities.invulnerable = player.abilities.invulnerable;
    player.abilities.may_build = player.abilities.may_build;
    player.abilities.instant_build = player.abilities.instant_build;
-   player.abilities.flying = player.abilities.flying;
-   player.abilities.may_fly = player.abilities.may_fly;
+//   player.abilities.flying = player.abilities.flying;
+   player.abilities.flying = true;
+   player.abilities.may_fly = true;
+//   player.abilities.may_fly = player.abilities.may_fly;
    player.abilities.walk_speed = player.abilities.walk_speed;
    player.abilities.fly_speed = player.abilities.fly_speed;
    return player;

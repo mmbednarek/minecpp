@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminecpp_format.a CMakeFiles/minecpp_format.dir/format.cpp.o
+/usr/bin/ranlib libminecpp_format.a

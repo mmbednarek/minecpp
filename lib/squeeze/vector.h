@@ -1,6 +1,6 @@
 #pragma once
 #include <array>
-#include <cstddef>
+#include <mb/int.h>
 #include <functional>
 #include <utility>
 #include <vector>
@@ -8,63 +8,63 @@
 namespace Squeeze {
 
 class Vector {
-   std::vector<std::uint64_t> m_data;
-   std::uint8_t m_bits;
-   std::size_t m_size;
+   std::vector<mb::u64> m_data;
+   mb::u8 m_bits;
+   mb::size m_size;
 
  public:
    template<typename I>
-   Vector(std::uint8_t bits, std::vector<I> values) : m_bits(bits), m_size(values.size()) {
+   Vector(mb::u8 bits, std::vector<I> values) : m_bits(bits), m_size(values.size()) {
       int per_pack = 64 / bits;
       int packs = values.size() / per_pack;
       if (values.size() % per_pack != 0)
          ++packs;
-      uint32_t mask = (1u << bits) - 1u;
+      mb::u32 mask = (1u << bits) - 1u;
 
       m_data.resize(packs);
       std::generate(m_data.begin(), m_data.end(), [&values, per_pack, bits, mask, i = 0]() mutable {
-         uint64_t pack = 0;
-         uint32_t shift = 0;
+         mb::u64 pack = 0;
+         mb::u32 shift = 0;
          for (int j = 1; j < per_pack; ++j) {
-            pack |= static_cast<std::uint64_t>(values[i] & mask) << shift;
+            pack |= static_cast<mb::u64>(values[i] & mask) << shift;
             ++i;
             if (i >= values.size()) {
                return pack;
             }
             shift += bits;
          }
-         pack |= static_cast<std::uint64_t>(values[i] & mask) << shift;
+         pack |= static_cast<mb::u64>(values[i] & mask) << shift;
          ++i;
          return pack;
       });
    }
 
    Vector();
-   Vector(std::uint8_t bits, std::size_t size, std::vector<std::uint64_t> data);
-   Vector(std::uint8_t bits, std::size_t size, std::vector<std::int64_t> i_data);
-   Vector(std::uint8_t bits, std::size_t size, std::function<std::int32_t()> gen);
+   Vector(mb::u8 bits, mb::size size, std::vector<mb::u64> data);
+   Vector(mb::u8 bits, mb::size size, std::vector<mb::i64> i_data);
+   Vector(mb::u8 bits, mb::size size, std::function<mb::i32()> gen);
 
-   [[nodiscard]] constexpr std::size_t size() const {
+   [[nodiscard]] constexpr mb::size size() const {
       return m_size;
    }
-   [[nodiscard]] constexpr std::int8_t bits() const {
+   [[nodiscard]] constexpr mb::i8 bits() const {
       return m_bits;
    }
-   [[nodiscard]] constexpr const std::vector<uint64_t> &raw() const {
+   [[nodiscard]] constexpr const std::vector<mb::u64> &raw() const {
       return m_data;
    }
 
-   [[nodiscard]] std::int32_t at(std::size_t i) const;
-   [[nodiscard]] std::int32_t operator[](std::size_t i) const;
+   [[nodiscard]] mb::i32 at(mb::size i) const;
+   [[nodiscard]] mb::i32 operator[](mb::size i) const;
 
-   void set(std::size_t i, std::int32_t value);
-   void set_bits(std::uint8_t new_bits);
+   void set(mb::size i, mb::i32 value);
+   void set_bits(mb::u8 new_bits);
    void inc_bits();
 
    struct Iterator {
       Vector &vec;
-      std::size_t pack;
-      uint32_t offset;
+      mb::size pack;
+      mb::u32 offset;
 
       Iterator &operator++();
 
@@ -74,7 +74,7 @@ class Vector {
 
       bool operator!=(Iterator other) const;
 
-      [[nodiscard]] std::int32_t operator*() const;
+      [[nodiscard]] mb::i32 operator*() const;
 
       using difference_type = Vector;
       using value_type = Vector;

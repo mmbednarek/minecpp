@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 CMakeFiles/search_test.dir/re2/testing/search_test.cc.o CMakeFiles/search_test.dir/util/test.cc.o -o search_test  libtesting.a libre2.a -pthread 

@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 CMakeFiles/random_test.dir/re2/testing/random_test.cc.o CMakeFiles/random_test.dir/util/test.cc.o -o random_test  libtesting.a libre2.a -pthread 

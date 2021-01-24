@@ -114,12 +114,13 @@ Writer serialize(UpdateLight msg);
 // 0x26
 struct JoinGame {
    uint32_t player_id{};
+   bool is_hardcore{};
    uint8_t game_mode{};
-   uint8_t player_game_mode{};
+   uint8_t previous_game_mode{};
    std::vector<std::string> available_dimensions{};
+   std::string dimension_codec{};
    std::string dimension_type{};
-   std::string dimension{};
-   std::string dimension_props;
+   std::string world_name{};
    uint64_t seed{};
    uint8_t max_players{};
    uint32_t view_distance{};

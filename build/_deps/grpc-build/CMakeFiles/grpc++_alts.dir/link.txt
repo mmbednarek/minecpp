@@ -1,0 +1,2 @@
+/usr/bin/ar qc libgrpc++_alts.a CMakeFiles/grpc++_alts.dir/src/cpp/common/alts_context.cc.o CMakeFiles/grpc++_alts.dir/src/cpp/common/alts_util.cc.o
+/usr/bin/ranlib libgrpc++_alts.a

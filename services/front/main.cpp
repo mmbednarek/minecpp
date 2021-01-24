@@ -21,7 +21,12 @@ auto main() -> int {
    Engine::Client::Config engine_cfg{
        .addresses = conf.engine_hosts,
    };
-   Engine::Client::Provider engine_provider(engine_cfg);
+   auto engine_provider_res = Engine::Client::Provider::create(engine_cfg);
+   if (!engine_provider_res.ok()) {
+      spdlog::error("could not create engine provider: {}", engine_provider_res.msg());
+      return 1;
+   }
+   auto engine_provider = engine_provider_res.unwrap();
 
    auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());
    std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_service =

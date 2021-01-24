@@ -8,7 +8,7 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    w.write_big_endian(chunk.pos_x());
    w.write_big_endian(chunk.pos_z());
    w.write_byte(chunk.full());
-   w.write_byte(0);
+//   w.write_byte(0);
 
    size_t buff_size = 0;
 
@@ -35,12 +35,14 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    }
    height_maps.end_compound();
 
-   for (auto biome : chunk.biomes()) {
-      w.write_big_endian(biome);
+   if (chunk.full()) {
+      w.write_varint(chunk.biomes_size());
+      for (auto biome : chunk.biomes()) {
+         w.write_varint(biome);
+      }
    }
 
    w.write_varint(buff_size);
-
    for (const auto &sec : chunk.sections()) {
       if (sec.data_size() == 0) {
          continue;
@@ -85,7 +87,7 @@ void write_light(Writer &w, const minecpp::chunk::NetChunk &chunk) {
 
    w.write_varint(chunk.pos_x());
    w.write_varint(chunk.pos_z());
-   w.write_byte(0); // TODO: determine what this flag does
+   w.write_byte(0); // Trust edges
    w.write_varint(skyUpdateMask);
    w.write_varint(blockUpdateMask);
    w.write_varint(skyResetMask);

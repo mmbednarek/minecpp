@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <mb/result.h>
 
 struct Config {
    std::vector<std::string> engine_hosts;

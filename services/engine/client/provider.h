@@ -1,10 +1,11 @@
 #pragma once
 #include <boost/uuid/uuid.hpp>
-#include <map>
+#include <mb/result.h>
 #include <minepb/engine.grpc.pb.h>
 #include <random>
 #include <string>
 #include <vector>
+#include <map>
 
 namespace Engine::Client {
 
@@ -25,16 +26,18 @@ class Provider {
    };
 
  private:
-   std::vector<Service> services;
-   std::map<uuid, int> id_map;
-   std::default_random_engine rand{};
+   std::vector<Service> m_services;
+   std::map<uuid, int> m_uuid_to_id;
+   std::default_random_engine m_random_engine{};
 
  public:
-   explicit Provider(Config &cfg);
+   static mb::result<Provider> create(const Config &cfg);
 
-   Service &get_random_service();
-   PlayerService &get_service_by_id(uuid id);
-   const std::vector<Service> &get_services();
+   Provider(std::vector<Service> services, std::map<uuid, int> id_map);
+
+   [[nodiscard]] Service &get_random_service();
+   [[nodiscard]] PlayerService &get_service_by_id(uuid id);
+   [[nodiscard]] const std::vector<Service> &get_services() const;
 };
 
-} // namespace Engine::Client
+}// namespace Engine::Client

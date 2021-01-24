@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 CMakeFiles/string_generator_test.dir/re2/testing/string_generator_test.cc.o CMakeFiles/string_generator_test.dir/util/test.cc.o -o string_generator_test  libtesting.a libre2.a -pthread 

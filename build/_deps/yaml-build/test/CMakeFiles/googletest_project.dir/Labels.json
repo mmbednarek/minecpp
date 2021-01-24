@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/CMakeFiles/googletest_project"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/CMakeFiles/googletest_project.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/CMakeFiles/googletest_project-complete.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-install.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-mkdir.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-download.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-update.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-patch.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-configure.rule"
+		},
+		{
+			"file" : "/home/ego/projects/minecpp/build/_deps/yaml-build/test/googletest_project-prefix/src/googletest_project-stamp/googletest_project-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"googletest_project"
+		],
+		"name" : "googletest_project"
+	}
+}

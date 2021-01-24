@@ -6,14 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-add_subdirectory(boost-cmake)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
+find_package(Protobuf REQUIRED)
 
 include(FetchContent)
 FetchContent_Declare(
         gRPC
         GIT_REPOSITORY https://github.com/grpc/grpc
-        GIT_TAG v1.25.0
+        GIT_TAG v1.35.0
 )
 FetchContent_MakeAvailable(gRPC)
 
@@ -27,7 +27,7 @@ FetchContent_MakeAvailable(yaml)
 FetchContent_Declare(
         spdlog
         GIT_REPOSITORY https://github.com/gabime/spdlog
-        GIT_TAG v1.6.1
+        GIT_TAG v1.8.2
 )
 FetchContent_MakeAvailable(spdlog)
 
@@ -41,9 +41,16 @@ FetchContent_MakeAvailable(gtest)
 FetchContent_Declare(
         fmt
         GIT_REPOSITORY https://github.com/fmtlib/fmt
-        GIT_TAG 7.0.3
+        GIT_TAG 7.1.3
 )
 FetchContent_MakeAvailable(fmt)
+
+FetchContent_Declare(
+        libmb
+        GIT_REPOSITORY https://github.com/mmbednarek/mb
+        GIT_TAG libmb-0.0.14
+)
+FetchContent_MakeAvailable(libmb)
 
 include_directories(./lib)
 include_directories(./services/protos/include)

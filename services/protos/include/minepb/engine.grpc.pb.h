@@ -7,34 +7,24 @@
 #include "engine.pb.h"
 
 #include <functional>
+#include <grpc/impl/codegen/port_platform.h>
 #include <grpcpp/impl/codegen/async_generic_service.h>
 #include <grpcpp/impl/codegen/async_stream.h>
 #include <grpcpp/impl/codegen/async_unary_call.h>
 #include <grpcpp/impl/codegen/client_callback.h>
 #include <grpcpp/impl/codegen/client_context.h>
 #include <grpcpp/impl/codegen/completion_queue.h>
+#include <grpcpp/impl/codegen/message_allocator.h>
 #include <grpcpp/impl/codegen/method_handler.h>
 #include <grpcpp/impl/codegen/proto_utils.h>
 #include <grpcpp/impl/codegen/rpc_method.h>
 #include <grpcpp/impl/codegen/server_callback.h>
+#include <grpcpp/impl/codegen/server_callback_handlers.h>
 #include <grpcpp/impl/codegen/server_context.h>
 #include <grpcpp/impl/codegen/service_type.h>
 #include <grpcpp/impl/codegen/status.h>
 #include <grpcpp/impl/codegen/stub_options.h>
 #include <grpcpp/impl/codegen/sync_stream.h>
-
-namespace grpc_impl {
-class CompletionQueue;
-class ServerCompletionQueue;
-class ServerContext;
-}  // namespace grpc_impl
-
-namespace grpc {
-namespace experimental {
-template <typename RequestT, typename ResponseT>
-class MessageAllocator;
-}  // namespace experimental
-}  // namespace grpc
 
 namespace minecpp {
 namespace engine {
@@ -151,59 +141,95 @@ class PlayerService final {
      public:
       virtual ~experimental_async_interface() {}
       virtual void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void UpdatePing(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void UpdatePing(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void UpdatePing(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void UpdatePing(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void UpdatePing(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void LoadInitialChunks(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void LoadInitialChunks(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
       virtual void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) = 0;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      #else
       virtual void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
-      virtual void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) = 0;
+      #endif
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual void FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::ClientReadReactor< ::minecpp::engine::Event>* reactor) = 0;
+      #else
       virtual void FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::experimental::ClientReadReactor< ::minecpp::engine::Event>* reactor) = 0;
+      #endif
     };
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    typedef class experimental_async_interface async_interface;
+    #endif
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    async_interface* async() { return experimental_async(); }
+    #endif
     virtual class experimental_async_interface* experimental_async() { return nullptr; }
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::engine::AcceptPlayerResponse>* AsyncAcceptPlayerRaw(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -343,58 +369,88 @@ class PlayerService final {
       public StubInterface::experimental_async_interface {
      public:
       void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, std::function<void(::grpc::Status)>) override;
-      void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void AcceptPlayer(::grpc::ClientContext* context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void AcceptPlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::AcceptPlayerResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void SetPlayerPosition(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void SetPlayerPosition(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void SetPlayerRotation(::grpc::ClientContext* context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void SetPlayerRotation(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void ChatMessage(::grpc::ClientContext* context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void ChatMessage(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) override;
-      void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void ListPlayers(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void ListPlayers(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayersResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) override;
-      void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void ListPlayerEntities(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void ListPlayerEntities(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::ListPlayerEntitiesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void RemovePlayer(::grpc::ClientContext* context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void RemovePlayer(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void DestroyBlock(::grpc::ClientContext* context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void DestroyBlock(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void UpdatePing(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void UpdatePing(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void UpdatePing(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void UpdatePing(::grpc::ClientContext* context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void UpdatePing(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void AnimateHand(::grpc::ClientContext* context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void AnimateHand(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
-      void LoadInitialChunks(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void LoadInitialChunks(::grpc::ClientContext* context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void LoadInitialChunks(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void GetServiceId(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void GetServiceId(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceIdResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
       void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) override;
-      void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, std::function<void(::grpc::Status)>) override;
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      #else
       void GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
-      void GetServiceStatus(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::minecpp::engine::GetServiceStatusResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) override;
+      #endif
+      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      void FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::ClientReadReactor< ::minecpp::engine::Event>* reactor) override;
+      #else
       void FetchEvents(::grpc::ClientContext* context, ::minecpp::engine::FetchEventsRequest* request, ::grpc::experimental::ClientReadReactor< ::minecpp::engine::Event>* reactor) override;
+      #endif
      private:
       friend class Stub;
       explicit experimental_async(Stub* stub): stub_(stub) { }
@@ -758,19 +814,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_AcceptPlayer() {
-      ::grpc::Service::experimental().MarkMethodCallback(0,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::AcceptPlayerRequest* request,
-                 ::minecpp::engine::AcceptPlayerResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->AcceptPlayer(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::AcceptPlayerRequest* request, ::minecpp::engine::AcceptPlayerResponse* response) { return this->AcceptPlayer(context, request, response); }));}
     void SetMessageAllocatorFor_AcceptPlayer(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>*>(
-          ::grpc::Service::experimental().GetHandler(0))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(0);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_AcceptPlayer() override {
@@ -781,7 +846,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void AcceptPlayer(::grpc::ServerContext* /*context*/, const ::minecpp::engine::AcceptPlayerRequest* /*request*/, ::minecpp::engine::AcceptPlayerResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* AcceptPlayer(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::AcceptPlayerRequest* /*request*/, ::minecpp::engine::AcceptPlayerResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* AcceptPlayer(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::AcceptPlayerRequest* /*request*/, ::minecpp::engine::AcceptPlayerResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetPlayerPosition : public BaseClass {
@@ -789,19 +861,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_SetPlayerPosition() {
-      ::grpc::Service::experimental().MarkMethodCallback(1,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::SetPlayerPositionRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetPlayerPosition(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::SetPlayerPositionRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->SetPlayerPosition(context, request, response); }));}
     void SetMessageAllocatorFor_SetPlayerPosition(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(1))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(1);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_SetPlayerPosition() override {
@@ -812,7 +893,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* SetPlayerPosition(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* SetPlayerPosition(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::SetPlayerPositionRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_SetPlayerRotation : public BaseClass {
@@ -820,19 +908,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_SetPlayerRotation() {
-      ::grpc::Service::experimental().MarkMethodCallback(2,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::SetPlayerRotationRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->SetPlayerRotation(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::SetPlayerRotationRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->SetPlayerRotation(context, request, response); }));}
     void SetMessageAllocatorFor_SetPlayerRotation(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(2))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(2);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_SetPlayerRotation() override {
@@ -843,7 +940,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* SetPlayerRotation(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* SetPlayerRotation(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::SetPlayerRotationRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_ChatMessage : public BaseClass {
@@ -851,19 +955,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_ChatMessage() {
-      ::grpc::Service::experimental().MarkMethodCallback(3,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::ChatMessageRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->ChatMessage(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::ChatMessageRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->ChatMessage(context, request, response); }));}
     void SetMessageAllocatorFor_ChatMessage(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(3))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(3);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_ChatMessage() override {
@@ -874,7 +987,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void ChatMessage(::grpc::ServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* ChatMessage(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* ChatMessage(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::ChatMessageRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_ListPlayers : public BaseClass {
@@ -882,19 +1002,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_ListPlayers() {
-      ::grpc::Service::experimental().MarkMethodCallback(4,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::EmptyRequest* request,
-                 ::minecpp::engine::ListPlayersResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->ListPlayers(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayersResponse* response) { return this->ListPlayers(context, request, response); }));}
     void SetMessageAllocatorFor_ListPlayers(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>*>(
-          ::grpc::Service::experimental().GetHandler(4))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(4);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_ListPlayers() override {
@@ -905,7 +1034,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void ListPlayers(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* ListPlayers(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* ListPlayers(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayersResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_ListPlayerEntities : public BaseClass {
@@ -913,19 +1049,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_ListPlayerEntities() {
-      ::grpc::Service::experimental().MarkMethodCallback(5,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::EmptyRequest* request,
-                 ::minecpp::engine::ListPlayerEntitiesResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->ListPlayerEntities(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::ListPlayerEntitiesResponse* response) { return this->ListPlayerEntities(context, request, response); }));}
     void SetMessageAllocatorFor_ListPlayerEntities(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>*>(
-          ::grpc::Service::experimental().GetHandler(5))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(5);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_ListPlayerEntities() override {
@@ -936,7 +1081,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* ListPlayerEntities(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* ListPlayerEntities(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::ListPlayerEntitiesResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_RemovePlayer : public BaseClass {
@@ -944,19 +1096,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_RemovePlayer() {
-      ::grpc::Service::experimental().MarkMethodCallback(6,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::RemovePlayerRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->RemovePlayer(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::RemovePlayerRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->RemovePlayer(context, request, response); }));}
     void SetMessageAllocatorFor_RemovePlayer(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(6))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(6);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_RemovePlayer() override {
@@ -967,7 +1128,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void RemovePlayer(::grpc::ServerContext* /*context*/, const ::minecpp::engine::RemovePlayerRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* RemovePlayer(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::RemovePlayerRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* RemovePlayer(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::RemovePlayerRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_DestroyBlock : public BaseClass {
@@ -975,19 +1143,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_DestroyBlock() {
-      ::grpc::Service::experimental().MarkMethodCallback(7,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::DestroyBlockRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->DestroyBlock(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::DestroyBlockRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->DestroyBlock(context, request, response); }));}
     void SetMessageAllocatorFor_DestroyBlock(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(7))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(7);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_DestroyBlock() override {
@@ -998,7 +1175,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void DestroyBlock(::grpc::ServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* DestroyBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* DestroyBlock(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::DestroyBlockRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_UpdatePing : public BaseClass {
@@ -1006,19 +1190,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_UpdatePing() {
-      ::grpc::Service::experimental().MarkMethodCallback(8,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::UpdatePingRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->UpdatePing(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(8,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::UpdatePingRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->UpdatePing(context, request, response); }));}
     void SetMessageAllocatorFor_UpdatePing(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(8))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(8);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_UpdatePing() override {
@@ -1029,7 +1222,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void UpdatePing(::grpc::ServerContext* /*context*/, const ::minecpp::engine::UpdatePingRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* UpdatePing(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::UpdatePingRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* UpdatePing(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::UpdatePingRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_AnimateHand : public BaseClass {
@@ -1037,19 +1237,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_AnimateHand() {
-      ::grpc::Service::experimental().MarkMethodCallback(9,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::AnimateHandRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->AnimateHand(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::AnimateHandRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->AnimateHand(context, request, response); }));}
     void SetMessageAllocatorFor_AnimateHand(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(9))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(9);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_AnimateHand() override {
@@ -1060,7 +1269,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void AnimateHand(::grpc::ServerContext* /*context*/, const ::minecpp::engine::AnimateHandRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* AnimateHand(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::AnimateHandRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* AnimateHand(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::AnimateHandRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_LoadInitialChunks : public BaseClass {
@@ -1068,19 +1284,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_LoadInitialChunks() {
-      ::grpc::Service::experimental().MarkMethodCallback(10,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::LoadInitialChunksRequest* request,
-                 ::minecpp::engine::EmptyResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->LoadInitialChunks(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::LoadInitialChunksRequest* request, ::minecpp::engine::EmptyResponse* response) { return this->LoadInitialChunks(context, request, response); }));}
     void SetMessageAllocatorFor_LoadInitialChunks(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>*>(
-          ::grpc::Service::experimental().GetHandler(10))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(10);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_LoadInitialChunks() override {
@@ -1091,7 +1316,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void LoadInitialChunks(::grpc::ServerContext* /*context*/, const ::minecpp::engine::LoadInitialChunksRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* LoadInitialChunks(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::LoadInitialChunksRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* LoadInitialChunks(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::LoadInitialChunksRequest* /*request*/, ::minecpp::engine::EmptyResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_GetServiceId : public BaseClass {
@@ -1099,19 +1331,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_GetServiceId() {
-      ::grpc::Service::experimental().MarkMethodCallback(11,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::EmptyRequest* request,
-                 ::minecpp::engine::GetServiceIdResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->GetServiceId(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceIdResponse* response) { return this->GetServiceId(context, request, response); }));}
     void SetMessageAllocatorFor_GetServiceId(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>*>(
-          ::grpc::Service::experimental().GetHandler(11))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(11);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_GetServiceId() override {
@@ -1122,7 +1363,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void GetServiceId(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* GetServiceId(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* GetServiceId(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceIdResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_GetServiceStatus : public BaseClass {
@@ -1130,19 +1378,28 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_GetServiceStatus() {
-      ::grpc::Service::experimental().MarkMethodCallback(12,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(
-          [this](::grpc::ServerContext* context,
-                 const ::minecpp::engine::EmptyRequest* request,
-                 ::minecpp::engine::GetServiceStatusResponse* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   return this->GetServiceStatus(context, request, response, controller);
-                 }));
-    }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(12,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::EmptyRequest* request, ::minecpp::engine::GetServiceStatusResponse* response) { return this->GetServiceStatus(context, request, response); }));}
     void SetMessageAllocatorFor_GetServiceStatus(
         ::grpc::experimental::MessageAllocator< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>* allocator) {
-      static_cast<::grpc_impl::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>*>(
-          ::grpc::Service::experimental().GetHandler(12))
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(12);
+    #else
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::experimental().GetHandler(12);
+    #endif
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
     ~ExperimentalWithCallbackMethod_GetServiceStatus() override {
@@ -1153,7 +1410,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void GetServiceStatus(::grpc::ServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* GetServiceStatus(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* GetServiceStatus(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::EmptyRequest* /*request*/, ::minecpp::engine::GetServiceStatusResponse* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithCallbackMethod_FetchEvents : public BaseClass {
@@ -1161,9 +1425,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithCallbackMethod_FetchEvents() {
-      ::grpc::Service::experimental().MarkMethodCallback(13,
-        new ::grpc_impl::internal::CallbackServerStreamingHandler< ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
-          [this] { return this->FetchEvents(); }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodCallback(13,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::minecpp::engine::FetchEventsRequest* request) { return this->FetchEvents(context, request); }));
     }
     ~ExperimentalWithCallbackMethod_FetchEvents() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1173,10 +1448,19 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::experimental::ServerWriteReactor< ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>* FetchEvents() {
-      return new ::grpc_impl::internal::UnimplementedWriteReactor<
-        ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>;}
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerWriteReactor< ::minecpp::engine::Event>* FetchEvents(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::engine::FetchEventsRequest* /*request*/)
+    #else
+    virtual ::grpc::experimental::ServerWriteReactor< ::minecpp::engine::Event>* FetchEvents(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::minecpp::engine::FetchEventsRequest* /*request*/)
+    #endif
+      { return nullptr; }
   };
+  #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+  typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<ExperimentalWithCallbackMethod_RemovePlayer<ExperimentalWithCallbackMethod_DestroyBlock<ExperimentalWithCallbackMethod_UpdatePing<ExperimentalWithCallbackMethod_AnimateHand<ExperimentalWithCallbackMethod_LoadInitialChunks<ExperimentalWithCallbackMethod_GetServiceId<ExperimentalWithCallbackMethod_GetServiceStatus<ExperimentalWithCallbackMethod_FetchEvents<Service > > > > > > > > > > > > > > CallbackService;
+  #endif
+
   typedef ExperimentalWithCallbackMethod_AcceptPlayer<ExperimentalWithCallbackMethod_SetPlayerPosition<ExperimentalWithCallbackMethod_SetPlayerRotation<ExperimentalWithCallbackMethod_ChatMessage<ExperimentalWithCallbackMethod_ListPlayers<ExperimentalWithCallbackMethod_ListPlayerEntities<ExperimentalWithCallbackMethod_RemovePlayer<ExperimentalWithCallbackMethod_DestroyBlock<ExperimentalWithCallbackMethod_UpdatePing<ExperimentalWithCallbackMethod_AnimateHand<ExperimentalWithCallbackMethod_LoadInitialChunks<ExperimentalWithCallbackMethod_GetServiceId<ExperimentalWithCallbackMethod_GetServiceStatus<ExperimentalWithCallbackMethod_FetchEvents<Service > > > > > > > > > > > > > > ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AcceptPlayer : public BaseClass {
@@ -1702,14 +1986,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_AcceptPlayer() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(0,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->AcceptPlayer(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AcceptPlayer(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_AcceptPlayer() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1719,7 +2009,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void AcceptPlayer(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* AcceptPlayer(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* AcceptPlayer(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetPlayerPosition : public BaseClass {
@@ -1727,14 +2024,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_SetPlayerPosition() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(1,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetPlayerPosition(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetPlayerPosition(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetPlayerPosition() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1744,7 +2047,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetPlayerPosition(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* SetPlayerPosition(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* SetPlayerPosition(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_SetPlayerRotation : public BaseClass {
@@ -1752,14 +2062,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_SetPlayerRotation() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(2,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->SetPlayerRotation(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetPlayerRotation(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_SetPlayerRotation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1769,7 +2085,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void SetPlayerRotation(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* SetPlayerRotation(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* SetPlayerRotation(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_ChatMessage : public BaseClass {
@@ -1777,14 +2100,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_ChatMessage() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(3,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->ChatMessage(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ChatMessage(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_ChatMessage() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1794,7 +2123,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void ChatMessage(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* ChatMessage(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* ChatMessage(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_ListPlayers : public BaseClass {
@@ -1802,14 +2138,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_ListPlayers() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(4,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->ListPlayers(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ListPlayers(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_ListPlayers() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1819,7 +2161,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void ListPlayers(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* ListPlayers(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* ListPlayers(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_ListPlayerEntities : public BaseClass {
@@ -1827,14 +2176,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_ListPlayerEntities() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(5,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->ListPlayerEntities(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ListPlayerEntities(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_ListPlayerEntities() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1844,7 +2199,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void ListPlayerEntities(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* ListPlayerEntities(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* ListPlayerEntities(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_RemovePlayer : public BaseClass {
@@ -1852,14 +2214,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_RemovePlayer() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(6,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->RemovePlayer(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RemovePlayer(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_RemovePlayer() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1869,7 +2237,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void RemovePlayer(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* RemovePlayer(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* RemovePlayer(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_DestroyBlock : public BaseClass {
@@ -1877,14 +2252,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_DestroyBlock() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(7,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->DestroyBlock(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->DestroyBlock(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_DestroyBlock() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1894,7 +2275,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void DestroyBlock(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* DestroyBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* DestroyBlock(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_UpdatePing : public BaseClass {
@@ -1902,14 +2290,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_UpdatePing() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(8,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->UpdatePing(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(8,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->UpdatePing(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_UpdatePing() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1919,7 +2313,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void UpdatePing(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* UpdatePing(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* UpdatePing(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_AnimateHand : public BaseClass {
@@ -1927,14 +2328,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_AnimateHand() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(9,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->AnimateHand(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AnimateHand(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_AnimateHand() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1944,7 +2351,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void AnimateHand(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* AnimateHand(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* AnimateHand(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_LoadInitialChunks : public BaseClass {
@@ -1952,14 +2366,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_LoadInitialChunks() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(10,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->LoadInitialChunks(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(10,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->LoadInitialChunks(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_LoadInitialChunks() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1969,7 +2389,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void LoadInitialChunks(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* LoadInitialChunks(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* LoadInitialChunks(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_GetServiceId : public BaseClass {
@@ -1977,14 +2404,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_GetServiceId() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(11,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->GetServiceId(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(11,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetServiceId(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_GetServiceId() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1994,7 +2427,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void GetServiceId(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* GetServiceId(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* GetServiceId(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_GetServiceStatus : public BaseClass {
@@ -2002,14 +2442,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_GetServiceStatus() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(12,
-        new ::grpc_impl::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this](::grpc::ServerContext* context,
-                 const ::grpc::ByteBuffer* request,
-                 ::grpc::ByteBuffer* response,
-                 ::grpc::experimental::ServerCallbackRpcController* controller) {
-                   this->GetServiceStatus(context, request, response, controller);
-                 }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(12,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetServiceStatus(context, request, response); }));
     }
     ~ExperimentalWithRawCallbackMethod_GetServiceStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2019,7 +2465,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual void GetServiceStatus(::grpc::ServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/, ::grpc::experimental::ServerCallbackRpcController* controller) { controller->Finish(::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "")); }
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerUnaryReactor* GetServiceStatus(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #else
+    virtual ::grpc::experimental::ServerUnaryReactor* GetServiceStatus(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class ExperimentalWithRawCallbackMethod_FetchEvents : public BaseClass {
@@ -2027,9 +2480,20 @@ class PlayerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     ExperimentalWithRawCallbackMethod_FetchEvents() {
-      ::grpc::Service::experimental().MarkMethodRawCallback(13,
-        new ::grpc_impl::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-          [this] { return this->FetchEvents(); }));
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      ::grpc::Service::
+    #else
+      ::grpc::Service::experimental().
+    #endif
+        MarkMethodRawCallback(13,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+                   ::grpc::CallbackServerContext*
+    #else
+                   ::grpc::experimental::CallbackServerContext*
+    #endif
+                     context, const::grpc::ByteBuffer* request) { return this->FetchEvents(context, request); }));
     }
     ~ExperimentalWithRawCallbackMethod_FetchEvents() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2039,9 +2503,14 @@ class PlayerService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::experimental::ServerWriteReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* FetchEvents() {
-      return new ::grpc_impl::internal::UnimplementedWriteReactor<
-        ::grpc::ByteBuffer, ::grpc::ByteBuffer>;}
+    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* FetchEvents(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)
+    #else
+    virtual ::grpc::experimental::ServerWriteReactor< ::grpc::ByteBuffer>* FetchEvents(
+      ::grpc::experimental::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)
+    #endif
+      { return nullptr; }
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_AcceptPlayer : public BaseClass {
@@ -2050,7 +2519,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_AcceptPlayer() {
       ::grpc::Service::MarkMethodStreamed(0,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>(std::bind(&WithStreamedUnaryMethod_AcceptPlayer<BaseClass>::StreamedAcceptPlayer, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::AcceptPlayerRequest, ::minecpp::engine::AcceptPlayerResponse>* streamer) {
+                       return this->StreamedAcceptPlayer(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_AcceptPlayer() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2070,7 +2546,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_SetPlayerPosition() {
       ::grpc::Service::MarkMethodStreamed(1,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_SetPlayerPosition<BaseClass>::StreamedSetPlayerPosition, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::SetPlayerPositionRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedSetPlayerPosition(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetPlayerPosition() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2090,7 +2573,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_SetPlayerRotation() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_SetPlayerRotation<BaseClass>::StreamedSetPlayerRotation, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::SetPlayerRotationRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedSetPlayerRotation(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_SetPlayerRotation() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2110,7 +2600,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_ChatMessage() {
       ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_ChatMessage<BaseClass>::StreamedChatMessage, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::ChatMessageRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedChatMessage(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ChatMessage() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2130,7 +2627,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_ListPlayers() {
       ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>(std::bind(&WithStreamedUnaryMethod_ListPlayers<BaseClass>::StreamedListPlayers, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayersResponse>* streamer) {
+                       return this->StreamedListPlayers(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ListPlayers() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2150,7 +2654,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_ListPlayerEntities() {
       ::grpc::Service::MarkMethodStreamed(5,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>(std::bind(&WithStreamedUnaryMethod_ListPlayerEntities<BaseClass>::StreamedListPlayerEntities, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::EmptyRequest, ::minecpp::engine::ListPlayerEntitiesResponse>* streamer) {
+                       return this->StreamedListPlayerEntities(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_ListPlayerEntities() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2170,7 +2681,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_RemovePlayer() {
       ::grpc::Service::MarkMethodStreamed(6,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_RemovePlayer<BaseClass>::StreamedRemovePlayer, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::RemovePlayerRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedRemovePlayer(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_RemovePlayer() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2190,7 +2708,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_DestroyBlock() {
       ::grpc::Service::MarkMethodStreamed(7,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_DestroyBlock<BaseClass>::StreamedDestroyBlock, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::DestroyBlockRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedDestroyBlock(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_DestroyBlock() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2210,7 +2735,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_UpdatePing() {
       ::grpc::Service::MarkMethodStreamed(8,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_UpdatePing<BaseClass>::StreamedUpdatePing, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::UpdatePingRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedUpdatePing(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_UpdatePing() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2230,7 +2762,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_AnimateHand() {
       ::grpc::Service::MarkMethodStreamed(9,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_AnimateHand<BaseClass>::StreamedAnimateHand, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::AnimateHandRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedAnimateHand(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_AnimateHand() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2250,7 +2789,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_LoadInitialChunks() {
       ::grpc::Service::MarkMethodStreamed(10,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>(std::bind(&WithStreamedUnaryMethod_LoadInitialChunks<BaseClass>::StreamedLoadInitialChunks, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::LoadInitialChunksRequest, ::minecpp::engine::EmptyResponse>* streamer) {
+                       return this->StreamedLoadInitialChunks(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_LoadInitialChunks() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2270,7 +2816,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_GetServiceId() {
       ::grpc::Service::MarkMethodStreamed(11,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(std::bind(&WithStreamedUnaryMethod_GetServiceId<BaseClass>::StreamedGetServiceId, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceIdResponse>* streamer) {
+                       return this->StreamedGetServiceId(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetServiceId() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2290,7 +2843,14 @@ class PlayerService final {
    public:
     WithStreamedUnaryMethod_GetServiceStatus() {
       ::grpc::Service::MarkMethodStreamed(12,
-        new ::grpc::internal::StreamedUnaryHandler< ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(std::bind(&WithStreamedUnaryMethod_GetServiceStatus<BaseClass>::StreamedGetServiceStatus, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::engine::EmptyRequest, ::minecpp::engine::GetServiceStatusResponse>* streamer) {
+                       return this->StreamedGetServiceStatus(context,
+                         streamer);
+                  }));
     }
     ~WithStreamedUnaryMethod_GetServiceStatus() override {
       BaseClassMustBeDerivedFromService(this);
@@ -2311,7 +2871,14 @@ class PlayerService final {
    public:
     WithSplitStreamingMethod_FetchEvents() {
       ::grpc::Service::MarkMethodStreamed(13,
-        new ::grpc::internal::SplitServerStreamingHandler< ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(std::bind(&WithSplitStreamingMethod_FetchEvents<BaseClass>::StreamedFetchEvents, this, std::placeholders::_1, std::placeholders::_2)));
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerSplitStreamer<
+                     ::minecpp::engine::FetchEventsRequest, ::minecpp::engine::Event>* streamer) {
+                       return this->StreamedFetchEvents(context,
+                         streamer);
+                  }));
     }
     ~WithSplitStreamingMethod_FetchEvents() override {
       BaseClassMustBeDerivedFromService(this);

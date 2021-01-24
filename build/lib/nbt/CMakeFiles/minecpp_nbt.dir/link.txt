@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminecpp_nbt.a CMakeFiles/minecpp_nbt.dir/exception.cpp.o CMakeFiles/minecpp_nbt.dir/reader.cpp.o CMakeFiles/minecpp_nbt.dir/writer.cpp.o CMakeFiles/minecpp_nbt.dir/tag.cpp.o CMakeFiles/minecpp_nbt.dir/parser.cpp.o
+/usr/bin/ranlib libminecpp_nbt.a

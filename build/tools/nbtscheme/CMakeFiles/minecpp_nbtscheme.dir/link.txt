@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wall -Wextra -Wno-unused-parameter -fconcepts -O3 CMakeFiles/minecpp_nbtscheme.dir/main.cpp.o -o minecpp_nbtscheme  ../../lib/nbt/libminecpp_nbt.a ../../lib/mineutils/libminecpp_utils.a ../../_deps/fmt-build/libfmt.a -lBoost::iostreams 

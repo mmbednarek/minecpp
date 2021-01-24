@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 CMakeFiles/regexp_test.dir/re2/testing/regexp_test.cc.o CMakeFiles/regexp_test.dir/util/test.cc.o -o regexp_test  libtesting.a libre2.a -pthread 

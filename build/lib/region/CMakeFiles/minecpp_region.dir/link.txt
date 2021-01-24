@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminecpp_region.a CMakeFiles/minecpp_region.dir/reader.cpp.o
+/usr/bin/ranlib libminecpp_region.a

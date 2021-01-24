@@ -5,7 +5,6 @@
 
 #include <algorithm>
 
-#include <google/protobuf/stubs/common.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/wire_format_lite.h>
@@ -15,6 +14,8 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+
+PROTOBUF_PRAGMA_INIT_SEG
 extern PROTOBUF_INTERNAL_EXPORT_chunk_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NetChunk_Section_chunk_2eproto;
 namespace minecpp {
 namespace chunk {
@@ -36,11 +37,10 @@ static void InitDefaultsscc_info_NetChunk_chunk_2eproto() {
     new (ptr) ::minecpp::chunk::NetChunk();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::minecpp::chunk::NetChunk::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_NetChunk_chunk_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, InitDefaultsscc_info_NetChunk_chunk_2eproto}, {
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_NetChunk_chunk_2eproto}, {
       &scc_info_NetChunk_Section_chunk_2eproto.base,}};
 
 static void InitDefaultsscc_info_NetChunk_Section_chunk_2eproto() {
@@ -51,11 +51,10 @@ static void InitDefaultsscc_info_NetChunk_Section_chunk_2eproto() {
     new (ptr) ::minecpp::chunk::NetChunk_Section();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::minecpp::chunk::NetChunk_Section::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NetChunk_Section_chunk_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_NetChunk_Section_chunk_2eproto}, {}};
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_NetChunk_Section_chunk_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_chunk_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_chunk_2eproto = nullptr;
@@ -97,7 +96,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::chunk::_NetChunk_default_instance_),
 };
 
-const char descriptor_table_protodef_chunk_2eproto[] =
+const char descriptor_table_protodef_chunk_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\013chunk.proto\022\rminecpp.chunk\"\261\002\n\010NetChun"
   "k\022\r\n\005pos_x\030\001 \001(\005\022\r\n\005pos_z\030\002 \001(\005\022\014\n\004full\030"
   "\003 \001(\010\022\022\n\006biomes\030\004 \003(\005B\002\020\001\022\030\n\020hm_world_su"
@@ -115,55 +114,46 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_chu
   &scc_info_NetChunk_Section_chunk_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_chunk_2eproto_once;
-static bool descriptor_table_chunk_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chunk_2eproto = {
-  &descriptor_table_chunk_2eproto_initialized, descriptor_table_protodef_chunk_2eproto, "chunk.proto", 344,
+  false, false, descriptor_table_protodef_chunk_2eproto, "chunk.proto", 344,
   &descriptor_table_chunk_2eproto_once, descriptor_table_chunk_2eproto_sccs, descriptor_table_chunk_2eproto_deps, 2, 0,
   schemas, file_default_instances, TableStruct_chunk_2eproto::offsets,
   file_level_metadata_chunk_2eproto, 2, file_level_enum_descriptors_chunk_2eproto, file_level_service_descriptors_chunk_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_chunk_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_chunk_2eproto), true);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_chunk_2eproto(&descriptor_table_chunk_2eproto);
 namespace minecpp {
 namespace chunk {
 
 // ===================================================================
 
-void NetChunk_Section::InitAsDefaultInstance() {
-}
-class NetChunk_Section::HasBitSetters {
+class NetChunk_Section::_Internal {
  public:
 };
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int NetChunk_Section::kYFieldNumber;
-const int NetChunk_Section::kBitsFieldNumber;
-const int NetChunk_Section::kRefCountFieldNumber;
-const int NetChunk_Section::kPaletteFieldNumber;
-const int NetChunk_Section::kDataFieldNumber;
-const int NetChunk_Section::kBlockLightFieldNumber;
-const int NetChunk_Section::kSkyLightFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-NetChunk_Section::NetChunk_Section()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+NetChunk_Section::NetChunk_Section(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
+  palette_(arena),
+  data_(arena) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:minecpp.chunk.NetChunk.Section)
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:minecpp.chunk.NetChunk.Section)
 }
 NetChunk_Section::NetChunk_Section(const NetChunk_Section& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr),
       palette_(from.palette_),
       data_(from.data_) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   block_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from.block_light().size() > 0) {
-    block_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.block_light_);
+  if (!from._internal_block_light().empty()) {
+    block_light_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_block_light(), 
+      GetArena());
   }
   sky_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from.sky_light().size() > 0) {
-    sky_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.sky_light_);
+  if (!from._internal_sky_light().empty()) {
+    sky_light_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_sky_light(), 
+      GetArena());
   }
   ::memcpy(&y_, &from.y_,
     static_cast<size_t>(reinterpret_cast<char*>(&ref_count_) -
@@ -175,21 +165,30 @@ void NetChunk_Section::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NetChunk_Section_chunk_2eproto.base);
   block_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   sky_light_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&y_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&ref_count_) -
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&y_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&ref_count_) -
       reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
 }
 
 NetChunk_Section::~NetChunk_Section() {
   // @@protoc_insertion_point(destructor:minecpp.chunk.NetChunk.Section)
   SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 void NetChunk_Section::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
   block_light_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   sky_light_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
+void NetChunk_Section::ArenaDtor(void* object) {
+  NetChunk_Section* _this = reinterpret_cast< NetChunk_Section* >(object);
+  (void)_this;
+}
+void NetChunk_Section::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
 void NetChunk_Section::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -207,15 +206,14 @@ void NetChunk_Section::Clear() {
 
   palette_.Clear();
   data_.Clear();
-  block_light_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  sky_light_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  block_light_.ClearToEmpty();
+  sky_light_.ClearToEmpty();
   ::memset(&y_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&ref_count_) -
       reinterpret_cast<char*>(&y_)) + sizeof(ref_count_));
-  _internal_metadata_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* NetChunk_Section::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -226,55 +224,57 @@ const char* NetChunk_Section::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
       // int32 y = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // int32 bits = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          bits_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          bits_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // int32 ref_count = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          ref_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          ref_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // repeated int32 palette = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(mutable_palette(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_palette(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32) {
-          add_palette(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+          _internal_add_palette(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // repeated int64 data = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(mutable_data(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_data(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40) {
-          add_data(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+          _internal_add_data(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // bytes block_light = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_block_light(), ptr, ctx);
+          auto str = _internal_mutable_block_light();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // bytes sky_light = 7;
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(mutable_sky_light(), ptr, ctx);
+          auto str = _internal_mutable_sky_light();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -284,7 +284,9 @@ const char* NetChunk_Section::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
           ctx->SetLastTag(tag);
           goto success;
         }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
       }
@@ -297,257 +299,64 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool NetChunk_Section::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:minecpp.chunk.NetChunk.Section)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int32 y = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
 
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &y_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 bits = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &bits_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 ref_count = 3;
-      case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &ref_count_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated int32 palette = 4;
-      case 4: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (34 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_palette())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (32 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 1, 34u, input, this->mutable_palette())));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated int64 data = 5;
-      case 5: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (42 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 input, this->mutable_data())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (40 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 1, 42u, input, this->mutable_data())));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes block_light = 6;
-      case 6: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (50 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_block_light()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bytes sky_light = 7;
-      case 7: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (58 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadBytes(
-                input, this->mutable_sky_light()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:minecpp.chunk.NetChunk.Section)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:minecpp.chunk.NetChunk.Section)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-void NetChunk_Section::SerializeWithCachedSizes(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:minecpp.chunk.NetChunk.Section)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // int32 y = 1;
-  if (this->y() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(1, this->y(), output);
-  }
-
-  // int32 bits = 2;
-  if (this->bits() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->bits(), output);
-  }
-
-  // int32 ref_count = 3;
-  if (this->ref_count() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(3, this->ref_count(), output);
-  }
-
-  // repeated int32 palette = 4;
-  if (this->palette_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(4, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_palette_cached_byte_size_.load(
-        std::memory_order_relaxed));
-  }
-  for (int i = 0, n = this->palette_size(); i < n; i++) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32NoTag(
-      this->palette(i), output);
-  }
-
-  // repeated int64 data = 5;
-  if (this->data_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(5, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_data_cached_byte_size_.load(
-        std::memory_order_relaxed));
-  }
-  for (int i = 0, n = this->data_size(); i < n; i++) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64NoTag(
-      this->data(i), output);
-  }
-
-  // bytes block_light = 6;
-  if (this->block_light().size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
-      6, this->block_light(), output);
-  }
-
-  // bytes sky_light = 7;
-  if (this->sky_light().size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesMaybeAliased(
-      7, this->sky_light(), output);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:minecpp.chunk.NetChunk.Section)
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* NetChunk_Section::InternalSerializeWithCachedSizesToArray(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+::PROTOBUF_NAMESPACE_ID::uint8* NetChunk_Section::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.chunk.NetChunk.Section)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int32 y = 1;
   if (this->y() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->y(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_y(), target);
   }
 
   // int32 bits = 2;
   if (this->bits() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->bits(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_bits(), target);
   }
 
   // int32 ref_count = 3;
   if (this->ref_count() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->ref_count(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_ref_count(), target);
   }
 
   // repeated int32 palette = 4;
-  if (this->palette_size() > 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      4,
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-      target);
-    target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
-        _palette_cached_byte_size_.load(std::memory_order_relaxed),
-         target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      WriteInt32NoTagToArray(this->palette_, target);
+  {
+    int byte_size = _palette_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt32Packed(
+          4, _internal_palette(), byte_size, target);
+    }
   }
 
   // repeated int64 data = 5;
-  if (this->data_size() > 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      5,
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-      target);
-    target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
-        _data_cached_byte_size_.load(std::memory_order_relaxed),
-         target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      WriteInt64NoTagToArray(this->data_, target);
+  {
+    int byte_size = _data_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt64Packed(
+          5, _internal_data(), byte_size, target);
+    }
   }
 
   // bytes block_light = 6;
   if (this->block_light().size() > 0) {
-    target =
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
-        6, this->block_light(), target);
+    target = stream->WriteBytesMaybeAliased(
+        6, this->_internal_block_light(), target);
   }
 
   // bytes sky_light = 7;
   if (this->sky_light().size() > 0) {
-    target =
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBytesToArray(
-        7, this->sky_light(), target);
+    target = stream->WriteBytesMaybeAliased(
+        7, this->_internal_sky_light(), target);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.chunk.NetChunk.Section)
   return target;
@@ -557,11 +366,6 @@ size_t NetChunk_Section::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.chunk.NetChunk.Section)
   size_t total_size = 0;
 
-  if (_internal_metadata_.have_unknown_fields()) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -600,37 +404,41 @@ size_t NetChunk_Section::ByteSizeLong() const {
   if (this->block_light().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->block_light());
+        this->_internal_block_light());
   }
 
   // bytes sky_light = 7;
   if (this->sky_light().size() > 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->sky_light());
+        this->_internal_sky_light());
   }
 
   // int32 y = 1;
   if (this->y() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->y());
+        this->_internal_y());
   }
 
   // int32 bits = 2;
   if (this->bits() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->bits());
+        this->_internal_bits());
   }
 
   // int32 ref_count = 3;
   if (this->ref_count() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->ref_count());
+        this->_internal_ref_count());
   }
 
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -654,28 +462,26 @@ void NetChunk_Section::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
 void NetChunk_Section::MergeFrom(const NetChunk_Section& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.chunk.NetChunk.Section)
   GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   palette_.MergeFrom(from.palette_);
   data_.MergeFrom(from.data_);
   if (from.block_light().size() > 0) {
-
-    block_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.block_light_);
+    _internal_set_block_light(from._internal_block_light());
   }
   if (from.sky_light().size() > 0) {
-
-    sky_light_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.sky_light_);
+    _internal_set_sky_light(from._internal_sky_light());
   }
   if (from.y() != 0) {
-    set_y(from.y());
+    _internal_set_y(from._internal_y());
   }
   if (from.bits() != 0) {
-    set_bits(from.bits());
+    _internal_set_bits(from._internal_bits());
   }
   if (from.ref_count() != 0) {
-    set_ref_count(from.ref_count());
+    _internal_set_ref_count(from._internal_ref_count());
   }
 }
 
@@ -697,22 +503,19 @@ bool NetChunk_Section::IsInitialized() const {
   return true;
 }
 
-void NetChunk_Section::Swap(NetChunk_Section* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
 void NetChunk_Section::InternalSwap(NetChunk_Section* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   palette_.InternalSwap(&other->palette_);
   data_.InternalSwap(&other->data_);
-  block_light_.Swap(&other->block_light_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  sky_light_.Swap(&other->sky_light_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(y_, other->y_);
-  swap(bits_, other->bits_);
-  swap(ref_count_, other->ref_count_);
+  block_light_.Swap(&other->block_light_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  sky_light_.Swap(&other->sky_light_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(NetChunk_Section, ref_count_)
+      + sizeof(NetChunk_Section::ref_count_)
+      - PROTOBUF_FIELD_OFFSET(NetChunk_Section, y_)>(
+          reinterpret_cast<char*>(&y_),
+          reinterpret_cast<char*>(&other->y_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata NetChunk_Section::GetMetadata() const {
@@ -722,35 +525,27 @@ void NetChunk_Section::InternalSwap(NetChunk_Section* other) {
 
 // ===================================================================
 
-void NetChunk::InitAsDefaultInstance() {
-}
-class NetChunk::HasBitSetters {
+class NetChunk::_Internal {
  public:
 };
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int NetChunk::kPosXFieldNumber;
-const int NetChunk::kPosZFieldNumber;
-const int NetChunk::kFullFieldNumber;
-const int NetChunk::kBiomesFieldNumber;
-const int NetChunk::kHmWorldSurfaceFieldNumber;
-const int NetChunk::kHmMotionBlockingFieldNumber;
-const int NetChunk::kSectionsFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-NetChunk::NetChunk()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+NetChunk::NetChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
+  biomes_(arena),
+  hm_world_surface_(arena),
+  hm_motion_blocking_(arena),
+  sections_(arena) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:minecpp.chunk.NetChunk)
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:minecpp.chunk.NetChunk)
 }
 NetChunk::NetChunk(const NetChunk& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr),
       biomes_(from.biomes_),
       hm_world_surface_(from.hm_world_surface_),
       hm_motion_blocking_(from.hm_motion_blocking_),
       sections_(from.sections_) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&pos_x_, &from.pos_x_,
     static_cast<size_t>(reinterpret_cast<char*>(&full_) -
     reinterpret_cast<char*>(&pos_x_)) + sizeof(full_));
@@ -759,19 +554,28 @@ NetChunk::NetChunk(const NetChunk& from)
 
 void NetChunk::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NetChunk_chunk_2eproto.base);
-  ::memset(&pos_x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&full_) -
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&pos_x_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&full_) -
       reinterpret_cast<char*>(&pos_x_)) + sizeof(full_));
 }
 
 NetChunk::~NetChunk() {
   // @@protoc_insertion_point(destructor:minecpp.chunk.NetChunk)
   SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 void NetChunk::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
 }
 
+void NetChunk::ArenaDtor(void* object) {
+  NetChunk* _this = reinterpret_cast< NetChunk* >(object);
+  (void)_this;
+}
+void NetChunk::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
 void NetChunk::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -794,10 +598,9 @@ void NetChunk::Clear() {
   ::memset(&pos_x_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&full_) -
       reinterpret_cast<char*>(&pos_x_)) + sizeof(full_));
-  _internal_metadata_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* NetChunk::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -808,51 +611,51 @@ const char* NetChunk::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
       // int32 pos_x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          pos_x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          pos_x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // int32 pos_z = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          pos_z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          pos_z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // bool full = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          full_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          full_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // repeated int32 biomes = 4 [packed = true];
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(mutable_biomes(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_biomes(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32) {
-          add_biomes(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+          _internal_add_biomes(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // repeated int64 hm_world_surface = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(mutable_hm_world_surface(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_hm_world_surface(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40) {
-          add_hm_world_surface(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+          _internal_add_hm_world_surface(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // repeated int64 hm_motion_blocking = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(mutable_hm_motion_blocking(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_hm_motion_blocking(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48) {
-          add_hm_motion_blocking(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr));
+          _internal_add_hm_motion_blocking(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -862,10 +665,10 @@ const char* NetChunk::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ptr -= 1;
           do {
             ptr += 1;
-            ptr = ctx->ParseMessage(add_sections(), ptr);
+            ptr = ctx->ParseMessage(_internal_add_sections(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<::PROTOBUF_NAMESPACE_ID::uint8>(ptr) == 58);
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -874,7 +677,9 @@ const char* NetChunk::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ctx->SetLastTag(tag);
           goto success;
         }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
       }
@@ -887,277 +692,69 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool NetChunk::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:minecpp.chunk.NetChunk)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // int32 pos_x = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
 
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &pos_x_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 pos_z = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &pos_z_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bool full = 3;
-      case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &full_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated int32 biomes = 4 [packed = true];
-      case 4: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (34 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_biomes())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (32 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 1, 34u, input, this->mutable_biomes())));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated int64 hm_world_surface = 5;
-      case 5: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (42 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 input, this->mutable_hm_world_surface())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (40 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 1, 42u, input, this->mutable_hm_world_surface())));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated int64 hm_motion_blocking = 6;
-      case 6: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (50 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 input, this->mutable_hm_motion_blocking())));
-        } else if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (48 & 0xFF)) {
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::PROTOBUF_NAMESPACE_ID::int64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT64>(
-                 1, 50u, input, this->mutable_hm_motion_blocking())));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // repeated .minecpp.chunk.NetChunk.Section sections = 7;
-      case 7: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (58 & 0xFF)) {
-          DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadMessage(
-                input, add_sections()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:minecpp.chunk.NetChunk)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:minecpp.chunk.NetChunk)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-void NetChunk::SerializeWithCachedSizes(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:minecpp.chunk.NetChunk)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // int32 pos_x = 1;
-  if (this->pos_x() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(1, this->pos_x(), output);
-  }
-
-  // int32 pos_z = 2;
-  if (this->pos_z() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(2, this->pos_z(), output);
-  }
-
-  // bool full = 3;
-  if (this->full() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(3, this->full(), output);
-  }
-
-  // repeated int32 biomes = 4 [packed = true];
-  if (this->biomes_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(4, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_biomes_cached_byte_size_.load(
-        std::memory_order_relaxed));
-  }
-  for (int i = 0, n = this->biomes_size(); i < n; i++) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32NoTag(
-      this->biomes(i), output);
-  }
-
-  // repeated int64 hm_world_surface = 5;
-  if (this->hm_world_surface_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(5, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_hm_world_surface_cached_byte_size_.load(
-        std::memory_order_relaxed));
-  }
-  for (int i = 0, n = this->hm_world_surface_size(); i < n; i++) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64NoTag(
-      this->hm_world_surface(i), output);
-  }
-
-  // repeated int64 hm_motion_blocking = 6;
-  if (this->hm_motion_blocking_size() > 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTag(6, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_hm_motion_blocking_cached_byte_size_.load(
-        std::memory_order_relaxed));
-  }
-  for (int i = 0, n = this->hm_motion_blocking_size(); i < n; i++) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64NoTag(
-      this->hm_motion_blocking(i), output);
-  }
-
-  // repeated .minecpp.chunk.NetChunk.Section sections = 7;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->sections_size()); i < n; i++) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7,
-      this->sections(static_cast<int>(i)),
-      output);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:minecpp.chunk.NetChunk)
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* NetChunk::InternalSerializeWithCachedSizesToArray(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+::PROTOBUF_NAMESPACE_ID::uint8* NetChunk::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.chunk.NetChunk)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // int32 pos_x = 1;
   if (this->pos_x() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->pos_x(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_pos_x(), target);
   }
 
   // int32 pos_z = 2;
   if (this->pos_z() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->pos_z(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_pos_z(), target);
   }
 
   // bool full = 3;
   if (this->full() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->full(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(3, this->_internal_full(), target);
   }
 
   // repeated int32 biomes = 4 [packed = true];
-  if (this->biomes_size() > 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      4,
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-      target);
-    target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
-        _biomes_cached_byte_size_.load(std::memory_order_relaxed),
-         target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      WriteInt32NoTagToArray(this->biomes_, target);
+  {
+    int byte_size = _biomes_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt32Packed(
+          4, _internal_biomes(), byte_size, target);
+    }
   }
 
   // repeated int64 hm_world_surface = 5;
-  if (this->hm_world_surface_size() > 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      5,
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-      target);
-    target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
-        _hm_world_surface_cached_byte_size_.load(std::memory_order_relaxed),
-         target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      WriteInt64NoTagToArray(this->hm_world_surface_, target);
+  {
+    int byte_size = _hm_world_surface_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt64Packed(
+          5, _internal_hm_world_surface(), byte_size, target);
+    }
   }
 
   // repeated int64 hm_motion_blocking = 6;
-  if (this->hm_motion_blocking_size() > 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteTagToArray(
-      6,
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
-      target);
-    target = ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream::WriteVarint32ToArray(
-        _hm_motion_blocking_cached_byte_size_.load(std::memory_order_relaxed),
-         target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      WriteInt64NoTagToArray(this->hm_motion_blocking_, target);
+  {
+    int byte_size = _hm_motion_blocking_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt64Packed(
+          6, _internal_hm_motion_blocking(), byte_size, target);
+    }
   }
 
   // repeated .minecpp.chunk.NetChunk.Section sections = 7;
   for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->sections_size()); i < n; i++) {
+      n = static_cast<unsigned int>(this->_internal_sections_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessageToArray(
-        7, this->sections(static_cast<int>(i)), target);
+      InternalWriteMessage(7, this->_internal_sections(i), target, stream);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.chunk.NetChunk)
   return target;
@@ -1167,11 +764,6 @@ size_t NetChunk::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.chunk.NetChunk)
   size_t total_size = 0;
 
-  if (_internal_metadata_.have_unknown_fields()) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -1222,28 +814,24 @@ size_t NetChunk::ByteSizeLong() const {
   }
 
   // repeated .minecpp.chunk.NetChunk.Section sections = 7;
-  {
-    unsigned int count = static_cast<unsigned int>(this->sections_size());
-    total_size += 1UL * count;
-    for (unsigned int i = 0; i < count; i++) {
-      total_size +=
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-          this->sections(static_cast<int>(i)));
-    }
+  total_size += 1UL * this->_internal_sections_size();
+  for (const auto& msg : this->sections_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // int32 pos_x = 1;
   if (this->pos_x() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->pos_x());
+        this->_internal_pos_x());
   }
 
   // int32 pos_z = 2;
   if (this->pos_z() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->pos_z());
+        this->_internal_pos_z());
   }
 
   // bool full = 3;
@@ -1251,6 +839,10 @@ size_t NetChunk::ByteSizeLong() const {
     total_size += 1 + 1;
   }
 
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -1274,7 +866,7 @@ void NetChunk::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
 void NetChunk::MergeFrom(const NetChunk& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.chunk.NetChunk)
   GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -1283,13 +875,13 @@ void NetChunk::MergeFrom(const NetChunk& from) {
   hm_motion_blocking_.MergeFrom(from.hm_motion_blocking_);
   sections_.MergeFrom(from.sections_);
   if (from.pos_x() != 0) {
-    set_pos_x(from.pos_x());
+    _internal_set_pos_x(from._internal_pos_x());
   }
   if (from.pos_z() != 0) {
-    set_pos_z(from.pos_z());
+    _internal_set_pos_z(from._internal_pos_z());
   }
   if (from.full() != 0) {
-    set_full(from.full());
+    _internal_set_full(from._internal_full());
   }
 }
 
@@ -1311,20 +903,19 @@ bool NetChunk::IsInitialized() const {
   return true;
 }
 
-void NetChunk::Swap(NetChunk* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
 void NetChunk::InternalSwap(NetChunk* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   biomes_.InternalSwap(&other->biomes_);
   hm_world_surface_.InternalSwap(&other->hm_world_surface_);
   hm_motion_blocking_.InternalSwap(&other->hm_motion_blocking_);
-  CastToBase(&sections_)->InternalSwap(CastToBase(&other->sections_));
-  swap(pos_x_, other->pos_x_);
-  swap(pos_z_, other->pos_z_);
-  swap(full_, other->full_);
+  sections_.InternalSwap(&other->sections_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(NetChunk, full_)
+      + sizeof(NetChunk::full_)
+      - PROTOBUF_FIELD_OFFSET(NetChunk, pos_x_)>(
+          reinterpret_cast<char*>(&pos_x_),
+          reinterpret_cast<char*>(&other->pos_x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata NetChunk::GetMetadata() const {
@@ -1337,10 +928,10 @@ void NetChunk::InternalSwap(NetChunk* other) {
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::minecpp::chunk::NetChunk_Section* Arena::CreateMaybeMessage< ::minecpp::chunk::NetChunk_Section >(Arena* arena) {
-  return Arena::CreateInternal< ::minecpp::chunk::NetChunk_Section >(arena);
+  return Arena::CreateMessageInternal< ::minecpp::chunk::NetChunk_Section >(arena);
 }
 template<> PROTOBUF_NOINLINE ::minecpp::chunk::NetChunk* Arena::CreateMaybeMessage< ::minecpp::chunk::NetChunk >(Arena* arena) {
-  return Arena::CreateInternal< ::minecpp::chunk::NetChunk >(arena);
+  return Arena::CreateMessageInternal< ::minecpp::chunk::NetChunk >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

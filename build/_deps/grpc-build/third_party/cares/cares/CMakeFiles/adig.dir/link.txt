@@ -1,0 +1,1 @@
+/usr/bin/cc -O3 -DNDEBUG -rdynamic CMakeFiles/adig.dir/adig.c.o CMakeFiles/adig.dir/ares_getopt.c.o CMakeFiles/adig.dir/ares_nowarn.c.o CMakeFiles/adig.dir/ares_strcasecmp.c.o -o bin/adig  lib/libcares.a -lnsl -lrt 

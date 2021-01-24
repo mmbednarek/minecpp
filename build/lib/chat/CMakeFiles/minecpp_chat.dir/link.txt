@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminecpp_chat.a CMakeFiles/minecpp_chat.dir/parser.cpp.o CMakeFiles/minecpp_chat.dir/__/error/error.cpp.o
+/usr/bin/ranlib libminecpp_chat.a

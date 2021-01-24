@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminecpp_squeeze.a CMakeFiles/minecpp_squeeze.dir/vector.cpp.o
+/usr/bin/ranlib libminecpp_squeeze.a

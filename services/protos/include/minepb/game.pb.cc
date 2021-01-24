@@ -5,7 +5,6 @@
 
 #include <algorithm>
 
-#include <google/protobuf/stubs/common.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/wire_format_lite.h>
@@ -15,6 +14,8 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+
+PROTOBUF_PRAGMA_INIT_SEG
 namespace minecpp {
 namespace game {
 class GamePlayDefaultTypeInternal {
@@ -31,11 +32,10 @@ static void InitDefaultsscc_info_GamePlay_game_2eproto() {
     new (ptr) ::minecpp::game::GamePlay();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::minecpp::game::GamePlay::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GamePlay_game_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, InitDefaultsscc_info_GamePlay_game_2eproto}, {}};
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_GamePlay_game_2eproto}, {}};
 
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_game_2eproto[1];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_game_2eproto[4];
@@ -66,7 +66,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::game::_GamePlay_default_instance_),
 };
 
-const char descriptor_table_protodef_game_2eproto[] =
+const char descriptor_table_protodef_game_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\ngame.proto\022\014minecpp.game\"\274\002\n\010GamePlay\022"
   ".\n\tdimension\030\001 \001(\0162\033.minecpp.game.Dimens"
   "ionType\022\014\n\004seed\030\002 \001(\004\022$\n\004mode\030\003 \001(\0162\026.mi"
@@ -90,16 +90,15 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_gam
   &scc_info_GamePlay_game_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_game_2eproto_once;
-static bool descriptor_table_game_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_2eproto = {
-  &descriptor_table_game_2eproto_initialized, descriptor_table_protodef_game_2eproto, "game.proto", 606,
+  false, false, descriptor_table_protodef_game_2eproto, "game.proto", 606,
   &descriptor_table_game_2eproto_once, descriptor_table_game_2eproto_sccs, descriptor_table_game_2eproto_deps, 1, 0,
   schemas, file_default_instances, TableStruct_game_2eproto::offsets,
   file_level_metadata_game_2eproto, 1, file_level_enum_descriptors_game_2eproto, file_level_service_descriptors_game_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_game_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_game_2eproto), true);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_game_2eproto(&descriptor_table_game_2eproto);
 namespace minecpp {
 namespace game {
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DimensionType_descriptor() {
@@ -168,34 +167,19 @@ bool WorldType_IsValid(int value) {
 
 // ===================================================================
 
-void GamePlay::InitAsDefaultInstance() {
-}
-class GamePlay::HasBitSetters {
+class GamePlay::_Internal {
  public:
 };
 
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int GamePlay::kDimensionFieldNumber;
-const int GamePlay::kSeedFieldNumber;
-const int GamePlay::kModeFieldNumber;
-const int GamePlay::kWorldFieldNumber;
-const int GamePlay::kViewDistanceFieldNumber;
-const int GamePlay::kHardcoreFieldNumber;
-const int GamePlay::kMaxPlayersFieldNumber;
-const int GamePlay::kReducedDebugInfoFieldNumber;
-const int GamePlay::kDoImmediateRespawnFieldNumber;
-const int GamePlay::kDifficultyFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-GamePlay::GamePlay()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+GamePlay::GamePlay(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:minecpp.game.GamePlay)
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:minecpp.game.GamePlay)
 }
 GamePlay::GamePlay(const GamePlay& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&seed_, &from.seed_,
     static_cast<size_t>(reinterpret_cast<char*>(&difficulty_) -
     reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
@@ -203,19 +187,28 @@ GamePlay::GamePlay(const GamePlay& from)
 }
 
 void GamePlay::SharedCtor() {
-  ::memset(&seed_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&difficulty_) -
+  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+      reinterpret_cast<char*>(&seed_) - reinterpret_cast<char*>(this)),
+      0, static_cast<size_t>(reinterpret_cast<char*>(&difficulty_) -
       reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
 }
 
 GamePlay::~GamePlay() {
   // @@protoc_insertion_point(destructor:minecpp.game.GamePlay)
   SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 void GamePlay::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
 }
 
+void GamePlay::ArenaDtor(void* object) {
+  GamePlay* _this = reinterpret_cast< GamePlay* >(object);
+  (void)_this;
+}
+void GamePlay::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
 void GamePlay::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -234,10 +227,9 @@ void GamePlay::Clear() {
   ::memset(&seed_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&difficulty_) -
       reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
-  _internal_metadata_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-#if GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
 const char* GamePlay::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
@@ -248,75 +240,75 @@ const char* GamePlay::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
       // .minecpp.game.DimensionType dimension = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          set_dimension(static_cast<::minecpp::game::DimensionType>(val));
+          _internal_set_dimension(static_cast<::minecpp::game::DimensionType>(val));
         } else goto handle_unusual;
         continue;
       // uint64 seed = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          seed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          seed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // .minecpp.game.GameMode mode = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          set_mode(static_cast<::minecpp::game::GameMode>(val));
+          _internal_set_mode(static_cast<::minecpp::game::GameMode>(val));
         } else goto handle_unusual;
         continue;
       // .minecpp.game.WorldType world = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          set_world(static_cast<::minecpp::game::WorldType>(val));
+          _internal_set_world(static_cast<::minecpp::game::WorldType>(val));
         } else goto handle_unusual;
         continue;
       // int32 view_distance = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
-          view_distance_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          view_distance_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // bool hardcore = 6;
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
-          hardcore_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          hardcore_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // int32 max_players = 7;
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
-          max_players_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          max_players_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // bool reduced_debug_info = 8;
       case 8:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
-          reduced_debug_info_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          reduced_debug_info_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // bool do_immediate_respawn = 9;
       case 9:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
-          do_immediate_respawn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          do_immediate_respawn_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
       // .minecpp.game.Difficulty difficulty = 10;
       case 10:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
-          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          set_difficulty(static_cast<::minecpp::game::Difficulty>(val));
+          _internal_set_difficulty(static_cast<::minecpp::game::Difficulty>(val));
         } else goto handle_unusual;
         continue;
       default: {
@@ -325,7 +317,9 @@ const char* GamePlay::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
           ctx->SetLastTag(tag);
           goto success;
         }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
       }
@@ -338,302 +332,80 @@ failure:
   goto success;
 #undef CHK_
 }
-#else  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-bool GamePlay::MergePartialFromCodedStream(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!PROTOBUF_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-  // @@protoc_insertion_point(parse_start:minecpp.game.GamePlay)
-  for (;;) {
-    ::std::pair<::PROTOBUF_NAMESPACE_ID::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // .minecpp.game.DimensionType dimension = 1;
-      case 1: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (8 & 0xFF)) {
-          int value = 0;
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_dimension(static_cast< ::minecpp::game::DimensionType >(value));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
 
-      // uint64 seed = 2;
-      case 2: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (16 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::uint64, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_UINT64>(
-                 input, &seed_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .minecpp.game.GameMode mode = 3;
-      case 3: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (24 & 0xFF)) {
-          int value = 0;
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_mode(static_cast< ::minecpp::game::GameMode >(value));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .minecpp.game.WorldType world = 4;
-      case 4: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (32 & 0xFF)) {
-          int value = 0;
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_world(static_cast< ::minecpp::game::WorldType >(value));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 view_distance = 5;
-      case 5: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (40 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &view_distance_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bool hardcore = 6;
-      case 6: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (48 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &hardcore_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // int32 max_players = 7;
-      case 7: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (56 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   ::PROTOBUF_NAMESPACE_ID::int32, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_INT32>(
-                 input, &max_players_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bool reduced_debug_info = 8;
-      case 8: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (64 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &reduced_debug_info_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // bool do_immediate_respawn = 9;
-      case 9: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (72 & 0xFF)) {
-
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &do_immediate_respawn_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // .minecpp.game.Difficulty difficulty = 10;
-      case 10: {
-        if (static_cast< ::PROTOBUF_NAMESPACE_ID::uint8>(tag) == (80 & 0xFF)) {
-          int value = 0;
-          DO_((::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::ReadPrimitive<
-                   int, ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_difficulty(static_cast< ::minecpp::game::Difficulty >(value));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:minecpp.game.GamePlay)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:minecpp.game.GamePlay)
-  return false;
-#undef DO_
-}
-#endif  // GOOGLE_PROTOBUF_ENABLE_EXPERIMENTAL_PARSER
-
-void GamePlay::SerializeWithCachedSizes(
-    ::PROTOBUF_NAMESPACE_ID::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:minecpp.game.GamePlay)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // .minecpp.game.DimensionType dimension = 1;
-  if (this->dimension() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
-      1, this->dimension(), output);
-  }
-
-  // uint64 seed = 2;
-  if (this->seed() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64(2, this->seed(), output);
-  }
-
-  // .minecpp.game.GameMode mode = 3;
-  if (this->mode() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
-      3, this->mode(), output);
-  }
-
-  // .minecpp.game.WorldType world = 4;
-  if (this->world() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
-      4, this->world(), output);
-  }
-
-  // int32 view_distance = 5;
-  if (this->view_distance() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(5, this->view_distance(), output);
-  }
-
-  // bool hardcore = 6;
-  if (this->hardcore() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(6, this->hardcore(), output);
-  }
-
-  // int32 max_players = 7;
-  if (this->max_players() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32(7, this->max_players(), output);
-  }
-
-  // bool reduced_debug_info = 8;
-  if (this->reduced_debug_info() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(8, this->reduced_debug_info(), output);
-  }
-
-  // bool do_immediate_respawn = 9;
-  if (this->do_immediate_respawn() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBool(9, this->do_immediate_respawn(), output);
-  }
-
-  // .minecpp.game.Difficulty difficulty = 10;
-  if (this->difficulty() != 0) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnum(
-      10, this->difficulty(), output);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:minecpp.game.GamePlay)
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* GamePlay::InternalSerializeWithCachedSizesToArray(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target) const {
+::PROTOBUF_NAMESPACE_ID::uint8* GamePlay::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.game.GamePlay)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   // .minecpp.game.DimensionType dimension = 1;
   if (this->dimension() != 0) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      1, this->dimension(), target);
+      1, this->_internal_dimension(), target);
   }
 
   // uint64 seed = 2;
   if (this->seed() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->seed(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_seed(), target);
   }
 
   // .minecpp.game.GameMode mode = 3;
   if (this->mode() != 0) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      3, this->mode(), target);
+      3, this->_internal_mode(), target);
   }
 
   // .minecpp.game.WorldType world = 4;
   if (this->world() != 0) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      4, this->world(), target);
+      4, this->_internal_world(), target);
   }
 
   // int32 view_distance = 5;
   if (this->view_distance() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->view_distance(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_view_distance(), target);
   }
 
   // bool hardcore = 6;
   if (this->hardcore() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(6, this->hardcore(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(6, this->_internal_hardcore(), target);
   }
 
   // int32 max_players = 7;
   if (this->max_players() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->max_players(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_max_players(), target);
   }
 
   // bool reduced_debug_info = 8;
   if (this->reduced_debug_info() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(8, this->reduced_debug_info(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(8, this->_internal_reduced_debug_info(), target);
   }
 
   // bool do_immediate_respawn = 9;
   if (this->do_immediate_respawn() != 0) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(9, this->do_immediate_respawn(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(9, this->_internal_do_immediate_respawn(), target);
   }
 
   // .minecpp.game.Difficulty difficulty = 10;
   if (this->difficulty() != 0) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      10, this->difficulty(), target);
+      10, this->_internal_difficulty(), target);
   }
 
-  if (_internal_metadata_.have_unknown_fields()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.game.GamePlay)
   return target;
@@ -643,11 +415,6 @@ size_t GamePlay::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.game.GamePlay)
   size_t total_size = 0;
 
-  if (_internal_metadata_.have_unknown_fields()) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -656,39 +423,39 @@ size_t GamePlay::ByteSizeLong() const {
   if (this->seed() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->seed());
+        this->_internal_seed());
   }
 
   // .minecpp.game.DimensionType dimension = 1;
   if (this->dimension() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->dimension());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_dimension());
   }
 
   // .minecpp.game.GameMode mode = 3;
   if (this->mode() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->mode());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_mode());
   }
 
   // .minecpp.game.WorldType world = 4;
   if (this->world() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->world());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_world());
   }
 
   // int32 view_distance = 5;
   if (this->view_distance() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->view_distance());
+        this->_internal_view_distance());
   }
 
   // int32 max_players = 7;
   if (this->max_players() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->max_players());
+        this->_internal_max_players());
   }
 
   // bool hardcore = 6;
@@ -709,9 +476,13 @@ size_t GamePlay::ByteSizeLong() const {
   // .minecpp.game.Difficulty difficulty = 10;
   if (this->difficulty() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->difficulty());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_difficulty());
   }
 
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
   int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
   SetCachedSize(cached_size);
   return total_size;
@@ -735,39 +506,39 @@ void GamePlay::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
 void GamePlay::MergeFrom(const GamePlay& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.game.GamePlay)
   GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from.seed() != 0) {
-    set_seed(from.seed());
+    _internal_set_seed(from._internal_seed());
   }
   if (from.dimension() != 0) {
-    set_dimension(from.dimension());
+    _internal_set_dimension(from._internal_dimension());
   }
   if (from.mode() != 0) {
-    set_mode(from.mode());
+    _internal_set_mode(from._internal_mode());
   }
   if (from.world() != 0) {
-    set_world(from.world());
+    _internal_set_world(from._internal_world());
   }
   if (from.view_distance() != 0) {
-    set_view_distance(from.view_distance());
+    _internal_set_view_distance(from._internal_view_distance());
   }
   if (from.max_players() != 0) {
-    set_max_players(from.max_players());
+    _internal_set_max_players(from._internal_max_players());
   }
   if (from.hardcore() != 0) {
-    set_hardcore(from.hardcore());
+    _internal_set_hardcore(from._internal_hardcore());
   }
   if (from.reduced_debug_info() != 0) {
-    set_reduced_debug_info(from.reduced_debug_info());
+    _internal_set_reduced_debug_info(from._internal_reduced_debug_info());
   }
   if (from.do_immediate_respawn() != 0) {
-    set_do_immediate_respawn(from.do_immediate_respawn());
+    _internal_set_do_immediate_respawn(from._internal_do_immediate_respawn());
   }
   if (from.difficulty() != 0) {
-    set_difficulty(from.difficulty());
+    _internal_set_difficulty(from._internal_difficulty());
   }
 }
 
@@ -789,23 +560,15 @@ bool GamePlay::IsInitialized() const {
   return true;
 }
 
-void GamePlay::Swap(GamePlay* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
 void GamePlay::InternalSwap(GamePlay* other) {
   using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(seed_, other->seed_);
-  swap(dimension_, other->dimension_);
-  swap(mode_, other->mode_);
-  swap(world_, other->world_);
-  swap(view_distance_, other->view_distance_);
-  swap(max_players_, other->max_players_);
-  swap(hardcore_, other->hardcore_);
-  swap(reduced_debug_info_, other->reduced_debug_info_);
-  swap(do_immediate_respawn_, other->do_immediate_respawn_);
-  swap(difficulty_, other->difficulty_);
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GamePlay, difficulty_)
+      + sizeof(GamePlay::difficulty_)
+      - PROTOBUF_FIELD_OFFSET(GamePlay, seed_)>(
+          reinterpret_cast<char*>(&seed_),
+          reinterpret_cast<char*>(&other->seed_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata GamePlay::GetMetadata() const {
@@ -818,7 +581,7 @@ void GamePlay::InternalSwap(GamePlay* other) {
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::minecpp::game::GamePlay* Arena::CreateMaybeMessage< ::minecpp::game::GamePlay >(Arena* arena) {
-  return Arena::CreateInternal< ::minecpp::game::GamePlay >(arena);
+  return Arena::CreateMessageInternal< ::minecpp::game::GamePlay >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

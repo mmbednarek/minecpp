@@ -1,0 +1,2 @@
+/usr/bin/ar qc libminecpp_proto.a CMakeFiles/minecpp_proto.dir/engine.grpc.pb.cc.o CMakeFiles/minecpp_proto.dir/engine.pb.cc.o CMakeFiles/minecpp_proto.dir/chunk.pb.cc.o CMakeFiles/minecpp_proto.dir/chunk_storage.grpc.pb.cc.o CMakeFiles/minecpp_proto.dir/chunk_storage.pb.cc.o CMakeFiles/minecpp_proto.dir/game.pb.cc.o CMakeFiles/minecpp_proto.dir/player.pb.cc.o CMakeFiles/minecpp_proto.dir/events.pb.cc.o
+/usr/bin/ranlib libminecpp_proto.a

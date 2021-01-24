@@ -1,25 +1,17 @@
 #include "service.h"
 #include <grpcpp/server_builder.h>
-#include <iostream>
+#include <mb/core.h>
 #include <spdlog/spdlog.h>
 
 auto main() -> int {
-   auto region_path = std::getenv("REGION_PATH");
-   if (!region_path) {
-      spdlog::error("REGION_PATH variable required\n");
-      return 1;
-   }
+   auto region_path = mb::getenv("REGION_PATH").unwrap("world/region");
+   auto listen = mb::getenv("LISTEN").unwrap("0.0.0.0:7600");
 
-   std::string listen = std::getenv("LISTEN");
-   if (listen.empty()) {
-      listen = "0.0.0.0:7000";
-   }
-
-   ChunkStorage::Service s(region_path);
+   ChunkStorage::Service service(region_path);
 
    grpc::ServerBuilder builder;
    builder.AddListeningPort(listen, grpc::InsecureServerCredentials());
-   builder.RegisterService(&s);
+   builder.RegisterService(&service);
 
    std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
    spdlog::info("starting grpc server on address {}", listen);

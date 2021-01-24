@@ -1,0 +1,1 @@
+/usr/bin/cc -O3 -DNDEBUG -rdynamic CMakeFiles/acountry.dir/acountry.c.o CMakeFiles/acountry.dir/ares_getopt.c.o CMakeFiles/acountry.dir/ares_nowarn.c.o CMakeFiles/acountry.dir/ares_strcasecmp.c.o -o bin/acountry  lib/libcares.a -lnsl -lrt 

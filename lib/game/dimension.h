@@ -53,7 +53,8 @@ const DimensionProperties EndProps{
     .name = "minecraft:the_end",
 };
 
-void write_dimensions(NBT::Writer &w);
+void write_dimension_codec(NBT::Writer &w);
+void write_dimension_type(NBT::Writer &w);
 
 enum class Dimension : int8_t { Overworld = 0, Nether = -1, End = 1 };
 
