@@ -1,15 +1,15 @@
 #include <game/blocks/registry.h>
-#include <iostream>
+#include <fmt/core.h>
 
 auto main() -> int {
    for (auto &block : Game::Block::blocks) {
-      std::cout << block.tag() << '\n';
+      fmt::print("minecraft:{}\n", block.tag());
       for (const auto &attrib : block.attributes) {
-         std::cout << "  - " << attrib->name() << " [";
+         fmt::print("  - {} [", attrib->name());
          for (int i = 0; i < attrib->num_states() - 1; ++i) {
-            std::cout << attrib->name_of(i) << ", ";
+            fmt::print("{}, ", attrib->name_of(i));
          }
-         std::cout << attrib->name_of(attrib->num_states() - 1) << "]\n";
+         fmt::print("{}]\n", attrib->name_of(attrib->num_states() -1));
       }
    }
 }
