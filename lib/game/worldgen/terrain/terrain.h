@@ -24,6 +24,7 @@ class Terrain {
    int stone_id;
    int dirt_id;
    int grass_id;
+   int gravel_id;
    int sand_id;
    int water_id;
    int snow_id;

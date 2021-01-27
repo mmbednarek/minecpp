@@ -28,6 +28,7 @@ Terrain::Terrain(uint64_t seed, int x, int z) :  height_gen(seed), rand(seed), x
    stone_id = Block::encode_state("minecraft:stone", empty_attribs);
    dirt_id = Block::encode_state("minecraft:dirt", empty_attribs);
    grass_id = Block::encode_state("minecraft:grass_block", not_snowy);
+   gravel_id = Block::encode_state("minecraft:gravel", empty_attribs);
    sand_id = Block::encode_state("minecraft:sand", empty_attribs);
    water_id = Block::encode_state("minecraft:water", empty_attribs);
    snow_id = Block::encode_state("minecraft:snow", empty_attribs);
@@ -71,8 +72,20 @@ Section Terrain::generate_section(int sec) {
          if (block_y > 100) {
             return snow_block_id;
          }
+         if (block_y > 97) {
+            if (rand.next_int(2) == 0) {
+               return snow_block_id;
+            }
+            return stone_id;
+         }
          if (block_y > 90) {
             return stone_id;
+         }
+         if (block_y > 86) {
+            if (rand.next_int(2) == 0) {
+               return stone_id;
+            }
+            return grass_id;
          }
          return grass_id;
       }

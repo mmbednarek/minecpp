@@ -22,7 +22,7 @@ Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z
    std::copy(arr.begin(), arr.end(), hm_motion_blocking.begin());
    std::copy(arr.begin(), arr.end(), hm_world_surface.begin());
 
-   std::fill(biomes.begin(), biomes.end(), 0);
+   std::fill(biomes.begin(), biomes.end(), 1);
 }
 
 result<std::unique_ptr<Chunk>> Chunk::from_nbt(NBT::Reader &r) {

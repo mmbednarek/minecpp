@@ -532,7 +532,7 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn) {
    ss << R"({"description":{"extra":[{"color": "red", "bold": true, "text": "Mine"}, {"color": "gold", "bold": true, "text": "C++"}, {"color":"gray", "text": "\nA minecraft server backend written in C++"}], "text": ""},)";
    ss << R"("favicon":"data:image/png;base64,)" << favicon << R"(",)";
    ss << R"("players":{"max":34,"online":2},)";
-   ss << R"("version":{"name": "1.16.1", "protocol": 736}})";
+   ss << R"("version":{"name": "1.16.5", "protocol": 754}})";
 
    w.write_string(ss.str());
    conn->send_and_read(conn, w, *this);

@@ -46,7 +46,7 @@ void write_dimension_codec(NBT::Writer &w) {
    w.end_compound();
    w.begin_compound("minecraft:worldgen/biome");
    w.write_string("type", "minecraft:worldgen/biome");
-   w.begin_list("value", NBT::TagId::Compound, 1);
+   w.begin_list("value", NBT::TagId::Compound, 2);
    {
       w.write_string("name", "minecraft:plains");
       w.write_int("id", 0);
@@ -59,10 +59,29 @@ void write_dimension_codec(NBT::Writer &w) {
          w.write_float("downfall", 1.0);
          w.write_string("category", "plains");
          w.begin_compound("effects");
-         w.write_int("sky_color", 5414746);
-         w.write_int("water_fog_color", 8364543);
-         w.write_int("fog_color", 10441369);
-         w.write_int("water_color", 10456914);
+         w.write_int("sky_color", 12833240);
+         w.write_int("water_fog_color", 16054521);
+         w.write_int("fog_color", 16054521);
+         w.write_int("water_color", 6326951);
+         w.end_compound();
+      }
+      w.end_compound();
+      w.end_compound();
+      w.write_string("name", "minecraft:mountains");
+      w.write_int("id", 1);
+      w.begin_compound("element");
+      {
+         w.write_string("precipitation", "none");
+         w.write_float("depth", 1.0);
+         w.write_float("temperature", -0.5);
+         w.write_float("scale", 1.0);
+         w.write_float("downfall", 1.0);
+         w.write_string("category", "icy");
+         w.begin_compound("effects");
+         w.write_int("sky_color", 12833240);
+         w.write_int("water_fog_color", 16054521);
+         w.write_int("fog_color", 16054521);
+         w.write_int("water_color", 6326951);
          w.end_compound();
       }
       w.end_compound();
