@@ -5,6 +5,7 @@
 #include <map>
 #include <minenet/chat.h>
 #include <minepb/chunk.pb.h>
+#include <mb/int.h>
 #include <string_view>
 
 namespace MineNet::Message {
@@ -47,15 +48,17 @@ struct AnimateHand {
 };
 Writer serialize(AnimateHand msg);
 
+struct BlockChange {
+   mb::u64 block_position{};
+   mb::u32 block_id{};
+};
+Writer serialize(BlockChange msg);
+
 // 0x0f
 struct MultiBlockChange {
-   struct Change {
-      short offset;
-      uint32_t state;
-   };
-
-   int chunk_x, chunk_z;
-   std::vector<Change> changes;
+   mb::u64 chunk_position{};
+   bool distrust_edges = true;
+   std::vector<mb::u64> block_changes{};
 };
 Writer serialize(MultiBlockChange msg);
 

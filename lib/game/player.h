@@ -24,7 +24,7 @@ class Player {
       bool instant_build = true;
       bool invulnerable = false;
       bool may_build = true;
-      bool may_fly = false;
+      bool may_fly = true;
       float walk_speed = 0.1f;
 
       void from_proto(minecpp::player::Abilities abilities);

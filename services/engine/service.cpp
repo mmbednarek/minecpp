@@ -229,12 +229,9 @@ grpc::Status Service::DestroyBlock(grpc::ServerContext *context, const minecpp::
    }
 
    Game::Block::Position pos(request->x(), request->y(), request->z());
-   auto chunk_pos = pos.chunk_pos();
 
    minecpp::events::UpdateBlock update_block;
-   update_block.set_chunk_x(chunk_pos.x);
-   update_block.set_chunk_z(chunk_pos.z);
-   update_block.set_offset(pos.offset());
+   update_block.set_block_position(pos.as_long());
    update_block.set_state(0);
    event_manager.post(update_block);
 

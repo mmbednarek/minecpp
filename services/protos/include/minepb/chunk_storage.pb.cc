@@ -14,8 +14,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-
-PROTOBUF_PRAGMA_INIT_SEG
 extern PROTOBUF_INTERNAL_EXPORT_chunk_5fstorage_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Coord_chunk_5fstorage_2eproto;
 namespace minecpp {
 namespace chunk_storage {
@@ -65,6 +63,7 @@ static void InitDefaultsscc_info_AddReferencesRequest_chunk_5fstorage_2eproto() 
     new (ptr) ::minecpp::chunk_storage::AddReferencesRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::AddReferencesRequest::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_AddReferencesRequest_chunk_5fstorage_2eproto =
@@ -79,6 +78,7 @@ static void InitDefaultsscc_info_AddReferencesResponse_chunk_5fstorage_2eproto()
     new (ptr) ::minecpp::chunk_storage::AddReferencesResponse();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::AddReferencesResponse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_AddReferencesResponse_chunk_5fstorage_2eproto =
@@ -92,6 +92,7 @@ static void InitDefaultsscc_info_Coord_chunk_5fstorage_2eproto() {
     new (ptr) ::minecpp::chunk_storage::Coord();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::Coord::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Coord_chunk_5fstorage_2eproto =
@@ -105,6 +106,7 @@ static void InitDefaultsscc_info_EmptyResponse_chunk_5fstorage_2eproto() {
     new (ptr) ::minecpp::chunk_storage::EmptyResponse();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::EmptyResponse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_EmptyResponse_chunk_5fstorage_2eproto =
@@ -118,6 +120,7 @@ static void InitDefaultsscc_info_HeightAtRequest_chunk_5fstorage_2eproto() {
     new (ptr) ::minecpp::chunk_storage::HeightAtRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::HeightAtRequest::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_HeightAtRequest_chunk_5fstorage_2eproto =
@@ -131,6 +134,7 @@ static void InitDefaultsscc_info_HeightAtResponse_chunk_5fstorage_2eproto() {
     new (ptr) ::minecpp::chunk_storage::HeightAtResponse();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::HeightAtResponse::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_HeightAtResponse_chunk_5fstorage_2eproto =
@@ -144,6 +148,7 @@ static void InitDefaultsscc_info_LoadChunkRequest_chunk_5fstorage_2eproto() {
     new (ptr) ::minecpp::chunk_storage::LoadChunkRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::LoadChunkRequest::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_LoadChunkRequest_chunk_5fstorage_2eproto =
@@ -157,6 +162,7 @@ static void InitDefaultsscc_info_RemoveReferencesRequest_chunk_5fstorage_2eproto
     new (ptr) ::minecpp::chunk_storage::RemoveReferencesRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::RemoveReferencesRequest::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_RemoveReferencesRequest_chunk_5fstorage_2eproto =
@@ -171,6 +177,7 @@ static void InitDefaultsscc_info_SetBlockRequest_chunk_5fstorage_2eproto() {
     new (ptr) ::minecpp::chunk_storage::SetBlockRequest();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::chunk_storage::SetBlockRequest::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_SetBlockRequest_chunk_5fstorage_2eproto =
@@ -323,7 +330,7 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_chunk_
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_chunk_5fstorage_2eproto(&descriptor_table_chunk_5fstorage_2eproto);
+static bool dynamic_init_dummy_chunk_5fstorage_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_chunk_5fstorage_2eproto)), true);
 namespace minecpp {
 namespace chunk_storage {
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ReferenceStatus_descriptor() {
@@ -343,6 +350,8 @@ bool ReferenceStatus_IsValid(int value) {
 
 // ===================================================================
 
+void LoadChunkRequest::InitAsDefaultInstance() {
+}
 class LoadChunkRequest::_Internal {
  public:
 };
@@ -363,9 +372,8 @@ LoadChunkRequest::LoadChunkRequest(const LoadChunkRequest& from)
 }
 
 void LoadChunkRequest::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
       reinterpret_cast<char*>(&x_)) + sizeof(z_));
 }
 
@@ -408,6 +416,7 @@ void LoadChunkRequest::Clear() {
 
 const char* LoadChunkRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -572,6 +581,8 @@ void LoadChunkRequest::InternalSwap(LoadChunkRequest* other) {
 
 // ===================================================================
 
+void SetBlockRequest::InitAsDefaultInstance() {
+}
 class SetBlockRequest::_Internal {
  public:
 };
@@ -592,9 +603,8 @@ SetBlockRequest::SetBlockRequest(const SetBlockRequest& from)
 }
 
 void SetBlockRequest::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&state_) -
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&state_) -
       reinterpret_cast<char*>(&x_)) + sizeof(state_));
 }
 
@@ -637,6 +647,7 @@ void SetBlockRequest::Clear() {
 
 const char* SetBlockRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -847,6 +858,8 @@ void SetBlockRequest::InternalSwap(SetBlockRequest* other) {
 
 // ===================================================================
 
+void Coord::InitAsDefaultInstance() {
+}
 class Coord::_Internal {
  public:
 };
@@ -867,9 +880,8 @@ Coord::Coord(const Coord& from)
 }
 
 void Coord::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
       reinterpret_cast<char*>(&x_)) + sizeof(z_));
 }
 
@@ -912,6 +924,7 @@ void Coord::Clear() {
 
 const char* Coord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -1076,6 +1089,8 @@ void Coord::InternalSwap(Coord* other) {
 
 // ===================================================================
 
+void AddReferencesRequest::InitAsDefaultInstance() {
+}
 class AddReferencesRequest::_Internal {
  public:
 };
@@ -1093,12 +1108,12 @@ AddReferencesRequest::AddReferencesRequest(const AddReferencesRequest& from)
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   engine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_engine_id().empty()) {
-    engine_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_engine_id(), 
+    engine_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_engine_id(),
       GetArena());
   }
   player_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_player_id().empty()) {
-    player_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_player_id(), 
+    player_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_player_id(),
       GetArena());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.chunk_storage.AddReferencesRequest)
@@ -1144,13 +1159,14 @@ void AddReferencesRequest::Clear() {
   (void) cached_has_bits;
 
   coords_.Clear();
-  engine_id_.ClearToEmpty();
-  player_id_.ClearToEmpty();
+  engine_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  player_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* AddReferencesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -1342,6 +1358,8 @@ void AddReferencesRequest::InternalSwap(AddReferencesRequest* other) {
 
 // ===================================================================
 
+void AddReferencesResponse::InitAsDefaultInstance() {
+}
 class AddReferencesResponse::_Internal {
  public:
 };
@@ -1357,7 +1375,7 @@ AddReferencesResponse::AddReferencesResponse(const AddReferencesResponse& from)
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   target_engine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_target_engine_id().empty()) {
-    target_engine_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_target_engine_id(), 
+    target_engine_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_target_engine_id(),
       GetArena());
   }
   status_ = from.status_;
@@ -1402,13 +1420,14 @@ void AddReferencesResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  target_engine_id_.ClearToEmpty();
+  target_engine_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   status_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* AddReferencesResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -1571,6 +1590,8 @@ void AddReferencesResponse::InternalSwap(AddReferencesResponse* other) {
 
 // ===================================================================
 
+void RemoveReferencesRequest::InitAsDefaultInstance() {
+}
 class RemoveReferencesRequest::_Internal {
  public:
 };
@@ -1588,7 +1609,7 @@ RemoveReferencesRequest::RemoveReferencesRequest(const RemoveReferencesRequest& 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   player_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_player_id().empty()) {
-    player_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_player_id(), 
+    player_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_player_id(),
       GetArena());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.chunk_storage.RemoveReferencesRequest)
@@ -1632,12 +1653,13 @@ void RemoveReferencesRequest::Clear() {
   (void) cached_has_bits;
 
   coords_.Clear();
-  player_id_.ClearToEmpty();
+  player_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* RemoveReferencesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -1804,6 +1826,8 @@ void RemoveReferencesRequest::InternalSwap(RemoveReferencesRequest* other) {
 
 // ===================================================================
 
+void HeightAtRequest::InitAsDefaultInstance() {
+}
 class HeightAtRequest::_Internal {
  public:
 };
@@ -1824,9 +1848,8 @@ HeightAtRequest::HeightAtRequest(const HeightAtRequest& from)
 }
 
 void HeightAtRequest::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
       reinterpret_cast<char*>(&x_)) + sizeof(z_));
 }
 
@@ -1869,6 +1892,7 @@ void HeightAtRequest::Clear() {
 
 const char* HeightAtRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -2033,6 +2057,8 @@ void HeightAtRequest::InternalSwap(HeightAtRequest* other) {
 
 // ===================================================================
 
+void HeightAtResponse::InitAsDefaultInstance() {
+}
 class HeightAtResponse::_Internal {
  public:
 };
@@ -2091,6 +2117,7 @@ void HeightAtResponse::Clear() {
 
 const char* HeightAtResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -2227,6 +2254,8 @@ void HeightAtResponse::InternalSwap(HeightAtResponse* other) {
 
 // ===================================================================
 
+void EmptyResponse::InitAsDefaultInstance() {
+}
 class EmptyResponse::_Internal {
  public:
 };
@@ -2282,6 +2311,7 @@ void EmptyResponse::Clear() {
 
 const char* EmptyResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);

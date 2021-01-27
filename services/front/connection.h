@@ -76,7 +76,6 @@ class Connection {
 };
 
 template <typename M> void send(const Connection::Ptr &conn, M msg) {
-   spdlog::info("sending package: {}", typeid(M).name());
    auto w = MineNet::Message::serialize(msg);
    conn->send(conn, w);
 }

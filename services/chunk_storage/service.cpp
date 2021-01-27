@@ -1,12 +1,9 @@
 #include "service.h"
-#include <fstream>
 #include <game/chunk/chunk.h>
 #include <mineutils/compression.h>
 #include <mineutils/format.h>
 #include <mineutils/uuid.h>
-#include <nbt/reader.h>
 #include <region/reader.h>
-#include <spdlog/spdlog.h>
 
 namespace ChunkStorage {
 

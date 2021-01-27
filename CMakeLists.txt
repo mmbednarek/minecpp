@@ -10,10 +10,11 @@ find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(Protobuf REQUIRED)
 
 include(FetchContent)
+
 FetchContent_Declare(
         gRPC
         GIT_REPOSITORY https://github.com/grpc/grpc
-        GIT_TAG v1.35.0
+        GIT_TAG v1.34.1
 )
 FetchContent_MakeAvailable(gRPC)
 

@@ -14,8 +14,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-
-PROTOBUF_PRAGMA_INIT_SEG
 namespace minecpp {
 namespace game {
 class GamePlayDefaultTypeInternal {
@@ -32,6 +30,7 @@ static void InitDefaultsscc_info_GamePlay_game_2eproto() {
     new (ptr) ::minecpp::game::GamePlay();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::game::GamePlay::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GamePlay_game_2eproto =
@@ -98,7 +97,7 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_game_2
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_game_2eproto(&descriptor_table_game_2eproto);
+static bool dynamic_init_dummy_game_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_game_2eproto)), true);
 namespace minecpp {
 namespace game {
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DimensionType_descriptor() {
@@ -167,6 +166,8 @@ bool WorldType_IsValid(int value) {
 
 // ===================================================================
 
+void GamePlay::InitAsDefaultInstance() {
+}
 class GamePlay::_Internal {
  public:
 };
@@ -187,9 +188,8 @@ GamePlay::GamePlay(const GamePlay& from)
 }
 
 void GamePlay::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&seed_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&difficulty_) -
+  ::memset(&seed_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&difficulty_) -
       reinterpret_cast<char*>(&seed_)) + sizeof(difficulty_));
 }
 
@@ -232,6 +232,7 @@ void GamePlay::Clear() {
 
 const char* GamePlay::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);

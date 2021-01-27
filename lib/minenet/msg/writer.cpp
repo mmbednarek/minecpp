@@ -23,6 +23,18 @@ void Writer::write_varint(uint32_t value) {
    }
 }
 
+void Writer::write_varlong(uint64_t value) {
+   for (;;) {
+      if (value & (~0x7Fu)) {
+         write_byte((value & 0x7Fu) | 0x80u);
+         value >>= 7;
+         continue;
+      }
+      write_byte(value);
+      break;
+   }
+}
+
 int Writer::len_varint(int value) const {
    int result = 1;
    while (value & (~0x7Fu)) {

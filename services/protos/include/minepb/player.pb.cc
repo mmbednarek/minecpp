@@ -14,8 +14,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
-
-PROTOBUF_PRAGMA_INIT_SEG
 extern PROTOBUF_INTERNAL_EXPORT_player_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Abilities_player_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_player_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RecipeBook_player_2eproto;
 namespace minecpp {
@@ -42,6 +40,7 @@ static void InitDefaultsscc_info_Abilities_player_2eproto() {
     new (ptr) ::minecpp::player::Abilities();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::player::Abilities::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Abilities_player_2eproto =
@@ -55,6 +54,7 @@ static void InitDefaultsscc_info_Data_player_2eproto() {
     new (ptr) ::minecpp::player::Data();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::player::Data::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<2> scc_info_Data_player_2eproto =
@@ -70,6 +70,7 @@ static void InitDefaultsscc_info_RecipeBook_player_2eproto() {
     new (ptr) ::minecpp::player::RecipeBook();
     ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
   }
+  ::minecpp::player::RecipeBook::InitAsDefaultInstance();
 }
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RecipeBook_player_2eproto =
@@ -163,12 +164,18 @@ const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_player
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_player_2eproto(&descriptor_table_player_2eproto);
+static bool dynamic_init_dummy_player_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_player_2eproto)), true);
 namespace minecpp {
 namespace player {
 
 // ===================================================================
 
+void Data::InitAsDefaultInstance() {
+  ::minecpp::player::_Data_default_instance_._instance.get_mutable()->abilities_ = const_cast< ::minecpp::player::Abilities*>(
+      ::minecpp::player::Abilities::internal_default_instance());
+  ::minecpp::player::_Data_default_instance_._instance.get_mutable()->recipe_book_ = const_cast< ::minecpp::player::RecipeBook*>(
+      ::minecpp::player::RecipeBook::internal_default_instance());
+}
 class Data::_Internal {
  public:
   static const ::minecpp::player::Abilities& abilities(const Data* msg);
@@ -194,7 +201,7 @@ Data::Data(const Data& from)
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_name().empty()) {
-    name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_name(), 
+    name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_name(),
       GetArena());
   }
   if (from._internal_has_abilities()) {
@@ -216,9 +223,8 @@ Data::Data(const Data& from)
 void Data::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Data_player_2eproto.base);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&abilities_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&game_mode_) -
+  ::memset(&abilities_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&game_mode_) -
       reinterpret_cast<char*>(&abilities_)) + sizeof(game_mode_));
 }
 
@@ -256,7 +262,7 @@ void Data::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  name_.ClearToEmpty();
+  name_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   if (GetArena() == nullptr && abilities_ != nullptr) {
     delete abilities_;
   }
@@ -273,6 +279,7 @@ void Data::Clear() {
 
 const char* Data::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -623,6 +630,8 @@ void Data::InternalSwap(Data* other) {
 
 // ===================================================================
 
+void Abilities::InitAsDefaultInstance() {
+}
 class Abilities::_Internal {
  public:
 };
@@ -643,9 +652,8 @@ Abilities::Abilities(const Abilities& from)
 }
 
 void Abilities::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&walk_speed_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&may_fly_) -
+  ::memset(&walk_speed_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&may_fly_) -
       reinterpret_cast<char*>(&walk_speed_)) + sizeof(may_fly_));
 }
 
@@ -688,6 +696,7 @@ void Abilities::Clear() {
 
 const char* Abilities::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -953,6 +962,8 @@ void Abilities::InternalSwap(Abilities* other) {
 
 // ===================================================================
 
+void RecipeBook::InitAsDefaultInstance() {
+}
 class RecipeBook::_Internal {
  public:
 };
@@ -973,9 +984,8 @@ RecipeBook::RecipeBook(const RecipeBook& from)
 }
 
 void RecipeBook::SharedCtor() {
-  ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-      reinterpret_cast<char*>(&gui_open_) - reinterpret_cast<char*>(this)),
-      0, static_cast<size_t>(reinterpret_cast<char*>(&furnace_filtering_craftable_) -
+  ::memset(&gui_open_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&furnace_filtering_craftable_) -
       reinterpret_cast<char*>(&gui_open_)) + sizeof(furnace_filtering_craftable_));
 }
 
@@ -1018,6 +1028,7 @@ void RecipeBook::Clear() {
 
 const char* RecipeBook::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);

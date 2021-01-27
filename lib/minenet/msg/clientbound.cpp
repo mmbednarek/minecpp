@@ -58,6 +58,15 @@ Writer serialize(AnimateHand msg) {
    return w;
 }
 
+Writer serialize(BlockChange msg) {
+   // 1.16.5 ok
+   Writer w;
+   w.write_byte(0x0b);
+   w.write_big_endian(msg.block_position);
+   w.write_varint(msg.block_id);
+   return w;
+}
+
 Writer serialize(Difficulty msg) {
    // 1.16.5 ok
    Writer w;
@@ -149,8 +158,8 @@ Writer serialize(JoinGame msg) {
    w.write_varint(msg.view_distance);
    w.write_byte(msg.reduced_debug_info);
    w.write_byte(!msg.immediate_respawn);
-   w.write_byte(0); // is debug
-   w.write_byte(0); // is flat
+   w.write_byte(0);// is debug
+   w.write_byte(0);// is flat
    return w;
 }
 
@@ -214,12 +223,12 @@ Writer serialize(AddPlayer msg) {
    for (const auto &pair : msg.properties) {
       w.write_string(pair.first);
       w.write_string(pair.second);
-      w.write_byte(0x00); // TODO: Add signature
+      w.write_byte(0x00);// TODO: Add signature
    }
 
    w.write_byte(msg.game_mode);
    w.write_varint(msg.ping);
-   w.write_byte(0x00); // TODO: Support name aliases
+   w.write_byte(0x00);// TODO: Support name aliases
 
    return w;
 }
@@ -257,11 +266,11 @@ Writer serialize(RecipeBook msg) {
    w.write_byte(msg.filtering_craftable);
    w.write_byte(msg.furnace_gui_open);
    w.write_byte(msg.furnace_filtering_craftable);
-   w.write_byte(msg.furnace_gui_open); // blast
+   w.write_byte(msg.furnace_gui_open);// blast
    w.write_byte(msg.furnace_filtering_craftable);
-   w.write_byte(msg.furnace_gui_open); // smoker
+   w.write_byte(msg.furnace_gui_open);// smoker
    w.write_byte(msg.furnace_filtering_craftable);
-   w.write_byte(0x00); // TODO: Support custom recipes
+   w.write_byte(0x00);// TODO: Support custom recipes
    w.write_byte(0x00);
    return w;
 }
@@ -285,21 +294,14 @@ Writer serialize(EntityHeadLook msg) {
 }
 
 Writer serialize(MultiBlockChange msg) {
-   using mb::u64;
-
-   // FIXME: New protocol
+   // 1.16.5 ok
    Writer w;
    w.write_byte(0x3b);
-
-//   w.write_big_endian<u64>(((static_cast<u64>(msg.chunk_x) & 0x3FFFFFu) << 42u) | (static_cast<u64>() & 0xFFFFF) | ((static_cast<u64>(msg.chunk_z) & 0x3FFFFF) << 20));
-   w.write_big_endian(msg.chunk_x);
-   w.write_big_endian(msg.chunk_z);
-   w.write_byte(0);
-   w.write_varint(msg.changes.size());
-
-   for (const auto &change : msg.changes) {
-      w.write_big_endian(change.offset);
-      w.write_varint(change.state);
+   w.write_big_endian(msg.chunk_position);
+   w.write_byte(msg.distrust_edges);
+   w.write_varint(msg.block_changes.size());
+   for (const auto &change : msg.block_changes) {
+      w.write_varlong(change);
    }
    return w;
 }
@@ -327,4 +329,4 @@ Writer serialize(UpdateChunkPosition msg) {
    return w;
 }
 
-} // namespace MineNet::Message
+}// namespace MineNet::Message

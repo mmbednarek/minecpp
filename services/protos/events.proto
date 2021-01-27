@@ -49,10 +49,8 @@ message RemovePlayer {
 }
 
 message UpdateBlock {
-    int32 chunk_x = 1;
-    int32 chunk_z = 2;
-    int32 offset = 3;
-    uint32 state = 4;
+    int64 block_position = 1;
+    uint32 state = 2;
 }
 
 message AnimateHand {
