@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-namespace Squeeze {
+namespace minecpp::squeezed {
 
 class Vector {
    std::vector<mb::u64> m_data;
@@ -87,4 +87,4 @@ class Vector {
    Iterator end();
 };
 
-}// namespace Squeeze
+}// namespace minecpp::squeezed

@@ -7,7 +7,7 @@
 #include <minecpp/game/block/position.h>
 #include <minecpp/random/random.h>
 
-namespace Game::WorldGen::Population {
+namespace minecpp::game::worldgen::population {
 
 class Population {
    Chunks &m_chunks;
@@ -17,10 +17,10 @@ class Population {
  public:
    explicit Population(Chunks &chunks, std::uint64_t seed);
 
-   void populate_chunk(Block::ChunkPos pos);
+   void populate_chunk(block::ChunkPos pos);
    ChunkPlacements &load_chunk_placements(Chunk &chunk);
    ChunkPlacements &get_chunk_placements_by_chunk(Chunk &chunk);
-   ChunkPlacements &get_chunk_placements(Block::ChunkPos pos);
+   ChunkPlacements &get_chunk_placements(block::ChunkPos pos);
 };
 
-}// namespace Game::WorldGen::Population
+}// namespace minecpp::game::worldgen::population

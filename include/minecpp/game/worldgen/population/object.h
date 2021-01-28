@@ -3,7 +3,7 @@
 #include <cassert>
 #include <tuple>
 
-namespace Game::WorldGen::Population {
+namespace minecpp::game::worldgen::population {
 
 struct Pos {
    int x, z;
@@ -54,4 +54,4 @@ extern std::array<const PopObject *, 7> pop_objects;
 
 int find_object_id(int value);
 
-}// namespace Game::WorldGen
+}// namespace minecpp::game::worldgen

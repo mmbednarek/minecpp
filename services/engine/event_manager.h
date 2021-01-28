@@ -17,7 +17,7 @@ class EventManager {
    void post(auto &e) {
       minecpp::engine::Event event;
       event.set_recipient(minecpp::engine::EventRecipient::EVERYONE);
-      event.set_kind(Game::Event(e.GetTypeName().substr(15).c_str()).index());
+      event.set_kind(minecpp::game::Event(e.GetTypeName().substr(15).c_str()).index());
       event.set_data(e.SerializeAsString());
 
       for (auto &q : queues) {

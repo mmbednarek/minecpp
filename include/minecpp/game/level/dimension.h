@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Game::Level {
+namespace minecpp::game::level {
 
 enum Dimension { Overworld, Nether, End };
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <stdexcept>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 class Exception : public std::runtime_error {
 public:

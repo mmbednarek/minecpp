@@ -1,6 +1,6 @@
 #include <minecpp/format/format.h>
 
-namespace Format {
+namespace minecpp::format {
 
 Builder::Builder() { stream << "{\"extra\":["; }
 
@@ -75,4 +75,4 @@ std::string_view color_to_str(Color c) {
    return "";
 }
 
-} // namespace Format
+} // namespace minecpp::format

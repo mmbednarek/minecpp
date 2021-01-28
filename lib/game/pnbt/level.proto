@@ -1,5 +1,5 @@
 syntax = "proto3";
-package Game.NbtLevel;
+package minecpp.game.nbt;
 
 message Memories {
 }

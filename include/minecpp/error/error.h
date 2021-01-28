@@ -30,5 +30,5 @@ class error {
 
 template<typename... Args>
 error errorf(std::string fmt, Args... a) {
-   return error(Utils::format(fmt, a...));
+   return error(minecpp::util::format(fmt, a...));
 }

@@ -4,7 +4,7 @@
 #include <fmt/core.h>
 #include <ostream>
 
-namespace Utils {
+namespace minecpp::util {
 
 constexpr static void apply_indent(std::ostream &os, std::uint32_t ident_level) {
    for (std::uint32_t i = 0; i < ident_level; ++i)
@@ -67,4 +67,4 @@ class ScriptWriter {
    std::ostream &raw();
 };
 
-}// namespace Utils
+}// namespace minecpp::util

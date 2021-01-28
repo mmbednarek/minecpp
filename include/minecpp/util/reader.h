@@ -4,7 +4,7 @@
 #include <istream>
 #include <vector>
 
-namespace Utils {
+namespace minecpp::util {
 
 class Reader {
  public:
@@ -42,4 +42,4 @@ class Reader {
  private:
    std::istream &stream;
 };
-} // namespace Utils
+} // namespace minecpp::util

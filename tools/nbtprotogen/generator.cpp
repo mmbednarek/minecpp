@@ -6,23 +6,23 @@
 
 namespace Semantics {
 
-using Utils::ScriptWriter;
+using minecpp::util::ScriptWriter;
 
 static std::string variant_to_nbt_tag(TypeVariant variant) {
    switch (variant) {
-   case TypeVariant::Int8: return "NBT::TagId::Byte";
-   case TypeVariant::Int16: return "NBT::TagId::Short";
-   case TypeVariant::Int32: return "NBT::TagId::Int";
-   case TypeVariant::Int64: return "NBT::TagId::Long";
-   case TypeVariant::String: return "NBT::TagId::String";
-   case TypeVariant::Float: return "NBT::TagId::Float";
-   case TypeVariant::Double: return "NBT::TagId::Double";
-   case TypeVariant::Bytes: return "NBT::TagId::ByteArray";
-   case TypeVariant::Ints: return "NBT::TagId::IntArray";
-   case TypeVariant::Longs: return "NBT::TagId::LongArray";
+   case TypeVariant::Int8: return "minecpp::nbt::TagId::Byte";
+   case TypeVariant::Int16: return "minecpp::nbt::TagId::Short";
+   case TypeVariant::Int32: return "minecpp::nbt::TagId::Int";
+   case TypeVariant::Int64: return "minecpp::nbt::TagId::Long";
+   case TypeVariant::String: return "minecpp::nbt::TagId::String";
+   case TypeVariant::Float: return "minecpp::nbt::TagId::Float";
+   case TypeVariant::Double: return "minecpp::nbt::TagId::Double";
+   case TypeVariant::Bytes: return "minecpp::nbt::TagId::ByteArray";
+   case TypeVariant::Ints: return "minecpp::nbt::TagId::IntArray";
+   case TypeVariant::Longs: return "minecpp::nbt::TagId::LongArray";
    default: break;
    }
-   return "NBT::TagId::Compound";
+   return "minecpp::nbt::TagId::Compound";
 }
 
 static std::string variant_to_type(TypeVariant variant) {
@@ -137,7 +137,7 @@ std::string Type::to_cpp() const {
       case TypeVariant::Bytes: return "std::vector<std::uint8_t>";
       case TypeVariant::Ints: return "std::vector<std::int32_t>";
       case TypeVariant::Longs: return "std::vector<std::int64_t>";
-      case TypeVariant::Compound: return "NBT::CompoundContent";
+      case TypeVariant::Compound: return "minecpp::nbt::CompoundContent";
       }
       return name;
    }(variant, name);
@@ -159,10 +159,10 @@ std::string Type::to_cpp() const {
 
 void Type::write_value(ScriptWriter &w, const std::string_view name, const std::string_view label) const {
    if (m_repeated > 0) {
-      w.line("w.begin_list(\"{1}\", {2}, {0}.size());", name, label, (m_repeated == 1 ? variant_to_nbt_tag(variant) : "NBT::TagId::List"));
+      w.line("w.begin_list(\"{1}\", {2}, {0}.size());", name, label, (m_repeated == 1 ? variant_to_nbt_tag(variant) : "minecpp::nbt::TagId::List"));
       w.scope("for (const auto &val0 : {})", name);
       for (int i = 1; i < m_repeated; ++i) {
-         w.line("w.begin_list_no_header({}, val{}.size());", (m_repeated == (i + 1) ? variant_to_nbt_tag(variant) : "NBT::TagId::List"), (i - 1));
+         w.line("w.begin_list_no_header({}, val{}.size());", (m_repeated == (i + 1) ? variant_to_nbt_tag(variant) : "minecpp::nbt::TagId::List"), (i - 1));
          w.scope("for (const auto &val{} : val{})", i, i - 1);
       }
       switch (variant) {
@@ -197,7 +197,7 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
          w.line("w.write_longs_content(val{});", m_repeated - 1);
          break;
       case TypeVariant::Compound:
-         w.line("NBT::serialize_compound_content(w, val{});", m_repeated - 1);
+         w.line("minecpp::nbt::serialize_compound_content(w, val{});", m_repeated - 1);
          break;
       default:
          w.line("val{}.serialize_no_header(w);", m_repeated - 1);
@@ -240,8 +240,8 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
       w.line("w.write_longs(\"{1}\", {0});", name, label);
       break;
    case TypeVariant::Compound:
-      w.line("w.write_header(NBT::TagId::Compound, \"{}\");", label);
-      w.line("NBT::serialize_compound_content(w, {});", name);
+      w.line("w.write_header(minecpp::nbt::TagId::Compound, \"{}\");", label);
+      w.line("minecpp::nbt::serialize_compound_content(w, {});", name);
       break;
    default:
       w.line("w.begin_compound(\"{}\");", label);
@@ -251,21 +251,21 @@ void Type::write_value(ScriptWriter &w, const std::string_view name, const std::
 
 std::string Type::nbt_tagid() const {
    if (m_repeated) {
-      return "NBT::TagId::List";
+      return "minecpp::nbt::TagId::List";
    }
    switch (variant) {
-   case TypeVariant::Int8: return "NBT::TagId::Byte";
-   case TypeVariant::Int16: return "NBT::TagId::Short";
-   case TypeVariant::Int32: return "NBT::TagId::Int";
-   case TypeVariant::Int64: return "NBT::TagId::Long";
-   case TypeVariant::String: return "NBT::TagId::String";
-   case TypeVariant::Float: return "NBT::TagId::Float";
-   case TypeVariant::Double: return "NBT::TagId::Double";
-   case TypeVariant::Bytes: return "NBT::TagId::ByteArray";
-   case TypeVariant::Ints: return "NBT::TagId::IntArray";
-   case TypeVariant::Longs: return "NBT::TagId::LongArray";
+   case TypeVariant::Int8: return "minecpp::nbt::TagId::Byte";
+   case TypeVariant::Int16: return "minecpp::nbt::TagId::Short";
+   case TypeVariant::Int32: return "minecpp::nbt::TagId::Int";
+   case TypeVariant::Int64: return "minecpp::nbt::TagId::Long";
+   case TypeVariant::String: return "minecpp::nbt::TagId::String";
+   case TypeVariant::Float: return "minecpp::nbt::TagId::Float";
+   case TypeVariant::Double: return "minecpp::nbt::TagId::Double";
+   case TypeVariant::Bytes: return "minecpp::nbt::TagId::ByteArray";
+   case TypeVariant::Ints: return "minecpp::nbt::TagId::IntArray";
+   case TypeVariant::Longs: return "minecpp::nbt::TagId::LongArray";
    }
-   return "NBT::TagId::Compound";
+   return "minecpp::nbt::TagId::Compound";
 }
 
 bool Type::operator==(const Type &other) const {
@@ -368,7 +368,7 @@ static std::string put_compound_read(std::string_view name) {
 }
 
 static void put_list_read(std::map<TypeVariant, std::any> &attribs, ScriptWriter &w, int level = 0) {
-   using Utils::repeat_string;
+   using minecpp::util::repeat_string;
 
    w.line("auto list_info{} = r.peek_list();", level);
    w.flat_scope("switch (list_info{}.tagid)", level);
@@ -397,7 +397,7 @@ static void put_list_read(std::map<TypeVariant, std::any> &attribs, ScriptWriter
       }
 
       if (pair.second.type() == typeid(CompoundDeserializer)) {
-         w.scope("case NBT::TagId::Compound:");
+         w.scope("case minecpp::nbt::TagId::Compound:");
          auto deser = std::any_cast<CompoundDeserializer>(pair.second);
          w.flat_scope("switch(res.__xx_get_id(name))");
          for (const auto &el : deser.elems) {
@@ -434,7 +434,7 @@ static void put_list_read(std::map<TypeVariant, std::any> &attribs, ScriptWriter
 
       if (pair.second.type() == typeid(ListDeserializer)) {
          auto deser = std::any_cast<ListDeserializer>(pair.second);
-         w.scope("case NBT::TagId::List:");
+         w.scope("case minecpp::nbt::TagId::List:");
          put_list_read(deser.elems, w, level + 1);
          w.line("return;");
          w.descope();
@@ -464,7 +464,7 @@ static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWri
       }
 
       if (pair.second.type() == typeid(CompoundDeserializer)) {
-         w.scope("case NBT::TagId::Compound:");
+         w.scope("case minecpp::nbt::TagId::Compound:");
          auto deser = std::any_cast<CompoundDeserializer>(pair.second);
          w.scope("switch(res.__xx_get_id(name))");
          {
@@ -483,7 +483,7 @@ static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWri
       }
 
       if (pair.second.type() == typeid(ListDeserializer)) {
-         w.scope("case NBT::TagId::List:");
+         w.scope("case minecpp::nbt::TagId::List:");
          auto deser = std::any_cast<ListDeserializer>(pair.second);
          put_list_read(deser.elems, w);
          w.line("return;");
@@ -527,10 +527,10 @@ void generate_header(Structure &s, std::ostream &output) {
       w.line();
       w.line("{}() = default;", el.name);
       w.line();
-      w.line("void serialize_no_header(NBT::Writer &w) const;");
+      w.line("void serialize_no_header(minecpp::nbt::Writer &w) const;");
       w.line("void serialize(std::ostream &out, std::string_view name = \"\") const;");
       w.line();
-      w.line("static {} deserialize_no_header(NBT::Reader &r);", el.name);
+      w.line("static {} deserialize_no_header(minecpp::nbt::Reader &r);", el.name);
       w.line("static {} deserialize(std::istream &in);", el.name);
       w.line();
       w.line_ignore("private:");
@@ -570,7 +570,7 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       }
       w.descope();
       w.line();
-      w.scope("void {}::serialize_no_header(NBT::Writer &w) const", el.name);
+      w.scope("void {}::serialize_no_header(minecpp::nbt::Writer &w) const", el.name);
       {
          std::for_each(el.attribs.begin(), el.attribs.end(), [&w](const Attribute &attrib) {
             attrib.t.write_value(w, attrib.name, attrib.label);
@@ -581,7 +581,7 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       w.line();
       w.scope("void {}::serialize(std::ostream &out, const std::string_view name) const", el.name);
       {
-         w.line("NBT::Writer w(out);");
+         w.line("minecpp::nbt::Writer w(out);");
          w.line("w.begin_compound(name);");
          w.line("this->serialize_no_header(w);");
       }
@@ -593,10 +593,10 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       });
       w.descope(";");
       w.line();
-      w.scope("{0} {0}::deserialize_no_header(NBT::Reader &r)", el.name);
+      w.scope("{0} {0}::deserialize_no_header(minecpp::nbt::Reader &r)", el.name);
       {
          w.line("{} res;", el.name);
-         w.scope("r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name)");
+         w.scope("r.read_compound([&res] (minecpp::nbt::Reader &r, NBT::TagId tagid, const std::string &name)");
          {
             auto deser = make_message_des(el.attribs);
             put_deserializer(deser, w);
@@ -609,9 +609,9 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       w.line();
       w.scope("{0} {0}::deserialize(std::istream &in)", el.name);
       {
-         w.line("NBT::Reader r(in);");
+         w.line("minecpp::nbt::Reader r(in);");
          w.line("auto peek = r.peek_tag();");
-         w.scope("if (peek.id != NBT::TagId::Compound)");
+         w.scope("if (peek.id != minecpp::nbt::TagId::Compound)");
          {
             w.line("return {}();", el.name);
          }

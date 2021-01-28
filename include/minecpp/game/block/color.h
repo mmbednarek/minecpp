@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 typedef uint32_t Color;
 
@@ -70,11 +70,11 @@ enum class ColorId : uint8_t {
 };
 
 using DyeColor =
-    Utils::Enum<ENU("white"), ENU("orange"), ENU("magenta"), ENU("light_blue"),
+    minecpp::util::Enum<ENU("white"), ENU("orange"), ENU("magenta"), ENU("light_blue"),
                 ENU("yellow"), ENU("lime"), ENU("pink"), ENU("gray"),
                 ENU("light_gray"), ENU("cyan"), ENU("purple"), ENU("blue"),
                 ENU("brown"), ENU("green"), ENU("red"), ENU("black")>;
 
 ColorId dye_color_id(DyeColor color);
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

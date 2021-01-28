@@ -4,7 +4,7 @@
 #include <boost/iostreams/filter/zlib.hpp>
 #include <minecpp/util/compression.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 GZipInputStream::GZipInputStream(std::istream &s) {
    push(boost::iostreams::gzip_decompressor());
@@ -28,4 +28,4 @@ void compress_zlib(std::vector<char> &sink, std::istream &s) {
    boost::iostreams::copy(s, filter);
 }
 
-}// namespace Utils
+}// namespace minecpp::util

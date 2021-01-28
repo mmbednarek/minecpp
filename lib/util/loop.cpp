@@ -1,6 +1,6 @@
 #include <minecpp/util/loop.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 void around(int x, int y, std::function<void(int, int)> f) {
    for (int oy = -1; oy < 2; oy += 2) {
@@ -16,4 +16,4 @@ void around(int x, int y, std::function<void(int, int)> f) {
    }
 }
 
-}// namespace Utils
+}// namespace minecpp::util

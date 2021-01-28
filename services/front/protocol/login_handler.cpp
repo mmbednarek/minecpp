@@ -8,7 +8,7 @@ LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler)
     : service(service), play_handler(play_handler) {}
 
 void LoginHandler::handle(const std::shared_ptr<Connection> &conn,
-                          MineNet::Message::Reader &r) {
+                          minecpp::network::message::Reader &r) {
    uint8_t op = r.read_byte();
    switch (op) {
    case 0:
@@ -22,7 +22,7 @@ void LoginHandler::handle(const std::shared_ptr<Connection> &conn,
 constexpr int compression_threshold = 256;
 
 void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
-                                      MineNet::Message::Reader &r) {
+                                      minecpp::network::message::Reader &r) {
    std::string user_name = r.read_string();
 
    auto response = service.login_player(user_name);
@@ -32,13 +32,13 @@ void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
    }
 
    // set compression
-   MineNet::Message::Writer w_comp;
+   minecpp::network::message::Writer w_comp;
    w_comp.write_byte(3);
    w_comp.write_varint(compression_threshold);
    conn->send(conn, w_comp);
    conn->set_compression_threshold(compression_threshold);
 
-   MineNet::Message::Writer w;
+   minecpp::network::message::Writer w;
    w.write_byte(2);
    w.write_uuid(response.id);
    w.write_string(response.user_name);
@@ -50,7 +50,7 @@ void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
 
 void LoginHandler::reject(const std::shared_ptr<Connection> &conn,
                           std::string_view message) {
-   MineNet::Message::Writer w;
+   minecpp::network::message::Writer w;
 
    w.write_byte(0);
    std::stringstream ss;

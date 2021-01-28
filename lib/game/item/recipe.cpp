@@ -3,9 +3,9 @@
 #include <stdexcept>
 #include <utility>
 
-namespace Game {
+namespace minecpp::game {
 
-const ItemStack &Game::Recipe::outcome() const { return _outcome_item; }
+const ItemStack &game::Recipe::outcome() const { return _outcome_item; }
 RecipeType Recipe::type() const { return _type; }
 
 Recipe::Recipe(ItemStack item, std::string group,
@@ -48,4 +48,4 @@ template <> Recipe::StoneCutting Recipe::details() const {
    return std::get<Recipe::StoneCutting>(_details);
 }
 
-} // namespace Game
+} // namespace minecpp::game

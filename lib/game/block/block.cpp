@@ -1,6 +1,6 @@
 #include <minecpp/game/block/block.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 std::string_view Block::tag() const { return _tag; }
 
@@ -102,4 +102,4 @@ std::function<void(Block &)> with_properties(Properties props) {
    };
 }
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

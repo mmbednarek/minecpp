@@ -23,7 +23,7 @@ concept Enumerable = requires(T a, size_t s, std::string_view str,
    index = a.index();
 };
 
-namespace Utils {
+namespace minecpp::util {
 
 template <typename> struct string_conv_helper;
 
@@ -96,4 +96,4 @@ template <typename... Enums>
 const std::array<std::string, sizeof...(Enums)>
     Enum<Enums...>::strings = make_enum_array<Enums...>();
 
-} // namespace Utils
+} // namespace minecpp::util

@@ -1,7 +1,7 @@
 #include "time.h"
 #include <chrono>
 
-namespace Utils {
+namespace minecpp::util {
 
 uint64_t now() {
    return std::chrono::duration_cast<std::chrono::seconds>(
@@ -15,4 +15,4 @@ uint64_t now_milis() {
        .count();
 }
 
-} // namespace Utils
+} // namespace minecpp::util

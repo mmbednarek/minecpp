@@ -2,7 +2,7 @@
 #include <boost/iostreams/filtering_stream.hpp>
 #include <iostream>
 
-namespace Utils {
+namespace minecpp::util {
 class GZipInputStream
     : public boost::iostreams::filtering_stream<boost::iostreams::input> {
  public:
@@ -23,4 +23,4 @@ class ZlibOutputStream
 
 void compress_zlib(std::vector<char> &sink, std::istream &s);
 
-} // namespace Utils
+} // namespace minecpp::util

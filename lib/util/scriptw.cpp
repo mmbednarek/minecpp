@@ -1,6 +1,6 @@
 #include <minecpp/util/scriptw.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 ScriptWriter::ScriptWriter(std::ostream &os) : os(os) {}
 

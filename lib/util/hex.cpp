@@ -1,6 +1,6 @@
 #include <minecpp/util/hex.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 std::array<char, 2> char_hex(char c) {
    std::array<char, 2> result;
@@ -35,4 +35,4 @@ std::string data_to_hex(const char *data, std::size_t size) {
    return result;
 }
 
-} // namespace Utils
+} // namespace minecpp::util

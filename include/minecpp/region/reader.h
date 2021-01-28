@@ -5,7 +5,7 @@
 #include <minecpp/error/result.h>
 #include <vector>
 
-namespace Region {
+namespace minecpp::region {
 
 class Reader {
  public:
@@ -17,4 +17,4 @@ class Reader {
    std::istream &stream;
 };
 
-}// namespace Region
+}// namespace minecpp::region

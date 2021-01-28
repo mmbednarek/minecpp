@@ -1,6 +1,6 @@
 #include <minecpp/random/mersenne.h>
 
-namespace Rand {
+namespace minecpp::random {
 
 Mersenne::Mersenne(const uint64_t seed) : engine(seed) {
 }

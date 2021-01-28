@@ -1,9 +1,9 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 using StructureMode =
-    Utils::Enum<ENU("save"), ENU("load"), ENU("corner"), ENU("data")>;
+    minecpp::util::Enum<ENU("save"), ENU("load"), ENU("corner"), ENU("data")>;
 
 }

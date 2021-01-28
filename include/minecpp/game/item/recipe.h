@@ -5,7 +5,7 @@
 #include <variant>
 #include <vector>
 
-namespace Game {
+namespace minecpp::game {
 
 enum RecipeType {
    CraftingShaped,
@@ -90,4 +90,4 @@ class Recipe {
    std::string _group;
 };
 
-}// namespace Game
+}// namespace minecpp::game

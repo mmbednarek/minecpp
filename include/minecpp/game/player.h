@@ -8,7 +8,7 @@
 #include <minepb/player.pb.h>
 #include <string>
 
-namespace Game {
+namespace minecpp::game {
 
 class PlayerData;
 
@@ -75,4 +75,4 @@ class Player {
    void load_chunks(World &w);
 };
 
-} // namespace Game
+} // namespace minecpp::game

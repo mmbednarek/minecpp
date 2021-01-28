@@ -1,7 +1,7 @@
 #pragma once
 #include "state.h"
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 
 

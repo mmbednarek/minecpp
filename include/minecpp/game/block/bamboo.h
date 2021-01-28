@@ -1,8 +1,8 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
-using BambooLeaves = Utils::Enum<ENU("none"), ENU("small"), ENU("large")>;
+using BambooLeaves = minecpp::util::Enum<ENU("none"), ENU("small"), ENU("large")>;
 
 }

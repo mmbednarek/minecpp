@@ -1,8 +1,8 @@
 #pragma once
 #include <cstdint>
 
-namespace Game {
+namespace minecpp::game {
 
-enum class Difficulty : std::uint8_t { Easy, Normal, Hard };
+//enum class Difficulty : std::uint8_t { Easy, Normal, Hard };
 
 }

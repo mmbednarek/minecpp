@@ -1,7 +1,7 @@
 #include <minecpp/util/uuid.h>
 #include <cstring>
 
-namespace Utils {
+namespace minecpp::util {
 
 void encode_uuid(char dst[], boost::uuids::uuid id) {
    dst[16] = 0;

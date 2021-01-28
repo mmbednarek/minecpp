@@ -1,6 +1,6 @@
 #include <minecpp/game/block/color.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 std::array<Color, 64> colors{
     0,        8368696,  16247203, 13092807, 16711680, 10526975, 10987431,
@@ -51,4 +51,4 @@ ColorId dye_color_id(DyeColor color) {
    }
    return ColorId::Black;
 }
-} // namespace Game::Block
+} // namespace minecpp::game::block

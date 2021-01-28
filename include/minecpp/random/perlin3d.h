@@ -2,7 +2,7 @@
 #include "random.h"
 #include <minecpp/util/vec.h>
 
-namespace Rand {
+namespace minecpp::random {
 
 class Perlin3d {
    Random &rand;
@@ -11,9 +11,9 @@ class Perlin3d {
  public:
    explicit Perlin3d(Random &rand);
 
-   [[nodiscard]] double dot_grad(int x, int y, int z, Utils::Vec3 pos);
-   [[nodiscard]] double at(Utils::Vec3 pos);
-   [[nodiscard]] Utils::Vec3 grad(int x, int y, int z);
+   [[nodiscard]] double dot_grad(int x, int y, int z, minecpp::util::Vec3 pos);
+   [[nodiscard]] double at(minecpp::util::Vec3 pos);
+   [[nodiscard]] minecpp::util::Vec3 grad(int x, int y, int z);
 };
 
 }

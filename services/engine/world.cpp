@@ -7,7 +7,7 @@ namespace Engine {
 World::World(uuid engine_id, const Engine::ChunkService &service, Dispatcher &dispatcher)
     : service(service), dispatcher(dispatcher), engine_id(engine_id) {}
 
-Game::Notifier &World::notifier() { return dispatcher; }
+minecpp::game::Notifier &World::notifier() { return dispatcher; }
 
 result<empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
    using minecpp::chunk_storage::ReferenceStatus;
@@ -29,7 +29,7 @@ result<empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
 
    if (res.status() == ReferenceStatus::MUST_MOVE) {
       uuid target_engine{};
-      Utils::decode_uuid(target_engine, res.target_engine_id().data());
+      minecpp::util::decode_uuid(target_engine, res.target_engine_id().data());
       dispatcher.transfer_player(player, target_engine);
    }
 

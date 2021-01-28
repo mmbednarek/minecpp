@@ -2,7 +2,7 @@
 #include <sstream>
 #include <string_view>
 
-namespace Utils {
+namespace minecpp::util {
 
 template <typename First, typename... Args>
 static void _do_format(const std::string_view f, std::stringstream &ss,
@@ -34,4 +34,4 @@ template <typename... Args> std::string format(std::string_view f, Args... a) {
 
 std::string format(std::string_view f);
 
-} // namespace Utils
+} // namespace minecpp::util

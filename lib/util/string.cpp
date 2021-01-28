@@ -1,6 +1,6 @@
 #include <minecpp/util/string.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 static int64_t pow(int64_t base, int64_t pow) {
    int64_t result = 1;
@@ -35,4 +35,4 @@ std::string repeat_string(std::string_view s, std::size_t n) {
    return result;
 }
 
-}// namespace Utils
+}// namespace minecpp::util

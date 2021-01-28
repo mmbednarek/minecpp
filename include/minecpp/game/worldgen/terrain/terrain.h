@@ -9,13 +9,13 @@
 #include <minecpp/random/perlin3d.h>
 #include <minecpp/random/random.h>
 
-namespace Game::WorldGen::Terrain {
+namespace minecpp::game::worldgen::terrain {
 
 inline constexpr int chunk_size = 16;
 
 class Terrain {
    HeightGenerator height_gen;
-   Rand::JavaRandom rand;
+   random::JavaRandom rand;
    int x, z;
    std::array<short, 256> height_map;
    std::array<short, 256> orig_height_map;

@@ -7,7 +7,7 @@
 #include <minecpp/nbt/tag.h>
 #include <stdexcept>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 const Properties stone{
         .material = &Material::Rock,
@@ -2295,7 +2295,7 @@ const auto tag_by_state = get_tag_by_state();
 std::string_view tag_from_state_id(uint32_t state) {
    if (state >= max_state_id) {
       throw std::runtime_error(
-              Utils::format("invalid state id: {} (maximal state id is {})", state,
+              minecpp::util::format("invalid state id: {} (maximal state id is {})", state,
                             max_state_id));
    }
 
@@ -2320,7 +2320,7 @@ void debug_block_info() {
    }
 }
 
-uint32_t encode_state(std::string_view tag, NBT::CompoundContent &attribs) {
+uint32_t encode_state(std::string_view tag, nbt::CompoundContent &attribs) {
    if (tag.substr(0, 9) == "minecraft") {
       tag = tag.substr(10);
    }
@@ -2338,10 +2338,10 @@ uint32_t encode_state(std::string_view tag, NBT::CompoundContent &attribs) {
          ++found;
          auto nbt_attr = attribs.at(name);
          switch (nbt_attr.tag_id) {
-            case NBT::TagId::String:
+            case nbt::TagId::String:
                state += a->index_from_str(nbt_attr.as<std::string>());
                break;
-            case NBT::TagId::Int:
+            case nbt::TagId::Int:
                state += a->index_from_int(nbt_attr.as<int>());
                break;
             default:
@@ -2368,4 +2368,4 @@ size_t total_num_states() {
    return total;
 }
 
-}// namespace Game::Block
+}// namespace minecpp::game::block

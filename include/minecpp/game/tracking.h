@@ -3,10 +3,10 @@
 #include <minecpp/game/block/position.h>
 #include <minecpp/util/vec.h>
 
-namespace Game {
+namespace minecpp::game {
 
-using Utils::Vec2;
-using Utils::Vec3;
+using minecpp::util::Vec2;
+using minecpp::util::Vec3;
 class Player;
 
 class Tracking {
@@ -22,4 +22,4 @@ class Tracking {
    void on_movement(World &w, Player &p, Vec3 position);
 };
 
-}// namespace Game
+}// namespace minecpp::game

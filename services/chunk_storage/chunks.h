@@ -16,25 +16,25 @@ namespace ChunkStorage {
 
 using uuid = boost::uuids::uuid;
 
-class ChunkManager : public Game::Chunks {
-   std::map<int64_t, std::unique_ptr<Game::Chunk>> chunks;
+class ChunkManager : public minecpp::game::Chunks {
+   std::map<int64_t, std::unique_ptr<minecpp::game::Chunk>> chunks;
    Regions regions;
-   Game::WorldGen::Generator gen;
+   minecpp::game::worldgen::Generator gen;
 
 
  public:
    explicit ChunkManager(Regions regions);
 
-   Game::Chunk &get_incomplete_chunk(int x, int z) override;
-   result<empty> put_chunk(int x, int z, std::unique_ptr<Game::Chunk> chunk) override;
-   result<Game::ChunkState> get_chunk_state(int x, int z) override;
-   result<Game::Chunk &> get_chunk(int x, int y);
-   result<Game::Chunk &> get_chunk(Game::Block::ChunkPos pos);
-   result<Game::Chunk &> load_chunk(int x, int y);
+   minecpp::game::Chunk &get_incomplete_chunk(int x, int z) override;
+   result<empty> put_chunk(int x, int z, std::unique_ptr<minecpp::game::Chunk> chunk) override;
+   result<minecpp::game::ChunkState> get_chunk_state(int x, int z) override;
+   result<minecpp::game::Chunk &> get_chunk(int x, int y);
+   result<minecpp::game::Chunk &> get_chunk(minecpp::game::block::ChunkPos pos);
+   result<minecpp::game::Chunk &> load_chunk(int x, int y);
    result<empty> set_block(int x, int y, int z, uint32_t state);
    result<int> height_at(int x, int z);
-   result<uuid> add_refs(uuid engine_id, uuid player_id, std::vector<Game::Block::ChunkPos> coords);
-   result<empty> free_refs(uuid player_id, std::vector<Game::Block::ChunkPos> coords);
+   result<uuid> add_refs(uuid engine_id, uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords);
+   result<empty> free_refs(uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords);
 };
 
 }// namespace ChunkStorage

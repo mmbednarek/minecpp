@@ -3,7 +3,7 @@
 #include <string_view>
 #include <vector>
 
-namespace Game {
+namespace minecpp::game {
 
 typedef int ItemId;
 
@@ -44,4 +44,4 @@ class Item {
    int max_damage;
 };
 
-} // namespace Game
+} // namespace minecpp::game

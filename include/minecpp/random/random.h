@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Rand {
+namespace minecpp::random {
 
 class Random {
  public:
@@ -11,4 +11,4 @@ class Random {
    virtual void reset_seed(uint64_t seed) = 0;
 };
 
-}// namespace Rand
+}// namespace minecpp::random

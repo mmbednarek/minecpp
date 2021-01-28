@@ -1,6 +1,6 @@
 #include <minecpp/util/packed.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 uint32_t log2(const uint32_t x) {
    uint32_t y;
@@ -88,4 +88,4 @@ void resize_pack(std::vector<int64_t> &data, uint8_t old_bits, uint8_t new_bits)
    data = std::move(resized);
 }
 
-} // namespace Utils
+} // namespace minecpp::util

@@ -3,10 +3,10 @@
 #include <functional>
 #include <minecpp/util/reader.h>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 class Parser {
-   Utils::Reader reader;
+   minecpp::util::Reader reader;
 
  public:
    explicit Parser(std::istream &stream);

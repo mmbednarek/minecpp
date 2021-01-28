@@ -2,7 +2,7 @@
 #include <utility>
 #include <vector>
 
-namespace Squeeze {
+namespace minecpp::squeezed {
 
 template<std::uint8_t bits>
 class TinyVec {
@@ -74,4 +74,4 @@ bool TinyVec<bits>::empty() const {
    return m_data.empty();
 }
 
-}// namespace Squeeze
+}// namespace minecpp::squeezed

@@ -8,7 +8,7 @@
 #include <minepb/chunk.pb.h>
 #include <string_view>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 using boost::uuids::uuid;
 
@@ -239,4 +239,4 @@ struct Raw {
 };
 Writer serialize(Raw msg);
 
-} // namespace MineNet::Message
+} // namespace minecpp::network::Message

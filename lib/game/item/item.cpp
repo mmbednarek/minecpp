@@ -1,6 +1,6 @@
 #include <minecpp/game/item/item.h>
 
-namespace Game {
+namespace minecpp::game {
 
 Item::Item(ItemId id, std::string_view tag_name, ItemGroup group)
     : _id(id), tag_name(tag_name), group(group), max_stack_size(64),

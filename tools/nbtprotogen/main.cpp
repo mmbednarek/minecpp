@@ -52,15 +52,15 @@ int main(int argc, char *argv[]) {
 
    t.serialize(ss);
 
-   NBT::Parser p(ss);
+   minecpp::nbt::Parser p(ss);
 
-   //   auto start = Utils::now_milis();
+   //   auto start = minecpp::util::now_milis();
    //   for (int i = 0; i < 100000; ++i) {
    //      ss.seekg(0, std::ios::beg);
    //      auto compound = p.read_tag();
    //   }
    //
-   //   start = Utils::now_milis();
+   //   start = minecpp::util::now_milis();
    //   for (int i = 0; i < 100000; ++i) {
    //      ss.seekg(0, std::ios::beg);
    //      auto test = proto::nbt::test::Test::deserialize(ss);

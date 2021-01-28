@@ -1,6 +1,6 @@
-#include <minecpp/squeeze/vector.h>
+#include <minecpp/squeezed/vector.h>
 
-namespace Squeeze {
+namespace minecpp::squeezed {
 
 constexpr std::uint32_t bitsLimit(std::uint8_t bits) {
    return 1u << bits;
@@ -138,4 +138,4 @@ bool Vector::Iterator::operator!=(Vector::Iterator other) const {
 std::int32_t Vector::Iterator::operator*() const {
    return (vec.m_data[pack] >> offset) & ((1u << vec.m_bits) - 1u);
 }
-}// namespace Squeeze
+}// namespace minecpp::squeezed

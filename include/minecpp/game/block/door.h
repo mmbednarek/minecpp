@@ -1,8 +1,8 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
-using DoorHinge = Utils::Enum<ENU("left"), ENU("right")>;
+using DoorHinge = minecpp::util::Enum<ENU("left"), ENU("right")>;
 
 }

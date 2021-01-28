@@ -1,7 +1,7 @@
 #include "server.h"
 #include "protocol/protocol.h"
 #include <boost/asio.hpp>
-#include <minecpp/network/msg/reader.h>
+#include <minecpp/network/message/reader.h>
 #include <spdlog/spdlog.h>
 #include <utility>
 
@@ -52,7 +52,7 @@ void Server::handshake(const std::shared_ptr<Connection> &conn) {
 	}
 
 	std::istream s(&buff);
-	MineNet::Message::Reader r(s);
+	minecpp::network::message::Reader r(s);
 
 	if (r.read_byte() != 0) {
 		return;

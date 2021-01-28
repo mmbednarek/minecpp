@@ -1,6 +1,6 @@
 #include <minecpp/game/block/position.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 constexpr uint32_t num_x_bits = 26;
 constexpr uint32_t num_y_bits = 64 - 26 - 26;
@@ -41,7 +41,7 @@ ChunkPos ChunkPos::operator+(ChunkPos &other) const { return ChunkPos{x + other.
 
 ChunkPos::ChunkPos(int x, int z) : x(x), z(z) {}
 
-ChunkPos::ChunkPos(Utils::Vec2 v) : x(v.x), z(v.z) {}
+ChunkPos::ChunkPos(minecpp::util::Vec2 v) : x(v.x), z(v.z) {}
 
 Position ChunkPos::block_at(int bx, int by, int bz) const {
    return Position(x * 16 + bx, by, z * 16 + bz);
@@ -55,4 +55,4 @@ bool ChunkPos::is_block_inside(int bx, int bz) const {
    return bx >= left && bx < right && bz >= bottom && bz < top;
 }
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

@@ -1,6 +1,6 @@
-#include <minecpp/network/msg/serverbound.h>
+#include <minecpp/network/message/serverbound.h>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 void deserialize(Reader &r, ChatMessage &msg) {
    msg.message = r.read_string();
@@ -12,7 +12,7 @@ void deserialize(Reader &r, ClientSettings &msg) {
    msg.visibility = static_cast<ChatVisibility>(r.read_byte());
    msg.enable_colors = r.read_byte();
    msg.model_part_flags = r.read_byte();
-   msg.hand_side = static_cast<Game::HandSide>(r.read_byte());
+   msg.hand_side = static_cast<game::HandSide>(r.read_byte());
 }
 
 void deserialize(Reader &r, KeepAliveClient &msg) {
@@ -41,11 +41,11 @@ void deserialize(Reader &r, PlayerRotation &msg) {
 void deserialize(Reader &r, PlayerDigging &msg) {
    msg.action = static_cast<DiggingAction>(r.read_varint());
    msg.position = r.read_big_endian<uint64_t>();
-   msg.facing = Game::Direction(r.read_byte());
+   msg.facing = game::Direction(r.read_byte());
 }
 
 void deserialize(Reader &r, AnimateHandClient &msg) {
    msg.hand = static_cast<PlayerHand>(r.read_varint());
 }
 
-} // namespace MineNet::Message
+} // namespace minecpp::network::Message

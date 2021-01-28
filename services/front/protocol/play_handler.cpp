@@ -1,7 +1,7 @@
 #include "play_handler.h"
 #include "../connection.h"
 #include "../service.h"
-#include <minecpp/network/msg/serverbound.h>
+#include <minecpp/network/message/serverbound.h>
 #include <minecpp/util/format.h>
 #include <spdlog/spdlog.h>
 
@@ -10,7 +10,7 @@ namespace Front::Protocol {
 PlayHandler::PlayHandler(Service &service) : service(service) {}
 
 void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
-   using namespace MineNet::Message;
+   using namespace minecpp::network::message;
    conn->async_read_packet(conn, *this);
 
    auto op = r.read_byte();
@@ -59,10 +59,10 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
    } break;
    default:
       spdlog::info("unknown op {}, packet data: {}", (int)op, r.get_hex_data());
-      send(conn, MineNet::Message::Chat{
-                     .message = MineNet::format_system_info(Utils::format(
+      send(conn, minecpp::network::message::Chat{
+                     .message = minecpp::network::format_system_info(minecpp::util::format(
                          "unimplemented operation code {}", (int)op)),
-                     .type = MineNet::ChatType::System,
+                     .type = minecpp::network::ChatType::System,
                  });
    }
 }

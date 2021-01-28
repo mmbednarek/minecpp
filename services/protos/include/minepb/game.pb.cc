@@ -76,7 +76,7 @@ const char descriptor_table_protodef_game_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "diate_respawn\030\t \001(\010\022,\n\ndifficulty\030\n \001(\0162"
   "\030.minecpp.game.Difficulty*3\n\rDimensionTy"
   "pe\022\r\n\tOverworld\020\000\022\n\n\006Nether\020\001\022\007\n\003End\020\002*,"
-  "\n\nDifficulty\022\010\n\004Easy\020\000\022\n\n\006Medium\020\001\022\010\n\004Ha"
+  "\n\nDifficulty\022\010\n\004Easy\020\000\022\n\n\006Normal\020\001\022\010\n\004Ha"
   "rd\020\002*D\n\010GameMode\022\014\n\010Survival\020\000\022\014\n\010Creati"
   "ve\020\001\022\r\n\tAdventure\020\002\022\r\n\tSpectator\020\003*R\n\tWo"
   "rldType\022\013\n\007Default\020\000\022\010\n\004Flat\020\001\022\017\n\013LargeB"

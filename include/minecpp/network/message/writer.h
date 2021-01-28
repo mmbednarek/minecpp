@@ -5,7 +5,7 @@
 #include <tuple>
 #include <vector>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 class Writer {
  public:
@@ -54,4 +54,4 @@ void Writer::write_big_endian_array(I *data, std::size_t size) {
    }
 }
 
-} // namespace MineNet::Message
+} // namespace minecpp::network::Message

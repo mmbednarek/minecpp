@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <functional>
 
-namespace Utils {
+namespace minecpp::util {
 
 uint32_t log2(uint32_t x);
 
@@ -26,4 +26,4 @@ template <std::size_t size> uint32_t get_packed(std::array<uint64_t, size> &data
 
 void resize_pack(std::vector<int64_t> &data, uint8_t old_bits, uint8_t new_bits);
 
-} // namespace Utils
+} // namespace minecpp::util

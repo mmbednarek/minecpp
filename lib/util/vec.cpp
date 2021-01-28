@@ -1,7 +1,7 @@
 #include <minecpp/util/vec.h>
 #include <cmath>
 
-namespace Utils {
+namespace minecpp::util {
 
 Vec2::Vec2(double x, double z) : x(x), z(z) {}
 
@@ -43,4 +43,4 @@ Vec3 Vec3::truncate() const {
 
 double distance(Vec2 a, Vec2 b) { return std::sqrt(std::pow(a.x - b.x, 2) + std::pow(a.z - b.z, 2)); }
 
-}// namespace Utils
+}// namespace minecpp::util

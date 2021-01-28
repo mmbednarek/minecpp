@@ -98,19 +98,19 @@ void Connection::async_read_packet_data(const Ptr &conn, Protocol::Handler &h) {
 
           if (conn->compression_threshold > 0) {
              // compressed
-             MineNet::Message::Reader r(s);
+             minecpp::network::message::Reader r(s);
              auto decompressed_size = r.read_varint();
              if (decompressed_size == 0) {
                 // threshold not reached
                 h.handle(conn, r);
              } else {
-                Utils::ZlibInputStream decompress(s);
-                MineNet::Message::Reader decompress_reader(decompress);
+                minecpp::util::ZlibInputStream decompress(s);
+                minecpp::network::message::Reader decompress_reader(decompress);
                 h.handle(conn, decompress_reader);
              }
           } else {
              // not compressed
-             MineNet::Message::Reader r(s);
+             minecpp::network::message::Reader r(s);
              h.handle(conn, r);
           }
 
@@ -165,19 +165,19 @@ void Connection::async_write_then_disconnect(const Ptr &conn, uint8_t *buff,
        });
 }
 
-void Connection::send(const Ptr &conn, MineNet::Message::Writer &w) {
+void Connection::send(const Ptr &conn, minecpp::network::message::Writer &w) {
    auto bf = w.buff(compression_threshold);
    async_write(conn, std::get<0>(bf), std::get<1>(bf));
 }
 
-void Connection::send_and_read(const Ptr &conn, MineNet::Message::Writer &w,
+void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w,
                                Protocol::Handler &h) {
    auto bf = w.buff(compression_threshold);
    async_write_then_read(conn, std::get<0>(bf), std::get<1>(bf), h);
 }
 
 void Connection::send_and_disconnect(const Ptr &conn,
-                                     MineNet::Message::Writer &w) {
+                                     minecpp::network::message::Writer &w) {
    auto bf = w.buff(compression_threshold);
    async_write_then_disconnect(conn, std::get<0>(bf), std::get<1>(bf));
 }

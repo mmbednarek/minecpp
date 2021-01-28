@@ -2,9 +2,9 @@
 #include <minecpp/random/java_random.h>
 #include <cmath>
 
-namespace Rand {
+namespace minecpp::random {
 
-using Utils::Vec3;
+using minecpp::util::Vec3;
 
 Perlin3d::Perlin3d(Random &rand): rand(rand), coef1(rand.next_int()), coef2(rand.next_int()), coef3(rand.next_int()), coef4(rand.next_int()) {
 }
@@ -13,7 +13,7 @@ Perlin3d::Perlin3d(Random &rand): rand(rand), coef1(rand.next_int()), coef2(rand
    return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
-double Perlin3d::at(Utils::Vec3 pos) {
+double Perlin3d::at(minecpp::util::Vec3 pos) {
    Vec3 floored_pos(pos.truncate());
    auto left = static_cast<int>(floored_pos.x);
    auto top = static_cast<int>(floored_pos.y);
@@ -45,12 +45,12 @@ double Perlin3d::at(Utils::Vec3 pos) {
    return std::lerp(inter_far, inter_close, weight.z);
 }
 
-Utils::Vec3 Perlin3d::grad(int x, int y, int z) {
-   Rand::JavaRandom r(x * coef1 + y * coef2 + z * coef3 + coef4);
-   return Utils::Vec3(r.next_double(), r.next_double(), r.next_double());
+minecpp::util::Vec3 Perlin3d::grad(int x, int y, int z) {
+   random::JavaRandom r(x * coef1 + y * coef2 + z * coef3 + coef4);
+   return minecpp::util::Vec3(r.next_double(), r.next_double(), r.next_double());
 }
 
-double Perlin3d::dot_grad(int x, int y, int z, Utils::Vec3 pos) {
+double Perlin3d::dot_grad(int x, int y, int z, minecpp::util::Vec3 pos) {
    auto g = grad(x, y, z);
    auto d = pos - Vec3(x, y, z);
    return (g.x * d.x) + (g.y * d.y) + (g.z * d.z);

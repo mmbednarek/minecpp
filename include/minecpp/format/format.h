@@ -1,7 +1,7 @@
 #pragma once
 #include <sstream>
 
-namespace Format {
+namespace minecpp::format {
 
 enum class Color : uint8_t {
    Black,

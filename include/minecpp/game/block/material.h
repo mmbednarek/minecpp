@@ -1,7 +1,7 @@
 #pragma once
 #include "color.h"
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 enum class PushReaction { Normal, Destroy, Block, Ignore, PushOnly };
 
@@ -61,4 +61,4 @@ struct Material {
    static const Material NetherWood;
 };
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

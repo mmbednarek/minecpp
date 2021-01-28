@@ -1,8 +1,8 @@
-#include <minecpp/network/msg/clientbound.h>
-#include <minecpp/network/msg/chunk.h>
+#include <minecpp/network/message/clientbound.h>
+#include <minecpp/network/message/chunk.h>
 #include <mb/int.h>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 Writer serialize(SpawnObject msg) {
    // 1.16.5 ok
@@ -329,4 +329,4 @@ Writer serialize(UpdateChunkPosition msg) {
    return w;
 }
 
-}// namespace MineNet::Message
+}// namespace minecpp::network::Message

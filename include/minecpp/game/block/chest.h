@@ -1,8 +1,8 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
-using ChestType = Utils::Enum<ENU("single"), ENU("left"), ENU("right")>;
+using ChestType = minecpp::util::Enum<ENU("single"), ENU("left"), ENU("right")>;
 
 }

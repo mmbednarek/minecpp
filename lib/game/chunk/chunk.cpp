@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace Game {
+namespace minecpp::game {
 
 inline int expected_data_version = 2230;
 
@@ -15,7 +15,7 @@ Chunk::Chunk() = default;
 
 Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z(z), full(false) {
    int i = 0;
-   auto arr = Utils::generate_packed(9, 256, [&height_map, &i]() {
+   auto arr = minecpp::util::generate_packed(9, 256, [&height_map, &i]() {
       return height_map[i++];
    });
 
@@ -25,10 +25,10 @@ Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z
    std::fill(biomes.begin(), biomes.end(), 1);
 }
 
-result<std::unique_ptr<Chunk>> Chunk::from_nbt(NBT::Reader &r) {
+result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt::Reader &r) {
    auto chunk = std::make_unique<Chunk>();
    try {
-      tryget(r.try_read_compound([&chunk](NBT::Reader &r, NBT::TagId tagid, const std::string &name) -> result<empty> {
+      tryget(r.try_read_compound([&chunk](nbt::Reader &r, nbt::TagId tagid, const std::string &name) -> result<empty> {
          return chunk->load(r, tagid, name);
       }));
       return result<std::unique_ptr<Chunk>>(std::move(chunk));
@@ -37,9 +37,9 @@ result<std::unique_ptr<Chunk>> Chunk::from_nbt(NBT::Reader &r) {
    }
 }
 
-result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+result<empty> Chunk::load(nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
    switch (tagid) {
-   case NBT::TagId::String:
+   case nbt::TagId::String:
       if (name == "Status") {
          if (auto status = r.read_str(); status == "full") {
             full = true;
@@ -47,9 +47,9 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
          return result_ok;
       }
 
-      r.skip_payload(NBT::TagId::String);
+      r.skip_payload(nbt::TagId::String);
       return result_ok;
-   case NBT::TagId::Int:
+   case nbt::TagId::Int:
       if (name == "xPos") {
          pos_x = r.read_int();
          return result_ok;
@@ -58,12 +58,12 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
          pos_z = r.read_int();
          return result_ok;
       }
-      r.skip_payload(NBT::TagId::Int);
+      r.skip_payload(nbt::TagId::Int);
       return result_ok;
-   case NBT::TagId::Compound:
+   case nbt::TagId::Compound:
       if (name == "Heightmaps") {
-         tryget(r.try_read_compound([this](NBT::Reader &r, NBT::TagId tagid, const std::string &name) -> result<empty> {
-            if (tagid != NBT::TagId::LongArray) {
+         tryget(r.try_read_compound([this](nbt::Reader &r, nbt::TagId tagid, const std::string &name) -> result<empty> {
+            if (tagid != nbt::TagId::LongArray) {
                return error(errclass::Internal, "height map expected to be a long array");
             }
 
@@ -83,28 +83,28 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
       }
       r.skip_payload(tagid);
       return result_ok;
-   case NBT::TagId::IntArray:
+   case nbt::TagId::IntArray:
       if (name == "Biomes") {
          biomes = r.read_int_array<1024>();
          return result_ok;
       }
-      r.skip_payload(NBT::TagId::IntArray);
+      r.skip_payload(nbt::TagId::IntArray);
       return result_ok;
-   case NBT::TagId::List:
+   case nbt::TagId::List:
       if (name == "Sections") {
-         r.read_list([this](NBT::Reader &r) {
+         r.read_list([this](nbt::Reader &r) {
             int8_t y = 0;
             std::vector<int64_t> data;
             std::vector<uint8_t> block_light;
             std::vector<uint8_t> sky_light;
             std::vector<std::uint32_t> palette;
-            r.read_compound([&y, &data, &palette, &block_light, &sky_light](NBT::Reader &r, NBT::TagId tag_id,
+            r.read_compound([&y, &data, &palette, &block_light, &sky_light](nbt::Reader &r, nbt::TagId tag_id,
                                                                             const std::string &name) {
-               if (tag_id == NBT::TagId::Byte && name == "Y") {
+               if (tag_id == nbt::TagId::Byte && name == "Y") {
                   y = r.read_byte();
                   return;
                }
-               if (tag_id == NBT::TagId::ByteArray) {
+               if (tag_id == nbt::TagId::ByteArray) {
                   if (name == "BlockLight") {
                      block_light = r.read_byte_vector();
                      return;
@@ -114,37 +114,37 @@ result<empty> Chunk::load(NBT::Reader &r, NBT::TagId tagid, const std::string &n
                      return;
                   }
                }
-               if (tag_id == NBT::TagId::LongArray && name == "BlockStates") {
+               if (tag_id == nbt::TagId::LongArray && name == "BlockStates") {
                   data = r.read_long_vec();
                   return;
                }
-               if (tag_id == NBT::TagId::List && name == "Palette") {
-                  r.read_list([&palette](NBT::Reader &r) { palette.emplace_back(PaletteItem(r).to_state_id()); });
+               if (tag_id == nbt::TagId::List && name == "Palette") {
+                  r.read_list([&palette](nbt::Reader &r) { palette.emplace_back(PaletteItem(r).to_state_id()); });
                   return;
                }
                r.skip_payload(tag_id);
             });
 
             uint8_t bits = data.size() * 64 / 4096;
-            int ref_count = Game::calculate_ref_count(data, palette);
+            int ref_count = game::calculate_ref_count(data, palette);
 
             sections[y] = Section{
                     .ref_count = ref_count,
                     .palette = std::move(palette),
-                    .data = Squeeze::Vector(bits, 4096, data),
-                    .block_light = Squeeze::TinyVec<4>(std::move(block_light)),
-                    .sky_light = Squeeze::TinyVec<4>(std::move(sky_light)),
+                    .data = minecpp::squeezed::Vector(bits, 4096, data),
+                    .block_light = minecpp::squeezed::TinyVec<4>(std::move(block_light)),
+                    .sky_light = minecpp::squeezed::TinyVec<4>(std::move(sky_light)),
             };
          });
          return result_ok;
       }
-      r.skip_payload(NBT::TagId::List);
+      r.skip_payload(nbt::TagId::List);
       return result_ok;
-   case NBT::TagId::Long:
-      r.skip_payload(NBT::TagId::Long);
+   case nbt::TagId::Long:
+      r.skip_payload(nbt::TagId::Long);
       return result_ok;
-   case NBT::TagId::Byte:
-      r.skip_payload(NBT::TagId::Byte);
+   case nbt::TagId::Byte:
+      r.skip_payload(nbt::TagId::Byte);
       return result_ok;
    default:
       return error(errclass::Internal, "invalid nbt tag");
@@ -177,7 +177,7 @@ void Chunk::as_proto(minecpp::chunk::NetChunk *chunk) {
 constexpr uint32_t coord_to_offset(int x, int y, int z) { return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15); }
 
 void Chunk::create_empty_section(int8_t sec) {
-   sections[sec] = Game::Section{
+   sections[sec] = game::Section{
            .ref_count = 4096,
            .palette{0},
            .data{4, 4096, []() { return 0; }},
@@ -230,7 +230,7 @@ void Chunk::set_block_light(int x, int y, int z, uint8_t value) {
    }
 
    if (iter->second.block_light.empty()) {
-      iter->second.block_light = Squeeze::TinyVec<4>(4096);
+      iter->second.block_light = minecpp::squeezed::TinyVec<4>(4096);
    }
 
    iter->second.block_light.set(coord_to_offset(x, y, z), value);
@@ -244,7 +244,7 @@ void Chunk::set_sky_light(int x, int y, int z, uint8_t value) {
    }
 
    if (iter->second.block_light.empty()) {
-      iter->second.block_light = Squeeze::TinyVec<4>(4096);
+      iter->second.block_light = minecpp::squeezed::TinyVec<4>(4096);
    }
 
    iter->second.sky_light.set(coord_to_offset(x, y, z), value);
@@ -274,7 +274,7 @@ void Chunk::free_ref(uuid player_id) {
 
 uuid Chunk::get_lock() const { return engine_lock; }
 
-int Chunk::height_at(int x, int z) { return Utils::get_packed(hm_world_surface, 9, 16 * (z & 15) + (x & 15)); }
+int Chunk::height_at(int x, int z) { return minecpp::util::get_packed(hm_world_surface, 9, 16 * (z & 15) + (x & 15)); }
 
 void Chunk::put_section(int8_t level, Section sec) {
    sections[level] = std::move(sec);
@@ -290,18 +290,18 @@ std::array<short, 256> Chunk::get_height_map() {
    return result;
 }
 
-Block::ChunkPos Chunk::pos() const {
-   return Block::ChunkPos(pos_x, pos_z);
+block::ChunkPos Chunk::pos() const {
+   return block::ChunkPos(pos_x, pos_z);
 }
 
-PaletteItem::PaletteItem(NBT::Reader &r) {
-   r.read_compound([this](NBT::Reader &r, NBT::TagId type, std::string key) {
-      if (key == "Name" && type == NBT::TagId::String) {
+PaletteItem::PaletteItem(nbt::Reader &r) {
+   r.read_compound([this](nbt::Reader &r, nbt::TagId type, std::string key) {
+      if (key == "Name" && type == nbt::TagId::String) {
          tag_name = r.read_str();
          return;
       }
-      if (key == "Properties" && type == NBT::TagId::Compound) {
-         NBT::Parser p(r.raw_stream());
+      if (key == "Properties" && type == nbt::TagId::Compound) {
+         nbt::Parser p(r.raw_stream());
          properties = p.read_compound();
          return;
       }
@@ -309,6 +309,6 @@ PaletteItem::PaletteItem(NBT::Reader &r) {
    });
 }
 
-uint32_t PaletteItem::to_state_id() { return Block::encode_state(tag_name, properties); }
+uint32_t PaletteItem::to_state_id() { return block::encode_state(tag_name, properties); }
 
-}// namespace Game
+}// namespace minecpp::game

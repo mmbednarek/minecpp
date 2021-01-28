@@ -1,5 +1,5 @@
 syntax = "proto3nbt";
-package Game.NbtChunk;
+package minecpp.game.nbt;
 
 message ArmorItem {
 }

@@ -1,6 +1,6 @@
 #include <minecpp/util/reader.h>
 
-namespace Utils {
+namespace minecpp::util {
 
 Reader::Reader(std::istream& s) : stream(s) {
 }

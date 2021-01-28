@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace Game::NbtChunk {
+namespace minecpp::game::NbtChunk {
 
 struct __nbt_offset { std::size_t offset, size; int id; };
 
@@ -31,10 +31,10 @@ struct ArmorItem {
 
    ArmorItem() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static ArmorItem deserialize_no_header(NBT::Reader &r);
+   static ArmorItem deserialize_no_header(nbt::Reader &r);
    static ArmorItem deserialize(std::istream &in);
 
 private:
@@ -58,10 +58,10 @@ struct Attribute {
 
    Attribute() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Attribute deserialize_no_header(NBT::Reader &r);
+   static Attribute deserialize_no_header(nbt::Reader &r);
    static Attribute deserialize(std::istream &in);
 
 private:
@@ -83,10 +83,10 @@ struct Memories {
 
    Memories() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Memories deserialize_no_header(NBT::Reader &r);
+   static Memories deserialize_no_header(nbt::Reader &r);
    static Memories deserialize(std::istream &in);
 
 private:
@@ -109,10 +109,10 @@ struct Brain {
 
    Brain() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Brain deserialize_no_header(NBT::Reader &r);
+   static Brain deserialize_no_header(nbt::Reader &r);
    static Brain deserialize(std::istream &in);
 
 private:
@@ -134,10 +134,10 @@ struct HandItem {
 
    HandItem() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static HandItem deserialize_no_header(NBT::Reader &r);
+   static HandItem deserialize_no_header(nbt::Reader &r);
    static HandItem deserialize(std::istream &in);
 
 private:
@@ -188,10 +188,10 @@ struct Entity {
 
    Entity() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Entity deserialize_no_header(NBT::Reader &r);
+   static Entity deserialize_no_header(nbt::Reader &r);
    static Entity deserialize(std::istream &in);
 
 private:
@@ -217,10 +217,10 @@ struct Heightmaps {
 
    Heightmaps() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Heightmaps deserialize_no_header(NBT::Reader &r);
+   static Heightmaps deserialize_no_header(nbt::Reader &r);
    static Heightmaps deserialize(std::istream &in);
 
 private:
@@ -240,14 +240,14 @@ private:
 
 struct PaletteItem {
    std::string name{};
-   NBT::CompoundContent properties{};
+   nbt::CompoundContent properties{};
 
    PaletteItem() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static PaletteItem deserialize_no_header(NBT::Reader &r);
+   static PaletteItem deserialize_no_header(nbt::Reader &r);
    static PaletteItem deserialize(std::istream &in);
 
 private:
@@ -274,10 +274,10 @@ struct Section {
 
    Section() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Section deserialize_no_header(NBT::Reader &r);
+   static Section deserialize_no_header(nbt::Reader &r);
    static Section deserialize(std::istream &in);
 
 private:
@@ -300,10 +300,10 @@ struct StartId {
 
    StartId() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static StartId deserialize_no_header(NBT::Reader &r);
+   static StartId deserialize_no_header(nbt::Reader &r);
    static StartId deserialize(std::istream &in);
 
 private:
@@ -328,10 +328,10 @@ struct Starts {
 
    Starts() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Starts deserialize_no_header(NBT::Reader &r);
+   static Starts deserialize_no_header(nbt::Reader &r);
    static Starts deserialize(std::istream &in);
 
 private:
@@ -354,10 +354,10 @@ struct Structures {
 
    Structures() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Structures deserialize_no_header(NBT::Reader &r);
+   static Structures deserialize_no_header(nbt::Reader &r);
    static Structures deserialize(std::istream &in);
 
 private:
@@ -390,10 +390,10 @@ struct Level {
 
    Level() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Level deserialize_no_header(NBT::Reader &r);
+   static Level deserialize_no_header(nbt::Reader &r);
    static Level deserialize(std::istream &in);
 
 private:
@@ -416,10 +416,10 @@ struct Chunk {
 
    Chunk() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Chunk deserialize_no_header(NBT::Reader &r);
+   static Chunk deserialize_no_header(nbt::Reader &r);
    static Chunk deserialize(std::istream &in);
 
 private:
@@ -437,4 +437,4 @@ private:
    }
 };
 
-}//namespace Game::NbtChunk
+}//namespace minecpp::game::NbtChunk

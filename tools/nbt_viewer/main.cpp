@@ -40,10 +40,10 @@ auto main(int argc, char *argv[]) -> int {
    }
 
    if (use_gzip) {
-      stream = new Utils::GZipInputStream(*stream);
+      stream = new minecpp::util::GZipInputStream(*stream);
    }
 
-   NBT::Parser parser(*stream);
+   minecpp::nbt::Parser parser(*stream);
    for (;;) {
       auto tag = parser.read_tag();
       if (tag.content.empty())

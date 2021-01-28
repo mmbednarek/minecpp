@@ -1,7 +1,7 @@
 #include <minecpp/game/entity/entity.h>
 #include <algorithm>
 
-namespace Game::Entity {
+namespace minecpp::game::entity {
 
 std::array<std::string, 7> known_attributes{
     "generic.maxHealth",      "generic.knockbackResistance", "generic.movementSpeed",   "generic.armor",
@@ -67,4 +67,4 @@ void Entity::sync_tracking() {
 void Attributes::set_attribute(AttributeName name, double value) { attributes[name] = value; }
 
 bool Movement::nil() { return x == 0 && y == 0 && z == 0; }
-} // namespace Game::Entity
+} // namespace minecpp::game::entity

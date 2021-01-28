@@ -8,7 +8,7 @@
 #include <minepb/chunk.pb.h>
 #include <string_view>
 
-namespace Game {
+namespace minecpp::game {
 
 using boost::uuids::uuid;
 
@@ -25,7 +25,7 @@ struct Chunk {
    Chunk();
    Chunk(int x, int z, std::array<short, 256> &height_map);
 
-   result<empty> load(NBT::Reader &r, NBT::TagId tagid, const std::string &name);
+   result<empty> load(nbt::Reader &r, nbt::TagId tagid, const std::string &name);
    void as_proto(minecpp::chunk::NetChunk *chunk);
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, uint32_t state);
@@ -39,17 +39,17 @@ struct Chunk {
    [[nodiscard]] uuid get_lock() const;
    bool add_ref(uuid engine_id, uuid player_id);
    void free_ref(uuid player_id);
-   Block::ChunkPos pos() const;
+   block::ChunkPos pos() const;
 
-   static result<std::unique_ptr<Chunk>> from_nbt(NBT::Reader &r);
+   static result<std::unique_ptr<Chunk>> from_nbt(nbt::Reader &r);
 };
 
 struct PaletteItem {
    std::string tag_name;
-   NBT::CompoundContent properties;
+   nbt::CompoundContent properties;
 
-   explicit PaletteItem(NBT::Reader &r);
+   explicit PaletteItem(nbt::Reader &r);
    uint32_t to_state_id();
 };
 
-}// namespace Game
+}// namespace minecpp::game

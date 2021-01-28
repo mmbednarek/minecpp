@@ -2,7 +2,7 @@
 #include <minecpp/nbt/reader.h>
 #include <minepb/player.pb.h>
 
-namespace Game {
+namespace minecpp::game {
 
 struct RecipeBook {
    bool filtering_craftable = false;
@@ -11,7 +11,7 @@ struct RecipeBook {
    bool gui_open = false;
 
    RecipeBook() = default;
-   explicit RecipeBook(NBT::Reader &r);
+   explicit RecipeBook(nbt::Reader &r);
 
    void as_proto(minecpp::player::RecipeBook *book) const;
 };

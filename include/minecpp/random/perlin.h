@@ -2,7 +2,7 @@
 #include <minecpp/random/random.h>
 #include <minecpp/util/vec.h>
 
-namespace Rand {
+namespace minecpp::random {
 
 class Perlin {
    Random &rand;
@@ -11,9 +11,9 @@ class Perlin {
  public:
    explicit Perlin(Random &rand);
 
-   [[nodiscard]] double dot_grad(int x, int z, Utils::Vec2 pos);
-   [[nodiscard]] double at(Utils::Vec2 pos);
-   [[nodiscard]] Utils::Vec2 grad(int x, int z);
+   [[nodiscard]] double dot_grad(int x, int z, minecpp::util::Vec2 pos);
+   [[nodiscard]] double at(minecpp::util::Vec2 pos);
+   [[nodiscard]] minecpp::util::Vec2 grad(int x, int z);
 };
 
 class DisplacedPerlin {
@@ -23,13 +23,13 @@ class DisplacedPerlin {
 
    double scale;
    double amp;
-   Utils::Vec2 move_dis_x;
-   Utils::Vec2 move_dis_z;
+   minecpp::util::Vec2 move_dis_x;
+   minecpp::util::Vec2 move_dis_z;
 
  public:
    explicit DisplacedPerlin(Random &rand, double scale, double amp);
 
-   [[nodiscard]] double at(Utils::Vec2 pos);
+   [[nodiscard]] double at(minecpp::util::Vec2 pos);
 };
 
-}// namespace Rand
+}// namespace minecpp::random

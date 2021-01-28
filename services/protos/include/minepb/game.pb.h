@@ -96,7 +96,7 @@ inline bool DimensionType_Parse(
 }
 enum Difficulty : int {
   Easy = 0,
-  Medium = 1,
+  Normal = 1,
   Hard = 2,
   Difficulty_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   Difficulty_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()

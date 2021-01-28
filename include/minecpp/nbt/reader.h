@@ -11,7 +11,7 @@
 #include <numeric>
 #include <string>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 struct TagHeader {
    TagId id;
@@ -23,7 +23,7 @@ struct ListHeader {
    std::size_t size;
 };
 
-class Reader : private Utils::Reader {
+class Reader : private minecpp::util::Reader {
  public:
    explicit Reader(std::istream &s);
 
@@ -60,7 +60,7 @@ class Reader : private Utils::Reader {
    TagHeader peek_tag();
    ListHeader peek_list();
    void check_signature();
-   Utils::Vec3 read_vec3();
+   minecpp::util::Vec3 read_vec3();
 
    template<std::size_t s>
    std::array<uint8_t, s> read_array();
@@ -207,4 +207,4 @@ bool Reader::seek_tag(std::string &name) {
    }
 }
 
-}// namespace NBT
+}// namespace minecpp::nbt

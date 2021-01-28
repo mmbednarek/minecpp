@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/network/msg/reader.h>
+#include <minecpp/network/message/reader.h>
 
 namespace Front {
 
@@ -9,7 +9,7 @@ namespace Protocol {
 
 class Handler {
  public:
-   virtual void handle(const std::shared_ptr<Connection> &conn, MineNet::Message::Reader &r) = 0;
+   virtual void handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r) = 0;
    virtual void handle_disconnect(Connection &conn) = 0;
 };
 

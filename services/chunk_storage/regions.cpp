@@ -61,7 +61,7 @@ result<std::vector<uint8_t>> Regions::read_chunk(int x, int z) {
 
    region.m.lock();
 
-   Region::Reader r(region.file);
+   minecpp::region::Reader r(region.file);
    auto data = r.load_chunk(x, z);
    region.m.unlock();
 

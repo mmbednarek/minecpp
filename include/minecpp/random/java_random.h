@@ -2,7 +2,7 @@
 #include <cstdint>
 #include "random.h"
 
-namespace Rand {
+namespace minecpp::random {
 
 class JavaRandom : public Random {
  public:
@@ -19,4 +19,4 @@ class JavaRandom : public Random {
    uint64_t _seed;
 };
 
-} // namespace Utils
+} // namespace minecpp::util

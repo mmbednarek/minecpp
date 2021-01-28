@@ -2,12 +2,12 @@
 #include "minecpp/game/chunks.h"
 #include "minecpp/game/worldgen/population/population.h"
 
-namespace Game::WorldGen {
+namespace minecpp::game::worldgen {
 
 class Generator {
    std::uint64_t m_seed;
    Chunks &m_chunks;
-   Population::Population m_population;
+   population::Population m_population;
  public:
    explicit Generator(Chunks &provider, std::uint64_t seed);
 

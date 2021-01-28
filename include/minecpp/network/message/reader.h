@@ -5,7 +5,7 @@
 #include <minecpp/game/item/recipe.h>
 #include <minecpp/nbt/tag.h>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 class Reader {
  public:
@@ -16,16 +16,16 @@ class Reader {
    std::string read_string();
    float read_float();
    double read_double();
-   NBT::CompoundContent read_nbt_tag();
+   nbt::CompoundContent read_nbt_tag();
 
-   Game::Recipe read_recipe();
-   Game::Recipe read_recipe_shaped();
-   Game::Recipe read_recipe_shapeless();
-   Game::Recipe read_recipe_heat_treatment(Game::RecipeType type);
-   Game::Recipe read_recipe_stone_cutting();
+   game::Recipe read_recipe();
+   game::Recipe read_recipe_shaped();
+   game::Recipe read_recipe_shapeless();
+   game::Recipe read_recipe_heat_treatment(game::RecipeType type);
+   game::Recipe read_recipe_stone_cutting();
 
-   Game::ItemStack read_stack();
-   Game::StackVariants read_stack_variants();
+   game::ItemStack read_stack();
+   game::StackVariants read_stack_variants();
 
    std::string get_hex_data();
 
@@ -40,4 +40,4 @@ class Reader {
    std::istream &s;
 };
 
-} // namespace MineNet::Message
+} // namespace minecpp::network::Message

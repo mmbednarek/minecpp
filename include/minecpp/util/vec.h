@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Utils {
+namespace minecpp::util {
 
 class Vec2 {
  public:
@@ -35,4 +35,4 @@ class Vec3 {
 
 double distance(Vec2 a, Vec2 b);
 
-} // namespace Utils
+} // namespace minecpp::util

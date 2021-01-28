@@ -1,7 +1,7 @@
 #include <minecpp/random/java_random.h>
 #include <minecpp/random/random.h>
 
-namespace Rand {
+namespace minecpp::random {
 
 constexpr auto MULTIPLIER = 0x5DEECE66DULL;
 constexpr auto ADDEND = 0xBULL;
@@ -38,4 +38,4 @@ void JavaRandom::reset_seed(uint64_t seed) {
 }
 
 
-} // namespace Utils
+} // namespace minecpp::util

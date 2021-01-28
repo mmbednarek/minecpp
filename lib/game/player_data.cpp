@@ -1,18 +1,18 @@
 #include <minecpp/game/player_data.h>
 #include <minecpp/game/item/registry.h>
 
-namespace Game {
+namespace minecpp::game {
 
-using NBT::TagId;
+using nbt::TagId;
 
 PlayerData::PlayerData(boost::uuids::uuid id) : id(id) {}
 
-PlayerData::PlayerData(NBT::Reader &r) : id() {
-   r.read_compound([this](NBT::Reader &r, NBT::TagId tagid,
+PlayerData::PlayerData(nbt::Reader &r) : id() {
+   r.read_compound([this](nbt::Reader &r, nbt::TagId tagid,
                           const std::string &name) { load(r, tagid, name); });
 }
 
-void PlayerData::load(NBT::Reader &r, NBT::TagId tagid,
+void PlayerData::load(nbt::Reader &r, nbt::TagId tagid,
                       const std::string &name) {
    switch (tagid) {
       case TagId::Float:
@@ -149,28 +149,28 @@ void PlayerData::load(NBT::Reader &r, NBT::TagId tagid,
             return;
          }
          if (name == "EnderItems") {
-            r.read_list([this](NBT::Reader &r) {
+            r.read_list([this](nbt::Reader &r) {
                ender_chest.emplace_back(InventoryItem(r));
             });
             return;
          }
          if (name == "Inventory") {
-            r.read_list([this](NBT::Reader &r) {
+            r.read_list([this](nbt::Reader &r) {
                inventory.emplace_back(InventoryItem(r));
             });
             return;
          }
          if (name == "Attributes") {
-            r.read_list([this](NBT::Reader &r) {
+            r.read_list([this](nbt::Reader &r) {
                double base = 0.0;
                std::string name;
-               r.read_compound([&base, &name](NBT::Reader &r, NBT::TagId tagid,
+               r.read_compound([&base, &name](nbt::Reader &r, nbt::TagId tagid,
                                               const std::string &key) {
-                  if (tagid == NBT::TagId::Double && key == "Base") {
+                  if (tagid == nbt::TagId::Double && key == "Base") {
                      base = r.read_float64();
                      return;
                   }
-                  if (tagid == NBT::TagId::String && key == "Name") {
+                  if (tagid == nbt::TagId::String && key == "Name") {
                      name = r.read_str();
                      return;
                   }
@@ -211,11 +211,11 @@ void PlayerData::load(NBT::Reader &r, NBT::TagId tagid,
    r.skip_payload(tagid);
 }
 
-Entity::Entity PlayerData::to_entity() {
-   Entity::Entity player_entity(id, Entity::player_type);
+entity::Entity PlayerData::to_entity() {
+   entity::Entity player_entity(id, entity::player_type);
    for (const auto &at : attributes) {
       player_entity.attributes.set_attribute(
-              Entity::to_attribute_name(at.first), at.second);
+              entity::to_attribute_name(at.first), at.second);
    }
    player_entity.dimension = static_cast<Dimension>(dimension);
    player_entity.health = health;
@@ -261,9 +261,9 @@ Player PlayerData::to_player(std::string &name) {
    return player;
 }
 
-PlayerData::Abilities::Abilities(NBT::Reader &r) {
+PlayerData::Abilities::Abilities(nbt::Reader &r) {
    r.read_compound(
-           [this](NBT::Reader &r, TagId tagid, const std::string &name) {
+           [this](nbt::Reader &r, TagId tagid, const std::string &name) {
               switch (tagid) {
                  case TagId::Float:
                     if (name == "flySpeed") {
@@ -304,4 +304,4 @@ PlayerData::Abilities::Abilities(NBT::Reader &r) {
            });
 }
 
-}// namespace Game
+}// namespace minecpp::game

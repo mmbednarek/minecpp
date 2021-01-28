@@ -6,8 +6,8 @@
 #include <boost/asio/streambuf.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <memory>
-#include <minecpp/network/msg/io.h>
-#include <minecpp/network/msg/message.h>
+#include <minecpp/network/message/io.h>
+#include <minecpp/network/message/message.h>
 #include <queue>
 #include <spdlog/spdlog.h>
 #include <tuple>
@@ -40,10 +40,10 @@ class Connection {
    void async_read_packet(const Ptr &conn, Protocol::Handler &h);
    void async_read_packet_data(const Ptr &conn, Protocol::Handler &h);
 
-   void send(const Ptr &conn, MineNet::Message::Writer &w);
-   void send_and_read(const Ptr &conn, MineNet::Message::Writer &w,
+   void send(const Ptr &conn, minecpp::network::message::Writer &w);
+   void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w,
                       Protocol::Handler &h);
-   void send_and_disconnect(const Ptr &conn, MineNet::Message::Writer &w);
+   void send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w);
 
    Server *get_server();
 
@@ -76,19 +76,19 @@ class Connection {
 };
 
 template <typename M> void send(const Connection::Ptr &conn, M msg) {
-   auto w = MineNet::Message::serialize(msg);
+   auto w = minecpp::network::message::serialize(msg);
    conn->send(conn, w);
 }
 
 template <typename M>
 void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h) {
-   auto w = MineNet::Message::serialize(msg);
+   auto w = minecpp::network::message::serialize(msg);
    conn->send_and_read(conn, w, h);
 }
 
 template <typename M>
 void send_and_disconnect(const Connection::Ptr &conn, M msg) {
-   auto w = MineNet::Message::serialize(msg);
+   auto w = minecpp::network::message::serialize(msg);
    conn->send_and_disconnect(conn, w);
 }
 

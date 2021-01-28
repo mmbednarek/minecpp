@@ -1,3 +1,3 @@
-namespace Game {
+namespace minecpp::game {
 
-} // namespace Game
+} // namespace minecpp::game

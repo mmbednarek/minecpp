@@ -3,14 +3,14 @@
 #include <minecpp/random/mersenne.h>
 #include <minecpp/random/perlin.h>
 
-namespace Game::WorldGen::Terrain {
+namespace minecpp::game::worldgen::terrain {
 
 class HeightGenerator {
-   Rand::Mersenne rand;
-   Rand::Perlin base_perlin;
-   Rand::Perlin perlin_det_amp;
-   Rand::DisplacedPerlin perlin_detail0;
-   Rand::DisplacedPerlin perlin_detail1;
+   random::Mersenne rand;
+   random::Perlin base_perlin;
+   random::Perlin perlin_det_amp;
+   random::DisplacedPerlin perlin_detail0;
+   random::DisplacedPerlin perlin_detail1;
 
  public:
    explicit HeightGenerator(uint64_t seed);
@@ -18,4 +18,4 @@ class HeightGenerator {
    short at(int x, int z);
 };
 
-}// namespace Game::WorldGen
+}// namespace minecpp::game::worldgen

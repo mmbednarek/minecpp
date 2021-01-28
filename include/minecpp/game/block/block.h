@@ -5,7 +5,7 @@
 #include <string_view>
 #include <vector>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 class Block {
    std::string_view _tag;
@@ -98,4 +98,4 @@ struct Properties {
 
 std::function<void(Block &)> with_properties(Properties props);
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

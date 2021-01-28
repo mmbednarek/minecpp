@@ -1,7 +1,7 @@
 #pragma once
 #include <minecpp/game/chunk/chunk.h>
 
-namespace Game {
+namespace minecpp::game {
 
 enum ChunkState {
    ABSENT = 0,
@@ -11,9 +11,9 @@ enum ChunkState {
 
 class Chunks {
  public:
-   virtual Game::Chunk &get_incomplete_chunk(int x, int z) = 0;
-   virtual result<empty> put_chunk(int x, int z, std::unique_ptr<Game::Chunk> chunk) = 0;
+   virtual game::Chunk &get_incomplete_chunk(int x, int z) = 0;
+   virtual result<empty> put_chunk(int x, int z, std::unique_ptr<game::Chunk> chunk) = 0;
    virtual result<ChunkState> get_chunk_state(int x, int z) = 0;
 };
 
-}// namespace Game
+}// namespace minecpp::game

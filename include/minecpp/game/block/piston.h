@@ -1,9 +1,9 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 using PistonType =
-Utils::Enum<ENU("normal"), ENU("sticky")>;
+minecpp::util::Enum<ENU("normal"), ENU("sticky")>;
 
 }

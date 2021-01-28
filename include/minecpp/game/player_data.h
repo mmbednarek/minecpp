@@ -8,9 +8,9 @@
 #include <minecpp/nbt/reader.h>
 #include <minecpp/util/vec.h>
 
-namespace Game {
+namespace minecpp::game {
 
-using Utils::Vec3;
+using minecpp::util::Vec3;
 
 class PlayerData {
  public:
@@ -24,15 +24,15 @@ class PlayerData {
       float walk_speed = 0.1f;
 
       Abilities() = default;
-      explicit Abilities(NBT::Reader &r);
+      explicit Abilities(nbt::Reader &r);
    };
 
-   explicit PlayerData(NBT::Reader &r);
+   explicit PlayerData(nbt::Reader &r);
    explicit PlayerData(boost::uuids::uuid id);
 
-   void load(NBT::Reader &r, NBT::TagId tagid, const std::string &name);
+   void load(nbt::Reader &r, nbt::TagId tagid, const std::string &name);
 
-   Entity::Entity to_entity();
+   entity::Entity to_entity();
    // NOTICE: ender chest and inventory is moved
    Player to_player(std::string &name);
 
@@ -83,4 +83,4 @@ class PlayerData {
    bool seen_credits = false;
 };
 
-}// namespace Game
+}// namespace minecpp::game

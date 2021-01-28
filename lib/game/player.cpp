@@ -1,6 +1,6 @@
 #include <minecpp/game/player.h>
 
-namespace Game {
+namespace minecpp::game {
 
 Player::Player(uuid id, std::string &name, Vec3 pos) : id(id), player_name(std::move(name)), tracking(pos, 4) {}
 
@@ -50,4 +50,4 @@ uint32_t Player::Abilities::flags() {
    return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
 }
 
-} // namespace Game
+} // namespace minecpp::game

@@ -8,7 +8,7 @@
 #include <variant>
 #include <vector>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 enum class TagId : uint8_t {
    End,
@@ -125,7 +125,7 @@ struct ListContent {
    template<typename T>
    std::vector<T> as_vec() {
       std::vector<T> result(elements.size());
-      std::transform(begin(), end(), result.begin(), [](const NBT::Content &el) {
+      std::transform(begin(), end(), result.begin(), [](const nbt::Content &el) {
          return el.as<T>();
       });
       return result;
@@ -166,7 +166,7 @@ std::vector<T> Content::as_vec() {
 }
 
 class Writer;
-void serialize_compound_content(NBT::Writer &w, const CompoundContent &cc);
-void serialize_content(NBT::Writer &w, const Content *c);
+void serialize_compound_content(nbt::Writer &w, const CompoundContent &cc);
+void serialize_content(nbt::Writer &w, const Content *c);
 
-}// namespace NBT
+}// namespace minecpp::nbt

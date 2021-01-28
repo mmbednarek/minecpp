@@ -4,10 +4,10 @@
 #include <istream>
 #include <minecpp/util/vec.h>
 
-namespace Game::Level {
+namespace minecpp::game::level {
 
 struct BorderInfo {
-   Utils::Vec2 center;
+   minecpp::util::Vec2 center;
    double damage_per_block;
    double size_lerp_target;
    long long size_lerp_time;
@@ -22,8 +22,8 @@ class Info {
    BorderInfo border;
    long long day_time;
    uint8_t difficulty;
-   Game::Rules rules;
-   Game::Mode mode;
+   game::Rules rules;
+   game::Mode mode;
    bool features;
    long long seed;
    std::vector<std::string> server_brands;
@@ -34,4 +34,4 @@ class Info {
    uint8_t snapshot;
 };
 
-} // namespace Game::Level
+} // namespace minecpp::game::level

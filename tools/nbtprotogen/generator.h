@@ -42,7 +42,7 @@ struct Type {
    bool operator<(const Type &other) const;
 
    [[nodiscard]] std::string to_cpp() const;
-   void write_value(Utils::ScriptWriter &w, std::string_view name, std::string_view label) const;
+   void write_value(minecpp::util::ScriptWriter &w, std::string_view name, std::string_view label) const;
    [[nodiscard]] std::string nbt_tagid() const;
 };
 

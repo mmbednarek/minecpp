@@ -1,12 +1,12 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game {
+namespace minecpp::game {
 
 using Event =
-    Utils::Enum<ENU("AddPlayer"), ENU("SpawnPlayer"), ENU("EntityMove"),
+    minecpp::util::Enum<ENU("AddPlayer"), ENU("SpawnPlayer"), ENU("EntityMove"),
                 ENU("EntityLook"), ENU("RemovePlayer"), ENU("UpdateBlock"),
                 ENU("Chat"), ENU("AnimateHand"), ENU("LoadTerrain"),
                 ENU("TransferPlayer")>;
 
-} // namespace Game
+} // namespace minecpp::game

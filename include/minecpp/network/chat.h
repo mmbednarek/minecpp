@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <string>
 
-namespace MineNet {
+namespace minecpp::network {
 
 enum class ChatType : uint8_t { Chat, System, GameInfo };
 

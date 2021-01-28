@@ -1,9 +1,9 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 using SlabType =
-Utils::Enum<ENU("top"), ENU("bottom"), ENU("double")>;
+minecpp::util::Enum<ENU("top"), ENU("bottom"), ENU("double")>;
 
 }

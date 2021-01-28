@@ -1,7 +1,7 @@
 // Generated using ProtoNBT generator
 #include <minecpp/game/pnbt/chunk.h>
 
-namespace Game::NbtChunk {
+namespace minecpp::game::NbtChunk {
 
 int ArmorItem::__xx_get_id(const std::string &name) const {
    auto it = __xx_offsets.find(name);
@@ -9,12 +9,12 @@ int ArmorItem::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void ArmorItem::serialize_no_header(NBT::Writer &w) const {
+void ArmorItem::serialize_no_header(nbt::Writer &w) const {
    w.end_compound();
 }
 
 void ArmorItem::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -22,9 +22,9 @@ void ArmorItem::serialize(std::ostream &out, const std::string_view name) const 
 std::unordered_map<std::string, __nbt_offset> ArmorItem::__xx_offsets {
 };
 
-ArmorItem ArmorItem::deserialize_no_header(NBT::Reader &r) {
+ArmorItem ArmorItem::deserialize_no_header(nbt::Reader &r) {
    ArmorItem res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       }
       r.skip_payload(tagid);
@@ -34,9 +34,9 @@ ArmorItem ArmorItem::deserialize_no_header(NBT::Reader &r) {
 }
 
 ArmorItem ArmorItem::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return ArmorItem();
    }
    return ArmorItem::deserialize_no_header(r);
@@ -48,14 +48,14 @@ int Attribute::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Attribute::serialize_no_header(NBT::Writer &w) const {
+void Attribute::serialize_no_header(nbt::Writer &w) const {
    w.write_double("Base", base);
    w.write_string("Name", this->name);
    w.end_compound();
 }
 
 void Attribute::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -65,14 +65,14 @@ std::unordered_map<std::string, __nbt_offset> Attribute::__xx_offsets {
    {"Name", {offsetof(Attribute, name), sizeof(Attribute::name), 2}},
 };
 
-Attribute Attribute::deserialize_no_header(NBT::Reader &r) {
+Attribute Attribute::deserialize_no_header(nbt::Reader &r) {
    Attribute res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::String: 
+      case nbt::TagId::String: 
          res.__xx_put(name, r.read_str());
          return;
-      case NBT::TagId::Double: 
+      case nbt::TagId::Double: 
          res.__xx_put(name, r.read_float64());
          return;
       }
@@ -83,9 +83,9 @@ Attribute Attribute::deserialize_no_header(NBT::Reader &r) {
 }
 
 Attribute Attribute::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Attribute();
    }
    return Attribute::deserialize_no_header(r);
@@ -97,12 +97,12 @@ int Memories::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Memories::serialize_no_header(NBT::Writer &w) const {
+void Memories::serialize_no_header(nbt::Writer &w) const {
    w.end_compound();
 }
 
 void Memories::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -110,9 +110,9 @@ void Memories::serialize(std::ostream &out, const std::string_view name) const {
 std::unordered_map<std::string, __nbt_offset> Memories::__xx_offsets {
 };
 
-Memories Memories::deserialize_no_header(NBT::Reader &r) {
+Memories Memories::deserialize_no_header(nbt::Reader &r) {
    Memories res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       }
       r.skip_payload(tagid);
@@ -122,9 +122,9 @@ Memories Memories::deserialize_no_header(NBT::Reader &r) {
 }
 
 Memories Memories::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Memories();
    }
    return Memories::deserialize_no_header(r);
@@ -136,14 +136,14 @@ int Brain::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Brain::serialize_no_header(NBT::Writer &w) const {
+void Brain::serialize_no_header(nbt::Writer &w) const {
    w.begin_compound("memories");
    this->memories.serialize_no_header(w);
    w.end_compound();
 }
 
 void Brain::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -152,11 +152,11 @@ std::unordered_map<std::string, __nbt_offset> Brain::__xx_offsets {
    {"memories", {offsetof(Brain, memories), sizeof(Brain::memories), 1}},
 };
 
-Brain Brain::deserialize_no_header(NBT::Reader &r) {
+Brain Brain::deserialize_no_header(nbt::Reader &r) {
    Brain res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Compound: {
+      case nbt::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
             case 1:
                res.__xx_put(name, Memories::deserialize_no_header(r));
@@ -172,9 +172,9 @@ Brain Brain::deserialize_no_header(NBT::Reader &r) {
 }
 
 Brain Brain::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Brain();
    }
    return Brain::deserialize_no_header(r);
@@ -186,12 +186,12 @@ int HandItem::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void HandItem::serialize_no_header(NBT::Writer &w) const {
+void HandItem::serialize_no_header(nbt::Writer &w) const {
    w.end_compound();
 }
 
 void HandItem::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -199,9 +199,9 @@ void HandItem::serialize(std::ostream &out, const std::string_view name) const {
 std::unordered_map<std::string, __nbt_offset> HandItem::__xx_offsets {
 };
 
-HandItem HandItem::deserialize_no_header(NBT::Reader &r) {
+HandItem HandItem::deserialize_no_header(nbt::Reader &r) {
    HandItem res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       }
       r.skip_payload(tagid);
@@ -211,9 +211,9 @@ HandItem HandItem::deserialize_no_header(NBT::Reader &r) {
 }
 
 HandItem HandItem::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return HandItem();
    }
    return HandItem::deserialize_no_header(r);
@@ -225,18 +225,18 @@ int Entity::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Entity::serialize_no_header(NBT::Writer &w) const {
+void Entity::serialize_no_header(nbt::Writer &w) const {
    w.write_float("AbsorptionAmount", this->absorption_amount);
    w.write_short("Air", this->air);
-   w.begin_list("ArmorDropChances", NBT::TagId::Float, armor_drop_chances.size());
+   w.begin_list("ArmorDropChances", nbt::TagId::Float, armor_drop_chances.size());
    for (const auto &val0 : armor_drop_chances) {
       w.write_float_content(val0);
    }
-   w.begin_list("ArmorItems", NBT::TagId::Compound, armor_items.size());
+   w.begin_list("ArmorItems", nbt::TagId::Compound, armor_items.size());
    for (const auto &val0 : armor_items) {
       val0.serialize_no_header(w);
    }
-   w.begin_list("Attributes", NBT::TagId::Compound, attributes.size());
+   w.begin_list("Attributes", nbt::TagId::Compound, attributes.size());
    for (const auto &val0 : attributes) {
       val0.serialize_no_header(w);
    }
@@ -249,11 +249,11 @@ void Entity::serialize_no_header(NBT::Writer &w) const {
    w.write_byte("FallFlying", this->fall_flying);
    w.write_short("Fire", this->fire);
    w.write_short("Fuse", this->fuse);
-   w.begin_list("HandDropChances", NBT::TagId::Float, hand_drop_chances.size());
+   w.begin_list("HandDropChances", nbt::TagId::Float, hand_drop_chances.size());
    for (const auto &val0 : hand_drop_chances) {
       w.write_float_content(val0);
    }
-   w.begin_list("HandItems", NBT::TagId::Compound, hand_items.size());
+   w.begin_list("HandItems", nbt::TagId::Compound, hand_items.size());
    for (const auto &val0 : hand_items) {
       val0.serialize_no_header(w);
    }
@@ -262,18 +262,18 @@ void Entity::serialize_no_header(NBT::Writer &w) const {
    w.write_short("HurtTime", this->hurt_time);
    w.write_byte("Invulnerable", this->invulnerable);
    w.write_byte("LeftHanded", this->left_handed);
-   w.begin_list("Motion", NBT::TagId::Double, motion.size());
+   w.begin_list("Motion", nbt::TagId::Double, motion.size());
    for (const auto &val0 : motion) {
       w.write_double_content(val0);
    }
    w.write_byte("OnGround", this->on_ground);
    w.write_byte("PersistenceRequired", this->persistence_required);
    w.write_int("PortalCooldown", this->portal_cooldown);
-   w.begin_list("Pos", NBT::TagId::Double, pos.size());
+   w.begin_list("Pos", nbt::TagId::Double, pos.size());
    for (const auto &val0 : pos) {
       w.write_double_content(val0);
    }
-   w.begin_list("Rotation", NBT::TagId::Float, rotation.size());
+   w.begin_list("Rotation", nbt::TagId::Float, rotation.size());
    for (const auto &val0 : rotation) {
       w.write_float_content(val0);
    }
@@ -284,7 +284,7 @@ void Entity::serialize_no_header(NBT::Writer &w) const {
 }
 
 void Entity::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -321,29 +321,29 @@ std::unordered_map<std::string, __nbt_offset> Entity::__xx_offsets {
    {"ignited", {offsetof(Entity, ignited), sizeof(Entity::ignited), 29}},
 };
 
-Entity Entity::deserialize_no_header(NBT::Reader &r) {
+Entity Entity::deserialize_no_header(nbt::Reader &r) {
    Entity res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Byte: 
+      case nbt::TagId::Byte: 
          res.__xx_put(name, r.read_byte());
          return;
-      case NBT::TagId::Short: 
+      case nbt::TagId::Short: 
          res.__xx_put(name, r.read_short());
          return;
-      case NBT::TagId::Int: 
+      case nbt::TagId::Int: 
          res.__xx_put(name, r.read_int());
          return;
-      case NBT::TagId::String: 
+      case nbt::TagId::String: 
          res.__xx_put(name, r.read_str());
          return;
-      case NBT::TagId::Float: 
+      case nbt::TagId::Float: 
          res.__xx_put(name, r.read_float32());
          return;
-      case NBT::TagId::IntArray: 
+      case nbt::TagId::IntArray: 
          res.__xx_put(name, r.read_int_vec());
          return;
-      case NBT::TagId::Compound: {
+      case nbt::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
             case 6:
                res.__xx_put(name, Brain::deserialize_no_header(r));
@@ -351,22 +351,22 @@ Entity Entity::deserialize_no_header(NBT::Reader &r) {
          }
          break;
       }
-      case NBT::TagId::List: {
+      case nbt::TagId::List: {
          auto list_info0 = r.peek_list();
          switch (list_info0.tagid) {
-         case NBT::TagId::Float: {
+         case nbt::TagId::Float: {
             std::vector<float> ls(list_info0.size);
             std::generate(ls.begin(), ls.end(), [&r]() { return r.read_float32(); });
             res.__xx_put(name, ls);
             return;
          }
-         case NBT::TagId::Double: {
+         case nbt::TagId::Double: {
             std::vector<double> ls(list_info0.size);
             std::generate(ls.begin(), ls.end(), [&r]() { return r.read_float64(); });
             res.__xx_put(name, ls);
             return;
          }
-         case NBT::TagId::Compound: {
+         case nbt::TagId::Compound: {
             switch(res.__xx_get_id(name)) {
             case 4: {
                std::vector<ArmorItem> ls(list_info0.size);
@@ -403,9 +403,9 @@ Entity Entity::deserialize_no_header(NBT::Reader &r) {
 }
 
 Entity Entity::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Entity();
    }
    return Entity::deserialize_no_header(r);
@@ -417,7 +417,7 @@ int Heightmaps::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Heightmaps::serialize_no_header(NBT::Writer &w) const {
+void Heightmaps::serialize_no_header(nbt::Writer &w) const {
    w.write_longs("MOTION_BLOCKING", motion_blocking);
    w.write_longs("MOTION_BLOCKING_NO_LEAVES", motion_blocking_no_leaves);
    w.write_longs("OCEAN_FLOOR", ocean_floor);
@@ -426,7 +426,7 @@ void Heightmaps::serialize_no_header(NBT::Writer &w) const {
 }
 
 void Heightmaps::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -438,11 +438,11 @@ std::unordered_map<std::string, __nbt_offset> Heightmaps::__xx_offsets {
    {"WORLD_SURFACE", {offsetof(Heightmaps, world_surface), sizeof(Heightmaps::world_surface), 4}},
 };
 
-Heightmaps Heightmaps::deserialize_no_header(NBT::Reader &r) {
+Heightmaps Heightmaps::deserialize_no_header(nbt::Reader &r) {
    Heightmaps res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::LongArray: 
+      case nbt::TagId::LongArray: 
          res.__xx_put(name, r.read_long_vec());
          return;
       }
@@ -453,9 +453,9 @@ Heightmaps Heightmaps::deserialize_no_header(NBT::Reader &r) {
 }
 
 Heightmaps Heightmaps::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Heightmaps();
    }
    return Heightmaps::deserialize_no_header(r);
@@ -467,15 +467,15 @@ int PaletteItem::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void PaletteItem::serialize_no_header(NBT::Writer &w) const {
+void PaletteItem::serialize_no_header(nbt::Writer &w) const {
    w.write_string("Name", this->name);
-   w.write_header(NBT::TagId::Compound, "Properties");
-   NBT::serialize_compound_content(w, properties);
+   w.write_header(nbt::TagId::Compound, "Properties");
+   nbt::serialize_compound_content(w, properties);
    w.end_compound();
 }
 
 void PaletteItem::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -485,14 +485,14 @@ std::unordered_map<std::string, __nbt_offset> PaletteItem::__xx_offsets {
    {"Properties", {offsetof(PaletteItem, properties), sizeof(PaletteItem::properties), 2}},
 };
 
-PaletteItem PaletteItem::deserialize_no_header(NBT::Reader &r) {
+PaletteItem PaletteItem::deserialize_no_header(nbt::Reader &r) {
    PaletteItem res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::String: 
+      case nbt::TagId::String: 
          res.__xx_put(name, r.read_str());
          return;
-      case NBT::TagId::Compound: 
+      case nbt::TagId::Compound: 
          res.__xx_put(name, r.read_compound_content());
          return;
       }
@@ -503,9 +503,9 @@ PaletteItem PaletteItem::deserialize_no_header(NBT::Reader &r) {
 }
 
 PaletteItem PaletteItem::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return PaletteItem();
    }
    return PaletteItem::deserialize_no_header(r);
@@ -517,12 +517,12 @@ int Section::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Section::serialize_no_header(NBT::Writer &w) const {
+void Section::serialize_no_header(nbt::Writer &w) const {
    w.write_byte("Y", this->y);
    w.write_bytes("BlockLight", block_light);
    w.write_bytes("SkyLight", sky_light);
    w.write_longs("BlockStates", block_states);
-   w.begin_list("Palette", NBT::TagId::Compound, palette.size());
+   w.begin_list("Palette", nbt::TagId::Compound, palette.size());
    for (const auto &val0 : palette) {
       val0.serialize_no_header(w);
    }
@@ -530,7 +530,7 @@ void Section::serialize_no_header(NBT::Writer &w) const {
 }
 
 void Section::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -543,23 +543,23 @@ std::unordered_map<std::string, __nbt_offset> Section::__xx_offsets {
    {"Palette", {offsetof(Section, palette), sizeof(Section::palette), 5}},
 };
 
-Section Section::deserialize_no_header(NBT::Reader &r) {
+Section Section::deserialize_no_header(nbt::Reader &r) {
    Section res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Byte: 
+      case nbt::TagId::Byte: 
          res.__xx_put(name, r.read_byte());
          return;
-      case NBT::TagId::ByteArray: 
+      case nbt::TagId::ByteArray: 
          res.__xx_put(name, r.read_byte_vector());
          return;
-      case NBT::TagId::LongArray: 
+      case nbt::TagId::LongArray: 
          res.__xx_put(name, r.read_long_vec());
          return;
-      case NBT::TagId::List: {
+      case nbt::TagId::List: {
          auto list_info0 = r.peek_list();
          switch (list_info0.tagid) {
-         case NBT::TagId::Compound: {
+         case nbt::TagId::Compound: {
             switch(res.__xx_get_id(name)) {
             case 5: {
                std::vector<PaletteItem> ls(list_info0.size);
@@ -584,9 +584,9 @@ Section Section::deserialize_no_header(NBT::Reader &r) {
 }
 
 Section Section::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Section();
    }
    return Section::deserialize_no_header(r);
@@ -598,13 +598,13 @@ int StartId::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void StartId::serialize_no_header(NBT::Writer &w) const {
+void StartId::serialize_no_header(nbt::Writer &w) const {
    w.write_string("id", this->id);
    w.end_compound();
 }
 
 void StartId::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -613,11 +613,11 @@ std::unordered_map<std::string, __nbt_offset> StartId::__xx_offsets {
    {"id", {offsetof(StartId, id), sizeof(StartId::id), 1}},
 };
 
-StartId StartId::deserialize_no_header(NBT::Reader &r) {
+StartId StartId::deserialize_no_header(nbt::Reader &r) {
    StartId res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::String: 
+      case nbt::TagId::String: 
          res.__xx_put(name, r.read_str());
          return;
       }
@@ -628,9 +628,9 @@ StartId StartId::deserialize_no_header(NBT::Reader &r) {
 }
 
 StartId StartId::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return StartId();
    }
    return StartId::deserialize_no_header(r);
@@ -642,7 +642,7 @@ int Starts::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Starts::serialize_no_header(NBT::Writer &w) const {
+void Starts::serialize_no_header(nbt::Writer &w) const {
    w.begin_compound("mineshaft");
    this->mineshaft.serialize_no_header(w);
    w.begin_compound("ruined_portal");
@@ -653,7 +653,7 @@ void Starts::serialize_no_header(NBT::Writer &w) const {
 }
 
 void Starts::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -664,11 +664,11 @@ std::unordered_map<std::string, __nbt_offset> Starts::__xx_offsets {
    {"stronghold", {offsetof(Starts, stronghold), sizeof(Starts::stronghold), 3}},
 };
 
-Starts Starts::deserialize_no_header(NBT::Reader &r) {
+Starts Starts::deserialize_no_header(nbt::Reader &r) {
    Starts res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Compound: {
+      case nbt::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
             case 1:
                res.__xx_put(name, StartId::deserialize_no_header(r));
@@ -690,9 +690,9 @@ Starts Starts::deserialize_no_header(NBT::Reader &r) {
 }
 
 Starts Starts::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Starts();
    }
    return Starts::deserialize_no_header(r);
@@ -704,14 +704,14 @@ int Structures::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Structures::serialize_no_header(NBT::Writer &w) const {
+void Structures::serialize_no_header(nbt::Writer &w) const {
    w.begin_compound("Starts");
    this->starts.serialize_no_header(w);
    w.end_compound();
 }
 
 void Structures::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -720,11 +720,11 @@ std::unordered_map<std::string, __nbt_offset> Structures::__xx_offsets {
    {"Starts", {offsetof(Structures, starts), sizeof(Structures::starts), 2}},
 };
 
-Structures Structures::deserialize_no_header(NBT::Reader &r) {
+Structures Structures::deserialize_no_header(nbt::Reader &r) {
    Structures res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Compound: {
+      case nbt::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
             case 2:
                res.__xx_put(name, Starts::deserialize_no_header(r));
@@ -740,9 +740,9 @@ Structures Structures::deserialize_no_header(NBT::Reader &r) {
 }
 
 Structures Structures::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Structures();
    }
    return Structures::deserialize_no_header(r);
@@ -754,9 +754,9 @@ int Level::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Level::serialize_no_header(NBT::Writer &w) const {
+void Level::serialize_no_header(nbt::Writer &w) const {
    w.write_ints("Biomes", biomes);
-   w.begin_list("Entities", NBT::TagId::Compound, entities.size());
+   w.begin_list("Entities", nbt::TagId::Compound, entities.size());
    for (const auto &val0 : entities) {
       val0.serialize_no_header(w);
    }
@@ -764,7 +764,7 @@ void Level::serialize_no_header(NBT::Writer &w) const {
    this->heightmaps.serialize_no_header(w);
    w.write_long("InhabitedTime", this->inhabited_time);
    w.write_long("LastUpdate", this->last_update);
-   w.begin_list("Sections", NBT::TagId::Compound, sections.size());
+   w.begin_list("Sections", nbt::TagId::Compound, sections.size());
    for (const auto &val0 : sections) {
       val0.serialize_no_header(w);
    }
@@ -778,7 +778,7 @@ void Level::serialize_no_header(NBT::Writer &w) const {
 }
 
 void Level::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -797,26 +797,26 @@ std::unordered_map<std::string, __nbt_offset> Level::__xx_offsets {
    {"zPos", {offsetof(Level, z_pos), sizeof(Level::z_pos), 14}},
 };
 
-Level Level::deserialize_no_header(NBT::Reader &r) {
+Level Level::deserialize_no_header(nbt::Reader &r) {
    Level res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Byte: 
+      case nbt::TagId::Byte: 
          res.__xx_put(name, r.read_byte());
          return;
-      case NBT::TagId::Int: 
+      case nbt::TagId::Int: 
          res.__xx_put(name, r.read_int());
          return;
-      case NBT::TagId::Long: 
+      case nbt::TagId::Long: 
          res.__xx_put(name, r.read_long());
          return;
-      case NBT::TagId::String: 
+      case nbt::TagId::String: 
          res.__xx_put(name, r.read_str());
          return;
-      case NBT::TagId::IntArray: 
+      case nbt::TagId::IntArray: 
          res.__xx_put(name, r.read_int_vec());
          return;
-      case NBT::TagId::Compound: {
+      case nbt::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
             case 3:
                res.__xx_put(name, Heightmaps::deserialize_no_header(r));
@@ -827,10 +827,10 @@ Level Level::deserialize_no_header(NBT::Reader &r) {
          }
          break;
       }
-      case NBT::TagId::List: {
+      case nbt::TagId::List: {
          auto list_info0 = r.peek_list();
          switch (list_info0.tagid) {
-         case NBT::TagId::Compound: {
+         case nbt::TagId::Compound: {
             switch(res.__xx_get_id(name)) {
             case 2: {
                std::vector<Entity> ls(list_info0.size);
@@ -861,9 +861,9 @@ Level Level::deserialize_no_header(NBT::Reader &r) {
 }
 
 Level Level::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Level();
    }
    return Level::deserialize_no_header(r);
@@ -875,14 +875,14 @@ int Chunk::__xx_get_id(const std::string &name) const {
    return it->second.id;
 }
 
-void Chunk::serialize_no_header(NBT::Writer &w) const {
+void Chunk::serialize_no_header(nbt::Writer &w) const {
    w.begin_compound("Level");
    this->level.serialize_no_header(w);
    w.end_compound();
 }
 
 void Chunk::serialize(std::ostream &out, const std::string_view name) const {
-   NBT::Writer w(out);
+   nbt::Writer w(out);
    w.begin_compound(name);
    this->serialize_no_header(w);
 }
@@ -891,11 +891,11 @@ std::unordered_map<std::string, __nbt_offset> Chunk::__xx_offsets {
    {"Level", {offsetof(Chunk, level), sizeof(Chunk::level), 1}},
 };
 
-Chunk Chunk::deserialize_no_header(NBT::Reader &r) {
+Chunk Chunk::deserialize_no_header(nbt::Reader &r) {
    Chunk res;
-   r.read_compound([&res] (NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case NBT::TagId::Compound: {
+      case nbt::TagId::Compound: {
          switch(res.__xx_get_id(name)) {
             case 1:
                res.__xx_put(name, Level::deserialize_no_header(r));
@@ -911,12 +911,12 @@ Chunk Chunk::deserialize_no_header(NBT::Reader &r) {
 }
 
 Chunk Chunk::deserialize(std::istream &in) {
-   NBT::Reader r(in);
+   nbt::Reader r(in);
    auto peek = r.peek_tag();
-   if (peek.id != NBT::TagId::Compound) {
+   if (peek.id != nbt::TagId::Compound) {
       return Chunk();
    }
    return Chunk::deserialize_no_header(r);
 }
 
-}// namespace Game::NbtChunk
+}// namespace minecpp::game::NbtChunk

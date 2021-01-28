@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Game {
+namespace minecpp::game {
 
 enum class Mode : uint8_t {
    Survival,

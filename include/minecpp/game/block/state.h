@@ -15,7 +15,7 @@
 #include <string_view>
 #include <type_traits>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 class Attribute {
    std::string_view prop_name;
@@ -233,4 +233,4 @@ const EnumAttribute<JigsawOrientation> JigsawOrientation("orientation");
 
 } // namespace Attrib
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

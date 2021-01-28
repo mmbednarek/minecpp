@@ -3,11 +3,11 @@
 #include <cassert>
 #include <cmath>
 
-namespace Rand {
+namespace minecpp::random {
 
-using Utils::Vec2;
+using minecpp::util::Vec2;
 
-Perlin::Perlin(Rand::Random &rand) : rand(rand), coef1(rand.next_int()), coef2(rand.next_int()), coef3(rand.next_int()) {
+Perlin::Perlin(random::Random &rand) : rand(rand), coef1(rand.next_int()), coef2(rand.next_int()), coef3(rand.next_int()) {
 }
 
 [[nodiscard]] static double smooth(const double t) {
@@ -34,25 +34,25 @@ double Perlin::at(Vec2 pos) {
    return std::lerp(inter_bot, inter_top, weight.z);
 }
 
-double Perlin::dot_grad(int x, int z, Utils::Vec2 pos) {
+double Perlin::dot_grad(int x, int z, minecpp::util::Vec2 pos) {
    auto g = grad(x, z);
    Vec2 d = pos - Vec2(x, z);
    return (g.x * d.x) + (g.z * d.z);
 }
 
-Utils::Vec2 Perlin::grad(int x, int z) {
-   Rand::JavaRandom r(x * coef1 + z * coef2 + coef3);
-   return Utils::Vec2(r.next_double(), r.next_double());
+minecpp::util::Vec2 Perlin::grad(int x, int z) {
+   random::JavaRandom r(x * coef1 + z * coef2 + coef3);
+   return minecpp::util::Vec2(r.next_double(), r.next_double());
 }
 
 DisplacedPerlin::DisplacedPerlin(Random &rand, double scale, double amp) : base(rand), dis_x(rand), dis_z(rand), scale(scale), amp(amp), move_dis_x(rand.next_double(), rand.next_double()), move_dis_z(rand.next_double(), rand.next_double()) {
 }
 
-double DisplacedPerlin::at(const Utils::Vec2 pos) {
-   return base.at(pos + Utils::Vec2{
+double DisplacedPerlin::at(const minecpp::util::Vec2 pos) {
+   return base.at(pos + minecpp::util::Vec2{
            dis_x.at(pos * scale + move_dis_x) * amp,
            dis_z.at(pos * scale + move_dis_z) * amp,
    });
 }
 
-}// namespace Rand
+}// namespace minecpp::random

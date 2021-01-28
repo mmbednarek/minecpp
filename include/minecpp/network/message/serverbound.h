@@ -5,7 +5,7 @@
 #include <minecpp/network/chat.h>
 #include <string>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 // 0x03
 
@@ -21,7 +21,7 @@ struct ClientSettings {
    ChatVisibility visibility;
    bool enable_colors;
    uint8_t model_part_flags;
-   Game::HandSide hand_side;
+   game::HandSide hand_side;
 };
 void deserialize(Reader &r, ClientSettings &msg);
 
@@ -64,7 +64,7 @@ enum class DiggingAction : uint8_t {
 struct PlayerDigging {
    DiggingAction action;
    uint64_t position;
-   Game::Direction facing;
+   game::Direction facing;
 };
 void deserialize(Reader &r, PlayerDigging &msg);
 
@@ -79,4 +79,4 @@ struct AnimateHandClient {
 };
 void deserialize(Reader &r, AnimateHandClient &msg);
 
-}// namespace MineNet::Message
+}// namespace minecpp::network::Message

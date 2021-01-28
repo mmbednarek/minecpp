@@ -6,11 +6,11 @@
 #include <mineutils/loop.h>
 
 TEST(Utils, Format) {
-   auto empty_format = Utils::format("Hello!");
+   auto empty_format = minecpp::util::format("Hello!");
    ASSERT_EQ(empty_format, "Hello!");
-   auto format_one = Utils::format("Hello {}!", "World");
+   auto format_one = minecpp::util::format("Hello {}!", "World");
    ASSERT_EQ(format_one, "Hello World!");
-   auto format_many = Utils::format("Many values {}, {}, {}.", "something", 14, 23.567);
+   auto format_many = minecpp::util::format("Many values {}, {}, {}.", "something", 14, 23.567);
    ASSERT_EQ(format_many, "Many values something, 14, 23.567.");
 }
 
@@ -85,10 +85,10 @@ TEST(Utils, result) {
 
 TEST(Utils, PackingTest) {
    int i = 0;
-   auto data = Utils::generate_packed(12, 4096, [&i]() -> uint32_t { return i++; });
+   auto data = minecpp::util::generate_packed(12, 4096, [&i]() -> uint32_t { return i++; });
 
    i = 0;
-   Utils::for_each_packed(data, 12, 4096, [&i](uint32_t v) {
+   minecpp::util::for_each_packed(data, 12, 4096, [&i](uint32_t v) {
       ASSERT_EQ(v, i++);
    });
 }
@@ -97,7 +97,7 @@ TEST(Utils, Around) {
    char values[9];
    memset(values, 0, sizeof(char) * 9);
 
-   Utils::around(1, 1, [&values] (int x, int z) {
+   minecpp::util::around(1, 1, [&values] (int x, int z) {
       values[z * 3 + x] = 1;
    });
 

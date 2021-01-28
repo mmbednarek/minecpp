@@ -2,18 +2,18 @@
 #include <cstdint>
 #include <functional>
 #include <map>
-#include <minecpp/squeeze/tiny.h>
-#include <minecpp/squeeze/vector.h>
+#include <minecpp/squeezed/tiny.h>
+#include <minecpp/squeezed/vector.h>
 #include <vector>
 
-namespace Game {
+namespace minecpp::game {
 
 struct Section {
    int ref_count;
    std::vector<std::uint32_t> palette;
-   Squeeze::Vector data;
-   Squeeze::TinyVec<4> block_light;
-   Squeeze::TinyVec<4> sky_light;
+   minecpp::squeezed::Vector data;
+   minecpp::squeezed::TinyVec<4> block_light;
+   minecpp::squeezed::TinyVec<4> sky_light;
 };
 
 class SectionBuilder {

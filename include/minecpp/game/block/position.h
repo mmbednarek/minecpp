@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <minecpp/util/vec.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 constexpr int64_t chunk_max_z = 1875060;
 
@@ -12,7 +12,7 @@ struct ChunkPos {
    int x = 0, z = 0;
    ChunkPos() = default;
    ChunkPos(int x, int z);
-   explicit ChunkPos(Utils::Vec2 v);
+   explicit ChunkPos(minecpp::util::Vec2 v);
    ChunkPos operator+(ChunkPos &other) const;
    [[nodiscard]] constexpr std::uint64_t hash() const {
       return static_cast<int64_t>(z) + chunk_max_z * static_cast<int64_t>(x);
@@ -36,4 +36,4 @@ struct Position {
    [[nodiscard]] uint8_t offset_z() const;
 };
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

@@ -1,6 +1,6 @@
 #include <minecpp/game/block/material.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 const Material Material::Air{
     .color = ColorId::Air,
@@ -274,4 +274,4 @@ const Material Material::NetherWood{
     .color = ColorId::Wood,
 };
 
-} // namespace Game::Block
+} // namespace minecpp::game::block

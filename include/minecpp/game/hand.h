@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Game {
+namespace minecpp::game {
 
 enum class HandSide {
    Left, Right

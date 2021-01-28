@@ -5,14 +5,14 @@
 #include <minecpp/game/dimension.h>
 #include <minecpp/util/vec.h>
 
-namespace Game {
+namespace minecpp::game {
 class PlayerData;
 }
 
-namespace Game::Entity {
+namespace minecpp::game::entity {
 
 using boost::uuids::uuid;
-using Utils::Vec3;
+using minecpp::util::Vec3;
 
 typedef std::string_view AttributeName;
 typedef std::string_view Type;
@@ -87,4 +87,4 @@ class Entity {
    void sync_tracking();
 };
 
-} // namespace Game::Entity
+} // namespace minecpp::game::entity

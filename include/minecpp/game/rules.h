@@ -1,7 +1,7 @@
 #pragma once
 #include <minecpp/nbt/reader.h>
 
-namespace Game {
+namespace minecpp::game {
 
 struct Rules {
 	bool announce_advancements;

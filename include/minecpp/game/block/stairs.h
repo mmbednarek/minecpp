@@ -1,10 +1,10 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
 using StairsShape =
-    Utils::Enum<ENU("straight"), ENU("inner_left"), ENU("inner_right"),
+    minecpp::util::Enum<ENU("straight"), ENU("inner_left"), ENU("inner_right"),
                 ENU("outer_left"), ENU("outer_right")>;
 
 }

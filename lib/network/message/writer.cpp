@@ -1,9 +1,9 @@
-#include <minecpp/network/msg/writer.h>
+#include <minecpp/network/message/writer.h>
 #include <boost/uuid/uuid_io.hpp>
 #include <cstring>
 #include <minecpp/util/compression.h>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 Writer::Writer() {}
 
@@ -112,7 +112,7 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
 
       std::vector<char> compressed;
       stream.seekg(0, std::ios::beg);
-      Utils::compress_zlib(compressed, stream);
+      minecpp::util::compress_zlib(compressed, stream);
 
       int decompressed_size_num_bytes = len_varint(buff_size);
       std::size_t total_size = decompressed_size_num_bytes + compressed.size();
@@ -153,4 +153,4 @@ size_t Writer::peek_size() {
    return size;
 }
 
-} // namespace MineNet::Message
+} // namespace minecpp::network::Message

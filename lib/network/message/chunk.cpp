@@ -1,8 +1,8 @@
-#include <minecpp/network/msg/chunk.h>
 #include <minecpp/game/chunk/utils.h>
 #include <minecpp/nbt/writer.h>
+#include <minecpp/network/message/chunk.h>
 
-namespace MineNet::Message {
+namespace minecpp::network::message {
 
 void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    w.write_big_endian(chunk.pos_x());
@@ -14,7 +14,7 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    uint32_t available_sections = 0;
    for (const auto &sec : chunk.sections()) {
       if (sec.data_size() > 0) {
-         available_sections |= 1u << (uint32_t)sec.y();
+         available_sections |= 1u << (uint32_t) sec.y();
          buff_size += sizeof(short) + 1 + w.len_varint(sec.palette_size());
          for (auto item : sec.palette()) {
             buff_size += w.len_varint(item);
@@ -24,7 +24,7 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    }
    w.write_varint(available_sections);
 
-   NBT::Writer height_maps(w.raw_stream());
+   nbt::Writer height_maps(w.raw_stream());
    height_maps.begin_compound("");
    {
       auto mb = chunk.hm_motion_blocking();
@@ -86,7 +86,7 @@ void write_light(Writer &w, const minecpp::chunk::NetChunk &chunk) {
 
    w.write_varint(chunk.pos_x());
    w.write_varint(chunk.pos_z());
-   w.write_byte(0); // Trust edges
+   w.write_byte(0);// Trust edges
    w.write_varint(skyUpdateMask);
    w.write_varint(blockUpdateMask);
    w.write_varint(skyResetMask);
@@ -107,4 +107,4 @@ void write_light(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    }
 }
 
-} // namespace MineNet::Message
+}// namespace minecpp::network::message

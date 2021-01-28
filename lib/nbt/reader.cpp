@@ -2,9 +2,9 @@
 #include <minecpp/nbt/parser.h>
 #include <cassert>
 
-namespace NBT {
+namespace minecpp::nbt {
 
-Reader::Reader(std::istream &s) : Utils::Reader(s) {}
+Reader::Reader(std::istream &s) : minecpp::util::Reader(s) {}
 
 void Reader::find_compound(std::string name) {
    if (!seek_tag<TagId::Compound>(name)) {
@@ -98,7 +98,7 @@ void Reader::iter_compound(std::string name, const IterCallback &callback) {
 }
 
 bool Reader::find_bool_str(std::string name, bool def) {
-   if (!seek_tag<NBT::TagId::String>(name)) {
+   if (!seek_tag<nbt::TagId::String>(name)) {
       return def;
    }
    return read_str() == "true";
@@ -124,7 +124,7 @@ void Reader::read_compound(
         std::function<void(Reader &r, TagId key, std::string)> for_elem) {
    for (;;) {
       auto header = peek_tag();
-      if (header.id == NBT::TagId::End)
+      if (header.id == nbt::TagId::End)
          return;
       for_elem(*this, header.id, header.name);
    }
@@ -133,7 +133,7 @@ void Reader::read_compound(
 result<empty> Reader::try_read_compound(std::function<result<empty>(Reader &, TagId, std::string)> for_value) {
    for (;;) {
       auto header = peek_tag();
-      if (header.id == NBT::TagId::End)
+      if (header.id == nbt::TagId::End)
          return result_ok;
       auto res = for_value(*this, header.id, header.name);
       if (!res.ok()) {
@@ -162,26 +162,26 @@ void Reader::foreach_long(std::function<void(long long value)> for_elem) {
 
 std::istream &Reader::raw_stream() { return get_stream(); }
 
-Utils::Vec3 Reader::read_vec3() {
+minecpp::util::Vec3 Reader::read_vec3() {
    auto tagid = read_static(TagId::End);
    auto size = read_bswap<int>();
    if (tagid == TagId::End)
-      return Utils::Vec3();
+      return minecpp::util::Vec3();
 
    if (size != 3) {
       for (int i = 0; i < size; ++i) {
          skip_payload(TagId::Double);
       }
-      return Utils::Vec3();
+      return minecpp::util::Vec3();
    }
 
-   return Utils::Vec3(read_float64(),
+   return minecpp::util::Vec3(read_float64(),
                       read_float64(),
                       read_float64());
 }
 
 ListHeader Reader::peek_list() {
-   return ListHeader{read_static(NBT::TagId::End), static_cast<std::size_t>(read_bswap<int>())};
+   return ListHeader{read_static(nbt::TagId::End), static_cast<std::size_t>(read_bswap<int>())};
 }
 
 CompoundContent Reader::read_compound_content() {
@@ -189,4 +189,4 @@ CompoundContent Reader::read_compound_content() {
    return p.read_compound();
 }
 
-}// namespace NBT
+}// namespace minecpp::nbt

@@ -24,10 +24,10 @@ struct Foo {
 
    Foo() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Foo deserialize_no_header(NBT::Reader &r);
+   static Foo deserialize_no_header(minecpp::nbt::Reader &r);
    static Foo deserialize(std::istream &in);
 
  private:
@@ -53,10 +53,10 @@ struct Test {
 
    Test() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Test deserialize_no_header(NBT::Reader &r);
+   static Test deserialize_no_header(minecpp::nbt::Reader &r);
    static Test deserialize(std::istream &in);
 
  private:

@@ -3,7 +3,7 @@
 #include <minecpp/nbt/writer.h>
 #include <minepb/game.pb.h>
 
-namespace Game {
+namespace minecpp::game {
 
 class DimensionProperties {
  public:
@@ -21,7 +21,7 @@ class DimensionProperties {
    bool ultrawarm = false;
    bool has_ceiling = false;
 
-   void to_nbt(NBT::Writer &w) const;
+   void to_nbt(nbt::Writer &w) const;
 };
 
 const DimensionProperties OverworldProps{};
@@ -53,8 +53,8 @@ const DimensionProperties EndProps{
     .name = "minecraft:the_end",
 };
 
-void write_dimension_codec(NBT::Writer &w);
-void write_dimension_type(NBT::Writer &w);
+void write_dimension_codec(nbt::Writer &w);
+void write_dimension_type(nbt::Writer &w);
 
 enum class Dimension : int8_t { Overworld = 0, Nether = -1, End = 1 };
 
@@ -62,4 +62,4 @@ minecpp::game::DimensionType dimension_to_proto(Dimension d);
 
 constexpr uint32_t world_limit = 30000000;
 
-} // namespace Game
+} // namespace minecpp::game

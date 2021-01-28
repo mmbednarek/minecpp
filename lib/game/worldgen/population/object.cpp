@@ -2,30 +2,30 @@
 #include <minecpp/game/block/registry.h>
 #include <minecpp/nbt/tag.h>
 
-namespace Game::WorldGen::Population {
+namespace minecpp::game::worldgen::population {
 
-auto empty_nbt = NBT::CompoundContent{};
-auto state_axis_y = NBT::CompoundContent{
-        {"axis", NBT::make_string("y")},
+auto empty_nbt = nbt::CompoundContent{};
+auto state_axis_y = nbt::CompoundContent{
+        {"axis", nbt::make_string("y")},
 };
 
-auto upper_half_nbt = NBT::CompoundContent{
-        {"half", NBT::make_string("upper")},
+auto upper_half_nbt = nbt::CompoundContent{
+        {"half", nbt::make_string("upper")},
 };
-auto lower_half_nbt = NBT::CompoundContent{
-        {"half", NBT::make_string("lower")},
+auto lower_half_nbt = nbt::CompoundContent{
+        {"half", nbt::make_string("lower")},
 };
 
-int air_id = Block::encode_state("minecraft:air", empty_nbt);
-int stone_id = Block::encode_state("minecraft:stone", empty_nbt);
-int wood_id = Block::encode_state("minecraft:oak_wood", state_axis_y);
-int leaves_id = Block::encode_state("minecraft:oak_leaves", empty_nbt);
-int pumpkin_id = Block::encode_state("minecraft:pumpkin", empty_nbt);
-int tall_grass_upper_id = Block::encode_state("minecraft:tall_grass", upper_half_nbt);
-int tall_grass_lower_id = Block::encode_state("minecraft:tall_grass", lower_half_nbt);
-int dendelion_id = Block::encode_state("minecraft:dandelion", empty_nbt);
-int poppy_id = Block::encode_state("minecraft:poppy", empty_nbt);
-int blue_orchid_id = Block::encode_state("minecraft:blue_orchid", empty_nbt);
+int air_id = block::encode_state("minecraft:air", empty_nbt);
+int stone_id = block::encode_state("minecraft:stone", empty_nbt);
+int wood_id = block::encode_state("minecraft:oak_wood", state_axis_y);
+int leaves_id = block::encode_state("minecraft:oak_leaves", empty_nbt);
+int pumpkin_id = block::encode_state("minecraft:pumpkin", empty_nbt);
+int tall_grass_upper_id = block::encode_state("minecraft:tall_grass", upper_half_nbt);
+int tall_grass_lower_id = block::encode_state("minecraft:tall_grass", lower_half_nbt);
+int dendelion_id = block::encode_state("minecraft:dandelion", empty_nbt);
+int poppy_id = block::encode_state("minecraft:poppy", empty_nbt);
+int blue_orchid_id = block::encode_state("minecraft:blue_orchid", empty_nbt);
 
 const ShapedObject<5, 5, 7> tree0 {
          300, // per 10 000 elements

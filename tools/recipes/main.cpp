@@ -1,13 +1,13 @@
 #include <boost/program_options.hpp>
 #include <fstream>
 #include <minecpp/game/item/registry.h>
-#include <minecpp/network/msg/io.h>
+#include <minecpp/network/message/io.h>
 
 namespace options = boost::program_options;
 
-void print_shaped(Game::Recipe recipe) {
+void print_shaped(minecpp::game::Recipe recipe) {
    std::cout << "shaped:\n";
-   auto details = recipe.details<Game::Recipe::CraftingShaped>();
+   auto details = recipe.details<minecpp::game::Recipe::CraftingShaped>();
    assert((details.width * details.height) == (int) details.ingredients.size());
    for (int y = 0; y < details.height; ++y) {
       std::cout << "  ";
@@ -17,7 +17,7 @@ void print_shaped(Game::Recipe recipe) {
             std::cout << "empty ";
             continue;
          }
-         auto item = Game::item_by_id(in[0].id);
+         auto item = minecpp::game::item_by_id(in[0].id);
          std::cout << item.tag() << " ";
       }
       std::cout << "\n";
@@ -44,7 +44,7 @@ auto main(int argc, char *argv[]) -> int {
       return 2;
    }
 
-   MineNet::Message::Reader reader(f);
+   minecpp::network::message::Reader reader(f);
    auto b = reader.read_byte();
 
    if (b != 0x5b) {
@@ -59,34 +59,34 @@ auto main(int argc, char *argv[]) -> int {
       auto recipe = reader.read_recipe();
 
       auto out_stack = recipe.outcome();
-      auto outcome = Game::item_by_id(out_stack.id);
+      auto outcome = minecpp::game::item_by_id(out_stack.id);
 
       std::cout << "--------------------\n";
       std::cout << "outcome item = " << outcome.tag() << "\n";
       std::cout << "amount = " << (int) out_stack.amount << "\n";
       switch (recipe.type()) {
-      case Game::CraftingShaped:
+      case minecpp::game::CraftingShaped:
          print_shaped(recipe);
          break;
-      case Game::CraftingShapeless:
+      case minecpp::game::CraftingShapeless:
          std::cout << "shapeless\n";
          break;
-      case Game::Smelting:
+      case minecpp::game::Smelting:
          std::cout << "smelting\n";
          break;
-      case Game::Blasting:
+      case minecpp::game::Blasting:
          std::cout << "blasting\n";
          break;
-      case Game::Smoking:
+      case minecpp::game::Smoking:
          std::cout << "smoking\n";
          break;
-      case Game::CampfireCooking:
+      case minecpp::game::CampfireCooking:
          std::cout << "campfire_cooking\n";
          break;
-      case Game::StoneCutting:
+      case minecpp::game::StoneCutting:
          std::cout << "stone cutting\n";
          break;
-      case Game::Special:
+      case minecpp::game::Special:
          std::cout << "special\n";
          break;
       }

@@ -1,8 +1,8 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
-using BedPart = Utils::Enum<ENU("head"), ENU("foot")>;
+using BedPart = minecpp::util::Enum<ENU("head"), ENU("foot")>;
 
 }

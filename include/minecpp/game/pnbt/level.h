@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace Game::NbtLevel {
+namespace minecpp::game::NbtLevel {
 
 struct __nbt_offset { std::size_t offset, size; int id; };
 
@@ -34,10 +34,10 @@ struct Memories {
 
    Memories() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Memories deserialize_no_header(NBT::Reader &r);
+   static Memories deserialize_no_header(nbt::Reader &r);
    static Memories deserialize(std::istream &in);
 
 private:
@@ -60,10 +60,10 @@ struct Brain {
 
    Brain() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Brain deserialize_no_header(NBT::Reader &r);
+   static Brain deserialize_no_header(nbt::Reader &r);
    static Brain deserialize(std::istream &in);
 
 private:
@@ -92,10 +92,10 @@ struct Abilities {
 
    Abilities() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Abilities deserialize_no_header(NBT::Reader &r);
+   static Abilities deserialize_no_header(nbt::Reader &r);
    static Abilities deserialize(std::istream &in);
 
 private:
@@ -125,10 +125,10 @@ struct RecipeBook {
 
    RecipeBook() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static RecipeBook deserialize_no_header(NBT::Reader &r);
+   static RecipeBook deserialize_no_header(nbt::Reader &r);
    static RecipeBook deserialize(std::istream &in);
 
 private:
@@ -153,10 +153,10 @@ struct Version {
 
    Version() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Version deserialize_no_header(NBT::Reader &r);
+   static Version deserialize_no_header(nbt::Reader &r);
    static Version deserialize(std::istream &in);
 
 private:
@@ -182,10 +182,10 @@ struct BiomeSource {
 
    BiomeSource() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static BiomeSource deserialize_no_header(NBT::Reader &r);
+   static BiomeSource deserialize_no_header(nbt::Reader &r);
    static BiomeSource deserialize(std::istream &in);
 
 private:
@@ -211,10 +211,10 @@ struct Generator {
 
    Generator() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Generator deserialize_no_header(NBT::Reader &r);
+   static Generator deserialize_no_header(nbt::Reader &r);
    static Generator deserialize(std::istream &in);
 
 private:
@@ -238,10 +238,10 @@ struct DimentionData {
 
    DimentionData() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static DimentionData deserialize_no_header(NBT::Reader &r);
+   static DimentionData deserialize_no_header(nbt::Reader &r);
    static DimentionData deserialize(std::istream &in);
 
 private:
@@ -266,10 +266,10 @@ struct Dimentions {
 
    Dimentions() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Dimentions deserialize_no_header(NBT::Reader &r);
+   static Dimentions deserialize_no_header(nbt::Reader &r);
    static Dimentions deserialize(std::istream &in);
 
 private:
@@ -295,10 +295,10 @@ struct WorldGen {
 
    WorldGen() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static WorldGen deserialize_no_header(NBT::Reader &r);
+   static WorldGen deserialize_no_header(nbt::Reader &r);
    static WorldGen deserialize(std::istream &in);
 
 private:
@@ -321,10 +321,10 @@ struct DataPacks {
 
    DataPacks() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static DataPacks deserialize_no_header(NBT::Reader &r);
+   static DataPacks deserialize_no_header(nbt::Reader &r);
    static DataPacks deserialize(std::istream &in);
 
 private:
@@ -348,10 +348,10 @@ struct DragonFight {
 
    DragonFight() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static DragonFight deserialize_no_header(NBT::Reader &r);
+   static DragonFight deserialize_no_header(nbt::Reader &r);
    static DragonFight deserialize(std::istream &in);
 
 private:
@@ -373,10 +373,10 @@ struct CustomBossEvents {
 
    CustomBossEvents() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static CustomBossEvents deserialize_no_header(NBT::Reader &r);
+   static CustomBossEvents deserialize_no_header(nbt::Reader &r);
    static CustomBossEvents deserialize(std::istream &in);
 
 private:
@@ -430,10 +430,10 @@ struct Player {
 
    Player() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Player deserialize_no_header(NBT::Reader &r);
+   static Player deserialize_no_header(nbt::Reader &r);
    static Player deserialize(std::istream &in);
 
 private:
@@ -488,10 +488,10 @@ struct GameRules {
 
    GameRules() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static GameRules deserialize_no_header(NBT::Reader &r);
+   static GameRules deserialize_no_header(nbt::Reader &r);
    static GameRules deserialize(std::istream &in);
 
 private:
@@ -552,10 +552,10 @@ struct LevelData {
 
    LevelData() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static LevelData deserialize_no_header(NBT::Reader &r);
+   static LevelData deserialize_no_header(nbt::Reader &r);
    static LevelData deserialize(std::istream &in);
 
 private:
@@ -578,10 +578,10 @@ struct Level {
 
    Level() = default;
 
-   void serialize_no_header(NBT::Writer &w) const;
+   void serialize_no_header(nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name = "") const;
 
-   static Level deserialize_no_header(NBT::Reader &r);
+   static Level deserialize_no_header(nbt::Reader &r);
    static Level deserialize(std::istream &in);
 
 private:
@@ -599,4 +599,4 @@ private:
    }
 };
 
-}//namespace Game::NbtLevel
+}//namespace minecpp::game::NbtLevel

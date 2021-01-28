@@ -2,7 +2,7 @@
 #include <minecpp/game/block/registry.h>
 
 auto main() -> int {
-   for (auto &block : Game::Block::blocks) {
+   for (auto &block : minecpp::game::block::blocks) {
       fmt::print("minecraft:{}\n", block.tag());
       for (const auto &attrib : block.attributes) {
          fmt::print("  - {} [", attrib->name());

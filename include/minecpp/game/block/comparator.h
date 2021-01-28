@@ -1,8 +1,8 @@
 #pragma once
 #include <minecpp/util/enum.h>
 
-namespace Game::Block {
+namespace minecpp::game::block {
 
-using ComparatorMode = Utils::Enum<ENU("compare"), ENU("subtract")>;
+using ComparatorMode = minecpp::util::Enum<ENU("compare"), ENU("subtract")>;
 
 }

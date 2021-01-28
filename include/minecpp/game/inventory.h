@@ -4,15 +4,15 @@
 #include <minecpp/nbt/tag.h>
 #include <string_view>
 
-namespace Game {
+namespace minecpp::game {
 
 struct InventoryItem {
    uint8_t count;
    uint8_t slot;
    std::string_view id;
-   NBT::CompoundContent tag;
+   nbt::CompoundContent tag;
 
-   explicit InventoryItem(NBT::Reader &r);
+   explicit InventoryItem(nbt::Reader &r);
 };
 
-} // namespace Game
+} // namespace minecpp::game

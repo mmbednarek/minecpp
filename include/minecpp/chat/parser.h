@@ -3,7 +3,7 @@
 #include <variant>
 #include <vector>
 
-namespace Chat {
+namespace minecpp::chat {
 
 enum class TokenType { Identifier, Integer, Float };
 
@@ -25,4 +25,4 @@ using ParsingResult = std::variant<Command, std::string>;
 std::vector<Token> lex(std::string_view command);
 ParsingResult parse(std::vector<Token> &tokens);
 
-} // namespace Chat
+} // namespace minecpp::chat

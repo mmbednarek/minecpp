@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 
-namespace Utils {
+namespace minecpp::util {
 
 uint64_t now();
 uint64_t now_milis();

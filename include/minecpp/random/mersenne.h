@@ -2,7 +2,7 @@
 #include "random.h"
 #include <random>
 
-namespace Rand {
+namespace minecpp::random {
 
 class Mersenne : public Random {
    std::mt19937_64 engine;
@@ -15,4 +15,4 @@ class Mersenne : public Random {
    void reset_seed(uint64_t seed) override;
 };
 
-}// namespace Rand
+}// namespace minecpp::random

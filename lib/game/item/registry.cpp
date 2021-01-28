@@ -3,7 +3,7 @@
 #include <minecpp/util/format.h>
 #include <stdexcept>
 
-namespace Game {
+namespace minecpp::game {
 
 constexpr int num_items = 884;
 
@@ -917,10 +917,10 @@ ItemId item_id_from_tag(std::string_view tag) {
    }
 
    if (item_tags.find(tag) == item_tags.end()) {
-      throw std::runtime_error(Utils::format("could not find item tag {}", tag));
+      throw std::runtime_error(minecpp::util::format("could not find item tag {}", tag));
    }
 
    return item_tags.at(tag);
 }
 
-}// namespace Game
+}// namespace minecpp::game

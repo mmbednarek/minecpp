@@ -1,12 +1,12 @@
 #include <minecpp/game/recipe_book.h>
 
-namespace Game {
+namespace minecpp::game {
 
-using NBT::TagId;
+using nbt::TagId;
 
-RecipeBook::RecipeBook(NBT::Reader &r) {
+RecipeBook::RecipeBook(nbt::Reader &r) {
    r.read_compound(
-       [this](NBT::Reader &r, NBT::TagId tagid, const std::string &name) {
+       [this](nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
           if (tagid == TagId::Byte) {
              if (name == "isFilteringCraftable") {
                 filtering_craftable = r.read_byte();
@@ -36,4 +36,4 @@ void RecipeBook::as_proto(minecpp::player::RecipeBook *book) const {
    book->set_furnace_gui_open(furnace_gui_open);
 }
 
-} // namespace Game
+} // namespace minecpp::game
