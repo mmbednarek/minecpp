@@ -1,9 +1,9 @@
 #pragma once
 #include "ast.h"
 #include <any>
-#include <error/result.h>
+#include <minecpp/error/result.h>
 #include <map>
-#include <mineutils/scriptw.h>
+#include <minecpp/mineutils/scriptw.h>
 #include <string>
 #include <variant>
 #include <vector>
@@ -35,6 +35,8 @@ struct Type {
    Type() = default;
    Type(std::string name, int repeated);
    Type(std::unique_ptr<Type> subtype, int repeated);
+   Type(const Type &type);
+   Type &operator=(const Type &type);
 
    bool operator==(const Type &other) const;
    bool operator<(const Type &other) const;

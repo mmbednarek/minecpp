@@ -1,6 +1,6 @@
 #include "regions.h"
-#include <error/result.h>
-#include <region/reader.h>
+#include <minecpp/error/result.h>
+#include <minecpp/region/reader.h>
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <utility>

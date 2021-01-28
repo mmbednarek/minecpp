@@ -4,12 +4,12 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/name_generator.hpp>
 #include <fstream>
-#include <game/blocks/position.h>
-#include <game/dimension.h>
-#include <game/player.h>
 #include <grpcpp/grpcpp.h>
-#include <mineutils/time.h>
-#include <mineutils/uuid.h>
+#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/dimension.h>
+#include <minecpp/game/player.h>
+#include <minecpp/mineutils/time.h>
+#include <minecpp/mineutils/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {
@@ -129,7 +129,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
                       .opcode = 0x18,
               });
 
-//   send(conn, get_command_list());
+   //   send(conn, get_command_list());
 
    send(conn, RecipeBook{
                       .state = Init,

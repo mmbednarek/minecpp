@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <error/result.h>
+#include <minecpp/error/result.h>
 #include "token.h"
 
 namespace Lex {

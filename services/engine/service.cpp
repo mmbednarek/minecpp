@@ -2,14 +2,14 @@
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
-#include <chat/parser.h>
-#include <format/format.h>
-#include <game/blocks/position.h>
-#include <game/dimension.h>
 #include <grpcpp/create_channel.h>
-#include <minenet/chat.h>
+#include <minecpp/chat/parser.h>
+#include <minecpp/format/format.h>
+#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/dimension.h>
+#include <minecpp/minenet/chat.h>
+#include <minecpp/mineutils/uuid.h>
 #include <minepb/events.pb.h>
-#include <mineutils/uuid.h>
 #include <spdlog/spdlog.h>
 #include <utility>
 
@@ -42,7 +42,7 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
    auto &player_entity = entities.get_entity(player.get_entity_id());
 
    response->set_state(minecpp::engine::AcceptPlayerResponse_PlayerAcceptState_ACCEPTED);
-   response->set_area_id(0); // TODO: Put actual node id
+   response->set_area_id(0);// TODO: Put actual node id
 
    response->mutable_game_info()->set_max_players(max_players);
    response->mutable_game_info()->set_difficulty(static_cast<minecpp::game::Difficulty>(difficulty));
@@ -344,4 +344,4 @@ grpc::Status Service::LoadInitialChunks(grpc::ServerContext *context,
    return grpc::Status();
 }
 
-} // namespace Engine
+}// namespace Engine

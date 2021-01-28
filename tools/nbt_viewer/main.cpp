@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
-#include <mineutils/compression.h>
-#include <nbt/parser.h>
+#include <minecpp/mineutils/compression.h>
+#include <minecpp/nbt/parser.h>
 
 auto main(int argc, char *argv[]) -> int {
    std::string filename;

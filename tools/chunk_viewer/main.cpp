@@ -1,6 +1,6 @@
 #include <fmt/core.h>
 #include <fstream>
-#include <game/pnbt/chunk.h>
+#include <minecpp/game/pnbt/chunk.h>
 
 int main(int argc, char **argv) {
    if (argc < 2) {

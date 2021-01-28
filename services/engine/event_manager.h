@@ -1,6 +1,6 @@
 #pragma once
-#include <error/result.h>
-#include <game/events.h>
+#include <minecpp/error/result.h>
+#include <minecpp/game/events.h>
 #include <minepb/engine.pb.h>
 #include <queue>
 #include <string>

@@ -4,7 +4,7 @@
 #include "event_manager.h"
 #include "world.h"
 #include "dispatcher.h"
-#include <game/difficulty.h>
+#include <minecpp/game/difficulty.h>
 #include <minepb/engine.grpc.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
 #include <queue>

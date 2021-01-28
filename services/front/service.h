@@ -6,7 +6,7 @@
 #include <boost/random.hpp>
 #include <grpcpp/channel.h>
 #include <grpcpp/client_context.h>
-#include <minenet/msg/serverbound.h>
+#include <minecpp/minenet/msg/serverbound.h>
 #include <minepb/chunk.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
 #include <minepb/engine.grpc.pb.h>

@@ -1,5 +1,5 @@
 #include "world.h"
-#include <mineutils/uuid.h>
+#include <minecpp/mineutils/uuid.h>
 #include <utility>
 
 namespace Engine {

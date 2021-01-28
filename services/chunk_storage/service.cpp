@@ -1,9 +1,9 @@
 #include "service.h"
-#include <game/chunk/chunk.h>
-#include <mineutils/compression.h>
-#include <mineutils/format.h>
-#include <mineutils/uuid.h>
-#include <region/reader.h>
+#include <minecpp/game/chunk/chunk.h>
+#include <minecpp/mineutils/compression.h>
+#include <minecpp/mineutils/format.h>
+#include <minecpp/mineutils/uuid.h>
+#include <minecpp/region/reader.h>
 
 namespace ChunkStorage {
 

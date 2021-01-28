@@ -1,5 +1,5 @@
 #include "event_manager.h"
-#include <game/events.h>
+#include <minecpp/game/events.h>
 
 namespace Engine {
 

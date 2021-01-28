@@ -1,0 +1,1 @@
+add_library(minecpp_rand java_random.cpp perlin.cpp mersenne.cpp perlin3d.cpp)

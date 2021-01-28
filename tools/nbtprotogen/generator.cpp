@@ -1,5 +1,5 @@
 #include "generator.h"
-#include <mineutils/string.h>
+#include <minecpp/mineutils/string.h>
 #include <set>
 #include <sstream>
 #include <utility>
@@ -279,6 +279,19 @@ bool Type::operator<(const Type &other) const {
 Type::Type(std::unique_ptr<Type> subtype, int repeated) : m_subtype(std::move(subtype)) {
 }
 
+Type::Type(const Type &type) : variant(type.variant),
+                               m_subtype(type.m_subtype == nullptr ? nullptr : std::make_unique<Type>(*type.m_subtype)),
+                               m_repeated(type.m_repeated),
+                               name(type.name) {}
+
+Type &Type::operator=(const Type &type) {
+   variant = type.variant;
+   m_subtype = type.m_subtype == nullptr ? nullptr : std::make_unique<Type>(*type.m_subtype);
+   m_repeated = type.m_repeated;
+   name = type.name;
+   return *this;
+}
+
 std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &attribs) {
    std::map<TypeVariant, std::any> res;
    std::vector<Attribute> list;
@@ -390,8 +403,9 @@ static void put_list_read(std::map<TypeVariant, std::any> &attribs, ScriptWriter
          for (const auto &el : deser.elems) {
             w.scope("case {}:", el.id);
             for (int i = 1; i <= level; ++i) {
-               w.line("{}{}{} ls(list_info{}.size);", repeat_string("std::vector<", i + 1), el.typeName, std::string(i + 1, '>'), i-1);
-               w.scope("if (list_info{}.size == 0)", i); {
+               w.line("{}{}{} ls(list_info{}.size);", repeat_string("std::vector<", i + 1), el.typeName, std::string(i + 1, '>'), i - 1);
+               w.scope("if (list_info{}.size == 0)", i);
+               {
                   w.line("return;");
                }
                w.descope();
@@ -452,7 +466,8 @@ static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWri
       if (pair.second.type() == typeid(CompoundDeserializer)) {
          w.scope("case NBT::TagId::Compound:");
          auto deser = std::any_cast<CompoundDeserializer>(pair.second);
-         w.scope("switch(res.__xx_get_id(name))"); {
+         w.scope("switch(res.__xx_get_id(name))");
+         {
             for (const auto &el : deser.elems) {
                w.line("case {}:", el.id);
                w.ident();

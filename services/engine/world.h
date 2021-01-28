@@ -1,9 +1,9 @@
 #pragma once
 #include "dispatcher.h"
 #include <boost/uuid/uuid.hpp>
-#include <game/world.h>
+#include <minecpp/game/world.h>
 #include <minepb/chunk_storage.grpc.pb.h>
-#include <error/result.h>
+#include <minecpp/error/result.h>
 
 namespace Engine {
 

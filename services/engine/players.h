@@ -1,8 +1,8 @@
 #pragma once
 #include "entities.h"
 #include <boost/uuid/uuid.hpp>
-#include <game/player.h>
-#include <game/player_data.h>
+#include <minecpp/game/player.h>
+#include <minecpp/game/player_data.h>
 #include <vector>
 #include <functional>
 #include <random>

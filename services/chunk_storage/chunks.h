@@ -2,15 +2,15 @@
 #include "regions.h"
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
-#include <error/result.h>
-#include <game/blocks/position.h>
-#include <game/chunk/chunk.h>
-#include <game/chunks.h>
-#include <game/worldgen/generator.h>
-#include <game/worldgen/terrain/terrain.h>
+#include <minecpp/error/result.h>
+#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/chunk/chunk.h>
+#include <minecpp/game/chunks.h>
+#include <minecpp/game/worldgen/generator.h>
+#include <minecpp/game/worldgen/terrain/terrain.h>
 #include <map>
 #include <memory>
-#include <minerandom/java_random.h>
+#include <minecpp/minerandom/java_random.h>
 
 namespace ChunkStorage {
 

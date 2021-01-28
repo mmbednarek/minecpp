@@ -2,9 +2,9 @@
 #include <fmt/core.h>
 #include <fstream>
 #include <iostream>
-#include <mineutils/compression.h>
-#include <mineutils/scriptw.h>
-#include <nbt/parser.h>
+#include <minecpp/mineutils/compression.h>
+#include <minecpp/mineutils/scriptw.h>
+#include <minecpp/nbt/parser.h>
 #include <set>
 
 static std::string to_camel_case(const std::string_view name) {

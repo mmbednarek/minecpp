@@ -1,6 +1,6 @@
 #pragma once
 #include "handler.h"
-#include <minenet/msg/reader.h>
+#include <minecpp/minenet/msg/reader.h>
 
 namespace Front::Protocol {
 

@@ -1,5 +1,5 @@
-#include <game/blocks/registry.h>
 #include <fmt/core.h>
+#include <minecpp/game/blocks/registry.h>
 
 auto main() -> int {
    for (auto &block : Game::Block::blocks) {
@@ -9,7 +9,7 @@ auto main() -> int {
          for (int i = 0; i < attrib->num_states() - 1; ++i) {
             fmt::print("{}, ", attrib->name_of(i));
          }
-         fmt::print("{}]\n", attrib->name_of(attrib->num_states() -1));
+         fmt::print("{}]\n", attrib->name_of(attrib->num_states() - 1));
       }
    }
 }

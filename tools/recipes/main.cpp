@@ -1,14 +1,14 @@
 #include <boost/program_options.hpp>
 #include <fstream>
-#include <game/items/registry.h>
-#include <minenet/msg/io.h>
+#include <minecpp/game/items/registry.h>
+#include <minecpp/minenet/msg/io.h>
 
 namespace options = boost::program_options;
 
 void print_shaped(Game::Recipe recipe) {
    std::cout << "shaped:\n";
    auto details = recipe.details<Game::Recipe::CraftingShaped>();
-   assert((details.width * details.height) == (int)details.ingredients.size());
+   assert((details.width * details.height) == (int) details.ingredients.size());
    for (int y = 0; y < details.height; ++y) {
       std::cout << "  ";
       for (int x = 0; x < details.width; ++x) {
@@ -27,7 +27,7 @@ void print_shaped(Game::Recipe recipe) {
 auto main(int argc, char *argv[]) -> int {
    options::options_description desc("params");
    desc.add_options()("help", "help message")(
-       "input", options::value<std::string>(), "read stuff");
+           "input", options::value<std::string>(), "read stuff");
 
    options::variables_map var_map;
    options::store(options::parse_command_line(argc, argv, desc), var_map);
@@ -63,7 +63,7 @@ auto main(int argc, char *argv[]) -> int {
 
       std::cout << "--------------------\n";
       std::cout << "outcome item = " << outcome.tag() << "\n";
-      std::cout << "amount = " << (int)out_stack.amount << "\n";
+      std::cout << "amount = " << (int) out_stack.amount << "\n";
       switch (recipe.type()) {
       case Game::CraftingShaped:
          print_shaped(recipe);

@@ -1,10 +1,10 @@
 #include "players.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <fstream>
-#include <mineutils/compression.h>
-#include <mineutils/format.h>
-#include <mineutils/uuid.h>
-#include <nbt/reader.h>
+#include <minecpp/mineutils/compression.h>
+#include <minecpp/mineutils/format.h>
+#include <minecpp/mineutils/uuid.h>
+#include <minecpp/nbt/reader.h>
 #include <utility>
 
 namespace Engine {

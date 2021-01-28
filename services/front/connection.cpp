@@ -3,7 +3,7 @@
 #include <boost/asio.hpp>
 #include <boost/asio/socket_base.hpp>
 #include <boost/endian/conversion.hpp>
-#include <mineutils/compression.h>
+#include <minecpp/mineutils/compression.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {

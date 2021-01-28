@@ -1,16 +1,19 @@
 // Generated using ProtoNBT generator
 #pragma once
+#include <iostream>
+#include <map>
+#include <minecpp/error/result.h>
+#include <minecpp/nbt/reader.h>
+#include <minecpp/nbt/writer.h>
 #include <string>
 #include <vector>
-#include <nbt/writer.h>
-#include <nbt/reader.h>
-#include <map>
-#include <iostream>
-#include <error/result.h>
 
 namespace proto::nbt::test {
 
-struct __nbt_offset { std::size_t offset, size; int id; };
+struct __nbt_offset {
+   std::size_t offset, size;
+   int id;
+};
 
 struct Foo;
 struct Test;
@@ -27,7 +30,7 @@ struct Foo {
    static Foo deserialize_no_header(NBT::Reader &r);
    static Foo deserialize(std::istream &in);
 
-private:
+ private:
    static std::map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
@@ -56,7 +59,7 @@ struct Test {
    static Test deserialize_no_header(NBT::Reader &r);
    static Test deserialize(std::istream &in);
 
-private:
+ private:
    static std::map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 

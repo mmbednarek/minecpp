@@ -1,11 +1,8 @@
 #include "generator.h"
 #include "lexer.h"
 #include "parser.h"
-#include <fmt/core.h>
 #include <fstream>
 #include <iostream>
-#include <mineutils/time.h>
-#include <nbt/parser.h>
 
 //#define TEST
 
