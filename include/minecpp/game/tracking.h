@@ -1,12 +1,12 @@
 #pragma once
-#include "minecpp/game/blocks/position.h"
 #include "world.h"
-#include <minecpp/mineutils/vec.h>
+#include <minecpp/game/block/position.h>
+#include <minecpp/util/vec.h>
 
 namespace Game {
 
-using Utils::Vec3;
 using Utils::Vec2;
+using Utils::Vec3;
 class Player;
 
 class Tracking {
@@ -22,4 +22,4 @@ class Tracking {
    void on_movement(World &w, Player &p, Vec3 position);
 };
 
-} // namespace Game
+}// namespace Game

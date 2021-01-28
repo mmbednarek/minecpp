@@ -1,8 +1,8 @@
 #include "play_handler.h"
 #include "../connection.h"
 #include "../service.h"
-#include <minecpp/minenet/msg/serverbound.h>
-#include <minecpp/mineutils/format.h>
+#include <minecpp/network/msg/serverbound.h>
+#include <minecpp/util/format.h>
 #include <spdlog/spdlog.h>
 
 namespace Front::Protocol {

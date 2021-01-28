@@ -1,12 +1,12 @@
 #pragma once
 #include "inventory.h"
-#include "minecpp/game/entities/entity.h"
 #include "player.h"
 #include "recipe_book.h"
 #include <boost/uuid/uuid.hpp>
 #include <map>
-#include <minecpp/mineutils/vec.h>
+#include <minecpp/game/entity/entity.h>
 #include <minecpp/nbt/reader.h>
+#include <minecpp/util/vec.h>
 
 namespace Game {
 
@@ -83,4 +83,4 @@ class PlayerData {
    bool seen_credits = false;
 };
 
-} // namespace Game
+}// namespace Game

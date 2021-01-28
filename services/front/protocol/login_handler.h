@@ -2,7 +2,7 @@
 #include "../service.h"
 #include "handler.h"
 #include "play_handler.h"
-#include <minecpp/minenet/msg/io.h>
+#include <minecpp/network/msg/io.h>
 
 namespace Front::Protocol {
 

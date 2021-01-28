@@ -1,7 +1,7 @@
 #pragma once
 #include "event_manager.h"
 #include <minecpp/game/notifier.h>
-#include <minecpp/game/entities/entity.h>
+#include <minecpp/game/entity/entity.h>
 
 namespace Engine {
 

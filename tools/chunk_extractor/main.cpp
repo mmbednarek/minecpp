@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
-#include <minecpp/minenet/msg/chunk.h>
-#include <minecpp/mineutils/compression.h>
+#include <minecpp/network/msg/chunk.h>
+#include <minecpp/util/compression.h>
 #include <minecpp/region/reader.h>
 
 auto main(int argc, char *argv[]) -> int {

@@ -1,5 +1,5 @@
 #include <fmt/core.h>
-#include <minecpp/game/blocks/registry.h>
+#include <minecpp/game/block/registry.h>
 
 auto main() -> int {
    for (auto &block : Game::Block::blocks) {

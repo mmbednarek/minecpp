@@ -5,10 +5,10 @@
 #include <grpcpp/create_channel.h>
 #include <minecpp/chat/parser.h>
 #include <minecpp/format/format.h>
-#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/block/position.h>
 #include <minecpp/game/dimension.h>
-#include <minecpp/minenet/chat.h>
-#include <minecpp/mineutils/uuid.h>
+#include <minecpp/network/chat.h>
+#include <minecpp/util/uuid.h>
 #include <minepb/events.pb.h>
 #include <spdlog/spdlog.h>
 #include <utility>

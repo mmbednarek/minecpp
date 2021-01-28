@@ -1,7 +1,7 @@
 #pragma once
 #include "tag.h"
 #include <functional>
-#include <minecpp/mineutils/reader.h>
+#include <minecpp/util/reader.h>
 
 namespace NBT {
 

@@ -4,10 +4,10 @@
 #include <memory>
 #include <minecpp/game/chunk/chunk.h>
 #include <minecpp/game/chunk/section.h>
-#include <minecpp/minerandom/java_random.h>
-#include <minecpp/minerandom/perlin.h>
-#include <minecpp/minerandom/perlin3d.h>
-#include <minecpp/minerandom/random.h>
+#include <minecpp/random/java_random.h>
+#include <minecpp/random/perlin.h>
+#include <minecpp/random/perlin3d.h>
+#include <minecpp/random/random.h>
 
 namespace Game::WorldGen::Terrain {
 

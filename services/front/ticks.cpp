@@ -1,8 +1,8 @@
 #include "ticks.h"
 #include <grpcpp/client_context.h>
-#include <minecpp/minenet/msg/clientbound.h>
+#include <minecpp/network/msg/clientbound.h>
 #include <minepb/chunk_storage.pb.h>
-#include <minecpp/mineutils/time.h>
+#include <minecpp/util/time.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {

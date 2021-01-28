@@ -2,7 +2,7 @@
 #include "tag.h"
 #include <boost/endian/conversion.hpp>
 #include <cmath>
-#include <minecpp/mineutils/concepts.h>
+#include <minecpp/util/concepts.h>
 #include <ostream>
 
 namespace NBT {

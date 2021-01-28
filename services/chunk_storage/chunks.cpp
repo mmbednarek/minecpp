@@ -1,7 +1,7 @@
 #include "chunks.h"
 #include <minecpp/error/result.h>
-#include <minecpp/game/blocks/position.h>
-#include <minecpp/mineutils/compression.h>
+#include <minecpp/game/block/position.h>
+#include <minecpp/util/compression.h>
 #include <minecpp/region/reader.h>
 
 namespace ChunkStorage {

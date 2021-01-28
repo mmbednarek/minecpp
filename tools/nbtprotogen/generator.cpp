@@ -1,5 +1,5 @@
 #include "generator.h"
-#include <minecpp/mineutils/string.h>
+#include <minecpp/util/string.h>
 #include <set>
 #include <sstream>
 #include <utility>

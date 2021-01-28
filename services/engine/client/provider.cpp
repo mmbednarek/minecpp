@@ -1,7 +1,7 @@
 #include "provider.h"
 #include <algorithm>
 #include <grpcpp/create_channel.h>
-#include <minecpp/mineutils/uuid.h>
+#include <minecpp/util/uuid.h>
 
 namespace Engine::Client {
 

@@ -2,7 +2,7 @@
 #include "handler.h"
 #include <grpcpp/channel.h>
 #include <memory>
-#include <minecpp/minenet/msg/io.h>
+#include <minecpp/network/msg/io.h>
 #include <minepb/engine.pb.h>
 
 namespace Front {

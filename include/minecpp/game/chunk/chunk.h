@@ -2,7 +2,7 @@
 #include "section.h"
 #include <boost/uuid/uuid.hpp>
 #include <minecpp/error/result.h>
-#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/block/position.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
 #include <minepb/chunk.pb.h>

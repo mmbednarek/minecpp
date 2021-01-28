@@ -1,7 +1,7 @@
 #include <boost/program_options.hpp>
 #include <fstream>
-#include <minecpp/game/items/registry.h>
-#include <minecpp/minenet/msg/io.h>
+#include <minecpp/game/item/registry.h>
+#include <minecpp/network/msg/io.h>
 
 namespace options = boost::program_options;
 

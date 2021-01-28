@@ -1,6 +1,6 @@
 #include <fstream>
 #include <iostream>
-#include <minecpp/mineutils/compression.h>
+#include <minecpp/util/compression.h>
 #include <minecpp/nbt/parser.h>
 
 auto main(int argc, char *argv[]) -> int {

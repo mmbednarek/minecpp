@@ -2,8 +2,8 @@
 #include <fmt/core.h>
 #include <fstream>
 #include <iostream>
-#include <minecpp/mineutils/compression.h>
-#include <minecpp/mineutils/scriptw.h>
+#include <minecpp/util/compression.h>
+#include <minecpp/util/scriptw.h>
 #include <minecpp/nbt/parser.h>
 #include <set>
 

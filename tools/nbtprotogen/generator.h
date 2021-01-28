@@ -3,7 +3,7 @@
 #include <any>
 #include <minecpp/error/result.h>
 #include <map>
-#include <minecpp/mineutils/scriptw.h>
+#include <minecpp/util/scriptw.h>
 #include <string>
 #include <variant>
 #include <vector>

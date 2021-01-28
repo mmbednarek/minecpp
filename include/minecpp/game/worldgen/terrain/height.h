@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
-#include <minecpp/minerandom/mersenne.h>
-#include <minecpp/minerandom/perlin.h>
+#include <minecpp/random/mersenne.h>
+#include <minecpp/random/perlin.h>
 
 namespace Game::WorldGen::Terrain {
 

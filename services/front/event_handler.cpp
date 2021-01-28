@@ -1,8 +1,8 @@
 #include "event_handler.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <minecpp/game/events.h>
-#include <minecpp/mineutils/time.h>
-#include <minecpp/mineutils/uuid.h>
+#include <minecpp/util/time.h>
+#include <minecpp/util/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {

@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/mineutils/enum.h>
+#include <minecpp/util/enum.h>
 
 namespace Game {
 

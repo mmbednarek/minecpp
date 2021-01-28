@@ -6,8 +6,8 @@
 #include <boost/asio/streambuf.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <memory>
-#include <minecpp/minenet/msg/io.h>
-#include <minecpp/minenet/msg/message.h>
+#include <minecpp/network/msg/io.h>
+#include <minecpp/network/msg/message.h>
 #include <queue>
 #include <spdlog/spdlog.h>
 #include <tuple>

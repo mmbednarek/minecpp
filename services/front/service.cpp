@@ -5,11 +5,11 @@
 #include <boost/uuid/name_generator.hpp>
 #include <fstream>
 #include <grpcpp/grpcpp.h>
-#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/block/position.h>
 #include <minecpp/game/dimension.h>
 #include <minecpp/game/player.h>
-#include <minecpp/mineutils/time.h>
-#include <minecpp/mineutils/uuid.h>
+#include <minecpp/util/time.h>
+#include <minecpp/util/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {

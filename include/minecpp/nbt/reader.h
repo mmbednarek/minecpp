@@ -4,10 +4,10 @@
 #include <cstring>
 #include <functional>
 #include <minecpp/error/result.h>
-#include <minecpp/mineutils/concepts.h>
-#include <minecpp/mineutils/format.h>
-#include <minecpp/mineutils/reader.h>
-#include <minecpp/mineutils/vec.h>
+#include <minecpp/util/concepts.h>
+#include <minecpp/util/format.h>
+#include <minecpp/util/reader.h>
+#include <minecpp/util/vec.h>
 #include <numeric>
 #include <string>
 

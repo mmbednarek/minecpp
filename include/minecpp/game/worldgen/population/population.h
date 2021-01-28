@@ -4,8 +4,8 @@
 #include <cstdint>
 #include <map>
 #include <minecpp/error/result.h>
-#include <minecpp/game/blocks/position.h>
-#include <minecpp/minerandom/random.h>
+#include <minecpp/game/block/position.h>
+#include <minecpp/random/random.h>
 
 namespace Game::WorldGen::Population {
 

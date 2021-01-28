@@ -3,14 +3,14 @@
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 #include <minecpp/error/result.h>
-#include <minecpp/game/blocks/position.h>
+#include <minecpp/game/block/position.h>
 #include <minecpp/game/chunk/chunk.h>
 #include <minecpp/game/chunks.h>
 #include <minecpp/game/worldgen/generator.h>
 #include <minecpp/game/worldgen/terrain/terrain.h>
 #include <map>
 #include <memory>
-#include <minecpp/minerandom/java_random.h>
+#include <minecpp/random/java_random.h>
 
 namespace ChunkStorage {
 

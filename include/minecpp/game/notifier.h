@@ -1,6 +1,6 @@
 #pragma once
-#include "minecpp/game/blocks/position.h"
 #include <boost/uuid/uuid.hpp>
+#include <minecpp/game/block/position.h>
 #include <vector>
 
 namespace Game {
@@ -18,4 +18,4 @@ class Notifier {
    virtual void entity_move(int eid, uuid id, Entity::Movement movement, float yaw, float pitch) = 0;
 };
 
-} // namespace Game
+}// namespace Game

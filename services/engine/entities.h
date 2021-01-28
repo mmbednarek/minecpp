@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <minecpp/game/entities/entity.h>
+#include <minecpp/game/entity/entity.h>
 
 namespace Engine {
 
