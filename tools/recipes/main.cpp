@@ -5,9 +5,9 @@
 
 namespace options = boost::program_options;
 
-void print_shaped(minecpp::game::Recipe recipe) {
+void print_shaped(minecpp::game::item::Recipe recipe) {
    std::cout << "shaped:\n";
-   auto details = recipe.details<minecpp::game::Recipe::CraftingShaped>();
+   auto details = recipe.details<minecpp::game::item::Recipe::CraftingShaped>();
    assert((details.width * details.height) == (int) details.ingredients.size());
    for (int y = 0; y < details.height; ++y) {
       std::cout << "  ";
@@ -17,7 +17,7 @@ void print_shaped(minecpp::game::Recipe recipe) {
             std::cout << "empty ";
             continue;
          }
-         auto item = minecpp::game::item_by_id(in[0].id);
+         auto item = minecpp::game::item::item_by_id(in[0].id);
          std::cout << item.tag() << " ";
       }
       std::cout << "\n";
@@ -59,34 +59,34 @@ auto main(int argc, char *argv[]) -> int {
       auto recipe = reader.read_recipe();
 
       auto out_stack = recipe.outcome();
-      auto outcome = minecpp::game::item_by_id(out_stack.id);
+      auto outcome = minecpp::game::item::item_by_id(out_stack.id);
 
       std::cout << "--------------------\n";
       std::cout << "outcome item = " << outcome.tag() << "\n";
       std::cout << "amount = " << (int) out_stack.amount << "\n";
       switch (recipe.type()) {
-      case minecpp::game::CraftingShaped:
+      case minecpp::game::item::CraftingShaped:
          print_shaped(recipe);
          break;
-      case minecpp::game::CraftingShapeless:
+      case minecpp::game::item::CraftingShapeless:
          std::cout << "shapeless\n";
          break;
-      case minecpp::game::Smelting:
+      case minecpp::game::item::Smelting:
          std::cout << "smelting\n";
          break;
-      case minecpp::game::Blasting:
+      case minecpp::game::item::Blasting:
          std::cout << "blasting\n";
          break;
-      case minecpp::game::Smoking:
+      case minecpp::game::item::Smoking:
          std::cout << "smoking\n";
          break;
-      case minecpp::game::CampfireCooking:
+      case minecpp::game::item::CampfireCooking:
          std::cout << "campfire_cooking\n";
          break;
-      case minecpp::game::StoneCutting:
+      case minecpp::game::item::StoneCutting:
          std::cout << "stone cutting\n";
          break;
-      case minecpp::game::Special:
+      case minecpp::game::item::Special:
          std::cout << "special\n";
          break;
       }

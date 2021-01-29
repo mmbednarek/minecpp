@@ -18,14 +18,14 @@ class Reader {
    double read_double();
    nbt::CompoundContent read_nbt_tag();
 
-   game::Recipe read_recipe();
-   game::Recipe read_recipe_shaped();
-   game::Recipe read_recipe_shapeless();
-   game::Recipe read_recipe_heat_treatment(game::RecipeType type);
-   game::Recipe read_recipe_stone_cutting();
+   game::item::Recipe read_recipe();
+   game::item::Recipe read_recipe_shaped();
+   game::item::Recipe read_recipe_shapeless();
+   game::item::Recipe read_recipe_heat_treatment(game::item::RecipeType type);
+   game::item::Recipe read_recipe_stone_cutting();
 
-   game::ItemStack read_stack();
-   game::StackVariants read_stack_variants();
+   game::item::ItemStack read_stack();
+   game::item::StackVariants read_stack_variants();
 
    std::string get_hex_data();
 

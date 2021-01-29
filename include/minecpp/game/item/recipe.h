@@ -5,7 +5,7 @@
 #include <variant>
 #include <vector>
 
-namespace minecpp::game {
+namespace minecpp::game::item {
 
 enum RecipeType {
    CraftingShaped,

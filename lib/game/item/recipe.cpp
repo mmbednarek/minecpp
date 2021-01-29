@@ -1,11 +1,10 @@
 #include <minecpp/game/item/recipe.h>
-
 #include <stdexcept>
 #include <utility>
 
-namespace minecpp::game {
+namespace minecpp::game::item {
 
-const ItemStack &game::Recipe::outcome() const { return _outcome_item; }
+const ItemStack &Recipe::outcome() const { return _outcome_item; }
 RecipeType Recipe::type() const { return _type; }
 
 Recipe::Recipe(ItemStack item, std::string group,
@@ -41,11 +40,12 @@ Recipe::Recipe(ItemStack item, std::string group, Recipe::StoneCutting details)
     : _outcome_item(item), _type(RecipeType::StoneCutting),
       _details(std::move(details)), _group(std::move(group)) {}
 
-template <> Recipe::StoneCutting Recipe::details() const {
+template<>
+Recipe::StoneCutting Recipe::details() const {
    if (_type != RecipeType::StoneCutting)
       throw std::runtime_error("invalid recipe type");
 
    return std::get<Recipe::StoneCutting>(_details);
 }
 
-} // namespace minecpp::game
+}// namespace minecpp::game::item

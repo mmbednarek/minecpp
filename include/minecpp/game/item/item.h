@@ -3,7 +3,7 @@
 #include <string_view>
 #include <vector>
 
-namespace minecpp::game {
+namespace minecpp::game::item {
 
 typedef int ItemId;
 

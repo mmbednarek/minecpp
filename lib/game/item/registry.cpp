@@ -3,7 +3,7 @@
 #include <minecpp/util/format.h>
 #include <stdexcept>
 
-namespace minecpp::game {
+namespace minecpp::game::item {
 
 constexpr int num_items = 884;
 

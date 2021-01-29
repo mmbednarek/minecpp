@@ -22,8 +22,8 @@ InventoryItem::InventoryItem(nbt::Reader &r) {
      case TagId::String:
         if (name == "id") {
            try {
-              auto item_id = item_id_from_tag(r.read_str());
-              id = item_by_id(item_id).tag();
+              auto item_id = item::item_id_from_tag(r.read_str());
+              id = item::item_by_id(item_id).tag();
            } catch (std::runtime_error &e) {
               id = "air";
            }
