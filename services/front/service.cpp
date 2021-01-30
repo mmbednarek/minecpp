@@ -4,12 +4,12 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/name_generator.hpp>
 #include <fstream>
-#include <game/blocks/position.h>
-#include <game/dimension.h>
-#include <game/player.h>
 #include <grpcpp/grpcpp.h>
-#include <mineutils/time.h>
-#include <mineutils/uuid.h>
+#include <minecpp/game/block/position.h>
+#include <minecpp/game/dimension.h>
+#include <minecpp/game/player.h>
+#include <minecpp/util/time.h>
+#include <minecpp/util/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {
@@ -51,10 +51,10 @@ Service::LoginResponse Service::login_player(std::string &user_name) {
    return Service::LoginResponse{.accepted = true, .user_name = user_name, .id = gen(user_name)};
 }
 
-MineNet::Message::Raw get_command_list();
+minecpp::network::message::Raw get_command_list();
 
 void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name) {
-   using namespace MineNet::Message;
+   using namespace minecpp::network::message;
 
    conn->set_state(Protocol::State::Play);
 
@@ -78,12 +78,12 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
    }
 
    std::stringstream dimension_codec;
-   NBT::Writer dimension_codec_writer(dimension_codec);
-   Game::write_dimension_codec(dimension_codec_writer);
+   minecpp::nbt::Writer dimension_codec_writer(dimension_codec);
+   minecpp::game::write_dimension_codec(dimension_codec_writer);
 
    std::stringstream current_dimension;
-   NBT::Writer current_dimension_writer(current_dimension);
-   Game::write_dimension_type(current_dimension_writer);
+   minecpp::nbt::Writer current_dimension_writer(current_dimension);
+   minecpp::game::write_dimension_type(current_dimension_writer);
 
    send(conn, JoinGame{
                       .player_id = static_cast<uint32_t>(res.player_data().entity_id()),
@@ -103,7 +103,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
 
    send(conn, Difficulty{.difficulty = static_cast<uint8_t>(res.game_info().difficulty()), .locked = false});
 
-   Game::Player::Abilities abilities;
+   minecpp::game::Player::Abilities abilities;
    abilities.from_proto(res.player_data().abilities());
 
    send(conn, PlayerAbilities{
@@ -129,7 +129,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
                       .opcode = 0x18,
               });
 
-//   send(conn, get_command_list());
+   //   send(conn, get_command_list());
 
    send(conn, RecipeBook{
                       .state = Init,
@@ -163,7 +163,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
 
    for (auto const &p : player_list.list()) {
       uuid p_id{};
-      Utils::decode_uuid(p_id, p.uuid().data());
+      minecpp::util::decode_uuid(p_id, p.uuid().data());
       send(conn, AddPlayer{
                          .id = p_id,
                          .name = p.name(),
@@ -187,7 +187,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
 
    for (auto const &e : player_entities.list()) {
       uuid e_id{};
-      Utils::decode_uuid(e_id, e.uuid().data());
+      minecpp::util::decode_uuid(e_id, e.uuid().data());
       if (e_id == id) {
          continue;
       }
@@ -221,13 +221,13 @@ void Service::on_player_disconnect(uuid engine_id, uuid player_id) {
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::ClientSettings msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::ClientSettings msg) {
    spdlog::info("client language: {}", msg.lang);
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerPosition msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerPosition msg) {
    char uuid[17];
-   Utils::encode_uuid(uuid, player_id);
+   minecpp::util::encode_uuid(uuid, player_id);
 
    grpc::ClientContext ctx;
    minecpp::engine::SetPlayerPositionRequest pos;
@@ -244,9 +244,9 @@ void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::Playe
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerPositionRotation msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerPositionRotation msg) {
    char uuid[17];
-   Utils::encode_uuid(uuid, player_id);
+   minecpp::util::encode_uuid(uuid, player_id);
 
    grpc::ClientContext ctx;
    minecpp::engine::SetPlayerPositionRequest pos;
@@ -275,9 +275,9 @@ void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::Playe
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerRotation msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerRotation msg) {
    char uuid[17];
-   Utils::encode_uuid(uuid, player_id);
+   minecpp::util::encode_uuid(uuid, player_id);
    grpc::ClientContext ctx_rot;
    minecpp::engine::SetPlayerRotationRequest rot;
    rot.set_uuid(uuid);
@@ -291,9 +291,9 @@ void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::Playe
       return;
    }
 }
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::ChatMessage msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::ChatMessage msg) {
    char uuid[17];
-   Utils::encode_uuid(uuid, player_id);
+   minecpp::util::encode_uuid(uuid, player_id);
    grpc::ClientContext ctx_rot;
    minecpp::engine::ChatMessageRequest chat;
    chat.set_uuid(uuid);
@@ -307,10 +307,10 @@ void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::ChatM
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::PlayerDigging msg) {
-   Game::Block::Position pos(msg.position);
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerDigging msg) {
+   minecpp::game::block::Position pos(msg.position);
 
-   if (msg.action == MineNet::Message::DiggingAction::StartDestroyBlock) {
+   if (msg.action == minecpp::network::message::DiggingAction::StartDestroyBlock) {
       minecpp::engine::DestroyBlockRequest req;
       req.set_uuid(player_id.data, player_id.size());
       req.set_x(pos.x);
@@ -325,11 +325,11 @@ void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::Playe
       }
    }
 }
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::KeepAliveClient msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::KeepAliveClient msg) {
 
    minecpp::engine::UpdatePingRequest req;
    req.set_uuid(player_id.data, player_id.size());
-   req.set_ping(Utils::now_milis() - msg.time);
+   req.set_ping(minecpp::util::now_milis() - msg.time);
    grpc::ClientContext ctx;
    minecpp::engine::EmptyResponse res;
    auto status = engine_provider.get_service_by_id(engine_id)->UpdatePing(&ctx, req, &res);
@@ -338,7 +338,7 @@ void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::KeepA
       return;
    }
 }
-void Service::on_message(uuid engine_id, uuid player_id, MineNet::Message::AnimateHandClient msg) {
+void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::AnimateHandClient msg) {
    minecpp::engine::AnimateHandRequest req;
    req.set_uuid(player_id.data, player_id.size());
    req.set_hand(static_cast<int>(msg.hand));
@@ -371,8 +371,8 @@ const char command_list[]{
         0x61, 0x6c, 0x75, 0x65, 0x11, 0x62, 0x72, 0x69, 0x67, 0x61, 0x64, 0x69, 0x65, 0x72, 0x3a, 0x69, 0x6e, 0x74, 0x65,
         0x67, 0x65, 0x72, 0x00, 0x00};
 
-MineNet::Message::Raw get_command_list() {
-   return MineNet::Message::Raw{
+minecpp::network::message::Raw get_command_list() {
+   return minecpp::network::message::Raw{
            .size = sizeof(command_list),
            .data = command_list,
    };

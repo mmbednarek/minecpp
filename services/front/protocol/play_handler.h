@@ -2,7 +2,7 @@
 #include "handler.h"
 #include <grpcpp/channel.h>
 #include <memory>
-#include <minenet/msg/io.h>
+#include <minecpp/network/message/io.h>
 #include <minepb/engine.pb.h>
 
 namespace Front {
@@ -11,7 +11,7 @@ class Service;
 
 namespace Front::Protocol {
 
-using MineNet::Message::Reader;
+using minecpp::network::message::Reader;
 
 class PlayHandler : public Handler {
    Service &service;

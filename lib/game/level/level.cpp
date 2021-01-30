@@ -1,13 +1,13 @@
-#include "level.h"
-#include <nbt/parser.h>
+#include <minecpp/game/level/level.h>
+#include <minecpp/nbt/parser.h>
 
-namespace Game::Level {
+namespace minecpp::game::level {
 
 Info::Info(std::istream &s) {
-	using Utils::Vec2;
-   NBT::Parser r(s);
+	using minecpp::util::Vec2;
+   nbt::Parser r(s);
 
-   auto data = r.read_tag().content.as<NBT::CompoundContent>();
+   auto data = r.read_tag().content.as<nbt::CompoundContent>();
 	border.center = Vec2(
 		data["BorderCenterX"].as<double>(),
       data["BorderCenterZ"].as<double>()

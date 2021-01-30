@@ -1,4 +1,4 @@
-#include "error.h"
+#include <minecpp/error/error.h>
 
 static grpc::StatusCode map_grpc_code(errclass c) {
    switch (c) {

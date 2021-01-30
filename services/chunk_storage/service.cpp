@@ -1,9 +1,9 @@
 #include "service.h"
-#include <game/chunk/chunk.h>
-#include <mineutils/compression.h>
-#include <mineutils/format.h>
-#include <mineutils/uuid.h>
-#include <region/reader.h>
+#include <minecpp/game/chunk/chunk.h>
+#include <minecpp/util/compression.h>
+#include <minecpp/util/format.h>
+#include <minecpp/util/uuid.h>
+#include <minecpp/region/reader.h>
 
 namespace ChunkStorage {
 
@@ -33,13 +33,13 @@ Service::~Service() {}
 grpc::Status Service::AddReferences(grpc::ServerContext *context,
                                     const minecpp::chunk_storage::AddReferencesRequest *request,
                                     minecpp::chunk_storage::AddReferencesResponse *response) {
-   std::vector<Game::Block::ChunkPos> coords(request->coords_size());
-   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> Game::Block::ChunkPos {
-      return Game::Block::ChunkPos(in_coord.x(), in_coord.z());
+   std::vector<minecpp::game::block::ChunkPos> coords(request->coords_size());
+   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
+      return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
    });
 
-   auto engine_id = Utils::make_uuid(request->engine_id().data());
-   auto player_id = Utils::make_uuid(request->player_id().data());
+   auto engine_id = minecpp::util::make_uuid(request->engine_id().data());
+   auto player_id = minecpp::util::make_uuid(request->player_id().data());
 
    auto res = chunks.add_refs(engine_id, player_id, coords);
    if (!res.ok()) {
@@ -58,11 +58,11 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
 grpc::Status Service::RemoveReference(grpc::ServerContext *context,
                                       const minecpp::chunk_storage::RemoveReferencesRequest *request,
                                       minecpp::chunk_storage::EmptyResponse *response) {
-   std::vector<Game::Block::ChunkPos> coords(request->coords_size());
-   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> Game::Block::ChunkPos {
-     return Game::Block::ChunkPos(in_coord.x(), in_coord.z());
+   std::vector<minecpp::game::block::ChunkPos> coords(request->coords_size());
+   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
+     return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
    });
-   auto player_id = Utils::make_uuid(request->player_id().data());
+   auto player_id = minecpp::util::make_uuid(request->player_id().data());
 
    auto res = chunks.free_refs(player_id, coords);
    if (!res.ok()) {

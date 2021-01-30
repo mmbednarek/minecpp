@@ -1,6 +1,6 @@
 #pragma once
-#include <error/result.h>
-#include <game/events.h>
+#include <minecpp/error/result.h>
+#include <minecpp/game/events.h>
 #include <minepb/engine.pb.h>
 #include <queue>
 #include <string>
@@ -17,7 +17,7 @@ class EventManager {
    void post(auto &e) {
       minecpp::engine::Event event;
       event.set_recipient(minecpp::engine::EventRecipient::EVERYONE);
-      event.set_kind(Game::Event(e.GetTypeName().substr(15).c_str()).index());
+      event.set_kind(minecpp::game::Event(e.GetTypeName().substr(15).c_str()).index());
       event.set_data(e.SerializeAsString());
 
       for (auto &q : queues) {

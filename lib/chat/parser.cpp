@@ -1,6 +1,6 @@
-#include "parser.h"
+#include <minecpp/chat/parser.h>
 
-namespace Chat {
+namespace minecpp::chat {
 
 static bool is_whitespace(char c) {
    switch (c) {
@@ -94,4 +94,4 @@ ParsingResult parse(std::vector<Token> &tokens) {
    return result;
 }
 
-} // namespace Chat
+} // namespace minecpp::chat

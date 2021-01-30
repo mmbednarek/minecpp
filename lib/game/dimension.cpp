@@ -1,6 +1,6 @@
-#include "dimension.h"
+#include <minecpp/game/dimension.h>
 
-namespace Game {
+namespace minecpp::game {
 
 minecpp::game::DimensionType dimension_to_proto(Dimension d) {
    switch (d) {
@@ -14,7 +14,7 @@ minecpp::game::DimensionType dimension_to_proto(Dimension d) {
    return minecpp::game::DimensionType::Overworld;
 }
 
-void DimensionProperties::to_nbt(NBT::Writer &w) const {
+void DimensionProperties::to_nbt(nbt::Writer &w) const {
    w.write_byte("piglin_safe", piglin_safe);
    w.write_byte("natural", natural);
    w.write_float("ambient_light", ambient_light);
@@ -30,11 +30,11 @@ void DimensionProperties::to_nbt(NBT::Writer &w) const {
    w.write_byte("has_ceiling", has_ceiling);
 }
 
-void write_dimension_codec(NBT::Writer &w) {
+void write_dimension_codec(nbt::Writer &w) {
    w.begin_compound("");
    w.begin_compound("minecraft:dimension_type");
    w.write_string("type", "minecraft:dimension_type");
-   w.begin_list("value", NBT::TagId::Compound, 1);
+   w.begin_list("value", nbt::TagId::Compound, 1);
    {
       w.write_string("name", "minecraft:overworld");
       w.write_int("id", 0);
@@ -46,7 +46,7 @@ void write_dimension_codec(NBT::Writer &w) {
    w.end_compound();
    w.begin_compound("minecraft:worldgen/biome");
    w.write_string("type", "minecraft:worldgen/biome");
-   w.begin_list("value", NBT::TagId::Compound, 2);
+   w.begin_list("value", nbt::TagId::Compound, 2);
    {
       w.write_string("name", "minecraft:plains");
       w.write_int("id", 0);
@@ -91,10 +91,10 @@ void write_dimension_codec(NBT::Writer &w) {
    w.end_compound();
 }
 
-void write_dimension_type(NBT::Writer &w) {
+void write_dimension_type(nbt::Writer &w) {
    w.begin_compound("");
    OverworldProps.to_nbt(w);
    w.end_compound();
 }
 
-}// namespace Game
+}// namespace minecpp::game

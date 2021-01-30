@@ -5,8 +5,8 @@ namespace Engine {
 
 Dispatcher::Dispatcher(EventManager &events) : events(events) {}
 
-void Dispatcher::load_terrain(boost::uuids::uuid player, Game::Block::ChunkPos central_chunk,
-                              std::vector<Game::Block::ChunkPos> coords) {
+void Dispatcher::load_terrain(boost::uuids::uuid player, minecpp::game::block::ChunkPos central_chunk,
+                              std::vector<minecpp::game::block::ChunkPos> coords) {
    minecpp::events::LoadTerrain event;
    event.set_uuid(player.data, player.size());
    event.mutable_central_chunk()->set_x(central_chunk.x);
@@ -26,7 +26,7 @@ void Dispatcher::transfer_player(boost::uuids::uuid player, boost::uuids::uuid t
    events.post(event);
 }
 
-void Dispatcher::entity_move(int eid, uuid id, Game::Entity::Movement movement, float yaw, float pitch) {
+void Dispatcher::entity_move(int eid, uuid id, minecpp::game::entity::Movement movement, float yaw, float pitch) {
    minecpp::events::EntityMove event;
    event.set_id(eid);
    event.set_uuid(id.data, id.size());

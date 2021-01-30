@@ -1,9 +1,9 @@
-#include "section.h"
-#include "utils.h"
-#include <mineutils/packed.h>
+#include <minecpp/game/chunk/section.h>
+#include <minecpp/game/chunk/utils.h>
+#include <minecpp/util/packed.h>
 #include <numeric>
 
-namespace Game {
+namespace minecpp::game {
 
 SectionBuilder::SectionBuilder() = default;
 
@@ -44,7 +44,7 @@ Section SectionBuilder::build() {
       ++bits;
 
    int i = 0;
-   auto data = Utils::generate_packed(bits, 4096, [this, &i]() {
+   auto data = minecpp::util::generate_packed(bits, 4096, [this, &i]() {
       return content[i++];
    });
 
@@ -56,15 +56,15 @@ Section SectionBuilder::build() {
       out_palette[item.second] = item.first;
    });
 
-   int ref_count = Game::calculate_ref_count(data, out_palette);
+   int ref_count = game::calculate_ref_count(data, out_palette);
 
    return Section{
            .ref_count = ref_count,
            .palette = std::move(out_palette),
            .data{static_cast<uint8_t>(bits), 4096, data},
-           .block_light{Squeeze::TinyVec<4>(light)},
-           .sky_light{Squeeze::TinyVec<4>(std::move(light))},
+           .block_light{minecpp::squeezed::TinyVec<4>(light)},
+           .sky_light{minecpp::squeezed::TinyVec<4>(std::move(light))},
    };
 }
 
-}// namespace Game
+}// namespace minecpp::game

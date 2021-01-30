@@ -1,10 +1,10 @@
-#include "tag.h"
-#include "writer.h"
+#include <minecpp/nbt/tag.h>
+#include <minecpp/nbt/writer.h>
 
-#include <mineutils/format.h>
+#include <minecpp/util/format.h>
 #include <utility>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 NamedTag::NamedTag(std::string name, TagId tag_id, std::any content) : name(std::move(name)), content{.tag_id = tag_id, .content = std::move(content)} {}
 
@@ -84,21 +84,21 @@ std::string Content::to_string(int padding) const {
    case TagId::End:
       return "<end>";
    case TagId::Byte:
-      return Utils::format("{}b", static_cast<int32_t>(as<int8_t>()));
+      return minecpp::util::format("{}b", static_cast<int32_t>(as<int8_t>()));
    case TagId::Short:
-      return Utils::format("{}s", as<int16_t>());
+      return minecpp::util::format("{}s", as<int16_t>());
    case TagId::Int:
       return std::to_string(as<int32_t>());
    case TagId::Long:
-      return Utils::format("{}l", as<int64_t>());
+      return minecpp::util::format("{}l", as<int64_t>());
    case TagId::Float:
-      return Utils::format("{}f", as<float>());
+      return minecpp::util::format("{}f", as<float>());
    case TagId::Double:
-      return Utils::format("{}d", as<double>());
+      return minecpp::util::format("{}d", as<double>());
    case TagId::ByteArray:
       return format_int_vec<uint8_t, 'B'>(as<std::vector<uint8_t>>(), padding);
    case TagId::String:
-      return Utils::format("\"{}\"", as<std::string>());
+      return minecpp::util::format("\"{}\"", as<std::string>());
    case TagId::List:
       return format_list(as<ListContent>(), padding);
    case TagId::Compound:
@@ -115,7 +115,7 @@ bool Content::empty() const {
    return tag_id == TagId::End;
 }
 
-void serialize_compound_content(NBT::Writer &w, const CompoundContent &cc) {
+void serialize_compound_content(nbt::Writer &w, const CompoundContent &cc) {
    for (auto pair : cc) {
       w.write_header(pair.second.tag_id, pair.first);
       serialize_content(w, &pair.second);
@@ -123,7 +123,7 @@ void serialize_compound_content(NBT::Writer &w, const CompoundContent &cc) {
    w.end_compound();
 }
 
-void serialize_content(NBT::Writer &w, const Content *c) {
+void serialize_content(nbt::Writer &w, const Content *c) {
    switch (c->tag_id) {
    case TagId::Byte:
       w.write_byte_content(c->as<int8_t>());
@@ -184,4 +184,4 @@ Content make_string(std::string s) {
    };
 }
 
-}// namespace NBT
+}// namespace minecpp::nbt

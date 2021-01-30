@@ -1,6 +1,6 @@
-#include "parser.h"
+#include <minecpp/nbt/parser.h>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 Parser::Parser(std::istream &stream) : reader(stream) {}
 

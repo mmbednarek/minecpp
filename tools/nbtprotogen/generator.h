@@ -1,9 +1,9 @@
 #pragma once
 #include "ast.h"
 #include <any>
-#include <error/result.h>
+#include <minecpp/error/result.h>
 #include <map>
-#include <mineutils/scriptw.h>
+#include <minecpp/util/scriptw.h>
 #include <string>
 #include <variant>
 #include <vector>
@@ -35,12 +35,14 @@ struct Type {
    Type() = default;
    Type(std::string name, int repeated);
    Type(std::unique_ptr<Type> subtype, int repeated);
+   Type(const Type &type);
+   Type &operator=(const Type &type);
 
    bool operator==(const Type &other) const;
    bool operator<(const Type &other) const;
 
    [[nodiscard]] std::string to_cpp() const;
-   void write_value(Utils::ScriptWriter &w, std::string_view name, std::string_view label) const;
+   void write_value(minecpp::util::ScriptWriter &w, std::string_view name, std::string_view label) const;
    [[nodiscard]] std::string nbt_tagid() const;
 };
 

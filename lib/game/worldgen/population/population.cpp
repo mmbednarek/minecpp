@@ -1,29 +1,29 @@
-#include "population.h"
-#include <mineutils/loop.h>
+#include <minecpp/game/worldgen/population/population.h>
+#include <minecpp/util/loop.h>
 
-namespace Game::WorldGen::Population {
+namespace minecpp::game::worldgen::population {
 
 constexpr std::uint64_t chunk_seed_coef1 = 0x2b8a12ba85c7;
 constexpr std::uint64_t chunk_seed_coef2 = 0x1e3ca454fe3e7;
 constexpr std::uint64_t chunk_seed_coef3 = 0x9adacb410e23;
 constexpr std::uint64_t chunk_seed_coef4 = 0xf84606d2fff5;
 
-constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, Block::ChunkPos pos) {
+constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, block::ChunkPos pos) {
    return seed * (chunk_seed_coef1 * pos.x + chunk_seed_coef2 * pos.z + chunk_seed_coef3) + chunk_seed_coef4;
 }
 
 Population::Population(Chunks &chunks, std::uint64_t seed) : m_chunks(chunks), m_seed(seed) {
 }
 
-void Population::populate_chunk(Block::ChunkPos pos) {
+void Population::populate_chunk(block::ChunkPos pos) {
    auto &chunk = m_chunks.get_incomplete_chunk(pos.x, pos.z);
 
    // populate main chunk
    get_chunk_placements_by_chunk(chunk).populate_chunk(chunk);
 
    // populate from chunks around
-   Utils::around(pos.x, pos.z, [this, &chunk](int x, int z) {
-      auto pos = Block::ChunkPos(x, z);
+   minecpp::util::around(pos.x, pos.z, [this, &chunk](int x, int z) {
+      auto pos = block::ChunkPos(x, z);
       get_chunk_placements(pos).populate_neighbour(chunk, pos);
    });
 
@@ -45,7 +45,7 @@ ChunkPlacements &Population::get_chunk_placements_by_chunk(Chunk &chunk) {
    return load_chunk_placements(chunk);
 }
 
-ChunkPlacements &Population::get_chunk_placements(Block::ChunkPos pos) {
+ChunkPlacements &Population::get_chunk_placements(block::ChunkPos pos) {
    auto iter = m_cache.find(pos.hash());
    if (iter != m_cache.end()) {
       return *iter->second;
@@ -53,4 +53,4 @@ ChunkPlacements &Population::get_chunk_placements(Block::ChunkPos pos) {
    return load_chunk_placements(m_chunks.get_incomplete_chunk(pos.x, pos.z));
 }
 
-}// namespace Game::WorldGen::Population
+}// namespace minecpp::game::worldgen::population

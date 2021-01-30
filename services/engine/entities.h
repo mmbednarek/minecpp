@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
-#include <game/entities/entity.h>
+#include <minecpp/game/entity/entity.h>
 
 namespace Engine {
 
-using Game::Entity::Entity;
+using minecpp::game::entity::Entity;
 
 typedef uint32_t EntityId;
 

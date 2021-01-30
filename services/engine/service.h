@@ -4,7 +4,7 @@
 #include "event_manager.h"
 #include "world.h"
 #include "dispatcher.h"
-#include <game/difficulty.h>
+#include <minecpp/game/difficulty.h>
 #include <minepb/engine.grpc.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
 #include <queue>
@@ -27,7 +27,7 @@ class Service final : public minecpp::engine::PlayerService::Service {
    World world;
 
    int max_players = 10;
-   Game::Difficulty difficulty = Game::Difficulty::Normal;
+   minecpp::game::Difficulty difficulty = minecpp::game::Difficulty::Normal;
    int view_distance = 16;
 
  public:

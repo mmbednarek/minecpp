@@ -1,6 +1,6 @@
-#include "writer.h"
+#include <minecpp/nbt/writer.h>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 Writer::Writer(std::ostream &s) : stream(s) {}
 
@@ -107,7 +107,7 @@ void Writer::write_double(std::string_view name, double value) {
    put_big_endian(v);
 }
 
-void Writer::begin_list(std::string_view name, NBT::TagId tag,
+void Writer::begin_list(std::string_view name, nbt::TagId tag,
                         int num_elements) {
    put_byte(static_cast<uint8_t>(TagId::List));
    put_string(name);
@@ -115,7 +115,7 @@ void Writer::begin_list(std::string_view name, NBT::TagId tag,
    put_big_endian(num_elements);
 }
 
-void Writer::begin_list_no_header(const NBT::TagId tag, const int num_elements) {
+void Writer::begin_list_no_header(const nbt::TagId tag, const int num_elements) {
    put_byte(static_cast<uint8_t>(tag));
    put_big_endian(num_elements);
 }
@@ -173,4 +173,4 @@ void Writer::write_header(TagId tag, std::string_view name) {
    put_string(name);
 }
 
-}// namespace NBT
+}// namespace minecpp::nbt

@@ -6,7 +6,7 @@
 #include <boost/random.hpp>
 #include <grpcpp/channel.h>
 #include <grpcpp/client_context.h>
-#include <minenet/msg/serverbound.h>
+#include <minecpp/network/message/serverbound.h>
 #include <minepb/chunk.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
 #include <minepb/engine.grpc.pb.h>
@@ -55,21 +55,21 @@ class Service {
    void on_player_disconnect(uuid engine_id, uuid player_id);
 
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::ClientSettings msg);
+                   minecpp::network::message::ClientSettings msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::PlayerPosition msg);
+                   minecpp::network::message::PlayerPosition msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::PlayerPositionRotation msg);
+                   minecpp::network::message::PlayerPositionRotation msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::PlayerRotation msg);
+                   minecpp::network::message::PlayerRotation msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::ChatMessage msg);
+                   minecpp::network::message::ChatMessage msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::PlayerDigging msg);
+                   minecpp::network::message::PlayerDigging msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::KeepAliveClient msg);
+                   minecpp::network::message::KeepAliveClient msg);
    void on_message(uuid engine_id, uuid player_id,
-                   MineNet::Message::AnimateHandClient msg);
+                   minecpp::network::message::AnimateHandClient msg);
 };
 
 } // namespace Front

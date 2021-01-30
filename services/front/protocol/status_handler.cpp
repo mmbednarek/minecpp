@@ -7,7 +7,7 @@ namespace Front::Protocol {
 StatusHandler::StatusHandler() {}
 
 void StatusHandler::handle(const std::shared_ptr<Connection> &conn,
-                           MineNet::Message::Reader &r) {
+                           minecpp::network::message::Reader &r) {
    uint8_t op = r.read_byte();
    switch (op) {
    case 0:
@@ -525,7 +525,7 @@ const char *favicon =
     "I20deesAAAAASUVORK5CYII=";
 
 void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn) {
-   MineNet::Message::Writer w;
+   minecpp::network::message::Writer w;
    w.write_byte(0);
 
    std::stringstream ss;
@@ -539,10 +539,10 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn) {
 }
 
 void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn,
-                                MineNet::Message::Reader &r) {
+                                minecpp::network::message::Reader &r) {
    auto player_time = r.read_big_endian<uint64_t>();
 
-   MineNet::Message::Writer w;
+   minecpp::network::message::Writer w;
    w.write_byte(1);
    w.write_big_endian(player_time);
    conn->send_and_disconnect(conn, w);

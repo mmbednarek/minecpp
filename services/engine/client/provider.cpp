@@ -1,7 +1,7 @@
 #include "provider.h"
 #include <algorithm>
 #include <grpcpp/create_channel.h>
-#include <mineutils/uuid.h>
+#include <minecpp/util/uuid.h>
 
 namespace Engine::Client {
 
@@ -30,7 +30,7 @@ mb::result<Provider> Provider::create(const Config &cfg) {
            throw std::runtime_error("failed to connect to engine service");
         }
         uuid id{};
-        Utils::decode_uuid(id, res.id().data());
+        minecpp::util::decode_uuid(id, res.id().data());
         uuid_to_id[id] = service_count++;
 
         return Service{

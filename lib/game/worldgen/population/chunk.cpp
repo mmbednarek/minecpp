@@ -1,16 +1,16 @@
-#include "chunk.h"
-#include "object.h"
-#include <game/blocks/position.h>
-#include <minerandom/java_random.h>
+#include <minecpp/game/worldgen/population/chunk.h>
+#include <minecpp/game/worldgen/population/object.h>
+#include <minecpp/game/block/position.h>
+#include <minecpp/random/java_random.h>
 
-namespace Game::WorldGen::Population {
+namespace minecpp::game::worldgen::population {
 
-ChunkPlacements::ChunkPlacements(Game::Chunk &chunk, std::uint64_t seed) : m_seed(seed) {
+ChunkPlacements::ChunkPlacements(game::Chunk &chunk, std::uint64_t seed) : m_seed(seed) {
    prepare_chunk(chunk);
 }
 
 Placement ChunkPlacements::get_placement(int x, int z) {
-   auto p = m_placements.find(Block::Position(x, 0, z).as_long());
+   auto p = m_placements.find(block::Position(x, 0, z).as_long());
    if (p == m_placements.end()) {
       return Placement{
               .object_id = -1,
@@ -19,8 +19,8 @@ Placement ChunkPlacements::get_placement(int x, int z) {
    return p->second;
 }
 
-void ChunkPlacements::prepare_chunk(Game::Chunk &chunk) {
-   Rand::JavaRandom rand(m_seed);
+void ChunkPlacements::prepare_chunk(game::Chunk &chunk) {
+   random::JavaRandom rand(m_seed);
    auto chunk_pos = chunk.pos();
 
    for (int _z = 0; _z < 16; ++_z) {
@@ -42,7 +42,7 @@ void ChunkPlacements::prepare_chunk(Game::Chunk &chunk) {
    }
 }
 
-void ChunkPlacements::put_object(Game::Chunk &chunk, int id, int x, int y, int z) {
+void ChunkPlacements::put_object(game::Chunk &chunk, int id, int x, int y, int z) {
    if (id >= pop_objects.size()) {
       return;
    }
@@ -69,7 +69,7 @@ void ChunkPlacements::put_object(Game::Chunk &chunk, int id, int x, int y, int z
    }
 }
 
-void ChunkPlacements::populate_chunk(Game::Chunk &chunk) {
+void ChunkPlacements::populate_chunk(game::Chunk &chunk) {
    std::for_each(m_placements.begin(), m_placements.end(), [&chunk](auto &pair) {
       Placement &placement = pair.second;
      auto &obj = pop_objects[placement.object_id];
@@ -84,7 +84,7 @@ void ChunkPlacements::populate_chunk(Game::Chunk &chunk) {
    });
 }
 
-void ChunkPlacements::populate_neighbour(Chunk &chunk, Block::ChunkPos pos) {
+void ChunkPlacements::populate_neighbour(Chunk &chunk, block::ChunkPos pos) {
    std::for_each(m_placements.begin(), m_placements.end(), [&chunk, pos](auto &pair) {
      Placement &placement = pair.second;
      auto &obj = pop_objects[placement.object_id];
@@ -103,4 +103,4 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, Block::ChunkPos pos) {
    });
 }
 
-}// namespace Game::WorldGen::Population
+}// namespace minecpp::game::worldgen::population

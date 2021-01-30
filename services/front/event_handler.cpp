@@ -1,8 +1,8 @@
 #include "event_handler.h"
 #include <boost/uuid/uuid_io.hpp>
-#include <game/events.h>
-#include <mineutils/time.h>
-#include <mineutils/uuid.h>
+#include <minecpp/game/events.h>
+#include <minecpp/util/time.h>
+#include <minecpp/util/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {
@@ -10,7 +10,7 @@ namespace Front {
 EventHandler::EventHandler(Server &server) : server(server) {}
 
 void EventHandler::accept_event(const minecpp::engine::Event &e) {
-   using Game::Event;
+   using minecpp::game::Event;
 
    switch (e.kind()) {
    case Event::index_of<ENU("AddPlayer")>(): {
@@ -68,9 +68,9 @@ void EventHandler::accept_event(const minecpp::engine::Event &e) {
 
 void EventHandler::on_event(AddPlayer &msg) {
    boost::uuids::uuid id{};
-   Utils::decode_uuid(id, msg.uuid().data());
+   minecpp::util::decode_uuid(id, msg.uuid().data());
 
-   auto add_player = MineNet::Message::AddPlayer{
+   auto add_player = minecpp::network::message::AddPlayer{
            .id = id,
            .name = msg.name(),
            .game_mode = static_cast<uint8_t>(msg.game_mode()),
@@ -87,9 +87,9 @@ void EventHandler::on_event(AddPlayer &msg) {
 
 void EventHandler::on_event(SpawnPlayer &msg) {
    boost::uuids::uuid id{};
-   Utils::decode_uuid(id, msg.uuid().data());
+   minecpp::util::decode_uuid(id, msg.uuid().data());
 
-   auto spawn_player = MineNet::Message::SpawnPlayer{
+   auto spawn_player = minecpp::network::message::SpawnPlayer{
            .entity_id = msg.id(),
            .id = id,
            .x = msg.x(),
@@ -110,14 +110,14 @@ void EventHandler::on_event(SpawnPlayer &msg) {
 
 void EventHandler::on_event(EntityMove &pos) {
    boost::uuids::uuid id{};
-   Utils::decode_uuid(id, pos.uuid().data());
+   minecpp::util::decode_uuid(id, pos.uuid().data());
    server.for_each_connection([&pos, id](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
       if (conn->get_uuid() == id) {
          return;
       }
-      send(conn, MineNet::Message::EntityMove{
+      send(conn, minecpp::network::message::EntityMove{
                          .entity_id = pos.id(),
                          .x = static_cast<short>(pos.x()),
                          .y = static_cast<short>(pos.y()),
@@ -131,7 +131,7 @@ void EventHandler::on_event(EntityMove &pos) {
 
 void EventHandler::on_event(EntityLook &pos) {
    boost::uuids::uuid id{};
-   Utils::decode_uuid(id, pos.uuid().data());
+   minecpp::util::decode_uuid(id, pos.uuid().data());
    server.for_each_connection([&pos, id](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
@@ -139,13 +139,13 @@ void EventHandler::on_event(EntityLook &pos) {
          return;
       }
       spdlog::info("rot yaw: {}, pitch: {}", pos.yaw(), pos.pitch());
-      send(conn, MineNet::Message::EntityLook{
+      send(conn, minecpp::network::message::EntityLook{
                          .entity_id = pos.id(),
                          .yaw = pos.yaw(),
                          .pitch = pos.pitch(),
                          .on_ground = true,
                  });
-      send(conn, MineNet::Message::EntityHeadLook{
+      send(conn, minecpp::network::message::EntityHeadLook{
                          .entity_id = pos.id(),
                          .yaw = pos.yaw(),
                  });
@@ -156,9 +156,9 @@ void EventHandler::on_event(Chat &msg) {
    server.for_each_connection([&msg](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      send(conn, MineNet::Message::Chat{
+      send(conn, minecpp::network::message::Chat{
                          .message = msg.message(),
-                         .type = MineNet::ChatType::System,
+                         .type = minecpp::network::ChatType::System,
                          .user_id = boost::uuids::uuid(),
                  });
    });
@@ -166,22 +166,22 @@ void EventHandler::on_event(Chat &msg) {
 
 void EventHandler::on_event(RemovePlayer &msg) {
    boost::uuids::uuid id{};
-   Utils::decode_uuid(id, msg.uuid().data());
+   minecpp::util::decode_uuid(id, msg.uuid().data());
 
    server.for_each_connection([&msg, id](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      send(conn, MineNet::Message::RemovePlayer{
+      send(conn, minecpp::network::message::RemovePlayer{
                          .id = id,
                  });
-      send(conn, MineNet::Message::DestroyEntity{
+      send(conn, minecpp::network::message::DestroyEntity{
                          .entity_id = static_cast<uint32_t>(msg.entity_id()),
                  });
    });
 }
 
 void EventHandler::on_event(UpdateBlock &msg) {
-   MineNet::Message::BlockChange change{
+   minecpp::network::message::BlockChange change{
      .block_position = static_cast<mb::u64>(msg.block_position()),
      .block_id = msg.state(),
    };
@@ -195,9 +195,9 @@ void EventHandler::on_event(UpdateBlock &msg) {
 
 void EventHandler::on_event(AnimateHand &msg) {
    boost::uuids::uuid id{};
-   Utils::decode_uuid(id, msg.uuid().data());
+   minecpp::util::decode_uuid(id, msg.uuid().data());
 
-   MineNet::Message::AnimateHand animate{
+   minecpp::network::message::AnimateHand animate{
            .entity_id = msg.entity_id(),
            .type = static_cast<uint8_t>(msg.hand()),
    };
@@ -212,7 +212,7 @@ void EventHandler::on_event(AnimateHand &msg) {
 
 void EventHandler::on_event(LoadTerrain &msg) {
    boost::uuids::uuid player_id{};
-   Utils::decode_uuid(player_id, msg.uuid().data());
+   minecpp::util::decode_uuid(player_id, msg.uuid().data());
 
    if (!server.has_connection(player_id)) {
       spdlog::error("connection {} not found", boost::uuids::to_string(player_id));
@@ -225,7 +225,7 @@ void EventHandler::on_event(LoadTerrain &msg) {
       return;
    }
 
-   send(conn, MineNet::Message::UpdateChunkPosition{
+   send(conn, minecpp::network::message::UpdateChunkPosition{
                       .x = msg.central_chunk().x(),
                       .z = msg.central_chunk().z(),
               });
@@ -239,31 +239,31 @@ const char *player_transfer_message = R"({"extra":[{"color":"dark_green", "text"
 
 void EventHandler::on_event(TransferPlayer &msg) {
    boost::uuids::uuid player_id{};
-   Utils::decode_uuid(player_id, msg.player().data());
+   minecpp::util::decode_uuid(player_id, msg.player().data());
 
    if (!server.has_connection(player_id))
       return;
 
    auto conn = server.connection_by_id(player_id);
 
-   send(conn, MineNet::Message::Chat{
+   send(conn, minecpp::network::message::Chat{
                       .message = player_transfer_message,
               });
 }
 
 void EventHandler::on_event(UpdatePlayerAbilities &msg) {
    boost::uuids::uuid player_id{};
-   Utils::decode_uuid(player_id, msg.uuid().data());
+   minecpp::util::decode_uuid(player_id, msg.uuid().data());
    auto conn = server.connection_by_id(player_id);
 
-   using MineNet::Message::PlayerAbilityFlag;
+   using minecpp::network::message::PlayerAbilityFlag;
    uint8_t flags = 0;
    flags |= msg.invulnerable() ? PlayerAbilityFlag::Invulnerable : 0;
    flags |= msg.is_flying() ? PlayerAbilityFlag::IsFlying : 0;
    flags |= msg.allow_flying() ? PlayerAbilityFlag::AllowFlying : 0;
    flags |= msg.creative_mode() ? PlayerAbilityFlag::CreativeMode : 0;
 
-   send(conn, MineNet::Message::PlayerAbilities{
+   send(conn, minecpp::network::message::PlayerAbilities{
                       .flags = flags,
                       .fly_speed = msg.fly_speed(),
                       .walk_speed = msg.walk_speed(),

@@ -1,6 +1,6 @@
-#include "exception.h"
+#include <minecpp/nbt/exception.h>
 
-namespace NBT {
+namespace minecpp::nbt {
 
 Exception::Exception(const char *c) : std::runtime_error(c) {
 }

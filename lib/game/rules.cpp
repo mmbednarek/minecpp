@@ -1,5 +1,3 @@
-#include "rules.h"
+namespace minecpp::game {
 
-namespace Game {
-
-} // namespace Game
+} // namespace minecpp::game

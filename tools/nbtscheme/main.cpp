@@ -2,9 +2,9 @@
 #include <fmt/core.h>
 #include <fstream>
 #include <iostream>
-#include <mineutils/compression.h>
-#include <mineutils/scriptw.h>
-#include <nbt/parser.h>
+#include <minecpp/util/compression.h>
+#include <minecpp/util/scriptw.h>
+#include <minecpp/nbt/parser.h>
 #include <set>
 
 static std::string to_camel_case(const std::string_view name) {
@@ -61,7 +61,7 @@ struct NameProvider {
 };
 
 struct Message {
-   NBT::CompoundContent content;
+   minecpp::nbt::CompoundContent content;
    std::string name;
 };
 
@@ -118,30 +118,30 @@ static std::string element_name(std::string_view name) {
    return std::string(name) + "Element";
 }
 
-std::vector<Message> find_dependencies(NBT::CompoundContent &content, std::string_view scope, std::string_view parent_label, NameProvider &np) {
+std::vector<Message> find_dependencies(minecpp::nbt::CompoundContent &content, std::string_view scope, std::string_view parent_label, NameProvider &np) {
    std::vector<Message> m;
-   std::for_each(content.begin(), content.end(), [&np, &m, &scope, parent_label](std::pair<std::string, NBT::Content> pair) {
-      if (pair.second.tag_id == NBT::TagId::Compound) {
+   std::for_each(content.begin(), content.end(), [&np, &m, &scope, parent_label](std::pair<std::string, minecpp::nbt::Content> pair) {
+      if (pair.second.tag_id == minecpp::nbt::TagId::Compound) {
          m.emplace_back(Message{
-                 .content = pair.second.as<NBT::CompoundContent>(),
+                 .content = pair.second.as<minecpp::nbt::CompoundContent>(),
                  .name = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, pair.first),
          });
-      } else if (pair.second.tag_id == NBT::TagId::List) {
-         auto list = pair.second.as<NBT::ListContent>();
-         if (list.tag_id == NBT::TagId::Compound) {
+      } else if (pair.second.tag_id == minecpp::nbt::TagId::List) {
+         auto list = pair.second.as<minecpp::nbt::ListContent>();
+         if (list.tag_id == minecpp::nbt::TagId::Compound) {
             auto element = *list.begin();
             m.emplace_back(Message{
-                    .content = element.as<NBT::CompoundContent>(),
+                    .content = element.as<minecpp::nbt::CompoundContent>(),
                     .name = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, element_name(pair.first)),
             });
          }
-         if (list.tag_id == NBT::TagId::List) {
+         if (list.tag_id == minecpp::nbt::TagId::List) {
             auto lt = *list.begin();
-            auto list2 = lt.as<NBT::ListContent>();
-            if (list2.tag_id == NBT::TagId::Compound) {
+            auto list2 = lt.as<minecpp::nbt::ListContent>();
+            if (list2.tag_id == minecpp::nbt::TagId::Compound) {
                auto element = *list2.begin();
                m.emplace_back(Message{
-                       .content = element.as<NBT::CompoundContent>(),
+                       .content = element.as<minecpp::nbt::CompoundContent>(),
                        .name = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, element_name(pair.first)),
                });
             }
@@ -151,27 +151,27 @@ std::vector<Message> find_dependencies(NBT::CompoundContent &content, std::strin
    return m;
 }
 
-std::string find_type(NameProvider &np, std::string_view scope, NBT::Content &content) {
+std::string find_type(NameProvider &np, std::string_view scope, minecpp::nbt::Content &content) {
    switch (content.tag_id) {
-   case NBT::TagId::Byte: return "int8";
-   case NBT::TagId::Short: return "int16";
-   case NBT::TagId::Int: return "int32";
-   case NBT::TagId::Long: return "int64";
-   case NBT::TagId::Float: return "float";
-   case NBT::TagId::Double: return "double";
-   case NBT::TagId::ByteArray: return "bytes";
-   case NBT::TagId::String: return "string";
-   case NBT::TagId::IntArray: return "ints";
-   case NBT::TagId::LongArray: return "longs";
-   case NBT::TagId::List: {
-      auto list = content.as<NBT::ListContent>();
+   case minecpp::nbt::TagId::Byte: return "int8";
+   case minecpp::nbt::TagId::Short: return "int16";
+   case minecpp::nbt::TagId::Int: return "int32";
+   case minecpp::nbt::TagId::Long: return "int64";
+   case minecpp::nbt::TagId::Float: return "float";
+   case minecpp::nbt::TagId::Double: return "double";
+   case minecpp::nbt::TagId::ByteArray: return "bytes";
+   case minecpp::nbt::TagId::String: return "string";
+   case minecpp::nbt::TagId::IntArray: return "ints";
+   case minecpp::nbt::TagId::LongArray: return "longs";
+   case minecpp::nbt::TagId::List: {
+      auto list = content.as<minecpp::nbt::ListContent>();
       if (list.elements.empty()) {
          return "repeated <unknown>";
       }
       auto element = *list.begin();
       return fmt::format("repeated {}", find_type(np, scope, element));
    }
-   case NBT::TagId::Compound: {
+   case minecpp::nbt::TagId::Compound: {
       return std::string(np.get_type(std::string(scope)));
    }
    }
@@ -179,7 +179,7 @@ std::string find_type(NameProvider &np, std::string_view scope, NBT::Content &co
    return "<unknown>";
 }
 
-void write_attribute(NameProvider &np, Utils::ScriptWriter &w, std::string_view scope, std::string_view name, NBT::Content content, int index) {
+void write_attribute(NameProvider &np, minecpp::util::ScriptWriter &w, std::string_view scope, std::string_view name, minecpp::nbt::Content content, int index) {
    auto formatted_name = format_name(name);
    if (formatted_name == name) {
       w.line("{} {} = {};", find_type(np, fmt::format("{}_{}", scope, name), content), format_name(name), index, name);
@@ -188,7 +188,7 @@ void write_attribute(NameProvider &np, Utils::ScriptWriter &w, std::string_view 
    }
 }
 
-void write_message(Utils::ScriptWriter &w, NameProvider &np, const std::string_view scope, const std::string_view name, NBT::CompoundContent cont) {
+void write_message(minecpp::util::ScriptWriter &w, NameProvider &np, const std::string_view scope, const std::string_view name, minecpp::nbt::CompoundContent cont) {
    auto dependencies = find_dependencies(cont, scope, name, np);
    for (auto &msg : dependencies) {
       write_message(w, np, fmt::format("{}_{}", scope, msg.name), msg.name, msg.content);
@@ -217,21 +217,21 @@ int main(int argc, char **argv) {
       return 1;
    }
 
-   //   Utils::GZipInputStream stream(file);
+   //   minecpp::util::GZipInputStream stream(file);
 
-   NBT::Parser p(file);
+   minecpp::nbt::Parser p(file);
    auto tag = p.read_tag();
 
    std::cout << tag.content.to_string();
 
    NameProvider np;
 
-   Utils::ScriptWriter w(std::cout);
+   minecpp::util::ScriptWriter w(std::cout);
 
    w.line("syntax = \"proto3\";");
    w.line("package {};", argv[1]);
    w.line();
 
-   write_message(w, np, "", argv[2], tag.content.as<NBT::CompoundContent>());
+   write_message(w, np, "", argv[2], tag.content.as<minecpp::nbt::CompoundContent>());
    return 0;
 }

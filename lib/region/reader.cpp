@@ -1,8 +1,8 @@
-#include "reader.h"
 #include <boost/endian/conversion.hpp>
-#include <mineutils/format.h>
+#include <minecpp/util/format.h>
+#include <minecpp/region/reader.h>
 
-namespace Region {
+namespace minecpp::region {
 
 Reader::Reader(std::istream &s) : stream(s) {}
 
@@ -44,4 +44,4 @@ result<std::vector<uint8_t>> Reader::load_chunk(int x, int z) {
    return data;
 }
 
-}// namespace Region
+}// namespace minecpp::region

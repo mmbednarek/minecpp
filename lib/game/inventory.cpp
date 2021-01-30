@@ -1,13 +1,13 @@
-#include "inventory.h"
-#include <game/items/registry.h>
-#include <nbt/parser.h>
+#include <minecpp/game/inventory.h>
+#include <minecpp/game/item/registry.h>
+#include <minecpp/nbt/parser.h>
 
-namespace Game {
+namespace minecpp::game {
 
-using NBT::TagId;
+using nbt::TagId;
 
-InventoryItem::InventoryItem(NBT::Reader &r) {
-   r.read_compound([this](NBT::Reader &r, NBT::TagId tagid,
+InventoryItem::InventoryItem(nbt::Reader &r) {
+   r.read_compound([this](nbt::Reader &r, nbt::TagId tagid,
                           const std::string &name) {
      switch (tagid) {
      case TagId::Byte:
@@ -22,8 +22,8 @@ InventoryItem::InventoryItem(NBT::Reader &r) {
      case TagId::String:
         if (name == "id") {
            try {
-              auto item_id = item_id_from_tag(r.read_str());
-              id = item_by_id(item_id).tag();
+              auto item_id = item::item_id_from_tag(r.read_str());
+              id = item::item_by_id(item_id).tag();
            } catch (std::runtime_error &e) {
               id = "air";
            }
@@ -32,8 +32,8 @@ InventoryItem::InventoryItem(NBT::Reader &r) {
         break;
      case TagId::Compound:
         if (name == "tag") {
-           NBT::Parser p(r.raw_stream());
-           tag = p.read_tag().content.as<NBT::CompoundContent>();
+           nbt::Parser p(r.raw_stream());
+           tag = p.read_tag().content.as<nbt::CompoundContent>();
            return;
         }
         break;

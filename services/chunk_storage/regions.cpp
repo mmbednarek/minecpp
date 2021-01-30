@@ -1,6 +1,6 @@
 #include "regions.h"
-#include <error/result.h>
-#include <region/reader.h>
+#include <minecpp/error/result.h>
+#include <minecpp/region/reader.h>
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <utility>
@@ -61,7 +61,7 @@ result<std::vector<uint8_t>> Regions::read_chunk(int x, int z) {
 
    region.m.lock();
 
-   Region::Reader r(region.file);
+   minecpp::region::Reader r(region.file);
    auto data = r.load_chunk(x, z);
    region.m.unlock();
 

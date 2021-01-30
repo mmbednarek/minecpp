@@ -22,7 +22,7 @@ enum DimensionType {
 
 enum Difficulty {
     Easy = 0;
-    Medium = 1;
+    Normal = 1;
     Hard = 2;
 }
 

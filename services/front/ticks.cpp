@@ -1,8 +1,8 @@
 #include "ticks.h"
 #include <grpcpp/client_context.h>
-#include <minenet/msg/clientbound.h>
+#include <minecpp/network/message/clientbound.h>
 #include <minepb/chunk_storage.pb.h>
-#include <mineutils/time.h>
+#include <minecpp/util/time.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {
@@ -16,14 +16,14 @@ constexpr int load_chunks_interval = 300;
    uint64_t last_keep_alive = 0;
    uint64_t last_load_chunks = 0;
    for (;;) {
-      auto now = Utils::now_milis();
+      auto now = minecpp::util::now_milis();
       if (now - last_keep_alive >= keep_alive_interval) {
          keep_alive();
-         last_keep_alive = Utils::now_milis();
+         last_keep_alive = minecpp::util::now_milis();
       }
       if (now - last_load_chunks >= load_chunks_interval) {
          load_chunks();
-         last_load_chunks = Utils::now_milis();
+         last_load_chunks = minecpp::util::now_milis();
       }
    }
 }
@@ -32,8 +32,8 @@ void TickManager::keep_alive() {
    server.for_each_connection([](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      send(conn, MineNet::Message::KeepAlive{
-                     .time = Utils::now_milis(),
+      send(conn, minecpp::network::message::KeepAlive{
+                     .time = minecpp::util::now_milis(),
                  });
    });
 }
@@ -59,10 +59,10 @@ void TickManager::load_chunks() {
          return;
       }
 
-      send(conn, MineNet::Message::ChunkData{
+      send(conn, minecpp::network::message::ChunkData{
                      .chunk = chunk,
                  });
-      send(conn, MineNet::Message::UpdateLight{
+      send(conn, minecpp::network::message::UpdateLight{
                      .chunk = chunk,
                  });
    });

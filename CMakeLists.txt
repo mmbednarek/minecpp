@@ -53,23 +53,30 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(libmb)
 
-include_directories(./lib)
+include_directories(./include)
 include_directories(./services/protos/include)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -fconcepts")
 
+# Libraries
+
 add_subdirectory(lib/chat)
 add_subdirectory(lib/error)
 add_subdirectory(lib/format)
-add_subdirectory(lib/squeeze)
-add_subdirectory(lib/minerandom)
-add_subdirectory(lib/mineutils)
+add_subdirectory(lib/squeezed)
+add_subdirectory(lib/random)
+add_subdirectory(lib/util)
 add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
-add_subdirectory(lib/minenet)
+add_subdirectory(lib/network)
+
+# Tests
+
 add_subdirectory(tests)
+
+# Tools
 
 add_subdirectory(tools/nbt_viewer)
 add_subdirectory(tools/chunk_extractor)
@@ -78,6 +85,9 @@ add_subdirectory(tools/recipes)
 add_subdirectory(tools/statelist)
 add_subdirectory(tools/nbtprotogen)
 add_subdirectory(tools/nbtscheme)
+
+# Services
+
 add_subdirectory(services/protos/include/minepb)
 add_subdirectory(services/chunk_storage)
 add_subdirectory(services/engine)

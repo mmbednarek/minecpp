@@ -1,30 +1,30 @@
-#include "utils.h"
 #include <cassert>
-#include <game/blocks/material.h>
-#include <game/blocks/registry.h>
-#include <mineutils/packed.h>
+#include <minecpp/game/block/material.h>
+#include <minecpp/game/block/registry.h>
+#include <minecpp/game/chunk/utils.h>
+#include <minecpp/util/packed.h>
 
-namespace Game {
+namespace minecpp::game {
 
 int calculate_ref_count(const std::vector<std::int64_t> &data,
                         const std::vector<std::uint32_t> &palette) {
    if (data.empty()) {
       return 0;
    }
-   int bits = Utils::log2(palette.size());
+   int bits = minecpp::util::log2(palette.size());
    if (bits < 4) {
       bits = 4;
    }
    int count = 0;
-   Utils::for_each_packed(data, bits, 4096, [&count, palette](uint32_t value) {
+   minecpp::util::for_each_packed(data, bits, 4096, [&count, palette](uint32_t value) {
       assert(value < palette.size());
-      auto block = Block::block_by_tag(
-          Block::tag_from_state_id(palette[value % palette.size()]));
-      if (block.material != &Block::Material::Air) {
+      auto block = block::block_by_tag(
+              block::tag_from_state_id(palette[value % palette.size()]));
+      if (block.material != &block::Material::Air) {
          ++count;
       }
    });
    return count;
 }
 
-} // namespace Game
+}// namespace minecpp::game
