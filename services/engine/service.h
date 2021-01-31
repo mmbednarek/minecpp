@@ -1,19 +1,19 @@
 #pragma once
-#include "entities.h"
-#include "players.h"
-#include "event_manager.h"
-#include "world.h"
 #include "dispatcher.h"
+#include "entities.h"
+#include "event_manager.h"
+#include "players.h"
+#include "world.h"
 #include <minecpp/game/difficulty.h>
-#include <minepb/engine.grpc.pb.h>
 #include <minepb/chunk_storage.grpc.pb.h>
+#include <minepb/engine.grpc.pb.h>
 #include <queue>
 #include <random>
 
 namespace Engine {
 
 typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
-    ChunkService;
+        ChunkService;
 
 using boost::uuids::uuid;
 
@@ -34,7 +34,7 @@ class Service final : public minecpp::engine::PlayerService::Service {
    Service(EntityManager &entities, PlayerManager &players, const ChunkService &chunk_store);
    ~Service() override;
 
-   void handle_command(uuid id, std::string cmd);
+   mb::result<mb::empty> handle_command(uuid id, std::string cmd);
 
    grpc::Status
    AcceptPlayer(grpc::ServerContext *context,
@@ -60,9 +60,9 @@ class Service final : public minecpp::engine::PlayerService::Service {
                minecpp::engine::ListPlayersResponse *response) override;
 
    grpc::Status ListPlayerEntities(
-       grpc::ServerContext *context,
-       const minecpp::engine::EmptyRequest *request,
-       minecpp::engine::ListPlayerEntitiesResponse *response) override;
+           grpc::ServerContext *context,
+           const minecpp::engine::EmptyRequest *request,
+           minecpp::engine::ListPlayerEntitiesResponse *response) override;
 
    grpc::Status
    RemovePlayer(grpc::ServerContext *context,
@@ -94,11 +94,11 @@ class Service final : public minecpp::engine::PlayerService::Service {
                 minecpp::engine::GetServiceIdResponse *response) override;
 
    grpc::Status GetServiceStatus(
-       grpc::ServerContext *context, const minecpp::engine::EmptyRequest *request,
-       minecpp::engine::GetServiceStatusResponse *response) override;
+           grpc::ServerContext *context, const minecpp::engine::EmptyRequest *request,
+           minecpp::engine::GetServiceStatusResponse *response) override;
 
    grpc::Status LoadInitialChunks(grpc::ServerContext *context, const minecpp::engine::LoadInitialChunksRequest *request,
                                   minecpp::engine::EmptyResponse *response) override;
 };
 
-} // namespace Engine
+}// namespace Engine

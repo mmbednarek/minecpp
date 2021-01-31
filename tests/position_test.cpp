@@ -1,11 +1,11 @@
 #include <gtest/gtest.h>
-#include <game/blocks/position.h>
 #include <iostream>
+#include <minecpp/game/block/position.h>
 
 TEST(Block, Position) {
-   Game::Block::Position p(-78, 20, -567);
+   minecpp::game::block::Position p(-78, 20, -567);
    auto encoded = p.as_long();
-   Game::Block::Position decoded(encoded);
+   minecpp::game::block::Position decoded(encoded);
 
    EXPECT_EQ(p.x, decoded.x);
    EXPECT_EQ(p.y, decoded.y);
@@ -13,7 +13,7 @@ TEST(Block, Position) {
 
    EXPECT_EQ(p.offset(), 10516);
 
-   Game::Block::Position border(-16, 0, 0);
+   minecpp::game::block::Position border(-16, 0, 0);
    EXPECT_EQ(border.offset(), 0);
    EXPECT_EQ(border.chunk_pos().x, -1);
 }

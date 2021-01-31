@@ -5,6 +5,7 @@
 #include "tracking.h"
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
+#include <mb/result.h>
 #include <minepb/player.pb.h>
 #include <string>
 
@@ -37,7 +38,7 @@ class Player {
    uint32_t entity_id{};
    std::string player_name;
    Mode game_mode = Mode::Survival;
-   Tracking tracking;
+   std::unique_ptr<Tracking> tracking;
 
    int ping{};
 
@@ -72,7 +73,7 @@ class Player {
    [[nodiscard]] int get_ping() const;
 
    void on_movement(World &w, Vec3 pos);
-   void load_chunks(World &w);
+   mb::result<mb::empty> load_chunks(World &w);
 };
 
-} // namespace minecpp::game
+}// namespace minecpp::game

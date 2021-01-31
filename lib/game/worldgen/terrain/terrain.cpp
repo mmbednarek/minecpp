@@ -6,7 +6,7 @@
 namespace minecpp::game::worldgen::terrain {
 
 constexpr auto sea_level = 63;
-constexpr auto sand_level = 68;
+constexpr auto sand_level = 64;
 
 Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(x), z(z) {
    for (int rx = 0; rx < chunk_size; ++rx) {
@@ -36,6 +36,9 @@ Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(
 }
 
 bool Terrain::section_empty(int sec) {
+   if (sec * chunk_size < sea_level) {
+      return false;
+   }
    for (int z = 0; z < chunk_size; ++z) {
       for (int x = 0; x < chunk_size; ++x) {
          if (height_at(x, z) + 1 > sec * chunk_size) {
@@ -66,6 +69,9 @@ Section Terrain::generate_section(int sec) {
       }
 
       if (block_y == height) {
+         if (block_y < 62) {
+            return dirt_id;
+         }
          if (block_y < sand_level) {
             return sand_id;
          }
@@ -90,6 +96,9 @@ Section Terrain::generate_section(int sec) {
          return grass_id;
       }
       if (height - block_y < 3) {
+         if (block_y < 62) {
+            return dirt_id;
+         }
          if (block_y < sand_level) {
             return sand_id;
          }

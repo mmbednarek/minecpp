@@ -206,15 +206,13 @@ boost::uuids::uuid Connection::service_id() {
 }
 
 void Connection::push_chunk(int x, int z) {
-   chunk_queue.push(std::make_tuple(x, z));
+   m_chunk_queue.push(minecpp::game::block::ChunkPos(x, z));
 }
 
-std::tuple<int, int> Connection::pop_chunk() {
-   auto chunk = chunk_queue.front();
-   chunk_queue.pop();
-   return chunk;
+minecpp::game::block::ChunkPos Connection::pop_chunk() {
+   return m_chunk_queue.pop();
 }
 
-bool Connection::has_chunks() { return !chunk_queue.empty(); }
+bool Connection::has_chunks() { return !m_chunk_queue.empty(); }
 
 } // namespace Front

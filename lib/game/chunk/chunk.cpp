@@ -25,44 +25,50 @@ Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : pos_x(x), pos_z
    std::fill(biomes.begin(), biomes.end(), 1);
 }
 
-result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt::Reader &r) {
+mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt::Reader &r) {
    auto chunk = std::make_unique<Chunk>();
    try {
-      tryget(r.try_read_compound([&chunk](nbt::Reader &r, nbt::TagId tagid, const std::string &name) -> result<empty> {
-         return chunk->load(r, tagid, name);
-      }));
-      return result<std::unique_ptr<Chunk>>(std::move(chunk));
+      auto res = r.try_read_compound([&chunk](nbt::Reader &r, nbt::TagId tagid, const std::string &name) -> result<empty> {
+         if (auto res = chunk->load(r, tagid, name); !res.ok()) {
+            return error(res.msg());
+         }
+         return result_ok;
+      });
+      if (!res.ok()) {
+         return mb::error(res.msg());
+      }
+      return std::move(chunk);
    } catch (std::exception &e) {
-      return errorf("exception while reading nbt tag: ", e.what());
+      return mb::error("exception while reading nbt tag");
    }
 }
 
-result<empty> Chunk::load(nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
+mb::result<mb::empty> Chunk::load(nbt::Reader &r, nbt::TagId tagid, const std::string &name) {
    switch (tagid) {
    case nbt::TagId::String:
       if (name == "Status") {
          if (auto status = r.read_str(); status == "full") {
             full = true;
          }
-         return result_ok;
+         return mb::ok;
       }
 
       r.skip_payload(nbt::TagId::String);
-      return result_ok;
+      return mb::ok;
    case nbt::TagId::Int:
       if (name == "xPos") {
          pos_x = r.read_int();
-         return result_ok;
+         return mb::ok;
       }
       if (name == "zPos") {
          pos_z = r.read_int();
-         return result_ok;
+         return mb::ok;
       }
       r.skip_payload(nbt::TagId::Int);
-      return result_ok;
+      return mb::ok;
    case nbt::TagId::Compound:
       if (name == "Heightmaps") {
-         tryget(r.try_read_compound([this](nbt::Reader &r, nbt::TagId tagid, const std::string &name) -> result<empty> {
+         auto res = r.try_read_compound([this](nbt::Reader &r, nbt::TagId tagid, const std::string &name) -> result<empty> {
             if (tagid != nbt::TagId::LongArray) {
                return error(errclass::Internal, "height map expected to be a long array");
             }
@@ -78,18 +84,21 @@ result<empty> Chunk::load(nbt::Reader &r, nbt::TagId tagid, const std::string &n
 
             r.skip_payload(tagid);
             return result_ok;
-         }));
-         return result_ok;
+         });
+         if (!res.ok()) {
+            return mb::error(res.msg());
+         }
+         return mb::ok;
       }
       r.skip_payload(tagid);
-      return result_ok;
+      return mb::ok;
    case nbt::TagId::IntArray:
       if (name == "Biomes") {
          biomes = r.read_int_array<1024>();
-         return result_ok;
+         return mb::ok;
       }
       r.skip_payload(nbt::TagId::IntArray);
-      return result_ok;
+      return mb::ok;
    case nbt::TagId::List:
       if (name == "Sections") {
          r.read_list([this](nbt::Reader &r) {
@@ -136,18 +145,18 @@ result<empty> Chunk::load(nbt::Reader &r, nbt::TagId tagid, const std::string &n
                     .sky_light = minecpp::squeezed::TinyVec<4>(std::move(sky_light)),
             };
          });
-         return result_ok;
+         return mb::ok;
       }
       r.skip_payload(nbt::TagId::List);
-      return result_ok;
+      return mb::ok;
    case nbt::TagId::Long:
       r.skip_payload(nbt::TagId::Long);
-      return result_ok;
+      return mb::ok;
    case nbt::TagId::Byte:
       r.skip_payload(nbt::TagId::Byte);
-      return result_ok;
+      return mb::ok;
    default:
-      return error(errclass::Internal, "invalid nbt tag");
+      return mb::error(mb::error::status::Internal, "invalid nbt tag");
    }
 }
 
@@ -243,8 +252,8 @@ void Chunk::set_sky_light(int x, int y, int z, uint8_t value) {
       return;
    }
 
-   if (iter->second.block_light.empty()) {
-      iter->second.block_light = minecpp::squeezed::TinyVec<4>(4096);
+   if (iter->second.sky_light.empty()) {
+      iter->second.sky_light = minecpp::squeezed::TinyVec<4>(4096);
    }
 
    iter->second.sky_light.set(coord_to_offset(x, y, z), value);

@@ -9,7 +9,10 @@ EntityId EntityManager::spawn(Entity e) {
    return id;
 }
 
-Entity &EntityManager::get_entity(EntityId id) {
+mb::result<Entity &> EntityManager::get_entity(EntityId id) {
+   if (id >= entities.size()) {
+      return mb::error("invalid entity id");
+   }
    return entities.at(id);
 }
 

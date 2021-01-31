@@ -1,5 +1,6 @@
-#include <minecpp/util/uuid.h>
 #include <cstring>
+#include <mb/result.h>
+#include <minecpp/util/uuid.h>
 
 namespace minecpp::util {
 
@@ -12,10 +13,19 @@ void decode_uuid(boost::uuids::uuid &dst, const char *src) {
    std::memcpy(dst.data, src, 16);
 }
 
-boost::uuids::uuid make_uuid(const char *src) {
-   boost::uuids::uuid result;
-   decode_uuid(result, src);
+mb::result<uuid> make_uuid(const std::string &id) {
+   if (id.size() != 16)
+      return mb::error("invalid uuid size");
+
+   uuid result;
+   decode_uuid(result, id.data());
    return result;
 }
 
+std::string uuid_to_string(uuid id) {
+   char data[17];
+   encode_uuid(data, id);
+   return std::string(data);
 }
+
+}// namespace minecpp::util

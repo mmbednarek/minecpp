@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
-#include <nbt/parser.h>
-#include <nbt/reader.h>
+#include <minecpp/nbt/parser.h>
+#include <minecpp/nbt/reader.h>
 
-using namespace NBT;
+using namespace minecpp::nbt;
 
 namespace {
 
@@ -11,7 +11,7 @@ TEST(NBT_Parser, TagByte) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
    auto tag = r.read_tag();
 
    ASSERT_EQ(tag.name, "Test");
@@ -24,7 +24,7 @@ TEST(NBT_Parser, TagShort) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
    auto tag = r.read_tag();
 
    ASSERT_EQ(tag.name, "Tests");
@@ -38,7 +38,7 @@ TEST(NBT_Parser, TagInt) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
    auto tag = r.read_tag();
 
    ASSERT_EQ(tag.name, "Tests1");
@@ -52,7 +52,7 @@ TEST(NBT_Parser, TagLong) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
    auto tag = r.read_tag();
 
    ASSERT_EQ(tag.name, "Tests1");
@@ -67,7 +67,7 @@ TEST(NBT_Parser, TagFloat) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
    auto tag = r.read_tag();
 
    ASSERT_EQ(tag.name, "AbsorptionAmount");
@@ -82,7 +82,7 @@ TEST(NBT_Parser, TagDouble) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
    auto tag = r.read_tag();
 
    ASSERT_EQ(tag.name, "BorderWarningTime");
@@ -96,7 +96,7 @@ TEST(NBT_Parser, MultipleTags) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag1 = r.read_tag();
    auto tag2 = r.read_tag();
@@ -113,7 +113,7 @@ TEST(NBT_Parser, NullTag) {
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
 
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag1 = r.read_tag();
    auto tag2 = r.read_tag();
@@ -128,7 +128,7 @@ TEST(NBT_Parser, ByteArrayTag) {
                0x00, 0x00, 0x05, 0x01, 0x02, 0x03, 0x04, 0x05};
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag = r.read_tag();
 
@@ -144,7 +144,7 @@ TEST(NBT_Parser, StringTag) {
                0x00, 0x05, 'v', 'a', 'l', 'u', 'e'};
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag = r.read_tag();
 
@@ -160,14 +160,14 @@ TEST(NBT_Parser, StringListTag) {
                0x07, 'm', 'i', 'n', 'e', 'c', 'p', 'p'};
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag = r.read_tag();
 
    std::vector<std::string> expected_vec{"vanilla", "minecpp"};
 
    ASSERT_EQ(tag.name, "ServerBrands");
-   ASSERT_EQ(tag.content.as<NBT::ListContent>().tag_id, NBT::TagId::String);
+   ASSERT_EQ(tag.content.as<ListContent>().tag_id, TagId::String);
    ASSERT_EQ(tag.content.as_vec<std::string>(), expected_vec);
    ASSERT_EQ(tag.content.to_string(), "[\n\t\"vanilla\",\n\t\"minecpp\"\n]");
 }
@@ -178,10 +178,10 @@ TEST(NBT_Parser, CompoundTag) {
                'u', 'f', 'f', 0x10, 0x20, 0x30, 0x40, 0x00};
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag = r.read_tag();
-   auto tag_map = tag.content.as<NBT::CompoundContent>();
+   auto tag_map = tag.content.as<CompoundContent>();
    auto &num_tag = tag_map["Num"];
    auto &stuff_tag = tag_map["Stuff"];
 
@@ -195,7 +195,7 @@ TEST(NBT_Parser, IntArrayTag) {
                0x00, 0x02, 0x01, 0x02, 0x03, 0x04, 0x10, 0x20, 0x30, 0x40};
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag = r.read_tag();
 
@@ -213,7 +213,7 @@ TEST(NBT_Parser, LongArrayTag) {
                0x30, 0x40, 0x50, 0x60, 0x70, (char) 0x80};
    auto stream = std::stringstream();
    stream.write(buff, sizeof(buff));
-   NBT::Parser r(stream);
+   Parser r(stream);
 
    auto tag = r.read_tag();
 

@@ -29,6 +29,7 @@ class EventHandler {
    void on_event(LoadTerrain &msg);
    void on_event(TransferPlayer &msg);
    void on_event(UpdatePlayerAbilities &msg);
+   void on_unload_chunk(UnloadChunk &msg);
 };
 
 } // namespace Front

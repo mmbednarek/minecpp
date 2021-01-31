@@ -2,7 +2,7 @@
 
 namespace minecpp::game {
 
-Player::Player(uuid id, std::string &name, Vec3 pos) : id(id), player_name(std::move(name)), tracking(pos, 4) {}
+Player::Player(uuid id, std::string &name, Vec3 pos) : id(id), player_name(std::move(name)), tracking(std::make_unique<Tracking>(pos, 8)) {}
 
 void Player::set_entity_id(uint32_t entity_id) { this->entity_id = entity_id; }
 
@@ -22,9 +22,13 @@ int Player::get_ping() const { return ping; }
 
 void Player::set_ping(int ping) { this->ping = ping; }
 
-void Player::on_movement(World &w, Vec3 pos) { tracking.on_movement(w, *this, pos); }
+void Player::on_movement(World &w, Vec3 pos) {
+   tracking->on_movement(w, *this, pos);
+}
 
-void Player::load_chunks(World &w) { tracking.load_chunks(w, *this); }
+mb::result<mb::empty> Player::load_chunks(World &w) {
+   return tracking->load_chunks(w, *this);
+}
 
 void Player::Abilities::as_proto(minecpp::player::Abilities *abilities) const {
    abilities->set_fly_speed(fly_speed);
@@ -50,4 +54,4 @@ uint32_t Player::Abilities::flags() {
    return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
 }
 
-} // namespace minecpp::game
+}// namespace minecpp::game

@@ -108,6 +108,12 @@ struct ChunkData {
 };
 Writer serialize(ChunkData msg);
 
+struct UnloadChunk {
+   mb::i32 chunk_x;
+   mb::i32 chunk_z;
+};
+Writer serialize(UnloadChunk msg);
+
 // 0x25
 struct UpdateLight {
    minecpp::chunk::NetChunk &chunk;

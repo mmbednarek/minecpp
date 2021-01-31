@@ -10,7 +10,7 @@ namespace Front {
 TickManager::TickManager(Server &server, const ChunkService &chunks) : server(server), chunk_service(chunks) {}
 
 constexpr int keep_alive_interval = 8000;
-constexpr int load_chunks_interval = 300;
+constexpr int load_chunks_interval = 5;
 
 [[noreturn]] void TickManager::tick() {
    uint64_t last_keep_alive = 0;
@@ -50,8 +50,8 @@ void TickManager::load_chunks() {
       grpc::ClientContext ctx;
       minecpp::chunk::NetChunk chunk;
       minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
-      load_chunk_request.set_x(std::get<0>(chunk_pos));
-      load_chunk_request.set_z(std::get<1>(chunk_pos));
+      load_chunk_request.set_x(chunk_pos.x);
+      load_chunk_request.set_z(chunk_pos.z);
 
       auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &chunk);
       if (!status.ok()) {

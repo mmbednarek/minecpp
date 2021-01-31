@@ -1,11 +1,13 @@
 #include <any>
-#include <error/result.h>
 #include <gtest/gtest.h>
-#include <mineutils/format.h>
-#include <mineutils/packed.h>
-#include <mineutils/loop.h>
+#include <minecpp/error/result.h>
+#include <minecpp/util/format.h>
+#include <minecpp/util/loop.h>
+#include <minecpp/util/packed.h>
+#include <minecpp/util/static_queue.h>
+#include <thread>
 
-TEST(Utils, Format) {
+TEST(minecpp_util, Format) {
    auto empty_format = minecpp::util::format("Hello!");
    ASSERT_EQ(empty_format, "Hello!");
    auto format_one = minecpp::util::format("Hello {}!", "World");
@@ -14,7 +16,7 @@ TEST(Utils, Format) {
    ASSERT_EQ(format_many, "Many values something, 14, 23.567.");
 }
 
-TEST(Utils, result) {
+TEST(minecpp_util, result) {
    auto do_stuff = [](int a, int b) -> result<int> {
       if (a == 0) {
          return error("a can't be zero");
@@ -83,7 +85,7 @@ TEST(Utils, result) {
    ASSERT_EQ(resTest3.msg(), "b can't be zero");
 }
 
-TEST(Utils, PackingTest) {
+TEST(minecpp_util, PackingTest) {
    int i = 0;
    auto data = minecpp::util::generate_packed(12, 4096, [&i]() -> uint32_t { return i++; });
 
@@ -93,11 +95,11 @@ TEST(Utils, PackingTest) {
    });
 }
 
-TEST(Utils, Around) {
+TEST(minecpp_util, Around) {
    char values[9];
    memset(values, 0, sizeof(char) * 9);
 
-   minecpp::util::around(1, 1, [&values] (int x, int z) {
+   minecpp::util::around(1, 1, [&values](int x, int z) {
       values[z * 3 + x] = 1;
    });
 
@@ -108,4 +110,20 @@ TEST(Utils, Around) {
    for (int x = 5; x < 9; ++x) {
       ASSERT_EQ(values[x], 1);
    }
+}
+
+TEST(minecpp_util, StaticQueue) {
+   minecpp::util::StaticQueue<int, 5> queue;
+
+   std::thread t1([&queue]() {
+      for (int i = 0; i < 100; ++i) {
+         queue.push(std::move(i));
+      }
+   });
+
+   for (int i = 0; i < 100; ++i) {
+      ASSERT_EQ(queue.pop(), i);
+   }
+
+   t1.join();
 }

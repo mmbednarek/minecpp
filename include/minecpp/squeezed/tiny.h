@@ -66,7 +66,7 @@ const std::vector<std::uint8_t> &TinyVec<bits>::raw() const {
 
 template<std::uint8_t bits>
 std::size_t TinyVec<bits>::size() const {
-   return 0;
+   return m_data.size() * 8 / bits;
 }
 
 template<std::uint8_t bits>

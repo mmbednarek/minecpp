@@ -1,7 +1,9 @@
 #pragma once
 #include "world.h"
+#include <mb/result.h>
 #include <minecpp/game/block/position.h>
 #include <minecpp/util/vec.h>
+#include <mutex>
 
 namespace minecpp::game {
 
@@ -10,15 +12,15 @@ using minecpp::util::Vec3;
 class Player;
 
 class Tracking {
-   Vec2 last_chunk_pos;
-   int radius_sq;
-   int radius;
-   int move_dist_sq;
+   std::mutex m_mutex{};
+   block::ChunkPos m_chunk_pos;
+   int m_radius_sq;
+   int m_radius;
 
  public:
    explicit Tracking(Vec3 position, int radius);
 
-   void load_chunks(World &w, Player &p);
+   mb::result<mb::empty> load_chunks(World &w, Player &p);
    void on_movement(World &w, Player &p, Vec3 position);
 };
 

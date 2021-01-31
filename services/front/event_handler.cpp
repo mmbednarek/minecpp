@@ -63,6 +63,11 @@ void EventHandler::accept_event(const minecpp::engine::Event &e) {
       pos.ParseFromString(e.data());
       on_event(pos);
    } break;
+   case Event::index_of<ENU("UnloadChunk")>(): {
+      UnloadChunk pos;
+      pos.ParseFromString(e.data());
+      on_unload_chunk(pos);
+   } break;
    }
 }
 
@@ -182,8 +187,8 @@ void EventHandler::on_event(RemovePlayer &msg) {
 
 void EventHandler::on_event(UpdateBlock &msg) {
    minecpp::network::message::BlockChange change{
-     .block_position = static_cast<mb::u64>(msg.block_position()),
-     .block_id = msg.state(),
+           .block_position = static_cast<mb::u64>(msg.block_position()),
+           .block_id = msg.state(),
    };
 
    server.for_each_connection([change](const std::shared_ptr<Connection> &conn) {
@@ -268,6 +273,15 @@ void EventHandler::on_event(UpdatePlayerAbilities &msg) {
                       .fly_speed = msg.fly_speed(),
                       .walk_speed = msg.walk_speed(),
               });
+}
+
+void EventHandler::on_unload_chunk(UnloadChunk &msg) {
+   if (auto res = minecpp::util::make_uuid(msg.uuid()); res.ok()) {
+      send(server.connection_by_id(res.unwrap()), minecpp::network::message::UnloadChunk{
+                                                          .chunk_x = msg.x(),
+                                                          .chunk_z = msg.z(),
+                                                  });
+   }
 }
 
 }// namespace Front

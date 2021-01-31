@@ -84,3 +84,9 @@ message UpdatePlayerAbilities {
     float walk_speed = 7;
     float fly_speed = 8;
 }
+
+message UnloadChunk {
+    bytes uuid = 1;
+    int32 x = 2;
+    int32 z = 3;
+}

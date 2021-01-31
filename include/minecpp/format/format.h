@@ -32,9 +32,9 @@ class Builder {
  public:
    Builder();
 
-   void text(std::string_view s);
-   void text(Color c, std::string_view s);
-   void bold(Color c, std::string_view s);
+   Builder &text(std::string_view s);
+   Builder &text(Color c, std::string_view s);
+   Builder &bold(Color c, std::string_view s);
 
    std::string build();
 

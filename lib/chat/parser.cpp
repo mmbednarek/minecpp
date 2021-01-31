@@ -19,7 +19,7 @@ static TokenType deduce_type(std::string_view value) {
    bool numeric = true;
    int dots = 0;
    for (const auto &ch : value) {
-      if ((ch < '0' || ch > '9') && ch != '.') {
+      if ((ch < '0' || ch > '9') && ch != '.' && ch != '-') {
          numeric = false;
       }
 
@@ -61,12 +61,12 @@ std::vector<Token> lex(std::string_view command) {
    return result;
 }
 
-ParsingResult parse(std::vector<Token> &tokens) {
+mb::result<Command> parse(std::vector<Token> &tokens) {
    if (tokens.empty()) {
-      return "no tokens provided";
+      return mb::error("no tokens provided");
    }
    if (tokens[0].type != TokenType::Identifier) {
-      return "command name must be an identifier";
+      return mb::error("command name must be an identifier");
    }
 
    Command result{

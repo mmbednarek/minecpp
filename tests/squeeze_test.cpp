@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include<squeeze/vector.h>
+#include <minecpp/squeezed/vector.h>
 
 TEST(Squeeze, vec) {
    auto gen_vec = [](std::size_t size) -> std::vector<int> {
@@ -11,7 +11,7 @@ TEST(Squeeze, vec) {
    };
 
    for (int s = 5; s < 20; ++s) {
-      Squeeze::Vector vec(5, gen_vec(s));
+      minecpp::squeezed::Vector vec(5, gen_vec(s));
 
       ASSERT_EQ(vec.size(), s);
 
@@ -38,7 +38,7 @@ TEST(Squeeze, set_test) {
      return result;
    };
 
-   Squeeze::Vector vec(4, gen_vec(5));
+   minecpp::squeezed::Vector vec(4, gen_vec(5));
    vec.set(2, 300);
    ASSERT_EQ(vec.bits(), 9);
 }

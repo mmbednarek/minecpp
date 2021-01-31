@@ -9,34 +9,33 @@ World::World(uuid engine_id, const Engine::ChunkService &service, Dispatcher &di
 
 minecpp::game::Notifier &World::notifier() { return dispatcher; }
 
-result<empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
+mb::result<mb::empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
    using minecpp::chunk_storage::ReferenceStatus;
 
    grpc::ClientContext ctx;
    minecpp::chunk_storage::AddReferencesRequest req;
-   minecpp::chunk_storage::AddReferencesResponse res;
+   minecpp::chunk_storage::AddReferencesResponse result;
 
-   req.set_player_id(player.data, player.size());
+   req.set_player_id(minecpp::util::uuid_to_string(player));
+   req.set_engine_id(minecpp::util::uuid_to_string(engine_id));
    for (auto const &c : refs) {
       auto new_coord = req.add_coords();
       new_coord->set_x(c.x);
       new_coord->set_z(c.z);
    }
-   auto status = service->AddReferences(&ctx, req, &res);
+   auto status = service->AddReferences(&ctx, req, &result);
    if (!status.ok()) {
-      return error(errclass::Internal, status.error_message());
+      return mb::error(mb::error::status::Internal, status.error_message());
    }
 
-   if (res.status() == ReferenceStatus::MUST_MOVE) {
-      uuid target_engine{};
-      minecpp::util::decode_uuid(target_engine, res.target_engine_id().data());
-      dispatcher.transfer_player(player, target_engine);
+   if (result.status() == ReferenceStatus::MUST_MOVE) {
+      dispatcher.transfer_player(player, MB_TRY(minecpp::util::make_uuid(result.target_engine_id())));
    }
 
-   return result_ok;
+   return mb::ok;
 }
 
-result<empty> World::free_refs(uuid player, std::vector<ChunkPos> refs) {
+mb::result<mb::empty> World::free_refs(uuid player, std::vector<ChunkPos> refs) {
    grpc::ClientContext ctx;
    minecpp::chunk_storage::RemoveReferencesRequest req;
    minecpp::chunk_storage::EmptyResponse res;
@@ -50,13 +49,13 @@ result<empty> World::free_refs(uuid player, std::vector<ChunkPos> refs) {
 
    auto status = service->RemoveReference(&ctx, req, &res);
    if (!status.ok()) {
-      return error(errclass::Internal, status.error_message());
+      return mb::error(mb::error::status::Internal, status.error_message());
    }
 
-   return result_ok;
+   return mb::ok;
 }
 
-result<int> World::height_at(int x, int z) {
+mb::result<int> World::height_at(int x, int z) {
    grpc::ClientContext ctx;
    minecpp::chunk_storage::HeightAtRequest req;
    minecpp::chunk_storage::HeightAtResponse res;
@@ -64,7 +63,7 @@ result<int> World::height_at(int x, int z) {
    req.set_z(z);
    auto status = service->HeightAt(&ctx, req, &res);
    if (!status.ok()) {
-      return error(status.error_message());
+      return mb::error(status.error_message());
    }
    return res.height();
 }

@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
-#include <minerandom/java_random.h>
-#include <minerandom/perlin.h>
-#include <minerandom/perlin3d.h>
+#include <minecpp/random/java_random.h>
+#include <minecpp/random/perlin.h>
+#include <minecpp/random/perlin3d.h>
 
 TEST(Rand, JavaRandom) {
-   Rand::JavaRandom r(1234);
+   minecpp::random::JavaRandom r(1234);
    int v;
    v = r.next_int(12);
    ASSERT_EQ(v, 8);
@@ -15,8 +15,8 @@ TEST(Rand, JavaRandom) {
 }
 
 TEST(Rand, JavaRandomTwins) {
-   Rand::JavaRandom a(2151901553968352745);
-   Rand::JavaRandom b(8091867987493326313);
+   minecpp::random::JavaRandom a(2151901553968352745);
+   minecpp::random::JavaRandom b(8091867987493326313);
    for (int i = 0; i < 256; ++i) {
       ASSERT_EQ(a.next_int(), b.next_int());
    }
@@ -54,8 +54,8 @@ static char level_to_char(double v) {
 }
 
 TEST(Rand, Perlin) {
-   Rand::JavaRandom rand(8091867987493326313);
-   Rand::Perlin perlin(rand);
+   minecpp::random::JavaRandom rand(8091867987493326313);
+   minecpp::random::Perlin perlin(rand);
 
    double avg = 0.0;
    double min = 1000;
@@ -86,8 +86,8 @@ TEST(Rand, Perlin) {
 }
 
 TEST(Rand, Perlin3d) {
-   Rand::JavaRandom rand(8091867987493326313);
-   Rand::Perlin3d perlin(rand);
+   minecpp::random::JavaRandom rand(8091867987493326313);
+   minecpp::random::Perlin3d perlin(rand);
 
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {
@@ -99,11 +99,11 @@ TEST(Rand, Perlin3d) {
 }
 
 TEST(Rand, DisplacedPerlin) {
-   Rand::JavaRandom rand(8091867987493326313);
-   Rand::DisplacedPerlin perlin(rand, 2.0, 1.0);
+   minecpp::random::JavaRandom rand(8091867987493326313);
+   minecpp::random::DisplacedPerlin perlin(rand, 2.0, 1.0);
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {
-         auto value = perlin.at(minecpp::util::Vec2(z, x) / 16.0) + 1;
+         auto value = perlin.at(minecpp::util::Vec2(x, z) / 16.0) + 1;
          std::cerr << level_to_char(value);
       }
       std::cerr << '\n';

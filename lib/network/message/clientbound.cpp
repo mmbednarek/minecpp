@@ -1,6 +1,6 @@
-#include <minecpp/network/message/clientbound.h>
-#include <minecpp/network/message/chunk.h>
 #include <mb/int.h>
+#include <minecpp/network/message/chunk.h>
+#include <minecpp/network/message/clientbound.h>
 
 namespace minecpp::network::message {
 
@@ -109,6 +109,15 @@ Writer serialize(EntityStatus msg) {
    w.write_byte(0x1a);
    w.write_big_endian(msg.entity_id);
    w.write_byte(msg.opcode);
+   return w;
+}
+
+Writer serialize(UnloadChunk msg) {
+   // 1.16.5 ok
+   Writer w;
+   w.write_byte(0x1c);
+   w.write_big_endian(msg.chunk_x);
+   w.write_big_endian(msg.chunk_z);
    return w;
 }
 
@@ -329,4 +338,4 @@ Writer serialize(UpdateChunkPosition msg) {
    return w;
 }
 
-}// namespace minecpp::network::Message
+}// namespace minecpp::network::message

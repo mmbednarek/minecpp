@@ -6,8 +6,10 @@
 #include <boost/asio/streambuf.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <memory>
+#include <minecpp/game/block/position.h>
 #include <minecpp/network/message/io.h>
 #include <minecpp/network/message/message.h>
+#include <minecpp/util/static_queue.h>
 #include <queue>
 #include <spdlog/spdlog.h>
 #include <tuple>
@@ -57,12 +59,12 @@ class Connection {
    [[nodiscard]] const boost::uuids::uuid &get_uuid() const;
 
    void push_chunk(int x, int z);
-   std::tuple<int, int> pop_chunk();
+   minecpp::game::block::ChunkPos pop_chunk();
    bool has_chunks();
 
  private:
    inline size_t read_varint(uint32_t result, uint32_t shift);
-   std::queue<std::tuple<int, int>> chunk_queue;
+   minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
 
    boost::uuids::uuid player_id{};
    boost::uuids::uuid engine_service_id{};
@@ -75,21 +77,22 @@ class Connection {
    Server *server;
 };
 
-template <typename M> void send(const Connection::Ptr &conn, M msg) {
+template<typename M>
+void send(const Connection::Ptr &conn, M msg) {
    auto w = minecpp::network::message::serialize(msg);
    conn->send(conn, w);
 }
 
-template <typename M>
+template<typename M>
 void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h) {
    auto w = minecpp::network::message::serialize(msg);
    conn->send_and_read(conn, w, h);
 }
 
-template <typename M>
+template<typename M>
 void send_and_disconnect(const Connection::Ptr &conn, M msg) {
    auto w = minecpp::network::message::serialize(msg);
    conn->send_and_disconnect(conn, w);
 }
 
-} // namespace Front
+}// namespace Front

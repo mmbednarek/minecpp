@@ -47,7 +47,7 @@ struct TableStruct_events_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -89,6 +89,9 @@ extern SpawnPlayerDefaultTypeInternal _SpawnPlayer_default_instance_;
 class TransferPlayer;
 class TransferPlayerDefaultTypeInternal;
 extern TransferPlayerDefaultTypeInternal _TransferPlayer_default_instance_;
+class UnloadChunk;
+class UnloadChunkDefaultTypeInternal;
+extern UnloadChunkDefaultTypeInternal _UnloadChunk_default_instance_;
 class UpdateBlock;
 class UpdateBlockDefaultTypeInternal;
 extern UpdateBlockDefaultTypeInternal _UpdateBlock_default_instance_;
@@ -109,6 +112,7 @@ template<> ::minecpp::events::PlayerPositionRotation* Arena::CreateMaybeMessage<
 template<> ::minecpp::events::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::events::RemovePlayer>(Arena*);
 template<> ::minecpp::events::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::events::SpawnPlayer>(Arena*);
 template<> ::minecpp::events::TransferPlayer* Arena::CreateMaybeMessage<::minecpp::events::TransferPlayer>(Arena*);
+template<> ::minecpp::events::UnloadChunk* Arena::CreateMaybeMessage<::minecpp::events::UnloadChunk>(Arena*);
 template<> ::minecpp::events::UpdateBlock* Arena::CreateMaybeMessage<::minecpp::events::UpdateBlock>(Arena*);
 template<> ::minecpp::events::UpdatePlayerAbilities* Arena::CreateMaybeMessage<::minecpp::events::UpdatePlayerAbilities>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -2348,6 +2352,172 @@ class UpdatePlayerAbilities PROTOBUF_FINAL :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_events_2eproto;
 };
+// -------------------------------------------------------------------
+
+class UnloadChunk PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.events.UnloadChunk) */ {
+ public:
+  inline UnloadChunk() : UnloadChunk(nullptr) {}
+  virtual ~UnloadChunk();
+
+  UnloadChunk(const UnloadChunk& from);
+  UnloadChunk(UnloadChunk&& from) noexcept
+    : UnloadChunk() {
+    *this = ::std::move(from);
+  }
+
+  inline UnloadChunk& operator=(const UnloadChunk& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UnloadChunk& operator=(UnloadChunk&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const UnloadChunk& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const UnloadChunk* internal_default_instance() {
+    return reinterpret_cast<const UnloadChunk*>(
+               &_UnloadChunk_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  friend void swap(UnloadChunk& a, UnloadChunk& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UnloadChunk* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UnloadChunk* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline UnloadChunk* New() const final {
+    return CreateMaybeMessage<UnloadChunk>(nullptr);
+  }
+
+  UnloadChunk* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<UnloadChunk>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const UnloadChunk& from);
+  void MergeFrom(const UnloadChunk& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UnloadChunk* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.events.UnloadChunk";
+  }
+  protected:
+  explicit UnloadChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_events_2eproto);
+    return ::descriptor_table_events_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUuidFieldNumber = 1,
+    kXFieldNumber = 2,
+    kZFieldNumber = 3,
+  };
+  // bytes uuid = 1;
+  void clear_uuid();
+  const std::string& uuid() const;
+  void set_uuid(const std::string& value);
+  void set_uuid(std::string&& value);
+  void set_uuid(const char* value);
+  void set_uuid(const void* value, size_t size);
+  std::string* mutable_uuid();
+  std::string* release_uuid();
+  void set_allocated_uuid(std::string* uuid);
+  private:
+  const std::string& _internal_uuid() const;
+  void _internal_set_uuid(const std::string& value);
+  std::string* _internal_mutable_uuid();
+  public:
+
+  // int32 x = 2;
+  void clear_x();
+  ::PROTOBUF_NAMESPACE_ID::int32 x() const;
+  void set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_x() const;
+  void _internal_set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // int32 z = 3;
+  void clear_z();
+  ::PROTOBUF_NAMESPACE_ID::int32 z() const;
+  void set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_z() const;
+  void _internal_set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.events.UnloadChunk)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uuid_;
+  ::PROTOBUF_NAMESPACE_ID::int32 x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 z_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_events_2eproto;
+};
 // ===================================================================
 
 
@@ -3893,9 +4063,117 @@ inline void UpdatePlayerAbilities::set_fly_speed(float value) {
   // @@protoc_insertion_point(field_set:minecpp.events.UpdatePlayerAbilities.fly_speed)
 }
 
+// -------------------------------------------------------------------
+
+// UnloadChunk
+
+// bytes uuid = 1;
+inline void UnloadChunk::clear_uuid() {
+  uuid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline const std::string& UnloadChunk::uuid() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UnloadChunk.uuid)
+  return _internal_uuid();
+}
+inline void UnloadChunk::set_uuid(const std::string& value) {
+  _internal_set_uuid(value);
+  // @@protoc_insertion_point(field_set:minecpp.events.UnloadChunk.uuid)
+}
+inline std::string* UnloadChunk::mutable_uuid() {
+  // @@protoc_insertion_point(field_mutable:minecpp.events.UnloadChunk.uuid)
+  return _internal_mutable_uuid();
+}
+inline const std::string& UnloadChunk::_internal_uuid() const {
+  return uuid_.Get();
+}
+inline void UnloadChunk::_internal_set_uuid(const std::string& value) {
+  
+  uuid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void UnloadChunk::set_uuid(std::string&& value) {
+  
+  uuid_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:minecpp.events.UnloadChunk.uuid)
+}
+inline void UnloadChunk::set_uuid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  
+  uuid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:minecpp.events.UnloadChunk.uuid)
+}
+inline void UnloadChunk::set_uuid(const void* value,
+    size_t size) {
+  
+  uuid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:minecpp.events.UnloadChunk.uuid)
+}
+inline std::string* UnloadChunk::_internal_mutable_uuid() {
+  
+  return uuid_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* UnloadChunk::release_uuid() {
+  // @@protoc_insertion_point(field_release:minecpp.events.UnloadChunk.uuid)
+  return uuid_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void UnloadChunk::set_allocated_uuid(std::string* uuid) {
+  if (uuid != nullptr) {
+    
+  } else {
+    
+  }
+  uuid_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uuid,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:minecpp.events.UnloadChunk.uuid)
+}
+
+// int32 x = 2;
+inline void UnloadChunk::clear_x() {
+  x_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UnloadChunk::_internal_x() const {
+  return x_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UnloadChunk::x() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UnloadChunk.x)
+  return _internal_x();
+}
+inline void UnloadChunk::_internal_set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  x_ = value;
+}
+inline void UnloadChunk::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:minecpp.events.UnloadChunk.x)
+}
+
+// int32 z = 3;
+inline void UnloadChunk::clear_z() {
+  z_ = 0;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UnloadChunk::_internal_z() const {
+  return z_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 UnloadChunk::z() const {
+  // @@protoc_insertion_point(field_get:minecpp.events.UnloadChunk.z)
+  return _internal_z();
+}
+inline void UnloadChunk::_internal_set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  
+  z_ = value;
+}
+inline void UnloadChunk::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:minecpp.events.UnloadChunk.z)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

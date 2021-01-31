@@ -6,29 +6,32 @@ Builder::Builder() { stream << "{\"extra\":["; }
 
 // TODO: Escape characters
 
-void Builder::text(std::string_view s) {
+Builder &Builder::text(std::string_view s) {
    if (!first) {
       stream << ",";
    }
    stream << R"({"color":"white","text":")" << s << "\"}";
    first = false;
+   return *this;
 }
 
-void Builder::text(Color c, std::string_view s) {
+Builder &Builder::text(Color c, std::string_view s) {
    if (!first) {
       stream << ",";
    }
    stream << R"({"color":")" << color_to_str(c) << R"(","text":")" << s << "\"}";
    first = false;
+   return *this;
 }
 
-void Builder::bold(Color c, std::string_view s) {
+Builder &Builder::bold(Color c, std::string_view s) {
    if (!first) {
       stream << ",";
    }
    stream << R"({"color":")" << color_to_str(c) << R"(","bold":true,"text":")"
           << s << "\"}";
    first = false;
+   return *this;
 }
 
 std::string Builder::build() {

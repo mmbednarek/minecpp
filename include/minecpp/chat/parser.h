@@ -1,11 +1,14 @@
 #pragma once
+#include <mb/result.h>
 #include <string>
 #include <variant>
 #include <vector>
 
 namespace minecpp::chat {
 
-enum class TokenType { Identifier, Integer, Float };
+enum class TokenType { Identifier,
+                       Integer,
+                       Float };
 
 struct Token {
    TokenType type;
@@ -20,9 +23,7 @@ struct Command {
    std::vector<Argument> args;
 };
 
-using ParsingResult = std::variant<Command, std::string>;
-
 std::vector<Token> lex(std::string_view command);
-ParsingResult parse(std::vector<Token> &tokens);
+mb::result<Command> parse(std::vector<Token> &tokens);
 
-} // namespace minecpp::chat
+}// namespace minecpp::chat

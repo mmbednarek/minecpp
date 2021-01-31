@@ -502,13 +502,13 @@ void generate_header(Structure &s, std::ostream &output) {
    ScriptWriter w(output);
    w.line("// Generated using ProtoNBT generator");
    w.line("#pragma once");
+   w.line("#include <iostream>");
+   w.line("#include <map>");
+   w.line("#include <mb/result.h>");
+   w.line("#include <minecpp/nbt/writer.h>");
+   w.line("#include <minecpp/nbt/reader.h>");
    w.line("#include <string>");
    w.line("#include <vector>");
-   w.line("#include <nbt/writer.h>");
-   w.line("#include <nbt/reader.h>");
-   w.line("#include <map>");
-   w.line("#include <iostream>");
-   w.line("#include <error/result.h>");
    w.line();
    w.flat_scope("namespace {}", s.package);
    w.line();

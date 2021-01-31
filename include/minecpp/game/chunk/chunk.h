@@ -1,7 +1,7 @@
 #pragma once
 #include "section.h"
 #include <boost/uuid/uuid.hpp>
-#include <minecpp/error/result.h>
+#include <mb/result.h>
 #include <minecpp/game/block/position.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
@@ -25,7 +25,7 @@ struct Chunk {
    Chunk();
    Chunk(int x, int z, std::array<short, 256> &height_map);
 
-   result<empty> load(nbt::Reader &r, nbt::TagId tagid, const std::string &name);
+   mb::result<mb::empty> load(nbt::Reader &r, nbt::TagId tagid, const std::string &name);
    void as_proto(minecpp::chunk::NetChunk *chunk);
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, uint32_t state);
@@ -41,7 +41,7 @@ struct Chunk {
    void free_ref(uuid player_id);
    block::ChunkPos pos() const;
 
-   static result<std::unique_ptr<Chunk>> from_nbt(nbt::Reader &r);
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(nbt::Reader &r);
 };
 
 struct PaletteItem {

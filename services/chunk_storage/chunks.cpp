@@ -1,8 +1,8 @@
 #include "chunks.h"
-#include <minecpp/error/result.h>
 #include <minecpp/game/block/position.h>
-#include <minecpp/util/compression.h>
 #include <minecpp/region/reader.h>
+#include <minecpp/util/compression.h>
+#include <spdlog/spdlog.h>
 
 namespace ChunkStorage {
 
@@ -25,22 +25,21 @@ minecpp::game::Chunk &ChunkManager::get_incomplete_chunk(int x, int z) {
    return *iter->second;
 }
 
-result<minecpp::game::Chunk &> ChunkManager::get_chunk(int x, int z) {
+mb::result<minecpp::game::Chunk &> ChunkManager::get_chunk(int x, int z) {
    auto iter = chunks.find(hash_chunk_pos(x, z));
    if (iter != chunks.end() && iter->second->full) {
       return *iter->second;
    }
-
    return load_chunk(x, z);
 }
 
-result<minecpp::game::Chunk &> ChunkManager::get_chunk(minecpp::game::block::ChunkPos pos) {
+mb::result<minecpp::game::Chunk &> ChunkManager::get_chunk(minecpp::game::block::ChunkPos pos) {
    return get_chunk(pos.x, pos.z);
 }
 
-result<minecpp::game::Chunk &> ChunkManager::load_chunk(int x, int z) {
+mb::result<minecpp::game::Chunk &> ChunkManager::load_chunk(int x, int z) {
    /*
-   auto data = tryget(regions.read_chunk(x, z));
+   auto data = MB_TRY(regions.read_chunk(x, z));
    auto chunk_data = std::any_cast<std::vector<uint8_t>>(data);
    std::istringstream compressed_stream(std::string((char *) chunk_data.data(), chunk_data.size()));
 
@@ -49,14 +48,19 @@ result<minecpp::game::Chunk &> ChunkManager::load_chunk(int x, int z) {
    cr.check_signature();
    cr.find_compound("Level");
 
-   auto chunk = tryget(minecpp::game::Chunk::from_nbt(cr));
+   auto chunk = MB_TRY(minecpp::game::Chunk::from_nbt(cr));
     */
    gen.generate_chunk(x, z);
-   auto iter = chunks.find(hash_chunk_pos(x, z));
-   return *iter->second;
+   auto &chunk = chunks.at(hash_chunk_pos(x, z));
+   for (const auto &sec : chunk->sections) {
+      if (!sec.second.sky_light.empty() && sec.second.sky_light.size() != 4096) {
+         spdlog::error("KURWA");
+      }
+   }
+   return *chunk;
 }
 
-result<empty> ChunkManager::set_block(int x, int y, int z, uint32_t state) {
+mb::result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t state) {
    minecpp::game::block::Position pos(x, y, z);
    auto chunk_pos = pos.chunk_pos();
    auto hashed_pos = hash_chunk_pos(chunk_pos.x, chunk_pos.z);
@@ -68,13 +72,13 @@ result<empty> ChunkManager::set_block(int x, int y, int z, uint32_t state) {
    }
 
    chunks[hashed_pos]->set_block(pos.offset_x(), y, pos.offset_z(), state);
-   return result_ok;
+   return mb::ok;
 }
 
-result<uuid> ChunkManager::add_refs(uuid engine_id, uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords) {
+mb::result<uuid> ChunkManager::add_refs(uuid engine_id, uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords) {
    uuid target_engine{};
    for (const auto &coord : coords) {
-      auto chunk = tryget(get_chunk(coord.x, coord.z));
+      auto chunk = MB_TRY(get_chunk(coord.x, coord.z));
       if (!chunk.add_ref(engine_id, player_id)) {
          target_engine = chunk.get_lock();
       }
@@ -82,15 +86,15 @@ result<uuid> ChunkManager::add_refs(uuid engine_id, uuid player_id, std::vector<
    return target_engine;
 }
 
-result<empty> ChunkManager::free_refs(uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords) {
+mb::result<mb::empty> ChunkManager::free_refs(uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords) {
    for (const auto &coord : coords) {
-      auto chunk = tryget(get_chunk(coord.x, coord.z));
+      auto chunk = MB_TRY(get_chunk(coord.x, coord.z));
       chunk.free_ref(player_id);
    }
-   return result_ok;
+   return mb::ok;
 }
 
-result<int> ChunkManager::height_at(int x, int z) {
+mb::result<int> ChunkManager::height_at(int x, int z) {
    auto res = get_chunk(minecpp::game::block::Position(x, 0, z).chunk_pos());
    if (!res.ok()) {
       return res.err();
@@ -98,12 +102,12 @@ result<int> ChunkManager::height_at(int x, int z) {
    return res.unwrap().height_at(x, z);
 }
 
-result<empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<minecpp::game::Chunk> chunk) {
+mb::result<mb::empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<minecpp::game::Chunk> chunk) {
    chunks[hash_chunk_pos(x, z)] = std::move(chunk);
-   return result_ok;
+   return mb::ok;
 }
 
-result<minecpp::game::ChunkState> ChunkManager::get_chunk_state(int x, int z) {
+mb::result<minecpp::game::ChunkState> ChunkManager::get_chunk_state(int x, int z) {
    auto iter = chunks.find(hash_chunk_pos(x, z));
    if (iter == chunks.end()) {
       return minecpp::game::ChunkState::ABSENT;

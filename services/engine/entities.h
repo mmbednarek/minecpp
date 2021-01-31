@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
+#include <mb/result.h>
 #include <minecpp/game/entity/entity.h>
+#include <vector>
 
 namespace Engine {
 
@@ -14,7 +15,7 @@ class EntityManager {
  public:
    // NOTICE: Entity is moved
    EntityId spawn(Entity e);
-   Entity &get_entity(EntityId id);
+   mb::result<Entity &> get_entity(EntityId id);
 };
 
-}
+}// namespace Engine

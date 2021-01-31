@@ -1,9 +1,9 @@
 #pragma once
 #include "dispatcher.h"
 #include <boost/uuid/uuid.hpp>
+#include <mb/result.h>
 #include <minecpp/game/world.h>
 #include <minepb/chunk_storage.grpc.pb.h>
-#include <minecpp/error/result.h>
 
 namespace Engine {
 
@@ -21,9 +21,9 @@ class World : public minecpp::game::World {
    World(uuid engine_id, const ChunkService &service, Dispatcher &dispatcher);
 
    minecpp::game::Notifier &notifier() override;
-   result<empty> add_refs(uuid player, std::vector<ChunkPos> refs) override;
-   result<empty> free_refs(uuid player, std::vector<ChunkPos> refs) override;
-   result<int> height_at(int x, int z) override;
+   mb::result<mb::empty> add_refs(uuid player, std::vector<ChunkPos> refs) override;
+   mb::result<mb::empty> free_refs(uuid player, std::vector<ChunkPos> refs) override;
+   mb::result<int> height_at(int x, int z) override;
 };
 
-} // namespace Engine
+}// namespace Engine

@@ -8,6 +8,7 @@
 #include <minecpp/game/block/position.h>
 #include <minecpp/game/dimension.h>
 #include <minecpp/network/chat.h>
+#include <minecpp/util/grpc.h>
 #include <minecpp/util/uuid.h>
 #include <minepb/events.pb.h>
 #include <spdlog/spdlog.h>
@@ -23,23 +24,12 @@ Service::Service(EntityManager &entities, PlayerManager &players, const ChunkSer
 
 grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::engine::AcceptPlayerRequest *request,
                                    minecpp::engine::AcceptPlayerResponse *response) {
-   if (request->uuid().size() != 16) {
-      return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "invalid uuid length");
-   }
+   auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
 
-
-   boost::uuids::uuid player_id{};
-   minecpp::util::decode_uuid(player_id, request->uuid().data());
-
-   try {
-      players.join_player(world, request->name(), player_id);
-   } catch (std::runtime_error &e) {
-      spdlog::error("could not join player: {}", e.what());
-      return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
-   }
-
-   auto &player = players.get_player(player_id);
-   auto &player_entity = entities.get_entity(player.get_entity_id());
+   MCPP_GRPC_TRY(players.join_player(world, request->name(), player_id));
+   auto &player = MCPP_GRPC_TRY(players.get_player(player_id));
+   auto &player_entity = MCPP_GRPC_TRY(entities.get_entity(player.get_entity_id()));
+   auto player_pos = player_entity.get_pos();
 
    response->set_state(minecpp::engine::AcceptPlayerResponse_PlayerAcceptState_ACCEPTED);
    response->set_area_id(0);// TODO: Put actual node id
@@ -54,7 +44,6 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
 
    response->mutable_player_data()->set_entity_id(player.get_entity_id());
    response->mutable_player_data()->set_game_mode(static_cast<minecpp::game::GameMode>(player.get_game_mode()));
-   auto player_pos = player_entity.get_pos();
    response->mutable_player_data()->set_x(player_pos.x);
    response->mutable_player_data()->set_y(player_pos.y);
    response->mutable_player_data()->set_z(player_pos.z);
@@ -64,26 +53,9 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
    player.get_abilities().as_proto(response->mutable_player_data()->mutable_abilities());
    player.get_recipe_book().as_proto(response->mutable_player_data()->mutable_recipe_book());
 
-   minecpp::events::AddPlayer add_player;
-   add_player.set_uuid(player_id.data, player_id.size());
-   add_player.set_name(request->name());
-   add_player.set_ping(player.get_ping());
-   event_manager.post(add_player);
-
-   minecpp::events::SpawnPlayer spawn_player;
-   spawn_player.set_uuid(player_id.data, player_id.size());
-   spawn_player.set_id(player.get_entity_id());
-   spawn_player.set_x(player_pos.x);
-   spawn_player.set_y(player_pos.y);
-   spawn_player.set_z(player_pos.z);
-   spawn_player.set_yaw(player_entity.get_yaw());
-   spawn_player.set_z(player_entity.get_pitch());
-   event_manager.post(spawn_player);
-
-   minecpp::events::Chat chat;
-   chat.set_type(1);
-   chat.set_message(minecpp::network::format_join_message(request->name()));
-   event_manager.post(chat);
+   dispatcher.add_player(player_id, request->name(), player.get_ping());
+   dispatcher.spawn_player(player_id, player.get_entity_id(), player_pos, player_entity.get_yaw(), player_entity.get_pitch());
+   dispatcher.send_chat(1, minecpp::network::format_join_message(request->name()));
 
    return grpc::Status();
 }
@@ -91,18 +63,12 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
 grpc::Status Service::SetPlayerPosition(grpc::ServerContext *context,
                                         const minecpp::engine::SetPlayerPositionRequest *request,
                                         minecpp::engine::EmptyResponse *response) {
-   boost::uuids::uuid player_id{};
-   minecpp::util::decode_uuid(player_id, request->uuid().data());
+   auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
+   auto &player_entity = MCPP_GRPC_TRY(players.get_entity(player_id));
+   auto player_pos = minecpp::util::Vec3(request->x(), request->y(), request->z());
 
-   try {
-      auto &e = players.get_entity(player_id);
-      auto pos = minecpp::util::Vec3(request->x(), request->y(), request->z());
-      e.set_pos(dispatcher, pos);
-      players.get_player(player_id).on_movement(world, pos);
-   } catch (std::runtime_error &e) {
-      spdlog::error("error setting player pos: {}", e.what());
-      return grpc::Status(grpc::StatusCode::NOT_FOUND, "player not found");
-   }
+   player_entity.set_pos(dispatcher, player_pos);
+   MCPP_GRPC_TRY(players.get_player(player_id)).on_movement(world, player_pos);
 
    return grpc::Status();
 }
@@ -110,47 +76,31 @@ grpc::Status Service::SetPlayerPosition(grpc::ServerContext *context,
 grpc::Status Service::SetPlayerRotation(grpc::ServerContext *context,
                                         const minecpp::engine::SetPlayerRotationRequest *request,
                                         minecpp::engine::EmptyResponse *response) {
-   boost::uuids::uuid player_id{};
-   minecpp::util::decode_uuid(player_id, request->uuid().data());
+   auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
 
-   try {
-      auto &e = players.get_entity(player_id);
-      e.set_rot(request->yaw(), request->pitch());
-
-      minecpp::events::EntityLook event;
-      event.set_id(e.get_id());
-      event.set_uuid(player_id.data, player_id.size());
-      event.set_yaw(e.get_yaw());
-      event.set_pitch(e.get_pitch());
-      event_manager.post(event);
-   } catch (std::runtime_error &e) {
-      spdlog::error("error setting player pos: {}", e.what());
-      return grpc::Status(grpc::StatusCode::NOT_FOUND, "player not found");
-   }
+   auto &player_entity = MCPP_GRPC_TRY(players.get_entity(player_id));
+   player_entity.set_rot(request->yaw(), request->pitch());
+   dispatcher.entity_look(player_id, player_entity.get_id(), player_entity.get_yaw(), player_entity.get_pitch());
 
    return grpc::Status();
 }
 
 grpc::Status Service::ChatMessage(grpc::ServerContext *context, const minecpp::engine::ChatMessageRequest *request,
                                   minecpp::engine::EmptyResponse *response) {
-   boost::uuids::uuid player_id{};
-   minecpp::util::decode_uuid(player_id, request->uuid().data());
+   auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
 
    if (request->message().empty()) {
       return grpc::Status();
    }
 
    if (request->message()[0] == '/') {
-      handle_command(player_id, request->message().substr(1));
+      MCPP_GRPC_TRY(handle_command(player_id, request->message().substr(1)));
       return grpc::Status();
    }
 
-   auto &p = players.get_player(player_id);
-   minecpp::events::Chat chat;
-   chat.set_type(0);
-   chat.set_message(minecpp::network::format_chat_message(p.get_player_name(), request->message()));
-   event_manager.post(chat);
-
+   auto &p = MCPP_GRPC_TRY(players.get_player(player_id));
+   spdlog::info("[{}] {}", p.get_player_name(), request->message());
+   dispatcher.send_chat(0, minecpp::network::format_chat_message(p.get_player_name(), request->message()));
    return grpc::Status();
 }
 
@@ -172,22 +122,23 @@ grpc::Status Service::ListPlayers(grpc::ServerContext *context, const minecpp::e
 grpc::Status Service::ListPlayerEntities(grpc::ServerContext *context, const minecpp::engine::EmptyRequest *request,
                                          minecpp::engine::ListPlayerEntitiesResponse *response) {
    players.for_each_player([this, response](minecpp::game::Player &p) {
-      auto &e = entities.get_entity(p.get_entity_id());
+      auto id = p.get_id();
+
+      auto player_entity_res = entities.get_entity(p.get_entity_id());
+      if (!player_entity_res.ok()) {
+         return;
+      }
+      auto &player_entity = player_entity_res.unwrap();
+      auto entity_pos = player_entity.get_pos();
 
       minecpp::engine::PlayerEntityData data;
-
-      auto id = p.get_id();
       data.set_uuid(id.data, id.size());
-
       data.set_entity_id(p.get_entity_id());
-
-      auto entity_pos = e.get_pos();
       data.set_x(entity_pos.x);
       data.set_y(entity_pos.y);
       data.set_z(entity_pos.z);
-
-      data.set_yaw(e.get_yaw());
-      data.set_pitch(e.get_pitch());
+      data.set_yaw(player_entity.get_yaw());
+      data.set_pitch(player_entity.get_pitch());
 
       response->mutable_list()->Add(std::forward<minecpp::engine::PlayerEntityData>(data));
    });
@@ -196,22 +147,14 @@ grpc::Status Service::ListPlayerEntities(grpc::ServerContext *context, const min
 
 grpc::Status Service::RemovePlayer(grpc::ServerContext *context, const minecpp::engine::RemovePlayerRequest *request,
                                    minecpp::engine::EmptyResponse *response) {
-   boost::uuids::uuid id{};
-   minecpp::util::decode_uuid(id, request->uuid().data());
+   auto id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
+   auto &player = MCPP_GRPC_TRY(players.get_player(id));
 
-   auto player = players.get_player(id);
-
-   minecpp::events::Chat chat;
-   chat.set_type(1);
-   chat.set_message(minecpp::network::format_left_message(player.get_player_name()));
-   event_manager.post(chat);
-
-   minecpp::events::RemovePlayer remove_player;
-   remove_player.set_uuid(request->uuid());
-   remove_player.set_entity_id(player.get_entity_id());
-   event_manager.post(remove_player);
+   dispatcher.send_chat(1, minecpp::network::format_left_message(player.get_player_name()));
+   dispatcher.remove_player(id, player.get_entity_id());
 
    players.remove_player(id);
+
    return grpc::Status();
 }
 grpc::Status Service::DestroyBlock(grpc::ServerContext *context, const minecpp::engine::DestroyBlockRequest *request,
@@ -228,36 +171,23 @@ grpc::Status Service::DestroyBlock(grpc::ServerContext *context, const minecpp::
       spdlog::error("set block error: {}", status.error_message());
    }
 
-   minecpp::game::block::Position pos(request->x(), request->y(), request->z());
-
-   minecpp::events::UpdateBlock update_block;
-   update_block.set_block_position(pos.as_long());
-   update_block.set_state(0);
-   event_manager.post(update_block);
-
+   dispatcher.update_block(request->x(), request->y(), request->z(), 0);
    return grpc::Status();
 }
 grpc::Status Service::UpdatePing(grpc::ServerContext *context, const minecpp::engine::UpdatePingRequest *request,
                                  minecpp::engine::EmptyResponse *response) {
    boost::uuids::uuid id{};
    minecpp::util::decode_uuid(id, request->uuid().data());
-   auto player = players.get_player(id);
+   auto &player = MCPP_GRPC_TRY(players.get_player(id));
    player.set_ping(request->ping());
    return grpc::Status();
 }
 
 grpc::Status Service::AnimateHand(grpc::ServerContext *context, const minecpp::engine::AnimateHandRequest *request,
                                   minecpp::engine::EmptyResponse *response) {
-   boost::uuids::uuid id{};
-   minecpp::util::decode_uuid(id, request->uuid().data());
-   auto player = players.get_player(id);
-
-   minecpp::events::AnimateHand animate;
-   animate.set_uuid(request->uuid());
-   animate.set_entity_id(player.get_entity_id());
-   animate.set_hand(request->hand());
-   event_manager.post(animate);
-
+   auto id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
+   auto &player = MCPP_GRPC_TRY(players.get_player(id));
+   dispatcher.animate_hand(id, player.get_entity_id(), request->hand());
    return grpc::Status();
 }
 
@@ -265,10 +195,7 @@ grpc::Status Service::FetchEvents(grpc::ServerContext *context, const minecpp::e
                                   grpc::ServerWriter<minecpp::engine::Event> *writer) {
    auto &queue = event_manager.create_queue(request->front_id());
    while (!context->IsCancelled()) {
-      while (!queue.empty()) {
-         writer->Write(queue.front());
-         queue.pop();
-      }
+      writer->Write(queue.pop());
    }
    return grpc::Status();
 }
@@ -285,62 +212,69 @@ grpc::Status Service::GetServiceStatus(grpc::ServerContext *context, const minec
    return grpc::Status();
 }
 
-void Service::handle_command(uuid id, std::string cmd) {
+mb::result<mb::empty> Service::handle_command(uuid id, std::string cmd) {
    using minecpp::format::Color;
 
    auto tokens = minecpp::chat::lex(cmd);
-   auto parsed = minecpp::chat::parse(tokens);
+   auto command = MB_TRY(minecpp::chat::parse(tokens));
 
-   if (std::holds_alternative<std::string>(parsed)) {
-      spdlog::info("could not parse command: {}", std::get<std::string>(parsed));
-      return;
-   }
-
-   auto command = std::get<minecpp::chat::Command>(parsed);
-
-   if (command.name == "me") {
-      auto &p = players.get_player(id);
-
-      minecpp::format::Builder b;
-      b.text(Color::Green, "Name ");
-      b.text(p.get_player_name());
-      b.text(Color::Green, " Id ");
-      b.text(boost::uuids::to_string(id));
-      b.text(Color::Green, " EntityId ");
-      b.text(std::to_string(p.get_entity_id()));
-      b.text(Color::Red, " Engine ");
-      b.text(boost::uuids::to_string(service_id));
-
-      minecpp::events::Chat chat;
-      chat.set_type(0);
-      chat.set_message(b.build());
-      event_manager.post(chat);
+   if (command.name == "info") {
+      auto &player = MB_TRY(players.get_player(id));
+      dispatcher.send_chat(0, minecpp::format::Builder()
+                                      .text(Color::Yellow, player.get_player_name())
+                                      .text(" (")
+                                      .bold(Color::White, "id: ")
+                                      .text(boost::uuids::to_string(id))
+                                      .bold(Color::White, ", entity_id: ")
+                                      .text(std::to_string(player.get_entity_id()))
+                                      .bold(Color::White, ", engine: ")
+                                      .text(boost::uuids::to_string(service_id))
+                                      .text(")")
+                                      .build());
    } else if (command.name == "height") {
-      auto &e = players.get_entity(id);
-      minecpp::format::Builder b;
-      b.text(Color::Green, "Height ");
-      b.text(std::to_string(world.height_at(e.get_pos().x, e.get_pos().z).unwrap(0)));
-      minecpp::events::Chat chat;
-      chat.set_type(0);
-      chat.set_message(b.build());
-      event_manager.post(chat);
+      auto &entity = MB_TRY(players.get_entity(id));
+      auto entity_pos = entity.get_pos();
+      dispatcher.send_chat(0, minecpp::format::Builder()
+                                      .bold(Color::White, "height: ")
+                                      .text(std::to_string(world.height_at(entity_pos.x, entity_pos.z).unwrap(0)))
+                                      .build());
+   } else if (command.name == "setblock") {
+      if (command.args.size() != 4) {
+         dispatcher.send_chat(0, minecpp::format::Builder().text(Color::Red, "setblock requires 4 arguments").build());
+         return mb::ok;
+      }
+      int x = std::get<int>(command.args[0]);
+      int y = std::get<int>(command.args[1]);
+      int z = std::get<int>(command.args[2]);
+      int state = std::get<int>(command.args[3]);
+
+      grpc::ClientContext ctx;
+      minecpp::chunk_storage::SetBlockRequest set_block;
+      set_block.set_x(x);
+      set_block.set_y(y);
+      set_block.set_z(z);
+      set_block.set_state(state);
+      minecpp::chunk_storage::EmptyResponse res;
+      auto status = chunk_storage->SetBlock(&ctx, set_block, &res);
+      if (!status.ok()) {
+         return mb::error("could not set block");
+      }
+
+      dispatcher.update_block(x, y, z, state);
+      dispatcher.send_chat(0, minecpp::format::Builder().text(Color::Blue, "updated block").build());
    } else {
-      minecpp::format::Builder b;
-      b.text(Color::Red, "unknown command");
-      minecpp::events::Chat chat;
-      chat.set_type(0);
-      chat.set_message(b.build());
-      event_manager.post(chat);
+      dispatcher.send_chat(0, minecpp::format::Builder().text(Color::Red, "invalid command").build());
    }
+
+   return mb::ok;
 }
 
 grpc::Status Service::LoadInitialChunks(grpc::ServerContext *context,
                                         const minecpp::engine::LoadInitialChunksRequest *request,
                                         minecpp::engine::EmptyResponse *response) {
-   boost::uuids::uuid id{};
-   minecpp::util::decode_uuid(id, request->uuid().data());
-   auto player = players.get_player(id);
-   player.load_chunks(world);
+   auto id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->uuid()));
+   auto &player = MCPP_GRPC_TRY(players.get_player(id));
+   MCPP_GRPC_TRY(player.load_chunks(world));
    return grpc::Status();
 }
 

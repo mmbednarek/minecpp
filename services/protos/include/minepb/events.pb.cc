@@ -69,6 +69,10 @@ class UpdatePlayerAbilitiesDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UpdatePlayerAbilities> _instance;
 } _UpdatePlayerAbilities_default_instance_;
+class UnloadChunkDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<UnloadChunk> _instance;
+} _UnloadChunk_default_instance_;
 }  // namespace events
 }  // namespace minecpp
 static void InitDefaultsscc_info_AddPlayer_events_2eproto() {
@@ -226,6 +230,20 @@ static void InitDefaultsscc_info_TransferPlayer_events_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_TransferPlayer_events_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_TransferPlayer_events_2eproto}, {}};
 
+static void InitDefaultsscc_info_UnloadChunk_events_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::minecpp::events::_UnloadChunk_default_instance_;
+    new (ptr) ::minecpp::events::UnloadChunk();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::minecpp::events::UnloadChunk::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UnloadChunk_events_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_UnloadChunk_events_2eproto}, {}};
+
 static void InitDefaultsscc_info_UpdateBlock_events_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -254,7 +272,7 @@ static void InitDefaultsscc_info_UpdatePlayerAbilities_events_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_UpdatePlayerAbilities_events_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_UpdatePlayerAbilities_events_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_events_2eproto[13];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_events_2eproto[14];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_events_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_events_2eproto = nullptr;
 
@@ -369,6 +387,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_events_2eproto::offsets[] PROT
   PROTOBUF_FIELD_OFFSET(::minecpp::events::UpdatePlayerAbilities, creative_mode_),
   PROTOBUF_FIELD_OFFSET(::minecpp::events::UpdatePlayerAbilities, walk_speed_),
   PROTOBUF_FIELD_OFFSET(::minecpp::events::UpdatePlayerAbilities, fly_speed_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::events::UnloadChunk, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::minecpp::events::UnloadChunk, uuid_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::events::UnloadChunk, x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::events::UnloadChunk, z_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::events::AddPlayer)},
@@ -384,6 +410,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 83, -1, sizeof(::minecpp::events::LoadTerrain)},
   { 91, -1, sizeof(::minecpp::events::TransferPlayer)},
   { 98, -1, sizeof(::minecpp::events::UpdatePlayerAbilities)},
+  { 110, -1, sizeof(::minecpp::events::UnloadChunk)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -400,6 +427,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::events::_LoadTerrain_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::events::_TransferPlayer_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::events::_UpdatePlayerAbilities_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::events::_UnloadChunk_default_instance_),
 };
 
 const char descriptor_table_protodef_events_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -427,11 +455,13 @@ const char descriptor_table_protodef_events_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "bilities\022\014\n\004uuid\030\001 \001(\014\022\024\n\014invulnerable\030\002"
   " \001(\010\022\021\n\tis_flying\030\003 \001(\010\022\024\n\014allow_flying\030"
   "\004 \001(\010\022\025\n\rcreative_mode\030\005 \001(\010\022\022\n\nwalk_spe"
-  "ed\030\007 \001(\002\022\021\n\tfly_speed\030\010 \001(\002b\006proto3"
+  "ed\030\007 \001(\002\022\021\n\tfly_speed\030\010 \001(\002\"1\n\013UnloadChu"
+  "nk\022\014\n\004uuid\030\001 \001(\014\022\t\n\001x\030\002 \001(\005\022\t\n\001z\030\003 \001(\005b\006"
+  "proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_events_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_events_2eproto_sccs[13] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_events_2eproto_sccs[14] = {
   &scc_info_AddPlayer_events_2eproto.base,
   &scc_info_AnimateHand_events_2eproto.base,
   &scc_info_Chat_events_2eproto.base,
@@ -443,15 +473,16 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_eve
   &scc_info_RemovePlayer_events_2eproto.base,
   &scc_info_SpawnPlayer_events_2eproto.base,
   &scc_info_TransferPlayer_events_2eproto.base,
+  &scc_info_UnloadChunk_events_2eproto.base,
   &scc_info_UpdateBlock_events_2eproto.base,
   &scc_info_UpdatePlayerAbilities_events_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_events_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_events_2eproto = {
-  false, false, descriptor_table_protodef_events_2eproto, "events.proto", 995,
-  &descriptor_table_events_2eproto_once, descriptor_table_events_2eproto_sccs, descriptor_table_events_2eproto_deps, 13, 0,
+  false, false, descriptor_table_protodef_events_2eproto, "events.proto", 1046,
+  &descriptor_table_events_2eproto_once, descriptor_table_events_2eproto_sccs, descriptor_table_events_2eproto_deps, 14, 0,
   schemas, file_default_instances, TableStruct_events_2eproto::offsets,
-  file_level_metadata_events_2eproto, 13, file_level_enum_descriptors_events_2eproto, file_level_service_descriptors_events_2eproto,
+  file_level_metadata_events_2eproto, 14, file_level_enum_descriptors_events_2eproto, file_level_service_descriptors_events_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -3967,6 +3998,271 @@ void UpdatePlayerAbilities::InternalSwap(UpdatePlayerAbilities* other) {
 }
 
 
+// ===================================================================
+
+void UnloadChunk::InitAsDefaultInstance() {
+}
+class UnloadChunk::_Internal {
+ public:
+};
+
+UnloadChunk::UnloadChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:minecpp.events.UnloadChunk)
+}
+UnloadChunk::UnloadChunk(const UnloadChunk& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (!from._internal_uuid().empty()) {
+    uuid_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_uuid(),
+      GetArena());
+  }
+  ::memcpy(&x_, &from.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.events.UnloadChunk)
+}
+
+void UnloadChunk::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_UnloadChunk_events_2eproto.base);
+  uuid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+}
+
+UnloadChunk::~UnloadChunk() {
+  // @@protoc_insertion_point(destructor:minecpp.events.UnloadChunk)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void UnloadChunk::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+  uuid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void UnloadChunk::ArenaDtor(void* object) {
+  UnloadChunk* _this = reinterpret_cast< UnloadChunk* >(object);
+  (void)_this;
+}
+void UnloadChunk::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void UnloadChunk::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const UnloadChunk& UnloadChunk::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_UnloadChunk_events_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void UnloadChunk::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.events.UnloadChunk)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  uuid_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* UnloadChunk::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // bytes uuid = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_uuid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 x = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // int32 z = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* UnloadChunk::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.events.UnloadChunk)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    target = stream->WriteBytesMaybeAliased(
+        1, this->_internal_uuid(), target);
+  }
+
+  // int32 x = 2;
+  if (this->x() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_x(), target);
+  }
+
+  // int32 z = 3;
+  if (this->z() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_z(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.events.UnloadChunk)
+  return target;
+}
+
+size_t UnloadChunk::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.events.UnloadChunk)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes uuid = 1;
+  if (this->uuid().size() > 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_uuid());
+  }
+
+  // int32 x = 2;
+  if (this->x() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_x());
+  }
+
+  // int32 z = 3;
+  if (this->z() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_z());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void UnloadChunk::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:minecpp.events.UnloadChunk)
+  GOOGLE_DCHECK_NE(&from, this);
+  const UnloadChunk* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<UnloadChunk>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:minecpp.events.UnloadChunk)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:minecpp.events.UnloadChunk)
+    MergeFrom(*source);
+  }
+}
+
+void UnloadChunk::MergeFrom(const UnloadChunk& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.events.UnloadChunk)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from.uuid().size() > 0) {
+    _internal_set_uuid(from._internal_uuid());
+  }
+  if (from.x() != 0) {
+    _internal_set_x(from._internal_x());
+  }
+  if (from.z() != 0) {
+    _internal_set_z(from._internal_z());
+  }
+}
+
+void UnloadChunk::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:minecpp.events.UnloadChunk)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void UnloadChunk::CopyFrom(const UnloadChunk& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.events.UnloadChunk)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UnloadChunk::IsInitialized() const {
+  return true;
+}
+
+void UnloadChunk::InternalSwap(UnloadChunk* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  uuid_.Swap(&other->uuid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(UnloadChunk, z_)
+      + sizeof(UnloadChunk::z_)
+      - PROTOBUF_FIELD_OFFSET(UnloadChunk, x_)>(
+          reinterpret_cast<char*>(&x_),
+          reinterpret_cast<char*>(&other->x_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata UnloadChunk::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace events
 }  // namespace minecpp
@@ -4009,6 +4305,9 @@ template<> PROTOBUF_NOINLINE ::minecpp::events::TransferPlayer* Arena::CreateMay
 }
 template<> PROTOBUF_NOINLINE ::minecpp::events::UpdatePlayerAbilities* Arena::CreateMaybeMessage< ::minecpp::events::UpdatePlayerAbilities >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::events::UpdatePlayerAbilities >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::events::UnloadChunk* Arena::CreateMaybeMessage< ::minecpp::events::UnloadChunk >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::events::UnloadChunk >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

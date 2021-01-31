@@ -1,9 +1,11 @@
 #include "service.h"
 #include <minecpp/game/chunk/chunk.h>
+#include <minecpp/region/reader.h>
 #include <minecpp/util/compression.h>
 #include <minecpp/util/format.h>
+#include <minecpp/util/grpc.h>
 #include <minecpp/util/uuid.h>
-#include <minecpp/region/reader.h>
+#include <spdlog/spdlog.h>
 
 namespace ChunkStorage {
 
@@ -11,20 +13,20 @@ Service::Service(std::string_view region_path) : chunks(Regions(region_path)) {}
 
 grpc::Status Service::LoadChunk(grpc::ServerContext *context, const minecpp::chunk_storage::LoadChunkRequest *request,
                                 minecpp::chunk::NetChunk *response) {
-   auto res = chunks.get_chunk(request->x(), request->z());
-   if (!res.ok()) {
-      return res.err()->grpc_status();
+   auto &chunk = MCPP_GRPC_TRY(chunks.get_chunk(request->x(), request->z()));
+   for (const auto &sec : chunk.sections) {
+      if (!sec.second.sky_light.empty() && sec.second.sky_light.size() != 4096) {
+         spdlog::info("invalid sky light size: {}", sec.second.sky_light.size());
+      }
    }
-   res.unwrap().as_proto(response);
+
+   chunk.as_proto(response);
    return grpc::Status();
 }
 
 grpc::Status Service::SetBlock(grpc::ServerContext *context, const minecpp::chunk_storage::SetBlockRequest *request,
                                minecpp::chunk_storage::EmptyResponse *response) {
-   auto res = chunks.set_block(request->x(), request->y(), request->z(), request->state());
-   if (!res.ok()) {
-      return res.err()->grpc_status();
-   }
+   MCPP_GRPC_TRY(chunks.set_block(request->x(), request->y(), request->z(), request->state()));
    return grpc::Status();
 }
 
@@ -38,14 +40,10 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
       return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
    });
 
-   auto engine_id = minecpp::util::make_uuid(request->engine_id().data());
-   auto player_id = minecpp::util::make_uuid(request->player_id().data());
+   auto engine_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->engine_id()));
+   auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->player_id()));
 
-   auto res = chunks.add_refs(engine_id, player_id, coords);
-   if (!res.ok()) {
-      return res.err()->grpc_status();
-   }
-   auto target = res.unwrap();
+   auto target = MCPP_GRPC_TRY(chunks.add_refs(engine_id, player_id, coords));
    if (target.is_nil()) {
       response->set_status(minecpp::chunk_storage::ReferenceStatus::OK);
       return grpc::Status();
@@ -60,24 +58,16 @@ grpc::Status Service::RemoveReference(grpc::ServerContext *context,
                                       minecpp::chunk_storage::EmptyResponse *response) {
    std::vector<minecpp::game::block::ChunkPos> coords(request->coords_size());
    std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
-     return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
+      return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
    });
-   auto player_id = minecpp::util::make_uuid(request->player_id().data());
+   auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->player_id()));
 
-   auto res = chunks.free_refs(player_id, coords);
-   if (!res.ok()) {
-      return res.err()->grpc_status();
-   }
-
+   MCPP_GRPC_TRY(chunks.free_refs(player_id, coords));
    return grpc::Status();
 }
 grpc::Status Service::HeightAt(grpc::ServerContext *context, const minecpp::chunk_storage::HeightAtRequest *request,
                                minecpp::chunk_storage::HeightAtResponse *response) {
-   auto height_res = chunks.height_at(request->x(), request->z());
-   if (!height_res.ok()) {
-      return height_res.err()->grpc_status();
-   }
-   response->set_height(height_res.unwrap(0));
+   response->set_height(MCPP_GRPC_TRY(chunks.height_at(request->x(), request->z())));
    return grpc::Status();
 }
 
