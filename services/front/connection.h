@@ -5,6 +5,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <mb/int.h>
 #include <memory>
 #include <minecpp/game/block/position.h>
 #include <minecpp/network/message/io.h>
@@ -18,6 +19,8 @@ namespace Front {
 
 using boost::asio::ip::tcp;
 class Server;
+
+using ConnectionId = mb::size;
 
 class Connection {
    friend Server;
@@ -56,26 +59,36 @@ class Connection {
    boost::uuids::uuid service_id();
 
    void set_uuid(boost::uuids::uuid uuid);
-   [[nodiscard]] const boost::uuids::uuid &get_uuid() const;
+
+   [[nodiscard]] const boost::uuids::uuid &uuid() const;
+   [[nodiscard]] ConnectionId id() const;
+   [[nodiscard]] mb::size compression_threshold() const;
 
    void push_chunk(int x, int z);
    minecpp::game::block::ChunkPos pop_chunk();
    bool has_chunks();
 
+   [[nodiscard]] tcp::socket &socket();
+
  private:
    inline size_t read_varint(uint32_t result, uint32_t shift);
-   minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
 
-   boost::uuids::uuid player_id{};
-   boost::uuids::uuid engine_service_id{};
-   int id = -1;
-   std::size_t compression_threshold = 0;
-   tcp::socket socket;
-   Protocol::State _state;
-   uint8_t leading_byte;
-   boost::asio::streambuf *packet_buff;
-   Server *server;
+   ConnectionId m_id = -1;
+   tcp::socket m_socket;
+
+   boost::uuids::uuid m_player_id{};
+   boost::uuids::uuid m_engine_service_id{};
+
+   Server *m_server;
+   Protocol::State m_state;
+   mb::size m_compression_threshold = 0;
+   minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
+   boost::asio::streambuf *m_packet_buff;
+   mb::u8 m_leading_byte;
 };
+
+void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, std::function<void(mb::u32)> callback);
+void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler);
 
 template<typename M>
 void send(const Connection::Ptr &conn, M msg) {

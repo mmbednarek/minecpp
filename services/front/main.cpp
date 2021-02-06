@@ -16,10 +16,9 @@ using namespace Front;
 
 auto main() -> int {
    auto conf = get_config();
-   std::atomic_bool consume_messages = true;
 
    Engine::Client::Config engine_cfg{
-       .addresses = conf.engine_hosts,
+           .addresses = conf.engine_hosts,
    };
    auto engine_provider_res = Engine::Client::Provider::create(engine_cfg);
    if (!engine_provider_res.ok()) {
@@ -30,7 +29,7 @@ auto main() -> int {
 
    auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());
    std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_service =
-       minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
+           minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
 
    Service service(conf, engine_provider, chunk_service);
 
@@ -71,7 +70,5 @@ auto main() -> int {
    } catch (std::exception &e) {
       spdlog::error("SERVER CRASHED: {}", e.what());
    }
-
-   consume_messages = false;
    return 0;
 }

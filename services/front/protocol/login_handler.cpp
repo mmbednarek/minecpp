@@ -45,7 +45,7 @@ void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
    conn->send(conn, w);
 
    service.init_player(conn, response.id, response.user_name);
-   conn->async_read_packet(conn, play_handler);
+   async_read_packet(conn, play_handler);
 }
 
 void LoginHandler::reject(const std::shared_ptr<Connection> &conn,

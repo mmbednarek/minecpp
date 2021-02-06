@@ -1,8 +1,8 @@
 #include "ticks.h"
 #include <grpcpp/client_context.h>
 #include <minecpp/network/message/clientbound.h>
-#include <minepb/chunk_storage.pb.h>
 #include <minecpp/util/time.h>
+#include <minepb/chunk_storage.pb.h>
 #include <spdlog/spdlog.h>
 
 namespace Front {
@@ -33,7 +33,7 @@ void TickManager::keep_alive() {
       if (!conn)
          return;
       send(conn, minecpp::network::message::KeepAlive{
-                     .time = minecpp::util::now_milis(),
+                         .time = minecpp::util::now_milis(),
                  });
    });
 }
@@ -60,12 +60,12 @@ void TickManager::load_chunks() {
       }
 
       send(conn, minecpp::network::message::ChunkData{
-                     .chunk = chunk,
-                 });
+                .chunk = chunk,
+        });
       send(conn, minecpp::network::message::UpdateLight{
-                     .chunk = chunk,
-                 });
+                .chunk = chunk,
+        });
    });
 }
 
-} // namespace Front
+}// namespace Front

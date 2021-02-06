@@ -23,7 +23,7 @@ public:
 
 	void handshake(const std::shared_ptr<Connection> &conn);
 
-	void drop_connection(std::size_t id);
+	void drop_connection(ConnectionId id);
 
 	void for_each_connection(
 			std::function<void(const std::shared_ptr<Connection> &)>);

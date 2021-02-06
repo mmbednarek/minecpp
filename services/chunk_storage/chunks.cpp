@@ -52,11 +52,6 @@ mb::result<minecpp::game::Chunk &> ChunkManager::load_chunk(int x, int z) {
     */
    gen.generate_chunk(x, z);
    auto &chunk = chunks.at(hash_chunk_pos(x, z));
-   for (const auto &sec : chunk->sections) {
-      if (!sec.second.sky_light.empty() && sec.second.sky_light.size() != 4096) {
-         spdlog::error("KURWA");
-      }
-   }
    return *chunk;
 }
 

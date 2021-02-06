@@ -84,7 +84,7 @@ void EventHandler::on_event(AddPlayer &msg) {
    server.for_each_connection([id, add_player](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      if (id == conn->get_uuid())
+      if (id == conn->uuid())
          return;
       send(conn, add_player);
    });
@@ -107,7 +107,7 @@ void EventHandler::on_event(SpawnPlayer &msg) {
    server.for_each_connection([spawn_player, id](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      if (id == conn->get_uuid())
+      if (id == conn->uuid())
          return;
       send(conn, spawn_player);
    });
@@ -119,7 +119,7 @@ void EventHandler::on_event(EntityMove &pos) {
    server.for_each_connection([&pos, id](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      if (conn->get_uuid() == id) {
+      if (conn->uuid() == id) {
          return;
       }
       send(conn, minecpp::network::message::EntityMove{
@@ -140,7 +140,7 @@ void EventHandler::on_event(EntityLook &pos) {
    server.for_each_connection([&pos, id](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      if (conn->get_uuid() == id) {
+      if (conn->uuid() == id) {
          return;
       }
       spdlog::info("rot yaw: {}, pitch: {}", pos.yaw(), pos.pitch());
@@ -209,7 +209,7 @@ void EventHandler::on_event(AnimateHand &msg) {
    server.for_each_connection([id, animate](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
-      if (conn->get_uuid() == id)
+      if (conn->uuid() == id)
          return;
       send(conn, animate);
    });

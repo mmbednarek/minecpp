@@ -19,7 +19,7 @@ void Server::accept_conn() {
 	auto conn = std::make_shared<Connection>(
 			(boost::asio::io_context &) acceptor.get_executor().context(), this);
 	acceptor.async_accept(
-			conn->socket, [this, conn](const boost::system::error_code &err) {
+			conn->m_socket, [this, conn](const boost::system::error_code &err) {
 				if (err) {
 					spdlog::error("error accepting connection: {}", err.message());
 					accept_conn();
@@ -71,13 +71,13 @@ void Server::handshake(const std::shared_ptr<Connection> &conn) {
 
 	conn->set_state(request_state);
 
-	conn->id = connections.size();
+	conn->m_id = connections.size();
 	connections.emplace_back(conn);
 
 	conn->async_read_packet(conn, *handlers[request_state]);
 }
 
-void Server::drop_connection(std::size_t id) {
+void Server::drop_connection(ConnectionId id) {
 	if (id >= connections.size())
 		return;
 	connections[id] = nullptr;
