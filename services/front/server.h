@@ -38,9 +38,9 @@ public:
 
 private:
 	std::map<boost::uuids::uuid, std::size_t> conn_ids;
-	std::vector<std::shared_ptr<Connection>> connections;
+	std::vector<std::shared_ptr<Connection>> m_connections;
 	tcp::acceptor acceptor;
-	Protocol::Handler *handlers[3];
+	Protocol::Handler *m_handlers[3];
 };
 
 } // namespace Front

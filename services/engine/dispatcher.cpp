@@ -92,7 +92,7 @@ void Dispatcher::update_block(minecpp::game::block::Position block, mb::u32 stat
 void Dispatcher::update_block(mb::i32 x, mb::i32 y, mb::i32 z, mb::u32 state) {
    minecpp::events::UpdateBlock update_block;
    update_block.set_block_position(minecpp::game::block::Position(x, y, z).as_long());
-   update_block.set_state(0);
+   update_block.set_state(state);
    events.post(update_block);
 }
 

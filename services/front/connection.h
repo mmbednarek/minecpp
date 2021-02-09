@@ -4,6 +4,7 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
+#include <boost/pool/object_pool.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <memory>
@@ -33,17 +34,11 @@ class Connection {
 
    void set_non_blocking();
 
-   size_t read_packet_size();
-   size_t read_packet_size(uint8_t leading);
-   size_t read(void *ptr, size_t size);
-   size_t read(boost::asio::streambuf &buff);
    void async_write_then_read(const Ptr &conn, uint8_t *buff, size_t size,
                               Protocol::Handler &h);
    void async_write(const Ptr &conn, uint8_t *buff, size_t size);
    void async_write_then_disconnect(const Ptr &conn, uint8_t *buff,
                                     size_t size);
-   void async_read_packet(const Ptr &conn, Protocol::Handler &h);
-   void async_read_packet_data(const Ptr &conn, Protocol::Handler &h);
 
    void send(const Ptr &conn, minecpp::network::message::Writer &w);
    void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w,
@@ -70,8 +65,10 @@ class Connection {
 
    [[nodiscard]] tcp::socket &socket();
 
+   mb::u8 *alloc_byte();
+   void free_byte(mb::u8 *byte);
+
  private:
-   inline size_t read_varint(uint32_t result, uint32_t shift);
 
    ConnectionId m_id = -1;
    tcp::socket m_socket;
@@ -82,9 +79,8 @@ class Connection {
    Server *m_server;
    Protocol::State m_state;
    mb::size m_compression_threshold = 0;
+   boost::object_pool<mb::u8> m_byte_pool;
    minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
-   boost::asio::streambuf *m_packet_buff;
-   mb::u8 m_leading_byte;
 };
 
 void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, std::function<void(mb::u32)> callback);

@@ -4,13 +4,16 @@
 #include <minecpp/util/time.h>
 #include <minepb/chunk_storage.pb.h>
 #include <spdlog/spdlog.h>
+#include <thread>
+#include <utility>
 
 namespace Front {
 
 TickManager::TickManager(Server &server, const ChunkService &chunks) : server(server), chunk_service(chunks) {}
 
 constexpr int keep_alive_interval = 8000;
-constexpr int load_chunks_interval = 5;
+constexpr int load_chunks_interval = 10;
+constexpr int thread_limit = 5;
 
 [[noreturn]] void TickManager::tick() {
    uint64_t last_keep_alive = 0;
@@ -39,6 +42,32 @@ void TickManager::keep_alive() {
 }
 
 void TickManager::load_chunks() {
+   while (m_future_chunks.size() > 4) {
+      for (auto at = m_future_chunks.begin(); at != m_future_chunks.end();) {
+         auto &future_ticket = *at;
+         if (!future_ticket.valid()) {
+            m_future_chunks.erase(at);
+            at = m_future_chunks.begin();
+            continue;
+         }
+         if (future_ticket.wait_for(std::chrono::seconds(0)) == std::future_status::ready) {
+            auto ticket = future_ticket.get();
+            m_future_chunks.erase(at);
+            at = m_future_chunks.begin();
+            if (ticket.loaded) {
+               send(ticket.conn, minecpp::network::message::ChunkData{
+                       .chunk = ticket.chunk,
+               });
+               send(ticket.conn, minecpp::network::message::UpdateLight{
+                       .chunk = ticket.chunk,
+               });
+            }
+            continue;
+         }
+         ++at;
+      }
+   }
+
    server.for_each_connection([this](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
@@ -47,24 +76,22 @@ void TickManager::load_chunks() {
 
       auto chunk_pos = conn->pop_chunk();
 
-      grpc::ClientContext ctx;
-      minecpp::chunk::NetChunk chunk;
-      minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
-      load_chunk_request.set_x(chunk_pos.x);
-      load_chunk_request.set_z(chunk_pos.z);
+      m_future_chunks.emplace_back(std::async(std::launch::async, [](std::shared_ptr<Connection> conn, ChunkService chunk_service, int x, int z) {
+         grpc::ClientContext ctx;
+         ChunkLoadTicket ticket{ .conn = std::move(conn) };
+         minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
+         load_chunk_request.set_x(x);
+         load_chunk_request.set_z(z);
 
-      auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &chunk);
-      if (!status.ok()) {
-         spdlog::error("error loading chunk: {}", status.error_message());
-         return;
-      }
+         auto status = chunk_service->LoadChunk(&ctx, load_chunk_request, &ticket.chunk);
+         if (!status.ok()) {
+            spdlog::error("error loading chunk: {}", status.error_message());
+            return ticket;
+         }
 
-      send(conn, minecpp::network::message::ChunkData{
-                .chunk = chunk,
-        });
-      send(conn, minecpp::network::message::UpdateLight{
-                .chunk = chunk,
-        });
+         ticket.loaded = true;
+         return ticket;
+      }, conn, chunk_service, chunk_pos.x, chunk_pos.z));
    });
 }
 

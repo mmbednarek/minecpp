@@ -30,7 +30,7 @@ void ChunkPlacements::prepare_chunk(game::Chunk &chunk) {
             continue;
          }
          short height = chunk.height_at(_x, _z) + 1;
-         if (height < 69 || height > 90)
+         if (height < 65 || height > 86)
             continue;
 
          std::uint32_t value = rand.next_int(10000);
@@ -64,7 +64,12 @@ void ChunkPlacements::put_object(game::Chunk &chunk, int id, int x, int y, int z
    }
    for (int _z = -center.z; _z < obj->length() - center.z; ++_z) {
       for (int _x = -center.x; _x < obj->width() - center.x; ++_x) {
-         m_placements[chunk.pos().block_at(x + _x, 0, z + _z).as_long()] = Placement{.object_id = id, .x = static_cast<short>(_x + center.x), .z = static_cast<short>(_z + center.z), .chunk_x = static_cast<short>(x + _x), .chunk_z = static_cast<short>(z + _z), .height = y};
+         m_placements[chunk.pos().block_at(x + _x, 0, z + _z).as_long()] = Placement{.object_id = id,
+                                                                                     .x = static_cast<short>(_x + center.x),
+                                                                                     .z = static_cast<short>(_z + center.z),
+                                                                                     .chunk_x = static_cast<short>(x + _x),
+                                                                                     .chunk_z = static_cast<short>(z + _z),
+                                                                                     .height = static_cast<short>(y)};
       }
    }
 }

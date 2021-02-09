@@ -110,14 +110,17 @@ Section Terrain::generate_section(int sec) {
          }
          return dirt_id;
       }
-      return stone_id;
+      if (block_y > 105) {
+         return snow_block_id;
+      }
+     return stone_id;
    });
    return builder.build();
 }
 
 std::unique_ptr<Chunk> Terrain::generate() {
    auto result = std::make_unique<Chunk>(x, z, height_map);
-   for (int i = 0; i < 8; ++i) {
+   for (int i = 0; i < 16; ++i) {
       if (section_empty(i))
          break;
       result->put_section(i, generate_section(i));

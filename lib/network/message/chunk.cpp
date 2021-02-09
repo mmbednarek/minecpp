@@ -86,7 +86,7 @@ void write_light(Writer &w, const minecpp::chunk::NetChunk &chunk) {
 
    w.write_varint(chunk.pos_x());
    w.write_varint(chunk.pos_z());
-   w.write_byte(0);// Trust edges
+   w.write_byte(1);// Trust edges
    w.write_varint(skyUpdateMask);
    w.write_varint(blockUpdateMask);
    w.write_varint(skyResetMask);

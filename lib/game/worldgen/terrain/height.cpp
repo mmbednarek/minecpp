@@ -13,6 +13,10 @@ short HeightGenerator::at(int x, int z) {
    result += perlin_detail0.at(perlin_pos / 80.0 + minecpp::util::Vec2(0.1, 0.3)) * 120;
    result += perlin_detail1.at(perlin_pos / 20.0 + minecpp::util::Vec2(0.6, 0.32)) * 28;
 
+   if (result >= 50) {
+      const auto df = result - 75;
+      result = 65 + df * df * df / 750;
+   }
    return static_cast<short>(result);
 }
 
