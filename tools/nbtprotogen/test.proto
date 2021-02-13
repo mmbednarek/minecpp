@@ -1,15 +1,13 @@
 syntax = "proto3";
 package proto.nbt.test;
 
-message Test {
-  int32 x = 1;
-  string val = 2 [json_name = "value"];
-  repeated int32 testval = 3;
-  repeated repeated Foo values = 4;
-}
-
 message Foo {
   string value = 1;
   repeated bytes stuff = 2;
 }
 
+message Test {
+  int32 x = 1;
+  string val = 2 [json_name = "value"];
+  repeated repeated Foo testval = 3;
+}

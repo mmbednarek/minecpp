@@ -49,9 +49,16 @@ FetchContent_MakeAvailable(fmt)
 FetchContent_Declare(
         libmb
         GIT_REPOSITORY https://github.com/mmbednarek/mb
-        GIT_TAG libmb-0.0.15
+        GIT_TAG libmb-0.0.16
 )
 FetchContent_MakeAvailable(libmb)
+
+FetchContent_Declare(
+        libmb_codegen
+        GIT_REPOSITORY https://github.com/mmbednarek/codegen
+        GIT_TAG codegen-0.0.17
+)
+FetchContent_MakeAvailable(libmb_codegen)
 
 include_directories(./include)
 include_directories(./services/protos/include)

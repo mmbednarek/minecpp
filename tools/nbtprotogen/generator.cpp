@@ -8,7 +8,7 @@ namespace Semantics {
 
 using minecpp::util::ScriptWriter;
 
-static std::string variant_to_nbt_tag(TypeVariant variant) {
+std::string variant_to_nbt_tag(TypeVariant variant) {
    switch (variant) {
    case TypeVariant::Int8: return "minecpp::nbt::TagId::Byte";
    case TypeVariant::Int16: return "minecpp::nbt::TagId::Short";
@@ -25,7 +25,7 @@ static std::string variant_to_nbt_tag(TypeVariant variant) {
    return "minecpp::nbt::TagId::Compound";
 }
 
-static std::string variant_to_type(TypeVariant variant) {
+std::string variant_to_type(TypeVariant variant) {
    switch (variant) {
    case TypeVariant::Int8: return "std::int8_t";
    case TypeVariant::Int16: return "std::int16_t";
@@ -124,7 +124,7 @@ Type::Type(std::string name, int repeated) : m_repeated(repeated), name(name) {
       return;
    }
 }
-std::string Type::to_cpp() const {
+std::string Type::to_cpp_type() const {
    auto result = [](const TypeVariant variant, const std::string &name) -> std::string {
       switch (variant) {
       case TypeVariant::Int8: return "std::int8_t";
@@ -276,52 +276,46 @@ bool Type::operator<(const Type &other) const {
    return variant < other.variant;
 }
 
-Type::Type(std::unique_ptr<Type> subtype, int repeated) : m_subtype(std::move(subtype)) {
-}
-
-Type::Type(const Type &type) : variant(type.variant),
-                               m_subtype(type.m_subtype == nullptr ? nullptr : std::make_unique<Type>(*type.m_subtype)),
-                               m_repeated(type.m_repeated),
-                               name(type.name) {}
-
 Type &Type::operator=(const Type &type) {
    variant = type.variant;
-   m_subtype = type.m_subtype == nullptr ? nullptr : std::make_unique<Type>(*type.m_subtype);
    m_repeated = type.m_repeated;
    name = type.name;
    return *this;
 }
+
+Type::Type(TypeVariant variant, int repeated) : variant(variant),
+                                                m_repeated(repeated) {}
 
 std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &attribs) {
    std::map<TypeVariant, std::any> res;
    std::vector<Attribute> list;
 
    for (const auto &att : attribs) {
-      if (att.t.m_repeated > 0) {
+      if (att.type.m_repeated > 0) {
          auto copied = att;
-         --copied.t.m_repeated;
+         --copied.type.m_repeated;
          list.emplace_back(std::move(copied));
          continue;
       }
-      if (att.t.variant == TypeVariant::Struct) {
+      if (att.type.variant == TypeVariant::Struct) {
          auto it = res.find(TypeVariant::Struct);
          if (it == res.end()) {
-            res[att.t.variant] = CompoundDeserializer{.elems{
+            res[att.type.variant] = CompoundDeserializer{.elems{
                     {
-                            .typeName = att.t.name,
+                            .typeName = att.type.name,
                             .id = att.id,
                     }}};
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .typeName = att.t.name,
+                 .typeName = att.type.name,
                  .id = att.id,
          });
          continue;
       }
-      res[att.t.variant] = StaticDeserializer{
-              .variant = att.t.variant,
+      res[att.type.variant] = StaticDeserializer{
+              .variant = att.type.variant,
       };
    }
    if (!list.empty()) {
@@ -333,7 +327,7 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
    return res;
 }
 
-static std::string_view put_static_read(StaticDeserializer des) {
+std::string put_static_read(const StaticDeserializer &des) {
    switch (des.variant) {
    case TypeVariant::Int8:
       return "r.read_byte()";
@@ -496,7 +490,7 @@ static void put_deserializer(std::map<TypeVariant, std::any> &attribs, ScriptWri
 
 Message::Message(const std::string &name) : name(name) {}
 
-Attribute::Attribute(Type t, const std::string_view name, const std::string_view label, int id) : t(std::move(t)), name(name), label(label.empty() ? name : label), id(id) {}
+Attribute::Attribute(Type t, const std::string_view name, const std::string_view label, int id) : type(std::move(t)), name(name), label(label.empty() ? name : label), id(id) {}
 
 void generate_header(Structure &s, std::ostream &output) {
    ScriptWriter w(output);
@@ -521,7 +515,7 @@ void generate_header(Structure &s, std::ostream &output) {
    std::for_each(s.messages.begin(), s.messages.end(), [&w](const auto &el) {
       w.scope("struct {}", el.name);
       std::for_each(el.attribs.begin(), el.attribs.end(), [&w](const Attribute &attrib) {
-         w.line("{} {}{};", attrib.t.to_cpp(), attrib.name, "{}");
+         w.line("{} {}{};", attrib.type.to_cpp_type(), attrib.name, "{}");
       });
 
       w.line();
@@ -573,7 +567,7 @@ result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &head
       w.scope("void {}::serialize_no_header(minecpp::nbt::Writer &w) const", el.name);
       {
          std::for_each(el.attribs.begin(), el.attribs.end(), [&w](const Attribute &attrib) {
-            attrib.t.write_value(w, attrib.name, attrib.label);
+            attrib.type.write_value(w, attrib.name, attrib.label);
          });
          w.line("w.end_compound();");
       }

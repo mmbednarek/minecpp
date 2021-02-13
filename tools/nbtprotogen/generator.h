@@ -1,8 +1,8 @@
 #pragma once
 #include "ast.h"
 #include <any>
-#include <minecpp/error/result.h>
 #include <map>
+#include <minecpp/error/result.h>
 #include <minecpp/util/scriptw.h>
 #include <string>
 #include <variant>
@@ -28,26 +28,25 @@ enum class TypeVariant {
 
 struct Type {
    TypeVariant variant = TypeVariant::Struct;
-   std::unique_ptr<Type> m_subtype;
    int m_repeated = 0;
    std::string name;
 
    Type() = default;
    Type(std::string name, int repeated);
-   Type(std::unique_ptr<Type> subtype, int repeated);
-   Type(const Type &type);
+   Type(TypeVariant variant, int repeated);
+   Type(const Type &type) = default;
    Type &operator=(const Type &type);
 
    bool operator==(const Type &other) const;
    bool operator<(const Type &other) const;
 
-   [[nodiscard]] std::string to_cpp() const;
+   [[nodiscard]] std::string to_cpp_type() const;
    void write_value(minecpp::util::ScriptWriter &w, std::string_view name, std::string_view label) const;
    [[nodiscard]] std::string nbt_tagid() const;
 };
 
 struct Attribute {
-   Type t;
+   Type type;
    std::string name;
    std::string label;
    int id;
@@ -91,5 +90,9 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
 
 void generate_header(Structure &s, std::ostream &output);
 result<empty> generate_cpp(Structure &s, std::ostream &output, std::string &header_file);
+
+std::string variant_to_nbt_tag(TypeVariant variant);
+std::string put_static_read(const StaticDeserializer &des);
+std::string variant_to_type(TypeVariant variant);
 
 }// namespace Semantics

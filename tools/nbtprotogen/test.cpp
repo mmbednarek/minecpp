@@ -31,7 +31,7 @@ std::map<std::string, __nbt_offset> Foo::__xx_offsets {
 
 Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r) {
    Foo res;
-   r.read_compound([&res] (minecpp::nbt::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::String: 
          res.__xx_put(name, r.read_str());
@@ -102,7 +102,7 @@ std::map<std::string, __nbt_offset> Test::__xx_offsets {
 
 Test Test::deserialize_no_header(minecpp::nbt::Reader &r) {
    Test res;
-   r.read_compound([&res] (minecpp::nbt::Reader &r, NBT::TagId tagid, const std::string &name) {
+   r.read_compound([&res] (minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Int: 
          res.__xx_put(name, r.read_int());
