@@ -1,0 +1,92 @@
+syntax = "proto3";
+package minecpp.message.protobuf.event;
+
+message AddPlayer {
+    bytes uuid = 1;
+    string name = 2;
+    int32 game_mode = 3;
+    int32 ping = 4;
+}
+
+message SpawnPlayer {
+    bytes uuid = 1;
+    int32 id = 2;
+    double x = 3;
+    double y = 4;
+    double z = 5;
+    float yaw = 6;
+    float pitch = 7;
+}
+
+message EntityMove {
+    bytes uuid = 1;
+    int32 id = 2;
+    int32 x = 3;
+    int32 y = 4;
+    int32 z = 5;
+    float yaw = 6;
+    float pitch = 7;
+}
+
+message EntityLook {
+    bytes uuid = 1;
+    int32 id = 2;
+    float yaw = 3;
+    float pitch = 4;
+}
+
+message PlayerPositionRotation {
+}
+
+message Chat {
+    string message = 1;
+    int32 type = 2;
+}
+
+message RemovePlayer {
+    bytes uuid = 1;
+    int32 entity_id = 2;
+}
+
+message UpdateBlock {
+    int64 block_position = 1;
+    uint32 state = 2;
+}
+
+message AnimateHand {
+    bytes uuid = 1;
+    int32 entity_id = 2;
+    int32 hand = 3;
+}
+
+message ChunkCoord {
+    int32 x = 1;
+    int32 z = 2;
+}
+
+message LoadTerrain {
+    bytes uuid = 1;
+    ChunkCoord central_chunk = 2;
+    repeated ChunkCoord coords = 3;
+}
+
+message TransferPlayer {
+    bytes player = 1;
+    bytes target_engine = 2;
+}
+
+message UpdatePlayerAbilities {
+    bytes uuid = 1;
+    bool invulnerable = 2;
+    bool is_flying = 3;
+    bool allow_flying = 4;
+    bool creative_mode = 5;
+    float walk_speed = 7;
+    float fly_speed = 8;
+}
+
+message UnloadChunk {
+    bytes uuid = 1;
+    int32 x = 2;
+    int32 z = 3;
+}

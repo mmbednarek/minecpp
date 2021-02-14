@@ -6,6 +6,7 @@
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
 #include <minepb/chunk.pb.h>
+#include <minecpp/message/nbt/chunk.nbt.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -42,6 +43,8 @@ struct Chunk {
    block::ChunkPos pos() const;
 
    static mb::result<std::unique_ptr<Chunk>> from_nbt(nbt::Reader &r);
+
+   static std::unique_ptr<Chunk> from_nbt(minecpp::message::nbt::Chunk &chunk);
 };
 
 struct PaletteItem {

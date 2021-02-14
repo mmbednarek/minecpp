@@ -2320,7 +2320,7 @@ void debug_block_info() {
    }
 }
 
-uint32_t encode_state(std::string_view tag, nbt::CompoundContent &attribs) {
+uint32_t encode_state(std::string_view tag, const nbt::CompoundContent &attribs) {
    if (tag.substr(0, 9) == "minecraft") {
       tag = tag.substr(10);
    }

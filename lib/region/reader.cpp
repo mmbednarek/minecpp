@@ -1,12 +1,13 @@
 #include <boost/endian/conversion.hpp>
-#include <minecpp/util/format.h>
+#include <fmt/core.h>
 #include <minecpp/region/reader.h>
+#include <minecpp/util/format.h>
 
 namespace minecpp::region {
 
 Reader::Reader(std::istream &s) : stream(s) {}
 
-result<std::vector<uint8_t>> Reader::load_chunk(int x, int z) {
+mb::result<std::vector<uint8_t>> Reader::load_chunk(int x, int z) {
    //   int off_x = x >= 0 ? x % 32 : -(x % 32);
    //   int off_z = z >= 0 ? z % 32 : -(z % 32);
    int off_x = x & 31;
@@ -17,7 +18,7 @@ result<std::vector<uint8_t>> Reader::load_chunk(int x, int z) {
    uint32_t location;
    stream.read((char *) &location, sizeof(uint32_t));
    if (location == 0) {
-      return error(errclass::NotFound, "no chunk at given location");
+      return mb::error(mb::error::status::NotFound, "no chunk at given location");
    }
 
    uint32_t offset = location << 8u;
@@ -37,8 +38,7 @@ result<std::vector<uint8_t>> Reader::load_chunk(int x, int z) {
    stream.read((char *) data.data(), data_size);
 
    if (stream.gcount() != data_size) {
-      return errorf("(x = {}, z = {}) invalid data count {} != {}", x, z,
-                    stream.gcount(), data_size);
+      return mb::error(fmt::format("(x = {}, z = {}) invalid data count {} != {}", x, z, stream.gcount(), data_size));
    }
 
    return data;

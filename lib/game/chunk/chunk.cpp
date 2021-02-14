@@ -2,8 +2,8 @@
 #include <minecpp/game/chunk/chunk.h>
 #include <minecpp/game/chunk/utils.h>
 #include <minecpp/game/item/registry.h>
-#include <minecpp/util/packed.h>
 #include <minecpp/nbt/parser.h>
+#include <minecpp/util/packed.h>
 #include <stdexcept>
 #include <vector>
 
@@ -301,6 +301,32 @@ std::array<short, 256> Chunk::get_height_map() {
 
 block::ChunkPos Chunk::pos() const {
    return block::ChunkPos(pos_x, pos_z);
+}
+
+std::unique_ptr<Chunk> Chunk::from_nbt(minecpp::message::nbt::Chunk &chunk) {
+   auto out = std::make_unique<Chunk>();
+   out->full = chunk.level.status == "full";
+   out->pos_x = chunk.level.x_pos;
+   out->pos_z = chunk.level.z_pos;
+   std::copy(chunk.level.heightmaps.world_surface.begin(), chunk.level.heightmaps.world_surface.end(), out->hm_world_surface.begin());
+   std::copy(chunk.level.heightmaps.motion_blocking.begin(), chunk.level.heightmaps.motion_blocking.end(), out->hm_motion_blocking.begin());
+//   std::copy(chunk.level.biomes.begin(), chunk.level.biomes.end(), out->biomes.begin());
+   std::fill_n(out->biomes.begin(), 1024, 1);
+   std::for_each(chunk.level.sections.begin(), chunk.level.sections.end(), [&out](const minecpp::message::nbt::Section &sec) {
+      Section out_sec;
+      out_sec.sky_light = minecpp::squeezed::TinyVec<4>(sec.sky_light);
+      out_sec.block_light = minecpp::squeezed::TinyVec<4>(sec.block_light);
+      out_sec.palette.resize(sec.palette.size());
+      std::transform(sec.palette.begin(), sec.palette.end(), out_sec.palette.begin(), [](const minecpp::message::nbt::PaletteItem &item) {
+         return block::encode_state(item.name, item.properties);
+      });
+      out_sec.ref_count = game::calculate_ref_count(sec.block_states, out_sec.palette);
+      if (!sec.block_states.empty()) {
+         out_sec.data = minecpp::squeezed::Vector(sec.block_states.size() * 64 / 4096, 4096, sec.block_states);
+      }
+      out->sections[sec.y] = out_sec;
+   });
+   return out;
 }
 
 PaletteItem::PaletteItem(nbt::Reader &r) {

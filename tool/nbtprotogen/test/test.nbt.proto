@@ -1,0 +1,13 @@
+syntax = "nbt";
+package proto.nbt.test;
+
+message Foo {
+  string value = 1;
+  map<string, int32> stuff = 2;
+}
+
+message Bar {
+  repeated Foo foo = 1;
+  map<string, Foo> foo_map = 2;
+  compound meta = 3;
+}

@@ -1,0 +1,43 @@
+syntax = "proto3";
+package minecpp.message.protobuf;
+
+message Gameplay {
+    DimensionType dimension = 1;
+    uint64 seed = 2;
+    GameMode mode = 3;
+    WorldType world = 4;
+    int32 view_distance = 5;
+    bool hardcore = 6;
+    int32 max_players = 7;
+    bool reduced_debug_info = 8;
+    bool do_immediate_respawn = 9;
+    Difficulty difficulty = 10;
+}
+
+enum DimensionType {
+    Overworld = 0;
+    Nether = 1;
+    End = 2;
+}
+
+enum Difficulty {
+    Easy = 0;
+    Normal = 1;
+    Hard = 2;
+}
+
+enum GameMode {
+    Survival = 0;
+    Creative = 1;
+    Adventure = 2;
+    Spectator = 3;
+}
+
+enum WorldType {
+    Default = 0;
+    Flat = 1;
+    LargeBiomes = 2;
+    Amplified = 3;
+    Customised = 4;
+}
+

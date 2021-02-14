@@ -61,7 +61,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(libmb_codegen)
 
 include_directories(./include)
-include_directories(./services/protos/include)
+include_directories(./service/protos/include)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -fconcepts")
@@ -78,24 +78,25 @@ add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
 add_subdirectory(lib/network)
+add_subdirectory(lib/message/nbt)
 
 # Tests
 
-add_subdirectory(tests)
+add_subdirectory(test)
 
 # Tools
 
-add_subdirectory(tools/nbt_viewer)
-add_subdirectory(tools/chunk_extractor)
-add_subdirectory(tools/chunk_viewer)
-add_subdirectory(tools/recipes)
-add_subdirectory(tools/statelist)
-add_subdirectory(tools/nbtprotogen)
-add_subdirectory(tools/nbtscheme)
+add_subdirectory(tool/nbt_viewer)
+add_subdirectory(tool/chunk_extractor)
+add_subdirectory(tool/chunk_viewer)
+add_subdirectory(tool/recipes)
+add_subdirectory(tool/statelist)
+add_subdirectory(tool/nbtprotogen)
+add_subdirectory(tool/nbtscheme)
 
 # Services
 
-add_subdirectory(services/protos/include/minepb)
-add_subdirectory(services/chunk_storage)
-add_subdirectory(services/engine)
-add_subdirectory(services/front)
+add_subdirectory(service/protos/include/minepb)
+add_subdirectory(service/chunk_storage)
+add_subdirectory(service/engine)
+add_subdirectory(service/front)
