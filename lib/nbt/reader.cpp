@@ -120,8 +120,7 @@ void Reader::check_signature() {
    }
 }
 
-void Reader::read_compound(
-        std::function<void(Reader &r, TagId key, std::string)> for_elem) {
+void Reader::read_compound(std::function<void(Reader &r, TagId key, std::string)> for_elem) {
    for (;;) {
       auto header = peek_tag();
       if (header.id == nbt::TagId::End)

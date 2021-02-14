@@ -39,19 +39,15 @@ mb::result<minecpp::game::Chunk &> ChunkManager::get_chunk(minecpp::game::block:
 }
 
 mb::result<minecpp::game::Chunk &> ChunkManager::load_chunk(int x, int z) {
-   auto data = MB_TRY(regions.read_chunk(x, z));
-   auto chunk_data = std::any_cast<std::vector<uint8_t>>(data);
-   std::istringstream compressed_stream(std::string((char *) chunk_data.data(), chunk_data.size()));
-   minecpp::util::ZlibInputStream chunk_stream(compressed_stream);
+//   auto data = MB_TRY(regions.read_chunk(x, z));
+//   auto chunk_data = std::any_cast<std::vector<uint8_t>>(data);
+//   std::istringstream compressed_stream(std::string((char *) chunk_data.data(), chunk_data.size()));
+//   minecpp::util::ZlibInputStream chunk_stream(compressed_stream);
 
-//   minecpp::nbt::Reader cr(chunk_stream);
-//   cr.check_signature();
-//   cr.find_compound("Level");
+//   auto nbt_chunk = minecpp::message::nbt::Chunk::deserialize(chunk_stream);
+//   chunks[hash_chunk_pos(x, z)] = MB_TRY(minecpp::game::Chunk::from_nbt(nbt_chunk));
 
-   auto nbt_chunk = minecpp::message::nbt::Chunk::deserialize(chunk_stream);
-   chunks[hash_chunk_pos(x, z)] = minecpp::game::Chunk::from_nbt(nbt_chunk);
-
-//   gen.generate_chunk(x, z);
+   gen.generate_chunk(x, z);
    auto &chunk = *chunks.at(hash_chunk_pos(x, z));
    return chunk;
 }

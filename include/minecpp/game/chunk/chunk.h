@@ -3,10 +3,10 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
 #include <minecpp/game/block/position.h>
+#include <minecpp/message/nbt/chunk.nbt.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
 #include <minepb/chunk.pb.h>
-#include <minecpp/message/nbt/chunk.nbt.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -26,7 +26,6 @@ struct Chunk {
    Chunk();
    Chunk(int x, int z, std::array<short, 256> &height_map);
 
-   mb::result<mb::empty> load(nbt::Reader &r, nbt::TagId tagid, const std::string &name);
    void as_proto(minecpp::chunk::NetChunk *chunk);
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, uint32_t state);
@@ -42,17 +41,7 @@ struct Chunk {
    void free_ref(uuid player_id);
    block::ChunkPos pos() const;
 
-   static mb::result<std::unique_ptr<Chunk>> from_nbt(nbt::Reader &r);
-
-   static std::unique_ptr<Chunk> from_nbt(minecpp::message::nbt::Chunk &chunk);
-};
-
-struct PaletteItem {
-   std::string tag_name;
-   nbt::CompoundContent properties;
-
-   explicit PaletteItem(nbt::Reader &r);
-   uint32_t to_state_id();
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::message::nbt::Chunk &chunk);
 };
 
 }// namespace minecpp::game
