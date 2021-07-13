@@ -94,8 +94,8 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, block::ChunkPos pos) {
      Placement &placement = pair.second;
      auto &obj = pop_objects[placement.object_id];
 
-     auto x = placement.chunk_x + (pos.x - chunk.pos_x) * 16;
-     auto z = placement.chunk_z + (pos.z - chunk.pos_z) * 16;
+     auto x = placement.chunk_x + (pos.x - chunk.m_pos_x) * 16;
+     auto z = placement.chunk_z + (pos.z - chunk.m_pos_z) * 16;
 
      if (x < 0 || x >= 16 || z < 0 || z >= 16)
         return;

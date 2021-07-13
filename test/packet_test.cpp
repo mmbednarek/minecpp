@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <minecpp/network/message/reader.h>
+#include <minecpp/network/message/file.h>
 
 TEST(PacketReader, VarInt) {
    char buff[]{(char)0xe2, (char)0xde, 0x0b};

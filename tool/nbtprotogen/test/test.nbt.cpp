@@ -113,23 +113,25 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
          break;
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
-         switch (list_info0.tagid) {
-         case minecpp::nbt::TagId::Compound: {
-            switch (res.__xx_get_id(name)) {
-            case 1: {
-               std::vector<Foo> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return Foo::deserialize_no_header(r);
-               });
-               res.__xx_put(name, ls);
-               return;
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Compound: {
+               switch (res.__xx_get_id(name)) {
+               case 1: {
+                  std::vector<Foo> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return Foo::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               }
+               break;
             }
             }
-            break;
-         }
-         }
-         for (mb::size i = 0; i < list_info0.size; ++i) {
-            r.skip_payload(list_info0.tagid);
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }

@@ -23,7 +23,7 @@ class Writer {
    void write_string_content(std::string_view str);
    void write_float_content(float value);
    void write_double_content(float value);
-   void write_long_content(long long value);
+   void write_long_content(int64_t value);
    void write_bytes_content(const std::vector<uint8_t> &values);
    void write_ints_content(const std::vector<int> &values);
    void write_longs_content(const std::vector<int64_t> &values);
@@ -34,7 +34,7 @@ class Writer {
    void write_string(std::string_view name, std::string_view str);
    void write_float(std::string_view name, float value);
    void write_double(std::string_view name, double value);
-   void write_long(std::string_view name, long long value);
+   void write_long(std::string_view name, int64_t value);
    void write_bytes(std::string_view name, const std::vector<uint8_t> &values);
    void write_ints(std::string_view name, const std::vector<int> &values);
    void write_longs(std::string_view name, const std::vector<int64_t> &values);

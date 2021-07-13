@@ -1,6 +1,6 @@
-#include <minecpp/network/message/reader.h>
 #include <boost/endian/conversion.hpp>
 #include <minecpp/nbt/parser.h>
+#include <minecpp/network/message/file.h>
 #include <stdexcept>
 
 namespace minecpp::network::message {

@@ -75,16 +75,16 @@ Section Terrain::generate_section(int sec) {
          if (block_y < sand_level) {
             return sand_id;
          }
-         if (block_y > 100) {
+         if (block_y > 130) {
             return snow_block_id;
          }
-         if (block_y > 97) {
+         if (block_y > 110) {
             if (rand.next_int(2) == 0) {
                return snow_block_id;
             }
             return stone_id;
          }
-         if (block_y > 90) {
+         if (block_y > 100) {
             return stone_id;
          }
          if (block_y > 86) {
@@ -102,15 +102,15 @@ Section Terrain::generate_section(int sec) {
          if (block_y < sand_level) {
             return sand_id;
          }
-         if (block_y > 97) {
+         if (block_y > 110) {
             return snow_block_id;
          }
-         if (block_y > 90) {
+         if (block_y > 100) {
             return stone_id;
          }
          return dirt_id;
       }
-      if (block_y > 105) {
+      if (block_y > 130) {
          return snow_block_id;
       }
      return stone_id;

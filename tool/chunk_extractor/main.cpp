@@ -1,8 +1,8 @@
 #include <fstream>
 #include <iostream>
 #include <minecpp/network/message/chunk.h>
+#include <minecpp/region/file.h>
 #include <minecpp/util/compression.h>
-#include <minecpp/region/reader.h>
 
 auto main(int argc, char *argv[]) -> int {
    if (argc < 4) {
@@ -17,7 +17,7 @@ auto main(int argc, char *argv[]) -> int {
       return 1;
    }
 
-   minecpp::region::Reader r(stream);
+   minecpp::region::RegionFile r(stream);
 
    uint32_t x = std::stoi(argv[2]);
    uint32_t z = std::stoi(argv[3]);

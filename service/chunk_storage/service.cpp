@@ -1,6 +1,6 @@
 #include "service.h"
 #include <minecpp/game/chunk/chunk.h>
-#include <minecpp/region/reader.h>
+#include <minecpp/region/file.h>
 #include <minecpp/util/compression.h>
 #include <minecpp/util/format.h>
 #include <minecpp/util/grpc.h>
@@ -14,7 +14,7 @@ Service::Service(std::string_view region_path) : chunks(Regions(region_path)) {}
 grpc::Status Service::LoadChunk(grpc::ServerContext *context, const minecpp::chunk_storage::LoadChunkRequest *request,
                                 minecpp::chunk::NetChunk *response) {
    auto &chunk = MCPP_GRPC_TRY(chunks.get_chunk(request->x(), request->z()));
-   for (const auto &sec : chunk.sections) {
+   for (const auto &sec : chunk.m_sections) {
       if (!sec.second.sky_light.empty() && sec.second.sky_light.size() != 4096) {
          spdlog::info("invalid sky light size: {}", sec.second.sky_light.size());
       }

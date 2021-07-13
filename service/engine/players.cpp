@@ -42,9 +42,11 @@ mb::result<minecpp::game::PlayerData> PlayerManager::load_player_data(minecpp::g
 }
 
 mb::result<minecpp::util::Vec3> PlayerManager::get_spawn_position(minecpp::game::World &w) {
-   std::uniform_int_distribution<int> dist(-200, 200);
-   auto x = dist(rand_engine);
-   auto z = dist(rand_engine);
+//   std::uniform_int_distribution<int> dist(-200, 200);
+//   auto x = dist(rand_engine);
+//   auto z = dist(rand_engine);
+   auto x = 0;
+   auto z = 0;
    auto y = MB_TRY(w.height_at(x, z)) + 2;
    return minecpp::util::Vec3(x, y, z);
 }

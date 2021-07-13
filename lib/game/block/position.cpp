@@ -32,9 +32,6 @@ ChunkPos Position::chunk_pos() const {
 
 uint16_t Position::offset() const { return offset_x() << 12 | y | offset_z() << 8; }
 
-inline uint8_t Position::offset_x() const { return x & 15; }
-inline uint8_t Position::offset_z() const { return z & 15; }
-
 bool operator==(const ChunkPos &a, const ChunkPos &b) { return a.x == b.x && a.z == b.z; }
 
 ChunkPos ChunkPos::operator+(ChunkPos &other) const { return ChunkPos{x + other.x, z + other.z}; }

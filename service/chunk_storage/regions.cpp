@@ -1,28 +1,33 @@
 #include "regions.h"
+#include <fmt/core.h>
 #include <minecpp/error/result.h>
-#include <minecpp/region/reader.h>
+#include <minecpp/region/file.h>
 #include <spdlog/spdlog.h>
 #include <sstream>
 #include <utility>
 
 namespace ChunkStorage {
 
-RegionFile::RegionFile(std::fstream stream, const std::string &path) : file(std::move(stream)), path(std::move(path)) {}
+RegionFile::RegionFile(std::fstream stream, std::string path) : m_file(std::move(stream)), m_path(std::move(path)) {}
 
 mb::result<std::unique_ptr<RegionFile>> RegionFile::load(const std::string &path) {
-   std::fstream file;
-   file.open(path);
+   std::fstream file(path, std::ios_base::binary | std::ios_base::out | std::ios_base::in);
    if (!file.is_open()) {
       return mb::error(mb::error::status::NotFound, "file not found");
    }
    return std::make_unique<RegionFile>(std::move(file), path);
 }
 
-RegionFile::~RegionFile() {
-   file.close();
+mb::result<mb::empty> RegionFile::reload() {
+   m_file.close();
+   m_file.open(m_path, std::ios_base::binary | std::ios_base::out | std::ios_base::in);
+   if (!m_file.is_open()) {
+      return mb::error("could not reopen file");
+   }
+   return mb::ok;
 }
 
-Regions::Regions(std::string_view path) : path(path) {}
+Regions::Regions(std::string_view path) : m_path(path) {}
 
 constexpr int max_z = 62502;// two regions over world border
 static constexpr int64_t hash_chunk_pos(int x, int z) {
@@ -30,44 +35,40 @@ static constexpr int64_t hash_chunk_pos(int x, int z) {
 }
 
 mb::result<RegionFile &> Regions::get_region(int x, int z) {
-   auto iter = files.find(hash_chunk_pos(x, z));
-   if (iter != files.end()) {
+   auto iter = m_files.find(hash_chunk_pos(x, z));
+   if (iter != m_files.end()) {
       return *iter->second;
    }
    return load_region(x, z);
 }
 
 mb::result<RegionFile &> Regions::load_region(int x, int z) {
-   std::stringstream region_path;
-   region_path << path << "/r." << x << "." << z << ".mca";
-
-   spdlog::info("loading region file {}", region_path.str());
-
-   auto region = tryget(RegionFile::load(region_path.str()));
+   auto region_path = fmt::format("{}/r.{}.{}.mca", m_path, x, z);
+   spdlog::info("loading region file {}", region_path);
+   auto region = MB_TRY(RegionFile::load(region_path));
    auto hash = hash_chunk_pos(x, z);
    auto &region_ref = *region;
-   files[hash] = std::move(region);
+   m_files[hash] = std::move(region);
    return region_ref;
 }
 
 static constexpr int chunk_to_region(int cord) { return cord < 0 ? (cord / 32 - 1) : cord / 32; }
 
 mb::result<std::vector<uint8_t>> Regions::read_chunk(int x, int z) {
-   auto region_res = get_region(chunk_to_region(x), chunk_to_region(z));
-   if (!region_res.ok()) {
-      return region_res.err();
-   }
-   auto &region = region_res.unwrap();
+   auto &region = MB_TRY(get_region(chunk_to_region(x), chunk_to_region(z)));
+   std::lock_guard<std::mutex> lock(region.m_mutex);
 
-   region.m.lock();
+   minecpp::region::RegionFile r(region.m_file);
+   return r.load_chunk(x, z);
+}
 
-   minecpp::region::Reader r(region.file);
-   auto data = r.load_chunk(x, z);
-   region.m.unlock();
-   if (!data.ok()) {
-      return data.err();
-   }
-   return data.unwrap();
+mb::result<mb::empty> Regions::write_chunk(mb::i32 x, mb::i32 z, const mb::view<char> chunk_data) noexcept {
+   auto &region = MB_TRY(get_region(chunk_to_region(x), chunk_to_region(z)));
+   std::lock_guard<std::mutex> lock(region.m_mutex);
+
+   minecpp::region::RegionFile r(region.m_file);
+   MB_TRY(r.write_data(x, z, chunk_data));
+   return mb::ok;
 }
 
 }// namespace ChunkStorage

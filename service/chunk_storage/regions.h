@@ -1,10 +1,11 @@
 #pragma once
 #include <any>
 #include <cstdint>
-#include <mb/result.h>
 #include <fstream>
 #include <functional>
 #include <map>
+#include <mb/result.h>
+#include <mb/view.h>
 #include <memory>
 #include <mutex>
 #include <string_view>
@@ -12,24 +13,24 @@
 namespace ChunkStorage {
 
 struct RegionFile {
-   std::fstream file;
-   std::string path;
-   std::mutex m;
+   std::fstream m_file;
+   std::string m_path;
+   std::mutex m_mutex;
 
-   explicit RegionFile(std::fstream stream, const std::string &path);
-   ~RegionFile();
+   explicit RegionFile(std::fstream stream, std::string path);
    static mb::result<std::unique_ptr<RegionFile>> load(const std::string &path);
+   [[nodiscard]] mb::result<mb::empty> reload();
 };
 
 class Regions {
-   std::string_view path;
-
-   std::map<int64_t, std::unique_ptr<RegionFile>> files;
+   std::string_view m_path;
+   std::map<int64_t, std::unique_ptr<RegionFile>> m_files;
 
  public:
    explicit Regions(std::string_view path);
 
-   mb::result<std::vector<uint8_t>> read_chunk(int x, int z);
+   [[nodiscard]] mb::result<std::vector<uint8_t>> read_chunk(int x, int z);
+   [[nodiscard]] mb::result<mb::empty> write_chunk(mb::i32 x, mb::i32 z, mb::view<char> chunk_data) noexcept;
 
  private:
    mb::result<RegionFile &> get_region(int x, int z);

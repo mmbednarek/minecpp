@@ -341,55 +341,57 @@ Entity Entity::deserialize_no_header(minecpp::nbt::Reader &r) {
          break;
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
-         switch (list_info0.tagid) {
-         case minecpp::nbt::TagId::Float: {
-            std::vector<float> ls(list_info0.size);
-            std::generate(ls.begin(), ls.end(), [&r]() {
-               return r.read_float32();
-            });
-            res.__xx_put(name, ls);
-            return;
-         }
-         case minecpp::nbt::TagId::Double: {
-            std::vector<double> ls(list_info0.size);
-            std::generate(ls.begin(), ls.end(), [&r]() {
-               return r.read_float64();
-            });
-            res.__xx_put(name, ls);
-            return;
-         }
-         case minecpp::nbt::TagId::Compound: {
-            switch (res.__xx_get_id(name)) {
-            case 4: {
-               std::vector<ArmorItem> ls(list_info0.size);
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Float: {
+               std::vector<float> ls(list_info0.size);
                std::generate(ls.begin(), ls.end(), [&r]() {
-                  return ArmorItem::deserialize_no_header(r);
+                  return r.read_float32();
                });
                res.__xx_put(name, ls);
                return;
             }
-            case 5: {
-               std::vector<Attribute> ls(list_info0.size);
+            case minecpp::nbt::TagId::Double: {
+               std::vector<double> ls(list_info0.size);
                std::generate(ls.begin(), ls.end(), [&r]() {
-                  return Attribute::deserialize_no_header(r);
+                  return r.read_float64();
                });
                res.__xx_put(name, ls);
                return;
             }
-            case 15: {
-               std::vector<HandItem> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return HandItem::deserialize_no_header(r);
-               });
-               res.__xx_put(name, ls);
-               return;
+            case minecpp::nbt::TagId::Compound: {
+               switch (res.__xx_get_id(name)) {
+               case 4: {
+                  std::vector<ArmorItem> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return ArmorItem::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               case 5: {
+                  std::vector<Attribute> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return Attribute::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               case 15: {
+                  std::vector<HandItem> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return HandItem::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               }
+               break;
             }
             }
-            break;
-         }
-         }
-         for (mb::size i = 0; i < list_info0.size; ++i) {
-            r.skip_payload(list_info0.tagid);
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }
@@ -603,23 +605,25 @@ Section Section::deserialize_no_header(minecpp::nbt::Reader &r) {
          return;
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
-         switch (list_info0.tagid) {
-         case minecpp::nbt::TagId::Compound: {
-            switch (res.__xx_get_id(name)) {
-            case 5: {
-               std::vector<PaletteItem> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return PaletteItem::deserialize_no_header(r);
-               });
-               res.__xx_put(name, ls);
-               return;
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Compound: {
+               switch (res.__xx_get_id(name)) {
+               case 5: {
+                  std::vector<PaletteItem> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return PaletteItem::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               }
+               break;
             }
             }
-            break;
-         }
-         }
-         for (mb::size i = 0; i < list_info0.size; ++i) {
-            r.skip_payload(list_info0.tagid);
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }
@@ -899,63 +903,67 @@ Level Level::deserialize_no_header(minecpp::nbt::Reader &r) {
          break;
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
-         switch (list_info0.tagid) {
-         case minecpp::nbt::TagId::Compound: {
-            switch (res.__xx_get_id(name)) {
-            case 3: {
-               std::vector<Entity> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return Entity::deserialize_no_header(r);
-               });
-               res.__xx_put(name, ls);
-               return;
-            }
-            case 9: {
-               std::vector<Section> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return Section::deserialize_no_header(r);
-               });
-               res.__xx_put(name, ls);
-               return;
-            }
-            }
-            break;
-         }
-         case minecpp::nbt::TagId::List: {
-            auto list_info1 = r.peek_list();
-            switch (list_info1.tagid) {
-            case minecpp::nbt::TagId::Short: {
-               std::vector<std::vector<std::int16_t>> ls(list_info0.size);
-               if (list_info0.size != 0) {
-                  auto it = ls.begin();
-                  *it = [&r, &list_info1]() {
-                     std::vector<std::int16_t> ls(list_info1.size);
-                     std::generate(ls.begin(), ls.end(), [&r]() {
-                        return r.read_short();
-                     });
-                     return ls;
-                  }();
-                  std::generate(it + 1, ls.end(), [&r]() {
-                     auto list_info1 = r.peek_list();
-                     std::vector<std::int16_t> ls(list_info1.size);
-                     std::generate(ls.begin(), ls.end(), [&r]() {
-                        return r.read_short();
-                     });
-                     return ls;
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Compound: {
+               switch (res.__xx_get_id(name)) {
+               case 3: {
+                  std::vector<Entity> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return Entity::deserialize_no_header(r);
                   });
+                  res.__xx_put(name, ls);
+                  return;
                }
-               res.__xx_put(name, ls);
+               case 9: {
+                  std::vector<Section> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return Section::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               }
+               break;
+            }
+            case minecpp::nbt::TagId::List: {
+               auto list_info1 = r.peek_list();
+               if (list_info1.size > 0) {
+                  switch (list_info1.tagid) {
+                  case minecpp::nbt::TagId::Short: {
+                     std::vector<std::vector<std::int16_t>> ls(list_info0.size);
+                     if (list_info0.size != 0) {
+                        auto it = ls.begin();
+                        *it = [&r, &list_info1]() {
+                           std::vector<std::int16_t> ls(list_info1.size);
+                           std::generate(ls.begin(), ls.end(), [&r]() {
+                              return r.read_short();
+                           });
+                           return ls;
+                        }();
+                        std::generate(it + 1, ls.end(), [&r]() {
+                           auto list_info1 = r.peek_list();
+                           std::vector<std::int16_t> ls(list_info1.size);
+                           std::generate(ls.begin(), ls.end(), [&r]() {
+                              return r.read_short();
+                           });
+                           return ls;
+                        });
+                     }
+                     res.__xx_put(name, ls);
+                     return;
+                  }
+                  }
+                  for (mb::size i = 0; i < list_info1.size; ++i) {
+                     r.skip_payload(list_info1.tagid);
+                  }
+               }
                return;
             }
             }
-            for (mb::size i = 0; i < list_info1.size; ++i) {
-               r.skip_payload(list_info1.tagid);
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
             }
-            return;
-         }
-         }
-         for (mb::size i = 0; i < list_info0.size; ++i) {
-            r.skip_payload(list_info0.tagid);
          }
          return;
       }

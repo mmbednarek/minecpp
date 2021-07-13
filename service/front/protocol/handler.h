@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/network/message/reader.h>
+#include <minecpp/network/message/file.h>
 
 namespace Front {
 

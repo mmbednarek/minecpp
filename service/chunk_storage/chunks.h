@@ -18,8 +18,8 @@ namespace ChunkStorage {
 using uuid = boost::uuids::uuid;
 
 class ChunkManager : public minecpp::game::Chunks {
-   std::map<int64_t, std::unique_ptr<minecpp::game::Chunk>> chunks;
-   Regions regions;
+   std::map<int64_t, std::unique_ptr<minecpp::game::Chunk>> m_chunks;
+   Regions m_regions;
    minecpp::game::worldgen::Generator gen;
 
 
@@ -32,6 +32,7 @@ class ChunkManager : public minecpp::game::Chunks {
    mb::result<minecpp::game::Chunk &> get_chunk(int x, int y);
    mb::result<minecpp::game::Chunk &> get_chunk(minecpp::game::block::ChunkPos pos);
    mb::result<minecpp::game::Chunk &> load_chunk(int x, int y);
+   [[nodiscard]] mb::result<mb::empty> save_chunk(int x, int z);
    mb::result<mb::empty> set_block(int x, int y, int z, uint32_t state);
    mb::result<int> height_at(int x, int z);
    mb::result<uuid> add_refs(uuid engine_id, uuid player_id, std::vector<minecpp::game::block::ChunkPos> coords);

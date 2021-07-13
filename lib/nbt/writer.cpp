@@ -1,3 +1,4 @@
+#include <mb/int.h>
 #include <minecpp/nbt/writer.h>
 
 namespace minecpp::nbt {
@@ -40,11 +41,11 @@ void Writer::write_int(std::string_view name, int value) {
    put_big_endian(value);
 }
 
-void Writer::write_long_content(long long int value) {
+void Writer::write_long_content(int64_t value) {
    put_big_endian(value);
 }
 
-void Writer::write_long(std::string_view name, long long value) {
+void Writer::write_long(std::string_view name, int64_t value) {
    put_byte(static_cast<uint8_t>(TagId::Long));
    put_string(name);
    put_big_endian(value);
@@ -139,7 +140,7 @@ void Writer::write_bytes(std::string_view name, const std::vector<uint8_t> &valu
 void Writer::write_ints_content(const std::vector<int> &values) {
    put_big_endian<int32_t>(values.size());
    for (const auto &val : values) {
-      put_big_endian<uint8_t>(val);
+      put_big_endian<int>(val);
    }
 }
 

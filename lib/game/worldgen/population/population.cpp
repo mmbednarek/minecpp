@@ -27,7 +27,7 @@ void Population::populate_chunk(block::ChunkPos pos) {
       get_chunk_placements(pos).populate_neighbour(chunk, pos);
    });
 
-   chunk.full = true;
+   chunk.m_full = true;
 }
 
 ChunkPlacements &Population::load_chunk_placements(Chunk &chunk) {

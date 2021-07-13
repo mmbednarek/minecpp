@@ -1,6 +1,7 @@
 #pragma once
 #include <boost/iostreams/filtering_stream.hpp>
 #include <iostream>
+#include <mb/int.h>
 
 namespace minecpp::util {
 class GZipInputStream

@@ -229,43 +229,45 @@ void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
    using minecpp::util::repeat_string;
 
    col << raw("auto list_info{} = r.peek_list()", depth);
-   switch_statement list_type_switch(raw("list_info{}.tagid", depth));
-   std::for_each(deserializer.elems.begin(), deserializer.elems.end(), [depth, &list_type_switch](const std::pair<const Semantics::TypeVariant, std::any> &pair) {
-      if (!pair.second.has_value()) {
-         return;
-      }
+   col << if_statement(raw("list_info{}.size > 0", depth), [&deserializer, depth](statement::collector &col) {
+     switch_statement list_type_switch(raw("list_info{}.tagid", depth));
+     std::for_each(deserializer.elems.begin(), deserializer.elems.end(), [depth, &list_type_switch](const std::pair<const Semantics::TypeVariant, std::any> &pair) {
+       if (!pair.second.has_value()) {
+          return;
+       }
 
-      if (pair.second.type() == typeid(Semantics::StaticDeserializer)) {
-         auto elem_deserializer = std::any_cast<Semantics::StaticDeserializer>(pair.second);
-         list_type_switch.add(raw(Semantics::variant_to_nbt_tag(elem_deserializer.variant)), [depth, &elem_deserializer](statement::collector &col) {
+       if (pair.second.type() == typeid(Semantics::StaticDeserializer)) {
+          auto elem_deserializer = std::any_cast<Semantics::StaticDeserializer>(pair.second);
+          list_type_switch.add(raw(Semantics::variant_to_nbt_tag(elem_deserializer.variant)), [depth, &elem_deserializer](statement::collector &col) {
             put_deserialize_list_logic_static(elem_deserializer, col, 0, depth);
-         });
-      }
+          });
+       }
 
-      if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
-         auto elem_deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
-         list_type_switch.add(raw("minecpp::nbt::TagId::Compound"), [&elem_deserializer, depth](statement::collector &col) {
+       if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
+          auto elem_deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
+          list_type_switch.add(raw("minecpp::nbt::TagId::Compound"), [&elem_deserializer, depth](statement::collector &col) {
             switch_statement compound_tag_switch(call("res.__xx_get_id", raw("name")));
             std::for_each(elem_deserializer.elems.begin(), elem_deserializer.elems.end(), [&compound_tag_switch, depth](const Semantics::CompoundDeserializer::Elem &elem) {
-               compound_tag_switch.add(raw("{}", elem.id), [&elem, depth](statement::collector &col) {
-                  put_deserialize_list_logic_compound(elem, col, 0, depth);
-               });
+              compound_tag_switch.add(raw("{}", elem.id), [&elem, depth](statement::collector &col) {
+                put_deserialize_list_logic_compound(elem, col, 0, depth);
+              });
             });
             col << compound_tag_switch;
             col << raw("break");
-         });
-      }
+          });
+       }
 
-      if (pair.second.type() == typeid(Semantics::ListDeserializer)) {
-         auto elem_deserializer = std::any_cast<Semantics::ListDeserializer>(pair.second);
-         list_type_switch.add(raw("minecpp::nbt::TagId::List"), [&elem_deserializer, depth](statement::collector &col) {
+       if (pair.second.type() == typeid(Semantics::ListDeserializer)) {
+          auto elem_deserializer = std::any_cast<Semantics::ListDeserializer>(pair.second);
+          list_type_switch.add(raw("minecpp::nbt::TagId::List"), [&elem_deserializer, depth](statement::collector &col) {
             put_deserialize_list_logic(elem_deserializer, col, depth + 1);
-         });
-      }
-   });
-   col << list_type_switch;
-   col << for_statement(raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"), [depth](statement::collector &col) {
-      col << call("r.skip_payload", raw("list_info{}.tagid", depth));
+          });
+       }
+     });
+     col << list_type_switch;
+     col << for_statement(raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"), [depth](statement::collector &col) {
+       col << call("r.skip_payload", raw("list_info{}.tagid", depth));
+     });
    });
    col << return_statement();
 }

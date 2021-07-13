@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <mb/int.h>
 #include <minecpp/util/vec.h>
 
 namespace minecpp::game::block {
@@ -32,8 +33,8 @@ struct Position {
    uint64_t as_long() const;
    [[nodiscard]] ChunkPos chunk_pos() const;
    [[nodiscard]] uint16_t offset() const;
-   [[nodiscard]] uint8_t offset_x() const;
-   [[nodiscard]] uint8_t offset_z() const;
+   [[nodiscard]] constexpr mb::u8 offset_x() const { return x & 15; }
+   [[nodiscard]] constexpr mb::u8 offset_z() const { return z & 15; }
 };
 
-} // namespace minecpp::game::block
+}// namespace minecpp::game::block

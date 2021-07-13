@@ -14,14 +14,14 @@ namespace minecpp::game {
 using boost::uuids::uuid;
 
 struct Chunk {
-   int pos_x, pos_z;
-   bool full = false;
-   std::array<int, 1024> biomes;
-   std::array<uint64_t, 37> hm_motion_blocking;
-   std::array<uint64_t, 37> hm_world_surface;
-   std::map<int8_t, Section> sections;
-   std::set<uuid> refs;
-   uuid engine_lock{};
+   int m_pos_x, m_pos_z;
+   bool m_full = false;
+   std::array<int, 1024> m_biomes;
+   std::array<uint64_t, 37> m_hm_motion_blocking;
+   std::array<uint64_t, 37> m_hm_world_surface;
+   std::map<int8_t, Section> m_sections;
+   std::set<uuid> m_references;
+   uuid m_engine_lock{};
 
    Chunk();
    Chunk(int x, int z, std::array<short, 256> &height_map);
@@ -41,7 +41,8 @@ struct Chunk {
    void free_ref(uuid player_id);
    block::ChunkPos pos() const;
 
-   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::message::nbt::Chunk &chunk);
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::message::nbt::Chunk &chunk) noexcept;
+   minecpp::message::nbt::Chunk to_nbt() noexcept;
 };
 
 }// namespace minecpp::game

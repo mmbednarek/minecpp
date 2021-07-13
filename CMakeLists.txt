@@ -3,8 +3,6 @@ project(minecpp)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(Protobuf REQUIRED)
@@ -64,7 +62,7 @@ include_directories(./include)
 include_directories(./service/protos/include)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -fconcepts")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -O3")
 
 # Libraries
 
