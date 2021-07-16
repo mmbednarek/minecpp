@@ -66,6 +66,8 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -O3")
 
 # Libraries
 
+add_subdirectory(lib/api/minecpp/proto)
+add_subdirectory(lib/api/minecpp/nbt)
 add_subdirectory(lib/chat)
 add_subdirectory(lib/error)
 add_subdirectory(lib/format)

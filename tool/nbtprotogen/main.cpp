@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 
    std::ifstream s(scheme_file);
    if (!s.is_open()) {
-      std::cerr << "could not open file";
+      std::cerr << "could not open file\n";
       return 1;
    }
 
@@ -86,14 +86,14 @@ int main(int argc, char *argv[]) {
 
    std::ofstream header_out(fmt::format("{}/{}.nbt.h", header_output, module_name));
    if (!header_out.is_open()) {
-      std::cerr << "could not open header output file";
+      std::cerr << "could not open header output file\n";
       return 1;
    }
    gen.write_header(header_out);
 
    std::ofstream source_out(fmt::format("{}/{}.nbt.cpp", source_output, module_name));
    if (!source_out.is_open()) {
-      std::cerr << "could not open source output file";
+      std::cerr << "could not open source output file, path " << fmt::format("{}/{}.nbt.cpp", source_output, module_name) << '\n';
       return 1;
    }
    gen.write_source(source_out);

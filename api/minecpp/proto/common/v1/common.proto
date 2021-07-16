@@ -1,0 +1,13 @@
+syntax = "proto3";
+package minecpp.proto.common.v1;
+
+message ChunkPosition {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message BlockPosition {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
