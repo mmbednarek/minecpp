@@ -11,6 +11,8 @@
 
 namespace minecpp::game {
 
+namespace nbt_chunk_v1 = minecpp::nbt::chunk::v1;
+
 inline int expected_data_version = 2230;
 
 Chunk::Chunk() = default;
@@ -170,7 +172,7 @@ block::ChunkPos Chunk::pos() const {
    return block::ChunkPos(m_pos_x, m_pos_z);
 }
 
-mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(minecpp::message::nbt::Chunk &chunk) noexcept {
+mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) noexcept {
    auto out = std::make_unique<Chunk>();
    out->m_full = chunk.level.status == "full";
    out->m_pos_x = chunk.level.x_pos;
@@ -179,12 +181,12 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(minecpp::message::nbt::Chunk 
    std::copy(chunk.level.heightmaps.motion_blocking.begin(), chunk.level.heightmaps.motion_blocking.end(), out->m_hm_motion_blocking.begin());
    //   std::copy(chunk.level.biomes.begin(), chunk.level.biomes.end(), out->biomes.begin());
    std::fill_n(out->m_biomes.begin(), 1024, 1);
-   std::transform(chunk.level.sections.begin(), chunk.level.sections.end(), std::inserter(out->m_sections, out->m_sections.begin()), [](const minecpp::message::nbt::Section &sec) {
+   std::transform(chunk.level.sections.begin(), chunk.level.sections.end(), std::inserter(out->m_sections, out->m_sections.begin()), [](const nbt_chunk_v1::Section &sec) {
       Section out_sec;
       out_sec.sky_light = minecpp::squeezed::TinyVec<4>(sec.sky_light);
       out_sec.block_light = minecpp::squeezed::TinyVec<4>(sec.block_light);
       out_sec.palette.resize(sec.palette.size());
-      std::transform(sec.palette.begin(), sec.palette.end(), out_sec.palette.begin(), [](const minecpp::message::nbt::PaletteItem &item) {
+      std::transform(sec.palette.begin(), sec.palette.end(), out_sec.palette.begin(), [](const nbt_chunk_v1::PaletteItem &item) {
          return block::encode_state(item.name, item.properties);
       });
       out_sec.ref_count = game::calculate_ref_count(sec.block_states, out_sec.palette);
@@ -196,8 +198,8 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(minecpp::message::nbt::Chunk 
    return out;
 }
 
-minecpp::message::nbt::Chunk Chunk::to_nbt() noexcept {
-   minecpp::message::nbt::Chunk result;
+nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept {
+   nbt_chunk_v1::Chunk result;
    result.level.status = m_full ? "full" : "features";
    result.level.x_pos = m_pos_x;
    result.level.z_pos = m_pos_z;
@@ -210,13 +212,13 @@ minecpp::message::nbt::Chunk Chunk::to_nbt() noexcept {
    std::copy(m_biomes.begin(), m_biomes.end(), result.level.biomes.begin());
    result.level.sections.reserve(m_sections.size());
    std::transform(m_sections.begin(), m_sections.end(), std::back_inserter(result.level.sections), [](const std::pair<const mb::i8, Section> &pair) {
-      minecpp::message::nbt::Section sec;
+      nbt_chunk_v1::Section sec;
       sec.y = pair.first;
       sec.sky_light = pair.second.sky_light.raw();
       sec.block_light = pair.second.block_light.raw();
       sec.palette.resize(pair.second.palette.size());
       std::transform(pair.second.palette.begin(), pair.second.palette.end(), sec.palette.begin(), [](const mb::u32 state) {
-         minecpp::message::nbt::PaletteItem item;
+         nbt_chunk_v1::PaletteItem item;
          item.name = fmt::format("minecraft:{}", block::tag_from_state_id(state));
          return item;
       });

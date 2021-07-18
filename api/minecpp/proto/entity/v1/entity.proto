@@ -1,0 +1,13 @@
+syntax = "proto3";
+package minecpp.proto.entity.v1;
+
+message Position {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Rotation {
+  float yaw = 1;
+  float pitch = 2;
+}

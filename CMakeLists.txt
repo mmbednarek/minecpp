@@ -9,10 +9,12 @@ find_package(Protobuf REQUIRED)
 
 include(FetchContent)
 
+set(gRPC_PROTOBUF_PROVIDER "package")
+
 FetchContent_Declare(
         gRPC
         GIT_REPOSITORY https://github.com/grpc/grpc
-        GIT_TAG v1.34.1
+        GIT_TAG v1.38.1
 )
 FetchContent_MakeAvailable(gRPC)
 
@@ -78,7 +80,9 @@ add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
 add_subdirectory(lib/network)
-add_subdirectory(lib/message/nbt)
+add_subdirectory(lib/event)
+add_subdirectory(lib/service/discovery)
+add_subdirectory(lib/service/engine)
 
 # Tests
 
@@ -93,6 +97,7 @@ add_subdirectory(tool/recipes)
 add_subdirectory(tool/statelist)
 add_subdirectory(tool/nbtprotogen)
 add_subdirectory(tool/nbtscheme)
+add_subdirectory(tool/discocli)
 
 # Services
 
@@ -100,3 +105,4 @@ add_subdirectory(service/protos/include/minepb)
 add_subdirectory(service/chunk_storage)
 add_subdirectory(service/engine)
 add_subdirectory(service/front)
+add_subdirectory(service/discovery)

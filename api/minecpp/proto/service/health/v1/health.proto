@@ -1,0 +1,14 @@
+syntax = "proto3";
+package minecpp.proto.service.health.v1;
+
+service HealthService {
+  rpc GetServiceStatus(Request) returns (ServiceStatus);
+}
+
+message Request {
+}
+
+message ServiceStatus {
+  string service_name = 1;
+  string service_version = 2;
+}

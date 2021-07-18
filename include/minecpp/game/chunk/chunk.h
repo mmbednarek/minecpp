@@ -3,7 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
 #include <minecpp/game/block/position.h>
-#include <minecpp/message/nbt/chunk.nbt.h>
+#include <minecpp/nbt/chunk/v1/chunk.nbt.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
 #include <minepb/chunk.pb.h>
@@ -39,10 +39,10 @@ struct Chunk {
    [[nodiscard]] uuid get_lock() const;
    bool add_ref(uuid engine_id, uuid player_id);
    void free_ref(uuid player_id);
-   block::ChunkPos pos() const;
+   [[nodiscard]] block::ChunkPos pos() const;
 
-   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::message::nbt::Chunk &chunk) noexcept;
-   minecpp::message::nbt::Chunk to_nbt() noexcept;
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
+   minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;
 };
 
 }// namespace minecpp::game

@@ -1,6 +1,14 @@
 set(proto_api_sources 
+ service/health/v1/health.grpc.pb.cc
+ service/health/v1/health.pb.cc
+ service/discovery/v1/discovery.pb.cc
+ service/discovery/v1/discovery.grpc.pb.cc
  service/engine/v1/engine.pb.cc
- event/v1/event.pb.cc
+ service/engine/v1/engine.grpc.pb.cc
+ chunk/v1/chunk.pb.cc
+ event/clientbound/v1/clientbound.pb.cc
+ event/serverbound/v1/serverbound.pb.cc
  common/v1/common.pb.cc
  player/v1/player.pb.cc
+ entity/v1/entity.pb.cc
 )
