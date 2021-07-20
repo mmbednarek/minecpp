@@ -3199,11 +3199,26 @@ class AcceptPlayer final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kDenialReasonFieldNumber = 5,
     kGameplayFieldNumber = 3,
-    kPlayerDataFieldNumber = 4,
+    kPlayerFieldNumber = 4,
     kStateFieldNumber = 1,
     kChallengeIdFieldNumber = 2,
   };
+  // string denial_reason = 5;
+  void clear_denial_reason();
+  const std::string& denial_reason() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_denial_reason(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_denial_reason();
+  PROTOBUF_MUST_USE_RESULT std::string* release_denial_reason();
+  void set_allocated_denial_reason(std::string* denial_reason);
+  private:
+  const std::string& _internal_denial_reason() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_denial_reason(const std::string& value);
+  std::string* _internal_mutable_denial_reason();
+  public:
+
   // .minecpp.proto.common.v1.Gameplay gameplay = 3;
   bool has_gameplay() const;
   private:
@@ -3222,23 +3237,23 @@ class AcceptPlayer final :
       ::minecpp::proto::common::v1::Gameplay* gameplay);
   ::minecpp::proto::common::v1::Gameplay* unsafe_arena_release_gameplay();
 
-  // .minecpp.proto.player.v1.PlayerData player_data = 4;
-  bool has_player_data() const;
+  // .minecpp.proto.player.v1.Player player = 4;
+  bool has_player() const;
   private:
-  bool _internal_has_player_data() const;
+  bool _internal_has_player() const;
   public:
-  void clear_player_data();
-  const ::minecpp::proto::player::v1::PlayerData& player_data() const;
-  PROTOBUF_MUST_USE_RESULT ::minecpp::proto::player::v1::PlayerData* release_player_data();
-  ::minecpp::proto::player::v1::PlayerData* mutable_player_data();
-  void set_allocated_player_data(::minecpp::proto::player::v1::PlayerData* player_data);
+  void clear_player();
+  const ::minecpp::proto::player::v1::Player& player() const;
+  PROTOBUF_MUST_USE_RESULT ::minecpp::proto::player::v1::Player* release_player();
+  ::minecpp::proto::player::v1::Player* mutable_player();
+  void set_allocated_player(::minecpp::proto::player::v1::Player* player);
   private:
-  const ::minecpp::proto::player::v1::PlayerData& _internal_player_data() const;
-  ::minecpp::proto::player::v1::PlayerData* _internal_mutable_player_data();
+  const ::minecpp::proto::player::v1::Player& _internal_player() const;
+  ::minecpp::proto::player::v1::Player* _internal_mutable_player();
   public:
-  void unsafe_arena_set_allocated_player_data(
-      ::minecpp::proto::player::v1::PlayerData* player_data);
-  ::minecpp::proto::player::v1::PlayerData* unsafe_arena_release_player_data();
+  void unsafe_arena_set_allocated_player(
+      ::minecpp::proto::player::v1::Player* player);
+  ::minecpp::proto::player::v1::Player* unsafe_arena_release_player();
 
   // .minecpp.proto.event.clientbound.v1.PlayerAcceptState state = 1;
   void clear_state();
@@ -3265,8 +3280,9 @@ class AcceptPlayer final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr denial_reason_;
   ::minecpp::proto::common::v1::Gameplay* gameplay_;
-  ::minecpp::proto::player::v1::PlayerData* player_data_;
+  ::minecpp::proto::player::v1::Player* player_;
   int state_;
   ::PROTOBUF_NAMESPACE_ID::uint32 challenge_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -6022,39 +6038,39 @@ inline void AcceptPlayer::set_allocated_gameplay(::minecpp::proto::common::v1::G
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
 }
 
-// .minecpp.proto.player.v1.PlayerData player_data = 4;
-inline bool AcceptPlayer::_internal_has_player_data() const {
-  return this != internal_default_instance() && player_data_ != nullptr;
+// .minecpp.proto.player.v1.Player player = 4;
+inline bool AcceptPlayer::_internal_has_player() const {
+  return this != internal_default_instance() && player_ != nullptr;
 }
-inline bool AcceptPlayer::has_player_data() const {
-  return _internal_has_player_data();
+inline bool AcceptPlayer::has_player() const {
+  return _internal_has_player();
 }
-inline const ::minecpp::proto::player::v1::PlayerData& AcceptPlayer::_internal_player_data() const {
-  const ::minecpp::proto::player::v1::PlayerData* p = player_data_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerData&>(
-      ::minecpp::proto::player::v1::_PlayerData_default_instance_);
+inline const ::minecpp::proto::player::v1::Player& AcceptPlayer::_internal_player() const {
+  const ::minecpp::proto::player::v1::Player* p = player_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::Player&>(
+      ::minecpp::proto::player::v1::_Player_default_instance_);
 }
-inline const ::minecpp::proto::player::v1::PlayerData& AcceptPlayer::player_data() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.player_data)
-  return _internal_player_data();
+inline const ::minecpp::proto::player::v1::Player& AcceptPlayer::player() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+  return _internal_player();
 }
-inline void AcceptPlayer::unsafe_arena_set_allocated_player_data(
-    ::minecpp::proto::player::v1::PlayerData* player_data) {
+inline void AcceptPlayer::unsafe_arena_set_allocated_player(
+    ::minecpp::proto::player::v1::Player* player) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_data_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_);
   }
-  player_data_ = player_data;
-  if (player_data) {
+  player_ = player;
+  if (player) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player_data)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
 }
-inline ::minecpp::proto::player::v1::PlayerData* AcceptPlayer::release_player_data() {
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::release_player() {
   
-  ::minecpp::proto::player::v1::PlayerData* temp = player_data_;
-  player_data_ = nullptr;
+  ::minecpp::proto::player::v1::Player* temp = player_;
+  player_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
   temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
@@ -6066,46 +6082,92 @@ inline ::minecpp::proto::player::v1::PlayerData* AcceptPlayer::release_player_da
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::player::v1::PlayerData* AcceptPlayer::unsafe_arena_release_player_data() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.player_data)
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::unsafe_arena_release_player() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
   
-  ::minecpp::proto::player::v1::PlayerData* temp = player_data_;
-  player_data_ = nullptr;
+  ::minecpp::proto::player::v1::Player* temp = player_;
+  player_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::player::v1::PlayerData* AcceptPlayer::_internal_mutable_player_data() {
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::_internal_mutable_player() {
   
-  if (player_data_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerData>(GetArenaForAllocation());
-    player_data_ = p;
+  if (player_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::Player>(GetArenaForAllocation());
+    player_ = p;
   }
-  return player_data_;
+  return player_;
 }
-inline ::minecpp::proto::player::v1::PlayerData* AcceptPlayer::mutable_player_data() {
-  ::minecpp::proto::player::v1::PlayerData* _msg = _internal_mutable_player_data();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.player_data)
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::mutable_player() {
+  ::minecpp::proto::player::v1::Player* _msg = _internal_mutable_player();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
   return _msg;
 }
-inline void AcceptPlayer::set_allocated_player_data(::minecpp::proto::player::v1::PlayerData* player_data) {
+inline void AcceptPlayer::set_allocated_player(::minecpp::proto::player::v1::Player* player) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_data_);
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_);
   }
-  if (player_data) {
+  if (player) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
         ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<
             ::PROTOBUF_NAMESPACE_ID::MessageLite>::GetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_data));
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player));
     if (message_arena != submessage_arena) {
-      player_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, player_data, submessage_arena);
+      player = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player, submessage_arena);
     }
     
   } else {
     
   }
-  player_data_ = player_data;
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player_data)
+  player_ = player;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+}
+
+// string denial_reason = 5;
+inline void AcceptPlayer::clear_denial_reason() {
+  denial_reason_.ClearToEmpty();
+}
+inline const std::string& AcceptPlayer::denial_reason() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.denial_reason)
+  return _internal_denial_reason();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AcceptPlayer::set_denial_reason(ArgT0&& arg0, ArgT... args) {
+ 
+ denial_reason_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AcceptPlayer.denial_reason)
+}
+inline std::string* AcceptPlayer::mutable_denial_reason() {
+  std::string* _s = _internal_mutable_denial_reason();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.denial_reason)
+  return _s;
+}
+inline const std::string& AcceptPlayer::_internal_denial_reason() const {
+  return denial_reason_.Get();
+}
+inline void AcceptPlayer::_internal_set_denial_reason(const std::string& value) {
+  
+  denial_reason_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* AcceptPlayer::_internal_mutable_denial_reason() {
+  
+  return denial_reason_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* AcceptPlayer::release_denial_reason() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.denial_reason)
+  return denial_reason_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void AcceptPlayer::set_allocated_denial_reason(std::string* denial_reason) {
+  if (denial_reason != nullptr) {
+    
+  } else {
+    
+  }
+  denial_reason_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), denial_reason,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.denial_reason)
 }
 
 // -------------------------------------------------------------------

@@ -10,7 +10,7 @@
 #include <queue>
 #include <random>
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
         ChunkService;
@@ -101,4 +101,4 @@ class Service final : public minecpp::engine::PlayerService::Service {
                                   minecpp::engine::EmptyResponse *response) override;
 };
 
-}// namespace Engine
+}// namespace minecpp::service::engine

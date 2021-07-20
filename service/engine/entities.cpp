@@ -1,6 +1,6 @@
 #include "entities.h"
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 EntityId EntityManager::spawn(Entity e) {
    EntityId id = entities.size();
@@ -16,4 +16,4 @@ mb::result<Entity &> EntityManager::get_entity(EntityId id) {
    return entities.at(id);
 }
 
-} // namespace Engine
+} // namespace minecpp::service::engine

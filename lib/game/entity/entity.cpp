@@ -1,20 +1,27 @@
-#include <minecpp/game/entity/entity.h>
 #include <algorithm>
+#include <minecpp/game/entity/entity.h>
+#include <minecpp/nbt/player/v1/player.nbt.h>
+#include <minecpp/player/id.h>
 
 namespace minecpp::game::entity {
 
 std::array<std::string, 7> known_attributes{
-    "generic.maxHealth",      "generic.knockbackResistance", "generic.movementSpeed",   "generic.armor",
-    "generic.armorToughness", "generic.followRange",         "generic.attackKnockback",
+        "generic.maxHealth",
+        "generic.knockbackResistance",
+        "generic.movementSpeed",
+        "generic.armor",
+        "generic.armorToughness",
+        "generic.followRange",
+        "generic.attackKnockback",
 };
 
 AttributeName to_attribute_name(const std::string &s) {
    return *std::find(known_attributes.begin(), known_attributes.end(), s);
 }
 
-std::string player_type = "player";
+std::string g_player_type = "minecraft:player";
 
-Entity::Entity(uuid uid, Type type) : uid(uid), type(type) {}
+Entity::Entity(uuid uid, const Type &type) : uid(uid), type(type) {}
 
 Dimension Entity::get_dimension() const { return dimension; }
 
@@ -46,9 +53,9 @@ Movement Entity::process_movement() {
    Vec3 diff = pos - tracked_pos;
 
    auto movement = Movement{
-       .x = static_cast<short>(diff.x * 4096),
-       .y = static_cast<short>(diff.y * 4096),
-       .z = static_cast<short>(diff.z * 4096),
+           .x = static_cast<short>(diff.x * 4096),
+           .y = static_cast<short>(diff.y * 4096),
+           .z = static_cast<short>(diff.z * 4096),
    };
 
    tracking.x += static_cast<int64_t>(movement.x);
@@ -67,4 +74,34 @@ void Entity::sync_tracking() {
 void Attributes::set_attribute(AttributeName name, double value) { attributes[name] = value; }
 
 bool Movement::nil() { return x == 0 && y == 0 && z == 0; }
-} // namespace minecpp::game::entity
+
+Entity Entity::from_player_nbt(const nbt::player::v1::Player &player) {
+   Entity entity(player::read_id_from_nbt(player.uuid), g_player_type);
+   for (const auto &at : player.attributes) {
+      entity.attributes.set_attribute(entity::to_attribute_name(at.name), at.base);
+   }
+
+   entity.health = player.health;
+   entity.absorption_amount = player.absorption_amount;
+   entity.fall_distance = player.fall_distance;
+   entity.air = player.air;
+   entity.death_time = player.death_time;
+   entity.fire = player.fire;
+   entity.hurt_time = player.hurt_time;
+   entity.can_pick_up_loot = true;
+   entity.fall_flying = player.fall_flying;
+   entity.hurt_by_timestamp = player.hurt_by_timestamp;
+   entity.invulnerable = player.invulnerable;
+   entity.on_ground = player.on_ground;
+   entity.motion = Vec3::from_nbt(player.motion);
+   entity.pos = Vec3::from_nbt(player.pos);
+   if (player.rotation.size() == 2) {
+      entity.yaw = player.rotation[0];
+      entity.pitch = player.rotation[1];
+   }
+   entity.sync_tracking();
+
+   return entity;
+}
+
+}// namespace minecpp::game::entity

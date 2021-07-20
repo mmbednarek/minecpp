@@ -12,31 +12,43 @@ using GrpcStream = grpc::ClientReaderWriter<proto::event::serverbound::v1::Event
 
 template<typename T>
 requires event::ClientboundVisitor<T>
-class Stream {
+class Receiver {
    T &m_visitor;
-   std::unique_ptr<GrpcStream> m_stream;
    bool m_running = true;
    std::thread m_thread;
+   GrpcStream &m_stream;
 
  public:
-   Stream(T &visitor, std::unique_ptr<GrpcStream> stream) : m_visitor(visitor),
-                                                            m_stream(std::move(stream)),
-                                                            m_thread(
-                                                                    [](Stream *stream) {
-                                                                       stream->thread_routine();
-                                                                    },
-                                                                    this) {}
+   Receiver(T &visitor, GrpcStream &stream) : m_visitor(visitor),
+                                              m_stream(stream),
+                                              m_thread(
+                                                      [](Receiver *receiver) {
+                                                         receiver->thread_routine();
+                                                      },
+                                                      this) {}
 
    void thread_routine() const {
       while (m_running) {
          proto::event::clientbound::v1::Event cb_event;
-         m_stream->Read(&cb_event);
+         m_stream.Read(&cb_event);
          event::visit_clientbound(cb_event, m_visitor);
       }
    }
+};
+
+class Stream {
+   std::unique_ptr<GrpcStream> m_stream;
+
+ public:
+   explicit Stream(std::unique_ptr<GrpcStream> stream) : m_stream(std::move(stream)) {}
 
    void send(const proto::event::serverbound::v1::Event &event) const {
       m_stream->Write(event);
+   }
+
+   template<typename T>
+   std::unique_ptr<Receiver<T>> make_receiver(T &visitor) {
+      return std::make_unique<Receiver<T>>(visitor, m_stream);
    }
 };
 
@@ -49,11 +61,9 @@ class Client {
  public:
    static mb::result<Client> create(std::string_view address);
 
-   template<typename T>
-   std::unique_ptr<Stream<T>> join(T &visitor) {
+   Stream join() {
       grpc::ClientContext ctx;
-      auto stream = m_stub->Join(&ctx);
-      return std::make_unique<Stream<T>>(visitor, stream);
+      return Stream(m_stub->Join(&ctx));
    }
 };
 

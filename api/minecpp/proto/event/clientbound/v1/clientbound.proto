@@ -103,12 +103,12 @@ message UnloadChunk {
   common.v1.ChunkPosition chunk_position = 2;
 }
 
-
 message AcceptPlayer {
   PlayerAcceptState state = 1;
   uint32 challenge_id = 2;
   common.v1.Gameplay gameplay = 3;
-  player.v1.PlayerData player_data = 4;
+  player.v1.Player player = 4;
+  string denial_reason = 5;
 }
 
 enum PlayerAcceptState {

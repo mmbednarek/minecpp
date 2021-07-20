@@ -216,7 +216,7 @@ void EventHandler::on_event(AnimateHand &msg) {
 }
 
 void EventHandler::on_event(LoadTerrain &msg) {
-   boost::uuids::uuid player_id{};
+   player::Id player_id{};
    minecpp::util::decode_uuid(player_id, msg.uuid().data());
 
    if (!server.has_connection(player_id)) {
@@ -243,7 +243,7 @@ void EventHandler::on_event(LoadTerrain &msg) {
 const char *player_transfer_message = R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";
 
 void EventHandler::on_event(TransferPlayer &msg) {
-   boost::uuids::uuid player_id{};
+   player::Id player_id{};
    minecpp::util::decode_uuid(player_id, msg.player().data());
 
    if (!server.has_connection(player_id))
@@ -257,7 +257,7 @@ void EventHandler::on_event(TransferPlayer &msg) {
 }
 
 void EventHandler::on_event(UpdatePlayerAbilities &msg) {
-   boost::uuids::uuid player_id{};
+   player::Id player_id{};
    minecpp::util::decode_uuid(player_id, msg.uuid().data());
    auto conn = server.connection_by_id(player_id);
 

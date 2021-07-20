@@ -3,12 +3,12 @@
 
 namespace minecpp::event {
 
-std::vector<player::id> read_recipients(const clientbound_v1::Event &event) {
+std::vector<player::Id> read_recipients(const clientbound_v1::Event &event) {
    switch (event.recipient_case()) {
    case proto::event::clientbound::v1::Event::kSinglePlayer:
-      return std::vector<player::id>{player::read_id_from_proto(event.single_player().player_id())};
+      return std::vector<player::Id>{player::read_id_from_proto(event.single_player().player_id())};
    case proto::event::clientbound::v1::Event::kMultiplePlayers: {
-      std::vector<player::id> result(event.multiple_players().player_ids_size());
+      std::vector<player::Id> result(event.multiple_players().player_ids_size());
       auto &player_ids = event.multiple_players().player_ids();
       std::transform(player_ids.begin(), player_ids.end(), result.begin(), [](const proto::player::v1::PlayerId &id) {
         return player::read_id_from_proto(id);
@@ -16,9 +16,9 @@ std::vector<player::id> read_recipients(const clientbound_v1::Event &event) {
       return result;
    }
    case proto::event::clientbound::v1::Event::kAllPlayers:
-      return std::vector<player::id>(); // empty signifies all players.
+      return std::vector<player::Id>(); // empty signifies all players.
    default: break;
    }
-   return std::vector<player::id>();
+   return std::vector<player::Id>();
 }
 }

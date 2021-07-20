@@ -6,7 +6,7 @@
 #include <spdlog/spdlog.h>
 #include <string>
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 class EventManager {
    using Queue = minecpp::util::StaticQueue<minecpp::engine::Event, 256>;
@@ -31,4 +31,4 @@ class EventManager {
    Queue &create_queue(const std::string &front_id);
 };
 
-} // namespace Engine
+} // namespace minecpp::service::engine

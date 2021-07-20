@@ -2,6 +2,8 @@
 #include <minecpp/game/player.h>
 #include <minecpp/game/tracking.h>
 #include <spdlog/spdlog.h>
+#include <minecpp/player/tracking.h>
+
 
 namespace minecpp::game {
 
@@ -102,4 +104,5 @@ mb::result<mb::empty> Tracking::load_chunks(World &w, Player &p) {
    return mb::ok;
 }
 
-}// namespace minecpp::game
+}
+// namespace minecpp::game

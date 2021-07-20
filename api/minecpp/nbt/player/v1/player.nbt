@@ -1,0 +1,88 @@
+syntax = "nbt";
+package minecpp.nbt.player.v1;
+
+message Attribute {
+   double base = 1 [label = "Base"];
+   string name = 2 [label = "Name"];
+}
+
+message Memories {
+}
+
+message Brain {
+   Memories memories = 1;
+}
+
+message InventoryElement {
+   int8 count = 1 [label = "Count"];
+   int8 slot = 2 [label = "Slot"];
+   string id = 3;
+}
+
+message Abilities {
+   float fly_speed = 1 [label = "flySpeed"];
+   int8 flying = 2;
+   int8 instabuild = 3;
+   int8 invulnerable = 4;
+   int8 may_build = 5 [label = "mayBuild"];
+   int8 mayfly = 6;
+   float walk_speed = 7 [label = "walkSpeed"];
+}
+
+message RecipeBook {
+   int8 is_blasting_furnace_filtering_craftable = 1 [label = "isBlastingFurnaceFilteringCraftable"];
+   int8 is_blasting_furnace_gui_open = 2 [label = "isBlastingFurnaceGuiOpen"];
+   int8 is_filtering_craftable = 3 [label = "isFilteringCraftable"];
+   int8 is_furnace_filtering_craftable = 4 [label = "isFurnaceFilteringCraftable"];
+   int8 is_furnace_gui_open = 5 [label = "isFurnaceGuiOpen"];
+   int8 is_gui_open = 6 [label = "isGuiOpen"];
+   int8 is_smoker_filtering_craftable = 7 [label = "isSmokerFilteringCraftable"];
+   int8 is_smoker_gui_open = 8 [label = "isSmokerGuiOpen"];
+   repeated string recipes = 9;
+   repeated string to_be_displayed = 10 [label = "toBeDisplayed"];
+}
+
+message Player {
+   float absorption_amount = 1 [label = "AbsorptionAmount"];
+   int16 air = 2 [label = "Air"];
+   repeated Attribute attributes = 3 [label = "Attributes"];
+   Brain brain = 4 [label = "Brain"];
+   int32 data_version = 5 [label = "DataVersion"];
+   int16 death_time = 6 [label = "DeathTime"];
+   string dimension = 7 [label = "Dimension"];
+   float fall_distance = 9 [label = "FallDistance"];
+   int8 fall_flying = 10 [label = "FallFlying"];
+   int16 fire = 11 [label = "Fire"];
+   float health = 12 [label = "Health"];
+   int32 hurt_by_timestamp = 13 [label = "HurtByTimestamp"];
+   int16 hurt_time = 14 [label = "HurtTime"];
+   repeated InventoryElement inventory = 15 [label = "Inventory"];
+   int8 invulnerable = 16 [label = "Invulnerable"];
+   repeated double motion = 17 [label = "Motion"];
+   int8 on_ground = 18 [label = "OnGround"];
+   int32 portal_cooldown = 19 [label = "PortalCooldown"];
+   repeated double pos = 20 [label = "Pos"];
+   repeated float rotation = 21 [label = "Rotation"];
+   int32 score = 22 [label = "Score"];
+   int32 selected_item_slot = 23 [label = "SelectedItemSlot"];
+   int16 sleep_timer = 24 [label = "SleepTimer"];
+   float spawn_angle = 25 [label = "SpawnAngle"];
+   string spawn_dimension = 26 [label = "SpawnDimension"];
+   int8 spawn_forced = 27 [label = "SpawnForced"];
+   int32 spawn_x = 28 [label = "SpawnX"];
+   int32 spawn_y = 29 [label = "SpawnY"];
+   int32 spawn_z = 30 [label = "SpawnZ"];
+   ints uuid = 31 [label = "UUID"];
+   int32 xp_level = 32 [label = "XpLevel"];
+   float xp_p = 33 [label = "XpP"];
+   int32 xp_seed = 34 [label = "XpSeed"];
+   int32 xp_total = 35 [label = "XpTotal"];
+   Abilities abilities = 36;
+   float food_exhaustion_level = 37 [label = "foodExhaustionLevel"];
+   int32 food_level = 38 [label = "foodLevel"];
+   float food_saturation_level = 39 [label = "foodSaturationLevel"];
+   int32 food_tick_timer = 40 [label = "foodTickTimer"];
+   int32 player_game_type = 41 [label = "playerGameType"];
+   RecipeBook recipe_book = 42 [label = "recipeBook"];
+   int8 seen_credits = 43 [label = "seenCredits"];
+}

@@ -48,28 +48,25 @@ struct StatusDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT StatusDefaultTypeInternal _Status_default_instance_;
-constexpr PlayerData::PlayerData(
+constexpr Player::Player(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , position_(nullptr)
+  , rotation_(nullptr)
   , abilities_(nullptr)
   , recipe_book_(nullptr)
-  , x_(0)
-  , y_(0)
-  , entity_id_(0)
-  , yaw_(0)
-  , z_(0)
-  , pitch_(0)
+  , entity_id_(0u)
   , game_mode_(0)
 {}
-struct PlayerDataDefaultTypeInternal {
-  constexpr PlayerDataDefaultTypeInternal()
+struct PlayerDefaultTypeInternal {
+  constexpr PlayerDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
-  ~PlayerDataDefaultTypeInternal() {}
+  ~PlayerDefaultTypeInternal() {}
   union {
-    PlayerData _instance;
+    Player _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PlayerDataDefaultTypeInternal _PlayerData_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PlayerDefaultTypeInternal _Player_default_instance_;
 constexpr Abilities::Abilities(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : walk_speed_(0)
@@ -128,20 +125,17 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_minecpp_2fproto_2fplayer_2fv1_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Status, ping_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Status, game_mode_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, name_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, entity_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, y_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, z_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, yaw_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, pitch_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, abilities_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, recipe_book_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerData, game_mode_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, name_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, entity_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, position_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, rotation_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, abilities_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, recipe_book_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Player, game_mode_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::Abilities, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -167,15 +161,15 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_minecpp_2fproto_2fplayer_2fv1_
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, sizeof(::minecpp::proto::player::v1::PlayerId)},
   { 7, -1, sizeof(::minecpp::proto::player::v1::Status)},
-  { 15, -1, sizeof(::minecpp::proto::player::v1::PlayerData)},
-  { 30, -1, sizeof(::minecpp::proto::player::v1::Abilities)},
-  { 42, -1, sizeof(::minecpp::proto::player::v1::RecipeBook)},
+  { 15, -1, sizeof(::minecpp::proto::player::v1::Player)},
+  { 27, -1, sizeof(::minecpp::proto::player::v1::Abilities)},
+  { 39, -1, sizeof(::minecpp::proto::player::v1::RecipeBook)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::player::v1::_PlayerId_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::player::v1::_Status_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::player::v1::_PlayerData_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::player::v1::_Player_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::player::v1::_Abilities_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::player::v1::_RecipeBook_default_instance_),
 };
@@ -183,32 +177,35 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n$minecpp/proto/player/v1/player.proto\022\027"
   "minecpp.proto.player.v1\032$minecpp/proto/c"
-  "ommon/v1/common.proto\"(\n\010PlayerId\022\r\n\005low"
-  "er\030\001 \001(\004\022\r\n\005upper\030\002 \001(\004\"Z\n\006Status\022\014\n\004nam"
-  "e\030\001 \001(\t\022\014\n\004ping\030\002 \001(\005\0224\n\tgame_mode\030\003 \001(\016"
-  "2!.minecpp.proto.common.v1.GameMode\"\221\002\n\n"
-  "PlayerData\022\014\n\004name\030\001 \001(\t\022\021\n\tentity_id\030\002 "
-  "\001(\005\022\t\n\001x\030\003 \001(\001\022\t\n\001y\030\004 \001(\001\022\t\n\001z\030\005 \001(\001\022\013\n\003"
-  "yaw\030\006 \001(\002\022\r\n\005pitch\030\007 \001(\002\0225\n\tabilities\030\010 "
-  "\001(\0132\".minecpp.proto.player.v1.Abilities\022"
-  "8\n\013recipe_book\030\t \001(\0132#.minecpp.proto.pla"
-  "yer.v1.RecipeBook\0224\n\tgame_mode\030\n \001(\0162!.m"
-  "inecpp.proto.common.v1.GameMode\"\223\001\n\tAbil"
-  "ities\022\022\n\nwalk_speed\030\001 \001(\002\022\021\n\tfly_speed\030\002"
-  " \001(\002\022\016\n\006flying\030\003 \001(\010\022\025\n\rinstant_build\030\004 "
-  "\001(\010\022\024\n\014invulnerable\030\005 \001(\010\022\021\n\tmay_build\030\006"
-  " \001(\010\022\017\n\007may_fly\030\007 \001(\010\"z\n\nRecipeBook\022\020\n\010g"
-  "ui_open\030\001 \001(\010\022\033\n\023filtering_craftable\030\002 \001"
-  "(\010\022\030\n\020furnace_gui_open\030\003 \001(\010\022#\n\033furnace_"
-  "filtering_craftable\030\004 \001(\010b\006proto3"
+  "ommon/v1/common.proto\032$minecpp/proto/ent"
+  "ity/v1/entity.proto\"(\n\010PlayerId\022\r\n\005lower"
+  "\030\001 \001(\004\022\r\n\005upper\030\002 \001(\004\"Z\n\006Status\022\014\n\004name\030"
+  "\001 \001(\t\022\014\n\004ping\030\002 \001(\005\0224\n\tgame_mode\030\003 \001(\0162!"
+  ".minecpp.proto.common.v1.GameMode\"\272\002\n\006Pl"
+  "ayer\022\014\n\004name\030\001 \001(\t\022\021\n\tentity_id\030\002 \001(\r\0223\n"
+  "\010position\030\003 \001(\0132!.minecpp.proto.entity.v"
+  "1.Position\0223\n\010rotation\030\004 \001(\0132!.minecpp.p"
+  "roto.entity.v1.Rotation\0225\n\tabilities\030\005 \001"
+  "(\0132\".minecpp.proto.player.v1.Abilities\0228"
+  "\n\013recipe_book\030\006 \001(\0132#.minecpp.proto.play"
+  "er.v1.RecipeBook\0224\n\tgame_mode\030\007 \001(\0162!.mi"
+  "necpp.proto.common.v1.GameMode\"\223\001\n\tAbili"
+  "ties\022\022\n\nwalk_speed\030\001 \001(\002\022\021\n\tfly_speed\030\002 "
+  "\001(\002\022\016\n\006flying\030\003 \001(\010\022\025\n\rinstant_build\030\004 \001"
+  "(\010\022\024\n\014invulnerable\030\005 \001(\010\022\021\n\tmay_build\030\006 "
+  "\001(\010\022\017\n\007may_fly\030\007 \001(\010\"z\n\nRecipeBook\022\020\n\010gu"
+  "i_open\030\001 \001(\010\022\033\n\023filtering_craftable\030\002 \001("
+  "\010\022\030\n\020furnace_gui_open\030\003 \001(\010\022#\n\033furnace_f"
+  "iltering_craftable\030\004 \001(\010b\006proto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_deps[1] = {
+static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_deps[2] = {
   &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
+  &::descriptor_table_minecpp_2fproto_2fentity_2fv1_2fentity_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto = {
-  false, false, 793, descriptor_table_protodef_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto, "minecpp/proto/player/v1/player.proto", 
-  &descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_once, descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_deps, 1, 5,
+  false, false, 872, descriptor_table_protodef_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto, "minecpp/proto/player/v1/player.proto", 
+  &descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_once, descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_deps, 2, 5,
   schemas, file_default_instances, TableStruct_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto::offsets,
   file_level_metadata_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto, file_level_service_descriptors_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto,
 };
@@ -708,36 +705,68 @@ void Status::InternalSwap(Status* other) {
 
 // ===================================================================
 
-class PlayerData::_Internal {
+class Player::_Internal {
  public:
-  static const ::minecpp::proto::player::v1::Abilities& abilities(const PlayerData* msg);
-  static const ::minecpp::proto::player::v1::RecipeBook& recipe_book(const PlayerData* msg);
+  static const ::minecpp::proto::entity::v1::Position& position(const Player* msg);
+  static const ::minecpp::proto::entity::v1::Rotation& rotation(const Player* msg);
+  static const ::minecpp::proto::player::v1::Abilities& abilities(const Player* msg);
+  static const ::minecpp::proto::player::v1::RecipeBook& recipe_book(const Player* msg);
 };
 
+const ::minecpp::proto::entity::v1::Position&
+Player::_Internal::position(const Player* msg) {
+  return *msg->position_;
+}
+const ::minecpp::proto::entity::v1::Rotation&
+Player::_Internal::rotation(const Player* msg) {
+  return *msg->rotation_;
+}
 const ::minecpp::proto::player::v1::Abilities&
-PlayerData::_Internal::abilities(const PlayerData* msg) {
+Player::_Internal::abilities(const Player* msg) {
   return *msg->abilities_;
 }
 const ::minecpp::proto::player::v1::RecipeBook&
-PlayerData::_Internal::recipe_book(const PlayerData* msg) {
+Player::_Internal::recipe_book(const Player* msg) {
   return *msg->recipe_book_;
 }
-PlayerData::PlayerData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+void Player::clear_position() {
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
+}
+void Player::clear_rotation() {
+  if (GetArenaForAllocation() == nullptr && rotation_ != nullptr) {
+    delete rotation_;
+  }
+  rotation_ = nullptr;
+}
+Player::Player(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
   if (!is_message_owned) {
     RegisterArenaDtor(arena);
   }
-  // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.v1.PlayerData)
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.v1.Player)
 }
-PlayerData::PlayerData(const PlayerData& from)
+Player::Player(const Player& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (!from._internal_name().empty()) {
     name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_name(), 
       GetArenaForAllocation());
+  }
+  if (from._internal_has_position()) {
+    position_ = new ::minecpp::proto::entity::v1::Position(*from.position_);
+  } else {
+    position_ = nullptr;
+  }
+  if (from._internal_has_rotation()) {
+    rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from.rotation_);
+  } else {
+    rotation_ = nullptr;
   }
   if (from._internal_has_abilities()) {
     abilities_ = new ::minecpp::proto::player::v1::Abilities(*from.abilities_);
@@ -749,51 +778,61 @@ PlayerData::PlayerData(const PlayerData& from)
   } else {
     recipe_book_ = nullptr;
   }
-  ::memcpy(&x_, &from.x_,
+  ::memcpy(&entity_id_, &from.entity_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&game_mode_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(game_mode_));
-  // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.v1.PlayerData)
+    reinterpret_cast<char*>(&entity_id_)) + sizeof(game_mode_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.v1.Player)
 }
 
-inline void PlayerData::SharedCtor() {
+inline void Player::SharedCtor() {
 name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&abilities_) - reinterpret_cast<char*>(this)),
+    reinterpret_cast<char*>(&position_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&game_mode_) -
-    reinterpret_cast<char*>(&abilities_)) + sizeof(game_mode_));
+    reinterpret_cast<char*>(&position_)) + sizeof(game_mode_));
 }
 
-PlayerData::~PlayerData() {
-  // @@protoc_insertion_point(destructor:minecpp.proto.player.v1.PlayerData)
+Player::~Player() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.player.v1.Player)
   if (GetArenaForAllocation() != nullptr) return;
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-inline void PlayerData::SharedDtor() {
+inline void Player::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (this != internal_default_instance()) delete position_;
+  if (this != internal_default_instance()) delete rotation_;
   if (this != internal_default_instance()) delete abilities_;
   if (this != internal_default_instance()) delete recipe_book_;
 }
 
-void PlayerData::ArenaDtor(void* object) {
-  PlayerData* _this = reinterpret_cast< PlayerData* >(object);
+void Player::ArenaDtor(void* object) {
+  Player* _this = reinterpret_cast< Player* >(object);
   (void)_this;
 }
-void PlayerData::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+void Player::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
 }
-void PlayerData::SetCachedSize(int size) const {
+void Player::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void PlayerData::Clear() {
-// @@protoc_insertion_point(message_clear_start:minecpp.proto.player.v1.PlayerData)
+void Player::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.player.v1.Player)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   name_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && rotation_ != nullptr) {
+    delete rotation_;
+  }
+  rotation_ = nullptr;
   if (GetArenaForAllocation() == nullptr && abilities_ != nullptr) {
     delete abilities_;
   }
@@ -802,13 +841,13 @@ void PlayerData::Clear() {
     delete recipe_book_;
   }
   recipe_book_ = nullptr;
-  ::memset(&x_, 0, static_cast<size_t>(
+  ::memset(&entity_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&game_mode_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(game_mode_));
+      reinterpret_cast<char*>(&entity_id_)) + sizeof(game_mode_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* PlayerData::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* Player::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
@@ -819,69 +858,48 @@ const char* PlayerData::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.player.v1.PlayerData.name"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.player.v1.Player.name"));
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 entity_id = 2;
+      // uint32 entity_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // double x = 3;
+      // .minecpp.proto.entity.v1.Position position = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 25)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // double y = 4;
+      // .minecpp.proto.entity.v1.Rotation rotation = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 33)) {
-          y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // double z = 5;
+      // .minecpp.proto.player.v1.Abilities abilities = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 41)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
-          ptr += sizeof(double);
-        } else goto handle_unusual;
-        continue;
-      // float yaw = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 53)) {
-          yaw_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else goto handle_unusual;
-        continue;
-      // float pitch = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 61)) {
-          pitch_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else goto handle_unusual;
-        continue;
-      // .minecpp.proto.player.v1.Abilities abilities = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           ptr = ctx->ParseMessage(_internal_mutable_abilities(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .minecpp.proto.player.v1.RecipeBook recipe_book = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+      // .minecpp.proto.player.v1.RecipeBook recipe_book = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
           ptr = ctx->ParseMessage(_internal_mutable_recipe_book(), ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // .minecpp.proto.common.v1.GameMode game_mode = 10;
-      case 10:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
+      // .minecpp.proto.common.v1.GameMode game_mode = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_game_mode(static_cast<::minecpp::proto::common::v1::GameMode>(val));
@@ -910,9 +928,9 @@ failure:
 #undef CHK_
 }
 
-::PROTOBUF_NAMESPACE_ID::uint8* PlayerData::_InternalSerialize(
+::PROTOBUF_NAMESPACE_ID::uint8* Player::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.player.v1.PlayerData)
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.player.v1.Player)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -921,80 +939,66 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "minecpp.proto.player.v1.PlayerData.name");
+      "minecpp.proto.player.v1.Player.name");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_name(), target);
   }
 
-  // int32 entity_id = 2;
+  // uint32 entity_id = 2;
   if (this->_internal_entity_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_entity_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_entity_id(), target);
   }
 
-  // double x = 3;
-  if (!(this->_internal_x() <= 0 && this->_internal_x() >= 0)) {
+  // .minecpp.proto.entity.v1.Position position = 3;
+  if (this->_internal_has_position()) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(3, this->_internal_x(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        3, _Internal::position(this), target, stream);
   }
 
-  // double y = 4;
-  if (!(this->_internal_y() <= 0 && this->_internal_y() >= 0)) {
+  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  if (this->_internal_has_rotation()) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(4, this->_internal_y(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        4, _Internal::rotation(this), target, stream);
   }
 
-  // double z = 5;
-  if (!(this->_internal_z() <= 0 && this->_internal_z() >= 0)) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteDoubleToArray(5, this->_internal_z(), target);
-  }
-
-  // float yaw = 6;
-  if (!(this->_internal_yaw() <= 0 && this->_internal_yaw() >= 0)) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(6, this->_internal_yaw(), target);
-  }
-
-  // float pitch = 7;
-  if (!(this->_internal_pitch() <= 0 && this->_internal_pitch() >= 0)) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(7, this->_internal_pitch(), target);
-  }
-
-  // .minecpp.proto.player.v1.Abilities abilities = 8;
+  // .minecpp.proto.player.v1.Abilities abilities = 5;
   if (this->_internal_has_abilities()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        8, _Internal::abilities(this), target, stream);
+        5, _Internal::abilities(this), target, stream);
   }
 
-  // .minecpp.proto.player.v1.RecipeBook recipe_book = 9;
+  // .minecpp.proto.player.v1.RecipeBook recipe_book = 6;
   if (this->_internal_has_recipe_book()) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(
-        9, _Internal::recipe_book(this), target, stream);
+        6, _Internal::recipe_book(this), target, stream);
   }
 
-  // .minecpp.proto.common.v1.GameMode game_mode = 10;
+  // .minecpp.proto.common.v1.GameMode game_mode = 7;
   if (this->_internal_game_mode() != 0) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      10, this->_internal_game_mode(), target);
+      7, this->_internal_game_mode(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.player.v1.PlayerData)
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.player.v1.Player)
   return target;
 }
 
-size_t PlayerData::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.player.v1.PlayerData)
+size_t Player::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.player.v1.Player)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1008,53 +1012,42 @@ size_t PlayerData::ByteSizeLong() const {
         this->_internal_name());
   }
 
-  // .minecpp.proto.player.v1.Abilities abilities = 8;
+  // .minecpp.proto.entity.v1.Position position = 3;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *position_);
+  }
+
+  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  if (this->_internal_has_rotation()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *rotation_);
+  }
+
+  // .minecpp.proto.player.v1.Abilities abilities = 5;
   if (this->_internal_has_abilities()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *abilities_);
   }
 
-  // .minecpp.proto.player.v1.RecipeBook recipe_book = 9;
+  // .minecpp.proto.player.v1.RecipeBook recipe_book = 6;
   if (this->_internal_has_recipe_book()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *recipe_book_);
   }
 
-  // double x = 3;
-  if (!(this->_internal_x() <= 0 && this->_internal_x() >= 0)) {
-    total_size += 1 + 8;
-  }
-
-  // double y = 4;
-  if (!(this->_internal_y() <= 0 && this->_internal_y() >= 0)) {
-    total_size += 1 + 8;
-  }
-
-  // int32 entity_id = 2;
+  // uint32 entity_id = 2;
   if (this->_internal_entity_id() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_entity_id());
   }
 
-  // float yaw = 6;
-  if (!(this->_internal_yaw() <= 0 && this->_internal_yaw() >= 0)) {
-    total_size += 1 + 4;
-  }
-
-  // double z = 5;
-  if (!(this->_internal_z() <= 0 && this->_internal_z() >= 0)) {
-    total_size += 1 + 8;
-  }
-
-  // float pitch = 7;
-  if (!(this->_internal_pitch() <= 0 && this->_internal_pitch() >= 0)) {
-    total_size += 1 + 4;
-  }
-
-  // .minecpp.proto.common.v1.GameMode game_mode = 10;
+  // .minecpp.proto.common.v1.GameMode game_mode = 7;
   if (this->_internal_game_mode() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_game_mode());
@@ -1069,21 +1062,21 @@ size_t PlayerData::ByteSizeLong() const {
   return total_size;
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PlayerData::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Player::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    PlayerData::MergeImpl
+    Player::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PlayerData::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Player::GetClassData() const { return &_class_data_; }
 
-void PlayerData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+void Player::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
                       const ::PROTOBUF_NAMESPACE_ID::Message&from) {
-  static_cast<PlayerData *>(to)->MergeFrom(
-      static_cast<const PlayerData &>(from));
+  static_cast<Player *>(to)->MergeFrom(
+      static_cast<const Player &>(from));
 }
 
 
-void PlayerData::MergeFrom(const PlayerData& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.v1.PlayerData)
+void Player::MergeFrom(const Player& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.v1.Player)
   GOOGLE_DCHECK_NE(&from, this);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -1091,29 +1084,20 @@ void PlayerData::MergeFrom(const PlayerData& from) {
   if (!from._internal_name().empty()) {
     _internal_set_name(from._internal_name());
   }
+  if (from._internal_has_position()) {
+    _internal_mutable_position()->::minecpp::proto::entity::v1::Position::MergeFrom(from._internal_position());
+  }
+  if (from._internal_has_rotation()) {
+    _internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(from._internal_rotation());
+  }
   if (from._internal_has_abilities()) {
     _internal_mutable_abilities()->::minecpp::proto::player::v1::Abilities::MergeFrom(from._internal_abilities());
   }
   if (from._internal_has_recipe_book()) {
     _internal_mutable_recipe_book()->::minecpp::proto::player::v1::RecipeBook::MergeFrom(from._internal_recipe_book());
   }
-  if (!(from._internal_x() <= 0 && from._internal_x() >= 0)) {
-    _internal_set_x(from._internal_x());
-  }
-  if (!(from._internal_y() <= 0 && from._internal_y() >= 0)) {
-    _internal_set_y(from._internal_y());
-  }
   if (from._internal_entity_id() != 0) {
     _internal_set_entity_id(from._internal_entity_id());
-  }
-  if (!(from._internal_yaw() <= 0 && from._internal_yaw() >= 0)) {
-    _internal_set_yaw(from._internal_yaw());
-  }
-  if (!(from._internal_z() <= 0 && from._internal_z() >= 0)) {
-    _internal_set_z(from._internal_z());
-  }
-  if (!(from._internal_pitch() <= 0 && from._internal_pitch() >= 0)) {
-    _internal_set_pitch(from._internal_pitch());
   }
   if (from._internal_game_mode() != 0) {
     _internal_set_game_mode(from._internal_game_mode());
@@ -1121,18 +1105,18 @@ void PlayerData::MergeFrom(const PlayerData& from) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void PlayerData::CopyFrom(const PlayerData& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.player.v1.PlayerData)
+void Player::CopyFrom(const Player& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.player.v1.Player)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool PlayerData::IsInitialized() const {
+bool Player::IsInitialized() const {
   return true;
 }
 
-void PlayerData::InternalSwap(PlayerData* other) {
+void Player::InternalSwap(Player* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
@@ -1141,14 +1125,14 @@ void PlayerData::InternalSwap(PlayerData* other) {
       &other->name_, other->GetArenaForAllocation()
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PlayerData, game_mode_)
-      + sizeof(PlayerData::game_mode_)
-      - PROTOBUF_FIELD_OFFSET(PlayerData, abilities_)>(
-          reinterpret_cast<char*>(&abilities_),
-          reinterpret_cast<char*>(&other->abilities_));
+      PROTOBUF_FIELD_OFFSET(Player, game_mode_)
+      + sizeof(Player::game_mode_)
+      - PROTOBUF_FIELD_OFFSET(Player, position_)>(
+          reinterpret_cast<char*>(&position_),
+          reinterpret_cast<char*>(&other->position_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata PlayerData::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata Player::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_getter, &descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto[2]);
@@ -1745,8 +1729,8 @@ template<> PROTOBUF_NOINLINE ::minecpp::proto::player::v1::PlayerId* Arena::Crea
 template<> PROTOBUF_NOINLINE ::minecpp::proto::player::v1::Status* Arena::CreateMaybeMessage< ::minecpp::proto::player::v1::Status >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::player::v1::Status >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::player::v1::PlayerData* Arena::CreateMaybeMessage< ::minecpp::proto::player::v1::PlayerData >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::minecpp::proto::player::v1::PlayerData >(arena);
+template<> PROTOBUF_NOINLINE ::minecpp::proto::player::v1::Player* Arena::CreateMaybeMessage< ::minecpp::proto::player::v1::Player >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::player::v1::Player >(arena);
 }
 template<> PROTOBUF_NOINLINE ::minecpp::proto::player::v1::Abilities* Arena::CreateMaybeMessage< ::minecpp::proto::player::v1::Abilities >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::player::v1::Abilities >(arena);

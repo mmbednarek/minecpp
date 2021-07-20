@@ -95,12 +95,12 @@ void Server::index_connection(boost::uuids::uuid index, std::size_t id) {
    conn_ids[index] = id;
 }
 
-bool Server::has_connection(boost::uuids::uuid player_id) {
+bool Server::has_connection(player::Id player_id) {
    return conn_ids.contains(player_id);
 }
 
 std::shared_ptr<Connection>
-Server::connection_by_id(boost::uuids::uuid player_id) {
+Server::connection_by_id(player::Id player_id) {
    return m_connections.at(conn_ids.at(player_id));
 }
 

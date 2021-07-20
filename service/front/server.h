@@ -28,9 +28,9 @@ public:
 	void for_each_connection(
 			std::function<void(const std::shared_ptr<Connection> &)>);
 
-	bool has_connection(boost::uuids::uuid player_id);
+	bool has_connection(player::Id player_id);
 
-	std::shared_ptr<Connection> connection_by_id(boost::uuids::uuid player_id);
+	std::shared_ptr<Connection> connection_by_id(player::Id player_id);
 
 	Protocol::Handler &get_handler(Protocol::State state);
 

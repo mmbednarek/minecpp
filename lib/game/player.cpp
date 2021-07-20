@@ -1,4 +1,6 @@
 #include <minecpp/game/player.h>
+#include <minecpp/player/player.h>
+
 
 namespace minecpp::game {
 
@@ -54,4 +56,5 @@ uint32_t Player::Abilities::flags() {
    return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
 }
 
-}// namespace minecpp::game
+}
+// namespace minecpp::game

@@ -209,7 +209,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
    engine.service->LoadInitialChunks(&ctx4, load_chunks_req, &empty_res);
 }
 
-void Service::on_player_disconnect(uuid engine_id, uuid player_id) {
+void Service::on_player_disconnect(uuid engine_id, player::Id_id) {
    minecpp::engine::RemovePlayerRequest req;
    req.set_uuid(player_id.data, player_id.size());
    grpc::ClientContext ctx;
@@ -221,11 +221,11 @@ void Service::on_player_disconnect(uuid engine_id, uuid player_id) {
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::ClientSettings msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::ClientSettings msg) {
    spdlog::info("client language: {}", msg.lang);
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerPosition msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::PlayerPosition msg) {
    char uuid[17];
    minecpp::util::encode_uuid(uuid, player_id);
 
@@ -244,7 +244,7 @@ void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::messa
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerPositionRotation msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::PlayerPositionRotation msg) {
    char uuid[17];
    minecpp::util::encode_uuid(uuid, player_id);
 
@@ -275,7 +275,7 @@ void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::messa
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerRotation msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::PlayerRotation msg) {
    char uuid[17];
    minecpp::util::encode_uuid(uuid, player_id);
    grpc::ClientContext ctx_rot;
@@ -291,7 +291,7 @@ void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::messa
       return;
    }
 }
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::ChatMessage msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::ChatMessage msg) {
    char uuid[17];
    minecpp::util::encode_uuid(uuid, player_id);
    grpc::ClientContext ctx_rot;
@@ -307,8 +307,8 @@ void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::messa
    }
 }
 
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::PlayerDigging msg) {
-   minecpp::game::block::Position pos(msg.position);
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::PlayerDigging msg) {
+   minecpp::game::BlockPosition pos(msg.position);
 
    if (msg.action == minecpp::network::message::DiggingAction::StartDestroyBlock) {
       minecpp::engine::DestroyBlockRequest req;
@@ -325,7 +325,7 @@ void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::messa
       }
    }
 }
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::KeepAliveClient msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::KeepAliveClient msg) {
 
    minecpp::engine::UpdatePingRequest req;
    req.set_uuid(player_id.data, player_id.size());
@@ -338,7 +338,7 @@ void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::messa
       return;
    }
 }
-void Service::on_message(uuid engine_id, uuid player_id, minecpp::network::message::AnimateHandClient msg) {
+void Service::on_message(uuid engine_id, player::Id_id, minecpp::network::message::AnimateHandClient msg) {
    minecpp::engine::AnimateHandRequest req;
    req.set_uuid(player_id.data, player_id.size());
    req.set_hand(static_cast<int>(msg.hand));

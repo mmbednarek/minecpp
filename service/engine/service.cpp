@@ -14,7 +14,7 @@
 #include <spdlog/spdlog.h>
 #include <utility>
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 Service::~Service() = default;
 
@@ -278,4 +278,4 @@ grpc::Status Service::LoadInitialChunks(grpc::ServerContext *context,
    return grpc::Status();
 }
 
-}// namespace Engine
+}// namespace minecpp::service::engine

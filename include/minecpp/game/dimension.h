@@ -56,7 +56,7 @@ const DimensionProperties EndProps{
 void write_dimension_codec(nbt::Writer &w);
 void write_dimension_type(nbt::Writer &w);
 
-enum class Dimension : int8_t { Overworld = 0, Nether = -1, End = 1 };
+enum class Dimension { Overworld = 0, Nether = -1, End = 1 };
 
 minecpp::game::DimensionType dimension_to_proto(Dimension d);
 

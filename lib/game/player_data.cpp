@@ -212,7 +212,7 @@ void PlayerData::load(nbt::Reader &r, nbt::TagId tagid,
 }
 
 entity::Entity PlayerData::to_entity() {
-   entity::Entity player_entity(id, entity::player_type);
+   entity::Entity player_entity(id, entity::g_player_type);
    for (const auto &at : attributes) {
       player_entity.attributes.set_attribute(
               entity::to_attribute_name(at.first), at.second);

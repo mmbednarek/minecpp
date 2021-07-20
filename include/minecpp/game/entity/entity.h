@@ -9,15 +9,19 @@ namespace minecpp::game {
 class PlayerData;
 }
 
+namespace minecpp::nbt::player::v1 {
+class Player;
+}
+
 namespace minecpp::game::entity {
 
 using boost::uuids::uuid;
 using minecpp::util::Vec3;
 
-typedef std::string_view AttributeName;
-typedef std::string_view Type;
+typedef std::string AttributeName;
+typedef std::string Type;
 
-extern std::string player_type;
+extern std::string g_player_type;
 extern std::array<std::string, 7> known_attributes;
 
 AttributeName to_attribute_name(const std::string &s);
@@ -42,13 +46,12 @@ struct Movement {
 class Entity {
    friend PlayerData;
 
-   uint32_t id;
+   uint32_t id{};
    uuid uid;
    Type type;
 
    Attributes attributes;
-   Dimension dimension = Dimension::Overworld;
-   Tracking tracking;
+   Tracking tracking{};
 
    float health = 10.0f;
    float absorption_amount = 0.0f;
@@ -72,7 +75,7 @@ class Entity {
    float yaw = 0.0f, pitch = 0.0f;
 
  public:
-   Entity(uuid uid, Type type);
+   Entity(uuid uid, const Type &type);
 
    [[nodiscard]] Dimension get_dimension() const;
    [[nodiscard]] Vec3 get_pos() const;
@@ -85,6 +88,8 @@ class Entity {
 
    Movement process_movement();
    void sync_tracking();
+
+   static Entity from_player_nbt(const nbt::player::v1::Player &player);
 };
 
 } // namespace minecpp::game::entity

@@ -217,9 +217,9 @@ int main(int argc, char **argv) {
       return 1;
    }
 
-   //   minecpp::util::GZipInputStream stream(file);
+   minecpp::util::GZipInputStream stream(file);
 
-   minecpp::nbt::Parser p(file);
+   minecpp::nbt::Parser p(stream);
    auto tag = p.read_tag();
 
    std::cout << tag.content.to_string();

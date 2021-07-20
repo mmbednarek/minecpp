@@ -128,7 +128,7 @@ void Chunk::set_sky_light(int x, int y, int z, uint8_t value) {
    iter->second.sky_light.set(coord_to_offset(x, y, z), value);
 }
 
-bool Chunk::add_ref(uuid engine_id, uuid player_id) {
+bool Chunk::add_ref(uuid engine_id, player::Id player_id) {
    m_references.insert(player_id);
 
    if (!m_engine_lock.is_nil()) {
@@ -140,7 +140,7 @@ bool Chunk::add_ref(uuid engine_id, uuid player_id) {
    return true;
 }
 
-void Chunk::free_ref(uuid player_id) {
+void Chunk::free_ref(player::Id player_id) {
    if (m_references.find(player_id) == m_references.end()) {
       return;
    }

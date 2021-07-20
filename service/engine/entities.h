@@ -3,7 +3,7 @@
 #include <minecpp/game/entity/entity.h>
 #include <vector>
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 using minecpp::game::entity::Entity;
 
@@ -18,4 +18,4 @@ class EntityManager {
    mb::result<Entity &> get_entity(EntityId id);
 };
 
-}// namespace Engine
+}// namespace minecpp::service::engine

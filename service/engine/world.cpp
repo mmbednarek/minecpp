@@ -2,14 +2,14 @@
 #include <minecpp/util/uuid.h>
 #include <utility>
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 World::World(uuid engine_id, const Engine::ChunkService &service, Dispatcher &dispatcher)
     : service(service), dispatcher(dispatcher), engine_id(engine_id) {}
 
 minecpp::game::Notifier &World::notifier() { return dispatcher; }
 
-mb::result<mb::empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
+mb::result<mb::empty> World::add_refs(player::Id, std::vector<ChunkPos> refs) {
    using minecpp::chunk_storage::ReferenceStatus;
 
    grpc::ClientContext ctx;
@@ -35,7 +35,7 @@ mb::result<mb::empty> World::add_refs(uuid player, std::vector<ChunkPos> refs) {
    return mb::ok;
 }
 
-mb::result<mb::empty> World::free_refs(uuid player, std::vector<ChunkPos> refs) {
+mb::result<mb::empty> World::free_refs(player::Id, std::vector<ChunkPos> refs) {
    grpc::ClientContext ctx;
    minecpp::chunk_storage::RemoveReferencesRequest req;
    minecpp::chunk_storage::EmptyResponse res;
@@ -68,4 +68,4 @@ mb::result<int> World::height_at(int x, int z) {
    return res.height();
 }
 
-} // namespace Engine
+} // namespace minecpp::service::engine

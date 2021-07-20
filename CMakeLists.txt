@@ -49,7 +49,7 @@ FetchContent_MakeAvailable(fmt)
 FetchContent_Declare(
         libmb
         GIT_REPOSITORY https://github.com/mmbednarek/mb
-        GIT_TAG libmb-0.0.16
+        GIT_TAG libmb-0.0.18
 )
 FetchContent_MakeAvailable(libmb)
 
@@ -76,6 +76,7 @@ add_subdirectory(lib/format)
 add_subdirectory(lib/squeezed)
 add_subdirectory(lib/random)
 add_subdirectory(lib/util)
+add_subdirectory(lib/player)
 add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
