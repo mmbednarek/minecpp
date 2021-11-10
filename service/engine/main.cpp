@@ -44,7 +44,7 @@ auto main() -> int {
    spdlog::info("starting grpc server on address {}", listen);
 
    std::thread write_thread([&service, &cq]() {
-      service.write_routine(cq);
+      service.write_routine(*cq);
    });
 
    server->Wait();

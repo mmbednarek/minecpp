@@ -9,6 +9,7 @@ set(gRPC_PROTOBUF_PROVIDER "package")
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(Protobuf REQUIRED)
 find_package(gRPC REQUIRED)
+find_package(absl REQUIRED)
 
 include(FetchContent)
 
