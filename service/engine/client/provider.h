@@ -1,19 +1,19 @@
 #pragma once
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
-#include <minepb/engine.grpc.pb.h>
+#include <minecpp/service/engine/api.h>
 #include <random>
 #include <string>
 #include <vector>
 #include <map>
 
-namespace Engine::Client {
+namespace minecpp::service::engine {
 
 struct Config {
    std::vector<std::string> addresses;
 };
 
-using PlayerService = std::unique_ptr<minecpp::engine::PlayerService::Stub>;
+using PlayerService = std::unique_ptr<minecpp::proto::service::engine::v1::EngineService::Stub>;
 using boost::uuids::uuid;
 
 class Provider {
@@ -40,4 +40,4 @@ class Provider {
    [[nodiscard]] const std::vector<Service> &get_services() const;
 };
 
-}// namespace Engine::Client
+}// namespace minecpp::service::engine

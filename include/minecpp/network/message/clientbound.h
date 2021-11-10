@@ -5,7 +5,7 @@
 #include <map>
 #include <mb/int.h>
 #include <minecpp/network/chat.h>
-#include <minepb/chunk.pb.h>
+#include <minecpp/proto/chunk/v1/chunk.pb.h>
 #include <string_view>
 
 namespace minecpp::network::message {
@@ -34,7 +34,7 @@ Writer serialize(SpawnExperienceOrb msg);
 
 // 0x04
 struct SpawnPlayer {
-   int entity_id;
+   mb::u32 entity_id;
    boost::uuids::uuid id;
    double x, y, z;
    float yaw, pitch;
@@ -104,7 +104,7 @@ Writer serialize(KeepAlive msg);
 
 // 0x21
 struct ChunkData {
-   minecpp::chunk::NetChunk &chunk;
+   minecpp::proto::chunk::v1::Chunk &chunk;
 };
 Writer serialize(ChunkData msg);
 
@@ -116,7 +116,7 @@ Writer serialize(UnloadChunk msg);
 
 // 0x25
 struct UpdateLight {
-   minecpp::chunk::NetChunk &chunk;
+   minecpp::proto::chunk::v1::Chunk &chunk;
 };
 Writer serialize(UpdateLight msg);
 
@@ -202,7 +202,9 @@ struct PlayerPositionLook {
 };
 Writer serialize(PlayerPositionLook msg);
 
-enum RecipeBookState { Init, Add, Remove };
+enum RecipeBookState { Init,
+                       Add,
+                       Remove };
 
 // 0x37
 struct RecipeBook {
@@ -245,4 +247,4 @@ struct Raw {
 };
 Writer serialize(Raw msg);
 
-} // namespace minecpp::network::Message
+}// namespace minecpp::network::message

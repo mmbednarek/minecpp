@@ -244,33 +244,33 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_
   "\n4minecpp/proto/event/serverbound/v1/ser"
   "verbound.proto\022\"minecpp.proto.event.serv"
   "erbound.v1\032\031google/protobuf/any.proto\032$m"
-  "inecpp/proto/common/v1/common.proto\032$min"
-  "ecpp/proto/player/v1/player.proto\032$minec"
-  "pp/proto/entity/v1/entity.proto\"d\n\005Event"
-  "\022%\n\007payload\030\001 \001(\0132\024.google.protobuf.Any\022"
-  "4\n\tplayer_id\030\002 \001(\0132!.minecpp.proto.playe"
-  "r.v1.PlayerId\"D\n\014AcceptPlayer\022\014\n\004name\030\001 "
-  "\001(\t\022\024\n\014challenge_id\030\002 \001(\r\022\020\n\010front_id\030\003 "
-  "\001(\r\"H\n\021SetPlayerPosition\0223\n\010position\030\001 \001"
-  "(\0132!.minecpp.proto.entity.v1.Position\"H\n"
-  "\021SetPlayerRotation\0223\n\010rotation\030\001 \001(\0132!.m"
-  "inecpp.proto.entity.v1.Rotation\"\036\n\013ChatM"
-  "essage\022\017\n\007message\030\001 \001(\t\"\016\n\014RemovePlayer\""
-  "N\n\014DestroyBlock\022>\n\016block_position\030\001 \001(\0132"
-  "&.minecpp.proto.common.v1.BlockPosition\""
-  "\032\n\nUpdatePing\022\014\n\004ping\030\001 \001(\005\"\033\n\013AnimateHa"
-  "nd\022\014\n\004hand\030\001 \001(\005\"\023\n\021LoadInitialChunksb\006p"
-  "roto3"
+  "inecpp/proto/common/v1/common.proto\032 min"
+  "ecpp/proto/player/v1/id.proto\032$minecpp/p"
+  "roto/entity/v1/entity.proto\"d\n\005Event\022%\n\007"
+  "payload\030\001 \001(\0132\024.google.protobuf.Any\0224\n\tp"
+  "layer_id\030\002 \001(\0132!.minecpp.proto.player.v1"
+  ".PlayerId\"D\n\014AcceptPlayer\022\014\n\004name\030\001 \001(\t\022"
+  "\024\n\014challenge_id\030\002 \001(\r\022\020\n\010front_id\030\003 \001(\r\""
+  "H\n\021SetPlayerPosition\0223\n\010position\030\001 \001(\0132!"
+  ".minecpp.proto.entity.v1.Position\"H\n\021Set"
+  "PlayerRotation\0223\n\010rotation\030\001 \001(\0132!.minec"
+  "pp.proto.entity.v1.Rotation\"\036\n\013ChatMessa"
+  "ge\022\017\n\007message\030\001 \001(\t\"\016\n\014RemovePlayer\"N\n\014D"
+  "estroyBlock\022>\n\016block_position\030\001 \001(\0132&.mi"
+  "necpp.proto.common.v1.BlockPosition\"\032\n\nU"
+  "pdatePing\022\014\n\004ping\030\001 \001(\005\"\033\n\013AnimateHand\022\014"
+  "\n\004hand\030\001 \001(\005\"\023\n\021LoadInitialChunksb\006proto"
+  "3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps[4] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
   &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
   &::descriptor_table_minecpp_2fproto_2fentity_2fv1_2fentity_2eproto,
-  &::descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fplayer_2eproto,
+  &::descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fid_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = {
-  false, false, 765, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto, "minecpp/proto/event/serverbound/v1/serverbound.proto", 
+  false, false, 761, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto, "minecpp/proto/event/serverbound/v1/serverbound.proto", 
   &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps, 4, 10,
   schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto::offsets,
   file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto, file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,

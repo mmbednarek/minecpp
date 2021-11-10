@@ -23,7 +23,7 @@ namespace v1 {
 constexpr ChunkPosition::ChunkPosition(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : x_(0)
-  , y_(0){}
+  , z_(0){}
 struct ChunkPositionDefaultTypeInternal {
   constexpr ChunkPositionDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -87,7 +87,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_minecpp_2fproto_2fcommon_2fv1_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::ChunkPosition, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::ChunkPosition, y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::ChunkPosition, z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::BlockPosition, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -127,7 +127,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n$minecpp/proto/common/v1/common.proto\022\027"
   "minecpp.proto.common.v1\"%\n\rChunkPosition"
-  "\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\"0\n\rBlockPosition\022"
+  "\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"0\n\rBlockPosition\022"
   "\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\"\350\002\n\010Gam"
   "eplay\0229\n\tdimension\030\001 \001(\0162&.minecpp.proto"
   ".common.v1.DimensionType\022\014\n\004seed\030\002 \001(\004\022/"
@@ -246,16 +246,16 @@ ChunkPosition::ChunkPosition(const ChunkPosition& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&y_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(y_));
+    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.common.v1.ChunkPosition)
 }
 
 inline void ChunkPosition::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&y_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(y_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
 }
 
 ChunkPosition::~ChunkPosition() {
@@ -286,8 +286,8 @@ void ChunkPosition::Clear() {
   (void) cached_has_bits;
 
   ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&y_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(y_));
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -304,10 +304,10 @@ const char* ChunkPosition::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // int32 y = 2;
+      // int32 z = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -346,10 +346,10 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
   }
 
-  // int32 y = 2;
-  if (this->_internal_y() != 0) {
+  // int32 z = 2;
+  if (this->_internal_z() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_y(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -375,11 +375,11 @@ size_t ChunkPosition::ByteSizeLong() const {
         this->_internal_x());
   }
 
-  // int32 y = 2;
-  if (this->_internal_y() != 0) {
+  // int32 z = 2;
+  if (this->_internal_z() != 0) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_y());
+        this->_internal_z());
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -413,8 +413,8 @@ void ChunkPosition::MergeFrom(const ChunkPosition& from) {
   if (from._internal_x() != 0) {
     _internal_set_x(from._internal_x());
   }
-  if (from._internal_y() != 0) {
-    _internal_set_y(from._internal_y());
+  if (from._internal_z() != 0) {
+    _internal_set_z(from._internal_z());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -434,8 +434,8 @@ void ChunkPosition::InternalSwap(ChunkPosition* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ChunkPosition, y_)
-      + sizeof(ChunkPosition::y_)
+      PROTOBUF_FIELD_OFFSET(ChunkPosition, z_)
+      + sizeof(ChunkPosition::z_)
       - PROTOBUF_FIELD_OFFSET(ChunkPosition, x_)>(
           reinterpret_cast<char*>(&x_),
           reinterpret_cast<char*>(&other->x_));

@@ -10,7 +10,7 @@
 #include <mutex>
 #include <string_view>
 
-namespace ChunkStorage {
+namespace minecpp::service::chunk_storage {
 
 struct RegionFile {
    std::fstream m_file;
@@ -37,4 +37,4 @@ class Regions {
    mb::result<RegionFile &> load_region(int x, int z);
 };
 
-}// namespace ChunkStorage
+}// namespace minecpp::service::chunk_storage

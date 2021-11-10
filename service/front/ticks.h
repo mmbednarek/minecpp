@@ -1,15 +1,15 @@
 #pragma once
 #include "server.h"
-#include <minepb/chunk_storage.grpc.pb.h>
+#include <minecpp/proto/service/chunk_storage/v1/chunk_storage.grpc.pb.h>
 
-namespace Front {
+namespace minecpp::service::front {
 
-typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
+typedef std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub>
         ChunkService;
 
 struct ChunkLoadTicket {
    bool loaded{false};
-   minecpp::chunk::NetChunk chunk{};
+   minecpp::proto::chunk::v1::Chunk chunk{};
    std::shared_ptr<Connection> conn;
 };
 
@@ -26,4 +26,4 @@ class TickManager {
    void load_chunks();
 };
 
-}// namespace Front
+}// namespace minecpp::service::front

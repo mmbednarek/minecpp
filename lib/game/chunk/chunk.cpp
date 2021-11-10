@@ -29,7 +29,7 @@ Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : m_pos_x(x), m_p
    std::fill(m_biomes.begin(), m_biomes.end(), 1);
 }
 
-void Chunk::as_proto(minecpp::chunk::NetChunk *chunk) {
+void Chunk::as_proto(minecpp::proto::chunk::v1::Chunk *chunk) {
    chunk->set_pos_x(m_pos_x);
    chunk->set_pos_z(m_pos_z);
    chunk->set_full(m_full);

@@ -6,7 +6,7 @@
 #include <sstream>
 #include <utility>
 
-namespace ChunkStorage {
+namespace minecpp::service::chunk_storage {
 
 RegionFile::RegionFile(std::fstream stream, std::string path) : m_file(std::move(stream)), m_path(std::move(path)) {}
 
@@ -71,4 +71,4 @@ mb::result<mb::empty> Regions::write_chunk(mb::i32 x, mb::i32 z, const mb::view<
    return mb::ok;
 }
 
-}// namespace ChunkStorage
+}// namespace minecpp::service::chunk_storage

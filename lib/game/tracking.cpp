@@ -9,15 +9,15 @@ namespace minecpp::game {
 
 static inline int pow2(int a) { return a * a; }
 
-static int dist_sq(block::ChunkPos a, block::ChunkPos b) { return pow2(a.x - b.x) + pow2(a.z - b.z); }
+static int dist_sq(ChunkPosition a, ChunkPosition b) { return pow2(a.x - b.x) + pow2(a.z - b.z); }
 
 Tracking::Tracking(Vec3 position, int radius)
     : m_chunk_pos((position.flat() / 16.0).truncate()),
       m_radius_sq(radius * radius),
       m_radius(radius) {}
 
-block::ChunkPos to_chunk_pos(Vec3 &pos) {
-   return block::ChunkPos(static_cast<int>(std::floor(pos.x / 16.0)), static_cast<int>(std::floor(pos.z / 16.0)));
+ChunkPosition to_chunk_pos(Vec3 &pos) {
+   return ChunkPosition(static_cast<int>(std::floor(pos.x / 16.0)), static_cast<int>(std::floor(pos.z / 16.0)));
 }
 
 
@@ -28,8 +28,8 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position) {
       return;
    }
 
-   std::vector<block::ChunkPos> chunks_to_load;// TODO: pre alloc
-   std::vector<block::ChunkPos> chunks_to_free;// TODO: pre alloc
+   std::vector<ChunkPosition> chunks_to_load;// TODO: pre alloc
+   std::vector<ChunkPosition> chunks_to_free;// TODO: pre alloc
 
    for (int z = -m_radius - 1; z < m_radius + 1; ++z) {
       for (int x = -m_radius - 1; x < m_radius + 1; ++x) {
@@ -37,7 +37,7 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position) {
             continue;
          }
 
-         auto offset = block::ChunkPos(x, z);
+         auto offset = ChunkPosition(x, z);
 
          auto next_chunk_pos_off = (next_chunk_pos + offset);
          auto last_chunk_pos_off = (m_chunk_pos + offset);
@@ -63,14 +63,14 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position) {
       if (auto res = w.free_refs(p.get_id(), chunks_to_free); !res.ok()) {
          return;
       }
-      for (const block::ChunkPos &pos : chunks_to_free) {
-         w.notifier().unload_chunk(p.get_id(), pos.x, pos.z);
+      for (const ChunkPosition &pos : chunks_to_free) {
+         w.notifier().unload_chunk(p.get_id(), pos);
       }
    }
 
    if (!chunks_to_load.empty()) {
       // sort so chunks closer to the player would load first
-      std::sort(chunks_to_load.begin(), chunks_to_load.end(), [next_chunk_pos](const block::ChunkPos &a, const block::ChunkPos &b) {
+      std::sort(chunks_to_load.begin(), chunks_to_load.end(), [next_chunk_pos](const ChunkPosition &a, const ChunkPosition &b) {
          return dist_sq(next_chunk_pos, a) < dist_sq(next_chunk_pos, b);
       });
       if (auto res = w.add_refs(p.get_id(), chunks_to_load); !res.ok()) {
@@ -81,19 +81,19 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position) {
 }
 
 mb::result<mb::empty> Tracking::load_chunks(World &w, Player &p) {
-   std::vector<block::ChunkPos> chunks_to_load;// TODO: pre alloc
+   std::vector<ChunkPosition> chunks_to_load;// TODO: pre alloc
 
    for (int z = -m_radius; z < m_radius; ++z) {
       for (int x = -m_radius; x < m_radius; ++x) {
-         auto offset = block::ChunkPos{x, z};
-         if (dist_sq(block::ChunkPos{0, 0}, offset) <= m_radius_sq) {
+         auto offset = ChunkPosition{x, z};
+         if (dist_sq(ChunkPosition{0, 0}, offset) <= m_radius_sq) {
             chunks_to_load.emplace_back(m_chunk_pos + offset);
          }
       }
    }
 
    // sort so chunks closer to the player would load first
-   std::sort(chunks_to_load.begin(), chunks_to_load.end(), [this](const block::ChunkPos &a, const block::ChunkPos &b) {
+   std::sort(chunks_to_load.begin(), chunks_to_load.end(), [this](const ChunkPosition &a, const ChunkPosition &b) {
       return dist_sq(m_chunk_pos, a) < dist_sq(m_chunk_pos, b);
    });
 

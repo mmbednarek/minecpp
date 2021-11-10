@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <minecpp/nbt/writer.h>
-#include <minepb/game.pb.h>
+#include <minecpp/proto/common/v1/common.pb.h>
 
 namespace minecpp::game {
 
@@ -26,40 +26,42 @@ class DimensionProperties {
 
 const DimensionProperties OverworldProps{};
 const DimensionProperties OverworldCavesProps{
-    .name = "minecraft:overworld",
-    .has_ceiling = true,
+        .name = "minecraft:overworld",
+        .has_ceiling = true,
 };
 const DimensionProperties NetherProps{
-    .piglin_safe = true,
-    .natural = false,
-    .ambient_light = 0.1f,
-    .infiniburn = "minecraft:infiniburn_nether",
-    .respawn_anchor_works = true,
-    .has_skylight = false,
-    .bed_works = false,
-    .name = "minecraft:the_nether",
-    .logical_height = 128,
-    .shrunk = true,
-    .ultrawarm = true,
-    .has_ceiling = true,
+        .piglin_safe = true,
+        .natural = false,
+        .ambient_light = 0.1f,
+        .infiniburn = "minecraft:infiniburn_nether",
+        .respawn_anchor_works = true,
+        .has_skylight = false,
+        .bed_works = false,
+        .name = "minecraft:the_nether",
+        .logical_height = 128,
+        .shrunk = true,
+        .ultrawarm = true,
+        .has_ceiling = true,
 };
 const DimensionProperties EndProps{
-    .natural = false,
-    .infiniburn = "minecraft:infiniburn_end",
-    .respawn_anchor_works = false,
-    .has_skylight = false,
-    .bed_works = false,
-    .has_raids = true,
-    .name = "minecraft:the_end",
+        .natural = false,
+        .infiniburn = "minecraft:infiniburn_end",
+        .respawn_anchor_works = false,
+        .has_skylight = false,
+        .bed_works = false,
+        .has_raids = true,
+        .name = "minecraft:the_end",
 };
 
 void write_dimension_codec(nbt::Writer &w);
 void write_dimension_type(nbt::Writer &w);
 
-enum class Dimension { Overworld = 0, Nether = -1, End = 1 };
+enum class Dimension { Overworld = 0,
+                       Nether = -1,
+                       End = 1 };
 
-minecpp::game::DimensionType dimension_to_proto(Dimension d);
+proto::common::v1::DimensionType dimension_to_proto(Dimension d);
 
 constexpr uint32_t world_limit = 30000000;
 
-} // namespace minecpp::game
+}// namespace minecpp::game

@@ -4,7 +4,7 @@
 
 namespace minecpp::network::message {
 
-void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
+void write_chunk(Writer &w, const minecpp::proto::chunk::v1::Chunk &chunk) {
    w.write_big_endian(chunk.pos_x());
    w.write_big_endian(chunk.pos_z());
    w.write_byte(chunk.full());
@@ -64,7 +64,7 @@ void write_chunk(Writer &w, const minecpp::chunk::NetChunk &chunk) {
    w.write_varint(0);
 }
 
-void write_light(Writer &w, const minecpp::chunk::NetChunk &chunk) {
+void write_light(Writer &w, const minecpp::proto::chunk::v1::Chunk &chunk) {
    uint32_t skyUpdateMask = 0;
    uint32_t blockUpdateMask = 0;
    uint32_t skyResetMask = 0;

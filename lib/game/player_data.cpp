@@ -217,7 +217,7 @@ entity::Entity PlayerData::to_entity() {
       player_entity.attributes.set_attribute(
               entity::to_attribute_name(at.first), at.second);
    }
-   player_entity.dimension = static_cast<Dimension>(dimension);
+//   player_entity.dimension = static_cast<Dimension>(dimension);
    player_entity.health = health;
    player_entity.absorption_amount = absorption_amount;
    player_entity.fall_distance = fall_distance;

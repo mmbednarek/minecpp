@@ -64,7 +64,7 @@ include_directories(./include)
 include_directories(./service/protos/include)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -O3")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter")
 
 # Libraries
 

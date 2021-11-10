@@ -4,7 +4,7 @@
 #include "play_handler.h"
 #include <minecpp/network/message/io.h>
 
-namespace Front::Protocol {
+namespace minecpp::service::front::Protocol {
 
 class LoginHandler : public Handler {
  public:
@@ -21,4 +21,4 @@ class LoginHandler : public Handler {
    PlayHandler &play_handler;
 };
 
-} // namespace Front::Protocol
+} // namespace minecpp::service::front::Protocol

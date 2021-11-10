@@ -20,6 +20,31 @@ inline proto::entity::v1::Position write_entity_position(const util::Vec3 &pos) 
    return result;
 }
 
-}
+struct Movement {
+   short x, y, z;
+
+   [[nodiscard]] inline proto::entity::v1::Movement to_proto() const {
+      proto::entity::v1::Movement result;
+      result.set_x(x);
+      result.set_y(y);
+      result.set_z(z);
+      return result;
+   }
+};
+
+struct Rotation {
+   float yaw, pitch;
+
+   constexpr Rotation(float yaw, float pitch) : yaw(yaw), pitch(pitch) {}
+
+   [[nodiscard]] inline proto::entity::v1::Rotation to_proto() const {
+      proto::entity::v1::Rotation result;
+      result.set_yaw(yaw);
+      result.set_pitch(pitch);
+      return result;
+   }
+};
+
+}// namespace minecpp::entity
 
 #endif//MINECPP_ENTITY_H

@@ -54,7 +54,7 @@ grpc::Status Service::AcceptPlayer(grpc::ServerContext *context, const minecpp::
    player.get_recipe_book().as_proto(response->mutable_player_data()->mutable_recipe_book());
 
    dispatcher.add_player(player_id, request->name(), player.get_ping());
-   dispatcher.spawn_player(player_id, player.get_entity_id(), player_pos, player_entity.get_yaw(), player_entity.get_pitch());
+   dispatcher.spawn_player(player_id, player.get_entity_id(), player_pos, <#initializer #>);
    dispatcher.send_chat(1, minecpp::network::format_join_message(request->name()));
 
    return grpc::Status();
@@ -80,7 +80,7 @@ grpc::Status Service::SetPlayerRotation(grpc::ServerContext *context,
 
    auto &player_entity = MCPP_GRPC_TRY(players.get_entity(player_id));
    player_entity.set_rot(request->yaw(), request->pitch());
-   dispatcher.entity_look(player_id, player_entity.get_id(), player_entity.get_yaw(), player_entity.get_pitch());
+   dispatcher.entity_look(player_id, player_entity.get_id(), <#initializer #>);
 
    return grpc::Status();
 }

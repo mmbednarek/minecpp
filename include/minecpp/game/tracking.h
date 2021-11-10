@@ -1,7 +1,7 @@
 #pragma once
 #include "world.h"
 #include <mb/result.h>
-#include <minecpp/game/block/position.h>
+#include <minecpp/game/game.h>
 #include <minecpp/util/vec.h>
 #include <mutex>
 
@@ -13,7 +13,7 @@ class Player;
 
 class Tracking {
    std::mutex m_mutex{};
-   block::ChunkPos m_chunk_pos;
+   ChunkPosition m_chunk_pos;
    int m_radius_sq;
    int m_radius;
 

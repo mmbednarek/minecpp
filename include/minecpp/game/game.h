@@ -22,12 +22,18 @@ constexpr mb::u64 g_block_position_mask_z = (1u << g_block_position_z_bits) - 1;
 constexpr mb::u32 g_block_position_bit_offset_x = g_block_position_y_bits + g_block_position_x_bits;
 constexpr mb::u32 g_block_position_bit_offset_z = g_block_position_y_bits;
 
+struct ChunkPosition;
+
 struct BlockPosition {
    int x{}, y{}, z{};
 
    constexpr BlockPosition() = default;
 
    constexpr BlockPosition(int x, int y, int z) : x(x), y(y), z(z) {}
+
+   constexpr explicit BlockPosition(mb::u64 encoded) : x(static_cast<int>(encoded >> (g_block_position_z_bits + g_block_position_y_bits))),
+                                                       y(static_cast<int>(encoded << (g_block_position_x_bits + g_block_position_z_bits) >> (g_block_position_x_bits + g_block_position_z_bits))),
+                                                       z(static_cast<int>(encoded << g_block_position_x_bits >> (g_block_position_x_bits + g_block_position_y_bits))) {}
 
    [[nodiscard]] constexpr mb::u64 as_long() const {
       return ((static_cast<mb::u64>(x) & g_block_position_mask_x) << g_block_position_bit_offset_x) | (static_cast<mb::u64>(y) & g_block_position_mask_y) |
@@ -36,6 +42,21 @@ struct BlockPosition {
 
    static constexpr BlockPosition from_proto(const proto::common::v1::BlockPosition &position) {
       return BlockPosition(position.x(), position.y(), position.z());
+   }
+
+   [[nodiscard]] constexpr ChunkPosition chunk_position() const;
+
+   [[nodiscard]] constexpr mb::u8 offset_x() const { return x & (g_chunk_width - 1); }
+   [[nodiscard]] constexpr mb::u8 offset_z() const { return z & (g_chunk_depth - 1); }
+
+   [[nodiscard]] constexpr mb::u16 offset() const { return offset_x() << 12 | y | offset_z() << 8; }
+
+   [[nodiscard]] inline proto::common::v1::BlockPosition to_proto() const {
+      proto::common::v1::BlockPosition block_position;
+      block_position.set_x(x);
+      block_position.set_y(y);
+      block_position.set_z(z);
+      return block_position;
    }
 };
 
@@ -74,6 +95,17 @@ struct ChunkPosition {
    static constexpr ChunkPosition from_position(const util::Vec3 &v) {
       return ChunkPosition((v.flat() / util::Vec2(g_chunk_width, g_chunk_depth)).truncate());
    }
+
+   [[nodiscard]] inline proto::common::v1::ChunkPosition to_proto() const {
+      proto::common::v1::ChunkPosition result;
+      result.set_x(x);
+      result.set_z(z);
+      return result;
+   }
 };
+
+constexpr ChunkPosition BlockPosition::chunk_position() const {
+   return ChunkPosition(x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1), z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1));
+}
 
 }// namespace minecpp::game

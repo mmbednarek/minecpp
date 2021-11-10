@@ -13,13 +13,17 @@ namespace serverbound_v1 = proto::event::serverbound::v1;
 
 class Dispatcher;
 class PlayerManager;
+class EntityManager;
 
 class EventHandler {
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;
+   EntityManager &m_entity_manager;
    game::World &m_world;
 
  public:
+   EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager, game::World &world);
+
    void handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id);
    void handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id);
    void handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event, player::Id player_id);

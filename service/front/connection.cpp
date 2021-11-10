@@ -7,7 +7,7 @@
 #include <minecpp/util/time.h>
 #include <spdlog/spdlog.h>
 
-namespace Front {
+namespace minecpp::service::front {
 
 Connection::Connection(boost::asio::io_context &ctx, Server *server)
     : m_socket(ctx), m_server(server), m_state(Protocol::Handshake) {}
@@ -198,4 +198,4 @@ void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shif
    });
 }
 
-}// namespace Front
+}// namespace minecpp::service::front

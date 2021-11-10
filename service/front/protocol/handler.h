@@ -1,7 +1,7 @@
 #pragma once
 #include <minecpp/network/message/file.h>
 
-namespace Front {
+namespace minecpp::service::front {
 
 class Connection;
 
@@ -15,4 +15,4 @@ class Handler {
 
 } // namespace Protocol
 
-} // namespace Front
+} // namespace minecpp::service::front

@@ -23,7 +23,7 @@ std::string g_player_type = "minecraft:player";
 
 Entity::Entity(uuid uid, const Type &type) : uid(uid), type(type) {}
 
-Dimension Entity::get_dimension() const { return dimension; }
+Dimension Entity::get_dimension() const { return Dimension::Overworld; }
 
 Vec3 Entity::get_pos() const { return pos; }
 
@@ -34,8 +34,8 @@ float Entity::get_pitch() const { return pitch; }
 void Entity::set_pos(Notifier &n, Vec3 pos) {
    this->pos = pos;
    auto movement = process_movement();
-   if (!movement.nil()) {
-      n.entity_move(id, uid, movement, yaw, pitch);
+   if (movement.x != 0 || movement.y != 0 || movement.z != 0) {
+      n.entity_move(uid, id, movement, {yaw, pitch});
    }
 }
 
@@ -48,11 +48,11 @@ void Entity::set_id(uint32_t id) { this->id = id; }
 
 uint32_t Entity::get_id() { return id; }
 
-Movement Entity::process_movement() {
+minecpp::entity::Movement Entity::process_movement() {
    Vec3 tracked_pos = Vec3(tracking.x, tracking.y, tracking.z) / 4096.0;
    Vec3 diff = pos - tracked_pos;
 
-   auto movement = Movement{
+   auto movement = minecpp::entity::Movement{
            .x = static_cast<short>(diff.x * 4096),
            .y = static_cast<short>(diff.y * 4096),
            .z = static_cast<short>(diff.z * 4096),

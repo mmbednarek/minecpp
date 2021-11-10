@@ -29,7 +29,7 @@ RecipeBook::RecipeBook(nbt::Reader &r) {
        });
 }
 
-void RecipeBook::as_proto(minecpp::player::RecipeBook *book) const {
+void RecipeBook::as_proto(proto::player::v1::RecipeBook *book) const {
    book->set_filtering_craftable(filtering_craftable);
    book->set_furnace_filtering_craftable(furnace_filtering_craftable);
    book->set_gui_open(gui_open);

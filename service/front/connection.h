@@ -16,7 +16,7 @@
 #include <spdlog/spdlog.h>
 #include <tuple>
 
-namespace Front {
+namespace minecpp::service::front {
 
 using boost::asio::ip::tcp;
 class Server;
@@ -104,4 +104,4 @@ void send_and_disconnect(const Connection::Ptr &conn, M msg) {
    conn->send_and_disconnect(conn, w);
 }
 
-}// namespace Front
+}// namespace minecpp::service::front

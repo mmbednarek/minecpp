@@ -22,23 +22,26 @@ class Dispatcher : public minecpp::game::Notifier {
  public:
    explicit Dispatcher(EventManager &events);
 
-   void load_terrain(player::Id player, minecpp::game::ChunkPosition central_chunk,
+   void load_terrain(player::Id player_id, const game::ChunkPosition &central_chunk,
                      std::vector<minecpp::game::ChunkPosition> coords) override;
-   void transfer_player(player::Id player, boost::uuids::uuid target_engine);
+   void transfer_player(player::Id player_id, boost::uuids::uuid target_engine);
    void update_block(minecpp::game::BlockPosition block, mb::u32 state) override;
 
-   void entity_move(int eid, uuid id, minecpp::game::entity::Movement movement, float yaw, float pitch) override;
-   void entity_look(player::Id player, mb::u32 entity_id, mb::f32 yaw, mb::f32 pitch) override;
+   void entity_move(player::Id player_id, entity::Id entity_id, const entity::Movement &movement, const entity::Rotation &rotation) override;
+   void entity_look(player::Id player_id, mb::u32 entity_id, const entity::Rotation &rotation) override;
 
-   void add_player(player::Id player, const std::string &name, mb::u32 ping) override;
-   void spawn_player(player::Id player, mb::u32 entity_id, minecpp::util::Vec3 position, mb::f32 yaw, mb::f32 pitch) override;
-   void remove_player(player::Id player, mb::u32 entity_id) override;
+   void add_player(player::Id player_id, const std::string &name, mb::u32 ping) override;
+   void spawn_player(player::Id player_id, mb::u32 entity_id, minecpp::util::Vec3 position, const entity::Rotation &rotation) override;
+   void remove_player(player::Id player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
    void update_block(mb::i32 x, mb::i32 y, mb::i32 z, mb::u32 state) override;
-   void animate_hand(player::Id player, mb::u32 entity_id, mb::u32 hand) override;
-   void unload_chunk(player::Id player, mb::i32 x, mb::i32 z) override;
+   void animate_hand(player::Id player_id, mb::u32 entity_id, mb::u32 hand) override;
+   void unload_chunk(player::Id player_id, const game::ChunkPosition &chunk_position) override;
 
-   void accept_player(const player::Player &player, const game::entity::Entity &entity);
+   void player_list(player::Id player_id, const std::vector<player::Status> &status_list);
+   void entity_list(player::Id player_id, const std::vector<game::entity::Entity> &entity_list);
+
+   void accept_player(const player::Player &player_id, const game::entity::Entity &entity);
    void deny_player(const player::Id &player_id, const std::string &reason);
 };
 

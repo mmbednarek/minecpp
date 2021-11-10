@@ -1,5 +1,6 @@
 #pragma once
 #include "id.h"
+#include "tracking.h"
 #include <minecpp/entity/entity.h>
 #include <minecpp/game/mode.h>
 #include <minecpp/proto/player/v1/player.pb.h>
@@ -18,8 +19,6 @@ class Player;
 }
 
 namespace minecpp::player {
-
-class Tracking;
 
 using boost::uuids::uuid;
 
@@ -41,9 +40,20 @@ struct Abilities {
    }
 };
 
-enum class AcceptState {
-   Accepted,
-   Denied
+struct Status {
+   Id id;
+   std::string name;
+   int ping;
+   game::Mode mode;
+
+   [[nodiscard]] inline proto::player::v1::Status to_proto() const {
+      proto::player::v1::Status status;
+      *status.mutable_id() = write_id_to_proto(id);
+      status.set_name(name);
+      status.set_ping(ping);
+      status.set_game_mode(game::write_mode_to_proto(mode));
+      return status;
+   }
 };
 
 class Player {
@@ -100,6 +110,15 @@ class Player {
 
    constexpr void set_ping(int ping) {
       m_ping = ping;
+   }
+
+   [[nodiscard]] inline Status status() const {
+      return Status{
+              .id = m_id,
+              .name = m_name,
+              .ping = m_ping,
+              .mode = m_game_mode,
+      };
    }
 
    void on_movement(game::World &w, util::Vec3 pos);

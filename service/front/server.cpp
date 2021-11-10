@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 #include <utility>
 
-namespace Front {
+namespace minecpp::service::front {
 
 Server::Server(boost::asio::io_context &ctx, short port,
                Protocol::Handler *play, Protocol::Handler *status,
@@ -104,4 +104,4 @@ Server::connection_by_id(player::Id player_id) {
    return m_connections.at(conn_ids.at(player_id));
 }
 
-}// namespace Front
+}// namespace minecpp::service::front

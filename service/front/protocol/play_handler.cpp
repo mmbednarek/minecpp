@@ -5,7 +5,7 @@
 #include <minecpp/util/format.h>
 #include <spdlog/spdlog.h>
 
-namespace Front::Protocol {
+namespace minecpp::service::front::Protocol {
 
 PlayHandler::PlayHandler(Service &service) : service(service) {}
 
@@ -71,4 +71,4 @@ void PlayHandler::handle_disconnect(Connection &conn) {
    service.on_player_disconnect(conn.service_id(), conn.uuid());
 }
 
-} // namespace Front::Protocol
+} // namespace minecpp::service::front::Protocol

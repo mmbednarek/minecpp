@@ -33,7 +33,7 @@
 #include <google/protobuf/unknown_field_set.h>
 #include <google/protobuf/any.pb.h>
 #include <minecpp/proto/common/v1/common.pb.h>
-#include <minecpp/proto/player/v1/player.pb.h>
+#include <minecpp/proto/player/v1/id.pb.h>
 #include <minecpp/proto/entity/v1/entity.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>

@@ -87,4 +87,16 @@ void PlayerManager::remap_ids() {
 
 std::size_t PlayerManager::player_count() { return m_players.size(); }
 
+std::vector<player::Status> PlayerManager::player_status_list() const {
+   std::vector<player::Status> status_list(m_players.size());
+   std::transform(m_players.begin(), m_players.end(), status_list.begin(), [](const player::Player &player) {
+      return player::Status{
+              .name = player.name(),
+              .ping = player.ping(),
+              .mode = player.game_mode(),
+      };
+   });
+   return status_list;
+}
+
 }// namespace minecpp::service::engine

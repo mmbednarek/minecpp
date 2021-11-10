@@ -1,4 +1,3 @@
-#include "../engine/client/provider.h"
 #include "config.h"
 #include "event_handler.h"
 #include "protocol/login_handler.h"
@@ -8,60 +7,48 @@
 #include "ticks.h"
 #include <atomic>
 #include <grpcpp/grpcpp.h>
-#include <minepb/engine.grpc.pb.h>
+#include <minecpp/service/engine/api.h>
 #include <spdlog/spdlog.h>
 #include <thread>
 
-using namespace Front;
+using namespace minecpp::service::front;
 
 auto main() -> int {
    auto conf = get_config();
 
-   Engine::Client::Config engine_cfg{
-           .addresses = conf.engine_hosts,
-   };
-   auto engine_provider_res = Engine::Client::Provider::create(engine_cfg);
-   if (!engine_provider_res.ok()) {
-      spdlog::error("could not create engine provider: {}", engine_provider_res.msg());
+   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());
+   std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub> chunk_service =
+           minecpp::proto::service::chunk_storage::v1::ChunkStorage::NewStub(chunk_channel);
+
+   auto engine_client_res = minecpp::service::engine::Client::create(conf.engine_hosts[0]);
+   if (!engine_client_res.ok()) {
+      spdlog::error("could not connect create engine service client: {}", engine_client_res.msg());
       return 1;
    }
-   auto engine_provider = engine_provider_res.unwrap();
 
-   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());
-   std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub> chunk_service =
-           minecpp::chunk_storage::ChunkStorage::NewStub(chunk_channel);
+   auto engine_client = engine_client_res.unwrap();
+   auto stream_res = engine_client.join();
+   if (!stream_res.ok()) {
+      spdlog::error("engine client error: {}", stream_res.msg());
+      return 1;
+   }
+   auto stream = stream_res.unwrap();
 
-   Service service(conf, engine_provider, chunk_service);
+   Service service(conf, stream, chunk_service);
 
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
    Protocol::LoginHandler login_handler(service, play_handler);
 
-   std::vector<std::string> topics{"minecpp"};
-
    boost::asio::io_context ctx;
-   Server svr(ctx, conf.port, dynamic_cast<Protocol::Handler *>(&play_handler),
+   Server svr(ctx, static_cast<short>(conf.port), dynamic_cast<Protocol::Handler *>(&play_handler),
               dynamic_cast<Protocol::Handler *>(&status_handler), dynamic_cast<Protocol::Handler *>(&login_handler));
 
+   EventHandler handler(svr, stream);
+   auto event_receiver = stream.make_receiver(handler);
+
    TickManager ticks(svr, chunk_service);
-
    std::thread ticks_thread([&ticks]() { ticks.tick(); });
-
-   std::vector<std::thread> event_threads;
-   EventHandler consumer(svr);
-   minecpp::engine::FetchEventsRequest req{};
-   req.set_front_id(conf.front_id);
-   for (auto const &engine : engine_provider.get_services()) {
-      event_threads.emplace_back(std::thread([&engine, &consumer, req] {
-         grpc::ClientContext ctx{};
-         auto reader = engine.service->FetchEvents(&ctx, req);
-
-         minecpp::engine::Event event{};
-         while (reader->Read(&event)) {
-            consumer.accept_event(event);
-         }
-      }));
-   }
 
    spdlog::info("starting server on port {}", conf.port);
 

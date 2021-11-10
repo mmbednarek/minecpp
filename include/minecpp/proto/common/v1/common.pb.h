@@ -306,7 +306,7 @@ class ChunkPosition final :
 
   enum : int {
     kXFieldNumber = 1,
-    kYFieldNumber = 2,
+    kZFieldNumber = 2,
   };
   // int32 x = 1;
   void clear_x();
@@ -317,13 +317,13 @@ class ChunkPosition final :
   void _internal_set_x(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
-  // int32 y = 2;
-  void clear_y();
-  ::PROTOBUF_NAMESPACE_ID::int32 y() const;
-  void set_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // int32 z = 2;
+  void clear_z();
+  ::PROTOBUF_NAMESPACE_ID::int32 z() const;
+  void set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_y() const;
-  void _internal_set_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_z() const;
+  void _internal_set_z(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
   // @@protoc_insertion_point(class_scope:minecpp.proto.common.v1.ChunkPosition)
@@ -334,7 +334,7 @@ class ChunkPosition final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::int32 x_;
-  ::PROTOBUF_NAMESPACE_ID::int32 y_;
+  ::PROTOBUF_NAMESPACE_ID::int32 z_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto;
 };
@@ -768,24 +768,24 @@ inline void ChunkPosition::set_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.ChunkPosition.x)
 }
 
-// int32 y = 2;
-inline void ChunkPosition::clear_y() {
-  y_ = 0;
+// int32 z = 2;
+inline void ChunkPosition::clear_z() {
+  z_ = 0;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ChunkPosition::_internal_y() const {
-  return y_;
+inline ::PROTOBUF_NAMESPACE_ID::int32 ChunkPosition::_internal_z() const {
+  return z_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ChunkPosition::y() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.ChunkPosition.y)
-  return _internal_y();
+inline ::PROTOBUF_NAMESPACE_ID::int32 ChunkPosition::z() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.ChunkPosition.z)
+  return _internal_z();
 }
-inline void ChunkPosition::_internal_set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ChunkPosition::_internal_set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
   
-  y_ = value;
+  z_ = value;
 }
-inline void ChunkPosition::set_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.ChunkPosition.y)
+inline void ChunkPosition::set_z(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.ChunkPosition.z)
 }
 
 // -------------------------------------------------------------------

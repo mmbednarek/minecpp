@@ -6,7 +6,8 @@
 #include <minecpp/nbt/chunk/v1/chunk.nbt.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
-#include <minepb/chunk.pb.h>
+#include <minecpp/player/id.h>
+#include <minecpp/proto/chunk/v1/chunk.pb.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -26,7 +27,7 @@ struct Chunk {
    Chunk();
    Chunk(int x, int z, std::array<short, 256> &height_map);
 
-   void as_proto(minecpp::chunk::NetChunk *chunk);
+   void as_proto(minecpp::proto::chunk::v1::Chunk *chunk);
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, uint32_t state);
    uint8_t get_block_light(int x, int y, int z);

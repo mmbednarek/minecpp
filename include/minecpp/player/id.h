@@ -1,4 +1,5 @@
 #pragma once
+#include <boost/uuid/uuid_io.hpp>
 #include <minecpp/proto/player/v1/player.pb.h>
 #include <minecpp/util/uuid.h>
 
@@ -24,6 +25,10 @@ constexpr Id read_id_from_nbt(const std::vector<int> &id) {
    if (id.size() != 4)
       return Id();
    return util::read_uuid4(id[0], id[1], id[2], id[3]);
+}
+
+inline std::string format_player_id(Id player_id) {
+   return boost::uuids::to_string(player_id);
 }
 
 }// namespace minecpp::player

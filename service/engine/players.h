@@ -36,6 +36,8 @@ class PlayerManager {
    void remove_player(player::Id id);
    void remap_ids();
    std::size_t player_count();
+
+   [[nodiscard]] std::vector<player::Status> player_status_list() const;
 };
 
 }// namespace minecpp::service::engine

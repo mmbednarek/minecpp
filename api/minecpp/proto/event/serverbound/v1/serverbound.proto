@@ -3,7 +3,7 @@ package minecpp.proto.event.serverbound.v1;
 
 import "google/protobuf/any.proto";
 import "minecpp/proto/common/v1/common.proto";
-import "minecpp/proto/player/v1/player.proto";
+import "minecpp/proto/player/v1/id.proto";
 import "minecpp/proto/entity/v1/entity.proto";
 
 message Event {

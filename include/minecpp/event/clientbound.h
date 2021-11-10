@@ -20,8 +20,10 @@ concept ClientboundVisitor = requires(T t) {
    t.handle_load_terrain(clientbound_v1::LoadTerrain(), std::vector<player::Id>());
    t.handle_transfer_player(clientbound_v1::TransferPlayer(), std::vector<player::Id>());
    t.handle_unload_chunk(clientbound_v1::UnloadChunk(), std::vector<player::Id>());
-   t.handle_accept_player(clientbound_v1::AcceptPlayer(), std::vector<player::Id>());
    t.handle_player_list(clientbound_v1::PlayerList(), std::vector<player::Id>());
+   t.handle_entity_list(clientbound_v1::EntityList(), std::vector<player::Id>());
+   t.handle_accept_player(clientbound_v1::AcceptPlayer(), std::vector<player::Id>());
+   t.handle_deny_player(clientbound_v1::DenyPlayer(), std::vector<player::Id>());
 };
 
 std::vector<player::Id> read_recipients(const clientbound_v1::Event &event);
@@ -51,8 +53,10 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor) {
    MINECPP_EVENT_HANDLE_CLIENTBOUND(LoadTerrain, handle_load_terrain);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(TransferPlayer, handle_transfer_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(UnloadChunk, handle_unload_chunk);
-   MINECPP_EVENT_HANDLE_CLIENTBOUND(AcceptPlayer, handle_accept_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(PlayerList, handle_player_list);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(EntityList, handle_entity_list);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(AcceptPlayer, handle_accept_player);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(DenyPlayer, handle_deny_player);
 }
 
 }// namespace minecpp::event

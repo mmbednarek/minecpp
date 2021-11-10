@@ -3,16 +3,13 @@ package minecpp.proto.player.v1;
 
 import "minecpp/proto/common/v1/common.proto";
 import "minecpp/proto/entity/v1/entity.proto";
-
-message PlayerId {
-  uint64 lower = 1;
-  uint64 upper = 2;
-}
+import "minecpp/proto/player/v1/id.proto";
 
 message Status {
-  string name = 1;
-  int32 ping = 2;
-  common.v1.GameMode game_mode = 3;
+  PlayerId id = 1;
+  string name = 2;
+  int32 ping = 3;
+  common.v1.GameMode game_mode = 4;
 }
 
 message Player {

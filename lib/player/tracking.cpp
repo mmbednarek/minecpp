@@ -86,7 +86,7 @@ void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position) {
          return;
       }
       for (const auto &pos : chunks_to_free) {
-         w.notifier().unload_chunk(p.id(), pos.x, pos.z);
+         w.notifier().unload_chunk(p.id(), pos);
       }
    }
 

@@ -3,6 +3,7 @@ package minecpp.proto.event.clientbound.v1;
 
 import "google/protobuf/any.proto";
 import "minecpp/proto/common/v1/common.proto";
+import "minecpp/proto/player/v1/id.proto";
 import "minecpp/proto/player/v1/player.proto";
 import "minecpp/proto/entity/v1/entity.proto";
 
@@ -30,26 +31,26 @@ message AddPlayer {
   player.v1.PlayerId player_id = 1;
   string name = 2;
   common.v1.GameMode game_mode = 3;
-  int32 ping = 4;
+  uint32 ping = 4;
 }
 
 message SpawnPlayer {
   player.v1.PlayerId player_id = 1;
-  int32 entity_id = 2;
+  uint32 entity_id = 2;
   entity.v1.Position position = 3;
   entity.v1.Rotation rotation = 4;
 }
 
 message EntityMove {
   player.v1.PlayerId player_id = 1;
-  int32 entity_id = 2;
-  entity.v1.Position position = 3;
+  uint32 entity_id = 2;
+  entity.v1.Movement movement = 3;
   entity.v1.Rotation rotation = 4;
 }
 
 message EntityLook {
   player.v1.PlayerId player_id = 1;
-  int32 entity_id = 2;
+  uint32 entity_id = 2;
   entity.v1.Rotation rotation = 3;
 }
 
@@ -63,29 +64,27 @@ message Chat {
 
 message RemovePlayer {
   player.v1.PlayerId player_id = 1;
-  int32 entity_id = 2;
+  uint32 entity_id = 2;
 }
 
 message UpdateBlock {
-  int64 block_position = 1;
+  uint64 block_position = 1;
   uint32 state = 2;
 }
 
 message AnimateHand {
   player.v1.PlayerId player_id = 1;
-  int32 entity_id = 2;
-  int32 hand = 3;
+  uint32 entity_id = 2;
+  uint32 hand = 3;
 }
 
 message LoadTerrain {
-  player.v1.PlayerId player_id = 1;
-  common.v1.ChunkPosition central_chunk = 2;
-  repeated common.v1.ChunkPosition coords = 3;
+  common.v1.ChunkPosition central_chunk = 1;
+  repeated common.v1.ChunkPosition coords = 2;
 }
 
 message TransferPlayer {
-  bytes player = 1;
-  bytes target_engine = 2;
+  uint64 engine_instance_id = 2;
 }
 
 message UpdatePlayerAbilities {
@@ -103,21 +102,19 @@ message UnloadChunk {
   common.v1.ChunkPosition chunk_position = 2;
 }
 
-message AcceptPlayer {
-  PlayerAcceptState state = 1;
-  uint32 challenge_id = 2;
-  common.v1.Gameplay gameplay = 3;
-  player.v1.Player player = 4;
-  string denial_reason = 5;
-}
-
-enum PlayerAcceptState {
-  DENIED = 0;
-  ACCEPTED = 1;
-  MOVED = 2;
-}
-
 message PlayerList {
-  player.v1.PlayerId player_id = 1;
-  repeated player.v1.Status list = 2;
+  repeated player.v1.Status list = 1;
+}
+
+message EntityList {
+  repeated entity.v1.Entity list = 1;
+}
+
+message AcceptPlayer {
+  common.v1.Gameplay gameplay = 1;
+  player.v1.Player player = 2;
+}
+
+message DenyPlayer {
+  string denial_reason = 1;
 }
