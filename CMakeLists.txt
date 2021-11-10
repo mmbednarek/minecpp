@@ -4,19 +4,13 @@ project(minecpp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 
-find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
-find_package(Protobuf REQUIRED)
-
-include(FetchContent)
-
 set(gRPC_PROTOBUF_PROVIDER "package")
 
-FetchContent_Declare(
-        gRPC
-        GIT_REPOSITORY https://github.com/grpc/grpc
-        GIT_TAG v1.38.1
-)
-FetchContent_MakeAvailable(gRPC)
+find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
+find_package(Protobuf REQUIRED)
+find_package(gRPC REQUIRED)
+
+include(FetchContent)
 
 FetchContent_Declare(
         yaml

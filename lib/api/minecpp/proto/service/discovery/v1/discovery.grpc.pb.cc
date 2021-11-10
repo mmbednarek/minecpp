@@ -45,11 +45,11 @@ DiscoveryService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& c
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::discovery::v1::DiscoveryRequest, ::minecpp::proto::service::discovery::v1::DiscoveryResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_Resolve_, context, request, response);
 }
 
-void DiscoveryService::Stub::experimental_async::Resolve(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::DiscoveryRequest* request, ::minecpp::proto::service::discovery::v1::DiscoveryResponse* response, std::function<void(::grpc::Status)> f) {
+void DiscoveryService::Stub::async::Resolve(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::DiscoveryRequest* request, ::minecpp::proto::service::discovery::v1::DiscoveryResponse* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::discovery::v1::DiscoveryRequest, ::minecpp::proto::service::discovery::v1::DiscoveryResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Resolve_, context, request, response, std::move(f));
 }
 
-void DiscoveryService::Stub::experimental_async::Resolve(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::DiscoveryRequest* request, ::minecpp::proto::service::discovery::v1::DiscoveryResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void DiscoveryService::Stub::async::Resolve(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::DiscoveryRequest* request, ::minecpp::proto::service::discovery::v1::DiscoveryResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_Resolve_, context, request, response, reactor);
 }
 
@@ -68,11 +68,11 @@ void DiscoveryService::Stub::experimental_async::Resolve(::grpc::ClientContext* 
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::discovery::v1::RegisterRequest, ::minecpp::proto::service::discovery::v1::EmptyResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RegisterService_, context, request, response);
 }
 
-void DiscoveryService::Stub::experimental_async::RegisterService(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::RegisterRequest* request, ::minecpp::proto::service::discovery::v1::EmptyResult* response, std::function<void(::grpc::Status)> f) {
+void DiscoveryService::Stub::async::RegisterService(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::RegisterRequest* request, ::minecpp::proto::service::discovery::v1::EmptyResult* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::discovery::v1::RegisterRequest, ::minecpp::proto::service::discovery::v1::EmptyResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterService_, context, request, response, std::move(f));
 }
 
-void DiscoveryService::Stub::experimental_async::RegisterService(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::RegisterRequest* request, ::minecpp::proto::service::discovery::v1::EmptyResult* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void DiscoveryService::Stub::async::RegisterService(::grpc::ClientContext* context, const ::minecpp::proto::service::discovery::v1::RegisterRequest* request, ::minecpp::proto::service::discovery::v1::EmptyResult* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RegisterService_, context, request, response, reactor);
 }
 

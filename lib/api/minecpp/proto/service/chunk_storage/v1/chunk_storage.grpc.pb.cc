@@ -51,11 +51,11 @@ ChunkStorage::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_LoadChunk_, context, request, response);
 }
 
-void ChunkStorage::Stub::experimental_async::LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, std::function<void(::grpc::Status)> f) {
+void ChunkStorage::Stub::async::LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LoadChunk_, context, request, response, std::move(f));
 }
 
-void ChunkStorage::Stub::experimental_async::LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void ChunkStorage::Stub::async::LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_LoadChunk_, context, request, response, reactor);
 }
 
@@ -74,11 +74,11 @@ void ChunkStorage::Stub::experimental_async::LoadChunk(::grpc::ClientContext* co
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetBlock_, context, request, response);
 }
 
-void ChunkStorage::Stub::experimental_async::SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+void ChunkStorage::Stub::async::SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetBlock_, context, request, response, std::move(f));
 }
 
-void ChunkStorage::Stub::experimental_async::SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void ChunkStorage::Stub::async::SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetBlock_, context, request, response, reactor);
 }
 
@@ -97,11 +97,11 @@ void ChunkStorage::Stub::experimental_async::SetBlock(::grpc::ClientContext* con
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_AddReferences_, context, request, response);
 }
 
-void ChunkStorage::Stub::experimental_async::AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, std::function<void(::grpc::Status)> f) {
+void ChunkStorage::Stub::async::AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddReferences_, context, request, response, std::move(f));
 }
 
-void ChunkStorage::Stub::experimental_async::AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void ChunkStorage::Stub::async::AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_AddReferences_, context, request, response, reactor);
 }
 
@@ -120,11 +120,11 @@ void ChunkStorage::Stub::experimental_async::AddReferences(::grpc::ClientContext
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_RemoveReference_, context, request, response);
 }
 
-void ChunkStorage::Stub::experimental_async::RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+void ChunkStorage::Stub::async::RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveReference_, context, request, response, std::move(f));
 }
 
-void ChunkStorage::Stub::experimental_async::RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void ChunkStorage::Stub::async::RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_RemoveReference_, context, request, response, reactor);
 }
 
@@ -143,11 +143,11 @@ void ChunkStorage::Stub::experimental_async::RemoveReference(::grpc::ClientConte
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_HeightAt_, context, request, response);
 }
 
-void ChunkStorage::Stub::experimental_async::HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, std::function<void(::grpc::Status)> f) {
+void ChunkStorage::Stub::async::HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_HeightAt_, context, request, response, std::move(f));
 }
 
-void ChunkStorage::Stub::experimental_async::HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void ChunkStorage::Stub::async::HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_HeightAt_, context, request, response, reactor);
 }
 

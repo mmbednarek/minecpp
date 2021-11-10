@@ -34,7 +34,7 @@ auto main() -> int {
    }
    auto stream = stream_res.unwrap();
 
-   Service service(conf, stream, chunk_service);
+   Service service(conf, *stream, chunk_service);
 
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
@@ -44,8 +44,8 @@ auto main() -> int {
    Server svr(ctx, static_cast<short>(conf.port), dynamic_cast<Protocol::Handler *>(&play_handler),
               dynamic_cast<Protocol::Handler *>(&status_handler), dynamic_cast<Protocol::Handler *>(&login_handler));
 
-   EventHandler handler(svr, stream);
-   auto event_receiver = stream.make_receiver(handler);
+   EventHandler handler(svr, *stream);
+   auto event_receiver = stream->make_receiver(handler);
 
    TickManager ticks(svr, chunk_service);
    std::thread ticks_thread([&ticks]() { ticks.tick(); });

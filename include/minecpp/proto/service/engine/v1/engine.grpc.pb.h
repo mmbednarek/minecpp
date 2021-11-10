@@ -7,7 +7,6 @@
 #include <minecpp/proto/service/engine/v1/engine.pb.h>
 
 #include <functional>
-#include <grpc/impl/codegen/port_platform.h>
 #include <grpcpp/impl/codegen/async_generic_service.h>
 #include <grpcpp/impl/codegen/async_stream.h>
 #include <grpcpp/impl/codegen/async_unary_call.h>
@@ -49,23 +48,15 @@ class EngineService final {
     std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>> PrepareAsyncJoin(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderWriterInterface< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>>(PrepareAsyncJoinRaw(context, cq));
     }
-    class experimental_async_interface {
+    class async_interface {
      public:
-      virtual ~experimental_async_interface() {}
-      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
+      virtual ~async_interface() {}
       virtual void Join(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>* reactor) = 0;
-      #else
-      virtual void Join(::grpc::ClientContext* context, ::grpc::experimental::ClientBidiReactor< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>* reactor) = 0;
-      #endif
     };
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    typedef class experimental_async_interface async_interface;
-    #endif
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-    async_interface* async() { return experimental_async(); }
-    #endif
-    virtual class experimental_async_interface* experimental_async() { return nullptr; }
-  private:
+    typedef class async_interface experimental_async_interface;
+    virtual class async_interface* async() { return nullptr; }
+    class async_interface* experimental_async() { return async(); }
+   private:
     virtual ::grpc::ClientReaderWriterInterface< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* JoinRaw(::grpc::ClientContext* context) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* AsyncJoinRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderWriterInterface< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* PrepareAsyncJoinRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) = 0;
@@ -82,25 +73,21 @@ class EngineService final {
     std::unique_ptr<  ::grpc::ClientAsyncReaderWriter< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>> PrepareAsyncJoin(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderWriter< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>>(PrepareAsyncJoinRaw(context, cq));
     }
-    class experimental_async final :
-      public StubInterface::experimental_async_interface {
+    class async final :
+      public StubInterface::async_interface {
      public:
-      #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
       void Join(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>* reactor) override;
-      #else
-      void Join(::grpc::ClientContext* context, ::grpc::experimental::ClientBidiReactor< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>* reactor) override;
-      #endif
      private:
       friend class Stub;
-      explicit experimental_async(Stub* stub): stub_(stub) { }
+      explicit async(Stub* stub): stub_(stub) { }
       Stub* stub() { return stub_; }
       Stub* stub_;
     };
-    class experimental_async_interface* experimental_async() override { return &async_stub_; }
+    class async* async() override { return &async_stub_; }
 
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
-    class experimental_async async_stub_{this};
+    class async async_stub_{this};
     ::grpc::ClientReaderWriter< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* JoinRaw(::grpc::ClientContext* context) override;
     ::grpc::ClientAsyncReaderWriter< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* AsyncJoinRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReaderWriter< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* PrepareAsyncJoinRaw(::grpc::ClientContext* context, ::grpc::CompletionQueue* cq) override;
@@ -136,27 +123,17 @@ class EngineService final {
   };
   typedef WithAsyncMethod_Join<Service > AsyncService;
   template <class BaseClass>
-  class ExperimentalWithCallbackMethod_Join : public BaseClass {
+  class WithCallbackMethod_Join : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    ExperimentalWithCallbackMethod_Join() {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::Service::
-    #else
-      ::grpc::Service::experimental().
-    #endif
-        MarkMethodCallback(0,
+    WithCallbackMethod_Join() {
+      ::grpc::Service::MarkMethodCallback(0,
           new ::grpc::internal::CallbackBidiHandler< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>(
             [this](
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-                   ::grpc::CallbackServerContext*
-    #else
-                   ::grpc::experimental::CallbackServerContext*
-    #endif
-                     context) { return this->Join(context); }));
+                   ::grpc::CallbackServerContext* context) { return this->Join(context); }));
     }
-    ~ExperimentalWithCallbackMethod_Join() override {
+    ~WithCallbackMethod_Join() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
@@ -164,20 +141,12 @@ class EngineService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
     virtual ::grpc::ServerBidiReactor< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* Join(
       ::grpc::CallbackServerContext* /*context*/)
-    #else
-    virtual ::grpc::experimental::ServerBidiReactor< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>* Join(
-      ::grpc::experimental::CallbackServerContext* /*context*/)
-    #endif
       { return nullptr; }
   };
-  #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-  typedef ExperimentalWithCallbackMethod_Join<Service > CallbackService;
-  #endif
-
-  typedef ExperimentalWithCallbackMethod_Join<Service > ExperimentalCallbackService;
+  typedef WithCallbackMethod_Join<Service > CallbackService;
+  typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_Join : public BaseClass {
    private:
@@ -216,27 +185,17 @@ class EngineService final {
     }
   };
   template <class BaseClass>
-  class ExperimentalWithRawCallbackMethod_Join : public BaseClass {
+  class WithRawCallbackMethod_Join : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    ExperimentalWithRawCallbackMethod_Join() {
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-      ::grpc::Service::
-    #else
-      ::grpc::Service::experimental().
-    #endif
-        MarkMethodRawCallback(0,
+    WithRawCallbackMethod_Join() {
+      ::grpc::Service::MarkMethodRawCallback(0,
           new ::grpc::internal::CallbackBidiHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
-                   ::grpc::CallbackServerContext*
-    #else
-                   ::grpc::experimental::CallbackServerContext*
-    #endif
-                     context) { return this->Join(context); }));
+                   ::grpc::CallbackServerContext* context) { return this->Join(context); }));
     }
-    ~ExperimentalWithRawCallbackMethod_Join() override {
+    ~WithRawCallbackMethod_Join() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
@@ -244,13 +203,8 @@ class EngineService final {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    #ifdef GRPC_CALLBACK_API_NONEXPERIMENTAL
     virtual ::grpc::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* Join(
       ::grpc::CallbackServerContext* /*context*/)
-    #else
-    virtual ::grpc::experimental::ServerBidiReactor< ::grpc::ByteBuffer, ::grpc::ByteBuffer>* Join(
-      ::grpc::experimental::CallbackServerContext* /*context*/)
-    #endif
       { return nullptr; }
   };
   typedef Service StreamedUnaryService;

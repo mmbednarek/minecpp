@@ -43,11 +43,11 @@ HealthService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::service::health::v1::Request, ::minecpp::proto::service::health::v1::ServiceStatus, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetServiceStatus_, context, request, response);
 }
 
-void HealthService::Stub::experimental_async::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::proto::service::health::v1::Request* request, ::minecpp::proto::service::health::v1::ServiceStatus* response, std::function<void(::grpc::Status)> f) {
+void HealthService::Stub::async::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::proto::service::health::v1::Request* request, ::minecpp::proto::service::health::v1::ServiceStatus* response, std::function<void(::grpc::Status)> f) {
   ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::service::health::v1::Request, ::minecpp::proto::service::health::v1::ServiceStatus, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetServiceStatus_, context, request, response, std::move(f));
 }
 
-void HealthService::Stub::experimental_async::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::proto::service::health::v1::Request* request, ::minecpp::proto::service::health::v1::ServiceStatus* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+void HealthService::Stub::async::GetServiceStatus(::grpc::ClientContext* context, const ::minecpp::proto::service::health::v1::Request* request, ::minecpp::proto::service::health::v1::ServiceStatus* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetServiceStatus_, context, request, response, reactor);
 }
 

@@ -41,7 +41,7 @@ class Receiver {
                                                                          m_cq(cq),
                                                                          m_thread(
                                                                                  [](Receiver *receiver) {
-                                                                                    receiver->thread_routine();
+//                                                                                    receiver->thread_routine();
                                                                                  },
                                                                                  this) {}
 
@@ -126,14 +126,14 @@ class Client {
  public:
    [[nodiscard]] static mb::result<Client> create(std::string_view address);
 
-   inline mb::result<Stream> join() {
+   inline mb::result<std::unique_ptr<Stream>> join() {
       auto ctx = std::make_unique<grpc::ClientContext>();
       auto cq = std::make_unique<grpc::CompletionQueue>();
       auto stream = m_stub->AsyncJoin(ctx.get(), cq.get(), write_notify_type(NotifyType::Join));
       if (!stream) {
          return mb::error("could not join stream");
       }
-      return Stream(std::move(stream), std::move(ctx), std::move(cq));
+      return std::make_unique<Stream>(std::move(stream), std::move(ctx), std::move(cq));
    }
 };
 

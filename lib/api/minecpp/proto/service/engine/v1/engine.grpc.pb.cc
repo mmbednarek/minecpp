@@ -43,7 +43,7 @@ EngineService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   return ::grpc::internal::ClientReaderWriterFactory< ::minecpp::proto::event::serverbound::v1::Event, ::minecpp::proto::event::clientbound::v1::Event>::Create(channel_.get(), rpcmethod_Join_, context);
 }
 
-void EngineService::Stub::experimental_async::Join(::grpc::ClientContext* context, ::grpc::experimental::ClientBidiReactor< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>* reactor) {
+void EngineService::Stub::async::Join(::grpc::ClientContext* context, ::grpc::ClientBidiReactor< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>* reactor) {
   ::grpc::internal::ClientCallbackReaderWriterFactory< ::minecpp::proto::event::serverbound::v1::Event,::minecpp::proto::event::clientbound::v1::Event>::Create(stub_->channel_.get(), stub_->rpcmethod_Join_, context, reactor);
 }
 
