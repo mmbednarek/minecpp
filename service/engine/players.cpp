@@ -33,6 +33,7 @@ mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(min
    if (!f_player_data.is_open()) {
       minecpp::nbt::player::v1::Player data;
       auto pos = MB_TRY(get_spawn_position(w));
+      data.uuid = player::write_id_to_nbt(id);
       data.pos.resize(3);
       data.pos[0] = pos.x;
       data.pos[1] = pos.y;

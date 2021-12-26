@@ -9,7 +9,7 @@ namespace minecpp::service::engine {
 
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
-Dispatcher::Dispatcher(EventManager &events) : m_events(events) {}
+Dispatcher::Dispatcher(EventManager<BidiStream> &events) : m_events(events) {}
 
 void Dispatcher::load_terrain(player::Id player_id, const game::ChunkPosition &central_chunk,
                               std::vector<minecpp::game::ChunkPosition> coords) {

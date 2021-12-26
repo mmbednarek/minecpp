@@ -1,36 +1,30 @@
 #pragma once
 #include "event_manager.h"
+#include <minecpp/grpc/server/bidi.h>
+#include <minecpp/proto/event/clientbound/v1/clientbound.pb.h>
+#include <minecpp/proto/event/serverbound/v1/serverbound.pb.h>
 #include <minecpp/proto/service/engine/v1/engine.grpc.pb.h>
 
 namespace minecpp::service::engine {
 
 class EventHandler;
 
-class ApiImpl final : public proto::service::engine::v1::EngineService::AsyncService {
-   using Stream = grpc::ServerReaderWriter<minecpp::proto::event::clientbound::v1::Event, minecpp::proto::event::serverbound::v1::Event>;
+using BidiStream = grpc::server::Stream<proto::event::clientbound::v1::Event, proto::event::serverbound::v1::Event, std::string>;
 
-   struct Client {
-      Stream &stream;
-      EventManager::Queue &queue;
-
-      Client(Stream &stream, EventManager &event_manager) : stream(stream),
-                                                            queue(event_manager.create_queue("front")) {}
-   };
-
-   bool m_running = true;
+class ApiHandler {
    EventHandler &m_event_handler;
-   EventManager &m_event_manager;
-   std::vector<std::unique_ptr<Client>> m_queues;
-   std::mutex m_queues_mutex;
+   EventManager<BidiStream> &m_event_manager;
 
  public:
-   ApiImpl(EventHandler &event_handler, EventManager &event_manager);
+   ApiHandler(EventHandler &event_handler, EventManager<BidiStream> &event_manager);
 
-   grpc::Status Join(grpc::ServerContext *context, Stream *stream) override;
+   void on_connected(BidiStream stream);
 
+   void on_finish_write(BidiStream stream);
 
-   void write_routine(grpc::CompletionQueue &cq);
-   void stop();
+   void on_finish_read(BidiStream, const proto::event::serverbound::v1::Event &event);
+
+   inline void on_disconnect(BidiStream stream) {}
 };
 
 }// namespace minecpp::service::engine

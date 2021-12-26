@@ -8,13 +8,14 @@
 
 namespace minecpp::grpc::server {
 
-template<typename TWrite, typename TRead>
+template<typename TWrite, typename TRead, typename TTag>
 struct CompletionEvent;
 
-template<typename TWrite, typename TRead>
+template<typename TWrite, typename TRead, typename TTag>
 struct BidiClient {
    ::grpc::ServerContext ctx;
    ::grpc::ServerAsyncReaderWriter<TWrite, TRead> stream;
+   TTag tag{};
 
    BidiClient() : stream(&ctx) {}
 
@@ -39,25 +40,25 @@ struct BidiClient {
    }
 };
 
-template<typename TWrite, typename TRead>
+template<typename TWrite, typename TRead, typename TTag>
 struct CompletionEvent {
    EventType tag;
-   BidiClient<TWrite, TRead> *client;
+   BidiClient<TWrite, TRead, TTag> *client;
    TRead *read_ptr;
 
-   CompletionEvent(EventType tag, BidiClient<TWrite, TRead> *client, TRead *read_ptr = nullptr) : tag(tag), client(client), read_ptr(read_ptr) {}
+   CompletionEvent(EventType tag, BidiClient<TWrite, TRead, TTag> *client, TRead *read_ptr = nullptr) : tag(tag), client(client), read_ptr(read_ptr) {}
 };
 
-template<typename TWrite, typename TRead>
+template<typename TWrite, typename TRead, typename TTag>
 class Stream {
-   BidiClient<TWrite, TRead> &m_client;
-   util::AtomicPool<CompletionEvent<TWrite, TRead>> &m_event_pool;
+   BidiClient<TWrite, TRead, TTag> &m_client;
+   util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &m_event_pool;
    util::AtomicPool<TRead> &m_read_pool;
 
  public:
-   Stream(BidiClient<TWrite, TRead> &client, util::AtomicPool<CompletionEvent<TWrite, TRead>> &event_pool, util::AtomicPool<TRead> &read_pool) : m_client(client),
-                                                                                                                                                   m_event_pool(event_pool),
-                                                                                                                                                   m_read_pool(read_pool) {}
+   Stream(BidiClient<TWrite, TRead, TTag> &client, util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &event_pool, util::AtomicPool<TRead> &read_pool) : m_client(client),
+                                                                                                                                                             m_event_pool(event_pool),
+                                                                                                                                                             m_read_pool(read_pool) {}
 
    void write(const TWrite &message) {
       m_client.write(m_event_pool, message);
@@ -70,9 +71,17 @@ class Stream {
    void disconnect() {
       m_client.disconnect(m_event_pool);
    }
+
+   [[nodiscard]] const TTag &tag() const {
+      return m_client.tag;
+   }
+
+   void set_tag(const TTag &tag) {
+      m_client.tag = tag;
+   }
 };
 
-template<typename TService, typename TWrite, typename TRead, typename TCallback, auto FRequest>
+template<typename TService, typename TWrite, typename TRead, typename TCallback, typename TTag, auto FRequest>
 class BidiServer {
    TCallback &m_callback;
    TService m_service;
@@ -80,8 +89,8 @@ class BidiServer {
    std::unique_ptr<::grpc::Server> m_server;
    std::vector<std::future<mb::result<mb::empty>>> m_workers;
    std::mutex m_next_lock;
-   util::AtomicPool<BidiClient<TWrite, TRead>> m_client_pool;
-   util::AtomicPool<CompletionEvent<TWrite, TRead>> m_event_pool;
+   util::AtomicPool<BidiClient<TWrite, TRead, TTag>> m_client_pool;
+   util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> m_event_pool;
    util::AtomicPool<TRead> m_read_pool;
 
  public:
@@ -100,28 +109,28 @@ class BidiServer {
             return mb::error("cannot read message\n");
          }
 
-         auto event = static_cast<CompletionEvent<TWrite, TRead> *>(tag_ptr);
+         auto event = static_cast<CompletionEvent<TWrite, TRead, TTag> *>(tag_ptr);
 
          switch (event->tag) {
          case EventType::Accept: {
-            m_callback.on_connected(Stream<TWrite, TRead>(*event->client, m_event_pool, m_read_pool));
+            m_callback.on_connected(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool));
             m_event_pool.free(event);
             accept();
             continue;
          }
          case EventType::Write: {
-            m_callback.on_finish_write(Stream<TWrite, TRead>(*event->client, m_event_pool, m_read_pool));
+            m_callback.on_finish_write(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool));
             m_event_pool.free(event);
             continue;
          }
          case EventType::Read: {
-            m_callback.on_finish_read(Stream<TWrite, TRead>(*event->client, m_event_pool, m_read_pool), *event->read_ptr);
+            m_callback.on_finish_read(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool), *event->read_ptr);
             m_read_pool.free(event->read_ptr);
             m_event_pool.free(event);
             continue;
          }
          case EventType::Disconnect: {
-            m_callback.on_disconnect(Stream<TWrite, TRead>(*event->client, m_event_pool, m_read_pool));
+            m_callback.on_disconnect(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool));
             m_client_pool.free(event->client);
             m_event_pool.free(event);
             continue;
@@ -160,6 +169,9 @@ class BidiServer {
    mb::result<mb::empty> wait() {
       std::vector<mb::result<mb::empty>> results;
       results.reserve(m_workers.size());
+      std::for_each(m_workers.begin(), m_workers.end(), [](std::future<mb::result<mb::empty>> &worker) {
+         worker.wait();
+      });
       std::transform(m_workers.begin(), m_workers.end(), std::back_inserter(results), [](std::future<mb::result<mb::empty>> &worker) -> mb::result<mb::empty> {
          if (!worker.valid())
             return mb::ok;

@@ -12,7 +12,6 @@
 #include <minecpp/grpc/server/bidi.h>
 #include <minecpp/proto/service/chunk_storage/v1/chunk_storage.grpc.pb.h>
 #include <spdlog/spdlog.h>
-#include <thread>
 
 auto main() -> int {
    using namespace minecpp::service::engine;
@@ -28,25 +27,18 @@ auto main() -> int {
                                       grpc::InsecureChannelCredentials());
    auto chunk_storage = minecpp::proto::service::chunk_storage::v1::ChunkStorage::ChunkStorage::NewStub(channel);
 
-   EventManager manager;
+   EventManager<BidiStream> manager;
    Dispatcher dispatcher(manager);
    World world(boost::uuids::uuid(), *chunk_storage, dispatcher);
-
    EventHandler handler(dispatcher, players, entities, world);
 
-   ApiImpl service(handler, manager);
-
-   grpc::ServerBuilder builder;
-   builder.AddListeningPort(listen, grpc::InsecureServerCredentials());
-   builder.RegisterService(&service);
-   auto cq = builder.AddCompletionQueue();
-
-   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
+   ApiHandler api_handler(handler, manager);
+   using BidiServer = minecpp::grpc::server::BidiServer<minecpp::proto::service::engine::v1::EngineService::AsyncService, minecpp::proto::event::clientbound::v1::Event, minecpp::proto::event::serverbound::v1::Event, ApiHandler, std::string, &minecpp::proto::service::engine::v1::EngineService::AsyncService::RequestJoin>;
+   BidiServer server(listen, api_handler, 1);
    spdlog::info("starting grpc server on address {}", listen);
-
-   std::thread write_thread([&service, &cq]() {
-      service.write_routine(*cq);
-   });
-
-   server->Wait();
+   server.accept();
+   auto res = server.wait();
+   if (!res.ok()) {
+      spdlog::error("server error: {}", res.msg());
+   }
 }

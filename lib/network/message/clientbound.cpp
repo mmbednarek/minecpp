@@ -77,6 +77,7 @@ Writer serialize(Difficulty msg) {
 }
 
 Writer serialize(Chat msg) {
+   std::cerr << "DEBUG " << msg.message << '\n';
    // 1.16.5 ok
    Writer w;
    w.write_byte(0x0e);

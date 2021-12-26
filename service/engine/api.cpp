@@ -5,40 +5,40 @@
 
 namespace minecpp::service::engine {
 
-ApiImpl::ApiImpl(EventHandler &event_handler, EventManager &event_manager) : m_event_handler(event_handler),
-                                                                             m_event_manager(event_manager) {}
+ApiHandler::ApiHandler(EventHandler &event_handler, EventManager<BidiStream> &event_manager) : m_event_handler(event_handler), m_event_manager(event_manager) {}
 
-grpc::Status ApiImpl::Join(grpc::ServerContext *context, Stream *stream) {
-   m_queues_mutex.lock();
-   m_queues.push_back(std::make_unique<Client>(*stream, m_event_manager));
-   m_queues_mutex.unlock();
-
-   spdlog::info("front connection");
-
-   while (m_running) {
-      proto::event::serverbound::v1::Event proto_event;
-      stream->Read(&proto_event);
-      event::visit_serverbound(proto_event, m_event_handler);
-   }
-   return grpc::Status();
+void ApiHandler::on_connected(BidiStream stream) {
+   const auto tag = "front";
+   stream.set_tag(tag);
+   stream.read();
+   m_event_manager.add_client(stream);
+   spdlog::info("api handler: front connection");
 }
 
-void ApiImpl::write_routine(grpc::CompletionQueue &cq) {
-   while (m_running) {
-      std::lock_guard<std::mutex> lg(m_queues_mutex);
-      for (auto &queue : m_queues) {
-         if (queue->queue.empty())
-            continue;
-
-         auto event = queue->queue.pop();
-         spdlog::info("sending event: {}", event.payload().type_url());
-         queue->stream.Write(event);
-      }
+void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbound::v1::Event &event) {
+   spdlog::info("api handler: received message");
+   stream.read();
+   try {
+      event::visit_serverbound(event, m_event_handler);
+   } catch (std::runtime_error &err) {
+      spdlog::error("visit error: {}", err.what());
    }
 }
 
-void ApiImpl::stop() {
-   m_running = false;
+void ApiHandler::on_finish_write(BidiStream stream) {
+//   spdlog::info("api handler: wrote message");
+   auto client = m_event_manager.client(stream.tag());
+   if (client == nullptr) {
+      return;
+   }
+   if(!client->writing) {
+      return;
+   }
+   if (client->queue.empty()) {
+      client->writing = false;
+      return;
+   }
+   stream.write(client->queue.pop());
 }
 
 }// namespace minecpp::service::engine

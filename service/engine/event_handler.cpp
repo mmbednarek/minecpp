@@ -13,22 +13,22 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
                                                                                                                                        m_world(world) {}
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id) {
-   spdlog::info("player accept request from {}", event.name());
-   auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
-   if (!join_result.ok()) {
-      m_dispatcher.deny_player(player_id, join_result.msg());
-      return;
-   }
+      spdlog::info("player accept request from {}", event.name());
+      auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
+      if (!join_result.ok()) {
+         m_dispatcher.deny_player(player_id, join_result.msg());
+         return;
+      }
 
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
-   auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
+      auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
+      auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
 
-   m_dispatcher.accept_player(player, entity);
-   m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
-   m_dispatcher.add_player(player.id(), player.name(), player.ping());
-   m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
-   m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
+      m_dispatcher.accept_player(player, entity);
+      m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
+      m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
+      m_dispatcher.add_player(player.id(), player.name(), player.ping());
+      m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+      m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id) {
@@ -45,18 +45,22 @@ void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRot
 }
 
 void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, player::Id player_id) {
-   if (event.message().empty())
-      return;
+   try {
+      if (event.message().empty())
+         return;
 
-   if (event.message()[0] == '/') {
-      // TODO: Handle commands
-      return;
+      if (event.message()[0] == '/') {
+         // TODO: Handle commands
+         return;
+      }
+
+      auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+
+      spdlog::info("CHAT [{}] {}", player.name(), event.message());
+      m_dispatcher.send_chat(chat::MessageType::PlayerMessage, chat::format_chat_message(player.name(), event.message()));
+   } catch (std::runtime_error &err) {
+      spdlog::error("handle chat message: {}", err.what());
    }
-
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-
-   spdlog::info("CHAT [{}] {}", player.name(), event.message());
-   m_dispatcher.send_chat(chat::MessageType::PlayerMessage, chat::format_chat_message(player.name(), event.message()));
 }
 
 void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, player::Id player_id) {
@@ -84,7 +88,10 @@ void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event,
 
 void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id) {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.load_chunks(m_world);
+   auto res = player.load_chunks(m_world);
+   if (!res.ok()) {
+      spdlog::error("error loading chunks: {}", res.msg());
+   }
 }
 
 }// namespace minecpp::service::engine

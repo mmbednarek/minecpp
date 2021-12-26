@@ -19,9 +19,9 @@ inline uuid read_uuid(mb::u64 lower, mb::u64 upper) {
 inline uuid read_uuid4(mb::i32 a, mb::i32 b, mb::i32 c, mb::i32 d) {
    uuid id;
    *reinterpret_cast<mb::i32 *>(id.data) = a;
-   *reinterpret_cast<mb::i32 *>(id.data + sizeof(mb::i32)) = a;
-   *reinterpret_cast<mb::i32 *>(id.data + 2 * sizeof(mb::i32)) = a;
-   *reinterpret_cast<mb::i32 *>(id.data + 3 * sizeof(mb::i32)) = a;
+   *reinterpret_cast<mb::i32 *>(id.data + sizeof(mb::i32)) = b;
+   *reinterpret_cast<mb::i32 *>(id.data + 2 * sizeof(mb::i32)) = c;
+   *reinterpret_cast<mb::i32 *>(id.data + 3 * sizeof(mb::i32)) = d;
    return id;
 }
 

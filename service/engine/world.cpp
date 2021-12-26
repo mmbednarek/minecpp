@@ -12,7 +12,7 @@ minecpp::game::Notifier &World::notifier() { return dispatcher; }
 mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::ChunkPosition> refs) {
    using proto::service::chunk_storage::v1::ReferenceStatus;
 
-   grpc::ClientContext ctx;
+   ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::AddReferencesRequest req;
    proto::service::chunk_storage::v1::AddReferencesResponse result;
 
@@ -36,7 +36,7 @@ mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::Ch
 }
 
 mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::ChunkPosition> refs) {
-   grpc::ClientContext ctx;
+   ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::RemoveReferencesRequest req;
    proto::service::chunk_storage::v1::EmptyResponse res;
 
@@ -56,7 +56,7 @@ mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::C
 }
 
 mb::result<int> World::height_at(int x, int z) {
-   grpc::ClientContext ctx;
+   ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::HeightAtRequest req;
    proto::service::chunk_storage::v1::HeightAtResponse res;
    req.set_x(x);
@@ -69,7 +69,7 @@ mb::result<int> World::height_at(int x, int z) {
 }
 
 mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::BlockState state) {
-   grpc::ClientContext ctx;
+   ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::SetBlockRequest req;
    req.set_x(pos.x);
    req.set_y(pos.y);

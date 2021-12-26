@@ -41,6 +41,8 @@ class EventHandler {
    template<typename T>
    void send_message_to_all_players(const T &msg) {
       for (auto &conn : m_server) {
+         if (conn.get() == nullptr)
+            continue;
          send(conn, msg);
       }
    }

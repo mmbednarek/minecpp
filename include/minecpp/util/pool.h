@@ -1,6 +1,6 @@
 #ifndef MINECPP_POOL_H
 #define MINECPP_POOL_H
-#include <boost/pool/pool.hpp>
+#include <boost/pool/object_pool.hpp>
 #include <mutex>
 
 namespace minecpp::util {

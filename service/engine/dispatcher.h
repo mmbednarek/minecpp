@@ -1,4 +1,5 @@
 #pragma once
+#include "api.h"
 #include "event_manager.h"
 #include <minecpp/chat/chat.h>
 #include <minecpp/game/entity/entity.h>
@@ -14,13 +15,11 @@ namespace minecpp::service::engine {
 
 using boost::uuids::uuid;
 
-class Stream;
-
 class Dispatcher : public minecpp::game::Notifier {
-   EventManager &m_events;
+   EventManager<BidiStream> &m_events;
 
  public:
-   explicit Dispatcher(EventManager &events);
+   explicit Dispatcher(EventManager<BidiStream> &events);
 
    void load_terrain(player::Id player_id, const game::ChunkPosition &central_chunk,
                      std::vector<minecpp::game::ChunkPosition> coords) override;

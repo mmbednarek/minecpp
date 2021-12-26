@@ -68,8 +68,8 @@ proto::player::v1::Player Player::to_proto(const game::entity::Entity &entity) c
    result.set_game_mode(game::write_mode_to_proto(m_game_mode));
    auto pos = entity.get_pos();
    result.mutable_position()->set_x(pos.x);
-   result.mutable_position()->set_x(pos.y);
-   result.mutable_position()->set_x(pos.z);
+   result.mutable_position()->set_y(pos.y);
+   result.mutable_position()->set_z(pos.z);
    result.mutable_rotation()->set_yaw(entity.get_yaw());
    result.mutable_rotation()->set_pitch(entity.get_pitch());
    return result;
