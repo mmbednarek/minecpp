@@ -9,7 +9,7 @@
 
 namespace minecpp::service::front {
 
-EventHandler::EventHandler(Server &server, engine::Stream &stream) : m_server(server), m_steam(stream) {}
+EventHandler::EventHandler(Server &server) : m_server(server) {}
 
 void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg, const std::vector<player::Id> &player_ids) {
    auto add_player = minecpp::network::message::AddPlayer{
@@ -235,7 +235,9 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                  });
 
 
-      m_steam.send(proto::event::serverbound::v1::LoadInitialChunks{}, player_id);
+      if(m_stream != nullptr) {
+         m_stream->send(proto::event::serverbound::v1::LoadInitialChunks{}, player_id);
+      }
    }
 }
 

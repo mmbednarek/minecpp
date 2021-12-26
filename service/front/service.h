@@ -29,7 +29,7 @@ constexpr boost::uuids::uuid g_player_uuid_namespace{
 
 class Service {
    boost::random::mt19937 rand;
-   engine::Stream &m_stream;
+   engine::Stream *m_stream;
 
    ChunkService m_chunk_service;
 
@@ -39,9 +39,12 @@ class Service {
    std::size_t cached_tags_size;
 
  public:
-   explicit Service(Config &conf, engine::Stream &engine_stream,
-                    ChunkService chunk_service);
+   explicit Service(Config &conf, ChunkService chunk_service);
    ~Service();
+
+   constexpr void set_stream(engine::Stream *stream) {
+      m_stream = stream;
+   }
 
    struct LoginResponse {
       bool accepted;

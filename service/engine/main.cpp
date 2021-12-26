@@ -9,6 +9,7 @@
 #include <grpcpp/server_builder.h>
 #include <iostream>
 #include <mb/core.h>
+#include <minecpp/grpc/server/bidi.h>
 #include <minecpp/proto/service/chunk_storage/v1/chunk_storage.grpc.pb.h>
 #include <spdlog/spdlog.h>
 #include <thread>

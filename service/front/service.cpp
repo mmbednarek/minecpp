@@ -18,8 +18,8 @@ namespace serverbound_v1 = proto::event::serverbound::v1;
 const char *internal_reason =
         R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
-Service::Service(Config &conf, engine::Stream &engine_stream, ChunkService chunk_service)
-    : m_stream(engine_stream), m_chunk_service(std::move(chunk_service)) {
+Service::Service(Config &conf, ChunkService chunk_service)
+    : m_chunk_service(std::move(chunk_service)) {
    std::ifstream recipe_st;
    recipe_st.open(conf.recipe_path);
    if (!recipe_st.is_open()) {
@@ -67,12 +67,12 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
    proto::event::serverbound::v1::AcceptPlayer accept_player;
    accept_player.set_challenge_id(0);
    accept_player.set_name(std::string(name));
-   m_stream.send(accept_player, id);
+   m_stream->send(accept_player, id);
 }
 
 void Service::on_player_disconnect(uuid engine_id, player::Id player_id) {
    proto::event::serverbound::v1::RemovePlayer remove_player{};
-   m_stream.send(remove_player, player_id);
+   m_stream->send(remove_player, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ClientSettings msg) {
@@ -84,7 +84,7 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    player_position.mutable_position()->set_x(msg.x);
    player_position.mutable_position()->set_y(msg.y);
    player_position.mutable_position()->set_z(msg.z);
-   m_stream.send(player_position, player_id);
+   m_stream->send(player_position, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerPositionRotation msg) {
@@ -92,43 +92,43 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    player_position.mutable_position()->set_x(msg.x);
    player_position.mutable_position()->set_y(msg.y);
    player_position.mutable_position()->set_z(msg.z);
-   m_stream.send(player_position, player_id);
+   m_stream->send(player_position, player_id);
 
    serverbound_v1::SetPlayerRotation player_rotation;
    player_rotation.mutable_rotation()->set_yaw(msg.yaw);
    player_rotation.mutable_rotation()->set_pitch(msg.pitch);
-   m_stream.send(player_rotation, player_id);
+   m_stream->send(player_rotation, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerRotation msg) {
    serverbound_v1::SetPlayerRotation player_rotation;
    player_rotation.mutable_rotation()->set_yaw(msg.yaw);
    player_rotation.mutable_rotation()->set_pitch(msg.pitch);
-   m_stream.send(player_rotation, player_id);
+   m_stream->send(player_rotation, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ChatMessage msg) {
    serverbound_v1::ChatMessage chat_message;
    chat_message.set_message(msg.message);
-   m_stream.send(chat_message, player_id);
+   m_stream->send(chat_message, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerDigging msg) {
    serverbound_v1::DestroyBlock destroy_block;
    *destroy_block.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
-   m_stream.send(destroy_block, player_id);
+   m_stream->send(destroy_block, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::KeepAliveClient msg) {
    serverbound_v1::UpdatePing update_ping;
    update_ping.set_ping(static_cast<int>(minecpp::util::now_milis() - msg.time));
-   m_stream.send(update_ping, player_id);
+   m_stream->send(update_ping, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::AnimateHandClient msg) {
    serverbound_v1::AnimateHand animate_hand;
    animate_hand.set_hand(static_cast<int>(msg.hand));
-   m_stream.send(animate_hand, player_id);
+   m_stream->send(animate_hand, player_id);
 }
 
 const char command_list[]{

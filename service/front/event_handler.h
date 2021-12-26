@@ -12,10 +12,14 @@ namespace clientbound_v1 = proto::event::clientbound::v1;
 
 class EventHandler {
    Server &m_server;
-   engine::Stream &m_steam;
+   engine::Stream *m_stream = nullptr;
 
  public:
-   explicit EventHandler(Server &server, engine::Stream &stream);
+   explicit EventHandler(Server &server);
+
+   constexpr void set_stream(engine::Stream *stream) {
+      m_stream = stream;
+   }
 
    void handle_add_player(const clientbound_v1::AddPlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos, const std::vector<player::Id> &player_ids);
