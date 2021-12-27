@@ -30,19 +30,19 @@ class Server {
 
    void drop_connection(ConnectionId id);
 
-   [[nodiscard]] constexpr ConnectionIter begin() {
+   [[nodiscard]] inline ConnectionIter begin() {
       return m_connections.begin();
    }
 
-   [[nodiscard]] constexpr ConnectionIter end() {
+   [[nodiscard]] inline ConnectionIter end() {
       return m_connections.end();
    }
 
-   [[nodiscard]] constexpr ConstConnectionIter cbegin() const {
+   [[nodiscard]] inline ConstConnectionIter cbegin() const {
       return m_connections.cbegin();
    }
 
-   [[nodiscard]] constexpr ConstConnectionIter cend() const {
+   [[nodiscard]] inline ConstConnectionIter cend() const {
       return m_connections.cend();
    }
 

@@ -10,7 +10,7 @@ auto main(int argc, char *argv[]) -> int {
       return 1;
    }
 
-   std::ifstream stream;
+   std::fstream stream;
    stream.open(argv[1]);
    if (!stream.is_open()) {
       std::cerr << "no such file or directory\n";

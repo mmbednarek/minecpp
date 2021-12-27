@@ -16,7 +16,7 @@ class Cache {
    std::vector<Endpoint> lookup(const std::string &service_name) const;
    void add(const std::string &service_name, const Endpoint& endpoint);
 
-   constexpr ResourceVersion resource_version() const {
+   inline ResourceVersion resource_version() const {
       return m_resource_version;
    }
 };

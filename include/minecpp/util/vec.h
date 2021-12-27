@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <cmath>
 
 namespace minecpp::util {
 
@@ -16,7 +17,9 @@ struct Vec2 {
 
    Vec2 operator+(Vec2 other) const;
    Vec2 operator-(Vec2 other) const;
-   Vec2 truncate() const;
+   [[nodiscard]] constexpr Vec2 truncate() const {
+      return {std::floor(x), std::floor(z)};
+   }
 
    double x{}, z{};
 };
@@ -40,7 +43,7 @@ struct Vec3 {
 
    double x{}, y{}, z{};
 
-   [[nodiscard]] static constexpr Vec3 from_nbt(const std::vector<double> &vec) {
+   [[nodiscard]] static inline Vec3 from_nbt(const std::vector<double> &vec) {
       if (vec.size() != 3)
          return Vec3();
       return Vec3(vec[0], vec[1], vec[2]);
