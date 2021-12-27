@@ -59,6 +59,17 @@ class EventHandler {
          send(conn, msg);
       }
    }
+
+   template<typename T>
+   void send_message_excluding(const T &msg, player::Id excluded) {
+      for (auto &conn : m_server) {
+         if (conn.get() == nullptr)
+            continue;
+         if (conn->uuid() == excluded)
+            continue;
+         send(conn, msg);
+      }
+   }
 };
 
 }// namespace minecpp::service::front

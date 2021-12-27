@@ -72,6 +72,7 @@ proto::player::v1::Player Player::to_proto(const game::entity::Entity &entity) c
    result.mutable_position()->set_z(pos.z);
    result.mutable_rotation()->set_yaw(entity.get_yaw());
    result.mutable_rotation()->set_pitch(entity.get_pitch());
+   *result.mutable_abilities() = m_abilities.to_proto();
    return result;
 }
 

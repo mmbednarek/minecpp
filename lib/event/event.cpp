@@ -17,7 +17,9 @@ std::vector<player::Id> read_recipients(const clientbound_v1::Event &event) {
    }
    case proto::event::clientbound::v1::Event::kAllPlayers:
       return std::vector<player::Id>(); // empty signifies all players.
-   default: break;
+   case proto::event::clientbound::v1::Event::kExcluding:
+      // TODO: Implement excluding
+      return std::vector<player::Id>(); // empty signifies all players.
    }
    return std::vector<player::Id>();
 }

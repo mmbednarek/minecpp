@@ -36,7 +36,7 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
                                     const chunk_storage_v1::AddReferencesRequest *request,
                                     chunk_storage_v1::AddReferencesResponse *response) {
    std::vector<minecpp::game::block::ChunkPos> coords(request->coords_size());
-   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
+   std::transform(request->coords().begin(), request->coords().end(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
       return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
    });
 
@@ -57,7 +57,7 @@ grpc::Status Service::RemoveReference(grpc::ServerContext *context,
                                       const chunk_storage_v1::RemoveReferencesRequest *request,
                                       chunk_storage_v1::EmptyResponse *response) {
    std::vector<minecpp::game::block::ChunkPos> coords(request->coords_size());
-   std::transform(request->coords().begin(), request->coords().begin(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
+   std::transform(request->coords().begin(), request->coords().end(), coords.begin(), [](auto &in_coord) -> minecpp::game::block::ChunkPos {
       return minecpp::game::block::ChunkPos(in_coord.x(), in_coord.z());
    });
    auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->player_id()));

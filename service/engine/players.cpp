@@ -38,6 +38,9 @@ mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(min
       data.pos[0] = pos.x;
       data.pos[1] = pos.y;
       data.pos[2] = pos.z;
+      data.abilities.mayfly = true;
+      data.abilities.flying = true;
+      data.abilities.fly_speed = 0.5f;
       return data;
    }
 

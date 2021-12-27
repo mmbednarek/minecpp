@@ -106,6 +106,7 @@ void Dispatcher::unload_chunk(player::Id player, const game::ChunkPosition &chun
 
 void Dispatcher::accept_player(const player::Player &player, const game::entity::Entity &entity) {
    clientbound_v1::AcceptPlayer accept_player;
+   accept_player.mutable_gameplay()->set_view_distance(32);
    *accept_player.mutable_player() = player.to_proto(entity);
    m_events.send_to(accept_player, player.id());
 }

@@ -53,6 +53,7 @@ void TickManager::load_chunks() {
             auto ticket = future_ticket.get();
             m_future_chunks.erase(at);
             at = m_future_chunks.begin();
+            spdlog::info("sending chunk {} {}", ticket.chunk.pos_x(), ticket.chunk.pos_z());
             if (ticket.loaded) {
                send(ticket.conn, minecpp::network::message::ChunkData{
                        .chunk = ticket.chunk,

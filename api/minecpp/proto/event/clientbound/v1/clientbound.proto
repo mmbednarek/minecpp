@@ -13,6 +13,7 @@ message Event {
     RecipientSinglePlayer single_player = 2;
     RecipientMultiplePlayers multiple_players = 3;
     RecipientAllPlayers all_players = 4;
+    RecipientExcluding excluding = 5;
   }
 }
 
@@ -25,6 +26,10 @@ message RecipientMultiplePlayers {
 }
 
 message RecipientAllPlayers {
+}
+
+message RecipientExcluding {
+  player.v1.PlayerId player_id = 1;
 }
 
 message AddPlayer {

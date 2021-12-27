@@ -22,16 +22,19 @@ void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg, const
 }
 
 void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &pos, const std::vector<player::Id> &player_ids) {
+   auto player_id = player::read_id_from_proto(pos.player_id());
+
    auto spawn_player = minecpp::network::message::SpawnPlayer{
            .entity_id = pos.entity_id(),
-           .id = player::read_id_from_proto(pos.player_id()),
+           .id = player_id,
            .x = pos.position().x(),
            .y = pos.position().y(),
            .z = pos.position().z(),
            .yaw = pos.rotation().yaw(),
            .pitch = pos.rotation().pitch(),
    };
-   send_message(spawn_player, player_ids);
+   // FIXME: temporary hack to not send a player himself
+   send_message_excluding(spawn_player, player_id);
 }
 
 void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos, const std::vector<player::Id> &player_ids) {
@@ -44,7 +47,9 @@ void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos, con
            .pitch = pos.rotation().pitch(),
            .on_ground = true,
    };
-   send_message(entity_move, player_ids);
+   // FIXME: temporary hack to not send a player himself
+   auto player_id = player::read_id_from_proto(pos.player_id());
+   send_message_excluding(entity_move, player_id);
 }
 
 void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos, const std::vector<player::Id> &player_ids) {
@@ -58,8 +63,10 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos, con
            .entity_id = static_cast<int>(pos.entity_id()),
            .yaw = pos.rotation().yaw(),
    };
-   send_message(entity_look, player_ids);
-   send_message(entity_head_look, player_ids);
+   // FIXME: temporary hack to not send a player himself
+   auto player_id = player::read_id_from_proto(pos.player_id());
+   send_message_excluding(entity_look, player_id);
+   send_message_excluding(entity_head_look, player_id);
 }
 
 void EventHandler::handle_chat(const clientbound_v1::Chat &pos, const std::vector<player::Id> &player_ids) {
@@ -110,6 +117,8 @@ void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg, c
          spdlog::error("connection {} is null", boost::uuids::to_string(player_id));
          return;
       }
+
+      spdlog::info("loading {} chunks, central position {} {}", msg.coords().size(), msg.central_chunk().x(), msg.central_chunk().z());
 
       send(conn, minecpp::network::message::UpdateChunkPosition{
                          .x = msg.central_chunk().x(),
