@@ -1,6 +1,6 @@
 #include <fmt/core.h>
 #include <fstream>
-#include <minecpp/game/pnbt/chunk.h>
+#include <minecpp/nbt/chunk/v1/chunk.nbt.h>
 
 int main(int argc, char **argv) {
    if (argc < 2) {
@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
       fmt::print(stderr, "could not open file {}", argv[1]);
       return 1;
    }
-   auto chunk = minecpp::game::NbtChunk::Chunk::deserialize(f);
+   auto chunk = minecpp::nbt::chunk::v1::Chunk::deserialize(f);
 
    fmt::print("chunk is at x: {}, z: {}", chunk.level.x_pos, chunk.level.z_pos);
    return 0;

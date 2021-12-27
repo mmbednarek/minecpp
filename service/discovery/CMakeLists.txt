@@ -1,0 +1,2 @@
+add_executable(minecpp_service_discovery main.cpp service.cpp cache.cpp cache.h)
+target_link_libraries(minecpp_service_discovery minecpp_api_proto minecpp_service_discovery_api libmb spdlog)

@@ -7,39 +7,44 @@
 #include <grpcpp/channel.h>
 #include <grpcpp/client_context.h>
 #include <minecpp/network/message/serverbound.h>
-#include <minepb/chunk.pb.h>
-#include <minepb/chunk_storage.grpc.pb.h>
-#include <minepb/engine.grpc.pb.h>
-#include <minepb/engine.pb.h>
+#include <minecpp/player/id.h>
+#include <minecpp/proto/chunk/v1/chunk.pb.h>
+#include <minecpp/proto/service/chunk_storage/v1/chunk_storage.grpc.pb.h>
+#include <minecpp/proto/service/engine/v1/engine.grpc.pb.h>
+#include <minecpp/service/engine/api.h>
 
-namespace Front {
+namespace minecpp::service::front {
 
-typedef std::shared_ptr<minecpp::chunk_storage::ChunkStorage::Stub>
-    ChunkService;
+typedef std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub>
+        ChunkService;
 
 class Server;
 using boost::uuids::uuid;
 
+
+constexpr boost::uuids::uuid g_player_uuid_namespace{
+        .data{0xe3, 0x35, 0xd4, 0xb4, 0x8d, 0x91, 0x4c, 0x5b, 0x8a, 0x7c, 0x23,
+              0x08, 0xf3, 0x0e, 0x29, 0x52},
+};
+
 class Service {
    boost::random::mt19937 rand;
-   Engine::Client::Provider &engine_provider;
+   engine::Stream *m_stream;
 
-   ChunkService chunk_service;
+   ChunkService m_chunk_service;
 
    char *cached_recipes = nullptr;
    std::size_t cached_recipes_size;
    char *cached_tags = nullptr;
    std::size_t cached_tags_size;
 
-   uuid player_uuid_namespace{
-       .data{0xe3, 0x35, 0xd4, 0xb4, 0x8d, 0x91, 0x4c, 0x5b, 0x8a, 0x7c, 0x23,
-             0x08, 0xf3, 0x0e, 0x29, 0x52},
-   };
-
  public:
-   explicit Service(Config &conf, Engine::Client::Provider &engine_provider,
-                    ChunkService chunk_service);
+   explicit Service(Config &conf, ChunkService chunk_service);
    ~Service();
+
+   constexpr void set_stream(engine::Stream *stream) {
+      m_stream = stream;
+   }
 
    struct LoginResponse {
       bool accepted;
@@ -52,24 +57,24 @@ class Service {
    void init_player(const std::shared_ptr<Connection> &conn, uuid id,
                     std::string_view name);
 
-   void on_player_disconnect(uuid engine_id, uuid player_id);
+   void on_player_disconnect(uuid engine_id, player::Id player_id);
 
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::ClientSettings msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::PlayerPosition msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::PlayerPositionRotation msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::PlayerRotation msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::ChatMessage msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::PlayerDigging msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::KeepAliveClient msg);
-   void on_message(uuid engine_id, uuid player_id,
+   void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::AnimateHandClient msg);
 };
 
-} // namespace Front
+}// namespace minecpp::service::front

@@ -1,11 +1,14 @@
 #pragma once
 #include "chunks.h"
-#include <minepb/chunk_storage.grpc.pb.h>
+#include <minecpp/proto/service/chunk_storage/v1/chunk_storage.grpc.pb.h>
 #include <string_view>
 
-namespace ChunkStorage {
+namespace minecpp::service::chunk_storage {
 
-class Service final : public minecpp::chunk_storage::ChunkStorage::Service {
+namespace chunk_storage_v1 = minecpp::proto::service::chunk_storage::v1;
+namespace chunk_v1 = minecpp::proto::chunk::v1;
+
+class Service final : public chunk_storage_v1::ChunkStorage::Service {
    ChunkManager chunks;
 
  public:
@@ -13,26 +16,26 @@ class Service final : public minecpp::chunk_storage::ChunkStorage::Service {
    ~Service() override;
    grpc::Status
    LoadChunk(grpc::ServerContext *context,
-             const minecpp::chunk_storage::LoadChunkRequest *request,
-             minecpp::chunk::NetChunk *response) override;
+             const chunk_storage_v1::LoadChunkRequest *request,
+             chunk_v1::Chunk *response) override;
 
    grpc::Status
    SetBlock(grpc::ServerContext *context,
-            const minecpp::chunk_storage::SetBlockRequest *request,
-            minecpp::chunk_storage::EmptyResponse *response) override;
+            const chunk_storage_v1::SetBlockRequest *request,
+            chunk_storage_v1::EmptyResponse *response) override;
 
    grpc::Status AddReferences(
        grpc::ServerContext *context,
-       const minecpp::chunk_storage::AddReferencesRequest *request,
-       minecpp::chunk_storage::AddReferencesResponse *response) override;
+       const chunk_storage_v1::AddReferencesRequest *request,
+       chunk_storage_v1::AddReferencesResponse *response) override;
 
    grpc::Status RemoveReference(
        grpc::ServerContext *context,
-       const minecpp::chunk_storage::RemoveReferencesRequest *request,
-       minecpp::chunk_storage::EmptyResponse *response) override;
+       const chunk_storage_v1::RemoveReferencesRequest *request,
+       chunk_storage_v1::EmptyResponse *response) override;
 
-   grpc::Status HeightAt(grpc::ServerContext *context, const minecpp::chunk_storage::HeightAtRequest *request,
-                         minecpp::chunk_storage::HeightAtResponse *response) override;
+   grpc::Status HeightAt(grpc::ServerContext *context, const chunk_storage_v1::HeightAtRequest *request,
+                         chunk_storage_v1::HeightAtResponse *response) override;
 };
 
-} // namespace ChunkStorage
+} // namespace minecpp::service::chunk_storage

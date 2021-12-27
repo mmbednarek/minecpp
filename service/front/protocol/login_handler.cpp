@@ -2,7 +2,7 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <spdlog/spdlog.h>
 
-namespace Front::Protocol {
+namespace minecpp::service::front::Protocol {
 
 LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler)
     : service(service), play_handler(play_handler) {}
@@ -64,4 +64,4 @@ void LoginHandler::reject(const std::shared_ptr<Connection> &conn,
 
 void LoginHandler::handle_disconnect(Connection &conn) {}
 
-} // namespace Front::Protocol
+} // namespace minecpp::service::front::Protocol

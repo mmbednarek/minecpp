@@ -1,19 +1,19 @@
 #include "entities.h"
 
-namespace Engine {
+namespace minecpp::service::engine {
 
 EntityId EntityManager::spawn(Entity e) {
-   EntityId id = entities.size();
+   EntityId id = m_entities.size();
    e.set_id(id);
-   entities.emplace_back(std::move(e));
+   m_entities.emplace_back(std::move(e));
    return id;
 }
 
 mb::result<Entity &> EntityManager::get_entity(EntityId id) {
-   if (id >= entities.size()) {
+   if (id >= m_entities.size()) {
       return mb::error("invalid entity id");
    }
-   return entities.at(id);
+   return m_entities.at(id);
 }
 
-} // namespace Engine
+} // namespace minecpp::service::engine

@@ -4,17 +4,14 @@ project(minecpp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED OFF)
 
+set(gRPC_PROTOBUF_PROVIDER "package")
+
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(Protobuf REQUIRED)
+find_package(gRPC REQUIRED)
+find_package(absl REQUIRED)
 
 include(FetchContent)
-
-FetchContent_Declare(
-        gRPC
-        GIT_REPOSITORY https://github.com/grpc/grpc
-        GIT_TAG v1.34.1
-)
-FetchContent_MakeAvailable(gRPC)
 
 FetchContent_Declare(
         yaml
@@ -47,7 +44,7 @@ FetchContent_MakeAvailable(fmt)
 FetchContent_Declare(
         libmb
         GIT_REPOSITORY https://github.com/mmbednarek/mb
-        GIT_TAG libmb-0.0.16
+        GIT_TAG libmb-0.0.18
 )
 FetchContent_MakeAvailable(libmb)
 
@@ -62,21 +59,26 @@ include_directories(./include)
 include_directories(./service/protos/include)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter -O3")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter")
 
 # Libraries
 
+add_subdirectory(lib/api/minecpp/proto)
+add_subdirectory(lib/api/minecpp/nbt)
 add_subdirectory(lib/chat)
 add_subdirectory(lib/error)
 add_subdirectory(lib/format)
 add_subdirectory(lib/squeezed)
 add_subdirectory(lib/random)
 add_subdirectory(lib/util)
+add_subdirectory(lib/player)
 add_subdirectory(lib/nbt)
 add_subdirectory(lib/region)
 add_subdirectory(lib/game)
 add_subdirectory(lib/network)
-add_subdirectory(lib/message/nbt)
+add_subdirectory(lib/event)
+add_subdirectory(lib/service/discovery)
+add_subdirectory(lib/service/engine)
 
 # Tests
 
@@ -91,6 +93,7 @@ add_subdirectory(tool/recipes)
 add_subdirectory(tool/statelist)
 add_subdirectory(tool/nbtprotogen)
 add_subdirectory(tool/nbtscheme)
+add_subdirectory(tool/discocli)
 
 # Services
 
@@ -98,3 +101,4 @@ add_subdirectory(service/protos/include/minepb)
 add_subdirectory(service/chunk_storage)
 add_subdirectory(service/engine)
 add_subdirectory(service/front)
+add_subdirectory(service/discovery)

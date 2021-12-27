@@ -5,42 +5,63 @@
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <functional>
+#include <map>
+#include <minecpp/player/id.h>
 #include <string>
 #include <vector>
-#include <map>
 
-namespace Front {
+namespace minecpp::service::front {
 
 using boost::asio::ip::tcp;
 
 class Server {
-public:
-	explicit Server(boost::asio::io_context &ctx, short port,
-					Protocol::Handler *play, Protocol::Handler *status,
-					Protocol::Handler *login);
+   using ConnectionPtr = std::shared_ptr<Connection>;
+   using ConnectionIter = std::vector<ConnectionPtr>::iterator;
+   using ConstConnectionIter = std::vector<ConnectionPtr>::const_iterator;
 
-	void accept_conn();
+ public:
+   explicit Server(boost::asio::io_context &ctx, short port,
+                   Protocol::Handler *play, Protocol::Handler *status,
+                   Protocol::Handler *login);
 
-	void handshake(const std::shared_ptr<Connection> &conn);
+   void accept_conn();
 
-	void drop_connection(ConnectionId id);
+   void handshake(const std::shared_ptr<Connection> &conn);
 
-	void for_each_connection(
-			std::function<void(const std::shared_ptr<Connection> &)>);
+   void drop_connection(ConnectionId id);
 
-	bool has_connection(boost::uuids::uuid player_id);
+   [[nodiscard]] constexpr ConnectionIter begin() {
+      return m_connections.begin();
+   }
 
-	std::shared_ptr<Connection> connection_by_id(boost::uuids::uuid player_id);
+   [[nodiscard]] constexpr ConnectionIter end() {
+      return m_connections.end();
+   }
 
-	Protocol::Handler &get_handler(Protocol::State state);
+   [[nodiscard]] constexpr ConstConnectionIter cbegin() const {
+      return m_connections.cbegin();
+   }
 
-	void index_connection(boost::uuids::uuid index, std::size_t id);
+   [[nodiscard]] constexpr ConstConnectionIter cend() const {
+      return m_connections.cend();
+   }
 
-private:
-	std::map<boost::uuids::uuid, std::size_t> conn_ids;
-	std::vector<std::shared_ptr<Connection>> m_connections;
-	tcp::acceptor acceptor;
-	Protocol::Handler *m_handlers[3];
+   void for_each_connection(
+           std::function<void(const std::shared_ptr<Connection> &)>);
+
+   bool has_connection(player::Id player_id);
+
+   std::shared_ptr<Connection> connection_by_id(player::Id player_id);
+
+   Protocol::Handler &get_handler(Protocol::State state);
+
+   void index_connection(boost::uuids::uuid index, std::size_t id);
+
+ private:
+   std::map<boost::uuids::uuid, std::size_t> conn_ids;
+   std::vector<ConnectionPtr> m_connections;
+   tcp::acceptor acceptor;
+   Protocol::Handler *m_handlers[3];
 };
 
-} // namespace Front
+}// namespace minecpp::service::front

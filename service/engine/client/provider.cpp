@@ -3,7 +3,7 @@
 #include <grpcpp/create_channel.h>
 #include <minecpp/util/uuid.h>
 
-namespace Engine::Client {
+namespace minecpp::service::engine {
 
 mb::result<Provider> Provider::create(const Config &cfg) {
    if (cfg.addresses.empty()) {
@@ -66,4 +66,4 @@ const std::vector<Provider::Service> &Provider::get_services() const {
    return m_services;
 }
 
-}// namespace Engine::Client
+}// namespace minecpp::service::engine

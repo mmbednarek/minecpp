@@ -1,5 +1,5 @@
 #pragma once
-#include "../../../cmake-build-debug/_deps/grpc-src/include/grpcpp/impl/codegen/status.h"
+#include <grpcpp/impl/codegen/status.h>
 #include <memory>
 #include <minecpp/util/format.h>
 

@@ -1,0 +1,40 @@
+syntax = "proto3";
+package minecpp.proto.player.v1;
+
+import "minecpp/proto/common/v1/common.proto";
+import "minecpp/proto/entity/v1/entity.proto";
+import "minecpp/proto/player/v1/id.proto";
+
+message Status {
+  PlayerId id = 1;
+  string name = 2;
+  int32 ping = 3;
+  common.v1.GameMode game_mode = 4;
+}
+
+message Player {
+  string name = 1;
+  uint32 entity_id = 2;
+  entity.v1.Position position = 3;
+  entity.v1.Rotation rotation = 4;
+  Abilities abilities = 5;
+  RecipeBook recipe_book = 6;
+  common.v1.GameMode game_mode = 7;
+}
+
+message Abilities {
+  float walk_speed = 1;
+  float fly_speed = 2;
+  bool flying = 3;
+  bool instant_build = 4;
+  bool invulnerable = 5;
+  bool may_build = 6;
+  bool may_fly = 7;
+}
+
+message RecipeBook {
+  bool gui_open = 1;
+  bool filtering_craftable = 2;
+  bool furnace_gui_open = 3;
+  bool furnace_filtering_craftable = 4;
+}

@@ -2,7 +2,7 @@
 #include "handler.h"
 #include <minecpp/network/message/file.h>
 
-namespace Front::Protocol {
+namespace minecpp::service::front::Protocol {
 
 class StatusHandler : public Handler {
  public:
@@ -17,4 +17,4 @@ class StatusHandler : public Handler {
                     minecpp::network::message::Reader &r);
 };
 
-} // namespace Front::Protocol
+} // namespace minecpp::service::front::Protocol

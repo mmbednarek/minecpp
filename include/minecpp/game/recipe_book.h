@@ -1,6 +1,6 @@
 #pragma once
 #include <minecpp/nbt/reader.h>
-#include <minepb/player.pb.h>
+#include <minecpp/proto/player/v1/player.pb.h>
 
 namespace minecpp::game {
 
@@ -13,7 +13,7 @@ struct RecipeBook {
    RecipeBook() = default;
    explicit RecipeBook(nbt::Reader &r);
 
-   void as_proto(minecpp::player::RecipeBook *book) const;
+   void as_proto(proto::player::v1::RecipeBook *book) const;
 };
 
 }

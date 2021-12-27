@@ -1,4 +1,6 @@
 #include <minecpp/game/player.h>
+#include <minecpp/player/player.h>
+
 
 namespace minecpp::game {
 
@@ -30,7 +32,7 @@ mb::result<mb::empty> Player::load_chunks(World &w) {
    return tracking->load_chunks(w, *this);
 }
 
-void Player::Abilities::as_proto(minecpp::player::Abilities *abilities) const {
+void Player::Abilities::as_proto(proto::player::v1::Abilities *abilities) const {
    abilities->set_fly_speed(fly_speed);
    abilities->set_walk_speed(walk_speed);
    abilities->set_flying(flying);
@@ -40,7 +42,7 @@ void Player::Abilities::as_proto(minecpp::player::Abilities *abilities) const {
    abilities->set_invulnerable(invulnerable);
 }
 
-void Player::Abilities::from_proto(const minecpp::player::Abilities abilities) {
+void Player::Abilities::from_proto(const proto::player::v1::Abilities &abilities) {
    fly_speed = abilities.fly_speed();
    walk_speed = abilities.walk_speed();
    flying = abilities.flying();
@@ -54,4 +56,5 @@ uint32_t Player::Abilities::flags() {
    return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
 }
 
-}// namespace minecpp::game
+}
+// namespace minecpp::game

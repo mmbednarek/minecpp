@@ -6,7 +6,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 #include <mb/result.h>
-#include <minepb/player.pb.h>
+#include <minecpp/proto/player/v1/player.pb.h>
 #include <string>
 
 namespace minecpp::game {
@@ -28,8 +28,8 @@ class Player {
       bool may_fly = true;
       float walk_speed = 0.1f;
 
-      void from_proto(minecpp::player::Abilities abilities);
-      void as_proto(minecpp::player::Abilities *abilities) const;
+      void from_proto(const proto::player::v1::Abilities &abilities);
+      void as_proto(proto::player::v1::Abilities *abilities) const;
       uint32_t flags();
    };
 

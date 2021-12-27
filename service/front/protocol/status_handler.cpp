@@ -2,7 +2,7 @@
 #include "../connection.h"
 #include <spdlog/spdlog.h>
 
-namespace Front::Protocol {
+namespace minecpp::service::front::Protocol {
 
 StatusHandler::StatusHandler() {}
 
@@ -550,4 +550,4 @@ void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn,
 
 void StatusHandler::handle_disconnect(Connection &conn) {}
 
-} // namespace Front::Protocol
+} // namespace minecpp::service::front::Protocol

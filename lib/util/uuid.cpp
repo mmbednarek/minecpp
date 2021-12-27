@@ -14,10 +14,10 @@ void decode_uuid(boost::uuids::uuid &dst, const char *src) {
 }
 
 mb::result<uuid> make_uuid(const std::string &id) {
+   uuid result{};
    if (id.size() != 16)
-      return mb::error("invalid uuid size");
+      return result;
 
-   uuid result;
    decode_uuid(result, id.data());
    return result;
 }

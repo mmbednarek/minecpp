@@ -2,12 +2,11 @@
 #include <grpcpp/client_context.h>
 #include <minecpp/network/message/clientbound.h>
 #include <minecpp/util/time.h>
-#include <minepb/chunk_storage.pb.h>
 #include <spdlog/spdlog.h>
 #include <thread>
 #include <utility>
 
-namespace Front {
+namespace minecpp::service::front {
 
 TickManager::TickManager(Server &server, const ChunkService &chunks) : server(server), chunk_service(chunks) {}
 
@@ -54,6 +53,7 @@ void TickManager::load_chunks() {
             auto ticket = future_ticket.get();
             m_future_chunks.erase(at);
             at = m_future_chunks.begin();
+            spdlog::info("sending chunk {} {}", ticket.chunk.pos_x(), ticket.chunk.pos_z());
             if (ticket.loaded) {
                send(ticket.conn, minecpp::network::message::ChunkData{
                        .chunk = ticket.chunk,
@@ -79,7 +79,7 @@ void TickManager::load_chunks() {
       m_future_chunks.emplace_back(std::async(std::launch::async, [](std::shared_ptr<Connection> conn, ChunkService chunk_service, int x, int z) {
          grpc::ClientContext ctx;
          ChunkLoadTicket ticket{ .conn = std::move(conn) };
-         minecpp::chunk_storage::LoadChunkRequest load_chunk_request;
+         minecpp::proto::service::chunk_storage::v1::LoadChunkRequest load_chunk_request;
          load_chunk_request.set_x(x);
          load_chunk_request.set_z(z);
 
@@ -95,4 +95,4 @@ void TickManager::load_chunks() {
    });
 }
 
-}// namespace Front
+}// namespace minecpp::service::front

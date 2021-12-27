@@ -1,0 +1,30 @@
+syntax = "proto3";
+package minecpp.proto.service.discovery.v1;
+
+service DiscoveryService {
+  rpc Resolve(DiscoveryRequest) returns (DiscoveryResponse);
+  rpc RegisterService(RegisterRequest) returns (EmptyResult);
+}
+
+message DiscoveryRequest {
+  uint64 resource_version = 1;
+  string service_name = 2;
+}
+
+message DiscoveryResponse {
+  uint64 resource_version = 1;
+  repeated Endpoint endpoints = 2;
+}
+
+message Endpoint {
+  string address = 1;
+  uint32 port = 2;
+}
+
+message RegisterRequest {
+  string service_name = 1;
+  Endpoint endpoint = 2;
+}
+
+message EmptyResult {
+}

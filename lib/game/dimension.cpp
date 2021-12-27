@@ -2,16 +2,18 @@
 
 namespace minecpp::game {
 
-minecpp::game::DimensionType dimension_to_proto(Dimension d) {
+proto::common::v1::DimensionType dimension_to_proto(Dimension d) {
+   using proto::common::v1::DimensionType;
+
    switch (d) {
    case Dimension::Overworld:
-      return minecpp::game::DimensionType::Overworld;
+      return DimensionType::Overworld;
    case Dimension::Nether:
-      return minecpp::game::DimensionType::Nether;
+      return DimensionType::Nether;
    case Dimension::End:
-      return minecpp::game::DimensionType::End;
+      return DimensionType::End;
    }
-   return minecpp::game::DimensionType::Overworld;
+   return DimensionType::Overworld;
 }
 
 void DimensionProperties::to_nbt(nbt::Writer &w) const {

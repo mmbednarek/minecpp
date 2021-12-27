@@ -1,0 +1,28 @@
+syntax = "proto3";
+package minecpp.proto.entity.v1;
+
+import "minecpp/proto/player/v1/id.proto";
+
+message Position {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Rotation {
+  float yaw = 1;
+  float pitch = 2;
+}
+
+message Movement {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
+
+message Entity {
+  player.v1.PlayerId id = 1;
+  uint32 entity_id = 2;
+  Position position = 3;
+  Rotation rotation = 4;
+}

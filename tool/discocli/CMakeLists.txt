@@ -1,0 +1,2 @@
+add_executable(minecpp_tool_discocli main.cpp)
+target_link_libraries(minecpp_tool_discocli LINK_PUBLIC minecpp_service_discovery_api fmt)

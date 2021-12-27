@@ -7,7 +7,7 @@ auto main() -> int {
    auto region_path = mb::getenv("REGION_PATH").unwrap("world/region");
    auto listen = mb::getenv("LISTEN").unwrap("0.0.0.0:7600");
 
-   ChunkStorage::Service service(region_path);
+   minecpp::service::chunk_storage::Service service(region_path);
 
    grpc::ServerBuilder builder;
    builder.AddListeningPort(listen, grpc::InsecureServerCredentials());
