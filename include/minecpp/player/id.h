@@ -7,7 +7,7 @@ namespace minecpp::player {
 
 using Id = minecpp::util::uuid;
 
-constexpr Id read_id_from_proto(const proto::player::v1::PlayerId &id) {
+inline Id read_id_from_proto(const proto::player::v1::PlayerId &id) {
    return util::read_uuid(id.lower(), id.upper());
 }
 
@@ -21,9 +21,9 @@ inline proto::player::v1::PlayerId write_id_to_proto(Id player_id) {
    return result;
 }
 
-constexpr Id read_id_from_nbt(const std::vector<int> &id) {
+inline Id read_id_from_nbt(const std::vector<int> &id) {
    if (id.size() != 4)
-      return Id();
+      return {};
    return util::read_uuid4(id[0], id[1], id[2], id[3]);
 }
 

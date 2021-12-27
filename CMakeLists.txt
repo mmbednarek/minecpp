@@ -97,7 +97,6 @@ add_subdirectory(tool/discocli)
 
 # Services
 
-add_subdirectory(service/protos/include/minepb)
 add_subdirectory(service/chunk_storage)
 add_subdirectory(service/engine)
 add_subdirectory(service/front)

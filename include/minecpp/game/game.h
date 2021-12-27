@@ -40,7 +40,7 @@ struct BlockPosition {
              ((static_cast<mb::u64>(z) & g_block_position_mask_z) << g_block_position_bit_offset_z);
    }
 
-   static constexpr BlockPosition from_proto(const proto::common::v1::BlockPosition &position) {
+   static inline BlockPosition from_proto(const proto::common::v1::BlockPosition &position) {
       return BlockPosition(position.x(), position.y(), position.z());
    }
 
@@ -92,7 +92,7 @@ struct ChunkPosition {
       return block_x >= left && block_x < right && block_z >= bottom && block_z < top;
    }
 
-   static constexpr ChunkPosition from_position(const util::Vec3 &v) {
+   static inline ChunkPosition from_position(const util::Vec3 &v) {
       return ChunkPosition((v.flat() / util::Vec2(g_chunk_width, g_chunk_depth)).truncate());
    }
 

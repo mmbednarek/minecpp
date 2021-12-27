@@ -8,7 +8,7 @@ namespace minecpp::entity {
 
 using Id = mb::u32;
 
-constexpr util::Vec3 read_entity_position(const proto::entity::v1::Position &pos) {
+inline util::Vec3 read_entity_position(const proto::entity::v1::Position &pos) {
    return util::Vec3(pos.x(), pos.y(), pos.z());
 }
 

@@ -9,8 +9,6 @@ Vec2 Vec2::operator/(double value) const { return Vec2(x / value, z / value); }
 
 Vec2 Vec2::operator+(Vec2 other) const { return Vec2(x + other.x, z + other.z); }
 
-Vec2 Vec2::truncate() const { return Vec2(std::floor(x), std::floor(z)); }
-
 Vec2 Vec2::operator-(Vec2 other) const {
    return Vec2(x - other.x, z - other.z);
 }
