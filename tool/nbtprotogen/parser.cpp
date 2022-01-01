@@ -38,6 +38,13 @@ mb::result<std::vector<Ast::Node>> Parser::parse() {
          }
          out.emplace_back(res.unwrap());
       } break;
+      case TokenType::Import: {
+         auto res = parse_import(Ast::Location(tkn));
+         if (!res.ok()) {
+            return res.err();
+         }
+         out.emplace_back(res.unwrap());
+      } break;
       default:
          return mb::error(fmt::format("[{}:{}] unexpected token \"{}\"", tkn.line, tkn.col, tkn.value));
       }
@@ -149,6 +156,15 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc) {
       }
    }
 
+   tkn = reader.next();
+   while (tkn.tt == TokenType::Dot) {
+      out.package.emplace_back(out.type);
+      tkn = MB_TRY(reader.expect(TokenType::Identifier));
+      out.type = tkn.value;
+      tkn = reader.next();
+   }
+   reader.back();
+
    tkn = MB_TRY(reader.expect(TokenType::Identifier));
    out.name = tkn.value;
 
@@ -185,6 +201,18 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc) {
       return res.err();
    }
    return out;
+}
+
+mb::result<Ast::Import> Parser::parse_import(Ast::Location loc) {
+   using Lex::TokenType;
+   Ast::Import result;
+   result.loc = loc;
+
+   auto res = MB_TRY(reader.expect(TokenType::String));
+   result.path = res.value.substr(1, res.value.size() - 2);
+
+   MB_TRY(reader.expect(TokenType::SemiCol));
+   return result;
 }
 
 }// namespace Syntax

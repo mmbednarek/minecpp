@@ -6,6 +6,7 @@
 namespace minecpp::tool::nbt_idl {
 
 class Generator {
+   std::string m_header_name;
    mb::codegen::component m_component;
  public:
    explicit Generator(Semantics::Structure &structure, const std::string &module_name, const std::string &header_path);

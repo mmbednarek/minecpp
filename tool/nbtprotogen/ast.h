@@ -43,6 +43,7 @@ enum class TypeName {
 struct Attribute {
    int repeated = 0;
    std::string type;
+   std::vector<std::string> package;
    std::string name;  // C++ attribute name
    std::string label; // NBT label
    std::string subtype; // Subtype for map
@@ -56,9 +57,15 @@ struct Message {
    Location loc;
 };
 
+struct Import {
+   std::string path;
+   Location loc;
+};
+
 using Node = std::variant<
         SyntaxInfo,
         PackageInfo,
-        Message>;
+        Message,
+        Import>;
 
 }// namespace Syntax::Ast

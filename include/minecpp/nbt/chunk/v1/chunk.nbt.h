@@ -1,5 +1,5 @@
-#ifndef MINECPP_NBT_CHUNK_V_CHUNK_H
-#define MINECPP_NBT_CHUNK_V_CHUNK_H
+#ifndef MINECPP_NBT_CHUNK_V1_CHUNK_H
+#define MINECPP_NBT_CHUNK_V1_CHUNK_H
 #include <iostream>
 #include <map>
 #include <mb/int.h>
@@ -11,15 +11,15 @@
 
 namespace minecpp::nbt::chunk::v1 {
 
-#ifndef NBT_IDL_OFFSET_CLASS
-#define NBT_IDL_OFFSET_CLASS
+#ifndef MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
+#define MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
 class __nbt_idl_offset {
  public:
    mb::size offset{};
    mb::size size{};
    int id{};
 };
-#endif//NBT_IDL_OFFSET_CLASS
+#endif//MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
 
 class ArmorItem {
    static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
@@ -451,4 +451,4 @@ class Chunk {
 };
 
 }
-#endif//MINECPP_NBT_CHUNK_V_CHUNK_H
+#endif//MINECPP_NBT_CHUNK_V1_CHUNK_H

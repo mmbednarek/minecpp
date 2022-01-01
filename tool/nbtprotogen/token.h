@@ -20,7 +20,8 @@ enum class TokenType {
    LeftAngle,
    RightAngle,
    Dot,
-   Comma
+   Comma,
+   Import
 };
 
 struct Token {

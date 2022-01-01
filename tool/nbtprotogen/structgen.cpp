@@ -2,6 +2,7 @@
 #include <mb/codegen/class.h>
 #include <mb/codegen/lambda.h>
 #include <sstream>
+#include <fmt/format.h>
 
 namespace minecpp::tool::nbt_idl {
 
@@ -11,7 +12,8 @@ constexpr auto g_get_offset_id = "__xx_get_id";
 constexpr auto g_put_method = "__xx_put";
 constexpr auto g_offset_class_constant = "NBT_IDL_OFFSET_CLASS";
 
-Generator::Generator(Semantics::Structure &structure, const std::string &module_name, const std::string &header_path) : m_component(structure.package, make_header_constant(structure.package, module_name)) {
+Generator::Generator(Semantics::Structure &structure, const std::string &module_name, const std::string &header_path) : m_header_name(make_header_constant(structure.package, module_name)),
+                                                                                                                        m_component(structure.package, m_header_name) {
    using namespace mb::codegen;
    m_component.header_include("iostream");
    m_component.header_include("map");
@@ -27,7 +29,11 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       m_component.source_include(fmt::format("{}/{}.nbt.h", header_path, module_name));
    }
 
-   class_spec offset_class(g_offset_class_name, g_offset_class_constant);
+   for (const auto &path : structure.imports) {
+       m_component.header_include(path + ".h");
+   }
+
+   class_spec offset_class(g_offset_class_name, fmt::format("{}_OFFSET_CLASS", m_header_name));
    offset_class.add_public("mb::size", "offset");
    offset_class.add_public("mb::size", "size");
    offset_class.add_public("int", "id");
@@ -144,7 +150,7 @@ std::string make_header_constant(const std::string &package_name, const std::str
 
       if ((c >= 'a' && c <= 'z')) {
          result << static_cast<char>(toupper(c));
-      } else if ((c >= 'A' && c <= 'Z')) {
+      } else if ((c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
          result << c;
       } else if (c == ':') {
          sep = true;

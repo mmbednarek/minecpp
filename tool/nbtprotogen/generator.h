@@ -29,11 +29,12 @@ enum class TypeVariant {
 struct Type {
    TypeVariant variant = TypeVariant::Struct;
    int m_repeated = 0;
+   std::vector<std::string> ns;
    std::string name;
    std::unique_ptr<Type> subtype;// subtype for map
 
    Type() = default;
-   Type(const std::string &name, int repeated, const std::string &subtype);
+   Type(const std::vector<std::string> &ns, const std::string &name, int repeated, const std::string &subtype);
    Type(TypeVariant variant, int repeated);
    Type(const Type &type);
    Type &operator=(const Type &type);
@@ -68,6 +69,7 @@ struct Structure {
    std::string version;
    std::string package;
    std::vector<Message> messages;
+   std::vector<std::string> imports;
 
    explicit Structure(std::vector<Syntax::Ast::Node> nodes);
 };

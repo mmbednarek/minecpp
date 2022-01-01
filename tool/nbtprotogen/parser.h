@@ -17,6 +17,7 @@ class Parser {
    mb::result<Ast::PackageInfo> parse_package_info(Ast::Location loc);
    mb::result<Ast::Message> parse_message(Ast::Location loc);
    mb::result<Ast::Attribute> parse_attribute(Ast::Location loc);
+   mb::result<Ast::Import> parse_import(Ast::Location loc);
 
 };
 

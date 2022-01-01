@@ -101,6 +101,16 @@ number  {num1}|{num2}
             col_num += YYLeng();
          }
 
+"import" {
+            lex_output.emplace_back(Lex::Token{
+                    .value{YYText()},
+                    .tt = Lex::TokenType::Import,
+                    .line = line_num,
+                    .col = col_num,
+            });
+            col_num += YYLeng();
+         }
+
 "=" {
             lex_output.emplace_back(Lex::Token{
                     .value{YYText()},

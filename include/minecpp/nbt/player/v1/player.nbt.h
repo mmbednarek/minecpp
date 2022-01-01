@@ -1,5 +1,5 @@
-#ifndef MINECPP_NBT_PLAYER_V_PLAYER_H
-#define MINECPP_NBT_PLAYER_V_PLAYER_H
+#ifndef MINECPP_NBT_PLAYER_V1_PLAYER_H
+#define MINECPP_NBT_PLAYER_V1_PLAYER_H
 #include <iostream>
 #include <map>
 #include <mb/int.h>
@@ -11,15 +11,15 @@
 
 namespace minecpp::nbt::player::v1 {
 
-#ifndef NBT_IDL_OFFSET_CLASS
-#define NBT_IDL_OFFSET_CLASS
+#ifndef MINECPP_NBT_PLAYER_V1_PLAYER_H_OFFSET_CLASS
+#define MINECPP_NBT_PLAYER_V1_PLAYER_H_OFFSET_CLASS
 class __nbt_idl_offset {
  public:
    mb::size offset{};
    mb::size size{};
    int id{};
 };
-#endif//NBT_IDL_OFFSET_CLASS
+#endif//MINECPP_NBT_PLAYER_V1_PLAYER_H_OFFSET_CLASS
 
 class Attribute {
    static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
@@ -269,4 +269,4 @@ class Player {
 };
 
 }
-#endif//MINECPP_NBT_PLAYER_V_PLAYER_H
+#endif//MINECPP_NBT_PLAYER_V1_PLAYER_H

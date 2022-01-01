@@ -11,15 +11,15 @@
 
 namespace proto::nbt::test {
 
-#ifndef NBT_IDL_OFFSET_CLASS
-#define NBT_IDL_OFFSET_CLASS
+#ifndef PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
+#define PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 class __nbt_idl_offset {
  public:
    mb::size offset{};
    mb::size size{};
    int id{};
 };
-#endif//NBT_IDL_OFFSET_CLASS
+#endif//PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 
 class Foo {
    static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
