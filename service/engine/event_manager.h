@@ -18,18 +18,13 @@ class EventManager {
    struct Client {
       TStream stream;
       EventManager::Queue queue;
-      std::atomic<bool> writing = false;
       std::mutex mutex;
-      std::atomic<int> writing_count = 0;
 
       explicit Client(TStream stream) : stream(stream) {}
 
       void write(Event event) {
-         if (!writing && mutex.try_lock()) {
-            ++writing_count;
-            writing = true;
+         if (mutex.try_lock()) {
             stream.write(event);
-            mutex.unlock();
             return;
          }
          queue.push(std::move(event));

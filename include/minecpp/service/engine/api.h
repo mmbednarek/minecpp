@@ -22,25 +22,22 @@ constexpr std::size_t g_steam_queue_size = 1024;
 class Stream {
    ClientBidiStream &m_stream;
    std::mutex &m_mtx;
-   bool &m_writing;
    util::StaticQueue<OutEvent, g_steam_queue_size> &m_out_queue;
 
  public:
-   Stream(ClientBidiStream &stream, std::mutex &mtx, bool &writing, util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue) : m_stream(stream), m_mtx(mtx), m_writing(writing), m_out_queue(out_queue) {}
+   Stream(ClientBidiStream &stream, std::mutex &mtx, util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue) : m_stream(stream), m_mtx(mtx), m_out_queue(out_queue) {}
 
    template<typename TEvent>
    void send(const TEvent &event, player::Id player_id) const {
       proto::event::serverbound::v1::Event proto_event;
       proto_event.mutable_payload()->PackFrom(event);
       *proto_event.mutable_player_id() = player::write_id_to_proto(player_id);
-      if (!m_writing) {
-          if (m_mtx.try_lock()) {
-              m_writing = true;
-              m_stream.write(proto_event);
-              m_mtx.unlock();
-              return;
-         }
+      if (m_mtx.try_lock()) {
+         // good we're free to write
+         m_stream.write(proto_event);
+         return;
       }
+      // we're currently writing, just push it onto the queue
       m_out_queue.push(std::move(proto_event));
    }
 };
@@ -52,7 +49,6 @@ class ClientEventHandler {
    std::unique_ptr<ClientBidiStream> m_stream;
    util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
    std::mutex m_mtx;
-   bool m_writing;
 
  public:
    explicit ClientEventHandler(TVisitor &visitor) : m_visitor(visitor) {}
@@ -63,14 +59,14 @@ class ClientEventHandler {
    };
 
    void on_finish_write(ClientBidiStream stream) {
-       std::unique_lock<std::mutex> lock(m_mtx);
-       if (!m_out_queue.empty()) {
-         m_writing = true;
-         auto event = m_out_queue.pop();
-         stream.write(event);
+      if (m_out_queue.empty()) {
+         // queue is empty, we can unlock the mutex, so next
+         // thread can write directly
+         m_mtx.unlock();
          return;
       }
-      m_writing = false;
+      // queue is not empty write another message
+      stream.write(m_out_queue.pop());
    }
 
    void on_finish_read(ClientBidiStream stream, const proto::event::clientbound::v1::Event &info) {
@@ -83,7 +79,7 @@ class ClientEventHandler {
    Stream stream() {
       while (m_stream == nullptr)
          ;
-      return {*m_stream, m_mtx, m_writing, m_out_queue};
+      return {*m_stream, m_mtx, m_out_queue};
    }
 };
 

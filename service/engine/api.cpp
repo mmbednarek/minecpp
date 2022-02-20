@@ -26,24 +26,15 @@ void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbou
 }
 
 void ApiHandler::on_finish_write(BidiStream stream) {
-//   spdlog::info("api handler: wrote message");
    auto client = m_event_manager.client(stream.tag());
-   if (client == nullptr) {
+   if (client == nullptr)
       return;
-   }
-
-   std::unique_lock<std::mutex> lock(client->mutex);
-   --client->writing_count;
 
    if (client->queue.empty()) {
-      client->writing = false;
-      spdlog::info("setting writing to false, counting: {}", client->writing_count);
+      client->mutex.unlock();
       return;
    }
-   ++client->writing_count;
-   auto msg = client->queue.pop();
-   spdlog::info("writing next message, size: {}", msg.ByteSizeLong());
-   stream.write(msg);
+   stream.write(client->queue.pop());
 }
 
 }// namespace minecpp::service::engine
