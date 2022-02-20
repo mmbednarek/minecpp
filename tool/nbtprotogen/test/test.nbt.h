@@ -22,21 +22,23 @@ class __nbt_idl_offset {
 #endif//PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 
 class Foo {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::map<std::string, std::int32_t>>) {
+         if (name == "stuff") {
+            this->stuff = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "value") {
+            this->value = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -50,21 +52,30 @@ class Foo {
 };
 
 class Bar {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, minecpp::nbt::CompoundContent>) {
+         if (name == "meta") {
+            this->meta = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::map<std::string, Foo>>) {
+         if (name == "foo_map") {
+            this->foo_map = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+      if constexpr (std::is_same_v<T, std::vector<Foo>>) {
+         if (name == "foo") {
+            this->foo = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
    }
 
  public:

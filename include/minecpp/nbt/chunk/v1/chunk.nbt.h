@@ -22,21 +22,9 @@ class __nbt_idl_offset {
 #endif//MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
 
 class ArmorItem {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
-         return;
-      }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+   void __xx_put(const std::string &name, T &&value) {
    }
 
  public:
@@ -48,21 +36,23 @@ class ArmorItem {
 };
 
 class Attribute {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, double>) {
+         if (name == "Base") {
+            this->base = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "Name") {
+            this->name = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -76,21 +66,9 @@ class Attribute {
 };
 
 class Memories {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
-         return;
-      }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+   void __xx_put(const std::string &name, T &&value) {
    }
 
  public:
@@ -102,21 +80,16 @@ class Memories {
 };
 
 class Brain {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, Memories>) {
+         if (name == "memories") {
+            this->memories = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -129,21 +102,9 @@ class Brain {
 };
 
 class HandItem {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
-         return;
-      }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+   void __xx_put(const std::string &name, T &&value) {
    }
 
  public:
@@ -155,21 +116,161 @@ class HandItem {
 };
 
 class Entity {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, Brain>) {
+         if (name == "Brain") {
+            this->brain = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, float>) {
+         if (name == "AbsorptionAmount") {
+            this->absorption_amount = std::forward<T>(value);
+            return;
+         }
+         if (name == "FallDistance") {
+            this->fall_distance = std::forward<T>(value);
+            return;
+         }
+         if (name == "Health") {
+            this->health = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+      if constexpr (std::is_same_v<T, std::int16_t>) {
+         if (name == "Air") {
+            this->air = std::forward<T>(value);
+            return;
+         }
+         if (name == "DeathTime") {
+            this->death_time = std::forward<T>(value);
+            return;
+         }
+         if (name == "Fire") {
+            this->fire = std::forward<T>(value);
+            return;
+         }
+         if (name == "Fuse") {
+            this->fuse = std::forward<T>(value);
+            return;
+         }
+         if (name == "HurtTime") {
+            this->hurt_time = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int32_t>) {
+         if (name == "HurtByTimestamp") {
+            this->hurt_by_timestamp = std::forward<T>(value);
+            return;
+         }
+         if (name == "PortalCooldown") {
+            this->portal_cooldown = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "CanPickUpLoot") {
+            this->can_pick_up_loot = std::forward<T>(value);
+            return;
+         }
+         if (name == "ExplosionRadius") {
+            this->explosion_radius = std::forward<T>(value);
+            return;
+         }
+         if (name == "FallFlying") {
+            this->fall_flying = std::forward<T>(value);
+            return;
+         }
+         if (name == "Invulnerable") {
+            this->invulnerable = std::forward<T>(value);
+            return;
+         }
+         if (name == "LeftHanded") {
+            this->left_handed = std::forward<T>(value);
+            return;
+         }
+         if (name == "OnGround") {
+            this->on_ground = std::forward<T>(value);
+            return;
+         }
+         if (name == "PersistenceRequired") {
+            this->persistence_required = std::forward<T>(value);
+            return;
+         }
+         if (name == "ignited") {
+            this->ignited = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "id") {
+            this->id = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<ArmorItem>>) {
+         if (name == "ArmorItems") {
+            this->armor_items = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<Attribute>>) {
+         if (name == "Attributes") {
+            this->attributes = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<HandItem>>) {
+         if (name == "HandItems") {
+            this->hand_items = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<double>>) {
+         if (name == "Motion") {
+            this->motion = std::forward<T>(value);
+            return;
+         }
+         if (name == "Pos") {
+            this->pos = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<float>>) {
+         if (name == "ArmorDropChances") {
+            this->armor_drop_chances = std::forward<T>(value);
+            return;
+         }
+         if (name == "HandDropChances") {
+            this->hand_drop_chances = std::forward<T>(value);
+            return;
+         }
+         if (name == "Rotation") {
+            this->rotation = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<std::int32_t>>) {
+         if (name == "UUID") {
+            this->uuid = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
    }
 
  public:
@@ -210,21 +311,36 @@ class Entity {
 };
 
 class Heightmaps {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::vector<std::int64_t>>) {
+         if (name == "MOTION_BLOCKING") {
+            this->motion_blocking = std::forward<T>(value);
+            return;
+         }
+         if (name == "MOTION_BLOCKING_NO_LEAVES") {
+            this->motion_blocking_no_leaves = std::forward<T>(value);
+            return;
+         }
+         if (name == "OCEAN_FLOOR") {
+            this->ocean_floor = std::forward<T>(value);
+            return;
+         }
+         if (name == "OCEAN_FLOOR_WG") {
+            this->ocean_floor_wg = std::forward<T>(value);
+            return;
+         }
+         if (name == "WORLD_SURFACE") {
+            this->world_surface = std::forward<T>(value);
+            return;
+         }
+         if (name == "WORLD_SURFACE_WG") {
+            this->world_surface_wg = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -242,21 +358,23 @@ class Heightmaps {
 };
 
 class PaletteItem {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, minecpp::nbt::CompoundContent>) {
+         if (name == "Properties") {
+            this->properties = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "Name") {
+            this->name = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -270,21 +388,41 @@ class PaletteItem {
 };
 
 class Section {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "Y") {
+            this->y = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::vector<PaletteItem>>) {
+         if (name == "Palette") {
+            this->palette = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+      if constexpr (std::is_same_v<T, std::vector<std::int64_t>>) {
+         if (name == "BlockStates") {
+            this->block_states = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<std::uint8_t>>) {
+         if (name == "BlockLight") {
+            this->block_light = std::forward<T>(value);
+            return;
+         }
+         if (name == "SkyLight") {
+            this->sky_light = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
    }
 
  public:
@@ -301,21 +439,16 @@ class Section {
 };
 
 class Start {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "id") {
+            this->id = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -328,21 +461,16 @@ class Start {
 };
 
 class Structures {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::map<std::string, Start>>) {
+         if (name == "Starts") {
+            this->starts = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -355,21 +483,20 @@ class Structures {
 };
 
 class CarvingMasks {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::vector<std::uint8_t>>) {
+         if (name == "AIR") {
+            this->air = std::forward<T>(value);
+            return;
+         }
+         if (name == "LIQUID") {
+            this->liquid = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -383,21 +510,98 @@ class CarvingMasks {
 };
 
 class Level {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, CarvingMasks>) {
+         if (name == "CarvingMasks") {
+            this->carving_masks = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, Heightmaps>) {
+         if (name == "Heightmaps") {
+            this->heightmaps = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+      if constexpr (std::is_same_v<T, Structures>) {
+         if (name == "Structures") {
+            this->structures = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int32_t>) {
+         if (name == "xPos") {
+            this->x_pos = std::forward<T>(value);
+            return;
+         }
+         if (name == "zPos") {
+            this->z_pos = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int64_t>) {
+         if (name == "LastUpdate") {
+            this->last_update = std::forward<T>(value);
+            return;
+         }
+         if (name == "InhabitedTime") {
+            this->inhabited_time = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "isLightOn") {
+            this->is_light_on = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "Status") {
+            this->status = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<Entity>>) {
+         if (name == "Entities") {
+            this->entities = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<Section>>) {
+         if (name == "Sections") {
+            this->sections = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<std::int32_t>>) {
+         if (name == "Biomes") {
+            this->biomes = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<std::vector<std::int16_t>>>) {
+         if (name == "Lights") {
+            this->lights = std::forward<T>(value);
+            return;
+         }
+         if (name == "PostProcessing") {
+            this->post_processing = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
    }
 
  public:
@@ -423,21 +627,23 @@ class Level {
 };
 
 class Chunk {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, Level>) {
+         if (name == "Level") {
+            this->level = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::int32_t>) {
+         if (name == "DataVersion") {
+            this->version = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:

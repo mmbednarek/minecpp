@@ -1,65 +1,49 @@
 cmake_minimum_required(VERSION 3.15)
 project(minecpp)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED OFF)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic")
 
 set(gRPC_PROTOBUF_PROVIDER "package")
 
+find_package(fmt REQUIRED)
+find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(Protobuf REQUIRED)
 find_package(gRPC REQUIRED)
 find_package(absl REQUIRED)
+find_package(GTest REQUIRED)
+
+if (${SPDLOG_FMT_EXTERNAL})
+    add_definitions(-DSPDLOG_FMT_EXTERNAL=1)
+endif()
 
 include(FetchContent)
 
-FetchContent_Declare(
-        yaml
-        GIT_REPOSITORY https://github.com/jbeder/yaml-cpp
-        GIT_TAG yaml-cpp-0.6.3
+fetchcontent_declare(
+  yaml
+  GIT_REPOSITORY https://github.com/jbeder/yaml-cpp
+  GIT_TAG yaml-cpp-0.7.0
 )
-FetchContent_MakeAvailable(yaml)
+fetchcontent_makeavailable(yaml)
 
-FetchContent_Declare(
-        spdlog
-        GIT_REPOSITORY https://github.com/gabime/spdlog
-        GIT_TAG v1.8.2
+fetchcontent_declare(
+  libmb
+  GIT_REPOSITORY https://github.com/mmbednarek/mb
+  GIT_TAG libmb-0.0.20
 )
-FetchContent_MakeAvailable(spdlog)
+fetchcontent_makeavailable(libmb)
 
-FetchContent_Declare(
-        gtest
-        GIT_REPOSITORY https://github.com/google/googletest
-        GIT_TAG release-1.10.0
+fetchcontent_declare(
+  libmb_codegen
+  GIT_REPOSITORY https://github.com/mmbednarek/codegen
+  GIT_TAG codegen-0.0.21
 )
-FetchContent_MakeAvailable(gtest)
-
-FetchContent_Declare(
-        fmt
-        GIT_REPOSITORY https://github.com/fmtlib/fmt
-        GIT_TAG 7.1.3
-)
-FetchContent_MakeAvailable(fmt)
-
-FetchContent_Declare(
-        libmb
-        GIT_REPOSITORY https://github.com/mmbednarek/mb
-        GIT_TAG libmb-0.0.19
-)
-FetchContent_MakeAvailable(libmb)
-
-FetchContent_Declare(
-        libmb_codegen
-        GIT_REPOSITORY https://github.com/mmbednarek/codegen
-        GIT_TAG codegen-0.0.17
-)
-FetchContent_MakeAvailable(libmb_codegen)
+fetchcontent_makeavailable(libmb_codegen)
 
 include_directories(./include)
 include_directories(./service/protos/include)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wno-unused-parameter")
 
 # Libraries
 

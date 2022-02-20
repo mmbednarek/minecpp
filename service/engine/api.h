@@ -4,6 +4,7 @@
 #include <minecpp/proto/event/clientbound/v1/clientbound.pb.h>
 #include <minecpp/proto/event/serverbound/v1/serverbound.pb.h>
 #include <minecpp/proto/service/engine/v1/engine.grpc.pb.h>
+#include <string>
 
 namespace minecpp::service::engine {
 

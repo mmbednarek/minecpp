@@ -22,21 +22,20 @@ class __nbt_idl_offset {
 #endif//MINECPP_NBT_COMMON_V1_COMMON_H_OFFSET_CLASS
 
 class ChunkPosition {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::int32_t>) {
+         if (name == "x") {
+            this->x = std::forward<T>(value);
+            return;
+         }
+         if (name == "y") {
+            this->y = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -50,21 +49,24 @@ class ChunkPosition {
 };
 
 class BlockPosition {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::int32_t>) {
+         if (name == "x") {
+            this->x = std::forward<T>(value);
+            return;
+         }
+         if (name == "y") {
+            this->y = std::forward<T>(value);
+            return;
+         }
+         if (name == "z") {
+            this->z = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:

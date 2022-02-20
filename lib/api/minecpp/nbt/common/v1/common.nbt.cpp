@@ -38,19 +38,6 @@ ChunkPosition ChunkPosition::deserialize(std::istream &in) {
    return ChunkPosition::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> ChunkPosition::__xx_offsets {
-   {"x", {offsetof(ChunkPosition, x), sizeof(ChunkPosition::x), 1}},
-   {"y", {offsetof(ChunkPosition, y), sizeof(ChunkPosition::y), 2}},
-};
-
-int ChunkPosition::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void BlockPosition::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Int, "x");
    w.write_int_content(x);
@@ -87,20 +74,6 @@ BlockPosition BlockPosition::deserialize(std::istream &in) {
       return BlockPosition();
    }
    return BlockPosition::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> BlockPosition::__xx_offsets {
-   {"x", {offsetof(BlockPosition, x), sizeof(BlockPosition::x), 1}},
-   {"y", {offsetof(BlockPosition, y), sizeof(BlockPosition::y), 2}},
-   {"z", {offsetof(BlockPosition, z), sizeof(BlockPosition::z), 3}},
-};
-
-int BlockPosition::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 }

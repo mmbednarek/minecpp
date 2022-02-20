@@ -92,6 +92,7 @@ struct CompoundDeserializer {
       int id;
       TypeVariant subtype;
       std::string subtypeName;
+      std::string label;
    };
    std::vector<Elem> elems;
 };

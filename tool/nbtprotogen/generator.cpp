@@ -249,18 +249,20 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
             res[TypeVariant::Struct] = CompoundDeserializer{.elems{
                     {
                             .kind = CompoundKind::Struct,
-                            .typeName = att.type.name,
+                            .typeName = att.type.to_cpp_type(),
                             .name = att.name,
                             .id = att.id,
+                            .label = att.label,
                     }}};
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
                  .kind = CompoundKind::Struct,
-                 .typeName = att.type.name,
+                 .typeName = att.type.to_cpp_type(),
                  .name = att.name,
                  .id = att.id,
+                 .label = att.label,
          });
          continue;
       }
@@ -273,11 +275,12 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
             res[TypeVariant::Struct] = CompoundDeserializer{.elems{
                     {
                             .kind = CompoundKind::Map,
-                            .typeName = att.type.name,
+                            .typeName = att.type.to_cpp_type(),
                             .name = att.name,
                             .id = att.id,
                             .subtype = att.type.subtype->variant,
                             .subtypeName = att.type.subtype->name,
+                            .label = att.label,
                     },
             }};
             continue;
@@ -285,11 +288,12 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
                  .kind = CompoundKind::Map,
-                 .typeName = att.type.name,
+                 .typeName = att.type.to_cpp_type(),
                  .name = att.name,
                  .id = att.id,
                  .subtype = att.type.subtype->variant,
-                 .subtypeName = att.type.subtype->name,
+                 .subtypeName = att.type.subtype->to_cpp_type(),
+                 .label = att.label,
          });
          continue;
       }
@@ -299,9 +303,10 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
             res[TypeVariant::Struct] = CompoundDeserializer{.elems{
                     {
                             .kind = CompoundKind::Compound,
-                            .typeName = att.type.name,
+                            .typeName = att.type.to_cpp_type(),
                             .name = att.name,
                             .id = att.id,
+                            .label = att.label,
                     },
             }};
             continue;
@@ -309,9 +314,10 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
                  .kind = CompoundKind::Compound,
-                 .typeName = att.type.name,
+                 .typeName = att.type.to_cpp_type(),
                  .name = att.name,
                  .id = att.id,
+                 .label = att.label,
          });
          continue;
       }

@@ -1,0 +1,4 @@
+project(minecpp_protonbt_benchmark)
+
+add_executable(minecpp_protonbt_benchmark benchmark.cpp)
+target_link_libraries(minecpp_protonbt_benchmark minecpp_nbt minecpp_api_nbt libmb fmt benchmark)

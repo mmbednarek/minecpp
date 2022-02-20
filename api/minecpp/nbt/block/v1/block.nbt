@@ -1,22 +1,21 @@
 syntax = "nbt";
 package minecpp.nbt.block.v1;
 
-message EnumAllowedValues {
+message EnumState {
+    string name = 1 [label = "Name"];
     repeated string values = 2 [label = "Label"];
 }
 
-message IntAllowedValues {
+message IntState {
+    string name = 1 [label = "Name"];
     int32 min_value = 2 [label = "MinValue"];
-    int32 max_value = 2 [label = "MaxValue"];
+    int32 max_value = 3 [label = "MaxValue"];
 }
 
-message State {
+message BoolState {
     string name = 1 [label = "Name"];
-    string tag = 2 [label = "Tag"];
-    int32 allowed_values_variant = 3 [label = "AllowedValuesVariant"];
-    EnumAllowedValues enum_allowed_values = 4 [label = "EnumAllowedValues"];
-    IntAllowedValues int_allowed_values = 5 [label = "IntAllowedValues"];
 }
 
 message Block {
+    repeated string state_tags = 1 [label = "StateTags"];
 }

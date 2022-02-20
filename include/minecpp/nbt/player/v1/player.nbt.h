@@ -22,21 +22,23 @@ class __nbt_idl_offset {
 #endif//MINECPP_NBT_PLAYER_V1_PLAYER_H_OFFSET_CLASS
 
 class Attribute {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, double>) {
+         if (name == "Base") {
+            this->base = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "Name") {
+            this->name = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -50,21 +52,9 @@ class Attribute {
 };
 
 class Memories {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
-         return;
-      }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+   void __xx_put(const std::string &name, T &&value) {
    }
 
  public:
@@ -76,21 +66,16 @@ class Memories {
 };
 
 class Brain {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, Memories>) {
+         if (name == "memories") {
+            this->memories = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
-         return;
-      }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -103,21 +88,27 @@ class Brain {
 };
 
 class InventoryElement {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "Count") {
+            this->count = std::forward<T>(value);
+            return;
+         }
+         if (name == "Slot") {
+            this->slot = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "id") {
+            this->id = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -132,21 +123,43 @@ class InventoryElement {
 };
 
 class Abilities {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, float>) {
+         if (name == "flySpeed") {
+            this->fly_speed = std::forward<T>(value);
+            return;
+         }
+         if (name == "walkSpeed") {
+            this->walk_speed = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "flying") {
+            this->flying = std::forward<T>(value);
+            return;
+         }
+         if (name == "instabuild") {
+            this->instabuild = std::forward<T>(value);
+            return;
+         }
+         if (name == "invulnerable") {
+            this->invulnerable = std::forward<T>(value);
+            return;
+         }
+         if (name == "mayBuild") {
+            this->may_build = std::forward<T>(value);
+            return;
+         }
+         if (name == "mayfly") {
+            this->mayfly = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -165,21 +178,55 @@ class Abilities {
 };
 
 class RecipeBook {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "isBlastingFurnaceFilteringCraftable") {
+            this->is_blasting_furnace_filtering_craftable = std::forward<T>(value);
+            return;
+         }
+         if (name == "isBlastingFurnaceGuiOpen") {
+            this->is_blasting_furnace_gui_open = std::forward<T>(value);
+            return;
+         }
+         if (name == "isFilteringCraftable") {
+            this->is_filtering_craftable = std::forward<T>(value);
+            return;
+         }
+         if (name == "isFurnaceFilteringCraftable") {
+            this->is_furnace_filtering_craftable = std::forward<T>(value);
+            return;
+         }
+         if (name == "isFurnaceGuiOpen") {
+            this->is_furnace_gui_open = std::forward<T>(value);
+            return;
+         }
+         if (name == "isGuiOpen") {
+            this->is_gui_open = std::forward<T>(value);
+            return;
+         }
+         if (name == "isSmokerFilteringCraftable") {
+            this->is_smoker_filtering_craftable = std::forward<T>(value);
+            return;
+         }
+         if (name == "isSmokerGuiOpen") {
+            this->is_smoker_gui_open = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, std::vector<std::string>>) {
+         if (name == "recipes") {
+            this->recipes = std::forward<T>(value);
+            return;
+         }
+         if (name == "toBeDisplayed") {
+            this->to_be_displayed = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
    }
 
  public:
@@ -201,21 +248,216 @@ class RecipeBook {
 };
 
 class Player {
-   static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-   int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
-      auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) {
+   void __xx_put(const std::string &name, T &&value) {
+      if constexpr (std::is_same_v<T, Abilities>) {
+         if (name == "abilities") {
+            this->abilities = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      if (it->second.size != sizeof(T)) {
+      if constexpr (std::is_same_v<T, Brain>) {
+         if (name == "Brain") {
+            this->brain = std::forward<T>(value);
+            return;
+         }
          return;
       }
-      T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
-      ptr->~T();
-      *ptr = std::forward<T>(value);
+      if constexpr (std::is_same_v<T, RecipeBook>) {
+         if (name == "recipeBook") {
+            this->recipe_book = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, float>) {
+         if (name == "AbsorptionAmount") {
+            this->absorption_amount = std::forward<T>(value);
+            return;
+         }
+         if (name == "FallDistance") {
+            this->fall_distance = std::forward<T>(value);
+            return;
+         }
+         if (name == "Health") {
+            this->health = std::forward<T>(value);
+            return;
+         }
+         if (name == "SpawnAngle") {
+            this->spawn_angle = std::forward<T>(value);
+            return;
+         }
+         if (name == "XpP") {
+            this->xp_p = std::forward<T>(value);
+            return;
+         }
+         if (name == "foodExhaustionLevel") {
+            this->food_exhaustion_level = std::forward<T>(value);
+            return;
+         }
+         if (name == "foodSaturationLevel") {
+            this->food_saturation_level = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int16_t>) {
+         if (name == "Air") {
+            this->air = std::forward<T>(value);
+            return;
+         }
+         if (name == "DeathTime") {
+            this->death_time = std::forward<T>(value);
+            return;
+         }
+         if (name == "Fire") {
+            this->fire = std::forward<T>(value);
+            return;
+         }
+         if (name == "HurtTime") {
+            this->hurt_time = std::forward<T>(value);
+            return;
+         }
+         if (name == "SleepTimer") {
+            this->sleep_timer = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int32_t>) {
+         if (name == "DataVersion") {
+            this->data_version = std::forward<T>(value);
+            return;
+         }
+         if (name == "HurtByTimestamp") {
+            this->hurt_by_timestamp = std::forward<T>(value);
+            return;
+         }
+         if (name == "PortalCooldown") {
+            this->portal_cooldown = std::forward<T>(value);
+            return;
+         }
+         if (name == "Score") {
+            this->score = std::forward<T>(value);
+            return;
+         }
+         if (name == "SelectedItemSlot") {
+            this->selected_item_slot = std::forward<T>(value);
+            return;
+         }
+         if (name == "SpawnX") {
+            this->spawn_x = std::forward<T>(value);
+            return;
+         }
+         if (name == "SpawnY") {
+            this->spawn_y = std::forward<T>(value);
+            return;
+         }
+         if (name == "SpawnZ") {
+            this->spawn_z = std::forward<T>(value);
+            return;
+         }
+         if (name == "XpLevel") {
+            this->xp_level = std::forward<T>(value);
+            return;
+         }
+         if (name == "XpSeed") {
+            this->xp_seed = std::forward<T>(value);
+            return;
+         }
+         if (name == "XpTotal") {
+            this->xp_total = std::forward<T>(value);
+            return;
+         }
+         if (name == "foodLevel") {
+            this->food_level = std::forward<T>(value);
+            return;
+         }
+         if (name == "foodTickTimer") {
+            this->food_tick_timer = std::forward<T>(value);
+            return;
+         }
+         if (name == "playerGameType") {
+            this->player_game_type = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::int8_t>) {
+         if (name == "FallFlying") {
+            this->fall_flying = std::forward<T>(value);
+            return;
+         }
+         if (name == "Invulnerable") {
+            this->invulnerable = std::forward<T>(value);
+            return;
+         }
+         if (name == "OnGround") {
+            this->on_ground = std::forward<T>(value);
+            return;
+         }
+         if (name == "SpawnForced") {
+            this->spawn_forced = std::forward<T>(value);
+            return;
+         }
+         if (name == "seenCredits") {
+            this->seen_credits = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::string>) {
+         if (name == "Dimension") {
+            this->dimension = std::forward<T>(value);
+            return;
+         }
+         if (name == "SpawnDimension") {
+            this->spawn_dimension = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<Attribute>>) {
+         if (name == "Attributes") {
+            this->attributes = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<InventoryElement>>) {
+         if (name == "Inventory") {
+            this->inventory = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<double>>) {
+         if (name == "Motion") {
+            this->motion = std::forward<T>(value);
+            return;
+         }
+         if (name == "Pos") {
+            this->pos = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<float>>) {
+         if (name == "Rotation") {
+            this->rotation = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<T, std::vector<std::int32_t>>) {
+         if (name == "UUID") {
+            this->uuid = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
    }
 
  public:

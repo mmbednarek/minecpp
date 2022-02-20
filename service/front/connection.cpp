@@ -71,8 +71,8 @@ void Connection::async_write_then_disconnect(const Ptr &conn, uint8_t *buff, siz
 }
 
 void Connection::send(const Ptr &conn, minecpp::network::message::Writer &w) {
-   auto bf = w.buff(m_compression_threshold);
-   async_write(conn, std::get<0>(bf), std::get<1>(bf));
+   auto [bf, bf_size] = w.buff(m_compression_threshold);
+   async_write(conn, bf, bf_size);
 }
 
 void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w,
@@ -131,6 +131,7 @@ ConnectionId Connection::id() const {
 mb::size Connection::compression_threshold() const {
    return m_compression_threshold;
 }
+
 mb::u8 *Connection::alloc_byte() {
    return m_byte_pool.construct(0);
 }
@@ -177,7 +178,7 @@ void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler) 
    });
 }
 
-void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, std::function<void(mb::u32)> callback) {
+void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, const std::function<void(mb::u32)>& callback) {
    auto bp = conn->alloc_byte();
    boost::asio::async_read(conn->socket(), boost::asio::buffer(bp, 1), [conn, result, shift, callback, bp](const boost::system::error_code &err, size_t size) {
       if (err) {

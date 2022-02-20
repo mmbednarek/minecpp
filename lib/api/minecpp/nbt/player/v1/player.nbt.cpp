@@ -41,19 +41,6 @@ Attribute Attribute::deserialize(std::istream &in) {
    return Attribute::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Attribute::__xx_offsets {
-   {"Base", {offsetof(Attribute, base), sizeof(Attribute::base), 1}},
-   {"Name", {offsetof(Attribute, name), sizeof(Attribute::name), 2}},
-};
-
-int Attribute::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Memories::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
@@ -81,17 +68,6 @@ Memories Memories::deserialize(std::istream &in) {
    return Memories::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Memories::__xx_offsets {
-};
-
-int Memories::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Brain::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Compound, "memories");
    memories.serialize_no_header(w);
@@ -109,8 +85,7 @@ Brain Brain::deserialize_no_header(minecpp::nbt::Reader &r) {
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 1:
+         if (name == "memories") {
             res.__xx_put(name, Memories::deserialize_no_header(r));
             return;
          }
@@ -128,18 +103,6 @@ Brain Brain::deserialize(std::istream &in) {
       return Brain();
    }
    return Brain::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Brain::__xx_offsets {
-   {"memories", {offsetof(Brain, memories), sizeof(Brain::memories), 1}},
-};
-
-int Brain::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void InventoryElement::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -181,20 +144,6 @@ InventoryElement InventoryElement::deserialize(std::istream &in) {
       return InventoryElement();
    }
    return InventoryElement::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> InventoryElement::__xx_offsets {
-   {"Count", {offsetof(InventoryElement, count), sizeof(InventoryElement::count), 1}},
-   {"Slot", {offsetof(InventoryElement, slot), sizeof(InventoryElement::slot), 2}},
-   {"id", {offsetof(InventoryElement, id), sizeof(InventoryElement::id), 3}},
-};
-
-int InventoryElement::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Abilities::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -244,24 +193,6 @@ Abilities Abilities::deserialize(std::istream &in) {
       return Abilities();
    }
    return Abilities::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Abilities::__xx_offsets {
-   {"flySpeed", {offsetof(Abilities, fly_speed), sizeof(Abilities::fly_speed), 1}},
-   {"flying", {offsetof(Abilities, flying), sizeof(Abilities::flying), 2}},
-   {"instabuild", {offsetof(Abilities, instabuild), sizeof(Abilities::instabuild), 3}},
-   {"invulnerable", {offsetof(Abilities, invulnerable), sizeof(Abilities::invulnerable), 4}},
-   {"mayBuild", {offsetof(Abilities, may_build), sizeof(Abilities::may_build), 5}},
-   {"mayfly", {offsetof(Abilities, mayfly), sizeof(Abilities::mayfly), 6}},
-   {"walkSpeed", {offsetof(Abilities, walk_speed), sizeof(Abilities::walk_speed), 7}},
-};
-
-int Abilities::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void RecipeBook::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -339,27 +270,6 @@ RecipeBook RecipeBook::deserialize(std::istream &in) {
       return RecipeBook();
    }
    return RecipeBook::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> RecipeBook::__xx_offsets {
-   {"isBlastingFurnaceFilteringCraftable", {offsetof(RecipeBook, is_blasting_furnace_filtering_craftable), sizeof(RecipeBook::is_blasting_furnace_filtering_craftable), 1}},
-   {"isBlastingFurnaceGuiOpen", {offsetof(RecipeBook, is_blasting_furnace_gui_open), sizeof(RecipeBook::is_blasting_furnace_gui_open), 2}},
-   {"isFilteringCraftable", {offsetof(RecipeBook, is_filtering_craftable), sizeof(RecipeBook::is_filtering_craftable), 3}},
-   {"isFurnaceFilteringCraftable", {offsetof(RecipeBook, is_furnace_filtering_craftable), sizeof(RecipeBook::is_furnace_filtering_craftable), 4}},
-   {"isFurnaceGuiOpen", {offsetof(RecipeBook, is_furnace_gui_open), sizeof(RecipeBook::is_furnace_gui_open), 5}},
-   {"isGuiOpen", {offsetof(RecipeBook, is_gui_open), sizeof(RecipeBook::is_gui_open), 6}},
-   {"isSmokerFilteringCraftable", {offsetof(RecipeBook, is_smoker_filtering_craftable), sizeof(RecipeBook::is_smoker_filtering_craftable), 7}},
-   {"isSmokerGuiOpen", {offsetof(RecipeBook, is_smoker_gui_open), sizeof(RecipeBook::is_smoker_gui_open), 8}},
-   {"recipes", {offsetof(RecipeBook, recipes), sizeof(RecipeBook::recipes), 9}},
-   {"toBeDisplayed", {offsetof(RecipeBook, to_be_displayed), sizeof(RecipeBook::to_be_displayed), 10}},
-};
-
-int RecipeBook::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Player::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -494,14 +404,15 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
          res.__xx_put(name, r.read_int_vec());
          return;
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 4:
+         if (name == "Brain") {
             res.__xx_put(name, Brain::deserialize_no_header(r));
             return;
-         case 36:
+         }
+         if (name == "abilities") {
             res.__xx_put(name, Abilities::deserialize_no_header(r));
             return;
-         case 42:
+         }
+         if (name == "recipeBook") {
             res.__xx_put(name, RecipeBook::deserialize_no_header(r));
             return;
          }
@@ -527,8 +438,7 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
                return;
             }
             case minecpp::nbt::TagId::Compound: {
-               switch (res.__xx_get_id(name)) {
-               case 3: {
+               if (name == "Attributes") {
                   std::vector<Attribute> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return Attribute::deserialize_no_header(r);
@@ -536,14 +446,13 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
                   res.__xx_put(name, ls);
                   return;
                }
-               case 15: {
+               if (name == "Inventory") {
                   std::vector<InventoryElement> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return InventoryElement::deserialize_no_header(r);
                   });
                   res.__xx_put(name, ls);
                   return;
-               }
                }
                break;
             }
@@ -567,59 +476,6 @@ Player Player::deserialize(std::istream &in) {
       return Player();
    }
    return Player::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Player::__xx_offsets {
-   {"AbsorptionAmount", {offsetof(Player, absorption_amount), sizeof(Player::absorption_amount), 1}},
-   {"Air", {offsetof(Player, air), sizeof(Player::air), 2}},
-   {"Attributes", {offsetof(Player, attributes), sizeof(Player::attributes), 3}},
-   {"Brain", {offsetof(Player, brain), sizeof(Player::brain), 4}},
-   {"DataVersion", {offsetof(Player, data_version), sizeof(Player::data_version), 5}},
-   {"DeathTime", {offsetof(Player, death_time), sizeof(Player::death_time), 6}},
-   {"Dimension", {offsetof(Player, dimension), sizeof(Player::dimension), 7}},
-   {"FallDistance", {offsetof(Player, fall_distance), sizeof(Player::fall_distance), 9}},
-   {"FallFlying", {offsetof(Player, fall_flying), sizeof(Player::fall_flying), 10}},
-   {"Fire", {offsetof(Player, fire), sizeof(Player::fire), 11}},
-   {"Health", {offsetof(Player, health), sizeof(Player::health), 12}},
-   {"HurtByTimestamp", {offsetof(Player, hurt_by_timestamp), sizeof(Player::hurt_by_timestamp), 13}},
-   {"HurtTime", {offsetof(Player, hurt_time), sizeof(Player::hurt_time), 14}},
-   {"Inventory", {offsetof(Player, inventory), sizeof(Player::inventory), 15}},
-   {"Invulnerable", {offsetof(Player, invulnerable), sizeof(Player::invulnerable), 16}},
-   {"Motion", {offsetof(Player, motion), sizeof(Player::motion), 17}},
-   {"OnGround", {offsetof(Player, on_ground), sizeof(Player::on_ground), 18}},
-   {"PortalCooldown", {offsetof(Player, portal_cooldown), sizeof(Player::portal_cooldown), 19}},
-   {"Pos", {offsetof(Player, pos), sizeof(Player::pos), 20}},
-   {"Rotation", {offsetof(Player, rotation), sizeof(Player::rotation), 21}},
-   {"Score", {offsetof(Player, score), sizeof(Player::score), 22}},
-   {"SelectedItemSlot", {offsetof(Player, selected_item_slot), sizeof(Player::selected_item_slot), 23}},
-   {"SleepTimer", {offsetof(Player, sleep_timer), sizeof(Player::sleep_timer), 24}},
-   {"SpawnAngle", {offsetof(Player, spawn_angle), sizeof(Player::spawn_angle), 25}},
-   {"SpawnDimension", {offsetof(Player, spawn_dimension), sizeof(Player::spawn_dimension), 26}},
-   {"SpawnForced", {offsetof(Player, spawn_forced), sizeof(Player::spawn_forced), 27}},
-   {"SpawnX", {offsetof(Player, spawn_x), sizeof(Player::spawn_x), 28}},
-   {"SpawnY", {offsetof(Player, spawn_y), sizeof(Player::spawn_y), 29}},
-   {"SpawnZ", {offsetof(Player, spawn_z), sizeof(Player::spawn_z), 30}},
-   {"UUID", {offsetof(Player, uuid), sizeof(Player::uuid), 31}},
-   {"XpLevel", {offsetof(Player, xp_level), sizeof(Player::xp_level), 32}},
-   {"XpP", {offsetof(Player, xp_p), sizeof(Player::xp_p), 33}},
-   {"XpSeed", {offsetof(Player, xp_seed), sizeof(Player::xp_seed), 34}},
-   {"XpTotal", {offsetof(Player, xp_total), sizeof(Player::xp_total), 35}},
-   {"abilities", {offsetof(Player, abilities), sizeof(Player::abilities), 36}},
-   {"foodExhaustionLevel", {offsetof(Player, food_exhaustion_level), sizeof(Player::food_exhaustion_level), 37}},
-   {"foodLevel", {offsetof(Player, food_level), sizeof(Player::food_level), 38}},
-   {"foodSaturationLevel", {offsetof(Player, food_saturation_level), sizeof(Player::food_saturation_level), 39}},
-   {"foodTickTimer", {offsetof(Player, food_tick_timer), sizeof(Player::food_tick_timer), 40}},
-   {"playerGameType", {offsetof(Player, player_game_type), sizeof(Player::player_game_type), 41}},
-   {"recipeBook", {offsetof(Player, recipe_book), sizeof(Player::recipe_book), 42}},
-   {"seenCredits", {offsetof(Player, seen_credits), sizeof(Player::seen_credits), 43}},
-};
-
-int Player::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 }

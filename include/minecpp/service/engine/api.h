@@ -19,11 +19,12 @@ using OutEvent = proto::event::serverbound::v1::Event;
 
 class Stream {
    ClientBidiStream &m_stream;
-   std::atomic<bool> &m_writing;
+   std::mutex &m_mtx;
+   bool &m_writing;
    util::StaticQueue<OutEvent, 256> &m_out_queue;
 
  public:
-   Stream(ClientBidiStream &stream, std::atomic<bool> &writing, util::StaticQueue<OutEvent, 256> &out_queue) : m_stream(stream), m_writing(writing), m_out_queue(out_queue) {}
+   Stream(ClientBidiStream &stream, std::mutex &mtx, bool &writing, util::StaticQueue<OutEvent, 256> &out_queue) : m_stream(stream), m_mtx(mtx), m_writing(writing), m_out_queue(out_queue) {}
 
    template<typename TEvent>
    void send(const TEvent &event, player::Id player_id) const {
@@ -31,9 +32,12 @@ class Stream {
       proto_event.mutable_payload()->PackFrom(event);
       *proto_event.mutable_player_id() = player::write_id_to_proto(player_id);
       if (!m_writing) {
-         m_writing = true;
-         m_stream.write(proto_event);
-         return;
+          if (m_mtx.try_lock()) {
+              m_writing = true;
+              m_stream.write(proto_event);
+              m_mtx.unlock();
+              return;
+         }
       }
       m_out_queue.push(std::move(proto_event));
    }
@@ -45,7 +49,8 @@ class ClientEventHandler {
    TVisitor &m_visitor;
    std::unique_ptr<ClientBidiStream> m_stream;
    util::StaticQueue<OutEvent, 256> m_out_queue;
-   std::atomic<bool> m_writing = false;
+   std::mutex m_mtx;
+   bool m_writing;
 
  public:
    explicit ClientEventHandler(TVisitor &visitor) : m_visitor(visitor) {}
@@ -56,7 +61,9 @@ class ClientEventHandler {
    };
 
    void on_finish_write(ClientBidiStream stream) {
-      if (!m_out_queue.empty()) {
+       std::unique_lock<std::mutex> lock(m_mtx);
+
+       if (!m_out_queue.empty()) {
          m_writing = true;
          auto event = m_out_queue.pop();
          stream.write(event);
@@ -75,7 +82,7 @@ class ClientEventHandler {
    Stream stream() {
       while (m_stream == nullptr)
          ;
-      return {*m_stream, m_writing, m_out_queue};
+      return {*m_stream, m_mtx, m_writing, m_out_queue};
    }
 };
 

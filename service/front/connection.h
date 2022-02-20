@@ -83,7 +83,7 @@ class Connection {
    minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
 };
 
-void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, std::function<void(mb::u32)> callback);
+void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, const std::function<void(mb::u32)>& callback);
 void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler);
 
 template<typename M>

@@ -29,17 +29,6 @@ ArmorItem ArmorItem::deserialize(std::istream &in) {
    return ArmorItem::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> ArmorItem::__xx_offsets {
-};
-
-int ArmorItem::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Attribute::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Double, "Base");
    w.write_double_content(base);
@@ -79,19 +68,6 @@ Attribute Attribute::deserialize(std::istream &in) {
    return Attribute::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Attribute::__xx_offsets {
-   {"Base", {offsetof(Attribute, base), sizeof(Attribute::base), 1}},
-   {"Name", {offsetof(Attribute, name), sizeof(Attribute::name), 2}},
-};
-
-int Attribute::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Memories::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
@@ -119,17 +95,6 @@ Memories Memories::deserialize(std::istream &in) {
    return Memories::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Memories::__xx_offsets {
-};
-
-int Memories::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Brain::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Compound, "memories");
    memories.serialize_no_header(w);
@@ -147,8 +112,7 @@ Brain Brain::deserialize_no_header(minecpp::nbt::Reader &r) {
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 1:
+         if (name == "memories") {
             res.__xx_put(name, Memories::deserialize_no_header(r));
             return;
          }
@@ -166,18 +130,6 @@ Brain Brain::deserialize(std::istream &in) {
       return Brain();
    }
    return Brain::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Brain::__xx_offsets {
-   {"memories", {offsetof(Brain, memories), sizeof(Brain::memories), 1}},
-};
-
-int Brain::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void HandItem::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -205,17 +157,6 @@ HandItem HandItem::deserialize(std::istream &in) {
       return HandItem();
    }
    return HandItem::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> HandItem::__xx_offsets {
-};
-
-int HandItem::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Entity::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -333,8 +274,7 @@ Entity Entity::deserialize_no_header(minecpp::nbt::Reader &r) {
          res.__xx_put(name, r.read_int_vec());
          return;
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 6:
+         if (name == "Brain") {
             res.__xx_put(name, Brain::deserialize_no_header(r));
             return;
          }
@@ -360,8 +300,7 @@ Entity Entity::deserialize_no_header(minecpp::nbt::Reader &r) {
                return;
             }
             case minecpp::nbt::TagId::Compound: {
-               switch (res.__xx_get_id(name)) {
-               case 4: {
+               if (name == "ArmorItems") {
                   std::vector<ArmorItem> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return ArmorItem::deserialize_no_header(r);
@@ -369,7 +308,7 @@ Entity Entity::deserialize_no_header(minecpp::nbt::Reader &r) {
                   res.__xx_put(name, ls);
                   return;
                }
-               case 5: {
+               if (name == "Attributes") {
                   std::vector<Attribute> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return Attribute::deserialize_no_header(r);
@@ -377,14 +316,13 @@ Entity Entity::deserialize_no_header(minecpp::nbt::Reader &r) {
                   res.__xx_put(name, ls);
                   return;
                }
-               case 15: {
+               if (name == "HandItems") {
                   std::vector<HandItem> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return HandItem::deserialize_no_header(r);
                   });
                   res.__xx_put(name, ls);
                   return;
-               }
                }
                break;
             }
@@ -408,46 +346,6 @@ Entity Entity::deserialize(std::istream &in) {
       return Entity();
    }
    return Entity::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Entity::__xx_offsets {
-   {"AbsorptionAmount", {offsetof(Entity, absorption_amount), sizeof(Entity::absorption_amount), 1}},
-   {"Air", {offsetof(Entity, air), sizeof(Entity::air), 2}},
-   {"ArmorDropChances", {offsetof(Entity, armor_drop_chances), sizeof(Entity::armor_drop_chances), 3}},
-   {"ArmorItems", {offsetof(Entity, armor_items), sizeof(Entity::armor_items), 4}},
-   {"Attributes", {offsetof(Entity, attributes), sizeof(Entity::attributes), 5}},
-   {"Brain", {offsetof(Entity, brain), sizeof(Entity::brain), 6}},
-   {"CanPickUpLoot", {offsetof(Entity, can_pick_up_loot), sizeof(Entity::can_pick_up_loot), 7}},
-   {"DeathTime", {offsetof(Entity, death_time), sizeof(Entity::death_time), 8}},
-   {"ExplosionRadius", {offsetof(Entity, explosion_radius), sizeof(Entity::explosion_radius), 9}},
-   {"FallDistance", {offsetof(Entity, fall_distance), sizeof(Entity::fall_distance), 10}},
-   {"FallFlying", {offsetof(Entity, fall_flying), sizeof(Entity::fall_flying), 11}},
-   {"Fire", {offsetof(Entity, fire), sizeof(Entity::fire), 12}},
-   {"Fuse", {offsetof(Entity, fuse), sizeof(Entity::fuse), 13}},
-   {"HandDropChances", {offsetof(Entity, hand_drop_chances), sizeof(Entity::hand_drop_chances), 14}},
-   {"HandItems", {offsetof(Entity, hand_items), sizeof(Entity::hand_items), 15}},
-   {"Health", {offsetof(Entity, health), sizeof(Entity::health), 16}},
-   {"HurtByTimestamp", {offsetof(Entity, hurt_by_timestamp), sizeof(Entity::hurt_by_timestamp), 17}},
-   {"HurtTime", {offsetof(Entity, hurt_time), sizeof(Entity::hurt_time), 18}},
-   {"Invulnerable", {offsetof(Entity, invulnerable), sizeof(Entity::invulnerable), 19}},
-   {"LeftHanded", {offsetof(Entity, left_handed), sizeof(Entity::left_handed), 20}},
-   {"Motion", {offsetof(Entity, motion), sizeof(Entity::motion), 21}},
-   {"OnGround", {offsetof(Entity, on_ground), sizeof(Entity::on_ground), 22}},
-   {"PersistenceRequired", {offsetof(Entity, persistence_required), sizeof(Entity::persistence_required), 23}},
-   {"PortalCooldown", {offsetof(Entity, portal_cooldown), sizeof(Entity::portal_cooldown), 24}},
-   {"Pos", {offsetof(Entity, pos), sizeof(Entity::pos), 25}},
-   {"Rotation", {offsetof(Entity, rotation), sizeof(Entity::rotation), 26}},
-   {"UUID", {offsetof(Entity, uuid), sizeof(Entity::uuid), 27}},
-   {"id", {offsetof(Entity, id), sizeof(Entity::id), 28}},
-   {"ignited", {offsetof(Entity, ignited), sizeof(Entity::ignited), 29}},
-};
-
-int Entity::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Heightmaps::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -494,23 +392,6 @@ Heightmaps Heightmaps::deserialize(std::istream &in) {
    return Heightmaps::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Heightmaps::__xx_offsets {
-   {"MOTION_BLOCKING", {offsetof(Heightmaps, motion_blocking), sizeof(Heightmaps::motion_blocking), 1}},
-   {"MOTION_BLOCKING_NO_LEAVES", {offsetof(Heightmaps, motion_blocking_no_leaves), sizeof(Heightmaps::motion_blocking_no_leaves), 2}},
-   {"OCEAN_FLOOR", {offsetof(Heightmaps, ocean_floor), sizeof(Heightmaps::ocean_floor), 3}},
-   {"OCEAN_FLOOR_WG", {offsetof(Heightmaps, ocean_floor_wg), sizeof(Heightmaps::ocean_floor_wg), 4}},
-   {"WORLD_SURFACE", {offsetof(Heightmaps, world_surface), sizeof(Heightmaps::world_surface), 5}},
-   {"WORLD_SURFACE_WG", {offsetof(Heightmaps, world_surface_wg), sizeof(Heightmaps::world_surface_wg), 5}},
-};
-
-int Heightmaps::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void PaletteItem::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "Name");
    w.write_string_content(name);
@@ -533,8 +414,7 @@ PaletteItem PaletteItem::deserialize_no_header(minecpp::nbt::Reader &r) {
          res.__xx_put(name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 2:
+         if (name == "Properties") {
             res.__xx_put(name, r.read_compound_content());
             return;
          }
@@ -552,19 +432,6 @@ PaletteItem PaletteItem::deserialize(std::istream &in) {
       return PaletteItem();
    }
    return PaletteItem::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> PaletteItem::__xx_offsets {
-   {"Name", {offsetof(PaletteItem, name), sizeof(PaletteItem::name), 1}},
-   {"Properties", {offsetof(PaletteItem, properties), sizeof(PaletteItem::properties), 2}},
-};
-
-int PaletteItem::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Section::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -608,15 +475,13 @@ Section Section::deserialize_no_header(minecpp::nbt::Reader &r) {
          if (list_info0.size > 0) {
             switch (list_info0.tagid) {
             case minecpp::nbt::TagId::Compound: {
-               switch (res.__xx_get_id(name)) {
-               case 5: {
+               if (name == "Palette") {
                   std::vector<PaletteItem> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return PaletteItem::deserialize_no_header(r);
                   });
                   res.__xx_put(name, ls);
                   return;
-               }
                }
                break;
             }
@@ -640,22 +505,6 @@ Section Section::deserialize(std::istream &in) {
       return Section();
    }
    return Section::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Section::__xx_offsets {
-   {"Y", {offsetof(Section, y), sizeof(Section::y), 1}},
-   {"BlockLight", {offsetof(Section, block_light), sizeof(Section::block_light), 2}},
-   {"SkyLight", {offsetof(Section, sky_light), sizeof(Section::sky_light), 3}},
-   {"BlockStates", {offsetof(Section, block_states), sizeof(Section::block_states), 4}},
-   {"Palette", {offsetof(Section, palette), sizeof(Section::palette), 5}},
-};
-
-int Section::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Start::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -692,18 +541,6 @@ Start Start::deserialize(std::istream &in) {
    return Start::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Start::__xx_offsets {
-   {"id", {offsetof(Start, id), sizeof(Start::id), 1}},
-};
-
-int Start::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Structures::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Compound, "Starts");
    std::for_each(starts.begin(), starts.end(), [&w](const auto &pair) {
@@ -725,8 +562,7 @@ Structures Structures::deserialize_no_header(minecpp::nbt::Reader &r) {
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 1:
+         if (name == "Starts") {
             r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
                if (tagid != minecpp::nbt::TagId::Compound) {
                   r.skip_payload(tagid);
@@ -750,18 +586,6 @@ Structures Structures::deserialize(std::istream &in) {
       return Structures();
    }
    return Structures::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Structures::__xx_offsets {
-   {"Starts", {offsetof(Structures, starts), sizeof(Structures::starts), 1}},
-};
-
-int Structures::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void CarvingMasks::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -798,19 +622,6 @@ CarvingMasks CarvingMasks::deserialize(std::istream &in) {
       return CarvingMasks();
    }
    return CarvingMasks::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> CarvingMasks::__xx_offsets {
-   {"AIR", {offsetof(CarvingMasks, air), sizeof(CarvingMasks::air), 1}},
-   {"LIQUID", {offsetof(CarvingMasks, liquid), sizeof(CarvingMasks::liquid), 2}},
-};
-
-int CarvingMasks::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Level::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -889,14 +700,15 @@ Level Level::deserialize_no_header(minecpp::nbt::Reader &r) {
          res.__xx_put(name, r.read_int_vec());
          return;
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 2:
+         if (name == "CarvingMasks") {
             res.__xx_put(name, CarvingMasks::deserialize_no_header(r));
             return;
-         case 4:
+         }
+         if (name == "Heightmaps") {
             res.__xx_put(name, Heightmaps::deserialize_no_header(r));
             return;
-         case 11:
+         }
+         if (name == "Structures") {
             res.__xx_put(name, Structures::deserialize_no_header(r));
             return;
          }
@@ -906,8 +718,7 @@ Level Level::deserialize_no_header(minecpp::nbt::Reader &r) {
          if (list_info0.size > 0) {
             switch (list_info0.tagid) {
             case minecpp::nbt::TagId::Compound: {
-               switch (res.__xx_get_id(name)) {
-               case 3: {
+               if (name == "Entities") {
                   std::vector<Entity> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return Entity::deserialize_no_header(r);
@@ -915,14 +726,13 @@ Level Level::deserialize_no_header(minecpp::nbt::Reader &r) {
                   res.__xx_put(name, ls);
                   return;
                }
-               case 9: {
+               if (name == "Sections") {
                   std::vector<Section> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return Section::deserialize_no_header(r);
                   });
                   res.__xx_put(name, ls);
                   return;
-               }
                }
                break;
             }
@@ -982,31 +792,6 @@ Level Level::deserialize(std::istream &in) {
    return Level::deserialize_no_header(r);
 }
 
-std::unordered_map<std::string, __nbt_idl_offset> Level::__xx_offsets {
-   {"Biomes", {offsetof(Level, biomes), sizeof(Level::biomes), 1}},
-   {"CarvingMasks", {offsetof(Level, carving_masks), sizeof(Level::carving_masks), 2}},
-   {"Entities", {offsetof(Level, entities), sizeof(Level::entities), 3}},
-   {"Heightmaps", {offsetof(Level, heightmaps), sizeof(Level::heightmaps), 4}},
-   {"LastUpdate", {offsetof(Level, last_update), sizeof(Level::last_update), 5}},
-   {"Lights", {offsetof(Level, lights), sizeof(Level::lights), 6}},
-   {"InhabitedTime", {offsetof(Level, inhabited_time), sizeof(Level::inhabited_time), 7}},
-   {"PostProcessing", {offsetof(Level, post_processing), sizeof(Level::post_processing), 8}},
-   {"Sections", {offsetof(Level, sections), sizeof(Level::sections), 9}},
-   {"Status", {offsetof(Level, status), sizeof(Level::status), 10}},
-   {"Structures", {offsetof(Level, structures), sizeof(Level::structures), 11}},
-   {"isLightOn", {offsetof(Level, is_light_on), sizeof(Level::is_light_on), 14}},
-   {"xPos", {offsetof(Level, x_pos), sizeof(Level::x_pos), 15}},
-   {"zPos", {offsetof(Level, z_pos), sizeof(Level::z_pos), 16}},
-};
-
-int Level::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
-}
-
 void Chunk::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Int, "DataVersion");
    w.write_int_content(version);
@@ -1029,8 +814,7 @@ Chunk Chunk::deserialize_no_header(minecpp::nbt::Reader &r) {
          res.__xx_put(name, r.read_int());
          return;
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 2:
+         if (name == "Level") {
             res.__xx_put(name, Level::deserialize_no_header(r));
             return;
          }
@@ -1048,19 +832,6 @@ Chunk Chunk::deserialize(std::istream &in) {
       return Chunk();
    }
    return Chunk::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Chunk::__xx_offsets {
-   {"DataVersion", {offsetof(Chunk, version), sizeof(Chunk::version), 1}},
-   {"Level", {offsetof(Chunk, level), sizeof(Chunk::level), 2}},
-};
-
-int Chunk::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 }

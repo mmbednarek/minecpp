@@ -28,8 +28,7 @@ Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r) {
          res.__xx_put(name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 2:
+         if (name == "stuff") {
             r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
                if (tagid != minecpp::nbt::TagId::Int) {
                   r.skip_payload(tagid);
@@ -53,19 +52,6 @@ Foo Foo::deserialize(std::istream &in) {
       return Foo();
    }
    return Foo::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Foo::__xx_offsets {
-   {"value", {offsetof(Foo, value), sizeof(Foo::value), 1}},
-   {"stuff", {offsetof(Foo, stuff), sizeof(Foo::stuff), 2}},
-};
-
-int Foo::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 void Bar::serialize_no_header(minecpp::nbt::Writer &w) const {
@@ -96,8 +82,7 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Compound:
-         switch (res.__xx_get_id(name)) {
-         case 2:
+         if (name == "foo_map") {
             r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
                if (tagid != minecpp::nbt::TagId::Compound) {
                   r.skip_payload(tagid);
@@ -106,7 +91,8 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
                res.foo_map.insert(std::make_pair(name, Foo::deserialize_no_header(r)));
             });
             return;
-         case 3:
+         }
+         if (name == "meta") {
             res.__xx_put(name, r.read_compound_content());
             return;
          }
@@ -116,15 +102,13 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
          if (list_info0.size > 0) {
             switch (list_info0.tagid) {
             case minecpp::nbt::TagId::Compound: {
-               switch (res.__xx_get_id(name)) {
-               case 1: {
+               if (name == "foo") {
                   std::vector<Foo> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return Foo::deserialize_no_header(r);
                   });
                   res.__xx_put(name, ls);
                   return;
-               }
                }
                break;
             }
@@ -148,20 +132,6 @@ Bar Bar::deserialize(std::istream &in) {
       return Bar();
    }
    return Bar::deserialize_no_header(r);
-}
-
-std::unordered_map<std::string, __nbt_idl_offset> Bar::__xx_offsets {
-   {"foo", {offsetof(Bar, foo), sizeof(Bar::foo), 1}},
-   {"foo_map", {offsetof(Bar, foo_map), sizeof(Bar::foo_map), 2}},
-   {"meta", {offsetof(Bar, meta), sizeof(Bar::meta), 3}},
-};
-
-int Bar::__xx_get_id(const std::string &name) const {
-   auto it = __xx_offsets.find(name);
-   if (it == __xx_offsets.end()) {
-      return -1;
-   }
-   return it->second.id;
 }
 
 }

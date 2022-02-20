@@ -32,9 +32,13 @@ auto main() -> int {
    EventHandler handler(svr);
    minecpp::service::engine::Client engine_client(conf.engine_hosts[0], handler);
 
+   spdlog::info("attempting to connect to engine");
+
    auto stream = engine_client.join();
    service.set_stream(&stream);
    handler.set_stream(&stream);
+
+   spdlog::info("established connection, starting tick");
 
    TickManager ticks(svr, chunk_service);
    std::thread ticks_thread([&ticks]() { ticks.tick(); });

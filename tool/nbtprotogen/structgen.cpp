@@ -1,8 +1,8 @@
 #include "structgen.h"
+#include <fmt/format.h>
 #include <mb/codegen/class.h>
 #include <mb/codegen/lambda.h>
 #include <sstream>
-#include <fmt/format.h>
 
 namespace minecpp::tool::nbt_idl {
 
@@ -30,7 +30,7 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
    }
 
    for (const auto &path : structure.imports) {
-       m_component.header_include(path + ".h");
+      m_component.header_include(path + ".h");
    }
 
    class_spec offset_class(g_offset_class_name, fmt::format("{}_OFFSET_CLASS", m_header_name));
@@ -44,6 +44,12 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       std::for_each(msg.attribs.begin(), msg.attribs.end(), [&message_class](const Semantics::Attribute &attr) {
          message_class.add_public(attr.type.to_cpp_type(), attr.name);
       });
+
+      std::map<std::string, std::vector<Semantics::Attribute>> type_names{};
+      for (auto &attrib : msg.attribs) {
+         auto name = attrib.type.to_cpp_type();
+         type_names[name].push_back(attrib);
+      }
 
       // public:
 
@@ -100,29 +106,35 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
          offset_map.add(pair);
       });
       // static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-      message_class.add_private(static_attribute("std::unordered_map<std::string, __nbt_idl_offset>", g_offset_attribute, offset_map));
+      //      message_class.add_private(static_attribute("std::unordered_map<std::string, __nbt_idl_offset>", g_offset_attribute, offset_map));
 
       // void __x_get_id()
-      message_class.add_private(method("int", g_get_offset_id, {{"const std::string", "&name"}}, true, [](statement::collector &col) {
-         col << assign("auto it", call("__xx_offsets.find", raw("name")));
-         col << if_statement(raw("it == __xx_offsets.end()"), [](statement::collector &col) {
-            col << raw("return -1");
-         });
-         col << raw("return it->second.id");
-      }));
+      //      message_class.add_private(method("int", g_get_offset_id, {{"const std::string", "&name"}}, true, [](statement::collector &col) {
+      //         col << assign("auto it", call("__xx_offsets.find", raw("name")));
+      //         col << if_statement(raw("it == __xx_offsets.end()"), [](statement::collector &col) {
+      //            col << raw("return -1");
+      //         });
+      //         col << raw("return it->second.id");
+      //      }));
 
       // void __xx_put()
-      message_class.add_private(method_template("void", g_put_method, {{"typename", "T"}}, {{"const std::string", "&name"}, {"T", "value"}}, [](statement::collector &col) {
-         col << assign("auto it", call("__xx_offsets.find", raw("name")));
-         col << if_statement(raw("it == __xx_offsets.end()"), [](statement::collector &col) {
-            col << raw("return");
-         });
-         col << if_statement(raw("it->second.size != sizeof(T)"), [](statement::collector &col) {
-            col << raw("return");
-         });
-         col << assign("T *ptr", raw("reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset)"));
-         col << call("ptr->~T");
-         col << assign("*ptr", call("std::forward<T>", raw("value")));
+      message_class.add_private(method_template("void", g_put_method, {{"typename", "T"}}, {{"const std::string", "&name"}, {"T", "&&value"}}, [&type_names](statement::collector &col) {
+         for (auto &pair : type_names) {
+            if (pair.second.empty())
+               continue;
+
+            auto stmt = if_statement(raw("std::is_same_v<T, {}>", pair.first), [&pair](statement::collector &col) {
+               for (auto &item : pair.second) {
+                  col << if_statement(raw("name == \"{}\"", item.label), [&item](statement::collector &col) {
+                     col << raw("this->{} = std::forward<T>(value)", item.name);
+                     col << raw("return");
+                  });
+               }
+               col << raw("return");
+            });
+            stmt.with_constexpr();
+            col << stmt;
+         }
       }));
 
       m_component << message_class;
@@ -182,9 +194,8 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
       if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
          auto deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
          tag_switch.add_noscope(raw("minecpp::nbt::TagId::Compound"), [&deserializer](statement::collector &col) {
-            switch_statement label_switch(call("res.__xx_get_id", raw("name")));
-            std::for_each(deserializer.elems.begin(), deserializer.elems.end(), [&label_switch](const Semantics::CompoundDeserializer::Elem &elem) {
-               label_switch.add_noscope(raw("{}", elem.id), [&elem](statement::collector &col) {
+            std::for_each(deserializer.elems.begin(), deserializer.elems.end(), [&col](const Semantics::CompoundDeserializer::Elem &elem) {
+               col << if_statement(raw("name == \"{}\"", elem.label), [&elem](statement::collector &col) {
                   switch (elem.kind) {
                   case Semantics::CompoundKind::Struct:
                      col << call("res.__xx_put", raw("name"), raw("{}::deserialize_no_header(r)", elem.typeName));
@@ -211,9 +222,9 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
                      col << raw("return");
                      return;
                   }
+                  col << raw("break");
                });
             });
-            col << label_switch;
             col << raw("break");
          });
          return;
@@ -236,44 +247,42 @@ void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
 
    col << raw("auto list_info{} = r.peek_list()", depth);
    col << if_statement(raw("list_info{}.size > 0", depth), [&deserializer, depth](statement::collector &col) {
-     switch_statement list_type_switch(raw("list_info{}.tagid", depth));
-     std::for_each(deserializer.elems.begin(), deserializer.elems.end(), [depth, &list_type_switch](const std::pair<const Semantics::TypeVariant, std::any> &pair) {
-       if (!pair.second.has_value()) {
-          return;
-       }
+      switch_statement list_type_switch(raw("list_info{}.tagid", depth));
+      std::for_each(deserializer.elems.begin(), deserializer.elems.end(), [depth, &list_type_switch](const std::pair<const Semantics::TypeVariant, std::any> &pair) {
+         if (!pair.second.has_value()) {
+            return;
+         }
 
-       if (pair.second.type() == typeid(Semantics::StaticDeserializer)) {
-          auto elem_deserializer = std::any_cast<Semantics::StaticDeserializer>(pair.second);
-          list_type_switch.add(raw(Semantics::variant_to_nbt_tag(elem_deserializer.variant)), [depth, &elem_deserializer](statement::collector &col) {
-            put_deserialize_list_logic_static(elem_deserializer, col, 0, depth);
-          });
-       }
-
-       if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
-          auto elem_deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
-          list_type_switch.add(raw("minecpp::nbt::TagId::Compound"), [&elem_deserializer, depth](statement::collector &col) {
-            switch_statement compound_tag_switch(call("res.__xx_get_id", raw("name")));
-            std::for_each(elem_deserializer.elems.begin(), elem_deserializer.elems.end(), [&compound_tag_switch, depth](const Semantics::CompoundDeserializer::Elem &elem) {
-              compound_tag_switch.add(raw("{}", elem.id), [&elem, depth](statement::collector &col) {
-                put_deserialize_list_logic_compound(elem, col, 0, depth);
-              });
+         if (pair.second.type() == typeid(Semantics::StaticDeserializer)) {
+            auto elem_deserializer = std::any_cast<Semantics::StaticDeserializer>(pair.second);
+            list_type_switch.add(raw(Semantics::variant_to_nbt_tag(elem_deserializer.variant)), [depth, &elem_deserializer](statement::collector &col) {
+               put_deserialize_list_logic_static(elem_deserializer, col, 0, depth);
             });
-            col << compound_tag_switch;
-            col << raw("break");
-          });
-       }
+         }
 
-       if (pair.second.type() == typeid(Semantics::ListDeserializer)) {
-          auto elem_deserializer = std::any_cast<Semantics::ListDeserializer>(pair.second);
-          list_type_switch.add(raw("minecpp::nbt::TagId::List"), [&elem_deserializer, depth](statement::collector &col) {
-            put_deserialize_list_logic(elem_deserializer, col, depth + 1);
-          });
-       }
-     });
-     col << list_type_switch;
-     col << for_statement(raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"), [depth](statement::collector &col) {
-       col << call("r.skip_payload", raw("list_info{}.tagid", depth));
-     });
+         if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
+            auto elem_deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
+            list_type_switch.add(raw("minecpp::nbt::TagId::Compound"), [&elem_deserializer, depth](statement::collector &col) {
+               std::for_each(elem_deserializer.elems.begin(), elem_deserializer.elems.end(), [&col, depth](const Semantics::CompoundDeserializer::Elem &elem) {
+                  col << if_statement(raw("name == \"{}\"", elem.label), [&elem, depth](statement::collector &col) {
+                     put_deserialize_list_logic_compound(elem, col, 0, depth);
+                  });
+               });
+               col << raw("break");
+            });
+         }
+
+         if (pair.second.type() == typeid(Semantics::ListDeserializer)) {
+            auto elem_deserializer = std::any_cast<Semantics::ListDeserializer>(pair.second);
+            list_type_switch.add(raw("minecpp::nbt::TagId::List"), [&elem_deserializer, depth](statement::collector &col) {
+               put_deserialize_list_logic(elem_deserializer, col, depth + 1);
+            });
+         }
+      });
+      col << list_type_switch;
+      col << for_statement(raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"), [depth](statement::collector &col) {
+         col << call("r.skip_payload", raw("list_info{}.tagid", depth));
+      });
    });
    col << return_statement();
 }
