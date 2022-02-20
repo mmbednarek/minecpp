@@ -17,14 +17,16 @@ using ClientBidiStream =
 
 using OutEvent = proto::event::serverbound::v1::Event;
 
+constexpr std::size_t g_steam_queue_size = 1024;
+
 class Stream {
    ClientBidiStream &m_stream;
    std::mutex &m_mtx;
    bool &m_writing;
-   util::StaticQueue<OutEvent, 256> &m_out_queue;
+   util::StaticQueue<OutEvent, g_steam_queue_size> &m_out_queue;
 
  public:
-   Stream(ClientBidiStream &stream, std::mutex &mtx, bool &writing, util::StaticQueue<OutEvent, 256> &out_queue) : m_stream(stream), m_mtx(mtx), m_writing(writing), m_out_queue(out_queue) {}
+   Stream(ClientBidiStream &stream, std::mutex &mtx, bool &writing, util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue) : m_stream(stream), m_mtx(mtx), m_writing(writing), m_out_queue(out_queue) {}
 
    template<typename TEvent>
    void send(const TEvent &event, player::Id player_id) const {
@@ -48,7 +50,7 @@ requires event::ClientboundVisitor<TVisitor>
 class ClientEventHandler {
    TVisitor &m_visitor;
    std::unique_ptr<ClientBidiStream> m_stream;
-   util::StaticQueue<OutEvent, 256> m_out_queue;
+   util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
    std::mutex m_mtx;
    bool m_writing;
 
@@ -62,7 +64,6 @@ class ClientEventHandler {
 
    void on_finish_write(ClientBidiStream stream) {
        std::unique_lock<std::mutex> lock(m_mtx);
-
        if (!m_out_queue.empty()) {
          m_writing = true;
          auto event = m_out_queue.pop();
@@ -96,7 +97,7 @@ class Client {
    ClientEventHandler<TVisitor> m_handler;
 
  public:
-   explicit Client(const std::string &address, TVisitor &visitor) : m_connection(address, m_handler, 1), m_handler(visitor) {}
+   explicit Client(const std::string &address, TVisitor &visitor) : m_connection(address, m_handler, 4), m_handler(visitor) {}
 
    [[nodiscard]] Stream join() {
       return m_handler.stream();

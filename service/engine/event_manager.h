@@ -13,19 +13,23 @@ template<typename TStream>
 class EventManager {
  public:
    using Event = proto::event::clientbound::v1::Event;
-   using Queue = minecpp::util::StaticQueue<Event, 256>;
+   using Queue = minecpp::util::StaticQueue<Event, 4096>;
 
    struct Client {
       TStream stream;
       EventManager::Queue queue;
       std::atomic<bool> writing = false;
+      std::mutex mutex;
+      std::atomic<int> writing_count = 0;
 
       explicit Client(TStream stream) : stream(stream) {}
 
       void write(Event event) {
-         if(!writing) {
+         if (!writing && mutex.try_lock()) {
+            ++writing_count;
             writing = true;
             stream.write(event);
+            mutex.unlock();
             return;
          }
          queue.push(std::move(event));

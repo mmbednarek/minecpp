@@ -103,6 +103,7 @@ class BidiServer {
             queue_ok = m_queue->Next(&tag_ptr, &data_ok);
          }
          if (!queue_ok) {
+            spdlog::info("shutting down the server :v");
             return mb::ok;
          }
          if (!data_ok) {
@@ -166,8 +167,8 @@ class BidiServer {
       std::invoke(FRequest, &m_service, &(client_ptr->ctx), &(client_ptr->stream), m_queue.get(), dynamic_cast<::grpc::ServerCompletionQueue *>(m_queue.get()), event);
    }
 
-   mb::result<mb::empty> wait() {
-      std::vector<mb::result<mb::empty>> results;
+   mb::emptyres wait() {
+      std::vector<mb::emptyres> results;
       results.reserve(m_workers.size());
       std::for_each(m_workers.begin(), m_workers.end(), [](std::future<mb::result<mb::empty>> &worker) {
          worker.wait();

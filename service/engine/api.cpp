@@ -31,14 +31,19 @@ void ApiHandler::on_finish_write(BidiStream stream) {
    if (client == nullptr) {
       return;
    }
-   if(!client->writing) {
-      return;
-   }
+
+   std::unique_lock<std::mutex> lock(client->mutex);
+   --client->writing_count;
+
    if (client->queue.empty()) {
       client->writing = false;
+      spdlog::info("setting writing to false, counting: {}", client->writing_count);
       return;
    }
-   stream.write(client->queue.pop());
+   ++client->writing_count;
+   auto msg = client->queue.pop();
+   spdlog::info("writing next message, size: {}", msg.ByteSizeLong());
+   stream.write(msg);
 }
 
 }// namespace minecpp::service::engine
