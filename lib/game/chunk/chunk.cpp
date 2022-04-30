@@ -2,7 +2,6 @@
 #include <minecpp/game/block/registry.h>
 #include <minecpp/game/chunk/chunk.h>
 #include <minecpp/game/chunk/utils.h>
-#include <minecpp/game/item/registry.h>
 #include <minecpp/nbt/parser.h>
 #include <minecpp/util/packed.h>
 #include <minecpp/util/time.h>

@@ -1,5 +1,4 @@
 #include "structgen.h"
-#include <fmt/format.h>
 #include <mb/codegen/class.h>
 #include <mb/codegen/lambda.h>
 #include <sstream>

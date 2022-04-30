@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <iostream>
 #include <minecpp/game/block/position.h>
 
 TEST(Block, Position) {

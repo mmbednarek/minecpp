@@ -30,7 +30,7 @@ class Reader {
          result[i] = read_bswap<T>();
       }
       return result;
-   };
+   }
 
    [[nodiscard]] float read_float() const;
    [[nodiscard]] double read_double() const;

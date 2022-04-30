@@ -16,137 +16,141 @@
 #include <google/protobuf/port_def.inc>
 
 PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace minecpp {
 namespace proto {
 namespace service {
 namespace chunk_storage {
 namespace v1 {
-constexpr LoadChunkRequest::LoadChunkRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_CONSTEXPR LoadChunkRequest::LoadChunkRequest(
+    ::_pbi::ConstantInitialized)
   : x_(0)
   , z_(0){}
 struct LoadChunkRequestDefaultTypeInternal {
-  constexpr LoadChunkRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR LoadChunkRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~LoadChunkRequestDefaultTypeInternal() {}
   union {
     LoadChunkRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT LoadChunkRequestDefaultTypeInternal _LoadChunkRequest_default_instance_;
-constexpr SetBlockRequest::SetBlockRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LoadChunkRequestDefaultTypeInternal _LoadChunkRequest_default_instance_;
+PROTOBUF_CONSTEXPR SetBlockRequest::SetBlockRequest(
+    ::_pbi::ConstantInitialized)
   : x_(0)
   , y_(0)
   , z_(0)
   , state_(0){}
 struct SetBlockRequestDefaultTypeInternal {
-  constexpr SetBlockRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR SetBlockRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~SetBlockRequestDefaultTypeInternal() {}
   union {
     SetBlockRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SetBlockRequestDefaultTypeInternal _SetBlockRequest_default_instance_;
-constexpr Coord::Coord(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetBlockRequestDefaultTypeInternal _SetBlockRequest_default_instance_;
+PROTOBUF_CONSTEXPR Coord::Coord(
+    ::_pbi::ConstantInitialized)
   : x_(0)
   , z_(0){}
 struct CoordDefaultTypeInternal {
-  constexpr CoordDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR CoordDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~CoordDefaultTypeInternal() {}
   union {
     Coord _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT CoordDefaultTypeInternal _Coord_default_instance_;
-constexpr AddReferencesRequest::AddReferencesRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CoordDefaultTypeInternal _Coord_default_instance_;
+PROTOBUF_CONSTEXPR AddReferencesRequest::AddReferencesRequest(
+    ::_pbi::ConstantInitialized)
   : coords_()
-  , engine_id_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , player_id_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+  , engine_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , player_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct AddReferencesRequestDefaultTypeInternal {
-  constexpr AddReferencesRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR AddReferencesRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~AddReferencesRequestDefaultTypeInternal() {}
   union {
     AddReferencesRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AddReferencesRequestDefaultTypeInternal _AddReferencesRequest_default_instance_;
-constexpr AddReferencesResponse::AddReferencesResponse(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : target_engine_id_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddReferencesRequestDefaultTypeInternal _AddReferencesRequest_default_instance_;
+PROTOBUF_CONSTEXPR AddReferencesResponse::AddReferencesResponse(
+    ::_pbi::ConstantInitialized)
+  : target_engine_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , status_(0)
 {}
 struct AddReferencesResponseDefaultTypeInternal {
-  constexpr AddReferencesResponseDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR AddReferencesResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~AddReferencesResponseDefaultTypeInternal() {}
   union {
     AddReferencesResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT AddReferencesResponseDefaultTypeInternal _AddReferencesResponse_default_instance_;
-constexpr RemoveReferencesRequest::RemoveReferencesRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddReferencesResponseDefaultTypeInternal _AddReferencesResponse_default_instance_;
+PROTOBUF_CONSTEXPR RemoveReferencesRequest::RemoveReferencesRequest(
+    ::_pbi::ConstantInitialized)
   : coords_()
-  , player_id_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+  , player_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct RemoveReferencesRequestDefaultTypeInternal {
-  constexpr RemoveReferencesRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RemoveReferencesRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~RemoveReferencesRequestDefaultTypeInternal() {}
   union {
     RemoveReferencesRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT RemoveReferencesRequestDefaultTypeInternal _RemoveReferencesRequest_default_instance_;
-constexpr HeightAtRequest::HeightAtRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveReferencesRequestDefaultTypeInternal _RemoveReferencesRequest_default_instance_;
+PROTOBUF_CONSTEXPR HeightAtRequest::HeightAtRequest(
+    ::_pbi::ConstantInitialized)
   : x_(0)
   , z_(0){}
 struct HeightAtRequestDefaultTypeInternal {
-  constexpr HeightAtRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR HeightAtRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~HeightAtRequestDefaultTypeInternal() {}
   union {
     HeightAtRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT HeightAtRequestDefaultTypeInternal _HeightAtRequest_default_instance_;
-constexpr HeightAtResponse::HeightAtResponse(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeightAtRequestDefaultTypeInternal _HeightAtRequest_default_instance_;
+PROTOBUF_CONSTEXPR HeightAtResponse::HeightAtResponse(
+    ::_pbi::ConstantInitialized)
   : height_(0){}
 struct HeightAtResponseDefaultTypeInternal {
-  constexpr HeightAtResponseDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR HeightAtResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~HeightAtResponseDefaultTypeInternal() {}
   union {
     HeightAtResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT HeightAtResponseDefaultTypeInternal _HeightAtResponse_default_instance_;
-constexpr EmptyResponse::EmptyResponse(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized){}
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeightAtResponseDefaultTypeInternal _HeightAtResponse_default_instance_;
+PROTOBUF_CONSTEXPR EmptyResponse::EmptyResponse(
+    ::_pbi::ConstantInitialized){}
 struct EmptyResponseDefaultTypeInternal {
-  constexpr EmptyResponseDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR EmptyResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~EmptyResponseDefaultTypeInternal() {}
   union {
     EmptyResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT EmptyResponseDefaultTypeInternal _EmptyResponse_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyResponseDefaultTypeInternal _EmptyResponse_default_instance_;
 }  // namespace v1
 }  // namespace chunk_storage
 }  // namespace service
 }  // namespace proto
 }  // namespace minecpp
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[9];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[1];
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto = nullptr;
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[9];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[1];
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto = nullptr;
 
 const uint32_t TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -222,7 +226,7 @@ const uint32_t TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fch
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest)},
   { 8, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest)},
   { 18, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::Coord)},
@@ -234,16 +238,16 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 66, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::EmptyResponse)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_LoadChunkRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_SetBlockRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_Coord_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_AddReferencesRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_AddReferencesResponse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_RemoveReferencesRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_HeightAtRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_HeightAtResponse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::chunk_storage::v1::_EmptyResponse_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::minecpp::proto::service::chunk_storage::v1::_LoadChunkRequest_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_SetBlockRequest_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_Coord_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_AddReferencesRequest_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_AddReferencesResponse_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_RemoveReferencesRequest_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_HeightAtRequest_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_HeightAtResponse_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_EmptyResponse_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -284,22 +288,24 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage
   "quest\0328.minecpp.proto.service.chunk_stor"
   "age.v1.HeightAtResponseb\006proto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps[1] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps[1] = {
   &::descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fchunk_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto = {
-  false, false, 1431, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto, "minecpp/proto/service/chunk_storage/v1/chunk_storage.proto", 
-  &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps, 1, 9,
-  schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto::offsets,
-  file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto, file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
+static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto = {
+    false, false, 1431, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
+    "minecpp/proto/service/chunk_storage/v1/chunk_storage.proto",
+    &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps, 1, 9,
+    schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto::offsets,
+    file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
+    file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
 };
-PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter() {
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter() {
   return &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto;
 }
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto);
 namespace minecpp {
 namespace proto {
 namespace service {
@@ -330,9 +336,6 @@ LoadChunkRequest::LoadChunkRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
 }
 LoadChunkRequest::LoadChunkRequest(const LoadChunkRequest& from)
@@ -353,21 +356,17 @@ inline void LoadChunkRequest::SharedCtor() {
 
 LoadChunkRequest::~LoadChunkRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void LoadChunkRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void LoadChunkRequest::ArenaDtor(void* object) {
-  LoadChunkRequest* _this = reinterpret_cast< LoadChunkRequest* >(object);
-  (void)_this;
-}
-void LoadChunkRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void LoadChunkRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -384,11 +383,11 @@ void LoadChunkRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* LoadChunkRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* LoadChunkRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 x = 1;
       case 1:
@@ -438,17 +437,17 @@ uint8_t* LoadChunkRequest::_InternalSerialize(
   // int32 x = 1;
   if (this->_internal_x() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
   }
 
   // int32 z = 2;
   if (this->_internal_z() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
@@ -465,12 +464,12 @@ size_t LoadChunkRequest::ByteSizeLong() const {
 
   // int32 x = 1;
   if (this->_internal_x() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_x());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_x());
   }
 
   // int32 z = 2;
   if (this->_internal_z() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_z());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -527,7 +526,7 @@ void LoadChunkRequest::InternalSwap(LoadChunkRequest* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata LoadChunkRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[0]);
 }
@@ -542,9 +541,6 @@ SetBlockRequest::SetBlockRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
 }
 SetBlockRequest::SetBlockRequest(const SetBlockRequest& from)
@@ -565,21 +561,17 @@ inline void SetBlockRequest::SharedCtor() {
 
 SetBlockRequest::~SetBlockRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void SetBlockRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void SetBlockRequest::ArenaDtor(void* object) {
-  SetBlockRequest* _this = reinterpret_cast< SetBlockRequest* >(object);
-  (void)_this;
-}
-void SetBlockRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void SetBlockRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -596,11 +588,11 @@ void SetBlockRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* SetBlockRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* SetBlockRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 x = 1;
       case 1:
@@ -666,29 +658,29 @@ uint8_t* SetBlockRequest::_InternalSerialize(
   // int32 x = 1;
   if (this->_internal_x() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
   }
 
   // int32 y = 2;
   if (this->_internal_y() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_y(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_y(), target);
   }
 
   // int32 z = 3;
   if (this->_internal_z() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_z(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_z(), target);
   }
 
   // int32 state = 4;
   if (this->_internal_state() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_state(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_state(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
@@ -705,22 +697,22 @@ size_t SetBlockRequest::ByteSizeLong() const {
 
   // int32 x = 1;
   if (this->_internal_x() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_x());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_x());
   }
 
   // int32 y = 2;
   if (this->_internal_y() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_y());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_y());
   }
 
   // int32 z = 3;
   if (this->_internal_z() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_z());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
   // int32 state = 4;
   if (this->_internal_state() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_state());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_state());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -783,7 +775,7 @@ void SetBlockRequest::InternalSwap(SetBlockRequest* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SetBlockRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[1]);
 }
@@ -798,9 +790,6 @@ Coord::Coord(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.Coord)
 }
 Coord::Coord(const Coord& from)
@@ -821,21 +810,17 @@ inline void Coord::SharedCtor() {
 
 Coord::~Coord() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.Coord)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void Coord::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void Coord::ArenaDtor(void* object) {
-  Coord* _this = reinterpret_cast< Coord* >(object);
-  (void)_this;
-}
-void Coord::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void Coord::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -852,11 +837,11 @@ void Coord::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* Coord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* Coord::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 x = 1;
       case 1:
@@ -906,17 +891,17 @@ uint8_t* Coord::_InternalSerialize(
   // int32 x = 1;
   if (this->_internal_x() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
   }
 
   // int32 z = 2;
   if (this->_internal_z() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.Coord)
@@ -933,12 +918,12 @@ size_t Coord::ByteSizeLong() const {
 
   // int32 x = 1;
   if (this->_internal_x() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_x());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_x());
   }
 
   // int32 z = 2;
   if (this->_internal_z() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_z());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -995,7 +980,7 @@ void Coord::InternalSwap(Coord* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Coord::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[2]);
 }
@@ -1011,64 +996,57 @@ AddReferencesRequest::AddReferencesRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
   coords_(arena) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
 }
 AddReferencesRequest::AddReferencesRequest(const AddReferencesRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       coords_(from.coords_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  engine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  engine_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    engine_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    engine_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_engine_id().empty()) {
-    engine_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_engine_id(), 
+    engine_id_.Set(from._internal_engine_id(), 
       GetArenaForAllocation());
   }
-  player_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  player_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    player_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    player_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_player_id().empty()) {
-    player_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_player_id(), 
+    player_id_.Set(from._internal_player_id(), 
       GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
 }
 
 inline void AddReferencesRequest::SharedCtor() {
-engine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+engine_id_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  engine_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  engine_id_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-player_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+player_id_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  player_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  player_id_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 AddReferencesRequest::~AddReferencesRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void AddReferencesRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  engine_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  player_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  engine_id_.Destroy();
+  player_id_.Destroy();
 }
 
-void AddReferencesRequest::ArenaDtor(void* object) {
-  AddReferencesRequest* _this = reinterpret_cast< AddReferencesRequest* >(object);
-  (void)_this;
-}
-void AddReferencesRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void AddReferencesRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -1085,17 +1063,17 @@ void AddReferencesRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* AddReferencesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* AddReferencesRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // bytes engine_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_engine_id();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1104,7 +1082,7 @@ const char* AddReferencesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAM
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_player_id();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1164,15 +1142,15 @@ uint8_t* AddReferencesRequest::_InternalSerialize(
   }
 
   // repeated .minecpp.proto.service.chunk_storage.v1.Coord coords = 3;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_coords_size()); i < n; i++) {
-    target = stream->EnsureSpace(target);
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_coords_size()); i < n; i++) {
+    const auto& repfield = this->_internal_coords(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, this->_internal_coords(i), target, stream);
+        InternalWriteMessage(3, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
@@ -1258,19 +1236,17 @@ void AddReferencesRequest::InternalSwap(AddReferencesRequest* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   coords_.InternalSwap(&other->coords_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &engine_id_, lhs_arena,
       &other->engine_id_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &player_id_, lhs_arena,
       &other->player_id_, rhs_arena
   );
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata AddReferencesRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[3]);
 }
@@ -1285,20 +1261,17 @@ AddReferencesResponse::AddReferencesResponse(::PROTOBUF_NAMESPACE_ID::Arena* are
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
 }
 AddReferencesResponse::AddReferencesResponse(const AddReferencesResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  target_engine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  target_engine_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    target_engine_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    target_engine_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_target_engine_id().empty()) {
-    target_engine_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_target_engine_id(), 
+    target_engine_id_.Set(from._internal_target_engine_id(), 
       GetArenaForAllocation());
   }
   status_ = from.status_;
@@ -1306,31 +1279,27 @@ AddReferencesResponse::AddReferencesResponse(const AddReferencesResponse& from)
 }
 
 inline void AddReferencesResponse::SharedCtor() {
-target_engine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+target_engine_id_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  target_engine_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  target_engine_id_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 status_ = 0;
 }
 
 AddReferencesResponse::~AddReferencesResponse() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void AddReferencesResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  target_engine_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  target_engine_id_.Destroy();
 }
 
-void AddReferencesResponse::ArenaDtor(void* object) {
-  AddReferencesResponse* _this = reinterpret_cast< AddReferencesResponse* >(object);
-  (void)_this;
-}
-void AddReferencesResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void AddReferencesResponse::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -1346,11 +1315,11 @@ void AddReferencesResponse::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* AddReferencesResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* AddReferencesResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.service.chunk_storage.v1.ReferenceStatus status = 1;
       case 1:
@@ -1365,7 +1334,7 @@ const char* AddReferencesResponse::_InternalParse(const char* ptr, ::PROTOBUF_NA
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_target_engine_id();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1402,7 +1371,7 @@ uint8_t* AddReferencesResponse::_InternalSerialize(
   // .minecpp.proto.service.chunk_storage.v1.ReferenceStatus status = 1;
   if (this->_internal_status() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
       1, this->_internal_status(), target);
   }
 
@@ -1413,7 +1382,7 @@ uint8_t* AddReferencesResponse::_InternalSerialize(
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
@@ -1438,7 +1407,7 @@ size_t AddReferencesResponse::ByteSizeLong() const {
   // .minecpp.proto.service.chunk_storage.v1.ReferenceStatus status = 1;
   if (this->_internal_status() != 0) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_status());
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_status());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1489,7 +1458,6 @@ void AddReferencesResponse::InternalSwap(AddReferencesResponse* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &target_engine_id_, lhs_arena,
       &other->target_engine_id_, rhs_arena
   );
@@ -1497,7 +1465,7 @@ void AddReferencesResponse::InternalSwap(AddReferencesResponse* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata AddReferencesResponse::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[4]);
 }
@@ -1513,51 +1481,44 @@ RemoveReferencesRequest::RemoveReferencesRequest(::PROTOBUF_NAMESPACE_ID::Arena*
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
   coords_(arena) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
 }
 RemoveReferencesRequest::RemoveReferencesRequest(const RemoveReferencesRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       coords_(from.coords_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  player_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  player_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    player_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    player_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_player_id().empty()) {
-    player_id_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_player_id(), 
+    player_id_.Set(from._internal_player_id(), 
       GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
 }
 
 inline void RemoveReferencesRequest::SharedCtor() {
-player_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+player_id_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  player_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  player_id_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 RemoveReferencesRequest::~RemoveReferencesRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void RemoveReferencesRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  player_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  player_id_.Destroy();
 }
 
-void RemoveReferencesRequest::ArenaDtor(void* object) {
-  RemoveReferencesRequest* _this = reinterpret_cast< RemoveReferencesRequest* >(object);
-  (void)_this;
-}
-void RemoveReferencesRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void RemoveReferencesRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -1573,17 +1534,17 @@ void RemoveReferencesRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* RemoveReferencesRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* RemoveReferencesRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // bytes player_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_player_id();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1637,15 +1598,15 @@ uint8_t* RemoveReferencesRequest::_InternalSerialize(
   }
 
   // repeated .minecpp.proto.service.chunk_storage.v1.Coord coords = 2;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_coords_size()); i < n; i++) {
-    target = stream->EnsureSpace(target);
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_coords_size()); i < n; i++) {
+    const auto& repfield = this->_internal_coords(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, this->_internal_coords(i), target, stream);
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
@@ -1721,14 +1682,13 @@ void RemoveReferencesRequest::InternalSwap(RemoveReferencesRequest* other) {
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   coords_.InternalSwap(&other->coords_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &player_id_, lhs_arena,
       &other->player_id_, rhs_arena
   );
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RemoveReferencesRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[5]);
 }
@@ -1743,9 +1703,6 @@ HeightAtRequest::HeightAtRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
 }
 HeightAtRequest::HeightAtRequest(const HeightAtRequest& from)
@@ -1766,21 +1723,17 @@ inline void HeightAtRequest::SharedCtor() {
 
 HeightAtRequest::~HeightAtRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void HeightAtRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void HeightAtRequest::ArenaDtor(void* object) {
-  HeightAtRequest* _this = reinterpret_cast< HeightAtRequest* >(object);
-  (void)_this;
-}
-void HeightAtRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void HeightAtRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -1797,11 +1750,11 @@ void HeightAtRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* HeightAtRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* HeightAtRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 x = 1;
       case 1:
@@ -1851,17 +1804,17 @@ uint8_t* HeightAtRequest::_InternalSerialize(
   // int32 x = 1;
   if (this->_internal_x() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
   }
 
   // int32 z = 2;
   if (this->_internal_z() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_z(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
@@ -1878,12 +1831,12 @@ size_t HeightAtRequest::ByteSizeLong() const {
 
   // int32 x = 1;
   if (this->_internal_x() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_x());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_x());
   }
 
   // int32 z = 2;
   if (this->_internal_z() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_z());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1940,7 +1893,7 @@ void HeightAtRequest::InternalSwap(HeightAtRequest* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata HeightAtRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[6]);
 }
@@ -1955,9 +1908,6 @@ HeightAtResponse::HeightAtResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
 }
 HeightAtResponse::HeightAtResponse(const HeightAtResponse& from)
@@ -1973,21 +1923,17 @@ height_ = 0;
 
 HeightAtResponse::~HeightAtResponse() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void HeightAtResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void HeightAtResponse::ArenaDtor(void* object) {
-  HeightAtResponse* _this = reinterpret_cast< HeightAtResponse* >(object);
-  (void)_this;
-}
-void HeightAtResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void HeightAtResponse::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -2002,11 +1948,11 @@ void HeightAtResponse::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* HeightAtResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* HeightAtResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // int32 height = 1;
       case 1:
@@ -2048,11 +1994,11 @@ uint8_t* HeightAtResponse::_InternalSerialize(
   // int32 height = 1;
   if (this->_internal_height() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_height(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_height(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
@@ -2069,7 +2015,7 @@ size_t HeightAtResponse::ByteSizeLong() const {
 
   // int32 height = 1;
   if (this->_internal_height() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_height());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_height());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -2118,7 +2064,7 @@ void HeightAtResponse::InternalSwap(HeightAtResponse* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata HeightAtResponse::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[7]);
 }
@@ -2157,7 +2103,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EmptyResponse::GetClassData() 
 
 
 ::PROTOBUF_NAMESPACE_ID::Metadata EmptyResponse::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto[8]);
 }
@@ -2169,31 +2115,40 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EmptyResponse::GetClassData() 
 }  // namespace proto
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::Coord* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::Coord >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::Coord*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::Coord >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::Coord >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::EmptyResponse*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE

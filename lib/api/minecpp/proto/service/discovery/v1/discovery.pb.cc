@@ -16,82 +16,86 @@
 #include <google/protobuf/port_def.inc>
 
 PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace minecpp {
 namespace proto {
 namespace service {
 namespace discovery {
 namespace v1 {
-constexpr DiscoveryRequest::DiscoveryRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : service_name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+PROTOBUF_CONSTEXPR DiscoveryRequest::DiscoveryRequest(
+    ::_pbi::ConstantInitialized)
+  : service_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , resource_version_(uint64_t{0u}){}
 struct DiscoveryRequestDefaultTypeInternal {
-  constexpr DiscoveryRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR DiscoveryRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~DiscoveryRequestDefaultTypeInternal() {}
   union {
     DiscoveryRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT DiscoveryRequestDefaultTypeInternal _DiscoveryRequest_default_instance_;
-constexpr DiscoveryResponse::DiscoveryResponse(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DiscoveryRequestDefaultTypeInternal _DiscoveryRequest_default_instance_;
+PROTOBUF_CONSTEXPR DiscoveryResponse::DiscoveryResponse(
+    ::_pbi::ConstantInitialized)
   : endpoints_()
   , resource_version_(uint64_t{0u}){}
 struct DiscoveryResponseDefaultTypeInternal {
-  constexpr DiscoveryResponseDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR DiscoveryResponseDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~DiscoveryResponseDefaultTypeInternal() {}
   union {
     DiscoveryResponse _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT DiscoveryResponseDefaultTypeInternal _DiscoveryResponse_default_instance_;
-constexpr Endpoint::Endpoint(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : address_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DiscoveryResponseDefaultTypeInternal _DiscoveryResponse_default_instance_;
+PROTOBUF_CONSTEXPR Endpoint::Endpoint(
+    ::_pbi::ConstantInitialized)
+  : address_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , port_(0u){}
 struct EndpointDefaultTypeInternal {
-  constexpr EndpointDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR EndpointDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~EndpointDefaultTypeInternal() {}
   union {
     Endpoint _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT EndpointDefaultTypeInternal _Endpoint_default_instance_;
-constexpr RegisterRequest::RegisterRequest(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : service_name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EndpointDefaultTypeInternal _Endpoint_default_instance_;
+PROTOBUF_CONSTEXPR RegisterRequest::RegisterRequest(
+    ::_pbi::ConstantInitialized)
+  : service_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , endpoint_(nullptr){}
 struct RegisterRequestDefaultTypeInternal {
-  constexpr RegisterRequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RegisterRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~RegisterRequestDefaultTypeInternal() {}
   union {
     RegisterRequest _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT RegisterRequestDefaultTypeInternal _RegisterRequest_default_instance_;
-constexpr EmptyResult::EmptyResult(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized){}
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RegisterRequestDefaultTypeInternal _RegisterRequest_default_instance_;
+PROTOBUF_CONSTEXPR EmptyResult::EmptyResult(
+    ::_pbi::ConstantInitialized){}
 struct EmptyResultDefaultTypeInternal {
-  constexpr EmptyResultDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR EmptyResultDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~EmptyResultDefaultTypeInternal() {}
   union {
     EmptyResult _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT EmptyResultDefaultTypeInternal _EmptyResult_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 EmptyResultDefaultTypeInternal _EmptyResult_default_instance_;
 }  // namespace v1
 }  // namespace discovery
 }  // namespace service
 }  // namespace proto
 }  // namespace minecpp
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[5];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto = nullptr;
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[5];
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto = nullptr;
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto = nullptr;
 
 const uint32_t TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -133,7 +137,7 @@ const uint32_t TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscover
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::service::discovery::v1::DiscoveryRequest)},
   { 8, -1, -1, sizeof(::minecpp::proto::service::discovery::v1::DiscoveryResponse)},
   { 16, -1, -1, sizeof(::minecpp::proto::service::discovery::v1::Endpoint)},
@@ -141,12 +145,12 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 32, -1, -1, sizeof(::minecpp::proto::service::discovery::v1::EmptyResult)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::discovery::v1::_DiscoveryRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::discovery::v1::_DiscoveryResponse_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::discovery::v1::_Endpoint_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::discovery::v1::_RegisterRequest_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::discovery::v1::_EmptyResult_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::minecpp::proto::service::discovery::v1::_DiscoveryRequest_default_instance_._instance,
+  &::minecpp::proto::service::discovery::v1::_DiscoveryResponse_default_instance_._instance,
+  &::minecpp::proto::service::discovery::v1::_Endpoint_default_instance_._instance,
+  &::minecpp::proto::service::discovery::v1::_RegisterRequest_default_instance_._instance,
+  &::minecpp::proto::service::discovery::v1::_EmptyResult_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -169,19 +173,21 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fdiscovery_2fv1_
   "uest\032/.minecpp.proto.service.discovery.v"
   "1.EmptyResultb\006proto3"
   ;
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto = {
-  false, false, 701, descriptor_table_protodef_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto, "minecpp/proto/service/discovery/v1/discovery.proto", 
-  &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once, nullptr, 0, 5,
-  schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto::offsets,
-  file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto, file_level_service_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto,
+static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto = {
+    false, false, 701, descriptor_table_protodef_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto,
+    "minecpp/proto/service/discovery/v1/discovery.proto",
+    &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once, nullptr, 0, 5,
+    schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto::offsets,
+    file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto,
+    file_level_service_descriptors_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto,
 };
-PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter() {
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter() {
   return &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto;
 }
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto);
 namespace minecpp {
 namespace proto {
 namespace service {
@@ -198,20 +204,17 @@ DiscoveryRequest::DiscoveryRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.discovery.v1.DiscoveryRequest)
 }
 DiscoveryRequest::DiscoveryRequest(const DiscoveryRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  service_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    service_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_service_name().empty()) {
-    service_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_service_name(), 
+    service_name_.Set(from._internal_service_name(), 
       GetArenaForAllocation());
   }
   resource_version_ = from.resource_version_;
@@ -219,31 +222,27 @@ DiscoveryRequest::DiscoveryRequest(const DiscoveryRequest& from)
 }
 
 inline void DiscoveryRequest::SharedCtor() {
-service_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+service_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  service_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 resource_version_ = uint64_t{0u};
 }
 
 DiscoveryRequest::~DiscoveryRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.discovery.v1.DiscoveryRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void DiscoveryRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  service_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_name_.Destroy();
 }
 
-void DiscoveryRequest::ArenaDtor(void* object) {
-  DiscoveryRequest* _this = reinterpret_cast< DiscoveryRequest* >(object);
-  (void)_this;
-}
-void DiscoveryRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void DiscoveryRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -259,11 +258,11 @@ void DiscoveryRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* DiscoveryRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* DiscoveryRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint64 resource_version = 1;
       case 1:
@@ -277,9 +276,9 @@ const char* DiscoveryRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_service_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name"));
         } else
           goto handle_unusual;
         continue;
@@ -315,7 +314,7 @@ uint8_t* DiscoveryRequest::_InternalSerialize(
   // uint64 resource_version = 1;
   if (this->_internal_resource_version() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_resource_version(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_resource_version(), target);
   }
 
   // string service_name = 2;
@@ -329,7 +328,7 @@ uint8_t* DiscoveryRequest::_InternalSerialize(
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.discovery.v1.DiscoveryRequest)
@@ -353,7 +352,7 @@ size_t DiscoveryRequest::ByteSizeLong() const {
 
   // uint64 resource_version = 1;
   if (this->_internal_resource_version() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64SizePlusOne(this->_internal_resource_version());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_resource_version());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -404,7 +403,6 @@ void DiscoveryRequest::InternalSwap(DiscoveryRequest* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &service_name_, lhs_arena,
       &other->service_name_, rhs_arena
   );
@@ -412,7 +410,7 @@ void DiscoveryRequest::InternalSwap(DiscoveryRequest* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata DiscoveryRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[0]);
 }
@@ -428,9 +426,6 @@ DiscoveryResponse::DiscoveryResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
   endpoints_(arena) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.discovery.v1.DiscoveryResponse)
 }
 DiscoveryResponse::DiscoveryResponse(const DiscoveryResponse& from)
@@ -447,21 +442,17 @@ resource_version_ = uint64_t{0u};
 
 DiscoveryResponse::~DiscoveryResponse() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.discovery.v1.DiscoveryResponse)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void DiscoveryResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void DiscoveryResponse::ArenaDtor(void* object) {
-  DiscoveryResponse* _this = reinterpret_cast< DiscoveryResponse* >(object);
-  (void)_this;
-}
-void DiscoveryResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void DiscoveryResponse::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -477,11 +468,11 @@ void DiscoveryResponse::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* DiscoveryResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* DiscoveryResponse::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint64 resource_version = 1;
       case 1:
@@ -536,19 +527,19 @@ uint8_t* DiscoveryResponse::_InternalSerialize(
   // uint64 resource_version = 1;
   if (this->_internal_resource_version() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_resource_version(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_resource_version(), target);
   }
 
   // repeated .minecpp.proto.service.discovery.v1.Endpoint endpoints = 2;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_endpoints_size()); i < n; i++) {
-    target = stream->EnsureSpace(target);
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_endpoints_size()); i < n; i++) {
+    const auto& repfield = this->_internal_endpoints(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, this->_internal_endpoints(i), target, stream);
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.discovery.v1.DiscoveryResponse)
@@ -572,7 +563,7 @@ size_t DiscoveryResponse::ByteSizeLong() const {
 
   // uint64 resource_version = 1;
   if (this->_internal_resource_version() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64SizePlusOne(this->_internal_resource_version());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_resource_version());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -623,7 +614,7 @@ void DiscoveryResponse::InternalSwap(DiscoveryResponse* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata DiscoveryResponse::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[1]);
 }
@@ -638,20 +629,17 @@ Endpoint::Endpoint(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.discovery.v1.Endpoint)
 }
 Endpoint::Endpoint(const Endpoint& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  address_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    address_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    address_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_address().empty()) {
-    address_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_address(), 
+    address_.Set(from._internal_address(), 
       GetArenaForAllocation());
   }
   port_ = from.port_;
@@ -659,31 +647,27 @@ Endpoint::Endpoint(const Endpoint& from)
 }
 
 inline void Endpoint::SharedCtor() {
-address_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+address_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  address_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  address_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 port_ = 0u;
 }
 
 Endpoint::~Endpoint() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.discovery.v1.Endpoint)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void Endpoint::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  address_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  address_.Destroy();
 }
 
-void Endpoint::ArenaDtor(void* object) {
-  Endpoint* _this = reinterpret_cast< Endpoint* >(object);
-  (void)_this;
-}
-void Endpoint::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void Endpoint::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -699,19 +683,19 @@ void Endpoint::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* Endpoint::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* Endpoint::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // string address = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_address();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.service.discovery.v1.Endpoint.address"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.service.discovery.v1.Endpoint.address"));
         } else
           goto handle_unusual;
         continue;
@@ -765,11 +749,11 @@ uint8_t* Endpoint::_InternalSerialize(
   // uint32 port = 2;
   if (this->_internal_port() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_port(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_port(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.discovery.v1.Endpoint)
@@ -793,7 +777,7 @@ size_t Endpoint::ByteSizeLong() const {
 
   // uint32 port = 2;
   if (this->_internal_port() != 0) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32SizePlusOne(this->_internal_port());
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_port());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -844,7 +828,6 @@ void Endpoint::InternalSwap(Endpoint* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &address_, lhs_arena,
       &other->address_, rhs_arena
   );
@@ -852,7 +835,7 @@ void Endpoint::InternalSwap(Endpoint* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Endpoint::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[2]);
 }
@@ -872,20 +855,17 @@ RegisterRequest::RegisterRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.discovery.v1.RegisterRequest)
 }
 RegisterRequest::RegisterRequest(const RegisterRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  service_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    service_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_service_name().empty()) {
-    service_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_service_name(), 
+    service_name_.Set(from._internal_service_name(), 
       GetArenaForAllocation());
   }
   if (from._internal_has_endpoint()) {
@@ -897,32 +877,28 @@ RegisterRequest::RegisterRequest(const RegisterRequest& from)
 }
 
 inline void RegisterRequest::SharedCtor() {
-service_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+service_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  service_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 endpoint_ = nullptr;
 }
 
 RegisterRequest::~RegisterRequest() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.discovery.v1.RegisterRequest)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void RegisterRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  service_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_name_.Destroy();
   if (this != internal_default_instance()) delete endpoint_;
 }
 
-void RegisterRequest::ArenaDtor(void* object) {
-  RegisterRequest* _this = reinterpret_cast< RegisterRequest* >(object);
-  (void)_this;
-}
-void RegisterRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void RegisterRequest::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -941,19 +917,19 @@ void RegisterRequest::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* RegisterRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* RegisterRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // string service_name = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_service_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.service.discovery.v1.RegisterRequest.service_name"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.service.discovery.v1.RegisterRequest.service_name"));
         } else
           goto handle_unusual;
         continue;
@@ -1006,14 +982,13 @@ uint8_t* RegisterRequest::_InternalSerialize(
 
   // .minecpp.proto.service.discovery.v1.Endpoint endpoint = 2;
   if (this->_internal_has_endpoint()) {
-    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(
-        2, _Internal::endpoint(this), target, stream);
+      InternalWriteMessage(2, _Internal::endpoint(this),
+        _Internal::endpoint(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.discovery.v1.RegisterRequest)
@@ -1090,7 +1065,6 @@ void RegisterRequest::InternalSwap(RegisterRequest* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &service_name_, lhs_arena,
       &other->service_name_, rhs_arena
   );
@@ -1098,7 +1072,7 @@ void RegisterRequest::InternalSwap(RegisterRequest* other) {
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RegisterRequest::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[3]);
 }
@@ -1137,7 +1111,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EmptyResult::GetClassData() co
 
 
 ::PROTOBUF_NAMESPACE_ID::Metadata EmptyResult::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fdiscovery_2eproto[4]);
 }
@@ -1149,19 +1123,24 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EmptyResult::GetClassData() co
 }  // namespace proto
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::DiscoveryRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::DiscoveryRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::DiscoveryRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::DiscoveryRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::discovery::v1::DiscoveryRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::DiscoveryResponse* Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::DiscoveryResponse >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::DiscoveryResponse*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::DiscoveryResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::discovery::v1::DiscoveryResponse >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::Endpoint* Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::Endpoint >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::Endpoint*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::Endpoint >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::discovery::v1::Endpoint >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::RegisterRequest* Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::RegisterRequest >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::RegisterRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::RegisterRequest >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::discovery::v1::RegisterRequest >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::EmptyResult* Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::EmptyResult >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::discovery::v1::EmptyResult*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::discovery::v1::EmptyResult >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::discovery::v1::EmptyResult >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE

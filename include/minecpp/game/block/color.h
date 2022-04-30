@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MINECPP_GAME_BLOCK_COLOR_H
+#define MINECPP_GAME_BLOCK_COLOR_H
+
 #include <array>
 #include <cstdint>
 #include <minecpp/util/enum.h>
@@ -78,3 +80,5 @@ using DyeColor =
 ColorId dye_color_id(DyeColor color);
 
 } // namespace minecpp::game::block
+
+#endif //MINECPP_GAME_BLOCK_COLOR_H

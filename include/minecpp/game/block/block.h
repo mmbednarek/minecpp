@@ -1,6 +1,8 @@
-#pragma once
+#ifndef MINECPP_GAME_BLOCK_BLOCK_H
+#define MINECPP_GAME_BLOCK_BLOCK_H
 #include "material.h"
 #include "state.h"
+#include <minecpp/game/state.h>
 #include <minecpp/util/string.h>
 #include <string_view>
 #include <vector>
@@ -11,7 +13,7 @@ class Block {
    std::string_view _tag;
 
  public:
-   template <typename... T>
+   template<typename... T>
    explicit Block(std::string_view tag, T... params) : _tag(tag) {
       if constexpr (sizeof...(T) > 0) {
          apply_options(params...);
@@ -21,6 +23,7 @@ class Block {
    [[nodiscard]] std::string_view tag() const;
 
    std::vector<const Attribute *> attributes{};
+   std::vector<State> states;
    const Material *material;
    ColorId color;
    std::string_view loot = "";
@@ -37,7 +40,7 @@ class Block {
    bool variable_opacity = false;
 
  private:
-   template <typename F, typename... Others>
+   template<typename F, typename... Others>
    constexpr void apply_options(F first, Others... others) {
       first(*this);
       if constexpr (sizeof...(Others) > 0) {
@@ -78,7 +81,7 @@ std::function<void(Block &)> with_zero_durability();
 
 std::function<void(Block &)> with_variable_opacity();
 
-template <typename... T>
+template<typename... T>
 std::function<void(Block &)> with_attributes(T... attribs) {
    return [attribs...](Block &b) {
       b.attributes = {attribs...};
@@ -98,4 +101,6 @@ struct Properties {
 
 std::function<void(Block &)> with_properties(Properties props);
 
-} // namespace minecpp::game::block
+}// namespace minecpp::game::block
+
+#endif //MINECPP_GAME_BLOCK_BLOCK_H

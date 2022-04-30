@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include <minecpp/nbt/parser.h>
-#include <minecpp/nbt/reader.h>
 
 using namespace minecpp::nbt;
 

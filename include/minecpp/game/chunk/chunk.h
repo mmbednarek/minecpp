@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MINECPP_GAME_CHUNK_CHUNK_H
+#define MINECPP_GAME_CHUNK_CHUNK_H
+
 #include "section.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
@@ -47,3 +49,5 @@ struct Chunk {
 };
 
 }// namespace minecpp::game
+
+#endif //MINECPP_GAME_CHUNK_CHUNK_H

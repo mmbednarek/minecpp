@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MINECPP_GAME_BLOCK_REGISTRY_H
+#define MINECPP_GAME_BLOCK_REGISTRY_H
+
 #include "block.h"
 #include <minecpp/nbt/tag.h>
 
@@ -10,3 +12,5 @@ void debug_block_info();
 std::string_view tag_from_state_id(uint32_t state);
 const Block &block_by_tag(std::string_view tag);
 }// namespace minecpp::game::block
+
+#endif //MINECPP_GAME_BLOCK_REGISTRY_H

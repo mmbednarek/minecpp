@@ -6,6 +6,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <memory>
 
 namespace Semantics {
 

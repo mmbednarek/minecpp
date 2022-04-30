@@ -16,6 +16,10 @@
 #include <google/protobuf/port_def.inc>
 
 PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace minecpp {
 namespace proto {
 namespace service {
@@ -26,11 +30,11 @@ namespace v1 {
 }  // namespace service
 }  // namespace proto
 }  // namespace minecpp
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto = nullptr;
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto = nullptr;
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto = nullptr;
 const uint32_t TableStruct_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto::offsets[1] = {};
-static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
+static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
+static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n,minecpp/proto/service/engine/v1/engine"
@@ -42,23 +46,25 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fengine_2fv1_2fe
   "rbound.v1.Event\032).minecpp.proto.event.cl"
   "ientbound.v1.Event(\0010\001b\006proto3"
   ;
-static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_deps[2] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_deps[2] = {
   &::descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto,
   &::descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_once;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto = {
-  false, false, 310, descriptor_table_protodef_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto, "minecpp/proto/service/engine/v1/engine.proto", 
-  &descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_deps, 2, 0,
-  schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto::offsets,
-  nullptr, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto, file_level_service_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto,
+static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto = {
+    false, false, 310, descriptor_table_protodef_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto,
+    "minecpp/proto/service/engine/v1/engine.proto",
+    &descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_deps, 2, 0,
+    schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto::offsets,
+    nullptr, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto,
+    file_level_service_descriptors_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto,
 };
-PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_getter() {
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto_getter() {
   return &descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto;
 }
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fengine_2fv1_2fengine_2eproto);
 namespace minecpp {
 namespace proto {
 namespace service {

@@ -31,14 +31,14 @@ fetchcontent_makeavailable(yaml)
 fetchcontent_declare(
   libmb
   GIT_REPOSITORY https://github.com/mmbednarek/mb
-  GIT_TAG libmb-0.0.20
+  GIT_TAG libmb-0.0.21
 )
 fetchcontent_makeavailable(libmb)
 
 fetchcontent_declare(
   libmb_codegen
   GIT_REPOSITORY https://github.com/mmbednarek/codegen
-  GIT_TAG codegen-0.0.21
+  GIT_TAG codegen-0.0.22
 )
 fetchcontent_makeavailable(libmb_codegen)
 
@@ -49,6 +49,7 @@ include_directories(./service/protos/include)
 
 add_subdirectory(lib/api/minecpp/proto)
 add_subdirectory(lib/api/minecpp/nbt)
+add_subdirectory(lib/repository)
 add_subdirectory(lib/chat)
 add_subdirectory(lib/error)
 add_subdirectory(lib/format)

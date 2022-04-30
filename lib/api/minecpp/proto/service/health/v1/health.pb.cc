@@ -16,43 +16,47 @@
 #include <google/protobuf/port_def.inc>
 
 PROTOBUF_PRAGMA_INIT_SEG
+
+namespace _pb = ::PROTOBUF_NAMESPACE_ID;
+namespace _pbi = _pb::internal;
+
 namespace minecpp {
 namespace proto {
 namespace service {
 namespace health {
 namespace v1 {
-constexpr Request::Request(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized){}
+PROTOBUF_CONSTEXPR Request::Request(
+    ::_pbi::ConstantInitialized){}
 struct RequestDefaultTypeInternal {
-  constexpr RequestDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~RequestDefaultTypeInternal() {}
   union {
     Request _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT RequestDefaultTypeInternal _Request_default_instance_;
-constexpr ServiceStatus::ServiceStatus(
-  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : service_name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , service_version_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestDefaultTypeInternal _Request_default_instance_;
+PROTOBUF_CONSTEXPR ServiceStatus::ServiceStatus(
+    ::_pbi::ConstantInitialized)
+  : service_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , service_version_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
 struct ServiceStatusDefaultTypeInternal {
-  constexpr ServiceStatusDefaultTypeInternal()
-    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ServiceStatusDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
   ~ServiceStatusDefaultTypeInternal() {}
   union {
     ServiceStatus _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ServiceStatusDefaultTypeInternal _ServiceStatus_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ServiceStatusDefaultTypeInternal _ServiceStatus_default_instance_;
 }  // namespace v1
 }  // namespace health
 }  // namespace service
 }  // namespace proto
 }  // namespace minecpp
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto[2];
-static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto = nullptr;
-static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto = nullptr;
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto[2];
+static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto = nullptr;
+static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto = nullptr;
 
 const uint32_t TableStruct_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
@@ -70,14 +74,14 @@ const uint32_t TableStruct_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2epr
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::health::v1::ServiceStatus, service_name_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::health::v1::ServiceStatus, service_version_),
 };
-static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::service::health::v1::Request)},
   { 6, -1, -1, sizeof(::minecpp::proto::service::health::v1::ServiceStatus)},
 };
 
-static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::health::v1::_Request_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::minecpp::proto::service::health::v1::_ServiceStatus_default_instance_),
+static const ::_pb::Message* const file_default_instances[] = {
+  &::minecpp::proto::service::health::v1::_Request_default_instance_._instance,
+  &::minecpp::proto::service::health::v1::_ServiceStatus_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -90,19 +94,21 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fhealth_2fv1_2fh
   "cpp.proto.service.health.v1.ServiceStatu"
   "sb\006proto3"
   ;
-static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_once;
-const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto = {
-  false, false, 289, descriptor_table_protodef_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto, "minecpp/proto/service/health/v1/health.proto", 
-  &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_once, nullptr, 0, 2,
-  schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto::offsets,
-  file_level_metadata_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto, file_level_service_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto,
+static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_once;
+const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto = {
+    false, false, 289, descriptor_table_protodef_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto,
+    "minecpp/proto/service/health/v1/health.proto",
+    &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_once, nullptr, 0, 2,
+    schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto::offsets,
+    file_level_metadata_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto,
+    file_level_service_descriptors_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto,
 };
-PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_getter() {
+PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_getter() {
   return &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto;
 }
 
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto);
 namespace minecpp {
 namespace proto {
 namespace service {
@@ -143,7 +149,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Request::GetClassData() const 
 
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Request::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto[0]);
 }
@@ -158,63 +164,56 @@ ServiceStatus::ServiceStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  if (!is_message_owned) {
-    RegisterArenaDtor(arena);
-  }
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.health.v1.ServiceStatus)
 }
 ServiceStatus::ServiceStatus(const ServiceStatus& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  service_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    service_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_service_name().empty()) {
-    service_name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_service_name(), 
+    service_name_.Set(from._internal_service_name(), 
       GetArenaForAllocation());
   }
-  service_version_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_version_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    service_version_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+    service_version_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_service_version().empty()) {
-    service_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_service_version(), 
+    service_version_.Set(from._internal_service_version(), 
       GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.health.v1.ServiceStatus)
 }
 
 inline void ServiceStatus::SharedCtor() {
-service_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+service_name_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  service_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  service_name_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-service_version_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+service_version_.InitDefault();
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  service_version_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  service_version_.Set("", GetArenaForAllocation());
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 ServiceStatus::~ServiceStatus() {
   // @@protoc_insertion_point(destructor:minecpp.proto.service.health.v1.ServiceStatus)
-  if (GetArenaForAllocation() != nullptr) return;
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 inline void ServiceStatus::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  service_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  service_version_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  service_name_.Destroy();
+  service_version_.Destroy();
 }
 
-void ServiceStatus::ArenaDtor(void* object) {
-  ServiceStatus* _this = reinterpret_cast< ServiceStatus* >(object);
-  (void)_this;
-}
-void ServiceStatus::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void ServiceStatus::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -230,19 +229,19 @@ void ServiceStatus::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* ServiceStatus::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+const char* ServiceStatus::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // string service_name = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           auto str = _internal_mutable_service_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.service.health.v1.ServiceStatus.service_name"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.service.health.v1.ServiceStatus.service_name"));
         } else
           goto handle_unusual;
         continue;
@@ -250,9 +249,9 @@ const char* ServiceStatus::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_service_version();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "minecpp.proto.service.health.v1.ServiceStatus.service_version"));
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.service.health.v1.ServiceStatus.service_version"));
         } else
           goto handle_unusual;
         continue;
@@ -306,7 +305,7 @@ uint8_t* ServiceStatus::_InternalSerialize(
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.health.v1.ServiceStatus)
@@ -383,19 +382,17 @@ void ServiceStatus::InternalSwap(ServiceStatus* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &service_name_, lhs_arena,
       &other->service_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &service_version_, lhs_arena,
       &other->service_version_, rhs_arena
   );
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ServiceStatus::GetMetadata() const {
-  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+  return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2eproto[1]);
 }
@@ -407,10 +404,12 @@ void ServiceStatus::InternalSwap(ServiceStatus* other) {
 }  // namespace proto
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::health::v1::Request* Arena::CreateMaybeMessage< ::minecpp::proto::service::health::v1::Request >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::health::v1::Request*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::health::v1::Request >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::health::v1::Request >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::service::health::v1::ServiceStatus* Arena::CreateMaybeMessage< ::minecpp::proto::service::health::v1::ServiceStatus >(Arena* arena) {
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::health::v1::ServiceStatus*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::health::v1::ServiceStatus >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::health::v1::ServiceStatus >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE

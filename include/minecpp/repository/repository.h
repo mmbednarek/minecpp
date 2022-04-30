@@ -24,7 +24,7 @@ class Repository {
  public:
    [[nodiscard]] mb::result<Id> find_id_by_tag(std::string_view tag) {
       if (m_tags.contains(tag)) {
-         return mb::result<Id>(m_tags.at(tag));
+         return static_cast<Id>(m_tags.at(tag));
       }
       return mb::error("not found");
    }
@@ -32,6 +32,18 @@ class Repository {
    [[nodiscard]] mb::result<const TResource &> find_block_by_tag(std::string_view tag) {
       auto id = MB_TRY(find_id_by_tag(tag));
       return m_description[id].resource;
+   }
+
+   [[nodiscard]] mb::result<const TResource &> get_by_id(Id id) {
+      if (id >= m_description.size())
+         return mb::error("invalid id");
+      return m_description[id].resource;
+   }
+
+   void register_resource(std::string_view tag, const TResource &res) {
+      auto index = m_description.size();
+      m_description.push_back(Description<TResource>{res, tag.data(), index});
+      m_tags[tag] = index;
    }
 };
 
