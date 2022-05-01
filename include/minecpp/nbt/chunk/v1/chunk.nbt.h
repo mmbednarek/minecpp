@@ -25,6 +25,7 @@ class ArmorItem {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
+      using TDc = typename std::decay<T>::type;
    }
 
  public:
@@ -39,14 +40,15 @@ class Attribute {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, double>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, double>) {
          if (name == "Base") {
             this->base = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
             this->name = std::forward<T>(value);
             return;
@@ -69,6 +71,7 @@ class Memories {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
+      using TDc = typename std::decay<T>::type;
    }
 
  public:
@@ -83,7 +86,8 @@ class Brain {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Memories>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Memories>) {
          if (name == "memories") {
             this->memories = std::forward<T>(value);
             return;
@@ -105,6 +109,7 @@ class HandItem {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
+      using TDc = typename std::decay<T>::type;
    }
 
  public:
@@ -119,14 +124,15 @@ class Entity {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Brain>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Brain>) {
          if (name == "Brain") {
             this->brain = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, float>) {
+      if constexpr (std::is_same_v<TDc, float>) {
          if (name == "AbsorptionAmount") {
             this->absorption_amount = std::forward<T>(value);
             return;
@@ -141,7 +147,7 @@ class Entity {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int16_t>) {
+      if constexpr (std::is_same_v<TDc, std::int16_t>) {
          if (name == "Air") {
             this->air = std::forward<T>(value);
             return;
@@ -164,7 +170,7 @@ class Entity {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "HurtByTimestamp") {
             this->hurt_by_timestamp = std::forward<T>(value);
             return;
@@ -175,7 +181,7 @@ class Entity {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "CanPickUpLoot") {
             this->can_pick_up_loot = std::forward<T>(value);
             return;
@@ -210,35 +216,35 @@ class Entity {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "id") {
             this->id = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<ArmorItem>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<ArmorItem>>) {
          if (name == "ArmorItems") {
             this->armor_items = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<Attribute>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<Attribute>>) {
          if (name == "Attributes") {
             this->attributes = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<HandItem>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<HandItem>>) {
          if (name == "HandItems") {
             this->hand_items = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<double>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<double>>) {
          if (name == "Motion") {
             this->motion = std::forward<T>(value);
             return;
@@ -249,7 +255,7 @@ class Entity {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<float>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<float>>) {
          if (name == "ArmorDropChances") {
             this->armor_drop_chances = std::forward<T>(value);
             return;
@@ -264,7 +270,7 @@ class Entity {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::int32_t>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::int32_t>>) {
          if (name == "UUID") {
             this->uuid = std::forward<T>(value);
             return;
@@ -314,7 +320,8 @@ class Heightmaps {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::vector<std::int64_t>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::vector<std::int64_t>>) {
          if (name == "MOTION_BLOCKING") {
             this->motion_blocking = std::forward<T>(value);
             return;
@@ -361,14 +368,15 @@ class PaletteItem {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, minecpp::nbt::CompoundContent>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, minecpp::nbt::CompoundContent>) {
          if (name == "Properties") {
             this->properties = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
             this->name = std::forward<T>(value);
             return;
@@ -391,28 +399,29 @@ class Section {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "Y") {
             this->y = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<PaletteItem>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<PaletteItem>>) {
          if (name == "Palette") {
             this->palette = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::int64_t>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::int64_t>>) {
          if (name == "BlockStates") {
             this->block_states = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::uint8_t>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::uint8_t>>) {
          if (name == "BlockLight") {
             this->block_light = std::forward<T>(value);
             return;
@@ -442,7 +451,8 @@ class Start {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::string>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "id") {
             this->id = std::forward<T>(value);
             return;
@@ -464,7 +474,8 @@ class Structures {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::map<std::string, Start>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::map<std::string, Start>>) {
          if (name == "Starts") {
             this->starts = std::forward<T>(value);
             return;
@@ -486,7 +497,8 @@ class CarvingMasks {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::vector<std::uint8_t>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::vector<std::uint8_t>>) {
          if (name == "AIR") {
             this->air = std::forward<T>(value);
             return;
@@ -513,28 +525,29 @@ class Level {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, CarvingMasks>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, CarvingMasks>) {
          if (name == "CarvingMasks") {
             this->carving_masks = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, Heightmaps>) {
+      if constexpr (std::is_same_v<TDc, Heightmaps>) {
          if (name == "Heightmaps") {
             this->heightmaps = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, Structures>) {
+      if constexpr (std::is_same_v<TDc, Structures>) {
          if (name == "Structures") {
             this->structures = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "xPos") {
             this->x_pos = std::forward<T>(value);
             return;
@@ -545,7 +558,7 @@ class Level {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int64_t>) {
+      if constexpr (std::is_same_v<TDc, std::int64_t>) {
          if (name == "LastUpdate") {
             this->last_update = std::forward<T>(value);
             return;
@@ -556,42 +569,42 @@ class Level {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "isLightOn") {
             this->is_light_on = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Status") {
             this->status = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<Entity>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<Entity>>) {
          if (name == "Entities") {
             this->entities = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<Section>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<Section>>) {
          if (name == "Sections") {
             this->sections = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::int32_t>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::int32_t>>) {
          if (name == "Biomes") {
             this->biomes = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::vector<std::int16_t>>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::vector<std::int16_t>>>) {
          if (name == "Lights") {
             this->lights = std::forward<T>(value);
             return;
@@ -630,14 +643,15 @@ class Chunk {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Level>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Level>) {
          if (name == "Level") {
             this->level = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "DataVersion") {
             this->version = std::forward<T>(value);
             return;

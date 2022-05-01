@@ -2,7 +2,7 @@
 
 namespace minecpp::game::block {
 
-std::string_view Block::tag() const { return _tag; }
+std::string_view Block::tag() const { return m_tag; }
 
 std::function<void(Block &)> with_material(const Material *mat) {
    return [mat](Block &b) {

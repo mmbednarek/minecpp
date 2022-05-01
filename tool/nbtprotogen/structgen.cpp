@@ -118,11 +118,12 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
 
       // void __xx_put()
       message_class.add_private(method_template("void", g_put_method, {{"typename", "T"}}, {{"const std::string", "&name"}, {"T", "&&value"}}, [&type_names](statement::collector &col) {
+         col << raw("using TDc = typename std::decay<T>::type");
          for (auto &pair : type_names) {
             if (pair.second.empty())
                continue;
 
-            auto stmt = if_statement(raw("std::is_same_v<T, {}>", pair.first), [&pair](statement::collector &col) {
+            auto stmt = if_statement(raw("std::is_same_v<TDc, {}>", pair.first), [&pair](statement::collector &col) {
                for (auto &item : pair.second) {
                   col << if_statement(raw("name == \"{}\"", item.label), [&item](statement::collector &col) {
                      col << raw("this->{} = std::forward<T>(value)", item.name);

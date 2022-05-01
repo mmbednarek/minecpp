@@ -26,14 +26,15 @@ class BlockEntry {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, block::v1::Block>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, block::v1::Block>) {
          if (name == "Block") {
             this->block = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Tag") {
             this->tag = std::forward<T>(value);
             return;
@@ -56,14 +57,15 @@ class EnumStateEntry {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, block::v1::EnumState>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, block::v1::EnumState>) {
          if (name == "State") {
             this->state = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Tag") {
             this->tag = std::forward<T>(value);
             return;
@@ -86,14 +88,15 @@ class IntStateEntry {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, block::v1::IntState>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, block::v1::IntState>) {
          if (name == "State") {
             this->state = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Tag") {
             this->tag = std::forward<T>(value);
             return;
@@ -116,14 +119,15 @@ class BoolStateEntry {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, block::v1::BoolState>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, block::v1::BoolState>) {
          if (name == "State") {
             this->state = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Tag") {
             this->tag = std::forward<T>(value);
             return;
@@ -146,28 +150,29 @@ class Repository {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::vector<BlockEntry>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::vector<BlockEntry>>) {
          if (name == "Blocks") {
             this->blocks = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<BoolStateEntry>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<BoolStateEntry>>) {
          if (name == "BoolStates") {
             this->bool_states = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<EnumStateEntry>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<EnumStateEntry>>) {
          if (name == "EnumStates") {
             this->enum_states = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<IntStateEntry>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<IntStateEntry>>) {
          if (name == "IntStates") {
             this->int_states = std::forward<T>(value);
             return;

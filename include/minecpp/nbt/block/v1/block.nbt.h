@@ -25,14 +25,15 @@ class EnumState {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::string>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
             this->name = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::string>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::string>>) {
          if (name == "Label") {
             this->values = std::forward<T>(value);
             return;
@@ -55,7 +56,8 @@ class IntState {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "MinValue") {
             this->min_value = std::forward<T>(value);
             return;
@@ -66,7 +68,7 @@ class IntState {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
             this->name = std::forward<T>(value);
             return;
@@ -90,7 +92,8 @@ class BoolState {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::string>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
             this->name = std::forward<T>(value);
             return;
@@ -112,7 +115,8 @@ class Block {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::vector<std::string>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::vector<std::string>>) {
          if (name == "StateTags") {
             this->state_tags = std::forward<T>(value);
             return;

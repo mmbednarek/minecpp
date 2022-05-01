@@ -5,16 +5,19 @@
 #include <minecpp/game/state.h>
 #include <minecpp/util/string.h>
 #include <string_view>
+#include <utility>
 #include <vector>
 
 namespace minecpp::game::block {
 
 class Block {
-   std::string_view _tag;
+   std::string m_tag;
 
  public:
+    explicit Block(std::string_view tag, std::vector<State> states) : m_tag(std::string(tag)), states(std::move(states)) {}
+
    template<typename... T>
-   explicit Block(std::string_view tag, T... params) : _tag(tag) {
+   explicit Block(std::string_view tag, T... params) : m_tag(std::string(tag)) {
       if constexpr (sizeof...(T) > 0) {
          apply_options(params...);
       }
@@ -24,7 +27,7 @@ class Block {
 
    std::vector<const Attribute *> attributes{};
    std::vector<State> states;
-   const Material *material;
+   const Material *material{};
    ColorId color;
    std::string_view loot = "";
    int light_value = 0;
@@ -38,6 +41,52 @@ class Block {
    bool ticks_randomly = false;
    bool solid = true;
    bool variable_opacity = false;
+
+   std::size_t state_count() {
+      std::size_t result = 1;
+      for (auto &state : states) {
+         result *= state.value_count();
+      }
+      return result;
+   }
+
+    struct StateIterator {
+        typename std::vector<game::State>::reverse_iterator it;
+        int state;
+        Block &block;
+
+        StateIterator &operator++() {
+           state /= it->value_count();
+           ++it;
+            return *this;
+        }
+
+        [[nodiscard]] std::tuple<game::State &, int> operator *() const {
+            return {*it, state % it->value_count()};
+        }
+
+        bool operator==(const StateIterator &rhs) {
+           return it == rhs.it;
+        }
+   };
+
+   struct StateRange {
+      Block &block;
+      int state;
+
+      StateIterator begin() {
+         return StateIterator{block.states.rbegin(), state, block};
+      }
+
+      StateIterator end() {
+         return StateIterator{block.states.rend(), 0, block};
+      }
+   };
+
+   [[nodiscard]] constexpr StateRange state_range(int state) {
+      return StateRange{*this, state};
+   }
+
 
  private:
    template<typename F, typename... Others>

@@ -25,14 +25,15 @@ class Foo {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::map<std::string, std::int32_t>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::map<std::string, std::int32_t>>) {
          if (name == "stuff") {
             this->stuff = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "value") {
             this->value = std::forward<T>(value);
             return;
@@ -55,21 +56,22 @@ class Bar {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, minecpp::nbt::CompoundContent>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, minecpp::nbt::CompoundContent>) {
          if (name == "meta") {
             this->meta = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::map<std::string, Foo>>) {
+      if constexpr (std::is_same_v<TDc, std::map<std::string, Foo>>) {
          if (name == "foo_map") {
             this->foo_map = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<Foo>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<Foo>>) {
          if (name == "foo") {
             this->foo = std::forward<T>(value);
             return;

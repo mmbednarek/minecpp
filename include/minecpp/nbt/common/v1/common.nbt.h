@@ -25,7 +25,8 @@ class ChunkPosition {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "x") {
             this->x = std::forward<T>(value);
             return;
@@ -52,7 +53,8 @@ class BlockPosition {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "x") {
             this->x = std::forward<T>(value);
             return;

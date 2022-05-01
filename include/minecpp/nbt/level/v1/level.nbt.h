@@ -25,6 +25,7 @@ class Memories {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
+      using TDc = typename std::decay<T>::type;
    }
 
  public:
@@ -39,7 +40,8 @@ class Brain {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Memories>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Memories>) {
          if (name == "memories") {
             this->memories = std::forward<T>(value);
             return;
@@ -61,7 +63,8 @@ class Abilities {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, float>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, float>) {
          if (name == "flySpeed") {
             this->fly_speed = std::forward<T>(value);
             return;
@@ -72,7 +75,7 @@ class Abilities {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "flying") {
             this->flying = std::forward<T>(value);
             return;
@@ -116,7 +119,8 @@ class RecipeBook {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "isBlastingFurnaceFilteringCraftable") {
             this->is_blasting_furnace_filtering_craftable = std::forward<T>(value);
             return;
@@ -173,21 +177,22 @@ class Version {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "Id") {
             this->id = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "Snapshot") {
             this->snapshot = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
             this->name = std::forward<T>(value);
             return;
@@ -211,21 +216,22 @@ class BiomeSource {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int64_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int64_t>) {
          if (name == "seed") {
             this->seed = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "large_biomes") {
             this->large_biomes = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "preset") {
             this->preset = std::forward<T>(value);
             return;
@@ -254,21 +260,22 @@ class Generator {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, BiomeSource>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, BiomeSource>) {
          if (name == "biome_source") {
             this->biome_source = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int64_t>) {
+      if constexpr (std::is_same_v<TDc, std::int64_t>) {
          if (name == "seed") {
             this->seed = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "settings") {
             this->settings = std::forward<T>(value);
             return;
@@ -297,14 +304,15 @@ class DimentionData {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Generator>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Generator>) {
          if (name == "generator") {
             this->generator = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "type") {
             this->type = std::forward<T>(value);
             return;
@@ -327,7 +335,8 @@ class Dimentions {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, DimentionData>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, DimentionData>) {
          if (name == "minecraft:overworld") {
             this->overworld = std::forward<T>(value);
             return;
@@ -359,21 +368,22 @@ class WorldGen {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Dimentions>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Dimentions>) {
          if (name == "dimensions") {
             this->dimensions = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int64_t>) {
+      if constexpr (std::is_same_v<TDc, std::int64_t>) {
          if (name == "seed") {
             this->seed = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "bonus_chest") {
             this->bonus_chest = std::forward<T>(value);
             return;
@@ -402,7 +412,8 @@ class DataPacks {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::vector<std::int64_t>>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::vector<std::int64_t>>) {
          if (name == "Disabled") {
             this->disabled = std::forward<T>(value);
             return;
@@ -424,7 +435,8 @@ class DragonFight {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "DragonKilled") {
             this->dragon_killed = std::forward<T>(value);
             return;
@@ -451,6 +463,7 @@ class CustomBossEvents {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
+      using TDc = typename std::decay<T>::type;
    }
 
  public:
@@ -465,28 +478,29 @@ class Player {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, Abilities>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, Abilities>) {
          if (name == "abilities") {
             this->abilities = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, Brain>) {
+      if constexpr (std::is_same_v<TDc, Brain>) {
          if (name == "Brain") {
             this->brain = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, RecipeBook>) {
+      if constexpr (std::is_same_v<TDc, RecipeBook>) {
          if (name == "recipeBook") {
             this->recipe_book = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, float>) {
+      if constexpr (std::is_same_v<TDc, float>) {
          if (name == "AbsorptionAmount") {
             this->absorption_amount = std::forward<T>(value);
             return;
@@ -513,7 +527,7 @@ class Player {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int16_t>) {
+      if constexpr (std::is_same_v<TDc, std::int16_t>) {
          if (name == "Air") {
             this->air = std::forward<T>(value);
             return;
@@ -536,7 +550,7 @@ class Player {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "DataVersion") {
             this->data_version = std::forward<T>(value);
             return;
@@ -587,7 +601,7 @@ class Player {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "FallFlying") {
             this->fall_flying = std::forward<T>(value);
             return;
@@ -606,14 +620,14 @@ class Player {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Dimension") {
             this->dimension = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::vector<std::int32_t>>) {
+      if constexpr (std::is_same_v<TDc, std::vector<std::int32_t>>) {
          if (name == "UUID") {
             this->uuid = std::forward<T>(value);
             return;
@@ -666,7 +680,8 @@ class GameRules {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, std::string>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "announceAdvancements") {
             this->announce_advancements = std::forward<T>(value);
             return;
@@ -848,56 +863,57 @@ class LevelData {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, CustomBossEvents>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, CustomBossEvents>) {
          if (name == "CustomBossEvents") {
             this->custom_boss_events = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, DataPacks>) {
+      if constexpr (std::is_same_v<TDc, DataPacks>) {
          if (name == "DataPacks") {
             this->data_packs = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, DragonFight>) {
+      if constexpr (std::is_same_v<TDc, DragonFight>) {
          if (name == "DragonFight") {
             this->dragon_fight = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, GameRules>) {
+      if constexpr (std::is_same_v<TDc, GameRules>) {
          if (name == "GameRules") {
             this->game_rules = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, Player>) {
+      if constexpr (std::is_same_v<TDc, Player>) {
          if (name == "Player") {
             this->player = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, Version>) {
+      if constexpr (std::is_same_v<TDc, Version>) {
          if (name == "Version") {
             this->version = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, WorldGen>) {
+      if constexpr (std::is_same_v<TDc, WorldGen>) {
          if (name == "WorldGenSettings") {
             this->world_gen_settings = std::forward<T>(value);
             return;
          }
          return;
       }
-      if constexpr (std::is_same_v<T, double>) {
+      if constexpr (std::is_same_v<TDc, double>) {
          if (name == "BorderCenterX") {
             this->border_center_x = std::forward<T>(value);
             return;
@@ -932,7 +948,7 @@ class LevelData {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int32_t>) {
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "DataVersion") {
             this->data_version = std::forward<T>(value);
             return;
@@ -979,7 +995,7 @@ class LevelData {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int64_t>) {
+      if constexpr (std::is_same_v<TDc, std::int64_t>) {
          if (name == "BorderSizeLerpTime") {
             this->border_size_lerp_time = std::forward<T>(value);
             return;
@@ -998,7 +1014,7 @@ class LevelData {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::int8_t>) {
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "Difficulty") {
             this->difficulty = std::forward<T>(value);
             return;
@@ -1033,7 +1049,7 @@ class LevelData {
          }
          return;
       }
-      if constexpr (std::is_same_v<T, std::string>) {
+      if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "LevelName") {
             this->level_name = std::forward<T>(value);
             return;
@@ -1093,7 +1109,8 @@ class Level {
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
-      if constexpr (std::is_same_v<T, LevelData>) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, LevelData>) {
          if (name == "Data") {
             this->data = std::forward<T>(value);
             return;

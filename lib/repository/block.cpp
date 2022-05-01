@@ -1,8 +1,8 @@
-#include <minecpp/repository/block.h>
-#include <minecpp/repository/state.h>
+#include <fstream>
 #include <minecpp/game/block/block.h>
 #include <minecpp/nbt/repository/v1/repository.nbt.h>
-#include <fstream>
+#include <minecpp/repository/block.h>
+#include <minecpp/repository/state.h>
 
 namespace minecpp::repository {
 
@@ -29,21 +29,41 @@ mb::emptyres load_blocks_from_file(std::string_view filename) {
 
    auto &blocks = Block::the();
    auto &state_manager = StateManager::the();
-   int state_id = 0;
    int block_id = 0;
    for (auto &block : repo.blocks) {
-      blocks.register_resource(block.tag, game::block::Block(block.tag));
-      int block_states = 1;
+      std::vector<game::State> block_states;
+      int block_state_count = 1;
       for (const auto &tag : block.block.state_tags) {
          auto state = MB_TRY(states.find_block_by_tag(tag));
-         block_states *= state.value_count();
+         block_states.push_back(state);
+         block_state_count *= state.value_count();
       }
-      state_manager.add_state(state_id, block_id);
+      state_manager.add_state(block_id, block_state_count);
+
+      blocks.register_resource(block.tag, game::block::Block(block.tag, block_states));
+
       ++block_id;
-      state_id += block_states;
    }
 
    return mb::ok;
 }
+std::function<int(const game::State &)> make_compound_encoder(const nbt::CompoundContent &cnt) {
+   return [&cnt](const game::State &state) -> int {
+      auto it = cnt.find(std::string(state.name()));
+      if (it == cnt.end())
+         return 0;
 
+      auto &content = it->second;
+
+      switch (content.tag_id) {
+      case nbt::TagId::String:
+         return state.index_from_value(content.as<std::string>());
+      case nbt::TagId::Int:
+         return state.index_from_value(content.as<int>());
+      default:
+         break;
+      }
+   };
 }
+
+}// namespace minecpp::repository

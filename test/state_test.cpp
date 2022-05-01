@@ -1,4 +1,5 @@
 #include <minecpp/game/state.h>
+#include <minecpp/game/block/registry.h>
 #include <minecpp/repository/state.h>
 #include <minecpp/repository/block.h>
 #include <gtest/gtest.h>
@@ -37,9 +38,30 @@ TEST(State, stateValues) {
 TEST(State, loadStates) {
    ASSERT_TRUE(minecpp::repository::load_blocks_from_file("repository.bin").ok());
 
-   for (int i = 0; i < 100; ++i) {
-      auto [block_id, state] = minecpp::repository::StateManager::the().parse_block_id(i);
+   ASSERT_EQ(minecpp::repository::StateManager::the().state_count(), minecpp::game::block::total_num_states());
+
+   for (std::size_t i = 0; i < minecpp::repository::StateManager::the().state_count(); ++i) {
+      auto [block_id, state] = minecpp::repository::StateManager::the().parse_block_id(static_cast<int>(i));
       auto block = minecpp::repository::Block::the().get_by_id(block_id).unwrap();
-      std::cout << block.tag() << "\n";
+
+      if (state == 0)
+         std::cout << block_id << ": " <<  block.tag() << "\n";
+      if (!block.states.empty())
+         std::cout << "  state " << state << ":\n";
+
+      minecpp::nbt::CompoundContent cont;
+
+      auto range = block.state_range(state);
+      std::for_each(range.begin(), range.end(), [&cont](const std::tuple<minecpp::game::State &, int> &pair) {
+         auto [block_state, value_index] = pair;
+        cont[std::string(block_state.name())] = minecpp::nbt::make_string(block_state.value_from_index(value_index));
+        std::cout << "    " << block_state.name() <<  "="  << block_state.value_from_index(value_index) << '\n';
+      });
+
+      auto encoded_new = minecpp::repository::encode_state(block_id, minecpp::repository::make_compound_encoder(cont)).unwrap();
+
+      auto encoded = minecpp::game::block::encode_state(block.tag(), cont);
+      ASSERT_EQ(i, encoded_new);
+      ASSERT_EQ(i, encoded);
    }
 }

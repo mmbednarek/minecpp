@@ -3,6 +3,7 @@
 #include <tuple>
 #include <map>
 #include <span>
+#include <minecpp/util/util.h>
 
 namespace minecpp::repository {
 
@@ -18,16 +19,27 @@ void parse_state(TInIter inBeg, TInIter inEnd, TOutIter outBeg, int encoded) {
 class StateManager {
    static StateManager g_instance;
 
-   std::map<int, int> m_states;
+   std::map<int, int> m_state_to_block_id;
+   std::map<int, int> m_block_id_to_state;
+   std::size_t m_state_count;
  public:
+
    std::tuple<int, int> parse_block_id(int block_id);
 
-   static constexpr StateManager &the() {
+   [[nodiscard]] static constexpr StateManager &the() {
       return g_instance;
    }
 
-   void add_state(int state_id, int block_id) {
-      m_states[state_id] = block_id;
+   GETTER(state_count)
+
+   void add_state(int block_id, int state_count) {
+      m_state_to_block_id[static_cast<int>(m_state_count)] = block_id;
+      m_block_id_to_state[block_id] = static_cast<int>(m_state_count);
+      m_state_count += state_count;
+   }
+
+   [[nodiscard]] int block_base_state(int block_id) const {
+      return m_block_id_to_state.at(block_id);
    }
 };
 

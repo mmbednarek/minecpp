@@ -26,14 +26,14 @@ class State {
    State(std::string_view name, int min, int max) : m_name(name), m_detail(IntState{min, max}) {}
    State(std::string_view name, const std::vector<std::string> &enum_values) : m_name(name), m_detail(EnumState{enum_values}) {}
 
-   [[nodiscard]] constexpr int value_count() {
+   [[nodiscard]] constexpr int value_count() const {
       return std::visit([](auto &&detail) -> int {
          using T = std::decay_t<decltype(detail)>;
          if constexpr (std::is_same_v<T, BoolState>) {
             return 2;
          }
          if constexpr (std::is_same_v<T, IntState>) {
-            return detail.max - detail.min;
+            return detail.max - detail.min + 1;
          }
          if constexpr (std::is_same_v<T, EnumState>) {
             return detail.values.size();
@@ -43,11 +43,11 @@ class State {
                         m_detail);
    }
 
-   [[nodiscard]] std::string value_from_index(int index) {
+   [[nodiscard]] std::string value_from_index(int index) const {
       return std::visit([index](auto &&detail) -> std::string {
          using T = std::decay_t<decltype(detail)>;
          if constexpr (std::is_same_v<T, BoolState>) {
-            return index == 1 ? "true" : "false";
+            return index == 0 ? "true" : "false";
          }
          if constexpr (std::is_same_v<T, IntState>) {
             return std::to_string(detail.min + index);
@@ -60,11 +60,11 @@ class State {
                         m_detail);
    }
 
-   [[nodiscard]] int index_from_value(std::string_view value) {
+   [[nodiscard]] int index_from_value(std::string_view value) const {
       return std::visit([value](auto &&detail) -> int {
          using T = std::decay_t<decltype(detail)>;
          if constexpr (std::is_same_v<T, BoolState>) {
-            return value == "true" ? 1 : 0;
+            return value == "true" ? 0 : 1;
          }
          if constexpr (std::is_same_v<T, IntState>) {
             return std::atoi(value.data()) - detail.min;
@@ -77,7 +77,27 @@ class State {
                         m_detail);
    }
 
-   [[nodiscard]] inline std::string_view name() const  {
+   [[nodiscard]] int index_from_value(int value) const {
+      return std::visit([value](auto &&detail) -> int {
+         using T = std::decay_t<decltype(detail)>;
+         if constexpr (std::is_same_v<T, BoolState>) {
+            return value == 0 ? 0 : 1;
+         }
+         if constexpr (std::is_same_v<T, IntState>) {
+            return value - detail.min;
+         }
+         if constexpr (std::is_same_v<T, EnumState>) {
+            auto it = std::find(detail.values.begin(), detail.values.end(), std::to_string(value));
+            if (it == detail.values.end())
+               return 0;
+            return it - detail.values.begin();
+         }
+         return 0;
+      },
+                        m_detail);
+   }
+
+   [[nodiscard]] inline std::string_view name() const {
       return m_name;
    }
 };
