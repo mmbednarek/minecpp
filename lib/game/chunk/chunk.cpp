@@ -1,7 +1,6 @@
 #include "minecpp/repository/block.h"
 #include "minecpp/repository/state.h"
 #include <fmt/core.h>
-#include <minecpp/game/block/registry.h>
 #include <minecpp/game/chunk/chunk.h>
 #include <minecpp/game/chunk/utils.h>
 #include <minecpp/nbt/parser.h>

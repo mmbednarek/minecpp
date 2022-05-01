@@ -1,4 +1,3 @@
-#include <minecpp/game/block/registry.h>
 #include <minecpp/game/worldgen/terrain/terrain.h>
 #include <minecpp/random/java_random.h>
 #include <minecpp/repository/block.h>

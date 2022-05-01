@@ -3,7 +3,6 @@
 
 namespace minecpp::game::worldgen::population {
 
-
 ObjectRepository ObjectRepository::g_instance;
 
 void ObjectRepository::register_objects() {

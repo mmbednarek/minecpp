@@ -28,7 +28,7 @@ template<typename TFunc>
 mb::result<int> encode_state(int block_id, TFunc fn) {
    const auto &block = MB_TRY(Block::the().get_by_id(block_id));
    auto state_id = 0;
-   for (auto const &state : block.states) {
+   for (auto const &state : block) {
       state_id *= state.value_count();
       state_id += fn(state);
    }

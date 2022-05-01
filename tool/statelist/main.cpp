@@ -1,5 +1,4 @@
 #include <fmt/core.h>
-#include <minecpp/game/block/registry.h>
 #include <minecpp/nbt/repository/v1/repository.nbt.h>
 #include <minecpp/nbt/parser.h>
 #include <minecpp/nbt/writer.h>

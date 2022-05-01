@@ -26,7 +26,7 @@ int calculate_ref_count(const std::vector<std::int64_t> &data,
          return;
 
       auto &block = res.unwrap();
-      if (block.material != &block::Material::Air) {
+      if (block.stats().material != &block::Material::Air) {
          ++count;
       }
    });
