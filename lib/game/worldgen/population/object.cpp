@@ -1,130 +1,111 @@
 #include <minecpp/game/worldgen/population/object.h>
-#include <minecpp/game/block/registry.h>
-#include <minecpp/nbt/tag.h>
+#include <minecpp/repository/block.h>
 
 namespace minecpp::game::worldgen::population {
 
-auto empty_nbt = nbt::CompoundContent{};
-auto state_axis_y = nbt::CompoundContent{
-        {"axis", nbt::make_string("y")},
-};
 
-auto upper_half_nbt = nbt::CompoundContent{
-        {"half", nbt::make_string("upper")},
-};
-auto lower_half_nbt = nbt::CompoundContent{
-        {"half", nbt::make_string("lower")},
-};
+ObjectRepository ObjectRepository::g_instance;
 
-int air_id = block::encode_state("minecraft:air", empty_nbt);
-int stone_id = block::encode_state("minecraft:stone", empty_nbt);
-int wood_id = block::encode_state("minecraft:oak_wood", state_axis_y);
-int leaves_id = block::encode_state("minecraft:oak_leaves", empty_nbt);
-int pumpkin_id = block::encode_state("minecraft:pumpkin", empty_nbt);
-int tall_grass_upper_id = block::encode_state("minecraft:tall_grass", upper_half_nbt);
-int tall_grass_lower_id = block::encode_state("minecraft:tall_grass", lower_half_nbt);
-int dendelion_id = block::encode_state("minecraft:dandelion", empty_nbt);
-int poppy_id = block::encode_state("minecraft:poppy", empty_nbt);
-int blue_orchid_id = block::encode_state("minecraft:blue_orchid", empty_nbt);
+void ObjectRepository::register_objects() {
+   int air_id = repository::encode_block_by_tag("minecraft:air");
+   int stone_id = repository::encode_block_by_tag("minecraft:stone");
+   int wood_id = repository::encode_block_by_tag("minecraft:oak_wood", std::make_pair("axis", "y"));
+   int leaves_id = repository::encode_block_by_tag("minecraft:oak_leaves");
+   int pumpkin_id = repository::encode_block_by_tag("minecraft:pumpkin");
+   int tall_grass_upper_id = repository::encode_block_by_tag("minecraft:tall_grass", std::make_pair("half", "upper"));
+   int tall_grass_lower_id = repository::encode_block_by_tag("minecraft:tall_grass", std::make_pair("half", "lower"));
+   int dendelion_id = repository::encode_block_by_tag("minecraft:dandelion");
+   int poppy_id = repository::encode_block_by_tag("minecraft:poppy");
+   int blue_orchid_id = repository::encode_block_by_tag("minecraft:blue_orchid");
 
-const ShapedObject<5, 5, 7> tree0 {
-         300, // per 10 000 elements
-        {
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, wood_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, wood_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, wood_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                leaves_id, leaves_id,  wood_id, leaves_id, leaves_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                air_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                leaves_id, leaves_id,  wood_id, leaves_id, leaves_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, leaves_id, leaves_id, leaves_id, air_id,
-                air_id, leaves_id,  leaves_id, leaves_id, air_id,
-                air_id, leaves_id, leaves_id, leaves_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-                air_id, air_id, leaves_id, air_id, air_id,
-                air_id, leaves_id,  leaves_id, leaves_id, air_id,
-                air_id, air_id, leaves_id, air_id, air_id,
-                air_id, air_id, air_id, air_id, air_id,
-        },
-};
+   m_objects.push_back(std::make_unique<ShapedObject<5, 5, 7>>(
+                                                  300, std::array<int, 5*5*7>{       air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, wood_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, wood_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, wood_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id,  wood_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               air_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id,  wood_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, leaves_id, leaves_id, leaves_id, air_id,
+                                                               air_id, leaves_id,  leaves_id, leaves_id, air_id,
+                                                               air_id, leaves_id, leaves_id, leaves_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                               air_id, air_id, leaves_id, air_id, air_id,
+                                                               air_id, leaves_id,  leaves_id, leaves_id, air_id,
+                                                               air_id, air_id, leaves_id, air_id, air_id,
+                                                               air_id, air_id, air_id, air_id, air_id,
+                                                       }));
 
-const ShapedObject<1, 1, 1> pumpkin {
-        5, // per 10 000 elements
-        {
-            pumpkin_id
-        },
-};
+   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(
+           5, // per 10 000 elements
+           std::array<int, 1*1*1>{
+                   pumpkin_id,
+           }
+   ));
 
-const ShapedObject<1, 1, 1> tall_grass0 {
-        1800, // per 10 000 elements
-        {
-                tall_grass_upper_id
-        },
-};
+   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(
+           1800, // per 10 000 elements
+           std::array<int, 1*1*1>{
+                   tall_grass_upper_id
+           }
+   ));
 
-const ShapedObject<1, 1, 2> tall_grass1 {
-        500, // per 10 000 elements
-        {
-                tall_grass_lower_id,
-                tall_grass_upper_id,
-        },
-};
+   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 2>>(
+           500, // per 10 000 elements
+           std::array<int, 1*1*2>{
+                   tall_grass_lower_id,
+                   tall_grass_upper_id,
+           }
+   ));
 
-const ShapedObject<1, 1, 1> dandelion {
-        100, // per 10 000 elements
-        {
-                dendelion_id
-        },
-};
-const ShapedObject<1, 1, 1> poppy {
-        100, // per 10 000 elements
-        {
-                poppy_id
-        },
-};
-const ShapedObject<1, 1, 1> orchid {
-        15, // per 10 000 elements
-        {
-                blue_orchid_id
-        },
-};
+   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(
+           100, // per 10 000 elements
+           std::array<int, 1*1*1>{
+                   dendelion_id
+           }
+   ));
 
-std::array<const PopObject *, 7> pop_objects {
-       &tree0,
-       &pumpkin,
-       &tall_grass0,
-       &tall_grass1,
-       &dandelion,
-       &poppy,
-       &orchid
-};
+   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(
+           100, // per 10 000 elements
+           std::array<int, 1*1*1>{
+                   poppy_id
+           }
+   ));
 
-int find_object_id(int value) {
+   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(
+           15, // per 10 000 elements
+           std::array<int, 1*1*1>{
+                   blue_orchid_id
+           }
+   ));
+}
+
+mb::size ObjectRepository::find_object_id(int value) {
    if (value == 0) {
       return 0;
    }
-   int i = 0;
-   for (const auto *e : pop_objects) {
+   mb::size i = 0;
+   for (const auto &e : m_objects) {
       value -= e->occurrence();
       if (value <= 0) {
          break;
@@ -132,12 +113,11 @@ int find_object_id(int value) {
       ++i;
    }
 
-   if (i == pop_objects.size()) {
+   if (i == m_objects.size()) {
       return -1;
    }
 
    return i;
 }
-
 
 }

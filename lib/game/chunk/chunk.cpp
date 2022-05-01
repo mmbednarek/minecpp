@@ -1,3 +1,5 @@
+#include "minecpp/repository/block.h"
+#include "minecpp/repository/state.h"
 #include <fmt/core.h>
 #include <minecpp/game/block/registry.h>
 #include <minecpp/game/chunk/chunk.h>
@@ -186,7 +188,9 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
       out_sec.block_light = minecpp::squeezed::TinyVec<4>(sec.block_light);
       out_sec.palette.resize(sec.palette.size());
       std::transform(sec.palette.begin(), sec.palette.end(), out_sec.palette.begin(), [](const nbt_chunk_v1::PaletteItem &item) {
-         return block::encode_state(item.name, item.properties);
+         // TODO: Remove these unwraps :C
+         auto block_id = repository::Block::the().find_id_by_tag(item.name).unwrap();
+         return repository::encode_state(static_cast<int>(block_id), repository::make_compound_encoder(item.properties)).unwrap();
       });
       out_sec.ref_count = game::calculate_ref_count(sec.block_states, out_sec.palette);
       if (!sec.block_states.empty()) {
@@ -202,7 +206,7 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept {
    result.level.status = m_full ? "full" : "features";
    result.level.x_pos = m_pos_x;
    result.level.z_pos = m_pos_z;
-   result.level.last_update = minecpp::util::now();
+   result.level.last_update = static_cast<mb::i64>(minecpp::util::now());
    result.level.heightmaps.world_surface.resize(m_hm_world_surface.size());
    std::copy(m_hm_world_surface.begin(), m_hm_world_surface.end(), result.level.heightmaps.world_surface.begin());
    result.level.heightmaps.motion_blocking.resize(m_hm_motion_blocking.size());
@@ -218,7 +222,13 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept {
       sec.palette.resize(pair.second.palette.size());
       std::transform(pair.second.palette.begin(), pair.second.palette.end(), sec.palette.begin(), [](const mb::u32 state) {
          nbt_chunk_v1::PaletteItem item;
-         item.name = fmt::format("minecraft:{}", block::tag_from_state_id(state));
+         auto [block_id, state_value] = repository::StateManager::the().parse_block_id(static_cast<int>(state));
+         auto res = repository::Block::the().get_by_id(block_id);
+         if (!res.ok()) {
+            return item;
+         }
+         auto &block = res.unwrap();
+         item.name = block.tag();
          return item;
       });
       sec.block_states.resize(pair.second.data.raw().size());

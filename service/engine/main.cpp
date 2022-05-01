@@ -6,11 +6,11 @@
 #include "world.h"
 #include <grpcpp/create_channel.h>
 #include <grpcpp/security/credentials.h>
-#include <grpcpp/server_builder.h>
 #include <iostream>
 #include <mb/core.h>
 #include <minecpp/grpc/server/bidi.h>
 #include <minecpp/proto/service/chunk_storage/v1/chunk_storage.grpc.pb.h>
+#include <minecpp/repository/repository.h>
 #include <spdlog/spdlog.h>
 
 auto main() -> int {
@@ -19,6 +19,13 @@ auto main() -> int {
    auto player_path = mb::getenv("PLAYERS_PATH").unwrap("world/playerdata");
    auto chunk_storage_address = mb::getenv("CHUNK_STORAGE_ADDRESS").unwrap("127.0.0.1:7000");
    auto listen = mb::getenv("LISTEN").unwrap("0.0.0.0:7800");
+   auto repo_file = mb::getenv("REPOSITORY_FILENAME").unwrap("repository.bin");
+
+   auto load_repo_res = minecpp::repository::load_repository_from_file(repo_file);
+   if (!load_repo_res.ok()) {
+      spdlog::error("could not load repository: {}", load_repo_res.msg());
+      return 1;
+   }
 
    EntityManager entities;
    PlayerManager players(player_path, entities);

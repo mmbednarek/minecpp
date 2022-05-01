@@ -6,7 +6,7 @@
 
 TEST(State, intstate) {
    minecpp::game::State state("t", 5, 10);
-   ASSERT_EQ(state.value_count(), 5);
+   ASSERT_EQ(state.value_count(), 6);
    ASSERT_EQ(state.index_from_value("7"), 2);
    ASSERT_EQ(state.value_from_index(3), "8");
 }
@@ -14,8 +14,8 @@ TEST(State, intstate) {
 TEST(State, boolstate) {
    minecpp::game::State state("t");
    ASSERT_EQ(state.value_count(), 2);
-   ASSERT_EQ(state.index_from_value("true"), 1);
-   ASSERT_EQ(state.value_from_index(0), "false");
+   ASSERT_EQ(state.index_from_value("true"), 0);
+   ASSERT_EQ(state.value_from_index(1), "false");
 }
 
 TEST(State, enumstate) {
@@ -36,7 +36,7 @@ TEST(State, stateValues) {
 }
 
 TEST(State, loadStates) {
-   ASSERT_TRUE(minecpp::repository::load_blocks_from_file("repository.bin").ok());
+   ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
 
    ASSERT_EQ(minecpp::repository::StateManager::the().state_count(), minecpp::game::block::total_num_states());
 

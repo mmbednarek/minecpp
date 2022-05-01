@@ -1,7 +1,10 @@
 #pragma once
 #include <array>
 #include <cassert>
+#include <mb/int.h>
+#include <memory>
 #include <tuple>
+#include <vector>
 
 namespace minecpp::game::worldgen::population {
 
@@ -37,10 +40,10 @@ class ShapedObject : public PopObject {
       return l;
    }
    [[nodiscard]] int occurrence() const override {
-       return occurr;
+      return occurr;
    };
    [[nodiscard]] Pos center() const override {
-           return Pos{.x = w / 2, .z = l / 2};
+      return Pos{.x = w / 2, .z = l / 2};
    };
    [[nodiscard]] int block_at(int x, int y, int z) const override {
       assert(x >= 0 && x < w);
@@ -50,8 +53,23 @@ class ShapedObject : public PopObject {
    }
 };
 
-extern std::array<const PopObject *, 7> pop_objects;
+class ObjectRepository {
+   static ObjectRepository g_instance;
 
-int find_object_id(int value);
+   std::vector<std::unique_ptr<PopObject>> m_objects;
 
-}// namespace minecpp::game::worldgen
+ public:
+   [[nodiscard]] static ObjectRepository &the() {
+      return g_instance;
+   }
+
+   void register_objects();
+
+   mb::size find_object_id(int value);
+
+   [[nodiscard]] PopObject &get_object(mb::size id) const {
+      return *m_objects[id];
+   }
+};
+
+}// namespace minecpp::game::worldgen::population

@@ -9,7 +9,7 @@ namespace minecpp::repository {
 Block Block::g_instance;
 BlockState BlockState::g_instance;
 
-mb::emptyres load_blocks_from_file(std::string_view filename) {
+mb::emptyres load_repository_from_file(std::string_view filename) {
    std::ifstream in_file(filename.data());
    if (!in_file.is_open()) {
       return mb::error("could not open file");
@@ -47,6 +47,7 @@ mb::emptyres load_blocks_from_file(std::string_view filename) {
 
    return mb::ok;
 }
+
 std::function<int(const game::State &)> make_compound_encoder(const nbt::CompoundContent &cnt) {
    return [&cnt](const game::State &state) -> int {
       auto it = cnt.find(std::string(state.name()));
@@ -64,6 +65,11 @@ std::function<int(const game::State &)> make_compound_encoder(const nbt::Compoun
          break;
       }
    };
+}
+
+int encode_block_by_tag(std::string_view tag) {
+    auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
+    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
 }// namespace minecpp::repository

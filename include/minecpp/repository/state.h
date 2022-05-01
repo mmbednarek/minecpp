@@ -1,9 +1,10 @@
 #ifndef MINECPP_REPOSITORY_STATE_H
 #define MINECPP_REPOSITORY_STATE_H
-#include <tuple>
+#include "mb/result.h"
 #include <map>
-#include <span>
 #include <minecpp/util/util.h>
+#include <span>
+#include <tuple>
 
 namespace minecpp::repository {
 

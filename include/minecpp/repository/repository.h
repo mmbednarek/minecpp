@@ -20,17 +20,17 @@ struct Description {
 template<typename TResource>
 class Repository {
    std::vector<Description<TResource>> m_description;
-   std::unordered_map<std::string_view, Id> m_tags;
+   std::unordered_map<std::string, Id> m_tags;
  public:
-   [[nodiscard]] mb::result<Id> find_id_by_tag(std::string_view tag) {
-      if (m_tags.contains(tag)) {
+   [[nodiscard]] mb::result<Id> find_id_by_tag(const std::string &tag) {
+      if (m_tags.contains(std::string(tag))) {
          return static_cast<Id>(m_tags.at(tag));
       }
       return mb::error("not found");
    }
 
    [[nodiscard]] mb::result<const TResource &> find_block_by_tag(std::string_view tag) {
-      auto id = MB_TRY(find_id_by_tag(tag));
+      auto id = MB_TRY(find_id_by_tag(std::string(tag)));
       return m_description[id].resource;
    }
 
@@ -40,12 +40,14 @@ class Repository {
       return m_description[id].resource;
    }
 
-   void register_resource(std::string_view tag, const TResource &res) {
+   void register_resource(const std::string &tag, const TResource &res) {
       auto index = m_description.size();
       m_description.push_back(Description<TResource>{res, tag.data(), index});
       m_tags[tag] = index;
    }
 };
+
+mb::emptyres load_repository_from_file(std::string_view filename);
 
 }
 

@@ -1,6 +1,7 @@
 #include <minecpp/game/block/registry.h>
 #include <minecpp/game/worldgen/terrain/terrain.h>
 #include <minecpp/random/java_random.h>
+#include <minecpp/repository/block.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::game::worldgen::terrain {
@@ -20,19 +21,15 @@ Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(
 
    std::copy(height_map.begin(), height_map.end(), orig_height_map.begin());
 
-   nbt::CompoundContent empty_attribs;
-   nbt::CompoundContent not_snowy;
-   not_snowy["snowy"] = nbt::make_string("false");
-
-   air_id = block::encode_state("minecraft:air", empty_attribs);
-   stone_id = block::encode_state("minecraft:stone", empty_attribs);
-   dirt_id = block::encode_state("minecraft:dirt", empty_attribs);
-   grass_id = block::encode_state("minecraft:grass_block", not_snowy);
-   gravel_id = block::encode_state("minecraft:gravel", empty_attribs);
-   sand_id = block::encode_state("minecraft:sand", empty_attribs);
-   water_id = block::encode_state("minecraft:water", empty_attribs);
-   snow_id = block::encode_state("minecraft:snow", empty_attribs);
-   snow_block_id = block::encode_state("minecraft:snow_block", empty_attribs);
+   air_id = repository::encode_block_by_tag("minecraft:air");
+   stone_id = repository::encode_block_by_tag("minecraft:stone");
+   dirt_id = repository::encode_block_by_tag("minecraft:dirt");
+   grass_id = repository::encode_block_by_tag("minecraft:grass_block", std::make_pair("snowy", "false"));
+   gravel_id = repository::encode_block_by_tag("minecraft:gravel");
+   sand_id = repository::encode_block_by_tag("minecraft:sand");
+   water_id = repository::encode_block_by_tag("minecraft:water");
+   snow_id = repository::encode_block_by_tag("minecraft:snow");
+   snow_block_id = repository::encode_block_by_tag("minecraft:snow_block");
 }
 
 bool Terrain::section_empty(int sec) {
