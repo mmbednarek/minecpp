@@ -133,6 +133,7 @@ struct JoinGame {
    uint64_t seed{};
    uint8_t max_players{};
    uint32_t view_distance{};
+   uint32_t simulation_distance{};
    bool reduced_debug_info{};
    bool immediate_respawn{};
 };
@@ -199,6 +200,7 @@ struct PlayerPositionLook {
    float yaw, pitch;
    uint8_t flags;
    int tp_id;
+   bool dismount_vehicle;
 };
 Writer serialize(PlayerPositionLook msg);
 

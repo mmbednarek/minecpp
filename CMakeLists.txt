@@ -79,6 +79,8 @@ add_subdirectory(tool/statelist)
 add_subdirectory(tool/nbtprotogen)
 add_subdirectory(tool/nbtscheme)
 add_subdirectory(tool/discocli)
+add_subdirectory(tool/dimension)
+add_subdirectory(tool/snbt_parser)
 
 # Services
 

@@ -65,7 +65,13 @@ class Block {
       }
    };
 
-   explicit Block(std::string_view tag, std::vector<State> states, const BlockStats &stats={}) : m_tag(std::string(tag)), m_states(std::move(states)), m_stats(stats) {}
+   explicit Block(std::string_view tag, std::vector<State> states, const BlockStats &stats={}) : m_tag(std::string(tag)), m_states(std::move(states)), m_stats(stats) {
+      if (tag == "minecraft:air") {
+         m_stats.material = &Material::Air;
+         return;
+      }
+      m_stats.material = &Material::Rock;
+   }
 
    [[nodiscard]] std::size_t state_count() const;
 

@@ -35,7 +35,8 @@ TEST(State, stateValues) {
 }
 
 TEST(State, loadStates) {
-   ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
+//   ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
+   ASSERT_TRUE(minecpp::repository::load_repository_from_file("/home/ego/test.bin").ok());
 
    for (std::size_t i = 0; i < minecpp::repository::StateManager::the().state_count(); ++i) {
       auto [block_id, state] = minecpp::repository::StateManager::the().parse_block_id(static_cast<int>(i));
@@ -58,4 +59,6 @@ TEST(State, loadStates) {
       auto encoded = minecpp::repository::encode_state(block_id, minecpp::repository::make_compound_encoder(cont)).unwrap();
       ASSERT_EQ(i, encoded);
    }
+
+   std::cout << "final state count: " << minecpp::repository::StateManager::the().state_count() << '\n';
 }

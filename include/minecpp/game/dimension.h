@@ -10,7 +10,7 @@ class DimensionProperties {
    bool piglin_safe = false;
    bool natural = true;
    float ambient_light = 0.0f;
-   std::string infiniburn = "minecraft:infiniburn_overworld";
+   std::string infiniburn = "#minecraft:infiniburn_overworld";
    bool respawn_anchor_works = false;
    bool has_skylight = true;
    bool bed_works = true;
@@ -33,7 +33,7 @@ const DimensionProperties NetherProps{
         .piglin_safe = true,
         .natural = false,
         .ambient_light = 0.1f,
-        .infiniburn = "minecraft:infiniburn_nether",
+        .infiniburn = "#minecraft:infiniburn_nether",
         .respawn_anchor_works = true,
         .has_skylight = false,
         .bed_works = false,
@@ -45,7 +45,7 @@ const DimensionProperties NetherProps{
 };
 const DimensionProperties EndProps{
         .natural = false,
-        .infiniburn = "minecraft:infiniburn_end",
+        .infiniburn = "#minecraft:infiniburn_end",
         .respawn_anchor_works = false,
         .has_skylight = false,
         .bed_works = false,

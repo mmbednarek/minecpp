@@ -153,4 +153,13 @@ size_t Writer::peek_size() {
    return size;
 }
 
+void Writer::write_from(Writer &other) {
+   auto view = other.stream.view();
+   stream.write(view.data(), static_cast<std::streamsize>(view.size()));
+}
+
+void Writer::write_long(uint64_t value) {
+   stream.write((char *)&value, sizeof(uint64_t));
+}
+
 } // namespace minecpp::network::Message

@@ -1,6 +1,7 @@
 #include <minecpp/nbt/tag.h>
 #include <minecpp/nbt/writer.h>
 
+#include <fmt/format.h>
 #include <minecpp/util/format.h>
 #include <utility>
 
@@ -57,6 +58,14 @@ static std::string format_list(ListContent list, int padding = 0) {
    return ss.str();
 }
 
+static std::string format_label(const std::string &label) {
+   auto it = std::find(label.begin(), label.end(), ':');
+   if (it == label.end()) {
+      return label;
+   }
+   return fmt::format("\"{}\"", label);
+}
+
 static std::string format_compound(std::map<std::string, Content> compound, int padding = 0) {
    std::stringstream ss;
 
@@ -67,11 +76,11 @@ static std::string format_compound(std::map<std::string, Content> compound, int 
    }
 
    ss << "{\n";
-   ss << pad(padding + 1) << it->first << ": " << it->second.to_string(padding + 1);
+   ss << pad(padding + 1) << format_label(it->first) << ": " << it->second.to_string(padding + 1);
    std::for_each(
            ++it, compound.end(), [&ss, padding](const auto &el) {
               ss << ",\n"
-                 << pad(padding + 1) << el.first << ": " << el.second.to_string(padding + 1);
+                 << pad(padding + 1) << format_label(el.first) << ": " << el.second.to_string(padding + 1);
            });
    ss << '\n'
       << pad(padding) << '}';
@@ -181,6 +190,62 @@ Content make_string(std::string s) {
    return Content{
            .tag_id = TagId::String,
            .content = std::move(s),
+   };
+}
+
+Content make_byte(std::int8_t bt) {
+   return Content{
+           .tag_id = TagId::Byte,
+           .content = bt,
+   };
+}
+
+Content make_short(std::int16_t bt) {
+   return Content{
+           .tag_id = TagId::Short,
+           .content = bt,
+   };
+}
+
+Content make_int(std::int32_t bt) {
+   return Content{
+           .tag_id = TagId::Int,
+           .content = bt,
+   };
+}
+
+Content make_long(std::int64_t bt) {
+   return Content{
+           .tag_id = TagId::Long,
+           .content = bt,
+   };
+}
+
+Content make_float(float value) {
+   return Content{
+           .tag_id = TagId::Float,
+           .content = value,
+   };
+}
+
+Content make_double(double value) {
+   return Content{
+           .tag_id = TagId::Double,
+           .content = value,
+   };
+}
+
+Content make_compound(CompoundContent cont) {
+   return Content{
+           .tag_id = TagId::Compound,
+           .content = std::move(cont),
+   };
+}
+
+Content make_list(ListContent cont)  {
+   return Content{
+           .tag_id = TagId::List,
+           .content = std::move(cont),
    };
 }
 

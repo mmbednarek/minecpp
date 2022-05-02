@@ -57,8 +57,6 @@ struct Content {
    void serialize(std::string_view name, std::ostream &s) const;
 };
 
-Content make_string(std::string s);
-
 using CompoundContent = std::map<std::string, Content>;
 
 struct ListContent {
@@ -131,6 +129,16 @@ struct ListContent {
       return result;
    }
 };
+
+Content make_string(std::string s);
+Content make_byte(std::int8_t bt);
+Content make_short(std::int16_t bt);
+Content make_int(std::int32_t bt);
+Content make_long(std::int64_t bt);
+Content make_float(float value);
+Content make_double(double value);
+Content make_compound(CompoundContent cont);
+Content make_list(ListContent cont);
 
 struct NamedTag {
    std::string name;

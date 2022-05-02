@@ -27,32 +27,32 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x10: {
+   case 0x0f: {
       KeepAliveClient msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x12: {
+   case 0x11: {
       PlayerPosition msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x13: {
+   case 0x12: {
       PlayerPositionRotation msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x14: {
+   case 0x13: {
       PlayerRotation msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x1b: {
+   case 0x1a: {
       PlayerDigging msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x2b: {
+   case 0x2c: {
       AnimateHandClient msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
