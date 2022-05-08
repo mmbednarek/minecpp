@@ -3,8 +3,9 @@
 #include <cstdio>
 #include <string_view>
 
-void die(std::string_view value) {
-   fmt::print(stderr, value);
+template<typename ...ARGS>
+void die(fmt::format_string<ARGS...> fmt, ARGS&& ...args) {
+   fmt::print(stderr, fmt, std::forward<ARGS>(args)...);
    std::exit(1);
 }
 

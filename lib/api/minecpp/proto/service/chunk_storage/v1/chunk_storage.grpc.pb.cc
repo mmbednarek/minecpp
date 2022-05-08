@@ -31,6 +31,7 @@ static const char* ChunkStorage_method_names[] = {
   "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/AddReferences",
   "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/RemoveReference",
   "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/HeightAt",
+  "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/GetBlock",
 };
 
 std::unique_ptr< ChunkStorage::Stub> ChunkStorage::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -45,6 +46,7 @@ ChunkStorage::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   , rpcmethod_AddReferences_(ChunkStorage_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveReference_(ChunkStorage_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_HeightAt_(ChunkStorage_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBlock_(ChunkStorage_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ChunkStorage::Stub::LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::minecpp::proto::chunk::v1::Chunk* response) {
@@ -162,6 +164,29 @@ void ChunkStorage::Stub::async::HeightAt(::grpc::ClientContext* context, const :
   return result;
 }
 
+::grpc::Status ChunkStorage::Stub::GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::minecpp::proto::common::v1::BlockState* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetBlock_, context, request, response);
+}
+
+void ChunkStorage::Stub::async::GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBlock_, context, request, response, std::move(f));
+}
+
+void ChunkStorage::Stub::async::GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetBlock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>* ChunkStorage::Stub::PrepareAsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::minecpp::proto::common::v1::BlockState, ::minecpp::proto::common::v1::BlockPosition, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetBlock_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>* ChunkStorage::Stub::AsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetBlockRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ChunkStorage::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ChunkStorage_method_names[0],
@@ -213,6 +238,16 @@ ChunkStorage::Service::Service() {
              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* resp) {
                return service->HeightAt(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ChunkStorage_method_names[5],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ChunkStorage::Service, ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ChunkStorage::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::minecpp::proto::common::v1::BlockPosition* req,
+             ::minecpp::proto::common::v1::BlockState* resp) {
+               return service->GetBlock(ctx, req, resp);
+             }, this)));
 }
 
 ChunkStorage::Service::~Service() {
@@ -247,6 +282,13 @@ ChunkStorage::Service::~Service() {
 }
 
 ::grpc::Status ChunkStorage::Service::HeightAt(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ChunkStorage::Service::GetBlock(::grpc::ServerContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response) {
   (void) context;
   (void) request;
   (void) response;

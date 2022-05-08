@@ -12,6 +12,10 @@ message BlockPosition {
   int32 z = 3;
 }
 
+message BlockState {
+  uint32 block_state = 1;
+}
+
 message Gameplay {
   DimensionType dimension = 1;
   uint64 seed = 2;
@@ -50,4 +54,23 @@ enum WorldType {
   LargeBiomes = 2;
   Amplified = 3;
   Customised = 4;
+}
+
+enum PlayerDiggingState {
+  Digging = 0;
+  CanceledDigging = 1;
+  FinishedDigging = 2;
+  DropAllItems = 3;
+  DropItem = 4;
+  ReleaseUseItem = 5;
+  SwapHeldItems = 6;
+}
+
+enum Face {
+  Bottom = 0;
+  Top = 1;
+  North = 2;
+  South = 3;
+  West = 4;
+  East = 5;
 }

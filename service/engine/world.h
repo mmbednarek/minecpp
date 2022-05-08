@@ -25,6 +25,7 @@ class World : public minecpp::game::World {
    mb::result<mb::empty> free_refs(player::Id player, std::vector<game::ChunkPosition> refs) override;
    mb::result<int> height_at(int x, int z) override;
    mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockState state) override;
+   mb::result<game::BlockState> get_block(const game::BlockPosition &pos) override;
 };
 
 }// namespace minecpp::service::engine

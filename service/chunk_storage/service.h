@@ -36,6 +36,7 @@ class Service final : public chunk_storage_v1::ChunkStorage::Service {
 
    grpc::Status HeightAt(grpc::ServerContext *context, const chunk_storage_v1::HeightAtRequest *request,
                          chunk_storage_v1::HeightAtResponse *response) override;
+   grpc::Status GetBlock(::grpc::ServerContext *context, const ::minecpp::proto::common::v1::BlockPosition *request, ::minecpp::proto::common::v1::BlockState *response) override;
 };
 
 } // namespace minecpp::service::chunk_storage

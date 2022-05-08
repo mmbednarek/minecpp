@@ -30,6 +30,7 @@ class Notifier {
    virtual void update_block(game::BlockPosition block, mb::u32 state) = 0;
    virtual void update_block(mb::i32 x, mb::i32 y, mb::i32 z, mb::u32 state) = 0;
    virtual void animate_hand(player::Id player, mb::u32 entity_id, mb::u32 hand) = 0;
+   virtual void acknowledge_player_digging(player::Id player_id, game::BlockPosition &pos, game::BlockState block_state, PlayerDiggingState state, bool successful) = 0;
    virtual void unload_chunk(player::Id player, const game::ChunkPosition &chunk_position) = 0;
 };
 

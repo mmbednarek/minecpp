@@ -1,4 +1,5 @@
 #include "structgen.h"
+#include "minecpp/util/string.h"
 #include <mb/codegen/class.h>
 #include <mb/codegen/lambda.h>
 #include <sstream>

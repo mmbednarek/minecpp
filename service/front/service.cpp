@@ -114,9 +114,11 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerDigging msg) {
-   serverbound_v1::DestroyBlock destroy_block;
-   *destroy_block.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
-   m_stream->send(destroy_block, player_id);
+   serverbound_v1::PlayerDigging player_digging;
+   player_digging.set_state(static_cast<proto::common::v1::PlayerDiggingState>(msg.action));
+   *player_digging.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
+   player_digging.set_face(static_cast<proto::common::v1::Face>(msg.facing));
+   m_stream->send(player_digging, player_id);
 }
 
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::KeepAliveClient msg) {

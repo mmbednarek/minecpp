@@ -22,6 +22,8 @@ struct ClientSettings {
    bool enable_colors;
    uint8_t model_part_flags;
    game::HandSide hand_side;
+   bool enable_text_filtering;
+   bool allow_server_listing;
 };
 void deserialize(Reader &r, ClientSettings &msg);
 
@@ -34,6 +36,7 @@ void deserialize(Reader &r, KeepAliveClient &msg);
 // 0x11
 struct PlayerPosition {
    double x, y, z;
+   bool on_ground;
 };
 void deserialize(Reader &r, PlayerPosition &msg);
 
@@ -41,30 +44,22 @@ void deserialize(Reader &r, PlayerPosition &msg);
 struct PlayerPositionRotation {
    double x, y, z;
    float yaw, pitch;
+   bool on_ground;
 };
 void deserialize(Reader &r, PlayerPositionRotation &msg);
 
 // 0x13
 struct PlayerRotation {
    float yaw, pitch;
+    bool on_ground;
 };
 void deserialize(Reader &r, PlayerRotation &msg);
 
-enum class DiggingAction : uint8_t {
-   StartDestroyBlock,
-   AbortDestroyBlock,
-   StopDestroyBlock,
-   DropAllItems,
-   DropItem,
-   ReleaseUseItem,
-   SwapHeldItems,
-};
-
 // 0x1a
 struct PlayerDigging {
-   DiggingAction action;
-   uint64_t position;
-   game::Direction facing;
+   game::PlayerDiggingState action{};
+   uint64_t position{};
+   game::Face facing{};
 };
 void deserialize(Reader &r, PlayerDigging &msg);
 
@@ -73,10 +68,10 @@ enum class PlayerHand : uint8_t {
    Off
 };
 
-// 0x2a
+// 0x2c
 struct AnimateHandClient {
    PlayerHand hand;
 };
 void deserialize(Reader &r, AnimateHandClient &msg);
 
-}// namespace minecpp::network::Message
+}// namespace minecpp::network::message

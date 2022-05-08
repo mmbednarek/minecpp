@@ -29,7 +29,7 @@ class EventHandler {
    void handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event, player::Id player_id);
    void handle_chat_message(const serverbound_v1::ChatMessage &event, player::Id player_id);
    void handle_remove_player(const serverbound_v1::RemovePlayer &event, player::Id player_id);
-   void handle_destroy_block(const serverbound_v1::DestroyBlock &event, player::Id player_id);
+   void handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id);
    void handle_update_ping(const serverbound_v1::UpdatePing &event, player::Id player_id);
    void handle_animate_hand(const serverbound_v1::AnimateHand &event, player::Id player_id);
    void handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id);

@@ -22,7 +22,7 @@ class Writer {
    void write_int_content(int value);
    void write_string_content(std::string_view str);
    void write_float_content(float value);
-   void write_double_content(float value);
+   void write_double_content(double value);
    void write_long_content(int64_t value);
    void write_bytes_content(const std::vector<uint8_t> &values);
    void write_ints_content(const std::vector<int> &values);

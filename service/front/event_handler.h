@@ -29,6 +29,7 @@ class EventHandler {
    void handle_remove_player(const clientbound_v1::RemovePlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_update_block(const clientbound_v1::UpdateBlock &msg, const std::vector<player::Id> &player_ids);
    void handle_animate_hand(const clientbound_v1::AnimateHand &msg, const std::vector<player::Id> &player_ids);
+   void handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg, const std::vector<player::Id> &player_ids);
    void handle_load_terrain(const clientbound_v1::LoadTerrain &msg, const std::vector<player::Id> &player_ids);
    void handle_transfer_player(const clientbound_v1::TransferPlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg, const std::vector<player::Id> &player_ids);

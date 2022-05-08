@@ -33,6 +33,7 @@
 #include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 #include <minecpp/proto/chunk/v1/chunk.pb.h>
+#include <minecpp/proto/common/v1/common.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto

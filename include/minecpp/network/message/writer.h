@@ -12,6 +12,7 @@ class Writer {
    explicit Writer();
 
    void write_byte(uint8_t value);
+   void write_long(uint64_t value);
    void write_varint(uint32_t value);
    void write_varlong(uint64_t value);
    int len_varint(int value) const;
@@ -21,6 +22,8 @@ class Writer {
    void write_float(float value);
    void write_double(double d);
    void write_bytes(const char *data, std::size_t size);
+   void write_from(Writer &other);
+
    std::tuple<uint8_t *, size_t> buff(std::size_t comp_thres = 0);
    template <typename T> void write_big_endian(T value);
    template <typename I> void write_big_endian_array(std::vector<I> vec);

@@ -53,6 +53,7 @@ grpc::Status Service::AddReferences(grpc::ServerContext *context,
    response->set_target_engine_id(target.data, target.size());
    return grpc::Status();
 }
+
 grpc::Status Service::RemoveReference(grpc::ServerContext *context,
                                       const chunk_storage_v1::RemoveReferencesRequest *request,
                                       chunk_storage_v1::EmptyResponse *response) {
@@ -63,12 +64,21 @@ grpc::Status Service::RemoveReference(grpc::ServerContext *context,
    auto player_id = MCPP_GRPC_TRY(minecpp::util::make_uuid(request->player_id()));
 
    MCPP_GRPC_TRY(chunks.free_refs(player_id, coords));
-   return grpc::Status();
+   return {};
 }
+
 grpc::Status Service::HeightAt(grpc::ServerContext *context, const chunk_storage_v1::HeightAtRequest *request,
                                chunk_storage_v1::HeightAtResponse *response) {
    response->set_height(MCPP_GRPC_TRY(chunks.height_at(request->x(), request->z())));
-   return grpc::Status();
+   return {};
+}
+
+grpc::Status Service::GetBlock(::grpc::ServerContext *context, const ::minecpp::proto::common::v1::BlockPosition *request, ::minecpp::proto::common::v1::BlockState *response) {
+   auto block_pos = game::BlockPosition::from_proto(*request);
+   auto chunk_pos = block_pos.chunk_position();
+   auto chunk = MCPP_GRPC_TRY(chunks.get_chunk(chunk_pos));
+   response->set_block_state(chunk.get_block(block_pos.offset_x(), block_pos.y, block_pos.offset_z()));
+   return {};
 }
 
 }// namespace minecpp::service::chunk_storage

@@ -254,48 +254,52 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage
   "\n:minecpp/proto/service/chunk_storage/v1"
   "/chunk_storage.proto\022&minecpp.proto.serv"
   "ice.chunk_storage.v1\032\"minecpp/proto/chun"
-  "k/v1/chunk.proto\"(\n\020LoadChunkRequest\022\t\n\001"
-  "x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"A\n\017SetBlockRequest\022\t\n"
-  "\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\r\n\005state\030"
-  "\004 \001(\005\"\035\n\005Coord\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"{\n\024"
-  "AddReferencesRequest\022\021\n\tengine_id\030\001 \001(\014\022"
-  "\021\n\tplayer_id\030\002 \001(\014\022=\n\006coords\030\003 \003(\0132-.min"
-  "ecpp.proto.service.chunk_storage.v1.Coor"
-  "d\"z\n\025AddReferencesResponse\022G\n\006status\030\001 \001"
-  "(\01627.minecpp.proto.service.chunk_storage"
-  ".v1.ReferenceStatus\022\030\n\020target_engine_id\030"
-  "\002 \001(\014\"k\n\027RemoveReferencesRequest\022\021\n\tplay"
-  "er_id\030\001 \001(\014\022=\n\006coords\030\002 \003(\0132-.minecpp.pr"
-  "oto.service.chunk_storage.v1.Coord\"\'\n\017He"
-  "ightAtRequest\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"\"\n\020H"
-  "eightAtResponse\022\016\n\006height\030\001 \001(\005\"\017\n\rEmpty"
-  "Response*(\n\017ReferenceStatus\022\006\n\002OK\020\000\022\r\n\tM"
-  "UST_MOVE\020\0012\212\005\n\014ChunkStorage\022d\n\tLoadChunk"
-  "\0228.minecpp.proto.service.chunk_storage.v"
-  "1.LoadChunkRequest\032\035.minecpp.proto.chunk"
-  ".v1.Chunk\022z\n\010SetBlock\0227.minecpp.proto.se"
-  "rvice.chunk_storage.v1.SetBlockRequest\0325"
+  "k/v1/chunk.proto\032$minecpp/proto/common/v"
+  "1/common.proto\"(\n\020LoadChunkRequest\022\t\n\001x\030"
+  "\001 \001(\005\022\t\n\001z\030\002 \001(\005\"A\n\017SetBlockRequest\022\t\n\001x"
+  "\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\r\n\005state\030\004 "
+  "\001(\005\"\035\n\005Coord\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"{\n\024Ad"
+  "dReferencesRequest\022\021\n\tengine_id\030\001 \001(\014\022\021\n"
+  "\tplayer_id\030\002 \001(\014\022=\n\006coords\030\003 \003(\0132-.minec"
+  "pp.proto.service.chunk_storage.v1.Coord\""
+  "z\n\025AddReferencesResponse\022G\n\006status\030\001 \001(\016"
+  "27.minecpp.proto.service.chunk_storage.v"
+  "1.ReferenceStatus\022\030\n\020target_engine_id\030\002 "
+  "\001(\014\"k\n\027RemoveReferencesRequest\022\021\n\tplayer"
+  "_id\030\001 \001(\014\022=\n\006coords\030\002 \003(\0132-.minecpp.prot"
+  "o.service.chunk_storage.v1.Coord\"\'\n\017Heig"
+  "htAtRequest\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"\"\n\020Hei"
+  "ghtAtResponse\022\016\n\006height\030\001 \001(\005\"\017\n\rEmptyRe"
+  "sponse*(\n\017ReferenceStatus\022\006\n\002OK\020\000\022\r\n\tMUS"
+  "T_MOVE\020\0012\343\005\n\014ChunkStorage\022d\n\tLoadChunk\0228"
   ".minecpp.proto.service.chunk_storage.v1."
-  "EmptyResponse\022\214\001\n\rAddReferences\022<.minecp"
-  "p.proto.service.chunk_storage.v1.AddRefe"
-  "rencesRequest\032=.minecpp.proto.service.ch"
-  "unk_storage.v1.AddReferencesResponse\022\211\001\n"
-  "\017RemoveReference\022\?.minecpp.proto.service"
-  ".chunk_storage.v1.RemoveReferencesReques"
-  "t\0325.minecpp.proto.service.chunk_storage."
-  "v1.EmptyResponse\022}\n\010HeightAt\0227.minecpp.p"
-  "roto.service.chunk_storage.v1.HeightAtRe"
-  "quest\0328.minecpp.proto.service.chunk_stor"
-  "age.v1.HeightAtResponseb\006proto3"
+  "LoadChunkRequest\032\035.minecpp.proto.chunk.v"
+  "1.Chunk\022z\n\010SetBlock\0227.minecpp.proto.serv"
+  "ice.chunk_storage.v1.SetBlockRequest\0325.m"
+  "inecpp.proto.service.chunk_storage.v1.Em"
+  "ptyResponse\022\214\001\n\rAddReferences\022<.minecpp."
+  "proto.service.chunk_storage.v1.AddRefere"
+  "ncesRequest\032=.minecpp.proto.service.chun"
+  "k_storage.v1.AddReferencesResponse\022\211\001\n\017R"
+  "emoveReference\022\?.minecpp.proto.service.c"
+  "hunk_storage.v1.RemoveReferencesRequest\032"
+  "5.minecpp.proto.service.chunk_storage.v1"
+  ".EmptyResponse\022}\n\010HeightAt\0227.minecpp.pro"
+  "to.service.chunk_storage.v1.HeightAtRequ"
+  "est\0328.minecpp.proto.service.chunk_storag"
+  "e.v1.HeightAtResponse\022W\n\010GetBlock\022&.mine"
+  "cpp.proto.common.v1.BlockPosition\032#.mine"
+  "cpp.proto.common.v1.BlockStateb\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps[1] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps[2] = {
   &::descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fchunk_2eproto,
+  &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto = {
-    false, false, 1431, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
+    false, false, 1558, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
     "minecpp/proto/service/chunk_storage/v1/chunk_storage.proto",
-    &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps, 1, 9,
+    &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto_deps, 2, 9,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto,

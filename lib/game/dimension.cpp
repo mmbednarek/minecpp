@@ -26,8 +26,10 @@ void DimensionProperties::to_nbt(nbt::Writer &w) const {
    w.write_byte("bed_works", bed_works);
    w.write_string("effetcs", "minecraft:overworld");
    w.write_byte("has_raids", has_raids);
+   w.write_int("min_y", 0);
+   w.write_int("height", logical_height);
    w.write_int("logical_height", logical_height);
-   w.write_float("coordinate_scale", 1.0);
+   w.write_double("coordinate_scale", 1.0);
    w.write_byte("ultrawarm", ultrawarm);
    w.write_byte("has_ceiling", has_ceiling);
 }

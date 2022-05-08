@@ -70,10 +70,29 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
    m_player_manager.remove_player(player_id);
 }
 
-void EventHandler::handle_destroy_block(const serverbound_v1::DestroyBlock &event, player::Id player_id) {
-   auto block_position = game::BlockPosition::from_proto(event.block_position());
-   m_dispatcher.update_block(block_position, 0);
-   m_world.set_block(block_position, 0);
+void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id){
+   auto status = static_cast<game::PlayerDiggingState>(event.state());
+
+   switch(status) {
+   case game::PlayerDiggingState::Digging:
+   case game::PlayerDiggingState::CanceledDigging: {
+      auto block_position = game::BlockPosition::from_proto(event.block_position());
+      auto block_state_res = m_world.get_block(block_position);
+      if (!block_state_res.ok())  {
+         spdlog::info("error fetching block state: {}", block_state_res.msg());
+         return;
+      }
+      auto block_state = block_state_res.unwrap();
+      m_dispatcher.acknowledge_player_digging(player_id, block_position, block_state, status, true);
+   } break;
+   case game::PlayerDiggingState::FinishedDigging: {
+      auto block_position = game::BlockPosition::from_proto(event.block_position());
+      m_dispatcher.acknowledge_player_digging(player_id, block_position, 0, status, true);
+      m_dispatcher.update_block(block_position, 0);
+      m_world.set_block(block_position, 0);
+   } break;
+   default: break;
+   }
 }
 
 void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, player::Id player_id) {

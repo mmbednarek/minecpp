@@ -16,7 +16,6 @@ void ApiHandler::on_connected(BidiStream stream) {
 }
 
 void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbound::v1::Event &event) {
-   spdlog::info("api handler: received message");
    stream.read();
    try {
       event::visit_serverbound(event, m_event_handler);

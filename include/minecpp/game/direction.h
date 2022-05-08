@@ -9,8 +9,6 @@ using Direction = minecpp::util::Enum<ENU("north"), ENU("east"), ENU("south"),
 
 using Axis = minecpp::util::Enum<ENU("x"), ENU("y"), ENU("z")>;
 
-using Face = minecpp::util::Enum<ENU("floor"), ENU("wall"), ENU("ceiling")>;
-
 using BellAttachment = minecpp::util::Enum<ENU("floor"), ENU("ceiling"),
                                    ENU("single_wall"), ENU("double_wall")>;
 

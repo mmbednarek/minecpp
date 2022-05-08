@@ -24,6 +24,30 @@ constexpr mb::u32 g_block_position_bit_offset_z = g_block_position_y_bits;
 
 struct ChunkPosition;
 
+constexpr int decode_x(mb::u64 pos) {
+   auto x = pos >> 38;
+   if (x >= (1u << 25)) {
+      return static_cast<int>(static_cast<mb::i64>(x) - (1 << 26));
+   }
+   return static_cast<int>(x);
+}
+
+constexpr int decode_y(mb::u64 pos) {
+   auto y = pos & 0xFFF;
+   if (y >= (1u << 11)) {
+      return static_cast<int>(static_cast<mb::i64>(y) - (1 << 12));
+   }
+   return static_cast<int>(y);
+}
+
+constexpr int decode_z(mb::u64 pos) {
+   auto z = (pos >> 12) & 0x3FFFFFF;
+   if (z >= (1u << 25)) {
+      return static_cast<int>(static_cast<mb::i64>(z) - (1 << 26));
+   }
+   return static_cast<int>(z);
+}
+
 struct BlockPosition {
    int x{}, y{}, z{};
 
@@ -31,17 +55,27 @@ struct BlockPosition {
 
    constexpr BlockPosition(int x, int y, int z) : x(x), y(y), z(z) {}
 
-   constexpr explicit BlockPosition(mb::u64 encoded) : x(static_cast<int>(encoded >> (g_block_position_z_bits + g_block_position_y_bits))),
-                                                       y(static_cast<int>(encoded << (g_block_position_x_bits + g_block_position_z_bits) >> (g_block_position_x_bits + g_block_position_z_bits))),
-                                                       z(static_cast<int>(encoded << g_block_position_x_bits >> (g_block_position_x_bits + g_block_position_y_bits))) {}
+   constexpr explicit BlockPosition(mb::u64 encoded) : x(decode_x(encoded)),
+                                                       y(decode_y(encoded)),
+                                                       z(decode_z(encoded)) {
+      if (x > 33554431) {
+         x = 67108862 - x;
+      }
+      if (z > 33554431) {
+         z = 67108862 - z;
+      }
+   }
 
    [[nodiscard]] constexpr mb::u64 as_long() const {
-      return ((static_cast<mb::u64>(x) & g_block_position_mask_x) << g_block_position_bit_offset_x) | (static_cast<mb::u64>(y) & g_block_position_mask_y) |
-             ((static_cast<mb::u64>(z) & g_block_position_mask_z) << g_block_position_bit_offset_z);
+      auto lx = x >= 0 ? static_cast<mb::u64>(x) : static_cast<mb::u64>(static_cast<mb::i64>(x) + (1 << 26));
+      auto ly = y >= 0 ? static_cast<mb::u64>(y) : static_cast<mb::u64>(static_cast<mb::i64>(y) + (1 << 12));
+      auto lz = z >= 0 ? static_cast<mb::u64>(z) : static_cast<mb::u64>(static_cast<mb::i64>(z) + (1 << 26));
+      return ((lx & g_block_position_mask_x) << g_block_position_bit_offset_x) | (ly & g_block_position_mask_y) |
+             ((lz & g_block_position_mask_z) << g_block_position_bit_offset_z);
    }
 
    static inline BlockPosition from_proto(const proto::common::v1::BlockPosition &position) {
-      return BlockPosition(position.x(), position.y(), position.z());
+      return {position.x(), position.y(), position.z()};
    }
 
    [[nodiscard]] constexpr ChunkPosition chunk_position() const;
@@ -61,6 +95,16 @@ struct BlockPosition {
 };
 
 using BlockState = mb::u32;
+
+[[nodiscard]] inline BlockState block_state_from_proto(const proto::common::v1::BlockState &state) {
+   return static_cast<BlockState>(state.block_state());
+}
+
+[[nodiscard]] inline proto::common::v1::BlockState block_state_to_proto(BlockState state) {
+   proto::common::v1::BlockState proto;
+   proto.set_block_state(state);
+   return proto;
+}
 
 struct ChunkPosition {
    int x{}, z{};
@@ -107,5 +151,24 @@ struct ChunkPosition {
 constexpr ChunkPosition BlockPosition::chunk_position() const {
    return ChunkPosition(x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1), z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1));
 }
+
+enum class PlayerDiggingState : int {
+   Digging = 0,
+   CanceledDigging = 1,
+   FinishedDigging = 2,
+   DropAllItems = 3,
+   DropItem = 4,
+   ReleaseUseItem = 5,
+   SwapHeldItems = 6,
+};
+
+enum class Face {
+   Bottom = 0,
+   Top = 1,
+   North = 2,
+   South = 3,
+   West = 4,
+   East = 5,
+};
 
 }// namespace minecpp::game

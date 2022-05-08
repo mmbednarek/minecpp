@@ -1,0 +1,24 @@
+services:
+  chunk_storage:
+    image: minecpp/chunk-storage:latest
+    environment:
+      LISTEN: 0.0.0.0:7000
+  engine:
+    image: minecpp/engine:latest
+    environment:
+      CHUNK_STORAGE_ADDRESS: chunk_storage:7000
+      LISTEN: 0.0.0.0:7000
+    depends_on:
+      - chunk_storage
+  front:
+    image: minecpp/front:latest
+    volumes:
+      - '.:/config'
+    environment:
+      CONFIG_FILE: /config/front-config-docker.yaml
+      PORT: 25565
+    ports:
+      - "25565:25565"
+    depends_on:
+      - engine
+      - chunk_storage

@@ -88,19 +88,19 @@ void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler);
 
 template<typename M>
 void send(const Connection::Ptr &conn, M msg) {
-   auto w = minecpp::network::message::serialize(msg);
+   auto w = msg.serialize();
    conn->send(conn, w);
 }
 
 template<typename M>
 void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h) {
-   auto w = minecpp::network::message::serialize(msg);
+   auto w = msg.serialize();
    conn->send_and_read(conn, w, h);
 }
 
 template<typename M>
 void send_and_disconnect(const Connection::Ptr &conn, M msg) {
-   auto w = minecpp::network::message::serialize(msg);
+   auto w = msg.serialize();
    conn->send_and_disconnect(conn, w);
 }
 

@@ -94,8 +94,8 @@ void Writer::write_float(std::string_view name, float value) {
    put_big_endian(v);
 }
 
-void Writer::write_double_content(float value) {
-   uint32_t v = *reinterpret_cast<uint32_t *>(&value);
+void Writer::write_double_content(double value) {
+   uint64_t v = *reinterpret_cast<uint64_t *>(&value);
    put_big_endian(v);
 }
 
