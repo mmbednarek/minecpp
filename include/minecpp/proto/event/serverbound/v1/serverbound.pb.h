@@ -60,6 +60,9 @@ extern AcceptPlayerDefaultTypeInternal _AcceptPlayer_default_instance_;
 class AnimateHand;
 struct AnimateHandDefaultTypeInternal;
 extern AnimateHandDefaultTypeInternal _AnimateHand_default_instance_;
+class BlockPlacement;
+struct BlockPlacementDefaultTypeInternal;
+extern BlockPlacementDefaultTypeInternal _BlockPlacement_default_instance_;
 class ChatMessage;
 struct ChatMessageDefaultTypeInternal;
 extern ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
@@ -92,6 +95,7 @@ extern UpdatePingDefaultTypeInternal _UpdatePing_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::minecpp::proto::event::serverbound::v1::AcceptPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::AcceptPlayer>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::AnimateHand* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::AnimateHand>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::BlockPlacement* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::BlockPlacement>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::ChatMessage* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChatMessage>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Event>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::LoadInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadInitialChunks>(Arena*);
@@ -1593,6 +1597,211 @@ class LoadInitialChunks final :
   typedef void DestructorSkippable_;
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto;
 };
+// -------------------------------------------------------------------
+
+class BlockPlacement final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.BlockPlacement) */ {
+ public:
+  inline BlockPlacement() : BlockPlacement(nullptr) {}
+  ~BlockPlacement() override;
+  explicit PROTOBUF_CONSTEXPR BlockPlacement(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  BlockPlacement(const BlockPlacement& from);
+  BlockPlacement(BlockPlacement&& from) noexcept
+    : BlockPlacement() {
+    *this = ::std::move(from);
+  }
+
+  inline BlockPlacement& operator=(const BlockPlacement& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BlockPlacement& operator=(BlockPlacement&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const BlockPlacement& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const BlockPlacement* internal_default_instance() {
+    return reinterpret_cast<const BlockPlacement*>(
+               &_BlockPlacement_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(BlockPlacement& a, BlockPlacement& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BlockPlacement* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BlockPlacement* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  BlockPlacement* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<BlockPlacement>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const BlockPlacement& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const BlockPlacement& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BlockPlacement* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.BlockPlacement";
+  }
+  protected:
+  explicit BlockPlacement(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 2,
+    kCrosshairFieldNumber = 4,
+    kHandFieldNumber = 1,
+    kFaceFieldNumber = 3,
+    kInsideBlockFieldNumber = 5,
+  };
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::BlockPosition& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::BlockPosition* release_position();
+  ::minecpp::proto::common::v1::BlockPosition* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::BlockPosition* position);
+  private:
+  const ::minecpp::proto::common::v1::BlockPosition& _internal_position() const;
+  ::minecpp::proto::common::v1::BlockPosition* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::BlockPosition* position);
+  ::minecpp::proto::common::v1::BlockPosition* unsafe_arena_release_position();
+
+  // .minecpp.proto.common.v1.Vector3f crosshair = 4;
+  bool has_crosshair() const;
+  private:
+  bool _internal_has_crosshair() const;
+  public:
+  void clear_crosshair();
+  const ::minecpp::proto::common::v1::Vector3f& crosshair() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3f* release_crosshair();
+  ::minecpp::proto::common::v1::Vector3f* mutable_crosshair();
+  void set_allocated_crosshair(::minecpp::proto::common::v1::Vector3f* crosshair);
+  private:
+  const ::minecpp::proto::common::v1::Vector3f& _internal_crosshair() const;
+  ::minecpp::proto::common::v1::Vector3f* _internal_mutable_crosshair();
+  public:
+  void unsafe_arena_set_allocated_crosshair(
+      ::minecpp::proto::common::v1::Vector3f* crosshair);
+  ::minecpp::proto::common::v1::Vector3f* unsafe_arena_release_crosshair();
+
+  // int32 hand = 1;
+  void clear_hand();
+  int32_t hand() const;
+  void set_hand(int32_t value);
+  private:
+  int32_t _internal_hand() const;
+  void _internal_set_hand(int32_t value);
+  public:
+
+  // .minecpp.proto.common.v1.Face face = 3;
+  void clear_face();
+  ::minecpp::proto::common::v1::Face face() const;
+  void set_face(::minecpp::proto::common::v1::Face value);
+  private:
+  ::minecpp::proto::common::v1::Face _internal_face() const;
+  void _internal_set_face(::minecpp::proto::common::v1::Face value);
+  public:
+
+  // bool inside_block = 5;
+  void clear_inside_block();
+  bool inside_block() const;
+  void set_inside_block(bool value);
+  private:
+  bool _internal_inside_block() const;
+  void _internal_set_inside_block(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.BlockPlacement)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::minecpp::proto::common::v1::BlockPosition* position_;
+  ::minecpp::proto::common::v1::Vector3f* crosshair_;
+  int32_t hand_;
+  int face_;
+  bool inside_block_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto;
+};
 // ===================================================================
 
 
@@ -2285,9 +2494,245 @@ inline void AnimateHand::set_hand(int32_t value) {
 
 // LoadInitialChunks
 
+// -------------------------------------------------------------------
+
+// BlockPlacement
+
+// int32 hand = 1;
+inline void BlockPlacement::clear_hand() {
+  hand_ = 0;
+}
+inline int32_t BlockPlacement::_internal_hand() const {
+  return hand_;
+}
+inline int32_t BlockPlacement::hand() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.BlockPlacement.hand)
+  return _internal_hand();
+}
+inline void BlockPlacement::_internal_set_hand(int32_t value) {
+  
+  hand_ = value;
+}
+inline void BlockPlacement::set_hand(int32_t value) {
+  _internal_set_hand(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.BlockPlacement.hand)
+}
+
+// .minecpp.proto.common.v1.BlockPosition position = 2;
+inline bool BlockPlacement::_internal_has_position() const {
+  return this != internal_default_instance() && position_ != nullptr;
+}
+inline bool BlockPlacement::has_position() const {
+  return _internal_has_position();
+}
+inline const ::minecpp::proto::common::v1::BlockPosition& BlockPlacement::_internal_position() const {
+  const ::minecpp::proto::common::v1::BlockPosition* p = position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::BlockPosition&>(
+      ::minecpp::proto::common::v1::_BlockPosition_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::BlockPosition& BlockPlacement::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.BlockPlacement.position)
+  return _internal_position();
+}
+inline void BlockPlacement::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::BlockPosition* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position_);
+  }
+  position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.serverbound.v1.BlockPlacement.position)
+}
+inline ::minecpp::proto::common::v1::BlockPosition* BlockPlacement::release_position() {
+  
+  ::minecpp::proto::common::v1::BlockPosition* temp = position_;
+  position_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::BlockPosition* BlockPlacement::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.v1.BlockPlacement.position)
+  
+  ::minecpp::proto::common::v1::BlockPosition* temp = position_;
+  position_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::BlockPosition* BlockPlacement::_internal_mutable_position() {
+  
+  if (position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::BlockPosition>(GetArenaForAllocation());
+    position_ = p;
+  }
+  return position_;
+}
+inline ::minecpp::proto::common::v1::BlockPosition* BlockPlacement::mutable_position() {
+  ::minecpp::proto::common::v1::BlockPosition* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.v1.BlockPlacement.position)
+  return _msg;
+}
+inline void BlockPlacement::set_allocated_position(::minecpp::proto::common::v1::BlockPosition* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.BlockPlacement.position)
+}
+
+// .minecpp.proto.common.v1.Face face = 3;
+inline void BlockPlacement::clear_face() {
+  face_ = 0;
+}
+inline ::minecpp::proto::common::v1::Face BlockPlacement::_internal_face() const {
+  return static_cast< ::minecpp::proto::common::v1::Face >(face_);
+}
+inline ::minecpp::proto::common::v1::Face BlockPlacement::face() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.BlockPlacement.face)
+  return _internal_face();
+}
+inline void BlockPlacement::_internal_set_face(::minecpp::proto::common::v1::Face value) {
+  
+  face_ = value;
+}
+inline void BlockPlacement::set_face(::minecpp::proto::common::v1::Face value) {
+  _internal_set_face(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.BlockPlacement.face)
+}
+
+// .minecpp.proto.common.v1.Vector3f crosshair = 4;
+inline bool BlockPlacement::_internal_has_crosshair() const {
+  return this != internal_default_instance() && crosshair_ != nullptr;
+}
+inline bool BlockPlacement::has_crosshair() const {
+  return _internal_has_crosshair();
+}
+inline const ::minecpp::proto::common::v1::Vector3f& BlockPlacement::_internal_crosshair() const {
+  const ::minecpp::proto::common::v1::Vector3f* p = crosshair_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3f&>(
+      ::minecpp::proto::common::v1::_Vector3f_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::Vector3f& BlockPlacement::crosshair() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.BlockPlacement.crosshair)
+  return _internal_crosshair();
+}
+inline void BlockPlacement::unsafe_arena_set_allocated_crosshair(
+    ::minecpp::proto::common::v1::Vector3f* crosshair) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(crosshair_);
+  }
+  crosshair_ = crosshair;
+  if (crosshair) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.serverbound.v1.BlockPlacement.crosshair)
+}
+inline ::minecpp::proto::common::v1::Vector3f* BlockPlacement::release_crosshair() {
+  
+  ::minecpp::proto::common::v1::Vector3f* temp = crosshair_;
+  crosshair_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::Vector3f* BlockPlacement::unsafe_arena_release_crosshair() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.v1.BlockPlacement.crosshair)
+  
+  ::minecpp::proto::common::v1::Vector3f* temp = crosshair_;
+  crosshair_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::Vector3f* BlockPlacement::_internal_mutable_crosshair() {
+  
+  if (crosshair_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3f>(GetArenaForAllocation());
+    crosshair_ = p;
+  }
+  return crosshair_;
+}
+inline ::minecpp::proto::common::v1::Vector3f* BlockPlacement::mutable_crosshair() {
+  ::minecpp::proto::common::v1::Vector3f* _msg = _internal_mutable_crosshair();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.v1.BlockPlacement.crosshair)
+  return _msg;
+}
+inline void BlockPlacement::set_allocated_crosshair(::minecpp::proto::common::v1::Vector3f* crosshair) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(crosshair_);
+  }
+  if (crosshair) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(crosshair));
+    if (message_arena != submessage_arena) {
+      crosshair = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, crosshair, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  crosshair_ = crosshair;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.BlockPlacement.crosshair)
+}
+
+// bool inside_block = 5;
+inline void BlockPlacement::clear_inside_block() {
+  inside_block_ = false;
+}
+inline bool BlockPlacement::_internal_inside_block() const {
+  return inside_block_;
+}
+inline bool BlockPlacement::inside_block() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.BlockPlacement.inside_block)
+  return _internal_inside_block();
+}
+inline void BlockPlacement::_internal_set_inside_block(bool value) {
+  
+  inside_block_ = value;
+}
+inline void BlockPlacement::set_inside_block(bool value) {
+  _internal_set_inside_block(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.BlockPlacement.inside_block)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

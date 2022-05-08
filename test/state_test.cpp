@@ -50,7 +50,7 @@ TEST(State, loadStates) {
       minecpp::nbt::CompoundContent cont;
 
       auto range = block.state_range(state);
-      std::for_each(range.begin(), range.end(), [&cont](const std::tuple<minecpp::game::State &, int> &pair) {
+      std::for_each(range.begin(), range.end(), [&cont](const std::tuple<const minecpp::game::State &, int> &pair) {
          auto [block_state, value_index] = pair;
         cont[std::string(block_state.name())] = minecpp::nbt::make_string(block_state.value_from_index(value_index));
         std::cout << "    " << block_state.name() <<  "="  << block_state.value_from_index(value_index) << '\n';

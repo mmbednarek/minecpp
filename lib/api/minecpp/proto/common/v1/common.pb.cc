@@ -88,11 +88,25 @@ struct GameplayDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GameplayDefaultTypeInternal _Gameplay_default_instance_;
+PROTOBUF_CONSTEXPR Vector3f::Vector3f(
+    ::_pbi::ConstantInitialized)
+  : x_(0)
+  , y_(0)
+  , z_(0){}
+struct Vector3fDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Vector3fDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~Vector3fDefaultTypeInternal() {}
+  union {
+    Vector3f _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Vector3fDefaultTypeInternal _Vector3f_default_instance_;
 }  // namespace v1
 }  // namespace common
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[4];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[5];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[6];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto = nullptr;
 
@@ -137,12 +151,22 @@ const uint32_t TableStruct_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Gameplay, reduced_debug_info_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Gameplay, do_immediate_respawn_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Gameplay, difficulty_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3f, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3f, x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3f, y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3f, z_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::common::v1::ChunkPosition)},
   { 8, -1, -1, sizeof(::minecpp::proto::common::v1::BlockPosition)},
   { 17, -1, -1, sizeof(::minecpp::proto::common::v1::BlockState)},
   { 24, -1, -1, sizeof(::minecpp::proto::common::v1::Gameplay)},
+  { 40, -1, -1, sizeof(::minecpp::proto::common::v1::Vector3f)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -150,6 +174,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::common::v1::_BlockPosition_default_instance_._instance,
   &::minecpp::proto::common::v1::_BlockState_default_instance_._instance,
   &::minecpp::proto::common::v1::_Gameplay_default_instance_._instance,
+  &::minecpp::proto::common::v1::_Vector3f_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -166,25 +191,26 @@ const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fcommon_2epr
   "hardcore\030\006 \001(\010\022\023\n\013max_players\030\007 \001(\005\022\032\n\022r"
   "educed_debug_info\030\010 \001(\010\022\034\n\024do_immediate_"
   "respawn\030\t \001(\010\0227\n\ndifficulty\030\n \001(\0162#.mine"
-  "cpp.proto.common.v1.Difficulty*3\n\rDimens"
-  "ionType\022\r\n\tOverworld\020\000\022\n\n\006Nether\020\001\022\007\n\003En"
-  "d\020\002*,\n\nDifficulty\022\010\n\004Easy\020\000\022\n\n\006Normal\020\001\022"
-  "\010\n\004Hard\020\002*D\n\010GameMode\022\014\n\010Survival\020\000\022\014\n\010C"
-  "reative\020\001\022\r\n\tAdventure\020\002\022\r\n\tSpectator\020\003*"
-  "R\n\tWorldType\022\013\n\007Default\020\000\022\010\n\004Flat\020\001\022\017\n\013L"
-  "argeBiomes\020\002\022\r\n\tAmplified\020\003\022\016\n\nCustomise"
-  "d\020\004*\222\001\n\022PlayerDiggingState\022\013\n\007Digging\020\000\022"
-  "\023\n\017CanceledDigging\020\001\022\023\n\017FinishedDigging\020"
-  "\002\022\020\n\014DropAllItems\020\003\022\014\n\010DropItem\020\004\022\022\n\016Rel"
-  "easeUseItem\020\005\022\021\n\rSwapHeldItems\020\006*E\n\004Face"
-  "\022\n\n\006Bottom\020\000\022\007\n\003Top\020\001\022\t\n\005North\020\002\022\t\n\005Sout"
-  "h\020\003\022\010\n\004West\020\004\022\010\n\004East\020\005b\006proto3"
+  "cpp.proto.common.v1.Difficulty\"+\n\010Vector"
+  "3f\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002*3\n\rD"
+  "imensionType\022\r\n\tOverworld\020\000\022\n\n\006Nether\020\001\022"
+  "\007\n\003End\020\002*,\n\nDifficulty\022\010\n\004Easy\020\000\022\n\n\006Norm"
+  "al\020\001\022\010\n\004Hard\020\002*D\n\010GameMode\022\014\n\010Survival\020\000"
+  "\022\014\n\010Creative\020\001\022\r\n\tAdventure\020\002\022\r\n\tSpectat"
+  "or\020\003*R\n\tWorldType\022\013\n\007Default\020\000\022\010\n\004Flat\020\001"
+  "\022\017\n\013LargeBiomes\020\002\022\r\n\tAmplified\020\003\022\016\n\nCust"
+  "omised\020\004*\222\001\n\022PlayerDiggingState\022\013\n\007Diggi"
+  "ng\020\000\022\023\n\017CanceledDigging\020\001\022\023\n\017FinishedDig"
+  "ging\020\002\022\020\n\014DropAllItems\020\003\022\014\n\010DropItem\020\004\022\022"
+  "\n\016ReleaseUseItem\020\005\022\021\n\rSwapHeldItems\020\006*E\n"
+  "\004Face\022\n\n\006Bottom\020\000\022\007\n\003Top\020\001\022\t\n\005North\020\002\022\t\n"
+  "\005South\020\003\022\010\n\004West\020\004\022\010\n\004East\020\005b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto = {
-    false, false, 1031, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
+    false, false, 1076, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
     "minecpp/proto/common/v1/common.proto",
-    &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto_once, nullptr, 0, 4,
+    &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto_once, nullptr, 0, 5,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto,
@@ -1296,6 +1322,269 @@ void Gameplay::InternalSwap(Gameplay* other) {
       file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[3]);
 }
 
+// ===================================================================
+
+class Vector3f::_Internal {
+ public:
+};
+
+Vector3f::Vector3f(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.common.v1.Vector3f)
+}
+Vector3f::Vector3f(const Vector3f& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.common.v1.Vector3f)
+}
+
+inline void Vector3f::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+}
+
+Vector3f::~Vector3f() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.common.v1.Vector3f)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Vector3f::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Vector3f::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void Vector3f::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.common.v1.Vector3f)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&z_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Vector3f::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // float x = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
+          x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float y = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
+          y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float z = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
+          z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Vector3f::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.common.v1.Vector3f)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // float x = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = this->_internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(1, this->_internal_x(), target);
+  }
+
+  // float y = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = this->_internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_y(), target);
+  }
+
+  // float z = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = this->_internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_z(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.common.v1.Vector3f)
+  return target;
+}
+
+size_t Vector3f::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.common.v1.Vector3f)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // float x = 1;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = this->_internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float y = 2;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = this->_internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float z = 3;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = this->_internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    total_size += 1 + 4;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Vector3f::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    Vector3f::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Vector3f::GetClassData() const { return &_class_data_; }
+
+void Vector3f::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<Vector3f *>(to)->MergeFrom(
+      static_cast<const Vector3f &>(from));
+}
+
+
+void Vector3f::MergeFrom(const Vector3f& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.common.v1.Vector3f)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_x = from._internal_x();
+  uint32_t raw_x;
+  memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
+  if (raw_x != 0) {
+    _internal_set_x(from._internal_x());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_y = from._internal_y();
+  uint32_t raw_y;
+  memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
+  if (raw_y != 0) {
+    _internal_set_y(from._internal_y());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_z = from._internal_z();
+  uint32_t raw_z;
+  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
+  if (raw_z != 0) {
+    _internal_set_z(from._internal_z());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Vector3f::CopyFrom(const Vector3f& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.common.v1.Vector3f)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Vector3f::IsInitialized() const {
+  return true;
+}
+
+void Vector3f::InternalSwap(Vector3f* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Vector3f, z_)
+      + sizeof(Vector3f::z_)
+      - PROTOBUF_FIELD_OFFSET(Vector3f, x_)>(
+          reinterpret_cast<char*>(&x_),
+          reinterpret_cast<char*>(&other->x_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Vector3f::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto_getter, &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto[4]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace common
@@ -1317,6 +1606,10 @@ Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::BlockState >(Arena* are
 template<> PROTOBUF_NOINLINE ::minecpp::proto::common::v1::Gameplay*
 Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::Gameplay >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::common::v1::Gameplay >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::common::v1::Vector3f*
+Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::Vector3f >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::common::v1::Vector3f >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

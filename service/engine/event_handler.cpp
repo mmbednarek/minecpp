@@ -3,7 +3,10 @@
 #include "entities.h"
 #include "players.h"
 #include <minecpp/chat/chat.h>
+#include <minecpp/format/format.h>
 #include <minecpp/game/world.h>
+#include <minecpp/repository/state.h>
+#include <minecpp/repository/block.h>
 
 namespace minecpp::service::engine {
 
@@ -13,22 +16,22 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
                                                                                                                                        m_world(world) {}
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id) {
-      spdlog::info("player accept request from {}", event.name());
-      auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
-      if (!join_result.ok()) {
-         m_dispatcher.deny_player(player_id, join_result.msg());
-         return;
-      }
+   spdlog::info("player accept request from {}", event.name());
+   auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
+   if (!join_result.ok()) {
+      m_dispatcher.deny_player(player_id, join_result.msg());
+      return;
+   }
 
-      auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
-      auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
+   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
+   auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
 
-      m_dispatcher.accept_player(player, entity);
-      m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
-      m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
-      m_dispatcher.add_player(player.id(), player.name(), player.ping());
-      m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
-      m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
+   m_dispatcher.accept_player(player, entity);
+   m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
+   m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
+   m_dispatcher.add_player(player.id(), player.name(), player.ping());
+   m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+   m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id) {
@@ -50,7 +53,37 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
          return;
 
       if (event.message()[0] == '/') {
-         // TODO: Handle commands
+         if (event.message().starts_with("/sb ")) {
+            format::Builder msg;
+            // set block
+            auto block_state = std::stoi(event.message().substr(4, event.message().size()));
+            if (block_state >= 0 && static_cast<mb::u64>(block_state) <= repository::StateManager::the().state_count()) {
+               msg.bold(format::Color::Green, "INFO").text(" changed selected color to ");
+
+               m_selected_block = static_cast<game::BlockState>(block_state);
+               const auto [block_id, state] = repository::StateManager::the().parse_block_id(m_selected_block);
+               auto &block = MB_ESCAPE(repository::Block::the().get_by_id(block_id));
+              msg.text(format::Color::Yellow, block.tag());
+
+               if (!block.is_single_state()) {
+                  msg.text(" (");
+                  std::stringstream ss;
+                  bool first = true;
+                  for (const auto &[state, value] : block.state_range(state))  {
+                     if (first) {
+                        first=false;
+                     } else {
+                        msg.text(", ");
+                     }
+                     msg.text(format::Color::Yellow, state.name()).text("=").text(format::Color::White, state.value_from_index(value));
+                  }
+                  msg.text(")");
+               }
+            } else {
+               msg.bold(format::Color::Yellow, "WARN").text(fmt::format(" invalid state id ")).bold(format::Color::White, fmt::format("{}", block_state));
+            }
+            m_dispatcher.send_chat(chat::MessageType::SystemMessage, msg.build());
+         }
          return;
       }
 
@@ -70,15 +103,15 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
    m_player_manager.remove_player(player_id);
 }
 
-void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id){
+void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id) {
    auto status = static_cast<game::PlayerDiggingState>(event.state());
 
-   switch(status) {
+   switch (status) {
    case game::PlayerDiggingState::Digging:
    case game::PlayerDiggingState::CanceledDigging: {
       auto block_position = game::BlockPosition::from_proto(event.block_position());
       auto block_state_res = m_world.get_block(block_position);
-      if (!block_state_res.ok())  {
+      if (!block_state_res.ok()) {
          spdlog::info("error fetching block state: {}", block_state_res.msg());
          return;
       }
@@ -111,6 +144,14 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    if (!res.ok()) {
       spdlog::error("error loading chunks: {}", res.msg());
    }
+}
+
+void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id) {
+   auto face = game::face_from_proto(event.face());
+   auto block_position = game::BlockPosition::from_proto(event.position());
+   auto neighbour_position = block_position.neighbour_at(face);
+   m_world.set_block(neighbour_position, m_selected_block);
+   m_dispatcher.update_block(neighbour_position, m_selected_block);
 }
 
 }// namespace minecpp::service::engine

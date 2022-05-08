@@ -103,7 +103,7 @@ class BidiServer {
             queue_ok = m_queue->Next(&tag_ptr, &data_ok);
          }
          if (!queue_ok) {
-            spdlog::info("shutting down the server :v");
+            spdlog::info("shutting down the server");
             return mb::ok;
          }
          if (!data_ok) {

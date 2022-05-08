@@ -18,6 +18,7 @@ concept ServerboundVisitor = requires(T t) {
    t.handle_update_ping(serverbound_v1::UpdatePing(), player::Id());
    t.handle_animate_hand(serverbound_v1::AnimateHand(), player::Id());
    t.handle_load_initial_chunks(serverbound_v1::LoadInitialChunks(), player::Id());
+   t.handle_block_placement(serverbound_v1::BlockPlacement(), player::Id());
 };
 
 #define MINECPP_EVENT_HANDLE_SERVICEBOUND(event_type, handler_method)                \
@@ -43,6 +44,7 @@ void visit_serverbound(const serverbound_v1::Event &event, T &visitor) {
    MINECPP_EVENT_HANDLE_SERVICEBOUND(UpdatePing, handle_update_ping);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(AnimateHand, handle_animate_hand);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(LoadInitialChunks, handle_load_initial_chunks);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(BlockPlacement, handle_block_placement);
 }
 
 }// namespace minecpp::event

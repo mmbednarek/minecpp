@@ -57,6 +57,11 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
+   case 0x2e: {
+      PlayerBlockPlacement msg{};
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
    default:
       spdlog::info("unknown op {}, packet data: {}", (int)op, r.get_hex_data());
       send(conn, minecpp::network::message::Chat{

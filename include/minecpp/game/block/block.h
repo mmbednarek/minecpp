@@ -33,9 +33,9 @@ class Block {
 
  public:
    struct StateIterator {
-      typename std::vector<game::State>::reverse_iterator it;
+      typename std::vector<game::State>::const_reverse_iterator it;
       int state;
-      Block &block;
+      const Block &block;
 
       StateIterator &operator++() {
          state /= it->value_count();
@@ -43,7 +43,7 @@ class Block {
          return *this;
       }
 
-      [[nodiscard]] std::tuple<game::State &, int> operator*() const {
+      [[nodiscard]] std::tuple<const game::State &, int> operator*() const {
          return {*it, state % it->value_count()};
       }
 
@@ -53,15 +53,15 @@ class Block {
    };
 
    struct StateRange {
-      Block &block;
+      const Block &block;
       int state;
 
       StateIterator begin() {
-         return StateIterator{block.m_states.rbegin(), state, block};
+         return StateIterator{block.m_states.crbegin(), state, block};
       }
 
       StateIterator end() {
-         return StateIterator{block.m_states.rend(), 0, block};
+         return StateIterator{block.m_states.crend(), 0, block};
       }
    };
 
@@ -75,7 +75,7 @@ class Block {
 
    [[nodiscard]] std::size_t state_count() const;
 
-   [[nodiscard]] constexpr StateRange state_range(int state) {
+   [[nodiscard]] constexpr StateRange state_range(int state) const {
       return StateRange{*this, state};
    }
 

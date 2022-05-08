@@ -36,6 +36,8 @@ class Reader {
       return result;
    }
 
+   uint64_t read_long();
+
  private:
    std::istream &s;
 };

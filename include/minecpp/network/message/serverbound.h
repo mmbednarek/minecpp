@@ -74,4 +74,15 @@ struct AnimateHandClient {
 };
 void deserialize(Reader &r, AnimateHandClient &msg);
 
+// 0x2e
+struct PlayerBlockPlacement {
+   PlayerHand hand{};
+   uint64_t position{};
+   game::Face facing{};
+   float x, y, z;
+   bool inside_block;
+};
+void deserialize(Reader &r, PlayerBlockPlacement &msg);
+
+
 }// namespace minecpp::network::message

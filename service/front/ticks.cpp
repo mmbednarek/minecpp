@@ -10,23 +10,20 @@ namespace minecpp::service::front {
 
 TickManager::TickManager(Server &server, const ChunkService &chunks) : server(server), chunk_service(chunks) {}
 
-constexpr int keep_alive_interval = 8000;
-constexpr int load_chunks_interval = 10;
+constexpr int keep_alive_count = 160;
 constexpr int thread_limit = 5;
 
 [[noreturn]] void TickManager::tick() {
-   uint64_t last_keep_alive = 0;
-   uint64_t last_load_chunks = 0;
+   using namespace std::chrono_literals;
+   uint64_t keep_alive_counter{};
    for (;;) {
-      auto now = minecpp::util::now_milis();
-      if (now - last_keep_alive >= keep_alive_interval) {
+      load_chunks();
+      ++keep_alive_counter;
+      if (keep_alive_counter >= keep_alive_count) {
+         keep_alive_counter  = 0;
          keep_alive();
-         last_keep_alive = minecpp::util::now_milis();
       }
-      if (now - last_load_chunks >= load_chunks_interval) {
-         load_chunks();
-         last_load_chunks = minecpp::util::now_milis();
-      }
+      std::this_thread::sleep_for(50ms);
    }
 }
 

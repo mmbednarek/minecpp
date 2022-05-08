@@ -150,12 +150,29 @@ struct LoadInitialChunksDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LoadInitialChunksDefaultTypeInternal _LoadInitialChunks_default_instance_;
+PROTOBUF_CONSTEXPR BlockPlacement::BlockPlacement(
+    ::_pbi::ConstantInitialized)
+  : position_(nullptr)
+  , crosshair_(nullptr)
+  , hand_(0)
+  , face_(0)
+
+  , inside_block_(false){}
+struct BlockPlacementDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR BlockPlacementDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~BlockPlacementDefaultTypeInternal() {}
+  union {
+    BlockPlacement _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BlockPlacementDefaultTypeInternal _BlockPlacement_default_instance_;
 }  // namespace v1
 }  // namespace serverbound
 }  // namespace event
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[10];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[11];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = nullptr;
 
@@ -233,6 +250,17 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbo
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, hand_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, position_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, face_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, crosshair_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, inside_block_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::Event)},
@@ -245,6 +273,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 53, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::UpdatePing)},
   { 60, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::AnimateHand)},
   { 67, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::LoadInitialChunks)},
+  { 73, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::BlockPlacement)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -258,6 +287,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::event::serverbound::v1::_UpdatePing_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_AnimateHand_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_LoadInitialChunks_default_instance_._instance,
+  &::minecpp::proto::event::serverbound::v1::_BlockPlacement_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -282,7 +312,12 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_
   ".v1.BlockPosition\022+\n\004face\030\003 \001(\0162\035.minecp"
   "p.proto.common.v1.Face\"\032\n\nUpdatePing\022\014\n\004"
   "ping\030\001 \001(\005\"\033\n\013AnimateHand\022\014\n\004hand\030\001 \001(\005\""
-  "\023\n\021LoadInitialChunksb\006proto3"
+  "\023\n\021LoadInitialChunks\"\321\001\n\016BlockPlacement\022"
+  "\014\n\004hand\030\001 \001(\005\0228\n\010position\030\002 \001(\0132&.minecp"
+  "p.proto.common.v1.BlockPosition\022+\n\004face\030"
+  "\003 \001(\0162\035.minecpp.proto.common.v1.Face\0224\n\t"
+  "crosshair\030\004 \001(\0132!.minecpp.proto.common.v"
+  "1.Vector3f\022\024\n\014inside_block\030\005 \001(\010b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps[4] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -292,9 +327,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = {
-    false, false, 868, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
+    false, false, 1080, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
     "minecpp/proto/event/serverbound/v1/serverbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps, 4, 10,
+    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps, 4, 11,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
@@ -2071,6 +2106,328 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*LoadInitialChunks::GetClassDat
       file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[9]);
 }
 
+// ===================================================================
+
+class BlockPlacement::_Internal {
+ public:
+  static const ::minecpp::proto::common::v1::BlockPosition& position(const BlockPlacement* msg);
+  static const ::minecpp::proto::common::v1::Vector3f& crosshair(const BlockPlacement* msg);
+};
+
+const ::minecpp::proto::common::v1::BlockPosition&
+BlockPlacement::_Internal::position(const BlockPlacement* msg) {
+  return *msg->position_;
+}
+const ::minecpp::proto::common::v1::Vector3f&
+BlockPlacement::_Internal::crosshair(const BlockPlacement* msg) {
+  return *msg->crosshair_;
+}
+void BlockPlacement::clear_position() {
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
+}
+void BlockPlacement::clear_crosshair() {
+  if (GetArenaForAllocation() == nullptr && crosshair_ != nullptr) {
+    delete crosshair_;
+  }
+  crosshair_ = nullptr;
+}
+BlockPlacement::BlockPlacement(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.serverbound.v1.BlockPlacement)
+}
+BlockPlacement::BlockPlacement(const BlockPlacement& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_position()) {
+    position_ = new ::minecpp::proto::common::v1::BlockPosition(*from.position_);
+  } else {
+    position_ = nullptr;
+  }
+  if (from._internal_has_crosshair()) {
+    crosshair_ = new ::minecpp::proto::common::v1::Vector3f(*from.crosshair_);
+  } else {
+    crosshair_ = nullptr;
+  }
+  ::memcpy(&hand_, &from.hand_,
+    static_cast<size_t>(reinterpret_cast<char*>(&inside_block_) -
+    reinterpret_cast<char*>(&hand_)) + sizeof(inside_block_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.BlockPlacement)
+}
+
+inline void BlockPlacement::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&position_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&inside_block_) -
+    reinterpret_cast<char*>(&position_)) + sizeof(inside_block_));
+}
+
+BlockPlacement::~BlockPlacement() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void BlockPlacement::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete position_;
+  if (this != internal_default_instance()) delete crosshair_;
+}
+
+void BlockPlacement::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void BlockPlacement::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
+    delete position_;
+  }
+  position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && crosshair_ != nullptr) {
+    delete crosshair_;
+  }
+  crosshair_ = nullptr;
+  ::memset(&hand_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&inside_block_) -
+      reinterpret_cast<char*>(&hand_)) + sizeof(inside_block_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* BlockPlacement::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 hand = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          hand_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.BlockPosition position = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.Face face = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_face(static_cast<::minecpp::proto::common::v1::Face>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.Vector3f crosshair = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+          ptr = ctx->ParseMessage(_internal_mutable_crosshair(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool inside_block = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          inside_block_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* BlockPlacement::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 hand = 1;
+  if (this->_internal_hand() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_hand(), target);
+  }
+
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
+  }
+
+  // .minecpp.proto.common.v1.Face face = 3;
+  if (this->_internal_face() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      3, this->_internal_face(), target);
+  }
+
+  // .minecpp.proto.common.v1.Vector3f crosshair = 4;
+  if (this->_internal_has_crosshair()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(4, _Internal::crosshair(this),
+        _Internal::crosshair(this).GetCachedSize(), target, stream);
+  }
+
+  // bool inside_block = 5;
+  if (this->_internal_inside_block() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(5, this->_internal_inside_block(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  return target;
+}
+
+size_t BlockPlacement::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *position_);
+  }
+
+  // .minecpp.proto.common.v1.Vector3f crosshair = 4;
+  if (this->_internal_has_crosshair()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *crosshair_);
+  }
+
+  // int32 hand = 1;
+  if (this->_internal_hand() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_hand());
+  }
+
+  // .minecpp.proto.common.v1.Face face = 3;
+  if (this->_internal_face() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_face());
+  }
+
+  // bool inside_block = 5;
+  if (this->_internal_inside_block() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData BlockPlacement::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    BlockPlacement::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*BlockPlacement::GetClassData() const { return &_class_data_; }
+
+void BlockPlacement::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<BlockPlacement *>(to)->MergeFrom(
+      static_cast<const BlockPlacement &>(from));
+}
+
+
+void BlockPlacement::MergeFrom(const BlockPlacement& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_position()) {
+    _internal_mutable_position()->::minecpp::proto::common::v1::BlockPosition::MergeFrom(from._internal_position());
+  }
+  if (from._internal_has_crosshair()) {
+    _internal_mutable_crosshair()->::minecpp::proto::common::v1::Vector3f::MergeFrom(from._internal_crosshair());
+  }
+  if (from._internal_hand() != 0) {
+    _internal_set_hand(from._internal_hand());
+  }
+  if (from._internal_face() != 0) {
+    _internal_set_face(from._internal_face());
+  }
+  if (from._internal_inside_block() != 0) {
+    _internal_set_inside_block(from._internal_inside_block());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void BlockPlacement::CopyFrom(const BlockPlacement& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.serverbound.v1.BlockPlacement)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool BlockPlacement::IsInitialized() const {
+  return true;
+}
+
+void BlockPlacement::InternalSwap(BlockPlacement* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(BlockPlacement, inside_block_)
+      + sizeof(BlockPlacement::inside_block_)
+      - PROTOBUF_FIELD_OFFSET(BlockPlacement, position_)>(
+          reinterpret_cast<char*>(&position_),
+          reinterpret_cast<char*>(&other->position_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata BlockPlacement::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[10]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace serverbound
@@ -2117,6 +2474,10 @@ Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::AnimateHand
 template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::LoadInitialChunks*
 Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::LoadInitialChunks >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::LoadInitialChunks >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::BlockPlacement*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::BlockPlacement >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::BlockPlacement >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

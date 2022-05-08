@@ -24,6 +24,33 @@ constexpr mb::u32 g_block_position_bit_offset_z = g_block_position_y_bits;
 
 struct ChunkPosition;
 
+enum class PlayerDiggingState : int {
+   Digging = 0,
+   CanceledDigging = 1,
+   FinishedDigging = 2,
+   DropAllItems = 3,
+   DropItem = 4,
+   ReleaseUseItem = 5,
+   SwapHeldItems = 6,
+};
+
+enum class Face {
+   Bottom = 0,
+   Top = 1,
+   North = 2,
+   South = 3,
+   West = 4,
+   East = 5,
+};
+
+[[nodiscard]] constexpr proto::common::v1::Face face_to_proto(Face face) {
+   return static_cast<proto::common::v1::Face>(face);
+}
+
+[[nodiscard]] constexpr Face face_from_proto(proto::common::v1::Face face) {
+   return static_cast<Face>(face);
+}
+
 constexpr int decode_x(mb::u64 pos) {
    auto x = pos >> 38;
    if (x >= (1u << 25)) {
@@ -92,6 +119,24 @@ struct BlockPosition {
       block_position.set_z(z);
       return block_position;
    }
+
+   [[nodiscard]] constexpr BlockPosition neighbour_at(Face facing) {
+      switch(facing) {
+      case Face::Bottom:
+         return {x, y-1, z};
+      case Face::Top:
+         return {x, y+1, z};
+      case Face::North:
+         return {x, y, z-1};
+      case Face::South:
+         return {x, y, z+1};
+      case Face::West:
+         return {x-1, y, z};
+      case Face::East:
+         return {x+1, y, z};
+      }
+      return {x, y, z};
+   }
 };
 
 using BlockState = mb::u32;
@@ -151,24 +196,5 @@ struct ChunkPosition {
 constexpr ChunkPosition BlockPosition::chunk_position() const {
    return ChunkPosition(x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1), z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1));
 }
-
-enum class PlayerDiggingState : int {
-   Digging = 0,
-   CanceledDigging = 1,
-   FinishedDigging = 2,
-   DropAllItems = 3,
-   DropItem = 4,
-   ReleaseUseItem = 5,
-   SwapHeldItems = 6,
-};
-
-enum class Face {
-   Bottom = 0,
-   Top = 1,
-   North = 2,
-   South = 3,
-   West = 4,
-   East = 5,
-};
 
 }// namespace minecpp::game

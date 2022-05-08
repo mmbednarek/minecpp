@@ -61,6 +61,9 @@ extern ChunkPositionDefaultTypeInternal _ChunkPosition_default_instance_;
 class Gameplay;
 struct GameplayDefaultTypeInternal;
 extern GameplayDefaultTypeInternal _Gameplay_default_instance_;
+class Vector3f;
+struct Vector3fDefaultTypeInternal;
+extern Vector3fDefaultTypeInternal _Vector3f_default_instance_;
 }  // namespace v1
 }  // namespace common
 }  // namespace proto
@@ -70,6 +73,7 @@ template<> ::minecpp::proto::common::v1::BlockPosition* Arena::CreateMaybeMessag
 template<> ::minecpp::proto::common::v1::BlockState* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::BlockState>(Arena*);
 template<> ::minecpp::proto::common::v1::ChunkPosition* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(Arena*);
 template<> ::minecpp::proto::common::v1::Gameplay* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::Gameplay>(Arena*);
+template<> ::minecpp::proto::common::v1::Vector3f* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::Vector3f>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace proto {
@@ -946,6 +950,171 @@ class Gameplay final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Vector3f final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.common.v1.Vector3f) */ {
+ public:
+  inline Vector3f() : Vector3f(nullptr) {}
+  ~Vector3f() override;
+  explicit PROTOBUF_CONSTEXPR Vector3f(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Vector3f(const Vector3f& from);
+  Vector3f(Vector3f&& from) noexcept
+    : Vector3f() {
+    *this = ::std::move(from);
+  }
+
+  inline Vector3f& operator=(const Vector3f& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Vector3f& operator=(Vector3f&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Vector3f& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Vector3f* internal_default_instance() {
+    return reinterpret_cast<const Vector3f*>(
+               &_Vector3f_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(Vector3f& a, Vector3f& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Vector3f* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Vector3f* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Vector3f* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Vector3f>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Vector3f& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const Vector3f& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Vector3f* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.common.v1.Vector3f";
+  }
+  protected:
+  explicit Vector3f(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
+  };
+  // float x = 1;
+  void clear_x();
+  float x() const;
+  void set_x(float value);
+  private:
+  float _internal_x() const;
+  void _internal_set_x(float value);
+  public:
+
+  // float y = 2;
+  void clear_y();
+  float y() const;
+  void set_y(float value);
+  private:
+  float _internal_y() const;
+  void _internal_set_y(float value);
+  public:
+
+  // float z = 3;
+  void clear_z();
+  float z() const;
+  void set_z(float value);
+  private:
+  float _internal_z() const;
+  void _internal_set_z(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.common.v1.Vector3f)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  float x_;
+  float y_;
+  float z_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_minecpp_2fproto_2fcommon_2fv1_2fcommon_2eproto;
+};
 // ===================================================================
 
 
@@ -1289,9 +1458,75 @@ inline void Gameplay::set_difficulty(::minecpp::proto::common::v1::Difficulty va
   // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Gameplay.difficulty)
 }
 
+// -------------------------------------------------------------------
+
+// Vector3f
+
+// float x = 1;
+inline void Vector3f::clear_x() {
+  x_ = 0;
+}
+inline float Vector3f::_internal_x() const {
+  return x_;
+}
+inline float Vector3f::x() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3f.x)
+  return _internal_x();
+}
+inline void Vector3f::_internal_set_x(float value) {
+  
+  x_ = value;
+}
+inline void Vector3f::set_x(float value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3f.x)
+}
+
+// float y = 2;
+inline void Vector3f::clear_y() {
+  y_ = 0;
+}
+inline float Vector3f::_internal_y() const {
+  return y_;
+}
+inline float Vector3f::y() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3f.y)
+  return _internal_y();
+}
+inline void Vector3f::_internal_set_y(float value) {
+  
+  y_ = value;
+}
+inline void Vector3f::set_y(float value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3f.y)
+}
+
+// float z = 3;
+inline void Vector3f::clear_z() {
+  z_ = 0;
+}
+inline float Vector3f::_internal_z() const {
+  return z_;
+}
+inline float Vector3f::z() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3f.z)
+  return _internal_z();
+}
+inline void Vector3f::_internal_set_z(float value) {
+  
+  z_ = value;
+}
+inline void Vector3f::set_z(float value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3f.z)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

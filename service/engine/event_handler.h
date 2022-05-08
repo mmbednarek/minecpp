@@ -20,6 +20,7 @@ class EventHandler {
    PlayerManager &m_player_manager;
    EntityManager &m_entity_manager;
    game::World &m_world;
+   game::BlockState m_selected_block = 1;
 
  public:
    EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager, game::World &world);
@@ -33,6 +34,7 @@ class EventHandler {
    void handle_update_ping(const serverbound_v1::UpdatePing &event, player::Id player_id);
    void handle_animate_hand(const serverbound_v1::AnimateHand &event, player::Id player_id);
    void handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id);
+   void handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id);
 };
 
 }// namespace minecpp::service::engine

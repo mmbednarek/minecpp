@@ -48,3 +48,11 @@ message AnimateHand {
 
 message LoadInitialChunks {
 }
+
+message BlockPlacement {
+  int32 hand = 1;
+  common.v1.BlockPosition position = 2;
+  common.v1.Face face = 3;
+  common.v1.Vector3f crosshair = 4;
+  bool inside_block = 5;
+}

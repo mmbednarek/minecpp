@@ -45,8 +45,16 @@ class Reader : private minecpp::util::Reader {
    void read_packed_ints(auto &result, uint16_t bits,
                          size_t num_packets);
 
-   void read_compound(
-           std::function<void(Reader &r, TagId type, std::string key)> for_value);
+   template<typename TFunction>
+   void read_compound(TFunction for_elem) {
+      for (;;) {
+         auto header = peek_tag();
+         if (header.id == nbt::TagId::End)
+            return;
+         for_elem(*this, header.id, header.name);
+      }
+   }
+
    result<empty> try_read_compound(
            std::function<result<empty>(Reader &r, TagId type, std::string key)> for_value);
    void read_list(std::function<void(Reader &)> for_elem);

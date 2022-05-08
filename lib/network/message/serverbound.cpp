@@ -62,4 +62,15 @@ void deserialize(Reader &r, AnimateHandClient &msg) {
    msg.hand = static_cast<PlayerHand>(r.read_varint());
 }
 
+void deserialize(Reader &r, PlayerBlockPlacement &msg) {
+   // 1.18.2 OK
+   msg.hand = static_cast<PlayerHand>(r.read_varint());
+   msg.position = r.read_long();
+   msg.facing = static_cast<game::Face>(r.read_varint());
+   msg.x = r.read_float();
+   msg.y = r.read_float();
+   msg.z = r.read_float();
+   msg.inside_block = r.read_byte();
+}
+
 } // namespace minecpp::network::Message

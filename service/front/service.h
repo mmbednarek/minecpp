@@ -75,6 +75,8 @@ class Service {
                    minecpp::network::message::KeepAliveClient msg);
    void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::AnimateHandClient msg);
+   void on_message(uuid engine_id, player::Id player_id,
+                   minecpp::network::message::PlayerBlockPlacement msg);
 };
 
 }// namespace minecpp::service::front

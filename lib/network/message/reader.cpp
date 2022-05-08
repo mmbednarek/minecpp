@@ -191,4 +191,11 @@ std::string Reader::get_hex_data() {
    return result;
 }
 
+uint64_t Reader::read_long() {
+   uint64_t value;
+   s.read((char *) &value, sizeof(uint64_t));
+   value = boost::endian::big_to_native(value);
+   return value;
+}
+
 }// namespace minecpp::network::Message

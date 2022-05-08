@@ -133,6 +133,18 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    m_stream->send(animate_hand, player_id);
 }
 
+void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerBlockPlacement msg) {
+   serverbound_v1::BlockPlacement block_placement;
+   block_placement.set_hand(static_cast<int32_t>(msg.hand));
+   *block_placement.mutable_position() = game::BlockPosition(msg.position).to_proto();
+   block_placement.set_face(static_cast<minecpp::proto::common::v1::Face>(msg.facing));
+   block_placement.mutable_crosshair()->set_x(msg.x);
+   block_placement.mutable_crosshair()->set_y(msg.y);
+   block_placement.mutable_crosshair()->set_z(msg.z);
+   block_placement.set_inside_block(msg.inside_block);
+   m_stream->send(block_placement, player_id);
+}
+
 const char command_list[]{
         0x11, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x05, 0x01, 0x0a, 0x04, 0x68, 0x65,
         0x6c, 0x70, 0x05, 0x01, 0x0b, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x01, 0x01, 0x0c, 0x02, 0x6d, 0x65, 0x01, 0x01, 0x0d,
