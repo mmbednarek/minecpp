@@ -1,4 +1,5 @@
 #pragma once
+#include "minecpp/game/game.h"
 #include "writer.h"
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
@@ -21,16 +22,18 @@ struct SpawnObject {
    uint8_t pitch, yaw;
    int data;
    uint16_t vel_x, vel_y, vel_z;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(SpawnObject msg);
 
 // 0x01
 struct SpawnExperienceOrb {
    uint32_t entity_id;
    double x, y, z;
    uint16_t xp_value;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(SpawnExperienceOrb msg);
 
 // 0x04
 struct SpawnPlayer {
@@ -38,87 +41,110 @@ struct SpawnPlayer {
    boost::uuids::uuid id;
    double x, y, z;
    float yaw, pitch;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(SpawnPlayer msg);
 
 // 0x05
 struct AnimateHand {
    int entity_id;
    uint8_t type;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(AnimateHand msg);
+
+// 0x08
+struct AcknowledgePlayerDigging  {
+   mb::u64 position;
+   game::BlockState block;
+   game::PlayerDiggingState state;
+   bool successful;
+
+   [[nodiscard]] Writer serialize() const;
+};
 
 struct BlockChange {
    mb::u64 block_position{};
    mb::u32 block_id{};
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(BlockChange msg);
 
 // 0x0f
 struct MultiBlockChange {
    mb::u64 chunk_position{};
    bool distrust_edges = true;
    std::vector<mb::u64> block_changes{};
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(MultiBlockChange msg);
 
 // 0x0d
 struct Difficulty {
    uint8_t difficulty;
    bool locked;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(Difficulty msg);
 
 // 0x0e
 struct Chat {
    std::string message;
    ChatType type;
    uuid user_id;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(Chat msg);
 
 // 0x18
 struct ServerBrand {
    std::string_view brand;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(ServerBrand msg);
 
 // 0x1a
 struct Disconnect {
    std::string_view reason;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(Disconnect msg);
 
 // 0x1b
 struct EntityStatus {
    uint32_t entity_id;
    uint8_t opcode;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(EntityStatus msg);
 
 // 0x20
 struct KeepAlive {
    uint64_t time;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(KeepAlive msg);
 
 // 0x21
 struct ChunkData {
    minecpp::proto::chunk::v1::Chunk &chunk;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(ChunkData msg);
 
 struct UnloadChunk {
    mb::i32 chunk_x;
    mb::i32 chunk_z;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(UnloadChunk msg);
 
 // 0x25
 struct UpdateLight {
    minecpp::proto::chunk::v1::Chunk &chunk;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(UpdateLight msg);
 
 // 0x26
 struct JoinGame {
@@ -136,16 +162,18 @@ struct JoinGame {
    uint32_t simulation_distance{};
    bool reduced_debug_info{};
    bool immediate_respawn{};
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(JoinGame msg);
 
 // 0x29
 struct EntityRelativeMove {
    int entity_id;
    short x, y, z;
    bool on_ground;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(EntityRelativeMove msg);
 
 // 0x2a
 struct EntityMove {
@@ -153,16 +181,18 @@ struct EntityMove {
    short x, y, z;
    float yaw, pitch;
    bool on_ground;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(EntityMove msg);
 
 // 0x2b
 struct EntityLook {
    int entity_id;
    float yaw, pitch;
    bool on_ground;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(EntityLook msg);
 
 enum PlayerAbilityFlag : uint8_t {
    Invulnerable = 1u << 0u,
@@ -175,8 +205,9 @@ enum PlayerAbilityFlag : uint8_t {
 struct PlayerAbilities {
    uint8_t flags;
    float fly_speed, walk_speed;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(PlayerAbilities msg);
 
 // 0x34 0x00
 struct AddPlayer {
@@ -185,14 +216,16 @@ struct AddPlayer {
    std::map<std::string, std::string> properties;
    uint8_t game_mode;
    uint32_t ping;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(AddPlayer msg);
 
 // 0x34 0x04
 struct RemovePlayer {
    uuid id;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(RemovePlayer msg);
 
 // 0x36
 struct PlayerPositionLook {
@@ -201,8 +234,9 @@ struct PlayerPositionLook {
    uint8_t flags;
    int tp_id;
    bool dismount_vehicle;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(PlayerPositionLook msg);
 
 enum RecipeBookState { Init,
                        Add,
@@ -215,38 +249,44 @@ struct RecipeBook {
    bool filtering_craftable;
    bool furnace_gui_open;
    bool furnace_filtering_craftable;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(RecipeBook msg);
 
 // 0x38 0x01
 struct DestroyEntity {
    uint32_t entity_id;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(DestroyEntity msg);
 
 // 0x3c
 struct EntityHeadLook {
    int entity_id;
    float yaw;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(EntityHeadLook msg);
 
 // 0x40
 struct HeldItem {
    uint8_t item;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(HeldItem msg);
 
 // 0x41
 struct UpdateChunkPosition {
    int x, z;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(UpdateChunkPosition msg);
 
 struct Raw {
    size_t size;
    const char *data;
+
+   [[nodiscard]] Writer serialize() const;
 };
-Writer serialize(Raw msg);
 
 }// namespace minecpp::network::message

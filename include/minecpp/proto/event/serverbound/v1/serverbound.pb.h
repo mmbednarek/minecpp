@@ -63,15 +63,15 @@ extern AnimateHandDefaultTypeInternal _AnimateHand_default_instance_;
 class ChatMessage;
 struct ChatMessageDefaultTypeInternal;
 extern ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
-class DestroyBlock;
-struct DestroyBlockDefaultTypeInternal;
-extern DestroyBlockDefaultTypeInternal _DestroyBlock_default_instance_;
 class Event;
 struct EventDefaultTypeInternal;
 extern EventDefaultTypeInternal _Event_default_instance_;
 class LoadInitialChunks;
 struct LoadInitialChunksDefaultTypeInternal;
 extern LoadInitialChunksDefaultTypeInternal _LoadInitialChunks_default_instance_;
+class PlayerDigging;
+struct PlayerDiggingDefaultTypeInternal;
+extern PlayerDiggingDefaultTypeInternal _PlayerDigging_default_instance_;
 class RemovePlayer;
 struct RemovePlayerDefaultTypeInternal;
 extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
@@ -93,9 +93,9 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::minecpp::proto::event::serverbound::v1::AcceptPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::AcceptPlayer>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::AnimateHand* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::AnimateHand>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::ChatMessage* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChatMessage>(Arena*);
-template<> ::minecpp::proto::event::serverbound::v1::DestroyBlock* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::DestroyBlock>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Event>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::LoadInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadInitialChunks>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::PlayerDigging* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PlayerDigging>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::RemovePlayer>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerPosition* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerPosition>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerRotation* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerRotation>(Arena*);
@@ -1019,24 +1019,24 @@ class RemovePlayer final :
 };
 // -------------------------------------------------------------------
 
-class DestroyBlock final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.DestroyBlock) */ {
+class PlayerDigging final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.PlayerDigging) */ {
  public:
-  inline DestroyBlock() : DestroyBlock(nullptr) {}
-  ~DestroyBlock() override;
-  explicit PROTOBUF_CONSTEXPR DestroyBlock(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline PlayerDigging() : PlayerDigging(nullptr) {}
+  ~PlayerDigging() override;
+  explicit PROTOBUF_CONSTEXPR PlayerDigging(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  DestroyBlock(const DestroyBlock& from);
-  DestroyBlock(DestroyBlock&& from) noexcept
-    : DestroyBlock() {
+  PlayerDigging(const PlayerDigging& from);
+  PlayerDigging(PlayerDigging&& from) noexcept
+    : PlayerDigging() {
     *this = ::std::move(from);
   }
 
-  inline DestroyBlock& operator=(const DestroyBlock& from) {
+  inline PlayerDigging& operator=(const PlayerDigging& from) {
     CopyFrom(from);
     return *this;
   }
-  inline DestroyBlock& operator=(DestroyBlock&& from) noexcept {
+  inline PlayerDigging& operator=(PlayerDigging&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1059,20 +1059,20 @@ class DestroyBlock final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const DestroyBlock& default_instance() {
+  static const PlayerDigging& default_instance() {
     return *internal_default_instance();
   }
-  static inline const DestroyBlock* internal_default_instance() {
-    return reinterpret_cast<const DestroyBlock*>(
-               &_DestroyBlock_default_instance_);
+  static inline const PlayerDigging* internal_default_instance() {
+    return reinterpret_cast<const PlayerDigging*>(
+               &_PlayerDigging_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     6;
 
-  friend void swap(DestroyBlock& a, DestroyBlock& b) {
+  friend void swap(PlayerDigging& a, PlayerDigging& b) {
     a.Swap(&b);
   }
-  inline void Swap(DestroyBlock* other) {
+  inline void Swap(PlayerDigging* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -1085,7 +1085,7 @@ class DestroyBlock final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(DestroyBlock* other) {
+  void UnsafeArenaSwap(PlayerDigging* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -1093,13 +1093,13 @@ class DestroyBlock final :
 
   // implements Message ----------------------------------------------
 
-  DestroyBlock* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<DestroyBlock>(arena);
+  PlayerDigging* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PlayerDigging>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const DestroyBlock& from);
+  void CopyFrom(const PlayerDigging& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const DestroyBlock& from);
+  void MergeFrom(const PlayerDigging& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -1116,15 +1116,15 @@ class DestroyBlock final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(DestroyBlock* other);
+  void InternalSwap(PlayerDigging* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.event.serverbound.v1.DestroyBlock";
+    return "minecpp.proto.event.serverbound.v1.PlayerDigging";
   }
   protected:
-  explicit DestroyBlock(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit PlayerDigging(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -1138,9 +1138,11 @@ class DestroyBlock final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kBlockPositionFieldNumber = 1,
+    kBlockPositionFieldNumber = 2,
+    kStateFieldNumber = 1,
+    kFaceFieldNumber = 3,
   };
-  // .minecpp.proto.common.v1.BlockPosition block_position = 1;
+  // .minecpp.proto.common.v1.BlockPosition block_position = 2;
   bool has_block_position() const;
   private:
   bool _internal_has_block_position() const;
@@ -1158,7 +1160,25 @@ class DestroyBlock final :
       ::minecpp::proto::common::v1::BlockPosition* block_position);
   ::minecpp::proto::common::v1::BlockPosition* unsafe_arena_release_block_position();
 
-  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.DestroyBlock)
+  // .minecpp.proto.common.v1.PlayerDiggingState state = 1;
+  void clear_state();
+  ::minecpp::proto::common::v1::PlayerDiggingState state() const;
+  void set_state(::minecpp::proto::common::v1::PlayerDiggingState value);
+  private:
+  ::minecpp::proto::common::v1::PlayerDiggingState _internal_state() const;
+  void _internal_set_state(::minecpp::proto::common::v1::PlayerDiggingState value);
+  public:
+
+  // .minecpp.proto.common.v1.Face face = 3;
+  void clear_face();
+  ::minecpp::proto::common::v1::Face face() const;
+  void set_face(::minecpp::proto::common::v1::Face value);
+  private:
+  ::minecpp::proto::common::v1::Face _internal_face() const;
+  void _internal_set_face(::minecpp::proto::common::v1::Face value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.PlayerDigging)
  private:
   class _Internal;
 
@@ -1166,6 +1186,8 @@ class DestroyBlock final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::minecpp::proto::common::v1::BlockPosition* block_position_;
+  int state_;
+  int face_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto;
 };
@@ -2084,25 +2106,45 @@ inline void ChatMessage::set_allocated_message(std::string* message) {
 
 // -------------------------------------------------------------------
 
-// DestroyBlock
+// PlayerDigging
 
-// .minecpp.proto.common.v1.BlockPosition block_position = 1;
-inline bool DestroyBlock::_internal_has_block_position() const {
+// .minecpp.proto.common.v1.PlayerDiggingState state = 1;
+inline void PlayerDigging::clear_state() {
+  state_ = 0;
+}
+inline ::minecpp::proto::common::v1::PlayerDiggingState PlayerDigging::_internal_state() const {
+  return static_cast< ::minecpp::proto::common::v1::PlayerDiggingState >(state_);
+}
+inline ::minecpp::proto::common::v1::PlayerDiggingState PlayerDigging::state() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.PlayerDigging.state)
+  return _internal_state();
+}
+inline void PlayerDigging::_internal_set_state(::minecpp::proto::common::v1::PlayerDiggingState value) {
+  
+  state_ = value;
+}
+inline void PlayerDigging::set_state(::minecpp::proto::common::v1::PlayerDiggingState value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.PlayerDigging.state)
+}
+
+// .minecpp.proto.common.v1.BlockPosition block_position = 2;
+inline bool PlayerDigging::_internal_has_block_position() const {
   return this != internal_default_instance() && block_position_ != nullptr;
 }
-inline bool DestroyBlock::has_block_position() const {
+inline bool PlayerDigging::has_block_position() const {
   return _internal_has_block_position();
 }
-inline const ::minecpp::proto::common::v1::BlockPosition& DestroyBlock::_internal_block_position() const {
+inline const ::minecpp::proto::common::v1::BlockPosition& PlayerDigging::_internal_block_position() const {
   const ::minecpp::proto::common::v1::BlockPosition* p = block_position_;
   return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::BlockPosition&>(
       ::minecpp::proto::common::v1::_BlockPosition_default_instance_);
 }
-inline const ::minecpp::proto::common::v1::BlockPosition& DestroyBlock::block_position() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.DestroyBlock.block_position)
+inline const ::minecpp::proto::common::v1::BlockPosition& PlayerDigging::block_position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.PlayerDigging.block_position)
   return _internal_block_position();
 }
-inline void DestroyBlock::unsafe_arena_set_allocated_block_position(
+inline void PlayerDigging::unsafe_arena_set_allocated_block_position(
     ::minecpp::proto::common::v1::BlockPosition* block_position) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(block_position_);
@@ -2113,9 +2155,9 @@ inline void DestroyBlock::unsafe_arena_set_allocated_block_position(
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.serverbound.v1.DestroyBlock.block_position)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.serverbound.v1.PlayerDigging.block_position)
 }
-inline ::minecpp::proto::common::v1::BlockPosition* DestroyBlock::release_block_position() {
+inline ::minecpp::proto::common::v1::BlockPosition* PlayerDigging::release_block_position() {
   
   ::minecpp::proto::common::v1::BlockPosition* temp = block_position_;
   block_position_ = nullptr;
@@ -2130,14 +2172,14 @@ inline ::minecpp::proto::common::v1::BlockPosition* DestroyBlock::release_block_
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::common::v1::BlockPosition* DestroyBlock::unsafe_arena_release_block_position() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.v1.DestroyBlock.block_position)
+inline ::minecpp::proto::common::v1::BlockPosition* PlayerDigging::unsafe_arena_release_block_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.v1.PlayerDigging.block_position)
   
   ::minecpp::proto::common::v1::BlockPosition* temp = block_position_;
   block_position_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::common::v1::BlockPosition* DestroyBlock::_internal_mutable_block_position() {
+inline ::minecpp::proto::common::v1::BlockPosition* PlayerDigging::_internal_mutable_block_position() {
   
   if (block_position_ == nullptr) {
     auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::BlockPosition>(GetArenaForAllocation());
@@ -2145,12 +2187,12 @@ inline ::minecpp::proto::common::v1::BlockPosition* DestroyBlock::_internal_muta
   }
   return block_position_;
 }
-inline ::minecpp::proto::common::v1::BlockPosition* DestroyBlock::mutable_block_position() {
+inline ::minecpp::proto::common::v1::BlockPosition* PlayerDigging::mutable_block_position() {
   ::minecpp::proto::common::v1::BlockPosition* _msg = _internal_mutable_block_position();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.v1.DestroyBlock.block_position)
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.v1.PlayerDigging.block_position)
   return _msg;
 }
-inline void DestroyBlock::set_allocated_block_position(::minecpp::proto::common::v1::BlockPosition* block_position) {
+inline void PlayerDigging::set_allocated_block_position(::minecpp::proto::common::v1::BlockPosition* block_position) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(block_position_);
@@ -2168,7 +2210,27 @@ inline void DestroyBlock::set_allocated_block_position(::minecpp::proto::common:
     
   }
   block_position_ = block_position;
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.DestroyBlock.block_position)
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.PlayerDigging.block_position)
+}
+
+// .minecpp.proto.common.v1.Face face = 3;
+inline void PlayerDigging::clear_face() {
+  face_ = 0;
+}
+inline ::minecpp::proto::common::v1::Face PlayerDigging::_internal_face() const {
+  return static_cast< ::minecpp::proto::common::v1::Face >(face_);
+}
+inline ::minecpp::proto::common::v1::Face PlayerDigging::face() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.PlayerDigging.face)
+  return _internal_face();
+}
+inline void PlayerDigging::_internal_set_face(::minecpp::proto::common::v1::Face value) {
+  
+  face_ = value;
+}
+inline void PlayerDigging::set_face(::minecpp::proto::common::v1::Face value) {
+  _internal_set_face(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.PlayerDigging.face)
 }
 
 // -------------------------------------------------------------------

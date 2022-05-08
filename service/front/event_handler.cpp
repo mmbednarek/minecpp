@@ -102,7 +102,18 @@ void EventHandler::handle_animate_hand(const clientbound_v1::AnimateHand &msg, c
            .entity_id = static_cast<int>(msg.entity_id()),
            .type = static_cast<uint8_t>(msg.hand()),
    };
-   send_message(animate, player_ids);
+   auto player_id = player::read_id_from_proto(msg.player_id());
+   send_message_excluding(animate, player_id);
+}
+
+void EventHandler::handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg, const std::vector<player::Id> &player_ids) {
+   minecpp::network::message::AcknowledgePlayerDigging acknowledge{
+           .position = game::BlockPosition::from_proto(msg.position()).as_long(),
+           .block = game::block_state_from_proto(msg.block_state()),
+           .state = static_cast<game::PlayerDiggingState>(msg.digging_state()),
+           .successful = msg.successful(),
+   };
+   send_message(acknowledge, player_ids);
 }
 
 void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg, const std::vector<player::Id> &player_ids) {
@@ -244,7 +255,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                  });
 
 
-      if(m_stream != nullptr) {
+      if (m_stream != nullptr) {
          m_stream->send(proto::event::serverbound::v1::LoadInitialChunks{}, player_id);
       }
    }

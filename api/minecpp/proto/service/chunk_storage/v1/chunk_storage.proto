@@ -2,6 +2,7 @@ syntax = "proto3";
 package minecpp.proto.service.chunk_storage.v1;
 
 import "minecpp/proto/chunk/v1/chunk.proto";
+import "minecpp/proto/common/v1/common.proto";
 
 service ChunkStorage {
   rpc LoadChunk (LoadChunkRequest) returns (chunk.v1.Chunk);
@@ -9,6 +10,7 @@ service ChunkStorage {
   rpc AddReferences (AddReferencesRequest) returns (AddReferencesResponse);
   rpc RemoveReference (RemoveReferencesRequest) returns (EmptyResponse);
   rpc HeightAt (HeightAtRequest) returns (HeightAtResponse);
+  rpc GetBlock (common.v1.BlockPosition) returns (common.v1.BlockState);
 }
 
 message LoadChunkRequest {

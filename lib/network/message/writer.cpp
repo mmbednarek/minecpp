@@ -1,6 +1,6 @@
-#include <minecpp/network/message/writer.h>
 #include <boost/uuid/uuid_io.hpp>
 #include <cstring>
+#include <minecpp/network/message/writer.h>
 #include <minecpp/util/compression.h>
 
 namespace minecpp::network::message {
@@ -8,7 +8,7 @@ namespace minecpp::network::message {
 Writer::Writer() {}
 
 void Writer::write_byte(uint8_t value) {
-   stream.write((char *)&value, sizeof(uint8_t));
+   stream.write((char *) &value, sizeof(uint8_t));
 }
 
 void Writer::write_varint(uint32_t value) {
@@ -54,7 +54,7 @@ void Writer::write_uuid_str(boost::uuids::uuid id) {
 }
 
 void Writer::write_uuid(boost::uuids::uuid id) {
-   stream.write((char *)id.data, 16);
+   stream.write((char *) id.data, 16);
 }
 
 void Writer::write_bytes(const char *data, size_t size) {
@@ -64,15 +64,15 @@ void Writer::write_bytes(const char *data, size_t size) {
 void Writer::write_float(float value) {
    static_assert(sizeof(int32_t) == sizeof(float));
    auto value_be =
-       boost::endian::native_to_big(*reinterpret_cast<int32_t *>(&value));
-   stream.write((char *)&value_be, sizeof(value_be));
+           boost::endian::native_to_big(*reinterpret_cast<int32_t *>(&value));
+   stream.write((char *) &value_be, sizeof(value_be));
 }
 
 void Writer::write_double(double value) {
    static_assert(sizeof(int64_t) == sizeof(double));
    auto value_be =
-       boost::endian::native_to_big(*reinterpret_cast<int64_t *>(&value));
-   stream.write((char *)&value_be, sizeof(value_be));
+           boost::endian::native_to_big(*reinterpret_cast<int64_t *>(&value));
+   stream.write((char *) &value_be, sizeof(value_be));
 }
 
 static void write_buff_size(uint8_t *buff, std::size_t size) {
@@ -102,8 +102,8 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
          write_buff_size(buff, buff_size + 1);
          buff[total_size_num_bytes] = 0;
          stream.seekg(0, std::ios::beg);
-         stream.read((char *)buff + header_size, buff_size);
-         return std::tuple(buff, buff_size + header_size);
+         stream.read((char *) buff + header_size, buff_size);
+         return std::make_tuple(buff, buff_size + header_size);
       }
 
       // reached compression threshold
@@ -139,7 +139,7 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
    write_buff_size(buff, buff_size);
 
    stream.seekg(0, std::ios::beg);
-   stream.read((char *)buff + header_size, buff_size);
+   stream.read((char *) buff + header_size, buff_size);
 
    return std::tuple(buff, buff_size + header_size);
 }
@@ -159,7 +159,8 @@ void Writer::write_from(Writer &other) {
 }
 
 void Writer::write_long(uint64_t value) {
-   stream.write((char *)&value, sizeof(uint64_t));
+   value = boost::endian::native_to_big(value);
+   stream.write((char *) &value, sizeof(uint64_t));
 }
 
-} // namespace minecpp::network::Message
+}// namespace minecpp::network::message

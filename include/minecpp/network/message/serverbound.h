@@ -55,21 +55,11 @@ struct PlayerRotation {
 };
 void deserialize(Reader &r, PlayerRotation &msg);
 
-enum class DiggingAction : uint8_t {
-   StartDestroyBlock,
-   AbortDestroyBlock,
-   StopDestroyBlock,
-   DropAllItems,
-   DropItem,
-   ReleaseUseItem,
-   SwapHeldItems,
-};
-
 // 0x1a
 struct PlayerDigging {
-   DiggingAction action;
-   uint64_t position;
-   game::Direction facing;
+   game::PlayerDiggingState action{};
+   uint64_t position{};
+   game::Face facing{};
 };
 void deserialize(Reader &r, PlayerDigging &msg);
 

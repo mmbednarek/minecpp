@@ -83,6 +83,13 @@ message AnimateHand {
   uint32 hand = 3;
 }
 
+message AcknowledgePlayerDigging {
+  common.v1.BlockPosition position = 1;
+  common.v1.BlockState block_state = 2;
+  common.v1.PlayerDiggingState digging_state = 3;
+  bool successful = 4;
+}
+
 message LoadTerrain {
   common.v1.ChunkPosition central_chunk = 1;
   repeated common.v1.ChunkPosition coords = 2;

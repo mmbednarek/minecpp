@@ -32,8 +32,10 @@ message ChatMessage {
 message RemovePlayer {
 }
 
-message DestroyBlock {
-  common.v1.BlockPosition block_position = 1;
+message PlayerDigging {
+  common.v1.PlayerDiggingState state = 1;
+  common.v1.BlockPosition block_position = 2;
+  common.v1.Face face = 3;
 }
 
 message UpdatePing {

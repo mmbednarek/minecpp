@@ -83,4 +83,18 @@ mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::Blo
    return mb::ok;
 }
 
+mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos) {
+   ::grpc::ClientContext ctx;
+
+   auto proto_pos = pos.to_proto();
+
+   proto::common::v1::BlockState state;
+   auto status = service.GetBlock(&ctx, proto_pos, &state);
+   if (!status.ok()) {
+      return mb::error(status.error_message());
+   }
+
+   return game::block_state_from_proto(state);
+}
+
 } // namespace minecpp::service::engine

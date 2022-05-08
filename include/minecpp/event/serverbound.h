@@ -14,7 +14,7 @@ concept ServerboundVisitor = requires(T t) {
    t.handle_set_player_rotation(serverbound_v1::SetPlayerRotation(), player::Id());
    t.handle_chat_message(serverbound_v1::ChatMessage(), player::Id());
    t.handle_remove_player(serverbound_v1::RemovePlayer(), player::Id());
-   t.handle_destroy_block(serverbound_v1::DestroyBlock(), player::Id());
+   t.handle_player_digging(serverbound_v1::PlayerDigging(), player::Id());
    t.handle_update_ping(serverbound_v1::UpdatePing(), player::Id());
    t.handle_animate_hand(serverbound_v1::AnimateHand(), player::Id());
    t.handle_load_initial_chunks(serverbound_v1::LoadInitialChunks(), player::Id());
@@ -39,7 +39,7 @@ void visit_serverbound(const serverbound_v1::Event &event, T &visitor) {
    MINECPP_EVENT_HANDLE_SERVICEBOUND(SetPlayerRotation, handle_set_player_rotation);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(ChatMessage, handle_chat_message);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(RemovePlayer, handle_remove_player);
-   MINECPP_EVENT_HANDLE_SERVICEBOUND(DestroyBlock, handle_destroy_block);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(PlayerDigging, handle_player_digging);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(UpdatePing, handle_update_ping);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(AnimateHand, handle_animate_hand);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(LoadInitialChunks, handle_load_initial_chunks);

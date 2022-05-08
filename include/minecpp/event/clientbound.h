@@ -17,6 +17,7 @@ concept ClientboundVisitor = requires(T t) {
    t.handle_update_block(clientbound_v1::UpdateBlock(), std::vector<player::Id>());
    t.handle_chat(clientbound_v1::Chat(), std::vector<player::Id>());
    t.handle_animate_hand(clientbound_v1::AnimateHand(), std::vector<player::Id>());
+   t.handle_acknowledge_player_digging(clientbound_v1::AcknowledgePlayerDigging(), std::vector<player::Id>());
    t.handle_load_terrain(clientbound_v1::LoadTerrain(), std::vector<player::Id>());
    t.handle_transfer_player(clientbound_v1::TransferPlayer(), std::vector<player::Id>());
    t.handle_unload_chunk(clientbound_v1::UnloadChunk(), std::vector<player::Id>());
@@ -50,6 +51,7 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor) {
    MINECPP_EVENT_HANDLE_CLIENTBOUND(UpdateBlock, handle_update_block);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(Chat, handle_chat);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(AnimateHand, handle_animate_hand);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(AcknowledgePlayerDigging, handle_acknowledge_player_digging);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(LoadTerrain, handle_load_terrain);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(TransferPlayer, handle_transfer_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(UnloadChunk, handle_unload_chunk);

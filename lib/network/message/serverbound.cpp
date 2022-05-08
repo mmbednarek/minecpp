@@ -1,3 +1,4 @@
+#include "minecpp/game/game.h"
 #include <minecpp/network/message/serverbound.h>
 
 namespace minecpp::network::message {
@@ -51,9 +52,9 @@ void deserialize(Reader &r, PlayerRotation &msg) {
 
 void deserialize(Reader &r, PlayerDigging &msg) {
    // 1.18.2 OK
-   msg.action = static_cast<DiggingAction>(r.read_varint());
+   msg.action = static_cast<game::PlayerDiggingState>(r.read_varint());
    msg.position = r.read_big_endian<uint64_t>();
-   msg.facing = game::Direction(r.read_byte());
+   msg.facing = static_cast<game::Face>(r.read_byte());
 }
 
 void deserialize(Reader &r, AnimateHandClient &msg) {

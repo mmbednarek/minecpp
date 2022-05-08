@@ -86,6 +86,20 @@ void Chunk::set_block(int x, int y, int z, uint32_t state) {
    set_sky_light(x, y, z, 15);
 }
 
+game::BlockState Chunk::get_block(int x, int y, int z) {
+   auto section_id = static_cast<int8_t>(y / 16);
+
+   auto it_section = m_sections.find(section_id);
+   if (it_section == m_sections.end())
+      return 0;
+
+   auto palette_index = it_section->second.data.at(coord_to_offset(x, y, z));
+   if (palette_index < 0 || palette_index >= it_section->second.palette.size())
+      return 0;
+
+   return it_section->second.palette[palette_index];
+}
+
 uint8_t Chunk::get_block_light(int x, int y, int z) {
    int8_t sec = y / 16;
    auto iter = m_sections.find(sec);
