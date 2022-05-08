@@ -24,42 +24,42 @@ class ScriptWriter {
    void line(std::string_view sv);
 
    template<typename... Args>
-   void line(std::string_view sv, Args... args) {
+   void line(fmt::format_string<Args...> sv, Args... args) {
       apply_indent(os, ident_level);
-      os << fmt::format(sv, args...);
+      os << fmt::format(sv, std::forward<Args>(args)...);
       os << '\n';
    }
 
    template<typename... Args>
-   void line_ignore(std::string_view sv, Args... args) {
-      os << fmt::format(sv, args...);
+   void line_ignore(fmt::format_string<Args...> sv, Args... args) {
+      os << fmt::format(sv, std::forward<Args>(args)...);
       os << '\n';
    }
 
    void line();
 
    template<typename... Args>
-   void scope(std::string_view sv, Args... args) {
+   void scope(fmt::format_string<Args...> sv, Args... args) {
       apply_indent(os, ident_level);
-      os << fmt::format(sv, args...);
+      os << fmt::format(sv, std::forward<Args>(args)...);
       os << " {\n";
       ident();
    }
 
    template<typename... Args>
-   void flat_scope(std::string_view sv, Args... args) {
+   void flat_scope(fmt::format_string<Args...> sv, Args... args) {
       apply_indent(os, ident_level);
-      os << fmt::format(sv, args...);
+      os << fmt::format(sv, std::forward<Args...>(args)...);
       os << " {\n";
    }
 
    void descope();
 
    template<typename... Args>
-   void descope(std::string_view sv, Args... args) {
+   void descope(fmt::format_string<Args...> sv, Args... args) {
       deindent();
       apply_indent(os, ident_level);
-      os << '}' << fmt::format(sv, args...) << '\n';
+      os << '}' << fmt::format(sv, std::forward<Args...>(args)...) << '\n';
    }
 
    void descope_flat();

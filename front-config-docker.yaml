@@ -1,0 +1,6 @@
+engine_hosts:
+  - "engine:7000"
+front_port: 25565
+recipes: /config/research/recipes.dat
+tags: /config/research/tags.dat
+chunk_storage_host: chunk_storage:7000

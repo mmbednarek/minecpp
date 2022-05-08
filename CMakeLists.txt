@@ -5,21 +5,33 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic")
 
+option(USE_LOCAL_GPRC "Compile using local gRPC and Protobuf libraries" ON)
+
 set(gRPC_PROTOBUF_PROVIDER "package")
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
-find_package(Protobuf REQUIRED)
-find_package(gRPC REQUIRED)
-find_package(absl REQUIRED)
 find_package(GTest REQUIRED)
+
+include(FetchContent)
+
+if (${USE_LOCAL_GPRC})
+    find_package(absl REQUIRED)
+    find_package(gRPC CONFIG REQUIRED)
+    find_package(Protobuf REQUIRED)
+else()
+    fetchcontent_declare(
+            gRPC
+            GIT_REPOSITORY https://github.com/grpc/grpc
+            GIT_TAG v1.46.0
+    )
+    fetchcontent_makeavailable(gRPC)
+endif()
 
 if (${SPDLOG_FMT_EXTERNAL})
     add_definitions(-DSPDLOG_FMT_EXTERNAL=1)
 endif()
-
-include(FetchContent)
 
 fetchcontent_declare(
   yaml
@@ -38,7 +50,7 @@ fetchcontent_makeavailable(libmb)
 fetchcontent_declare(
   libmb_codegen
   GIT_REPOSITORY https://github.com/mmbednarek/codegen
-  GIT_TAG codegen-0.0.24
+  GIT_TAG codegen-0.0.27
 )
 fetchcontent_makeavailable(libmb_codegen)
 
@@ -75,7 +87,6 @@ add_subdirectory(tool/nbt_viewer)
 add_subdirectory(tool/chunk_extractor)
 add_subdirectory(tool/chunk_viewer)
 add_subdirectory(tool/recipes)
-add_subdirectory(tool/statelist)
 add_subdirectory(tool/nbtprotogen)
 add_subdirectory(tool/nbtscheme)
 add_subdirectory(tool/discocli)

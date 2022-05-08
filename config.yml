@@ -1,6 +1,5 @@
 engine_hosts:
   - "127.0.0.1:7800"
-#  - "127.0.0.1:7801"
 front_port: 4500
 recipes: research/recipes.dat
 tags: research/tags.dat

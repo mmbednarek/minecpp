@@ -77,8 +77,11 @@ class ClientEventHandler {
    void on_disconnect(ClientBidiStream stream) {}
 
    Stream stream() {
-      while (m_stream == nullptr)
-         ;
+      while (m_stream == nullptr) {
+         using namespace std::chrono_literals;
+         spdlog::info("awaiting connection to engine...");
+         std::this_thread::sleep_for(1s);
+      }
       return {*m_stream, m_mtx, m_out_queue};
    }
 };

@@ -2,7 +2,6 @@
 #include "ast.h"
 #include <any>
 #include <map>
-#include <minecpp/util/scriptw.h>
 #include <string>
 #include <variant>
 #include <vector>

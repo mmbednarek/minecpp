@@ -1,3 +1,0 @@
-project(minecpp_statelist)
-add_executable(minecpp_statelist main.cpp)
-target_link_libraries(minecpp_statelist minecpp_game fmt)

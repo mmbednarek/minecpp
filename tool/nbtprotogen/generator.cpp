@@ -1,11 +1,10 @@
 #include "generator.h"
+#include <fmt/format.h>
 #include <set>
 #include <sstream>
 #include <utility>
 
 namespace Semantics {
-
-using minecpp::util::ScriptWriter;
 
 std::string variant_to_nbt_tag(TypeVariant variant) {
    switch (variant) {
