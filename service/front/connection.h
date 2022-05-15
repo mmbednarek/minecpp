@@ -23,7 +23,8 @@ class Server;
 
 using ConnectionId = mb::size;
 
-class Connection {
+class Connection
+{
    friend Server;
 
  public:
@@ -34,15 +35,12 @@ class Connection {
 
    void set_non_blocking();
 
-   void async_write_then_read(const Ptr &conn, uint8_t *buff, size_t size,
-                              Protocol::Handler &h);
+   void async_write_then_read(const Ptr &conn, uint8_t *buff, size_t size, Protocol::Handler &h);
    void async_write(const Ptr &conn, uint8_t *buff, size_t size);
-   void async_write_then_disconnect(const Ptr &conn, uint8_t *buff,
-                                    size_t size);
+   void async_write_then_disconnect(const Ptr &conn, uint8_t *buff, size_t size);
 
    void send(const Ptr &conn, minecpp::network::message::Writer &w);
-   void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w,
-                      Protocol::Handler &h);
+   void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, Protocol::Handler &h);
    void send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w);
 
    Server *get_server();
@@ -69,7 +67,6 @@ class Connection {
    void free_byte(mb::u8 *byte);
 
  private:
-
    ConnectionId m_id = -1;
    tcp::socket m_socket;
 
@@ -83,23 +80,27 @@ class Connection {
    minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
 };
 
-void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift, const std::function<void(mb::u32)>& callback);
+void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
+                       const std::function<void(mb::u32)> &callback);
 void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler);
 
 template<typename M>
-void send(const Connection::Ptr &conn, M msg) {
+void send(const Connection::Ptr &conn, M msg)
+{
    auto w = msg.serialize();
    conn->send(conn, w);
 }
 
 template<typename M>
-void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h) {
+void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h)
+{
    auto w = msg.serialize();
    conn->send_and_read(conn, w, h);
 }
 
 template<typename M>
-void send_and_disconnect(const Connection::Ptr &conn, M msg) {
+void send_and_disconnect(const Connection::Ptr &conn, M msg)
+{
    auto w = msg.serialize();
    conn->send_and_disconnect(conn, w);
 }

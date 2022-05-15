@@ -10,16 +10,15 @@ namespace minecpp::service::front {
 
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
-class EventHandler {
+class EventHandler
+{
    Server &m_server;
    engine::Stream *m_stream = nullptr;
 
  public:
    explicit EventHandler(Server &server);
 
-   constexpr void set_stream(engine::Stream *stream) {
-      m_stream = stream;
-   }
+   constexpr void set_stream(engine::Stream *stream) { m_stream = stream; }
 
    void handle_add_player(const clientbound_v1::AddPlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos, const std::vector<player::Id> &player_ids);
@@ -29,10 +28,12 @@ class EventHandler {
    void handle_remove_player(const clientbound_v1::RemovePlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_update_block(const clientbound_v1::UpdateBlock &msg, const std::vector<player::Id> &player_ids);
    void handle_animate_hand(const clientbound_v1::AnimateHand &msg, const std::vector<player::Id> &player_ids);
-   void handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg, const std::vector<player::Id> &player_ids);
+   void handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg,
+                                          const std::vector<player::Id> &player_ids);
    void handle_load_terrain(const clientbound_v1::LoadTerrain &msg, const std::vector<player::Id> &player_ids);
    void handle_transfer_player(const clientbound_v1::TransferPlayer &msg, const std::vector<player::Id> &player_ids);
-   void handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg, const std::vector<player::Id> &player_ids);
+   void handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg,
+                                       const std::vector<player::Id> &player_ids);
    void handle_unload_chunk(const clientbound_v1::UnloadChunk &msg, const std::vector<player::Id> &player_ids);
    void handle_accept_player(const clientbound_v1::AcceptPlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_deny_player(const clientbound_v1::DenyPlayer &msg, const std::vector<player::Id> &player_ids);
@@ -40,7 +41,8 @@ class EventHandler {
    void handle_entity_list(const clientbound_v1::EntityList &msg, const std::vector<player::Id> &player_ids);
 
    template<typename T>
-   void send_message_to_all_players(const T &msg) {
+   void send_message_to_all_players(const T &msg)
+   {
       for (auto &conn : m_server) {
          if (conn.get() == nullptr)
             continue;
@@ -49,7 +51,8 @@ class EventHandler {
    }
 
    template<typename T>
-   void send_message(const T &msg, const std::vector<player::Id> &player_ids) {
+   void send_message(const T &msg, const std::vector<player::Id> &player_ids)
+   {
       if (player_ids.empty()) {
          send_message_to_all_players(msg);
          return;
@@ -62,7 +65,8 @@ class EventHandler {
    }
 
    template<typename T>
-   void send_message_excluding(const T &msg, player::Id excluded) {
+   void send_message_excluding(const T &msg, player::Id excluded)
+   {
       for (auto &conn : m_server) {
          if (conn.get() == nullptr)
             continue;

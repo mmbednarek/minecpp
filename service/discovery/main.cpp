@@ -2,7 +2,8 @@
 #include <mb/core.h>
 #include <spdlog/spdlog.h>
 
-int main() {
+int main()
+{
    auto host = mb::getenv("DISCOVERY_HOST").unwrap("0.0.0.0:9911");
 
    minecpp::service::discovery::Service service;

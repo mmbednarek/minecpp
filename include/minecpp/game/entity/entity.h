@@ -27,24 +27,28 @@ extern std::array<std::string, 7> known_attributes;
 
 AttributeName to_attribute_name(const std::string &s);
 
-class Attributes {
+class Attributes
+{
    std::map<AttributeName, double> attributes;
 
  public:
    void set_attribute(AttributeName name, double value);
 };
 
-struct Tracking {
+struct Tracking
+{
    int64_t x, y, z;
 };
 
-struct Movement {
+struct Movement
+{
    short x, y, z;
 
    bool nil();
 };
 
-class Entity {
+class Entity
+{
    friend PlayerData;
 
    uint32_t id{};
@@ -54,21 +58,21 @@ class Entity {
    Attributes attributes;
    Tracking tracking{};
 
-   float health = 10.0f;
+   float health            = 10.0f;
    float absorption_amount = 0.0f;
-   float fall_distance = 0;
+   float fall_distance     = 0;
 
-   short air = 300;
+   short air        = 300;
    short death_time = 0;
-   short fire = -1;
-   short hurt_time = 0;
+   short fire       = -1;
+   short hurt_time  = 0;
 
-   bool can_pick_up_loot = false;
-   bool fall_flying = false;
-   bool hurt_by_timestamp = false;
-   bool invulnerable = false;
-   bool left_handed = false;
-   bool on_ground = true;
+   bool can_pick_up_loot     = false;
+   bool fall_flying          = false;
+   bool hurt_by_timestamp    = false;
+   bool invulnerable         = false;
+   bool left_handed          = false;
+   bool on_ground            = true;
    bool persistence_required = false;
 
    Vec3 motion;
@@ -90,7 +94,8 @@ class Entity {
    minecpp::entity::Movement process_movement();
    void sync_tracking();
 
-   [[nodiscard]] inline proto::entity::v1::Entity to_proto() const {
+   [[nodiscard]] inline proto::entity::v1::Entity to_proto() const
+   {
       proto::entity::v1::Entity entity;
       entity.set_entity_id(id);
       entity.mutable_rotation()->set_yaw(yaw);

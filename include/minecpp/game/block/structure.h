@@ -3,7 +3,6 @@
 
 namespace minecpp::game::block {
 
-using StructureMode =
-    minecpp::util::Enum<ENU("save"), ENU("load"), ENU("corner"), ENU("data")>;
+using StructureMode = minecpp::util::Enum<ENU("save"), ENU("load"), ENU("corner"), ENU("data")>;
 
 }

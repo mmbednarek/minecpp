@@ -4,25 +4,22 @@
 
 namespace minecpp::service::front::Protocol {
 
-LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler)
-    : service(service), play_handler(play_handler) {}
+LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler) : service(service), play_handler(play_handler)
+{}
 
-void LoginHandler::handle(const std::shared_ptr<Connection> &conn,
-                          minecpp::network::message::Reader &r) {
+void LoginHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+{
    uint8_t op = r.read_byte();
    switch (op) {
-   case 0:
-      handle_login_start(conn, r);
-      break;
-   default:
-      spdlog::debug("[login protocol] unknown operation code {}", (int)op);
+   case 0: handle_login_start(conn, r); break;
+   default: spdlog::debug("[login protocol] unknown operation code {}", (int) op);
    }
 }
 
 constexpr int compression_threshold = 256;
 
-void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
-                                      minecpp::network::message::Reader &r) {
+void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+{
    std::string user_name = r.read_string();
 
    auto response = service.login_player(user_name);
@@ -48,8 +45,8 @@ void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
    async_read_packet(conn, play_handler);
 }
 
-void LoginHandler::reject(const std::shared_ptr<Connection> &conn,
-                          std::string_view message) {
+void LoginHandler::reject(const std::shared_ptr<Connection> &conn, std::string_view message)
+{
    minecpp::network::message::Writer w;
 
    w.write_byte(0);
@@ -64,4 +61,4 @@ void LoginHandler::reject(const std::shared_ptr<Connection> &conn,
 
 void LoginHandler::handle_disconnect(Connection &conn) {}
 
-} // namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::Protocol

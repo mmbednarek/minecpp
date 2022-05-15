@@ -10,7 +10,8 @@
 
 namespace minecpp::nbt {
 
-enum class TagId : uint8_t {
+enum class TagId : uint8_t
+{
    End,
    Byte,
    Short,
@@ -26,12 +27,14 @@ enum class TagId : uint8_t {
    LongArray,
 };
 
-struct Content {
+struct Content
+{
    TagId tag_id;
    std::any content;
 
    template<typename T>
-   [[nodiscard]] T as() const {
+   [[nodiscard]] T as() const
+   {
       if (typeid(T) == content.type()) {
          return std::any_cast<T>(content);
       }
@@ -42,7 +45,8 @@ struct Content {
    }
 
    template<typename T>
-   [[nodiscard]] T as_or(T alt) const {
+   [[nodiscard]] T as_or(T alt) const
+   {
       if (typeid(T) == content.type()) {
          return std::any_cast<T>(content);
       }
@@ -59,17 +63,20 @@ struct Content {
 
 using CompoundContent = std::map<std::string, Content>;
 
-struct ListContent {
+struct ListContent
+{
    TagId tag_id;
    std::vector<std::any> elements;
-   class Iterator {
+   class Iterator
+   {
       ListContent &list;
       std::size_t at;
 
     public:
       explicit Iterator(ListContent &list, std::size_t at = 0) : list(list), at(at) {}
 
-      Iterator &operator++() {
+      Iterator &operator++()
+      {
          if (at >= list.elements.size()) {
             return *this;
          }
@@ -77,55 +84,49 @@ struct ListContent {
          return *this;
       }
 
-      Iterator operator++(int) {
+      Iterator operator++(int)
+      {
          auto value = *this;
          ++(*this);
          return value;
       }
 
-      bool operator==(Iterator other) const {
-         return at == other.at;
-      }
+      bool operator==(Iterator other) const { return at == other.at; }
 
-      bool operator!=(Iterator other) const {
-         return at != other.at;
-      }
+      bool operator!=(Iterator other) const { return at != other.at; }
 
-      Content operator*() const {
+      Content operator*() const
+      {
          return Content{
-                 .tag_id = list.tag_id,
+                 .tag_id  = list.tag_id,
                  .content = list.elements.at(at),
          };
       }
 
-      using difference_type = Content;
-      using value_type = Content;
-      using pointer = const Content *;
-      using reference = const Content &;
+      using difference_type   = Content;
+      using value_type        = Content;
+      using pointer           = const Content *;
+      using reference         = const Content &;
       using iterator_category = std::forward_iterator_tag;
    };
 
-   Content operator[](const std::size_t index) {
+   Content operator[](const std::size_t index)
+   {
       return Content{
-              .tag_id = tag_id,
+              .tag_id  = tag_id,
               .content = elements[index],
       };
    }
 
-   Iterator begin() {
-      return Iterator(*this, 0);
-   }
+   Iterator begin() { return Iterator(*this, 0); }
 
-   Iterator end() {
-      return Iterator(*this, elements.size());
-   }
+   Iterator end() { return Iterator(*this, elements.size()); }
 
    template<typename T>
-   std::vector<T> as_vec() {
+   std::vector<T> as_vec()
+   {
       std::vector<T> result(elements.size());
-      std::transform(begin(), end(), result.begin(), [](const nbt::Content &el) {
-         return el.as<T>();
-      });
+      std::transform(begin(), end(), result.begin(), [](const nbt::Content &el) { return el.as<T>(); });
       return result;
    }
 };
@@ -140,7 +141,8 @@ Content make_double(double value);
 Content make_compound(CompoundContent cont);
 Content make_list(ListContent cont);
 
-struct NamedTag {
+struct NamedTag
+{
    std::string name;
    Content content;
 
@@ -148,10 +150,10 @@ struct NamedTag {
 };
 
 template<typename T>
-std::vector<T> Content::as_vec() {
+std::vector<T> Content::as_vec()
+{
    switch (tag_id) {
-   case TagId::List:
-      return as<ListContent>().as_vec<T>();
+   case TagId::List: return as<ListContent>().as_vec<T>();
    case TagId::ByteArray:
       if constexpr (std::is_same<T, uint8_t>::value) {
          return as<std::vector<T>>();
@@ -167,8 +169,7 @@ std::vector<T> Content::as_vec() {
          return as<std::vector<T>>();
       }
       break;
-   default:
-      break;
+   default: break;
    }
    return std::vector<T>();
 }

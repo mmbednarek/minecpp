@@ -13,7 +13,8 @@ namespace minecpp::service::discovery {
 
 using ResourceVersion = mb::u64;
 
-struct Endpoint {
+struct Endpoint
+{
    std::string address{};
    mb::u32 port{};
 
@@ -23,12 +24,14 @@ struct Endpoint {
    static Endpoint from_proto(const proto::service::discovery::v1::Endpoint &endpoint);
 };
 
-struct DiscoveryResponse {
+struct DiscoveryResponse
+{
    bool modified{};
    std::vector<Endpoint> endpoints{};
 };
 
-class Client {
+class Client
+{
    std::shared_ptr<grpc::ChannelInterface> m_channel;
    std::unique_ptr<proto::service::discovery::v1::DiscoveryService::Stub> m_stub;
    ResourceVersion m_last_resource_version{};
@@ -40,7 +43,8 @@ class Client {
    mb::result<mb::empty> register_service(std::string_view service_name, std::string_view address, mb::u32 port);
 
  private:
-   Client(std::shared_ptr<grpc::ChannelInterface> channel, std::unique_ptr<proto::service::discovery::v1::DiscoveryService::Stub> stub);
+   Client(std::shared_ptr<grpc::ChannelInterface> channel,
+          std::unique_ptr<proto::service::discovery::v1::DiscoveryService::Stub> stub);
 };
 
 }// namespace minecpp::service::discovery

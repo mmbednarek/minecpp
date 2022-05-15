@@ -13,7 +13,8 @@ namespace proto::nbt::test {
 
 #ifndef PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 #define PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
-class __nbt_idl_offset {
+class __nbt_idl_offset
+{
  public:
    mb::size offset{};
    mb::size size{};
@@ -21,10 +22,12 @@ class __nbt_idl_offset {
 };
 #endif//PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 
-class Foo {
+class Foo
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::map<std::string, std::int32_t>>) {
          if (name == "stuff") {
@@ -52,10 +55,12 @@ class Foo {
    static Foo deserialize(std::istream &in);
 };
 
-class Bar {
+class Bar
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, minecpp::nbt::CompoundContent>) {
          if (name == "meta") {
@@ -91,5 +96,5 @@ class Bar {
    static Bar deserialize(std::istream &in);
 };
 
-}
+}// namespace proto::nbt::test
 #endif//PROTO_NBT_TEST_TEST_H

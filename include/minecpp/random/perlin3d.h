@@ -4,7 +4,8 @@
 
 namespace minecpp::random {
 
-class Perlin3d {
+class Perlin3d
+{
    Random &rand;
    uint64_t coef1, coef2, coef3, coef4;
 
@@ -16,4 +17,4 @@ class Perlin3d {
    [[nodiscard]] minecpp::util::Vec3 grad(int x, int y, int z);
 };
 
-}
+}// namespace minecpp::random

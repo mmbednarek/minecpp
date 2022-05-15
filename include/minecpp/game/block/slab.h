@@ -3,7 +3,6 @@
 
 namespace minecpp::game::block {
 
-using SlabType =
-minecpp::util::Enum<ENU("top"), ENU("bottom"), ENU("double")>;
+using SlabType = minecpp::util::Enum<ENU("top"), ENU("bottom"), ENU("double")>;
 
 }

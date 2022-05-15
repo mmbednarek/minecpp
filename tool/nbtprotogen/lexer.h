@@ -1,7 +1,7 @@
 #include "token.h"
-#include <vector>
-#include <istream>
 #include "token_reader.h"
+#include <istream>
+#include <vector>
 
 namespace Lex {
 

@@ -4,7 +4,8 @@
 
 namespace minecpp::tool::snbt_parser {
 
-enum class TokenType {
+enum class TokenType
+{
    Identifier,
    String,
    Byte,
@@ -21,11 +22,12 @@ enum class TokenType {
    RightSquareBracket,
 };
 
-struct Token {
+struct Token
+{
    TokenType type;
    std::string value;
 };
 
-}
+}// namespace minecpp::tool::snbt_parser
 
 #endif//MINECPP_TOKEN_H

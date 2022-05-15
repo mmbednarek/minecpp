@@ -9,13 +9,15 @@ constexpr int64_t chunk_max_z = 1875060;
 
 struct Position;
 
-struct ChunkPos {
+struct ChunkPos
+{
    int x = 0, z = 0;
    ChunkPos() = default;
    ChunkPos(int x, int z);
    explicit ChunkPos(minecpp::util::Vec2 v);
    ChunkPos operator+(ChunkPos &other) const;
-   [[nodiscard]] constexpr std::uint64_t hash() const {
+   [[nodiscard]] constexpr std::uint64_t hash() const
+   {
       return static_cast<int64_t>(z) + chunk_max_z * static_cast<int64_t>(x);
    }
    [[nodiscard]] Position block_at(int bx, int by, int bz) const;
@@ -24,7 +26,8 @@ struct ChunkPos {
 
 bool operator==(const ChunkPos &a, const ChunkPos &b);
 
-struct Position {
+struct Position
+{
    int x = 0, y = 0, z = 0;
 
    Position() = default;

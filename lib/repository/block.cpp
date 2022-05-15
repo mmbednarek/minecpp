@@ -9,7 +9,8 @@ namespace minecpp::repository {
 Block Block::g_instance;
 BlockState BlockState::g_instance;
 
-mb::emptyres load_repository_from_file(std::string_view filename) {
+mb::emptyres load_repository_from_file(std::string_view filename)
+{
    std::ifstream in_file(filename.data());
    if (!in_file.is_open()) {
       return mb::error("could not open file");
@@ -21,15 +22,16 @@ mb::emptyres load_repository_from_file(std::string_view filename) {
       states.register_resource(bool_state.tag, game::State(bool_state.state.name));
    }
    for (auto &int_state : repo.int_states) {
-      states.register_resource(int_state.tag, game::State(int_state.state.name, int_state.state.min_value, int_state.state.max_value));
+      states.register_resource(int_state.tag,
+                               game::State(int_state.state.name, int_state.state.min_value, int_state.state.max_value));
    }
    for (auto &enum_state : repo.enum_states) {
       states.register_resource(enum_state.tag, game::State(enum_state.state.name, enum_state.state.values));
    }
 
-   auto &blocks = Block::the();
+   auto &blocks        = Block::the();
    auto &state_manager = StateManager::the();
-   int block_id = 0;
+   int block_id        = 0;
    for (auto &block : repo.blocks) {
       std::vector<game::State> block_states;
       int block_state_count = 1;
@@ -48,7 +50,8 @@ mb::emptyres load_repository_from_file(std::string_view filename) {
    return mb::ok;
 }
 
-std::function<int(const game::State &)> make_compound_encoder(const nbt::CompoundContent &cnt) {
+std::function<int(const game::State &)> make_compound_encoder(const nbt::CompoundContent &cnt)
+{
    return [&cnt](const game::State &state) -> int {
       auto it = cnt.find(std::string(state.name()));
       if (it == cnt.end())
@@ -57,19 +60,17 @@ std::function<int(const game::State &)> make_compound_encoder(const nbt::Compoun
       auto &content = it->second;
 
       switch (content.tag_id) {
-      case nbt::TagId::String:
-         return state.index_from_value(content.as<std::string>());
-      case nbt::TagId::Int:
-         return state.index_from_value(content.as<int>());
-      default:
-         break;
+      case nbt::TagId::String: return state.index_from_value(content.as<std::string>());
+      case nbt::TagId::Int: return state.index_from_value(content.as<int>());
+      default: break;
       }
    };
 }
 
-int encode_block_by_tag(std::string_view tag) {
-    auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
-    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
+int encode_block_by_tag(std::string_view tag)
+{
+   auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
+   return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
 }// namespace minecpp::repository

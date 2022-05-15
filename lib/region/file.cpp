@@ -7,7 +7,8 @@ namespace minecpp::region {
 
 RegionFile::RegionFile(std::fstream &s) : m_stream(s) {}
 
-mb::result<std::vector<uint8_t>> RegionFile::load_chunk(int x, int z) noexcept {
+mb::result<std::vector<uint8_t>> RegionFile::load_chunk(int x, int z) noexcept
+{
    //   int off_x = x >= 0 ? x % 32 : -(x % 32);
    //   int off_z = z >= 0 ? z % 32 : -(z % 32);
    int off_x = x & 31;
@@ -22,7 +23,7 @@ mb::result<std::vector<uint8_t>> RegionFile::load_chunk(int x, int z) noexcept {
    }
 
    uint32_t offset = location << 8u;
-   offset = boost::endian::big_to_native(offset);
+   offset          = boost::endian::big_to_native(offset);
    if (!offset)
       return std::vector<uint8_t>();
    m_stream.seekg(offset << 12u, std::ios::beg);
@@ -43,7 +44,8 @@ mb::result<std::vector<uint8_t>> RegionFile::load_chunk(int x, int z) noexcept {
    return data;
 }
 
-mb::result<mb::empty> RegionFile::write_data(mb::i32 x, mb::i32 z, const mb::view<char> data) noexcept {
+mb::result<mb::empty> RegionFile::write_data(mb::i32 x, mb::i32 z, const mb::view<char> data) noexcept
+{
    int off_x = x & 31;
    int off_z = z & 31;
 
@@ -56,8 +58,8 @@ mb::result<mb::empty> RegionFile::write_data(mb::i32 x, mb::i32 z, const mb::vie
    }
 
    uint32_t offset = location << 8u;
-   offset = boost::endian::big_to_native(offset);
-   if(offset == 0) {
+   offset          = boost::endian::big_to_native(offset);
+   if (offset == 0) {
       return mb::error("empty offset");
    }
    mb::u32 block_count = (location >> 24u) & 0xff;
@@ -71,16 +73,16 @@ mb::result<mb::empty> RegionFile::write_data(mb::i32 x, mb::i32 z, const mb::vie
    m_stream.seekg(offset << 12u, std::ios::beg);
 
    mb::u32 size = data.size();
-   size = boost::endian::native_to_big(size);
+   size         = boost::endian::native_to_big(size);
    m_stream.write((char *) &size, sizeof(mb::u32));
 
    mb::u8 compression = 2;
    m_stream.write((char *) &compression, sizeof(mb::u8));
 
    m_stream.write(data.data(), data.size());
-//   for (std::size_t i = 0; i < max_size - data.size(); ++i) {
-//      m_stream.put(0x00); // fill the rest with zeros
-//   }
+   //   for (std::size_t i = 0; i < max_size - data.size(); ++i) {
+   //      m_stream.put(0x00); // fill the rest with zeros
+   //   }
    return mb::ok;
 }
 

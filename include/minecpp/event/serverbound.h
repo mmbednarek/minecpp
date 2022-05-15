@@ -8,7 +8,8 @@ namespace minecpp::event {
 namespace serverbound_v1 = proto::event::serverbound::v1;
 
 template<typename T>
-concept ServerboundVisitor = requires(T t) {
+concept ServerboundVisitor = requires(T t)
+{
    t.handle_accept_player(serverbound_v1::AcceptPlayer(), player::Id());
    t.handle_set_player_position(serverbound_v1::SetPlayerPosition(), player::Id());
    t.handle_set_player_rotation(serverbound_v1::SetPlayerRotation(), player::Id());
@@ -31,7 +32,8 @@ concept ServerboundVisitor = requires(T t) {
 
 template<typename T>
 requires ServerboundVisitor<T>
-void visit_serverbound(const serverbound_v1::Event &event, T &visitor) {
+void visit_serverbound(const serverbound_v1::Event &event, T &visitor)
+{
    if (!event.has_payload())
       return;
 

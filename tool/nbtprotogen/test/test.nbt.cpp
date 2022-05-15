@@ -2,7 +2,8 @@
 
 namespace proto::nbt::test {
 
-void Foo::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Foo::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::String, "value");
    w.write_string_content(value);
    w.write_header(minecpp::nbt::TagId::Compound, "stuff");
@@ -14,19 +15,19 @@ void Foo::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Foo::serialize(std::ostream &out, std::string_view name) const {
+void Foo::serialize(std::ostream &out, std::string_view name) const
+{
    minecpp::nbt::Writer w(out);
    w.begin_compound(name);
    serialize_no_header(w);
 }
 
-Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r) {
+Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Foo res;
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
-      case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
-         return;
+      case minecpp::nbt::TagId::String: res.__xx_put(name, r.read_str()); return;
       case minecpp::nbt::TagId::Compound:
          if (name == "stuff") {
             r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
@@ -45,7 +46,8 @@ Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r) {
    return res;
 }
 
-Foo Foo::deserialize(std::istream &in) {
+Foo Foo::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -54,12 +56,11 @@ Foo Foo::deserialize(std::istream &in) {
    return Foo::deserialize_no_header(r);
 }
 
-void Bar::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Bar::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::List, "foo");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, foo.size());
-   std::for_each(foo.begin(), foo.end(), [&w](const auto &value) {
-      value.serialize_no_header(w);
-   });
+   std::for_each(foo.begin(), foo.end(), [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Compound, "foo_map");
    std::for_each(foo_map.begin(), foo_map.end(), [&w](const auto &pair) {
       w.write_header(minecpp::nbt::TagId::Compound, pair.first);
@@ -71,13 +72,15 @@ void Bar::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Bar::serialize(std::ostream &out, std::string_view name) const {
+void Bar::serialize(std::ostream &out, std::string_view name) const
+{
    minecpp::nbt::Writer w(out);
    w.begin_compound(name);
    serialize_no_header(w);
 }
 
-Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
+Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Bar res;
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
@@ -104,18 +107,14 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
             case minecpp::nbt::TagId::Compound: {
                if (name == "foo") {
                   std::vector<Foo> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() {
-                     return Foo::deserialize_no_header(r);
-                  });
+                  std::generate(ls.begin(), ls.end(), [&r]() { return Foo::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                break;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) {
-               r.skip_payload(list_info0.tagid);
-            }
+            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
          }
          return;
       }
@@ -125,7 +124,8 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r) {
    return res;
 }
 
-Bar Bar::deserialize(std::istream &in) {
+Bar Bar::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -134,4 +134,4 @@ Bar Bar::deserialize(std::istream &in) {
    return Bar::deserialize_no_header(r);
 }
 
-}
+}// namespace proto::nbt::test

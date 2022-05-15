@@ -7,11 +7,10 @@ namespace minecpp::network::message {
 
 Writer::Writer() {}
 
-void Writer::write_byte(uint8_t value) {
-   stream.write((char *) &value, sizeof(uint8_t));
-}
+void Writer::write_byte(uint8_t value) { stream.write((char *) &value, sizeof(uint8_t)); }
 
-void Writer::write_varint(uint32_t value) {
+void Writer::write_varint(uint32_t value)
+{
    for (;;) {
       if (value & (~0x7Fu)) {
          write_byte((value & 0x7Fu) | 0x80u);
@@ -23,7 +22,8 @@ void Writer::write_varint(uint32_t value) {
    }
 }
 
-void Writer::write_varlong(uint64_t value) {
+void Writer::write_varlong(uint64_t value)
+{
    for (;;) {
       if (value & (~0x7Fu)) {
          write_byte((value & 0x7Fu) | 0x80u);
@@ -35,7 +35,8 @@ void Writer::write_varlong(uint64_t value) {
    }
 }
 
-int Writer::len_varint(int value) const {
+int Writer::len_varint(int value) const
+{
    int result = 1;
    while (value & (~0x7Fu)) {
       ++result;
@@ -44,38 +45,34 @@ int Writer::len_varint(int value) const {
    return result;
 }
 
-void Writer::write_string(std::string_view s) {
+void Writer::write_string(std::string_view s)
+{
    write_varint(s.size());
    stream << s;
 }
 
-void Writer::write_uuid_str(boost::uuids::uuid id) {
-   write_string(boost::uuids::to_string(id));
-}
+void Writer::write_uuid_str(boost::uuids::uuid id) { write_string(boost::uuids::to_string(id)); }
 
-void Writer::write_uuid(boost::uuids::uuid id) {
-   stream.write((char *) id.data, 16);
-}
+void Writer::write_uuid(boost::uuids::uuid id) { stream.write((char *) id.data, 16); }
 
-void Writer::write_bytes(const char *data, size_t size) {
-   stream.write(data, size);
-}
+void Writer::write_bytes(const char *data, size_t size) { stream.write(data, size); }
 
-void Writer::write_float(float value) {
+void Writer::write_float(float value)
+{
    static_assert(sizeof(int32_t) == sizeof(float));
-   auto value_be =
-           boost::endian::native_to_big(*reinterpret_cast<int32_t *>(&value));
+   auto value_be = boost::endian::native_to_big(*reinterpret_cast<int32_t *>(&value));
    stream.write((char *) &value_be, sizeof(value_be));
 }
 
-void Writer::write_double(double value) {
+void Writer::write_double(double value)
+{
    static_assert(sizeof(int64_t) == sizeof(double));
-   auto value_be =
-           boost::endian::native_to_big(*reinterpret_cast<int64_t *>(&value));
+   auto value_be = boost::endian::native_to_big(*reinterpret_cast<int64_t *>(&value));
    stream.write((char *) &value_be, sizeof(value_be));
 }
 
-static void write_buff_size(uint8_t *buff, std::size_t size) {
+static void write_buff_size(uint8_t *buff, std::size_t size)
+{
    int pos = 0;
    for (;;) {
       if (size & (~0x7Fu)) {
@@ -88,7 +85,8 @@ static void write_buff_size(uint8_t *buff, std::size_t size) {
    }
 }
 
-std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
+std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres)
+{
    stream.seekg(0, std::ios::end);
    std::size_t buff_size = stream.tellg();
 
@@ -97,8 +95,8 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
          // compression threshold not reached, just write data
          // put zero after size to indicate not compressed
          int total_size_num_bytes = len_varint(buff_size + 1);
-         int header_size = total_size_num_bytes + 1;
-         auto buff = new uint8_t[header_size + buff_size];
+         int header_size          = total_size_num_bytes + 1;
+         auto buff                = new uint8_t[header_size + buff_size];
          write_buff_size(buff, buff_size + 1);
          buff[total_size_num_bytes] = 0;
          stream.seekg(0, std::ios::beg);
@@ -115,8 +113,8 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
       minecpp::util::compress_zlib(compressed, stream);
 
       int decompressed_size_num_bytes = len_varint(buff_size);
-      std::size_t total_size = decompressed_size_num_bytes + compressed.size();
-      int total_size_num_bytes = len_varint(total_size);
+      std::size_t total_size          = decompressed_size_num_bytes + compressed.size();
+      int total_size_num_bytes        = len_varint(total_size);
 
       int header_size = total_size_num_bytes + decompressed_size_num_bytes;
 
@@ -146,19 +144,22 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres) {
 
 std::ostream &Writer::raw_stream() { return stream; }
 
-size_t Writer::peek_size() {
+size_t Writer::peek_size()
+{
    stream.seekg(0, std::ios::end);
    auto size = stream.tellg();
    stream.seekg(0, std::ios::beg);
    return size;
 }
 
-void Writer::write_from(Writer &other) {
+void Writer::write_from(Writer &other)
+{
    auto view = other.stream.view();
    stream.write(view.data(), static_cast<std::streamsize>(view.size()));
 }
 
-void Writer::write_long(uint64_t value) {
+void Writer::write_long(uint64_t value)
+{
    value = boost::endian::native_to_big(value);
    stream.write((char *) &value, sizeof(uint64_t));
 }

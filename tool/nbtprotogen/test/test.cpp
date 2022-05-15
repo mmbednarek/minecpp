@@ -1,15 +1,16 @@
+#include "test.nbt.h"
 #include <gtest/gtest.h>
 #include <sstream>
-#include "test.nbt.h"
 
-TEST(nbtproto, full) {
+TEST(nbtproto, full)
+{
    proto::nbt::test::Foo f;
-   f.value = "hello";
+   f.value        = "hello";
    f.stuff["foo"] = 4;
    f.stuff["bar"] = 5;
 
    proto::nbt::test::Foo f2;
-   f2.value = "world";
+   f2.value        = "world";
    f2.stuff["oof"] = 2;
    f2.stuff["rab"] = 3;
 
@@ -20,7 +21,7 @@ TEST(nbtproto, full) {
 
    minecpp::nbt::CompoundContent meta;
    meta["stuff"] = minecpp::nbt::make_string("foo");
-   b.meta = meta;
+   b.meta        = meta;
 
    std::stringstream ss;
    b.serialize(ss, "");

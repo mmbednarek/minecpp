@@ -7,7 +7,8 @@
 
 namespace minecpp::network::message {
 
-class Writer {
+class Writer
+{
  public:
    explicit Writer();
 
@@ -25,9 +26,12 @@ class Writer {
    void write_from(Writer &other);
 
    std::tuple<uint8_t *, size_t> buff(std::size_t comp_thres = 0);
-   template <typename T> void write_big_endian(T value);
-   template <typename I> void write_big_endian_array(std::vector<I> vec);
-   template <typename I> void write_big_endian_array(I *data, std::size_t size);
+   template<typename T>
+   void write_big_endian(T value);
+   template<typename I>
+   void write_big_endian_array(std::vector<I> vec);
+   template<typename I>
+   void write_big_endian_array(I *data, std::size_t size);
 
    size_t peek_size();
 
@@ -37,24 +41,25 @@ class Writer {
    std::stringstream stream;
 };
 
-template <typename T> void Writer::write_big_endian(T value) {
+template<typename T>
+void Writer::write_big_endian(T value)
+{
    value = boost::endian::native_to_big(value);
-   stream.write((char *)&value, sizeof(T));
+   stream.write((char *) &value, sizeof(T));
 }
 
-template <typename I> void Writer::write_big_endian_array(std::vector<I> vec) {
+template<typename I>
+void Writer::write_big_endian_array(std::vector<I> vec)
+{
    write_varint(vec.size());
-   for (auto const &v : vec) {
-      write_big_endian(v);
-   }
+   for (auto const &v : vec) { write_big_endian(v); }
 }
 
-template <typename I>
-void Writer::write_big_endian_array(I *data, std::size_t size) {
+template<typename I>
+void Writer::write_big_endian_array(I *data, std::size_t size)
+{
    write_varint(size);
-   for (std::size_t i = 0; i < size; ++i) {
-      write_big_endian(data[i]);
-   }
+   for (std::size_t i = 0; i < size; ++i) { write_big_endian(data[i]); }
 }
 
-} // namespace minecpp::network::Message
+}// namespace minecpp::network::message

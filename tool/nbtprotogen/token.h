@@ -3,7 +3,8 @@
 
 namespace Lex {
 
-enum class TokenType {
+enum class TokenType
+{
    Eof,
    Identifier,
    Integer,
@@ -24,10 +25,11 @@ enum class TokenType {
    Import
 };
 
-struct Token {
+struct Token
+{
    std::string value{};
    TokenType tt{};
    int line{}, col{};
 };
 
-}
+}// namespace Lex

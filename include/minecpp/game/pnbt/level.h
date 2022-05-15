@@ -10,7 +10,11 @@
 
 namespace minecpp::game::NbtLevel {
 
-struct __nbt_offset { std::size_t offset, size; int id; };
+struct __nbt_offset
+{
+   std::size_t offset, size;
+   int id;
+};
 
 struct Memories;
 struct Brain;
@@ -30,7 +34,8 @@ struct GameRules;
 struct LevelData;
 struct Level;
 
-struct Memories {
+struct Memories
+{
 
    Memories() = default;
 
@@ -40,22 +45,26 @@ struct Memories {
    static Memories deserialize_no_header(nbt::Reader &r);
    static Memories deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Brain {
+struct Brain
+{
    Memories memories{};
 
    Brain() = default;
@@ -66,22 +75,26 @@ struct Brain {
    static Brain deserialize_no_header(nbt::Reader &r);
    static Brain deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Abilities {
+struct Abilities
+{
    float fly_speed{};
    std::int8_t flying{};
    std::int8_t instabuild{};
@@ -98,22 +111,26 @@ struct Abilities {
    static Abilities deserialize_no_header(nbt::Reader &r);
    static Abilities deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct RecipeBook {
+struct RecipeBook
+{
    std::int8_t is_blasting_furnace_filtering_craftable{};
    std::int8_t is_blasting_furnace_gui_open{};
    std::int8_t is_filtering_craftable{};
@@ -131,22 +148,26 @@ struct RecipeBook {
    static RecipeBook deserialize_no_header(nbt::Reader &r);
    static RecipeBook deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Version {
+struct Version
+{
    std::int32_t id{};
    std::string name{};
    std::int8_t snapshot{};
@@ -159,22 +180,26 @@ struct Version {
    static Version deserialize_no_header(nbt::Reader &r);
    static Version deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct BiomeSource {
+struct BiomeSource
+{
    std::string preset{};
    std::int8_t large_biomes{};
    std::int64_t seed{};
@@ -188,22 +213,26 @@ struct BiomeSource {
    static BiomeSource deserialize_no_header(nbt::Reader &r);
    static BiomeSource deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Generator {
+struct Generator
+{
    BiomeSource biome_source{};
    std::int64_t seed{};
    std::string settings{};
@@ -217,22 +246,26 @@ struct Generator {
    static Generator deserialize_no_header(nbt::Reader &r);
    static Generator deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct DimentionData {
+struct DimentionData
+{
    Generator generator{};
    std::string type{};
 
@@ -244,22 +277,26 @@ struct DimentionData {
    static DimentionData deserialize_no_header(nbt::Reader &r);
    static DimentionData deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Dimentions {
+struct Dimentions
+{
    DimentionData overworld{};
    DimentionData the_end{};
    DimentionData the_nether{};
@@ -272,22 +309,26 @@ struct Dimentions {
    static Dimentions deserialize_no_header(nbt::Reader &r);
    static Dimentions deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct WorldGen {
+struct WorldGen
+{
    std::int8_t bonus_chest{};
    Dimentions dimensions{};
    std::int8_t generate_features{};
@@ -301,22 +342,26 @@ struct WorldGen {
    static WorldGen deserialize_no_header(nbt::Reader &r);
    static WorldGen deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct DataPacks {
+struct DataPacks
+{
    std::vector<std::int64_t> disabled{};
 
    DataPacks() = default;
@@ -327,22 +372,26 @@ struct DataPacks {
    static DataPacks deserialize_no_header(nbt::Reader &r);
    static DataPacks deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct DragonFight {
+struct DragonFight
+{
    std::int8_t dragon_killed{};
    std::int8_t previously_killed{};
 
@@ -354,22 +403,26 @@ struct DragonFight {
    static DragonFight deserialize_no_header(nbt::Reader &r);
    static DragonFight deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct CustomBossEvents {
+struct CustomBossEvents
+{
 
    CustomBossEvents() = default;
 
@@ -379,22 +432,26 @@ struct CustomBossEvents {
    static CustomBossEvents deserialize_no_header(nbt::Reader &r);
    static CustomBossEvents deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Player {
+struct Player
+{
    float absorption_amount{};
    std::int16_t air{};
    Brain brain{};
@@ -436,22 +493,26 @@ struct Player {
    static Player deserialize_no_header(nbt::Reader &r);
    static Player deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct GameRules {
+struct GameRules
+{
    std::string announce_advancements{};
    std::string command_block_output{};
    std::string disable_elytra_movement_check{};
@@ -494,22 +555,26 @@ struct GameRules {
    static GameRules deserialize_no_header(nbt::Reader &r);
    static GameRules deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct LevelData {
+struct LevelData
+{
    double border_center_x{};
    double border_center_z{};
    double border_damage_per_block{};
@@ -558,22 +623,26 @@ struct LevelData {
    static LevelData deserialize_no_header(nbt::Reader &r);
    static LevelData deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);
    }
 };
 
-struct Level {
+struct Level
+{
    LevelData data{};
 
    Level() = default;
@@ -584,15 +653,18 @@ struct Level {
    static Level deserialize_no_header(nbt::Reader &r);
    static Level deserialize(std::istream &in);
 
-private:
+ private:
    static std::unordered_map<std::string, __nbt_offset> __xx_offsets;
    int __xx_get_id(const std::string &name) const;
 
    template<typename T>
-   void __xx_put(const std::string &name, T value) {
+   void __xx_put(const std::string &name, T value)
+   {
       auto it = __xx_offsets.find(name);
-      if (it == __xx_offsets.end()) return;
-      if (it->second.size != sizeof(T)) return;
+      if (it == __xx_offsets.end())
+         return;
+      if (it->second.size != sizeof(T))
+         return;
       T *ptr = reinterpret_cast<T *>(reinterpret_cast<char *>(this) + it->second.offset);
       ptr->~T();
       *ptr = std::forward<T>(value);

@@ -2,50 +2,54 @@
 BasedOnStyle: LLVM
 AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: false
+AlignArrayOfStructures: Right
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveMacros: Consecutive
+AlignEscapedNewlines: Left
 AlignOperands: true
+AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: false
 AllowAllConstructorInitializersOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: Always
+AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: true
+AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: Always
+AllowShortIfStatementsOnASingleLine: Never
 AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakAfterReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: Yes
-BreakBeforeBraces: Custom
-BraceWrapping:
-  AfterCaseLabel: false
-  AfterClass: false
-  AfterControlStatement: Never
-  AfterEnum: false
-  AfterFunction: false
-  AfterNamespace: false
-  AfterUnion: false
-  BeforeCatch: false
-  BeforeElse: false
-  IndentBraces: false
-  SplitEmptyFunction: false
-  SplitEmptyRecord: true
+BinPackArguments: true
+BinPackParameters: true
+BreakBeforeBraces: Mozilla
 BreakBeforeBinaryOperators: None
+BreakBeforeConceptDeclarations: true
 BreakBeforeTernaryOperators: true
-BreakConstructorInitializers: BeforeColon
-BreakInheritanceList: BeforeColon
-ColumnLimit: 0
+BreakConstructorInitializers: AfterColon
+BreakInheritanceList: AfterComma
+ColumnLimit: 120
 CompactNamespaces: true
 ContinuationIndentWidth: 8
+EmptyLineBeforeAccessModifier: LogicalBlock
+FixNamespaceComments: true
 IndentCaseLabels: false
+IndentExternBlock: true
 IndentPPDirectives: None
 IndentWidth: 3
+LambdaBodyIndentation: Signature
 KeepEmptyLinesAtTheStartOfBlocks: true
 MaxEmptyLinesToKeep: 2
 NamespaceIndentation: None
 ObjCSpaceAfterProperty: false
 ObjCSpaceBeforeProtocolList: true
+# PackConstructorInitializers: Never
 PointerAlignment: Right
 ReflowComments: false
+# SeparateDefinitionBlocks: Always
+SortIncludes: CaseInsensitive
+SortUsingDeclarations: true
 SpaceAfterCStyleCast: true
 SpaceAfterLogicalNot: false
 SpaceAfterTemplateKeyword: false

@@ -9,14 +9,14 @@ namespace minecpp::service::front::Protocol {
 
 PlayHandler::PlayHandler(Service &service) : service(service) {}
 
-void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
+void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
+{
    using namespace minecpp::network::message;
    async_read_packet(conn, *this);
 
    auto op = r.read_byte();
    switch (op) {
-   case 0x00:
-      break; // confirm teleport
+   case 0x00: break;// confirm teleport
    case 0x03: {
       ChatMessage msg;
       deserialize(r, msg);
@@ -63,17 +63,15 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r) {
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
    default:
-      spdlog::info("unknown op {}, packet data: {}", (int)op, r.get_hex_data());
+      spdlog::info("unknown op {}, packet data: {}", (int) op, r.get_hex_data());
       send(conn, minecpp::network::message::Chat{
-                     .message = minecpp::network::format_system_info(minecpp::util::format(
-                         "unimplemented operation code {}", (int)op)),
-                     .type = minecpp::network::ChatType::System,
+                         .message = minecpp::network::format_system_info(
+                                 minecpp::util::format("unimplemented operation code {}", (int) op)),
+                         .type = minecpp::network::ChatType::System,
                  });
    }
 }
 
-void PlayHandler::handle_disconnect(Connection &conn) {
-   service.on_player_disconnect(conn.service_id(), conn.uuid());
-}
+void PlayHandler::handle_disconnect(Connection &conn) { service.on_player_disconnect(conn.service_id(), conn.uuid()); }
 
-} // namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::Protocol

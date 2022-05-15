@@ -2,7 +2,8 @@
 #include <fstream>
 #include <minecpp/nbt/chunk/v1/chunk.nbt.h>
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
    if (argc < 2) {
       fmt::print(stderr, "not enough arguments");
       return 1;

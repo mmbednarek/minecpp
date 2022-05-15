@@ -10,19 +10,22 @@
 namespace minecpp::service::engine {
 
 template<typename TStream>
-class EventManager {
+class EventManager
+{
  public:
    using Event = proto::event::clientbound::v1::Event;
    using Queue = minecpp::util::StaticQueue<Event, 4096>;
 
-   struct Client {
+   struct Client
+   {
       TStream stream;
       EventManager::Queue queue;
       std::mutex mutex;
 
       explicit Client(TStream stream) : stream(stream) {}
 
-      void write(Event event) {
+      void write(Event event)
+      {
          if (mutex.try_lock()) {
             stream.write(event);
             return;
@@ -38,7 +41,8 @@ class EventManager {
  public:
    EventManager() = default;
 
-   void send_to(auto &event, player::Id player_id) {
+   void send_to(auto &event, player::Id player_id)
+   {
       for (auto &q : m_queues) {
          Event proto_event;
          *proto_event.mutable_single_player()->mutable_player_id() = player::write_id_to_proto(player_id);
@@ -48,7 +52,8 @@ class EventManager {
       }
    }
 
-   void send_to_all(auto &event) {
+   void send_to_all(auto &event)
+   {
       for (auto &q : m_queues) {
          Event proto_event;
          *proto_event.mutable_all_players() = proto::event::clientbound::v1::RecipientAllPlayers();
@@ -57,14 +62,16 @@ class EventManager {
       }
    }
 
-   [[nodiscard]] Client *client(const std::string &tag) {
+   [[nodiscard]] Client *client(const std::string &tag)
+   {
       if (m_queues.contains(tag)) {
          return &m_queues.at(tag);
       }
       return nullptr;
    }
 
-   void add_client(TStream stream) {
+   void add_client(TStream stream)
+   {
       std::lock_guard<std::mutex> lock(m_queue_mutex);
       m_queues.emplace(stream.tag(), std::move(stream));
    }

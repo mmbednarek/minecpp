@@ -4,12 +4,14 @@
 
 namespace minecpp::service::engine {
 
-World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher)
-    : service(service), dispatcher(dispatcher), engine_id(engine_id) {}
+World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher) :
+    service(service), dispatcher(dispatcher), engine_id(engine_id)
+{}
 
 minecpp::game::Notifier &World::notifier() { return dispatcher; }
 
-mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::ChunkPosition> refs) {
+mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::ChunkPosition> refs)
+{
    using proto::service::chunk_storage::v1::ReferenceStatus;
 
    ::grpc::ClientContext ctx;
@@ -35,7 +37,8 @@ mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::Ch
    return mb::ok;
 }
 
-mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::ChunkPosition> refs) {
+mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::ChunkPosition> refs)
+{
    ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::RemoveReferencesRequest req;
    proto::service::chunk_storage::v1::EmptyResponse res;
@@ -55,7 +58,8 @@ mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::C
    return mb::ok;
 }
 
-mb::result<int> World::height_at(int x, int z) {
+mb::result<int> World::height_at(int x, int z)
+{
    ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::HeightAtRequest req;
    proto::service::chunk_storage::v1::HeightAtResponse res;
@@ -68,7 +72,8 @@ mb::result<int> World::height_at(int x, int z) {
    return res.height();
 }
 
-mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::BlockState state) {
+mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::BlockState state)
+{
    ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::SetBlockRequest req;
    req.set_x(pos.x);
@@ -83,7 +88,8 @@ mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::Blo
    return mb::ok;
 }
 
-mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos) {
+mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos)
+{
    ::grpc::ClientContext ctx;
 
    auto proto_pos = pos.to_proto();
@@ -97,4 +103,4 @@ mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos) {
    return game::block_state_from_proto(state);
 }
 
-} // namespace minecpp::service::engine
+}// namespace minecpp::service::engine

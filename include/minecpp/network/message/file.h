@@ -7,7 +7,8 @@
 
 namespace minecpp::network::message {
 
-class Reader {
+class Reader
+{
  public:
    explicit Reader(std::istream &s);
 
@@ -29,9 +30,11 @@ class Reader {
 
    std::string get_hex_data();
 
-   template <typename T> T read_big_endian() {
+   template<typename T>
+   T read_big_endian()
+   {
       T result;
-      s.read((char *)&result, sizeof(T));
+      s.read((char *) &result, sizeof(T));
       result = boost::endian::big_to_native(result);
       return result;
    }
@@ -42,4 +45,4 @@ class Reader {
    std::istream &s;
 };
 
-} // namespace minecpp::network::Message
+}// namespace minecpp::network::message

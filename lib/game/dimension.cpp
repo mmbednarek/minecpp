@@ -2,21 +2,20 @@
 
 namespace minecpp::game {
 
-proto::common::v1::DimensionType dimension_to_proto(Dimension d) {
+proto::common::v1::DimensionType dimension_to_proto(Dimension d)
+{
    using proto::common::v1::DimensionType;
 
    switch (d) {
-   case Dimension::Overworld:
-      return DimensionType::Overworld;
-   case Dimension::Nether:
-      return DimensionType::Nether;
-   case Dimension::End:
-      return DimensionType::End;
+   case Dimension::Overworld: return DimensionType::Overworld;
+   case Dimension::Nether: return DimensionType::Nether;
+   case Dimension::End: return DimensionType::End;
    }
    return DimensionType::Overworld;
 }
 
-void DimensionProperties::to_nbt(nbt::Writer &w) const {
+void DimensionProperties::to_nbt(nbt::Writer &w) const
+{
    w.write_byte("piglin_safe", piglin_safe);
    w.write_byte("natural", natural);
    w.write_float("ambient_light", ambient_light);
@@ -34,7 +33,8 @@ void DimensionProperties::to_nbt(nbt::Writer &w) const {
    w.write_byte("has_ceiling", has_ceiling);
 }
 
-void write_dimension_codec(nbt::Writer &w) {
+void write_dimension_codec(nbt::Writer &w)
+{
    w.begin_compound("");
    w.begin_compound("minecraft:dimension_type");
    w.write_string("type", "minecraft:dimension_type");
@@ -95,7 +95,8 @@ void write_dimension_codec(nbt::Writer &w) {
    w.end_compound();
 }
 
-void write_dimension_type(nbt::Writer &w) {
+void write_dimension_type(nbt::Writer &w)
+{
    w.begin_compound("");
    OverworldProps.to_nbt(w);
    w.end_compound();

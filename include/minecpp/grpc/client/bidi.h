@@ -10,45 +10,55 @@
 namespace minecpp::grpc::client {
 
 template<typename TRead>
-struct CompletionEvent {
+struct CompletionEvent
+{
    EventType event_type;
    TRead *read_ptr;
 
-   explicit CompletionEvent(EventType event_type, TRead *read_ptr = nullptr) : event_type(event_type), read_ptr(read_ptr) {}
+   explicit CompletionEvent(EventType event_type, TRead *read_ptr = nullptr) :
+       event_type(event_type), read_ptr(read_ptr)
+   {}
 };
 
 static ::grpc::Status g_status{};
 
 template<typename TWrite, typename TRead>
-class Stream {
+class Stream
+{
    ::grpc::ClientAsyncReaderWriter<TWrite, TRead> &m_stream;
    util::AtomicPool<CompletionEvent<TRead>> &m_event_pool;
    util::AtomicPool<TRead> &m_read_pool;
 
  public:
-   Stream(::grpc::ClientAsyncReaderWriter<TWrite, TRead> &client, util::AtomicPool<CompletionEvent<TRead>> &event_pool, util::AtomicPool<TRead> &read_pool) : m_stream(client),
-                                                                                                                                                              m_event_pool(event_pool),
-                                                                                                                                                              m_read_pool(read_pool) {}
+   Stream(::grpc::ClientAsyncReaderWriter<TWrite, TRead> &client, util::AtomicPool<CompletionEvent<TRead>> &event_pool,
+          util::AtomicPool<TRead> &read_pool) :
+       m_stream(client),
+       m_event_pool(event_pool), m_read_pool(read_pool)
+   {}
 
-   void write(const TWrite &message) {
+   void write(const TWrite &message)
+   {
       auto event = m_event_pool.construct(EventType::Write);
       m_stream.Write(message, event);
    }
 
-   void read() {
+   void read()
+   {
       auto read_ptr = m_read_pool.construct();
-      auto event = m_event_pool.construct(EventType::Read, read_ptr);
+      auto event    = m_event_pool.construct(EventType::Read, read_ptr);
       m_stream.Read(read_ptr, event);
    }
 
-   void disconnect() {
+   void disconnect()
+   {
       auto event = m_event_pool.construct(EventType::Disconnect);
       m_stream.Finish(&g_status, event);
    }
 };
 
 template<typename TStub, typename TWrite, typename TRead, typename TCallback, auto FStart>
-class Connection {
+class Connection
+{
    TCallback &m_callback;
    ::grpc::CompletionQueue m_queue;
    ::grpc::ClientContext m_ctx;
@@ -61,7 +71,8 @@ class Connection {
    std::vector<std::future<mb::result<mb::empty>>> m_workers;
 
  public:
-   mb::result<mb::empty> worker_routine() {
+   mb::result<mb::empty> worker_routine()
+   {
       for (;;) {
          void *tag_ptr;
          bool queue_ok, data_ok;
@@ -108,31 +119,35 @@ class Connection {
       }
    }
 
-   Connection(const std::string &address, TCallback &callback, std::size_t worker_count) : m_callback(callback),
-                                                                                           m_channel(::grpc::CreateChannel(address, ::grpc::InsecureChannelCredentials())),
-                                                                                           m_stub(m_channel) {
+   Connection(const std::string &address, TCallback &callback, std::size_t worker_count) :
+       m_callback(callback), m_channel(::grpc::CreateChannel(address, ::grpc::InsecureChannelCredentials())),
+       m_stub(m_channel)
+   {
       auto event = m_event_pool.construct(EventType::Accept);
-      m_stream = std::invoke(FStart, &m_stub, &m_ctx, &m_queue, event);
+      m_stream   = std::invoke(FStart, &m_stub, &m_ctx, &m_queue, event);
       m_workers.resize(worker_count);
-      std::generate(m_workers.begin(), m_workers.end(), [this]() {
-         return std::async(&Connection::worker_routine, this);
-      });
+      std::generate(m_workers.begin(), m_workers.end(),
+                    [this]() { return std::async(&Connection::worker_routine, this); });
    }
 
-   ~Connection() {
+   ~Connection()
+   {
       m_queue.Shutdown();
       wait();
    }
 
-   mb::result<mb::empty> wait() {
+   mb::result<mb::empty> wait()
+   {
       std::vector<mb::result<mb::empty>> results;
       results.reserve(m_workers.size());
-      std::transform(m_workers.begin(), m_workers.end(), std::back_inserter(results), [](std::future<mb::result<mb::empty>> &worker) -> mb::result<mb::empty> {
-         if (!worker.valid())
-            return mb::ok;
-         return worker.get();
-      });
-      auto err_it = std::find_if(results.begin(), results.end(), [](const mb::result<mb::empty> &res) { return !res.ok(); });
+      std::transform(m_workers.begin(), m_workers.end(), std::back_inserter(results),
+                     [](std::future<mb::result<mb::empty>> &worker) -> mb::result<mb::empty> {
+                        if (!worker.valid())
+                           return mb::ok;
+                        return worker.get();
+                     });
+      auto err_it =
+              std::find_if(results.begin(), results.end(), [](const mb::result<mb::empty> &res) { return !res.ok(); });
       if (err_it == results.end()) {
          return mb::ok;
       }

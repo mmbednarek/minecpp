@@ -19,7 +19,8 @@ namespace minecpp::service::chunk_storage {
 
 using uuid = boost::uuids::uuid;
 
-class ChunkManager : public minecpp::game::Chunks {
+class ChunkManager : public minecpp::game::Chunks
+{
    std::map<int64_t, std::unique_ptr<minecpp::game::Chunk>> m_chunks;
    Regions m_regions;
    minecpp::game::worldgen::Generator gen;

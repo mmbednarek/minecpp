@@ -3,7 +3,8 @@
 
 namespace minecpp::format {
 
-enum class Color : uint8_t {
+enum class Color : uint8_t
+{
    Black,
    DarkBlue,
    DarkGreen,
@@ -24,8 +25,8 @@ enum class Color : uint8_t {
 
 std::string_view color_to_str(Color c);
 
-
-class Builder {
+class Builder
+{
    std::stringstream stream;
    bool first = true;
 
@@ -37,7 +38,6 @@ class Builder {
    Builder &bold(Color c, std::string_view s);
 
    std::string build();
-
 };
 
-}
+}// namespace minecpp::format

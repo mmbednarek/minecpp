@@ -13,7 +13,8 @@ namespace minecpp::game::worldgen::terrain {
 
 inline constexpr int chunk_size = 16;
 
-class Terrain {
+class Terrain
+{
    HeightGenerator height_gen;
    random::JavaRandom rand;
    int x, z;
@@ -29,10 +30,12 @@ class Terrain {
    int water_id;
    int snow_id;
    int snow_block_id;
+
  public:
    Terrain(uint64_t seed, int x, int z);
 
    std::unique_ptr<Chunk> generate();
+
  private:
    [[nodiscard]] constexpr short height_at(int x, int z);
    [[nodiscard]] constexpr short orig_height_at(int x, int z);
@@ -42,4 +45,4 @@ class Terrain {
    bool section_empty(int sec);
 };
 
-}
+}// namespace minecpp::game::worldgen::terrain

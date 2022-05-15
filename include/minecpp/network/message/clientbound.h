@@ -14,7 +14,8 @@ namespace minecpp::network::message {
 using boost::uuids::uuid;
 
 // 0x00
-struct SpawnObject {
+struct SpawnObject
+{
    uint32_t entity_id;
    uuid unique_id;
    int entity_type;
@@ -27,7 +28,8 @@ struct SpawnObject {
 };
 
 // 0x01
-struct SpawnExperienceOrb {
+struct SpawnExperienceOrb
+{
    uint32_t entity_id;
    double x, y, z;
    uint16_t xp_value;
@@ -36,7 +38,8 @@ struct SpawnExperienceOrb {
 };
 
 // 0x04
-struct SpawnPlayer {
+struct SpawnPlayer
+{
    mb::u32 entity_id;
    boost::uuids::uuid id;
    double x, y, z;
@@ -46,7 +49,8 @@ struct SpawnPlayer {
 };
 
 // 0x05
-struct AnimateHand {
+struct AnimateHand
+{
    int entity_id;
    uint8_t type;
 
@@ -54,7 +58,8 @@ struct AnimateHand {
 };
 
 // 0x08
-struct AcknowledgePlayerDigging  {
+struct AcknowledgePlayerDigging
+{
    mb::u64 position;
    game::BlockState block;
    game::PlayerDiggingState state;
@@ -63,7 +68,8 @@ struct AcknowledgePlayerDigging  {
    [[nodiscard]] Writer serialize() const;
 };
 
-struct BlockChange {
+struct BlockChange
+{
    mb::u64 block_position{};
    mb::u32 block_id{};
 
@@ -71,7 +77,8 @@ struct BlockChange {
 };
 
 // 0x0f
-struct MultiBlockChange {
+struct MultiBlockChange
+{
    mb::u64 chunk_position{};
    bool distrust_edges = true;
    std::vector<mb::u64> block_changes{};
@@ -80,7 +87,8 @@ struct MultiBlockChange {
 };
 
 // 0x0d
-struct Difficulty {
+struct Difficulty
+{
    uint8_t difficulty;
    bool locked;
 
@@ -88,7 +96,8 @@ struct Difficulty {
 };
 
 // 0x0e
-struct Chat {
+struct Chat
+{
    std::string message;
    ChatType type;
    uuid user_id;
@@ -97,21 +106,24 @@ struct Chat {
 };
 
 // 0x18
-struct ServerBrand {
+struct ServerBrand
+{
    std::string_view brand;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x1a
-struct Disconnect {
+struct Disconnect
+{
    std::string_view reason;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x1b
-struct EntityStatus {
+struct EntityStatus
+{
    uint32_t entity_id;
    uint8_t opcode;
 
@@ -119,20 +131,23 @@ struct EntityStatus {
 };
 
 // 0x20
-struct KeepAlive {
+struct KeepAlive
+{
    uint64_t time;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x21
-struct ChunkData {
+struct ChunkData
+{
    minecpp::proto::chunk::v1::Chunk &chunk;
 
    [[nodiscard]] Writer serialize() const;
 };
 
-struct UnloadChunk {
+struct UnloadChunk
+{
    mb::i32 chunk_x;
    mb::i32 chunk_z;
 
@@ -140,14 +155,16 @@ struct UnloadChunk {
 };
 
 // 0x25
-struct UpdateLight {
+struct UpdateLight
+{
    minecpp::proto::chunk::v1::Chunk &chunk;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x26
-struct JoinGame {
+struct JoinGame
+{
    uint32_t player_id{};
    bool is_hardcore{};
    uint8_t game_mode{};
@@ -167,7 +184,8 @@ struct JoinGame {
 };
 
 // 0x29
-struct EntityRelativeMove {
+struct EntityRelativeMove
+{
    int entity_id;
    short x, y, z;
    bool on_ground;
@@ -176,7 +194,8 @@ struct EntityRelativeMove {
 };
 
 // 0x2a
-struct EntityMove {
+struct EntityMove
+{
    int entity_id;
    short x, y, z;
    float yaw, pitch;
@@ -186,7 +205,8 @@ struct EntityMove {
 };
 
 // 0x2b
-struct EntityLook {
+struct EntityLook
+{
    int entity_id;
    float yaw, pitch;
    bool on_ground;
@@ -194,15 +214,17 @@ struct EntityLook {
    [[nodiscard]] Writer serialize() const;
 };
 
-enum PlayerAbilityFlag : uint8_t {
+enum PlayerAbilityFlag : uint8_t
+{
    Invulnerable = 1u << 0u,
-   IsFlying = 1u << 1u,
-   AllowFlying = 1u << 2u,
+   IsFlying     = 1u << 1u,
+   AllowFlying  = 1u << 2u,
    CreativeMode = 1u << 3u,
 };
 
 // 0x32
-struct PlayerAbilities {
+struct PlayerAbilities
+{
    uint8_t flags;
    float fly_speed, walk_speed;
 
@@ -210,7 +232,8 @@ struct PlayerAbilities {
 };
 
 // 0x34 0x00
-struct AddPlayer {
+struct AddPlayer
+{
    uuid id;
    std::string_view name;
    std::map<std::string, std::string> properties;
@@ -221,14 +244,16 @@ struct AddPlayer {
 };
 
 // 0x34 0x04
-struct RemovePlayer {
+struct RemovePlayer
+{
    uuid id;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x36
-struct PlayerPositionLook {
+struct PlayerPositionLook
+{
    double x, y, z;
    float yaw, pitch;
    uint8_t flags;
@@ -238,12 +263,16 @@ struct PlayerPositionLook {
    [[nodiscard]] Writer serialize() const;
 };
 
-enum RecipeBookState { Init,
-                       Add,
-                       Remove };
+enum RecipeBookState
+{
+   Init,
+   Add,
+   Remove
+};
 
 // 0x37
-struct RecipeBook {
+struct RecipeBook
+{
    RecipeBookState state;
    bool gui_open;
    bool filtering_craftable;
@@ -254,14 +283,16 @@ struct RecipeBook {
 };
 
 // 0x38 0x01
-struct DestroyEntity {
+struct DestroyEntity
+{
    uint32_t entity_id;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x3c
-struct EntityHeadLook {
+struct EntityHeadLook
+{
    int entity_id;
    float yaw;
 
@@ -269,20 +300,23 @@ struct EntityHeadLook {
 };
 
 // 0x40
-struct HeldItem {
+struct HeldItem
+{
    uint8_t item;
 
    [[nodiscard]] Writer serialize() const;
 };
 
 // 0x41
-struct UpdateChunkPosition {
+struct UpdateChunkPosition
+{
    int x, z;
 
    [[nodiscard]] Writer serialize() const;
 };
 
-struct Raw {
+struct Raw
+{
    size_t size;
    const char *data;
 

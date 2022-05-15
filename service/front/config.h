@@ -1,10 +1,11 @@
 #pragma once
 #include <cstdint>
+#include <mb/result.h>
 #include <string>
 #include <vector>
-#include <mb/result.h>
 
-struct Config {
+struct Config
+{
    std::vector<std::string> engine_hosts;
    uint16_t port;
    std::string recipe_path;

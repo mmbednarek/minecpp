@@ -4,10 +4,12 @@
 
 namespace minecpp::game::worldgen {
 
-class Generator {
+class Generator
+{
    std::uint64_t m_seed;
    Chunks &m_chunks;
    population::Population m_population;
+
  public:
    explicit Generator(Chunks &provider, std::uint64_t seed);
 
@@ -16,4 +18,4 @@ class Generator {
    void populate_chunk(int x, int z);
 };
 
-}
+}// namespace minecpp::game::worldgen

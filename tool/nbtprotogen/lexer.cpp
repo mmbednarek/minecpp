@@ -6,8 +6,9 @@ extern std::vector<Lex::Token> lex_output;
 
 namespace Lex {
 
-TokenReader lex(std::istream &stream) {
-    std::stringstream ss;
+TokenReader lex(std::istream &stream)
+{
+   std::stringstream ss;
    lex_output.clear();
    FlexLexer *lexer = new yyFlexLexer;
    while (lexer->yylex(stream, ss) != 0)

@@ -2,14 +2,15 @@
 #include "ast.h"
 #include <any>
 #include <map>
+#include <memory>
 #include <string>
 #include <variant>
 #include <vector>
-#include <memory>
 
 namespace Semantics {
 
-enum class TypeVariant {
+enum class TypeVariant
+{
    Int8,
    Int16,
    Int32,
@@ -26,9 +27,10 @@ enum class TypeVariant {
    Map
 };
 
-struct Type {
+struct Type
+{
    TypeVariant variant = TypeVariant::Struct;
-   int m_repeated = 0;
+   int m_repeated      = 0;
    std::vector<std::string> ns;
    std::string name;
    std::unique_ptr<Type> subtype;// subtype for map
@@ -48,7 +50,8 @@ struct Type {
    [[nodiscard]] std::string nbt_tagid() const;
 };
 
-struct Attribute {
+struct Attribute
+{
    Type type;
    std::string name;
    std::string label;
@@ -58,14 +61,16 @@ struct Attribute {
    Attribute(Type t, std::string_view name, std::string_view label, int id);
 };
 
-struct Message {
+struct Message
+{
    std::string name;
    std::vector<Attribute> attribs;
    Message() = default;
    explicit Message(std::string name);
 };
 
-struct Structure {
+struct Structure
+{
    std::string version;
    std::string package;
    std::vector<Message> messages;
@@ -74,18 +79,22 @@ struct Structure {
    explicit Structure(std::vector<Syntax::Ast::Node> nodes);
 };
 
-struct StaticDeserializer {
+struct StaticDeserializer
+{
    TypeVariant variant;
 };
 
-enum class CompoundKind {
+enum class CompoundKind
+{
    Struct,
    Map,
    Compound
 };
 
-struct CompoundDeserializer {
-   struct Elem {
+struct CompoundDeserializer
+{
+   struct Elem
+   {
       CompoundKind kind = CompoundKind::Struct;
       std::string typeName;
       std::string name;
@@ -97,7 +106,8 @@ struct CompoundDeserializer {
    std::vector<Elem> elems;
 };
 
-struct ListDeserializer {
+struct ListDeserializer
+{
    std::map<TypeVariant, std::any> elems;
 };
 

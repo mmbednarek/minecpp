@@ -1,7 +1,7 @@
 #include "status_handler.h"
 #include "../connection.h"
-#include <spdlog/spdlog.h>
 #include <minecpp/format/format.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::service::front::Protocol {
 
@@ -9,22 +9,18 @@ StatusHandler::StatusHandler() {}
 
 extern const char *favicon;
 
-void StatusHandler::handle(const std::shared_ptr<Connection> &conn,
-                           minecpp::network::message::Reader &r) {
+void StatusHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+{
    uint8_t op = r.read_byte();
    switch (op) {
-   case 0:
-      handle_info(conn);
-      break;
-   case 1:
-      handle_ping(conn, r);
-      break;
-   default:
-      spdlog::debug("[status protocol] unknown operation code {}", (int)op);
+   case 0: handle_info(conn); break;
+   case 1: handle_ping(conn, r); break;
+   default: spdlog::debug("[status protocol] unknown operation code {}", (int) op);
    }
 }
 
-void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn) {
+void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn)
+{
    using minecpp::format::Color;
 
    minecpp::network::message::Writer w;
@@ -43,8 +39,8 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn) {
    conn->send_and_read(conn, w, *this);
 }
 
-void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn,
-                                minecpp::network::message::Reader &r) {
+void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+{
    auto player_time = r.read_big_endian<uint64_t>();
 
    minecpp::network::message::Writer w;
@@ -240,4 +236,4 @@ te8n6u2wd+UGWTYYH2aM8PbLWqXgAh0EuiLyK0W+V8YB8d9zeID/F3wBLtQnEd7SAAAAAElFTkSu
 QmCC
 )";
 
-} // namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::Protocol

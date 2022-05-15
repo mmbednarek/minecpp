@@ -13,7 +13,8 @@ namespace minecpp::nbt::common::v1 {
 
 #ifndef MINECPP_NBT_COMMON_V1_COMMON_H_OFFSET_CLASS
 #define MINECPP_NBT_COMMON_V1_COMMON_H_OFFSET_CLASS
-class __nbt_idl_offset {
+class __nbt_idl_offset
+{
  public:
    mb::size offset{};
    mb::size size{};
@@ -21,10 +22,12 @@ class __nbt_idl_offset {
 };
 #endif//MINECPP_NBT_COMMON_V1_COMMON_H_OFFSET_CLASS
 
-class ChunkPosition {
+class ChunkPosition
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "x") {
@@ -49,10 +52,12 @@ class ChunkPosition {
    static ChunkPosition deserialize(std::istream &in);
 };
 
-class BlockPosition {
+class BlockPosition
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "x") {
@@ -82,5 +87,5 @@ class BlockPosition {
    static BlockPosition deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt::common::v1
 #endif//MINECPP_NBT_COMMON_V1_COMMON_H

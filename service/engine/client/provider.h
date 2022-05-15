@@ -1,15 +1,16 @@
 #pragma once
 #include <boost/uuid/uuid.hpp>
+#include <map>
 #include <mb/result.h>
 #include <minecpp/service/engine/api.h>
 #include <random>
 #include <string>
 #include <vector>
-#include <map>
 
 namespace minecpp::service::engine {
 
-struct Config {
+struct Config
+{
    std::vector<std::string> addresses;
 };
 

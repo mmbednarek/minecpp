@@ -7,12 +7,13 @@ namespace minecpp::game::item {
 
 typedef int ItemId;
 
-enum ItemGroup {
+enum ItemGroup
+{
    BuildingBlocks,
    Decorations,
    RedStone,
    Transportation,
-   Search, // ?
+   Search,// ?
    Misc,
    Food,
    Tools,
@@ -22,14 +23,16 @@ enum ItemGroup {
 
 inline ItemGroup Materials = Misc;
 
-struct ItemStack {
+struct ItemStack
+{
    ItemId id;
    uint8_t amount;
 };
 
 typedef std::vector<ItemStack> StackVariants;
 
-class Item {
+class Item
+{
  public:
    Item(ItemId id, std::string_view tag_name, ItemGroup group);
 
@@ -44,4 +47,4 @@ class Item {
    int max_damage;
 };
 
-} // namespace minecpp::game
+}// namespace minecpp::game::item

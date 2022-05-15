@@ -1,10 +1,11 @@
 #pragma once
-#include <cstdint>
 #include "random.h"
+#include <cstdint>
 
 namespace minecpp::random {
 
-class JavaRandom : public Random {
+class JavaRandom : public Random
+{
  public:
    explicit JavaRandom(uint64_t seed);
 
@@ -19,4 +20,4 @@ class JavaRandom : public Random {
    uint64_t _seed;
 };
 
-} // namespace minecpp::util
+}// namespace minecpp::random

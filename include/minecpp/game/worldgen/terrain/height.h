@@ -5,7 +5,8 @@
 
 namespace minecpp::game::worldgen::terrain {
 
-class HeightGenerator {
+class HeightGenerator
+{
    random::Mersenne rand;
    random::Perlin base_perlin;
    random::Perlin perlin_det_amp;
@@ -18,4 +19,4 @@ class HeightGenerator {
    short at(int x, int z);
 };
 
-}// namespace minecpp::game::worldgen
+}// namespace minecpp::game::worldgen::terrain

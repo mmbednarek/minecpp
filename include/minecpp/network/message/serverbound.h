@@ -9,13 +9,15 @@ namespace minecpp::network::message {
 
 // 0x03
 
-struct ChatMessage {
+struct ChatMessage
+{
    std::string message;
 };
 void deserialize(Reader &r, ChatMessage &msg);
 
 // 0x05
-struct ClientSettings {
+struct ClientSettings
+{
    std::string lang;
    uint8_t view;
    ChatVisibility visibility;
@@ -28,20 +30,23 @@ struct ClientSettings {
 void deserialize(Reader &r, ClientSettings &msg);
 
 // 0x0f
-struct KeepAliveClient {
+struct KeepAliveClient
+{
    uint64_t time;
 };
 void deserialize(Reader &r, KeepAliveClient &msg);
 
 // 0x11
-struct PlayerPosition {
+struct PlayerPosition
+{
    double x, y, z;
    bool on_ground;
 };
 void deserialize(Reader &r, PlayerPosition &msg);
 
 // 0x12
-struct PlayerPositionRotation {
+struct PlayerPositionRotation
+{
    double x, y, z;
    float yaw, pitch;
    bool on_ground;
@@ -49,33 +54,38 @@ struct PlayerPositionRotation {
 void deserialize(Reader &r, PlayerPositionRotation &msg);
 
 // 0x13
-struct PlayerRotation {
+struct PlayerRotation
+{
    float yaw, pitch;
-    bool on_ground;
+   bool on_ground;
 };
 void deserialize(Reader &r, PlayerRotation &msg);
 
 // 0x1a
-struct PlayerDigging {
+struct PlayerDigging
+{
    game::PlayerDiggingState action{};
    uint64_t position{};
    game::Face facing{};
 };
 void deserialize(Reader &r, PlayerDigging &msg);
 
-enum class PlayerHand : uint8_t {
+enum class PlayerHand : uint8_t
+{
    Main,
    Off
 };
 
 // 0x2c
-struct AnimateHandClient {
+struct AnimateHandClient
+{
    PlayerHand hand;
 };
 void deserialize(Reader &r, AnimateHandClient &msg);
 
 // 0x2e
-struct PlayerBlockPlacement {
+struct PlayerBlockPlacement
+{
    PlayerHand hand{};
    uint64_t position{};
    game::Face facing{};

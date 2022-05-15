@@ -3,10 +3,10 @@
 
 namespace Lex {
 
-TokenReader::TokenReader(std::vector<Token> elements) : elements(std::move(elements)) {
-}
+TokenReader::TokenReader(std::vector<Token> elements) : elements(std::move(elements)) {}
 
-Token TokenReader::next() {
+Token TokenReader::next()
+{
    if (at >= elements.size()) {
       return Token{
               .tt = TokenType::Eof,
@@ -15,7 +15,8 @@ Token TokenReader::next() {
    return elements[at++];
 }
 
-mb::result<Token> TokenReader::expect(TokenType t) {
+mb::result<Token> TokenReader::expect(TokenType t)
+{
    auto tkn = next();
    if (tkn.tt != t) {
       return mb::error(fmt::format("[{}:{}] unexpected token \"{}\"", tkn.line, tkn.col, tkn.value));
@@ -23,9 +24,11 @@ mb::result<Token> TokenReader::expect(TokenType t) {
    return tkn;
 }
 
-void TokenReader::back() {
+void TokenReader::back()
+{
    --at;
-   if (at < 0) at = 0;
+   if (at < 0)
+      at = 0;
 }
 
 }// namespace Lex

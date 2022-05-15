@@ -1,12 +1,14 @@
 #pragma once
-#include "token_reader.h"
 #include "ast.h"
+#include "token_reader.h"
 #include <mb/result.h>
 
 namespace Syntax {
 
-class Parser {
+class Parser
+{
    Lex::TokenReader &reader;
+
  public:
    explicit Parser(Lex::TokenReader &reader);
 
@@ -18,7 +20,6 @@ class Parser {
    mb::result<Ast::Message> parse_message(Ast::Location loc);
    mb::result<Ast::Attribute> parse_attribute(Ast::Location loc);
    mb::result<Ast::Import> parse_import(Ast::Location loc);
-
 };
 
-}
+}// namespace Syntax

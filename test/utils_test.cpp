@@ -7,7 +7,8 @@
 #include <minecpp/util/static_queue.h>
 #include <thread>
 
-TEST(minecpp_util, Format) {
+TEST(minecpp_util, Format)
+{
    auto empty_format = minecpp::util::format("Hello!");
    ASSERT_EQ(empty_format, "Hello!");
    auto format_one = minecpp::util::format("Hello {}!", "World");
@@ -16,7 +17,8 @@ TEST(minecpp_util, Format) {
    ASSERT_EQ(format_many, "Many values something, 14, 23.567.");
 }
 
-TEST(minecpp_util, result) {
+TEST(minecpp_util, result)
+{
    auto do_stuff = [](int a, int b) -> result<int> {
       if (a == 0) {
          return error("a can't be zero");
@@ -33,7 +35,8 @@ TEST(minecpp_util, result) {
 
    int c = 3;
 
-   struct Test {
+   struct Test
+   {
       int a;
       int b;
       int &c;
@@ -68,7 +71,7 @@ TEST(minecpp_util, result) {
    ASSERT_FALSE(res2.ok());
    ASSERT_EQ(res2.msg(), "a can't be zero");
 
-   auto resTest = get_test(4, 5);
+   auto resTest    = get_test(4, 5);
    auto expectTest = Test{.a = 2, .b = 5, .c = c};
    ASSERT_TRUE(resTest.ok());
    auto gotTest = resTest.unwrap();
@@ -85,45 +88,36 @@ TEST(minecpp_util, result) {
    ASSERT_EQ(resTest3.msg(), "b can't be zero");
 }
 
-TEST(minecpp_util, PackingTest) {
-   int i = 0;
+TEST(minecpp_util, PackingTest)
+{
+   int i     = 0;
    auto data = minecpp::util::generate_packed(12, 4096, [&i]() -> uint32_t { return i++; });
 
    i = 0;
-   minecpp::util::for_each_packed(data, 12, 4096, [&i](uint32_t v) {
-      ASSERT_EQ(v, i++);
-   });
+   minecpp::util::for_each_packed(data, 12, 4096, [&i](uint32_t v) { ASSERT_EQ(v, i++); });
 }
 
-TEST(minecpp_util, Around) {
+TEST(minecpp_util, Around)
+{
    char values[9];
    memset(values, 0, sizeof(char) * 9);
 
-   minecpp::util::around(1, 1, [&values](int x, int z) {
-      values[z * 3 + x] = 1;
-   });
+   minecpp::util::around(1, 1, [&values](int x, int z) { values[z * 3 + x] = 1; });
 
    ASSERT_EQ(values[4], 0);
-   for (int x = 0; x < 4; ++x) {
-      ASSERT_EQ(values[x], 1);
-   }
-   for (int x = 5; x < 9; ++x) {
-      ASSERT_EQ(values[x], 1);
-   }
+   for (int x = 0; x < 4; ++x) { ASSERT_EQ(values[x], 1); }
+   for (int x = 5; x < 9; ++x) { ASSERT_EQ(values[x], 1); }
 }
 
-TEST(minecpp_util, StaticQueue) {
+TEST(minecpp_util, StaticQueue)
+{
    minecpp::util::StaticQueue<int, 5> queue;
 
    std::thread t1([&queue]() {
-      for (int i = 0; i < 100; ++i) {
-         queue.push(std::move(i));
-      }
+      for (int i = 0; i < 100; ++i) { queue.push(std::move(i)); }
    });
 
-   for (int i = 0; i < 100; ++i) {
-      ASSERT_EQ(queue.pop(), i);
-   }
+   for (int i = 0; i < 100; ++i) { ASSERT_EQ(queue.pop(), i); }
 
    t1.join();
 }

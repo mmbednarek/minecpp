@@ -4,7 +4,8 @@
 
 namespace minecpp::network::message {
 
-Writer SpawnObject::serialize() const {
+Writer SpawnObject::serialize() const
+{
    // 1.18.2 OK
    Writer w;
    w.write_byte(0x00);
@@ -23,7 +24,8 @@ Writer SpawnObject::serialize() const {
    return w;
 }
 
-Writer SpawnExperienceOrb::serialize() const {
+Writer SpawnExperienceOrb::serialize() const
+{
    // 1.18.2 OK
    Writer w;
    w.write_byte(0x01);
@@ -35,7 +37,8 @@ Writer SpawnExperienceOrb::serialize() const {
    return w;
 }
 
-Writer SpawnPlayer::serialize() const {
+Writer SpawnPlayer::serialize() const
+{
    // 1.18.2 OK
    Writer w;
    w.write_byte(0x04);
@@ -49,7 +52,8 @@ Writer SpawnPlayer::serialize() const {
    return w;
 }
 
-Writer AcknowledgePlayerDigging::serialize() const {
+Writer AcknowledgePlayerDigging::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x08);
@@ -60,7 +64,8 @@ Writer AcknowledgePlayerDigging::serialize() const {
    return w;
 }
 
-Writer AnimateHand::serialize() const {
+Writer AnimateHand::serialize() const
+{
    // 1.18.2 OK
    Writer w;
    w.write_byte(0x06);
@@ -69,7 +74,8 @@ Writer AnimateHand::serialize() const {
    return w;
 }
 
-Writer BlockChange::serialize() const {
+Writer BlockChange::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x0c);
@@ -78,7 +84,8 @@ Writer BlockChange::serialize() const {
    return w;
 }
 
-Writer Difficulty::serialize() const {
+Writer Difficulty::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x0e);
@@ -87,7 +94,8 @@ Writer Difficulty::serialize() const {
    return w;
 }
 
-Writer Chat::serialize() const {
+Writer Chat::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x0f);
@@ -97,7 +105,8 @@ Writer Chat::serialize() const {
    return w;
 }
 
-Writer ServerBrand::serialize() const {
+Writer ServerBrand::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x18);
@@ -106,7 +115,8 @@ Writer ServerBrand::serialize() const {
    return w;
 }
 
-Writer Disconnect::serialize() const {
+Writer Disconnect::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x1a);
@@ -114,7 +124,8 @@ Writer Disconnect::serialize() const {
    return w;
 }
 
-Writer EntityStatus::serialize() const {
+Writer EntityStatus::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x1b);
@@ -123,7 +134,8 @@ Writer EntityStatus::serialize() const {
    return w;
 }
 
-Writer UnloadChunk::serialize() const {
+Writer UnloadChunk::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x1d);
@@ -132,7 +144,8 @@ Writer UnloadChunk::serialize() const {
    return w;
 }
 
-Writer KeepAlive::serialize() const {
+Writer KeepAlive::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x21);
@@ -140,7 +153,8 @@ Writer KeepAlive::serialize() const {
    return w;
 }
 
-Writer ChunkData::serialize() const {
+Writer ChunkData::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x22);
@@ -148,7 +162,8 @@ Writer ChunkData::serialize() const {
    return w;
 }
 
-Writer UpdateLight::serialize() const {
+Writer UpdateLight::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x25);
@@ -156,7 +171,8 @@ Writer UpdateLight::serialize() const {
    return w;
 }
 
-Writer JoinGame::serialize() const {
+Writer JoinGame::serialize() const
+{
    // 1.18.2 OK
    Writer w;
    w.write_byte(0x26);
@@ -166,9 +182,7 @@ Writer JoinGame::serialize() const {
    w.write_byte(previous_game_mode);
 
    w.write_varint(available_dimensions.size());
-   for (const auto &d : available_dimensions) {
-      w.write_string(d);
-   }
+   for (const auto &d : available_dimensions) { w.write_string(d); }
 
    w.write_bytes(dimension_codec.data(), dimension_codec.size());
    w.write_bytes(dimension_type.data(), dimension_type.size());
@@ -184,7 +198,8 @@ Writer JoinGame::serialize() const {
    return w;
 }
 
-Writer EntityRelativeMove::serialize() const {
+Writer EntityRelativeMove::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x29);
@@ -196,7 +211,8 @@ Writer EntityRelativeMove::serialize() const {
    return w;
 }
 
-Writer EntityMove::serialize() const {
+Writer EntityMove::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x2a);
@@ -210,7 +226,8 @@ Writer EntityMove::serialize() const {
    return w;
 }
 
-Writer EntityLook::serialize() const {
+Writer EntityLook::serialize() const
+{
    // 1.18.2 OK
    Writer w;
    w.write_byte(0x2b);
@@ -221,7 +238,8 @@ Writer EntityLook::serialize() const {
    return w;
 }
 
-Writer PlayerAbilities::serialize() const {
+Writer PlayerAbilities::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x32);
@@ -231,7 +249,8 @@ Writer PlayerAbilities::serialize() const {
    return w;
 }
 
-Writer AddPlayer::serialize() const {
+Writer AddPlayer::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x36);
@@ -254,7 +273,8 @@ Writer AddPlayer::serialize() const {
    return w;
 }
 
-Writer RemovePlayer::serialize() const {
+Writer RemovePlayer::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x36);
@@ -264,7 +284,8 @@ Writer RemovePlayer::serialize() const {
    return w;
 }
 
-Writer PlayerPositionLook::serialize() const {
+Writer PlayerPositionLook::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x38);
@@ -279,7 +300,8 @@ Writer PlayerPositionLook::serialize() const {
    return w;
 }
 
-Writer RecipeBook::serialize() const {
+Writer RecipeBook::serialize() const
+{
    // 1.18.2 ok kina
    Writer w;
    w.write_byte(0x39);
@@ -298,7 +320,8 @@ Writer RecipeBook::serialize() const {
    return w;
 }
 
-Writer DestroyEntity::serialize() const {
+Writer DestroyEntity::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x3a);
@@ -307,7 +330,8 @@ Writer DestroyEntity::serialize() const {
    return w;
 }
 
-Writer EntityHeadLook::serialize() const {
+Writer EntityHeadLook::serialize() const
+{
    // 1.18,2 ok
    Writer w;
    w.write_byte(0x3e);
@@ -316,20 +340,20 @@ Writer EntityHeadLook::serialize() const {
    return w;
 }
 
-Writer MultiBlockChange::serialize() const {
+Writer MultiBlockChange::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x3f);
    w.write_big_endian(chunk_position);
    w.write_byte(distrust_edges);
    w.write_varint(block_changes.size());
-   for (const auto &change : block_changes) {
-      w.write_varlong(change);
-   }
+   for (const auto &change : block_changes) { w.write_varlong(change); }
    return w;
 }
 
-Writer HeldItem::serialize() const {
+Writer HeldItem::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x48);
@@ -337,13 +361,15 @@ Writer HeldItem::serialize() const {
    return w;
 }
 
-Writer Raw::serialize() const {
+Writer Raw::serialize() const
+{
    Writer w;
    w.write_bytes(data, size);
    return w;
 }
 
-Writer UpdateChunkPosition::serialize() const {
+Writer UpdateChunkPosition::serialize() const
+{
    // 1.18.2 ok
    Writer w;
    w.write_byte(0x49);

@@ -1,17 +1,19 @@
 #include "minecpp/game/game.h"
 #include <gtest/gtest.h>
 
-void test_position(int x, int y, int z) {
+void test_position(int x, int y, int z)
+{
    minecpp::game::BlockPosition p(x, y, z);
    auto encoded = p.as_long();
-   minecpp::game::BlockPosition  decoded(encoded);
+   minecpp::game::BlockPosition decoded(encoded);
 
    EXPECT_EQ(p.x, decoded.x);
    EXPECT_EQ(p.y, decoded.y);
    EXPECT_EQ(p.z, decoded.z);
 }
 
-TEST(Block, Position) {
+TEST(Block, Position)
+{
    test_position(100, 60, 100);
    test_position(-100, 60, 100);
    test_position(100, 60, -200);

@@ -8,7 +8,8 @@ namespace minecpp::event {
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
 template<typename T>
-concept ClientboundVisitor = requires(T t) {
+concept ClientboundVisitor = requires(T t)
+{
    t.handle_add_player(clientbound_v1::AddPlayer(), std::vector<player::Id>());
    t.handle_spawn_player(clientbound_v1::SpawnPlayer(), std::vector<player::Id>());
    t.handle_entity_move(clientbound_v1::EntityMove(), std::vector<player::Id>());
@@ -39,7 +40,8 @@ std::vector<player::Id> read_recipients(const clientbound_v1::Event &event);
 
 template<typename T>
 requires ClientboundVisitor<T>
-void visit_clientbound(const clientbound_v1::Event &event, T &visitor) {
+void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
+{
    if (!event.has_payload())
       return;
 

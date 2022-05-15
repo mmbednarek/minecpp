@@ -3,18 +3,26 @@
 
 namespace minecpp::game::block {
 
-enum class PushReaction { Normal, Destroy, Block, Ignore, PushOnly };
+enum class PushReaction
+{
+   Normal,
+   Destroy,
+   Block,
+   Ignore,
+   PushOnly
+};
 
-struct Material {
-   ColorId color = ColorId::Dirt;
+struct Material
+{
+   ColorId color              = ColorId::Dirt;
    PushReaction push_reaction = PushReaction::Normal;
-   bool blocks_movement = true;
-   bool flammable = false;
-   bool requires_no_tool = true;
-   bool is_liquid = false;
-   bool is_opaque = true;
-   bool replaceable = false;
-   bool is_solid = true;
+   bool blocks_movement       = true;
+   bool flammable             = false;
+   bool requires_no_tool      = true;
+   bool is_liquid             = false;
+   bool is_opaque             = true;
+   bool replaceable           = false;
+   bool is_solid              = true;
 
    static const Material Air;
    static const Material StructureVoid;
@@ -61,4 +69,4 @@ struct Material {
    static const Material NetherWood;
 };
 
-} // namespace minecpp::game::block
+}// namespace minecpp::game::block

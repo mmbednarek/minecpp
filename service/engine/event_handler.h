@@ -15,7 +15,8 @@ class Dispatcher;
 class PlayerManager;
 class EntityManager;
 
-class EventHandler {
+class EventHandler
+{
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;
    EntityManager &m_entity_manager;
@@ -23,7 +24,8 @@ class EventHandler {
    game::BlockState m_selected_block = 1;
 
  public:
-   EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager, game::World &world);
+   EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager,
+                game::World &world);
 
    void handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id);
    void handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id);

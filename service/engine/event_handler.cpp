@@ -5,17 +5,19 @@
 #include <minecpp/chat/chat.h>
 #include <minecpp/format/format.h>
 #include <minecpp/game/world.h>
-#include <minecpp/repository/state.h>
 #include <minecpp/repository/block.h>
+#include <minecpp/repository/state.h>
 
 namespace minecpp::service::engine {
 
-EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager, game::World &world) : m_dispatcher(dispatcher),
-                                                                                                                                       m_player_manager(player_manager),
-                                                                                                                                       m_entity_manager(entity_manager),
-                                                                                                                                       m_world(world) {}
+EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager,
+                           game::World &world) :
+    m_dispatcher(dispatcher),
+    m_player_manager(player_manager), m_entity_manager(entity_manager), m_world(world)
+{}
 
-void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id) {
+void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id)
+{
    spdlog::info("player accept request from {}", event.name());
    auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
    if (!join_result.ok()) {
@@ -30,24 +32,28 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
    m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
    m_dispatcher.add_player(player.id(), player.name(), player.ping());
-   m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+   m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(),
+                             entity::Rotation(entity.get_yaw(), entity.get_pitch()));
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 }
 
-void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id) {
-   auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
+void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id)
+{
+   auto &entity         = MB_ESCAPE(m_player_manager.get_entity(player_id));
    auto player_position = entity::read_entity_position(event.position());
    entity.set_pos(m_dispatcher, player_position);
    MB_ESCAPE(m_player_manager.get_player(player_id)).on_movement(m_world, player_position);
 }
 
-void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event, player::Id player_id) {
+void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event, player::Id player_id)
+{
    auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
    entity.set_rot(event.rotation().yaw(), event.rotation().pitch());
    m_dispatcher.entity_look(player_id, entity.get_id(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
 }
 
-void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, player::Id player_id) {
+void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, player::Id player_id)
+{
    try {
       if (event.message().empty())
          return;
@@ -57,30 +63,35 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
             format::Builder msg;
             // set block
             auto block_state = std::stoi(event.message().substr(4, event.message().size()));
-            if (block_state >= 0 && static_cast<mb::u64>(block_state) <= repository::StateManager::the().state_count()) {
+            if (block_state >= 0 &&
+                static_cast<mb::u64>(block_state) <= repository::StateManager::the().state_count()) {
                msg.bold(format::Color::Green, "INFO").text(" changed selected color to ");
 
-               m_selected_block = static_cast<game::BlockState>(block_state);
+               m_selected_block             = static_cast<game::BlockState>(block_state);
                const auto [block_id, state] = repository::StateManager::the().parse_block_id(m_selected_block);
-               auto &block = MB_ESCAPE(repository::Block::the().get_by_id(block_id));
-              msg.text(format::Color::Yellow, block.tag());
+               auto &block                  = MB_ESCAPE(repository::Block::the().get_by_id(block_id));
+               msg.text(format::Color::Yellow, block.tag());
 
                if (!block.is_single_state()) {
                   msg.text(" (");
                   std::stringstream ss;
                   bool first = true;
-                  for (const auto &[state, value] : block.state_range(state))  {
+                  for (const auto &[state, value] : block.state_range(state)) {
                      if (first) {
-                        first=false;
+                        first = false;
                      } else {
                         msg.text(", ");
                      }
-                     msg.text(format::Color::Yellow, state.name()).text("=").text(format::Color::White, state.value_from_index(value));
+                     msg.text(format::Color::Yellow, state.name())
+                             .text("=")
+                             .text(format::Color::White, state.value_from_index(value));
                   }
                   msg.text(")");
                }
             } else {
-               msg.bold(format::Color::Yellow, "WARN").text(fmt::format(" invalid state id ")).bold(format::Color::White, fmt::format("{}", block_state));
+               msg.bold(format::Color::Yellow, "WARN")
+                       .text(fmt::format(" invalid state id "))
+                       .bold(format::Color::White, fmt::format("{}", block_state));
             }
             m_dispatcher.send_chat(chat::MessageType::SystemMessage, msg.build());
          }
@@ -90,20 +101,23 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
       auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
 
       spdlog::info("CHAT [{}] {}", player.name(), event.message());
-      m_dispatcher.send_chat(chat::MessageType::PlayerMessage, chat::format_chat_message(player.name(), event.message()));
+      m_dispatcher.send_chat(chat::MessageType::PlayerMessage,
+                             chat::format_chat_message(player.name(), event.message()));
    } catch (std::runtime_error &err) {
       spdlog::error("handle chat message: {}", err.what());
    }
 }
 
-void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, player::Id player_id) {
+void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, player::Id player_id)
+{
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player.name()));
    m_dispatcher.remove_player(player_id, player.entity_id());
    m_player_manager.remove_player(player_id);
 }
 
-void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id) {
+void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id)
+{
    auto status = static_cast<game::PlayerDiggingState>(event.state());
 
    /*
@@ -141,27 +155,31 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    }
 }
 
-void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, player::Id player_id) {
+void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, player::Id player_id)
+{
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.set_ping(event.ping());
 }
 
-void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, player::Id player_id) {
+void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, player::Id player_id)
+{
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    m_dispatcher.animate_hand(player_id, player.entity_id(), event.hand());
 }
 
-void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id) {
+void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id)
+{
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto res = player.load_chunks(m_world);
+   auto res     = player.load_chunks(m_world);
    if (!res.ok()) {
       spdlog::error("error loading chunks: {}", res.msg());
    }
 }
 
-void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id) {
-   auto face = game::face_from_proto(event.face());
-   auto block_position = game::BlockPosition::from_proto(event.position());
+void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id)
+{
+   auto face               = game::face_from_proto(event.face());
+   auto block_position     = game::BlockPosition::from_proto(event.position());
    auto neighbour_position = block_position.neighbour_at(face);
    m_world.set_block(neighbour_position, m_selected_block);
    m_dispatcher.update_block(neighbour_position, m_selected_block);

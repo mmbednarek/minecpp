@@ -1,13 +1,15 @@
 #pragma once
-#include <vector>
-#include <mb/result.h>
 #include "token.h"
+#include <mb/result.h>
+#include <vector>
 
 namespace Lex {
 
-class TokenReader {
+class TokenReader
+{
    std::vector<Token> elements;
    std::size_t at = 0;
+
  public:
    explicit TokenReader(std::vector<Token> elements);
 
@@ -16,4 +18,4 @@ class TokenReader {
    void back();
 };
 
-}
+}// namespace Lex

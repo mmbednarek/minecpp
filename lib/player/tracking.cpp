@@ -7,19 +7,21 @@
 
 namespace minecpp::player {
 
-Tracking::Tracking(const util::Vec3 &position, int radius) : m_chunk_pos(game::ChunkPosition::from_position(position)),
-                                                             m_radius_sq(radius * radius),
-                                                             m_radius(radius) {}
+Tracking::Tracking(const util::Vec3 &position, int radius) :
+    m_chunk_pos(game::ChunkPosition::from_position(position)), m_radius_sq(radius * radius), m_radius(radius)
+{}
 
 
 template<typename T>
-static constexpr auto pow2(T value) {
+static constexpr auto pow2(T value)
+{
    return value * value;
 }
 
 static int dist_sq(game::ChunkPosition a, game::ChunkPosition b) { return pow2(a.x - b.x) + pow2(a.z - b.z); }
 
-mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p) {
+mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p)
+{
    std::vector<game::ChunkPosition> chunks_to_load;// TODO: pre alloc
 
    for (int z = -m_radius; z < m_radius; ++z) {
@@ -32,9 +34,10 @@ mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p) {
    }
 
    // sort so chunks closer to the player would load first
-   std::sort(chunks_to_load.begin(), chunks_to_load.end(), [this](const game::ChunkPosition &a, const game::ChunkPosition &b) {
-      return dist_sq(m_chunk_pos, a) < dist_sq(m_chunk_pos, b);
-   });
+   std::sort(chunks_to_load.begin(), chunks_to_load.end(),
+             [this](const game::ChunkPosition &a, const game::ChunkPosition &b) {
+                return dist_sq(m_chunk_pos, a) < dist_sq(m_chunk_pos, b);
+             });
 
    if (auto res = w.add_refs(p.id(), chunks_to_load); !res.ok()) {
       return res.err();
@@ -43,7 +46,8 @@ mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p) {
    return mb::ok;
 }
 
-void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position) {
+void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position)
+{
    std::lock_guard<std::mutex> lock(m_mutex);
    auto next_chunk_pos = game::ChunkPosition::from_position(position);
    if (next_chunk_pos.x == m_chunk_pos.x && next_chunk_pos.z == m_chunk_pos.z) {
@@ -85,16 +89,15 @@ void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position) {
       if (auto res = w.free_refs(p.id(), chunks_to_free); !res.ok()) {
          return;
       }
-      for (const auto &pos : chunks_to_free) {
-         w.notifier().unload_chunk(p.id(), pos);
-      }
+      for (const auto &pos : chunks_to_free) { w.notifier().unload_chunk(p.id(), pos); }
    }
 
    if (!chunks_to_load.empty()) {
       // sort so chunks closer to the player would load first
-      std::sort(chunks_to_load.begin(), chunks_to_load.end(), [next_chunk_pos](const game::ChunkPosition &a, const game::ChunkPosition &b) {
-        return dist_sq(next_chunk_pos, a) < dist_sq(next_chunk_pos, b);
-      });
+      std::sort(chunks_to_load.begin(), chunks_to_load.end(),
+                [next_chunk_pos](const game::ChunkPosition &a, const game::ChunkPosition &b) {
+                   return dist_sq(next_chunk_pos, a) < dist_sq(next_chunk_pos, b);
+                });
       if (auto res = w.add_refs(p.id(), chunks_to_load); !res.ok()) {
          return;
       }

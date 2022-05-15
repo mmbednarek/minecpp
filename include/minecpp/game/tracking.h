@@ -11,7 +11,8 @@ using minecpp::util::Vec2;
 using minecpp::util::Vec3;
 class Player;
 
-class Tracking {
+class Tracking
+{
    std::mutex m_mutex{};
    ChunkPosition m_chunk_pos;
    int m_radius_sq;

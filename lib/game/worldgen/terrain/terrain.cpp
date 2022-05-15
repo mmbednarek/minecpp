@@ -5,10 +5,11 @@
 
 namespace minecpp::game::worldgen::terrain {
 
-constexpr auto sea_level = 63;
+constexpr auto sea_level  = 63;
 constexpr auto sand_level = 64;
 
-Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(x), z(z) {
+Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(x), z(z)
+{
    for (int rx = 0; rx < chunk_size; ++rx) {
       for (int rz = 0; rz < chunk_size; ++rz) {
          auto block_x = chunk_size * x + rx;
@@ -20,18 +21,19 @@ Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(
 
    std::copy(height_map.begin(), height_map.end(), orig_height_map.begin());
 
-   air_id = repository::encode_block_by_tag("minecraft:air");
-   stone_id = repository::encode_block_by_tag("minecraft:stone");
-   dirt_id = repository::encode_block_by_tag("minecraft:dirt");
-   grass_id = repository::encode_block_by_tag("minecraft:grass_block", std::make_pair("snowy", "false"));
-   gravel_id = repository::encode_block_by_tag("minecraft:gravel");
-   sand_id = repository::encode_block_by_tag("minecraft:sand");
-   water_id = repository::encode_block_by_tag("minecraft:water");
-   snow_id = repository::encode_block_by_tag("minecraft:snow");
+   air_id        = repository::encode_block_by_tag("minecraft:air");
+   stone_id      = repository::encode_block_by_tag("minecraft:stone");
+   dirt_id       = repository::encode_block_by_tag("minecraft:dirt");
+   grass_id      = repository::encode_block_by_tag("minecraft:grass_block", std::make_pair("snowy", "false"));
+   gravel_id     = repository::encode_block_by_tag("minecraft:gravel");
+   sand_id       = repository::encode_block_by_tag("minecraft:sand");
+   water_id      = repository::encode_block_by_tag("minecraft:water");
+   snow_id       = repository::encode_block_by_tag("minecraft:snow");
    snow_block_id = repository::encode_block_by_tag("minecraft:snow_block");
 }
 
-bool Terrain::section_empty(int sec) {
+bool Terrain::section_empty(int sec)
+{
    if (sec * chunk_size < sea_level) {
       return false;
    }
@@ -45,11 +47,12 @@ bool Terrain::section_empty(int sec) {
    return true;
 }
 
-Section Terrain::generate_section(int sec) {
+Section Terrain::generate_section(int sec)
+{
    SectionBuilder builder;
    builder.fill([this, sec](short x, short y, short z) -> int {
       auto block_y = chunk_size * sec + y;
-      auto height = height_at(x, z);
+      auto height  = height_at(x, z);
       if (block_y > height) {
          if (block_y < sea_level) {
             return water_id;
@@ -109,12 +112,13 @@ Section Terrain::generate_section(int sec) {
       if (block_y > 130) {
          return snow_block_id;
       }
-     return stone_id;
+      return stone_id;
    });
    return builder.build();
 }
 
-std::unique_ptr<Chunk> Terrain::generate() {
+std::unique_ptr<Chunk> Terrain::generate()
+{
    auto result = std::make_unique<Chunk>(x, z, height_map);
    for (int i = 0; i < 16; ++i) {
       if (section_empty(i))
@@ -124,16 +128,10 @@ std::unique_ptr<Chunk> Terrain::generate() {
    return result;
 }
 
-constexpr short Terrain::height_at(const int x, const int z) {
-   return height_map[x + z * chunk_size];
-}
+constexpr short Terrain::height_at(const int x, const int z) { return height_map[x + z * chunk_size]; }
 
-constexpr short Terrain::orig_height_at(int x, int z) {
-   return orig_height_map[x + z * chunk_size];
-}
+constexpr short Terrain::orig_height_at(int x, int z) { return orig_height_map[x + z * chunk_size]; }
 
-constexpr void Terrain::set_height_at(int x, int z, short value) {
-   height_map[x + z * chunk_size] = value;
-}
+constexpr void Terrain::set_height_at(int x, int z, short value) { height_map[x + z * chunk_size] = value; }
 
 }// namespace minecpp::game::worldgen::terrain

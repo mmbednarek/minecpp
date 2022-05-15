@@ -6,7 +6,8 @@
 
 namespace minecpp::service::front::Protocol {
 
-class LoginHandler : public Handler {
+class LoginHandler : public Handler
+{
  public:
    explicit LoginHandler(Service &service, PlayHandler &play_handler);
 
@@ -21,4 +22,4 @@ class LoginHandler : public Handler {
    PlayHandler &play_handler;
 };
 
-} // namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::Protocol

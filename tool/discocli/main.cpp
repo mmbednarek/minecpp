@@ -1,15 +1,17 @@
-#include <minecpp/service/discovery/api.h>
-#include <fmt/core.h>
 #include <cstdio>
+#include <fmt/core.h>
+#include <minecpp/service/discovery/api.h>
 #include <string_view>
 
-template<typename ...ARGS>
-void die(fmt::format_string<ARGS...> fmt, ARGS&& ...args) {
+template<typename... ARGS>
+void die(fmt::format_string<ARGS...> fmt, ARGS &&...args)
+{
    fmt::print(stderr, fmt, std::forward<ARGS>(args)...);
    std::exit(1);
 }
 
-int main() {
+int main()
+{
    auto cli_result = minecpp::service::discovery::Client::create("127.0.0.1:9911");
    if (!cli_result.ok()) {
       die("could not initialise client");
@@ -33,7 +35,5 @@ int main() {
 
    fmt::print("modified: {}\n", result.modified);
    fmt::print("endpoints\n");
-   for (const auto &endpoint: result.endpoints) {
-      fmt::print(" - {}\n", endpoint.to_string());
-   }
+   for (const auto &endpoint : result.endpoints) { fmt::print(" - {}\n", endpoint.to_string()); }
 }

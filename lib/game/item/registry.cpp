@@ -894,24 +894,25 @@ const std::array<Item, num_items> items = {
         Item(883, "honeycomb_block", Decorations),
 };
 
-static std::map<std::string_view, int> read_tags() {
+static std::map<std::string_view, int> read_tags()
+{
    std::map<std::string_view, int> result;
-   for (const auto &i : items) {
-      result[i.tag()] = i.id();
-   }
+   for (const auto &i : items) { result[i.tag()] = i.id(); }
    return result;
 }
 
 const std::map<std::string_view, int> item_tags = read_tags();
 
-const Item &item_by_id(int id) {
+const Item &item_by_id(int id)
+{
    if (id < 0 || id > num_items)
       throw std::runtime_error("invalid item id");
 
    return items[id];
 }
 
-ItemId item_id_from_tag(std::string_view tag) {
+ItemId item_id_from_tag(std::string_view tag)
+{
    if (tag.substr(0, 9) == "minecraft") {
       tag = tag.substr(10);
    }
@@ -923,4 +924,4 @@ ItemId item_id_from_tag(std::string_view tag) {
    return item_tags.at(tag);
 }
 
-}// namespace minecpp::game
+}// namespace minecpp::game::item

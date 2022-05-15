@@ -12,7 +12,8 @@
 
 namespace minecpp::service::chunk_storage {
 
-struct RegionFile {
+struct RegionFile
+{
    std::fstream m_file;
    std::string m_path;
    std::mutex m_mutex;
@@ -22,7 +23,8 @@ struct RegionFile {
    [[nodiscard]] mb::result<mb::empty> reload();
 };
 
-class Regions {
+class Regions
+{
    std::string_view m_path;
    std::map<int64_t, std::unique_ptr<RegionFile>> m_files;
 

@@ -5,9 +5,12 @@
 
 namespace minecpp::service::engine {
 
-ApiHandler::ApiHandler(EventHandler &event_handler, EventManager<BidiStream> &event_manager) : m_event_handler(event_handler), m_event_manager(event_manager) {}
+ApiHandler::ApiHandler(EventHandler &event_handler, EventManager<BidiStream> &event_manager) :
+    m_event_handler(event_handler), m_event_manager(event_manager)
+{}
 
-void ApiHandler::on_connected(BidiStream stream) {
+void ApiHandler::on_connected(BidiStream stream)
+{
    const auto tag = "front";
    stream.set_tag(tag);
    stream.read();
@@ -15,7 +18,8 @@ void ApiHandler::on_connected(BidiStream stream) {
    spdlog::info("api handler: front connection");
 }
 
-void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbound::v1::Event &event) {
+void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbound::v1::Event &event)
+{
    stream.read();
    try {
       event::visit_serverbound(event, m_event_handler);
@@ -24,7 +28,8 @@ void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbou
    }
 }
 
-void ApiHandler::on_finish_write(BidiStream stream) {
+void ApiHandler::on_finish_write(BidiStream stream)
+{
    auto client = m_event_manager.client(stream.tag());
    if (client == nullptr)
       return;

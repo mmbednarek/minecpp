@@ -4,16 +4,17 @@
 
 namespace minecpp::service::front {
 
-typedef std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub>
-        ChunkService;
+typedef std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub> ChunkService;
 
-struct ChunkLoadTicket {
+struct ChunkLoadTicket
+{
    bool loaded{false};
    minecpp::proto::chunk::v1::Chunk chunk{};
    std::shared_ptr<Connection> conn;
 };
 
-class TickManager {
+class TickManager
+{
    Server &server;
    const ChunkService &chunk_service;
    std::vector<std::future<ChunkLoadTicket>> m_future_chunks;

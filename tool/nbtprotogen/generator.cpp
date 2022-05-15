@@ -6,7 +6,8 @@
 
 namespace Semantics {
 
-std::string variant_to_nbt_tag(TypeVariant variant) {
+std::string variant_to_nbt_tag(TypeVariant variant)
+{
    switch (variant) {
    case TypeVariant::Int8: return "minecpp::nbt::TagId::Byte";
    case TypeVariant::Int16: return "minecpp::nbt::TagId::Short";
@@ -23,7 +24,8 @@ std::string variant_to_nbt_tag(TypeVariant variant) {
    return "minecpp::nbt::TagId::Compound";
 }
 
-std::string variant_to_type(TypeVariant variant) {
+std::string variant_to_type(TypeVariant variant)
+{
    switch (variant) {
    case TypeVariant::Int8: return "std::int8_t";
    case TypeVariant::Int16: return "std::int16_t";
@@ -40,7 +42,8 @@ std::string variant_to_type(TypeVariant variant) {
    return "";
 }
 
-Structure::Structure(std::vector<Syntax::Ast::Node> nodes) {
+Structure::Structure(std::vector<Syntax::Ast::Node> nodes)
+{
    for (auto &node : nodes) {
       if (std::holds_alternative<Syntax::Ast::SyntaxInfo>(node)) {
          auto &ver = std::get<Syntax::Ast::SyntaxInfo>(node).version;
@@ -58,9 +61,7 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes) {
          std::stringstream ss;
          auto iter = pkg.begin();
          ss << *iter;
-         std::for_each(iter + 1, pkg.end(), [&ss](const auto &e) {
-            ss << "::" << e;
-         });
+         std::for_each(iter + 1, pkg.end(), [&ss](const auto &e) { ss << "::" << e; });
          package = ss.str();
          continue;
       }
@@ -68,9 +69,11 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes) {
          auto astMsg = std::get<Syntax::Ast::Message>(node);
          Message msg(astMsg.name);
          msg.attribs.resize(astMsg.attributes.size());
-         std::transform(astMsg.attributes.begin(), astMsg.attributes.end(), msg.attribs.begin(), [](const Syntax::Ast::Attribute &attrib) {
-            return Attribute(Type(attrib.package, attrib.type, attrib.repeated, attrib.subtype), attrib.name, attrib.label, attrib.pos);
-         });
+         std::transform(astMsg.attributes.begin(), astMsg.attributes.end(), msg.attribs.begin(),
+                        [](const Syntax::Ast::Attribute &attrib) {
+                           return Attribute(Type(attrib.package, attrib.type, attrib.repeated, attrib.subtype),
+                                            attrib.name, attrib.label, attrib.pos);
+                        });
          messages.emplace_back(msg);
          continue;
       }
@@ -81,10 +84,10 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes) {
    }
 }
 
-Type::Type(const std::vector<std::string> &ns, const std::string &name, int repeated, const std::string &subtype) : m_repeated(repeated),
-                                                                                                                    ns(ns),
-                                                                                                                    name(name),
-                                                                                                                    subtype(subtype.empty() ? nullptr : std::make_unique<Type>(std::vector<std::string>(), subtype, 0, "")) {
+Type::Type(const std::vector<std::string> &ns, const std::string &name, int repeated, const std::string &subtype) :
+    m_repeated(repeated), ns(ns), name(name),
+    subtype(subtype.empty() ? nullptr : std::make_unique<Type>(std::vector<std::string>(), subtype, 0, ""))
+{
    if (name == "int8") {
       variant = TypeVariant::Int8;
       return;
@@ -135,8 +138,10 @@ Type::Type(const std::vector<std::string> &ns, const std::string &name, int repe
    }
 }
 
-std::string Type::to_cpp_type() const {
-   auto result = [](const TypeVariant variant, const std::string &name, const std::unique_ptr<Type> &subtype) -> std::string {
+std::string Type::to_cpp_type() const
+{
+   auto result = [](const TypeVariant variant, const std::string &name,
+                    const std::unique_ptr<Type> &subtype) -> std::string {
       switch (variant) {
       case TypeVariant::Int8: return "std::int8_t";
       case TypeVariant::Int16: return "std::int16_t";
@@ -159,20 +164,15 @@ std::string Type::to_cpp_type() const {
    }
 
    std::stringstream ss;
-   for (int i = 0; i < m_repeated; ++i) {
-      ss << "std::vector<";
-   }
-   for (const auto &item : ns) {
-      ss << item << "::";
-   }
+   for (int i = 0; i < m_repeated; ++i) { ss << "std::vector<"; }
+   for (const auto &item : ns) { ss << item << "::"; }
    ss << result;
-   for (int i = 0; i < m_repeated; ++i) {
-      ss << ">";
-   }
+   for (int i = 0; i < m_repeated; ++i) { ss << ">"; }
    return ss.str();
 }
 
-std::string Type::nbt_tagid() const {
+std::string Type::nbt_tagid() const
+{
    if (m_repeated) {
       return "minecpp::nbt::TagId::List";
    }
@@ -191,47 +191,43 @@ std::string Type::nbt_tagid() const {
    return "minecpp::nbt::TagId::Compound";
 }
 
-bool Type::operator==(const Type &other) const {
-   return variant == other.variant;
-}
+bool Type::operator==(const Type &other) const { return variant == other.variant; }
 
-bool Type::operator<(const Type &other) const {
-   return variant < other.variant;
-}
+bool Type::operator<(const Type &other) const { return variant < other.variant; }
 
-Type &Type::operator=(const Type &type) {
-   variant = type.variant;
+Type &Type::operator=(const Type &type)
+{
+   variant    = type.variant;
    m_repeated = type.m_repeated;
-   name = type.name;
-   subtype = type.subtype == nullptr ? nullptr : std::make_unique<Type>(*type.subtype);
+   name       = type.name;
+   subtype    = type.subtype == nullptr ? nullptr : std::make_unique<Type>(*type.subtype);
    return *this;
 }
 
-Type::Type(TypeVariant variant, int repeated) : variant(variant),
-                                                m_repeated(repeated) {}
+Type::Type(TypeVariant variant, int repeated) : variant(variant), m_repeated(repeated) {}
 
-Type::Type(const Type &other) : variant(other.variant),
-                                m_repeated(other.m_repeated),
-                                ns(other.ns),
-                                name(other.name),
-                                subtype(other.subtype == nullptr ? nullptr : std::make_unique<Type>(*other.subtype)) {}
+Type::Type(const Type &other) :
+    variant(other.variant), m_repeated(other.m_repeated), ns(other.ns), name(other.name),
+    subtype(other.subtype == nullptr ? nullptr : std::make_unique<Type>(*other.subtype))
+{}
 
-Type::Type(Type &&other) noexcept : variant(std::exchange(other.variant, TypeVariant::Struct)),
-                                    m_repeated(std::exchange(other.m_repeated, 0)),
-                                    ns(std::exchange(other.ns, {})),
-                                    name(std::move(other.name)),
-                                    subtype(std::move(other.subtype)) {}
+Type::Type(Type &&other) noexcept :
+    variant(std::exchange(other.variant, TypeVariant::Struct)), m_repeated(std::exchange(other.m_repeated, 0)),
+    ns(std::exchange(other.ns, {})), name(std::move(other.name)), subtype(std::move(other.subtype))
+{}
 
-Type &Type::operator=(Type &&other) noexcept {
-   variant = std::exchange(other.variant, TypeVariant::Struct);
+Type &Type::operator=(Type &&other) noexcept
+{
+   variant    = std::exchange(other.variant, TypeVariant::Struct);
    m_repeated = std::exchange(other.m_repeated, 0);
-   ns = std::exchange(other.ns, {});
-   name = std::move(other.name);
-   subtype = std::move(other.subtype);
+   ns         = std::exchange(other.ns, {});
+   name       = std::move(other.name);
+   subtype    = std::move(other.subtype);
    return *this;
 }
 
-std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &attribs) {
+std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &attribs)
+{
    std::map<TypeVariant, std::any> res;
    std::vector<Attribute> list;
 
@@ -245,23 +241,22 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
       if (att.type.variant == TypeVariant::Struct) {
          auto it = res.find(TypeVariant::Struct);
          if (it == res.end()) {
-            res[TypeVariant::Struct] = CompoundDeserializer{.elems{
-                    {
-                            .kind = CompoundKind::Struct,
-                            .typeName = att.type.to_cpp_type(),
-                            .name = att.name,
-                            .id = att.id,
-                            .label = att.label,
-                    }}};
+            res[TypeVariant::Struct] = CompoundDeserializer{.elems{{
+                    .kind     = CompoundKind::Struct,
+                    .typeName = att.type.to_cpp_type(),
+                    .name     = att.name,
+                    .id       = att.id,
+                    .label    = att.label,
+            }}};
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .kind = CompoundKind::Struct,
+                 .kind     = CompoundKind::Struct,
                  .typeName = att.type.to_cpp_type(),
-                 .name = att.name,
-                 .id = att.id,
-                 .label = att.label,
+                 .name     = att.name,
+                 .id       = att.id,
+                 .label    = att.label,
          });
          continue;
       }
@@ -271,52 +266,54 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
          }
          auto it = res.find(TypeVariant::Struct);
          if (it == res.end()) {
-            res[TypeVariant::Struct] = CompoundDeserializer{.elems{
-                    {
-                            .kind = CompoundKind::Map,
-                            .typeName = att.type.to_cpp_type(),
-                            .name = att.name,
-                            .id = att.id,
-                            .subtype = att.type.subtype->variant,
-                            .subtypeName = att.type.subtype->name,
-                            .label = att.label,
-                    },
-            }};
+            res[TypeVariant::Struct] = CompoundDeserializer{
+                    .elems{
+                           {
+                           .kind        = CompoundKind::Map,
+                           .typeName    = att.type.to_cpp_type(),
+                           .name        = att.name,
+                           .id          = att.id,
+                           .subtype     = att.type.subtype->variant,
+                           .subtypeName = att.type.subtype->name,
+                           .label       = att.label,
+                           }, }
+            };
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .kind = CompoundKind::Map,
-                 .typeName = att.type.to_cpp_type(),
-                 .name = att.name,
-                 .id = att.id,
-                 .subtype = att.type.subtype->variant,
+                 .kind        = CompoundKind::Map,
+                 .typeName    = att.type.to_cpp_type(),
+                 .name        = att.name,
+                 .id          = att.id,
+                 .subtype     = att.type.subtype->variant,
                  .subtypeName = att.type.subtype->to_cpp_type(),
-                 .label = att.label,
+                 .label       = att.label,
          });
          continue;
       }
       if (att.type.variant == TypeVariant::Compound) {
          auto it = res.find(TypeVariant::Struct);
          if (it == res.end()) {
-            res[TypeVariant::Struct] = CompoundDeserializer{.elems{
-                    {
-                            .kind = CompoundKind::Compound,
-                            .typeName = att.type.to_cpp_type(),
-                            .name = att.name,
-                            .id = att.id,
-                            .label = att.label,
-                    },
-            }};
+            res[TypeVariant::Struct] = CompoundDeserializer{
+                    .elems{
+                           {
+                           .kind     = CompoundKind::Compound,
+                           .typeName = att.type.to_cpp_type(),
+                           .name     = att.name,
+                           .id       = att.id,
+                           .label    = att.label,
+                           }, }
+            };
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .kind = CompoundKind::Compound,
+                 .kind     = CompoundKind::Compound,
                  .typeName = att.type.to_cpp_type(),
-                 .name = att.name,
-                 .id = att.id,
-                 .label = att.label,
+                 .name     = att.name,
+                 .id       = att.id,
+                 .label    = att.label,
          });
          continue;
       }
@@ -333,38 +330,29 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
    return res;
 }
 
-std::string put_static_read(const StaticDeserializer &des) {
+std::string put_static_read(const StaticDeserializer &des)
+{
    switch (des.variant) {
-   case TypeVariant::Int8:
-      return "r.read_byte()";
-   case TypeVariant::Int16:
-      return "r.read_short()";
-   case TypeVariant::Int32:
-      return "r.read_int()";
-   case TypeVariant::Int64:
-      return "r.read_long()";
-   case TypeVariant::String:
-      return "r.read_str()";
-   case TypeVariant::Float:
-      return "r.read_float32()";
-   case TypeVariant::Double:
-      return "r.read_float64()";
-   case TypeVariant::Bytes:
-      return "r.read_byte_vector()";
-   case TypeVariant::Ints:
-      return "r.read_int_vec()";
-   case TypeVariant::Longs:
-      return "r.read_long_vec()";
-   case TypeVariant::Compound:
-      return "r.read_compound_content()";
-   default:
-      break;
+   case TypeVariant::Int8: return "r.read_byte()";
+   case TypeVariant::Int16: return "r.read_short()";
+   case TypeVariant::Int32: return "r.read_int()";
+   case TypeVariant::Int64: return "r.read_long()";
+   case TypeVariant::String: return "r.read_str()";
+   case TypeVariant::Float: return "r.read_float32()";
+   case TypeVariant::Double: return "r.read_float64()";
+   case TypeVariant::Bytes: return "r.read_byte_vector()";
+   case TypeVariant::Ints: return "r.read_int_vec()";
+   case TypeVariant::Longs: return "r.read_long_vec()";
+   case TypeVariant::Compound: return "r.read_compound_content()";
+   default: break;
    }
    return "";
 }
 
 Message::Message(std::string name) : name(std::move(name)) {}
 
-Attribute::Attribute(Type t, const std::string_view name, const std::string_view label, int id) : type(std::move(t)), name(name), label(label.empty() ? name : label), id(id) {}
+Attribute::Attribute(Type t, const std::string_view name, const std::string_view label, int id) :
+    type(std::move(t)), name(name), label(label.empty() ? name : label), id(id)
+{}
 
 }// namespace Semantics

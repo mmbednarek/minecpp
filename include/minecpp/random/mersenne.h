@@ -4,8 +4,10 @@
 
 namespace minecpp::random {
 
-class Mersenne : public Random {
+class Mersenne : public Random
+{
    std::mt19937_64 engine;
+
  public:
    explicit Mersenne(uint64_t seed);
 

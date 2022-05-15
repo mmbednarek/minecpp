@@ -10,9 +10,11 @@ namespace minecpp::service::engine {
 
 class EventHandler;
 
-using BidiStream = grpc::server::Stream<proto::event::clientbound::v1::Event, proto::event::serverbound::v1::Event, std::string>;
+using BidiStream =
+        grpc::server::Stream<proto::event::clientbound::v1::Event, proto::event::serverbound::v1::Event, std::string>;
 
-class ApiHandler {
+class ApiHandler
+{
    EventHandler &m_event_handler;
    EventManager<BidiStream> &m_event_manager;
 

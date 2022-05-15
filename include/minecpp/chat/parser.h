@@ -6,11 +6,15 @@
 
 namespace minecpp::chat {
 
-enum class TokenType { Identifier,
-                       Integer,
-                       Float };
+enum class TokenType
+{
+   Identifier,
+   Integer,
+   Float
+};
 
-struct Token {
+struct Token
+{
    TokenType type;
    std::string value;
    int column = 0;
@@ -18,7 +22,8 @@ struct Token {
 
 using Argument = std::variant<std::string, int, double>;
 
-struct Command {
+struct Command
+{
    std::string name;
    std::vector<Argument> args;
 };

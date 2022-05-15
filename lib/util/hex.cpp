@@ -2,7 +2,8 @@
 
 namespace minecpp::util {
 
-std::array<char, 2> char_hex(char c) {
+std::array<char, 2> char_hex(char c)
+{
    std::array<char, 2> result;
 
    auto most = c / 16;
@@ -22,17 +23,18 @@ std::array<char, 2> char_hex(char c) {
    return result;
 }
 
-std::string data_to_hex(const char *data, std::size_t size) {
+std::string data_to_hex(const char *data, std::size_t size)
+{
    std::string result;
    result.resize(size * 2);
 
    for (std::size_t i = 0; i < 2 * size; i += 2) {
-      auto hex = char_hex(data[i]);
-      result[i] = hex[0];
+      auto hex      = char_hex(data[i]);
+      result[i]     = hex[0];
       result[i + 1] = hex[1];
    }
 
    return result;
 }
 
-} // namespace minecpp::util
+}// namespace minecpp::util

@@ -6,12 +6,15 @@
 #include <utility>
 #include <variant>
 
-struct empty {};
+struct empty
+{};
 constexpr empty result_ok = empty{};
 
 template<typename T>
-class result {
-   struct container {
+class result
+{
+   struct container
+   {
       T value;
    };
    std::variant<container, std::unique_ptr<error>> value;
@@ -34,16 +37,20 @@ class result {
 };
 
 template<typename T>
-result<T>::result(T value) : value(container{std::forward<T>(value)}) {}
+result<T>::result(T value) : value(container{std::forward<T>(value)})
+{}
 
 template<typename T>
-result<T>::result(error e) : value(std::make_unique<error>(e)) {}
+result<T>::result(error e) : value(std::make_unique<error>(e))
+{}
 
 template<typename T>
-result<T>::result(error::ptr e) : value(std::move(e)) {}
+result<T>::result(error::ptr e) : value(std::move(e))
+{}
 
 template<typename T>
-result<T>::result(const result &other) {
+result<T>::result(const result &other)
+{
    if (!other.ok()) {
       value = std::move(other.err_cp());
    }
@@ -56,13 +63,15 @@ result<T>::result(const result &other) {
 }
 
 template<typename T>
-result<T> &result<T>::operator=(T val) {
+result<T> &result<T>::operator=(T val)
+{
    value = std::move(val);
    return *this;
 }
 
 template<typename T>
-T result<T>::unwrap() {
+T result<T>::unwrap()
+{
    if (ok()) {
       if constexpr (std::is_reference<T>::value) {
          return std::get<container>(value).value;
@@ -74,7 +83,8 @@ T result<T>::unwrap() {
 }
 
 template<typename T>
-T result<T>::unwrap(T alt) {
+T result<T>::unwrap(T alt)
+{
    if (ok()) {
       return std::move(std::get<container>(value).value);
    }
@@ -82,10 +92,14 @@ T result<T>::unwrap(T alt) {
 }
 
 template<typename T>
-bool result<T>::ok() const { return std::holds_alternative<container>(value); }
+bool result<T>::ok() const
+{
+   return std::holds_alternative<container>(value);
+}
 
 template<typename T>
-std::string result<T>::msg() const {
+std::string result<T>::msg() const
+{
    if (ok()) {
       return std::string();
    }
@@ -93,7 +107,8 @@ std::string result<T>::msg() const {
 }
 
 template<typename T>
-error::ptr result<T>::err() {
+error::ptr result<T>::err()
+{
    if (ok()) {
       return error::ptr(nullptr);
    }
@@ -101,16 +116,18 @@ error::ptr result<T>::err() {
 }
 
 template<typename T>
-[[nodiscard]] error::ptr result<T>::err_cp() const {
+[[nodiscard]] error::ptr result<T>::err_cp() const
+{
    if (ok()) {
       return error::ptr(nullptr);
    }
    return std::make_unique<error>(*std::get<error::ptr>(value));
 }
 
-#define tryget(stmt) ({ \
-   auto res = stmt;     \
-   if (!res.ok())       \
-      return res.err(); \
-   res.unwrap();        \
-})
+#define tryget(stmt)       \
+   ({                      \
+      auto res = stmt;     \
+      if (!res.ok())       \
+         return res.err(); \
+      res.unwrap();        \
+   })

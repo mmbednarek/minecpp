@@ -8,7 +8,8 @@
 
 namespace minecpp::game {
 
-struct Section {
+struct Section
+{
    int ref_count;
    std::vector<std::uint32_t> palette;
    minecpp::squeezed::Vector data;
@@ -16,10 +17,12 @@ struct Section {
    minecpp::squeezed::TinyVec<4> sky_light;
 };
 
-class SectionBuilder {
+class SectionBuilder
+{
    std::map<int, int> palette;
    std::array<int, 4096> content;
    int top_item = 0;
+
  public:
    SectionBuilder();
 
@@ -27,4 +30,4 @@ class SectionBuilder {
    Section build();
 };
 
-}
+}// namespace minecpp::game

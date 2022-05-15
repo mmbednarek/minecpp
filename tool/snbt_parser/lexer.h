@@ -6,25 +6,29 @@
 
 namespace minecpp::tool::snbt_parser {
 
-class Reader {
+class Reader
+{
  public:
    virtual bool has_next() = 0;
-   virtual char next() = 0;
+   virtual char next()     = 0;
 };
 
-class StringReader : public Reader {
+class StringReader : public Reader
+{
    std::string m_data;
    std::size_t m_at{};
+
  public:
    explicit StringReader(std::string_view);
 
    bool has_next() override;
    char next() override;
-
 };
 
-class Lexer {
-   enum class State {
+class Lexer
+{
+   enum class State
+   {
       Normal,
       String,
       StringEscape,
@@ -45,6 +49,6 @@ class Lexer {
    void push_special_token(TokenType type);
 };
 
-}
+}// namespace minecpp::tool::snbt_parser
 
 #endif//MINECPP_LEXER_H

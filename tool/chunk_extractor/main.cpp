@@ -4,7 +4,8 @@
 #include <minecpp/region/file.h>
 #include <minecpp/util/compression.h>
 
-auto main(int argc, char *argv[]) -> int {
+auto main(int argc, char *argv[]) -> int
+{
    if (argc < 4) {
       std::cerr << "not enough arguments\n";
       return 1;
@@ -21,15 +22,13 @@ auto main(int argc, char *argv[]) -> int {
 
    uint32_t x = std::stoi(argv[2]);
    uint32_t z = std::stoi(argv[3]);
-   auto data = r.load_chunk(x, z).unwrap();
+   auto data  = r.load_chunk(x, z).unwrap();
 
    std::istringstream ss(std::string((char *) data.data(), data.size()));
    minecpp::util::ZlibInputStream zlib_stream(ss);
 
    char buff[256];
-   while (zlib_stream.read(buff, 256)) {
-      std::cout.write(buff, 256);
-   }
+   while (zlib_stream.read(buff, 256)) { std::cout.write(buff, 256); }
 
    //   minecpp::nbt::Reader cr(zlib_stream);
    //   cr.check_signature();

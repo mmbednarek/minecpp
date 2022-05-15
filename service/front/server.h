@@ -14,14 +14,14 @@ namespace minecpp::service::front {
 
 using boost::asio::ip::tcp;
 
-class Server {
-   using ConnectionPtr = std::shared_ptr<Connection>;
-   using ConnectionIter = std::vector<ConnectionPtr>::iterator;
+class Server
+{
+   using ConnectionPtr       = std::shared_ptr<Connection>;
+   using ConnectionIter      = std::vector<ConnectionPtr>::iterator;
    using ConstConnectionIter = std::vector<ConnectionPtr>::const_iterator;
 
  public:
-   explicit Server(boost::asio::io_context &ctx, short port,
-                   Protocol::Handler *play, Protocol::Handler *status,
+   explicit Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play, Protocol::Handler *status,
                    Protocol::Handler *login);
 
    void accept_conn();
@@ -30,24 +30,15 @@ class Server {
 
    void drop_connection(ConnectionId id);
 
-   [[nodiscard]] inline ConnectionIter begin() {
-      return m_connections.begin();
-   }
+   [[nodiscard]] inline ConnectionIter begin() { return m_connections.begin(); }
 
-   [[nodiscard]] inline ConnectionIter end() {
-      return m_connections.end();
-   }
+   [[nodiscard]] inline ConnectionIter end() { return m_connections.end(); }
 
-   [[nodiscard]] inline ConstConnectionIter cbegin() const {
-      return m_connections.cbegin();
-   }
+   [[nodiscard]] inline ConstConnectionIter cbegin() const { return m_connections.cbegin(); }
 
-   [[nodiscard]] inline ConstConnectionIter cend() const {
-      return m_connections.cend();
-   }
+   [[nodiscard]] inline ConstConnectionIter cend() const { return m_connections.cend(); }
 
-   void for_each_connection(
-           std::function<void(const std::shared_ptr<Connection> &)>);
+   void for_each_connection(std::function<void(const std::shared_ptr<Connection> &)>);
 
    bool has_connection(player::Id player_id);
 

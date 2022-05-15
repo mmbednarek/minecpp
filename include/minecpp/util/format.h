@@ -4,11 +4,11 @@
 
 namespace minecpp::util {
 
-template <typename First, typename... Args>
-static void _do_format(const std::string_view f, std::stringstream &ss,
-                       First first, Args... a) {
+template<typename First, typename... Args>
+static void _do_format(const std::string_view f, std::stringstream &ss, First first, Args... a)
+{
    char last = 0;
-   int i = 0;
+   int i     = 0;
    for (const auto &c : f) {
       if (last == '{' && c == '}') {
          ss << f.substr(0, i - 1);
@@ -26,7 +26,9 @@ static void _do_format(const std::string_view f, std::stringstream &ss,
    }
 }
 
-template <typename... Args> std::string format(std::string_view f, Args... a) {
+template<typename... Args>
+std::string format(std::string_view f, Args... a)
+{
    std::stringstream ss;
    _do_format(f, ss, a...);
    return ss.str();
@@ -34,4 +36,4 @@ template <typename... Args> std::string format(std::string_view f, Args... a) {
 
 std::string format(std::string_view f);
 
-} // namespace minecpp::util
+}// namespace minecpp::util

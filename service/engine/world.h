@@ -12,7 +12,8 @@ using ChunkService = minecpp::proto::service::chunk_storage::v1::ChunkStorage::S
 using boost::uuids::uuid;
 using minecpp::game::ChunkPosition;
 
-class World : public minecpp::game::World {
+class World : public minecpp::game::World
+{
    ChunkService &service;
    Dispatcher &dispatcher;
    uuid engine_id;

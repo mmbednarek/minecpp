@@ -12,7 +12,8 @@
 
 using namespace minecpp::service::front;
 
-auto main() -> int {
+auto main() -> int
+{
    auto conf = get_config();
 
    auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());

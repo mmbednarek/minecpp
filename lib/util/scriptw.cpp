@@ -4,37 +4,32 @@ namespace minecpp::util {
 
 ScriptWriter::ScriptWriter(std::ostream &os) : os(os) {}
 
-void ScriptWriter::ident() {
-   ++ident_level;
-}
+void ScriptWriter::ident() { ++ident_level; }
 
-void ScriptWriter::deindent() {
+void ScriptWriter::deindent()
+{
    if (ident_level == 0)
       return;
    --ident_level;
 }
 
-std::ostream &ScriptWriter::raw() {
-   return os;
-}
+std::ostream &ScriptWriter::raw() { return os; }
 
-void ScriptWriter::line() {
-   os << "\n";
-}
+void ScriptWriter::line() { os << "\n"; }
 
-void ScriptWriter::descope_flat() {
-   os << "}\n";
-}
+void ScriptWriter::descope_flat() { os << "}\n"; }
 
-void ScriptWriter::line(std::string_view sv) {
+void ScriptWriter::line(std::string_view sv)
+{
    apply_indent(os, ident_level);
    os << sv << '\n';
 }
 
-void ScriptWriter::descope() {
+void ScriptWriter::descope()
+{
    deindent();
    apply_indent(os, ident_level);
    os << "}\n";
 }
 
-}
+}// namespace minecpp::util

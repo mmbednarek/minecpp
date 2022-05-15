@@ -3,7 +3,6 @@
 
 namespace minecpp::game::block {
 
-using PistonType =
-minecpp::util::Enum<ENU("normal"), ENU("sticky")>;
+using PistonType = minecpp::util::Enum<ENU("normal"), ENU("sticky")>;
 
 }

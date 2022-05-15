@@ -10,7 +10,8 @@ using minecpp::proto::chunk::v1::Chunk;
 Writer get_chunk_data(const Chunk &chunk);
 void write_light_data(Writer &w, const Chunk &chunk);
 
-void write_chunk(Writer &w, const Chunk &chunk) {
+void write_chunk(Writer &w, const Chunk &chunk)
+{
    // chunk position
    w.write_big_endian(chunk.pos_x());
    w.write_big_endian(chunk.pos_z());
@@ -36,20 +37,22 @@ void write_chunk(Writer &w, const Chunk &chunk) {
    write_light_data(w, chunk);
 }
 
-void write_light(Writer &w, const Chunk &chunk) {
+void write_light(Writer &w, const Chunk &chunk)
+{
    w.write_varint(chunk.pos_x());
    w.write_varint(chunk.pos_z());
    write_light_data(w, chunk);
 }
 
-void write_light_data(Writer &w, const Chunk &chunk) {
-   uint32_t sky_light_count = 0;
+void write_light_data(Writer &w, const Chunk &chunk)
+{
+   uint32_t sky_light_count   = 0;
    uint32_t block_light_count = 0;
 
-   uint32_t skyUpdateMask = 0;
+   uint32_t skyUpdateMask   = 0;
    uint32_t blockUpdateMask = 0;
-   uint32_t skyResetMask = 0;
-   uint32_t blockResetMask = 0;
+   uint32_t skyResetMask    = 0;
+   uint32_t blockResetMask  = 0;
 
    for (auto const &sec : chunk.sections()) {
       uint8_t place = static_cast<char>(sec.y()) + 1;
@@ -96,7 +99,8 @@ void write_light_data(Writer &w, const Chunk &chunk) {
    }
 }
 
-Writer get_chunk_data(const Chunk &chunk) {
+Writer get_chunk_data(const Chunk &chunk)
+{
    Writer chunk_data_writer;
    int index = 0;
    for (const auto &sec : chunk.sections()) {
@@ -105,21 +109,20 @@ Writer get_chunk_data(const Chunk &chunk) {
       // write palette
       chunk_data_writer.write_byte(sec.bits());
       chunk_data_writer.write_varint(sec.palette_size());
-      for (auto item : sec.palette()) {
-         chunk_data_writer.write_varint(item);
-      }
+      for (auto item : sec.palette()) { chunk_data_writer.write_varint(item); }
 
       // write data
       chunk_data_writer.write_big_endian_array(sec.data().data(), sec.data_size());
 
       // write biomes
-      chunk_data_writer.write_byte(6); // ignore palette
+      chunk_data_writer.write_byte(6);// ignore palette
 
-      auto biome_data = util::generate_packed(6, 64, [it = chunk.biomes().begin(), end = chunk.biomes().end()]() mutable {
-        if (it == end)
-           return 0;
-        return *(it++);
-      });
+      auto biome_data =
+              util::generate_packed(6, 64, [it = chunk.biomes().begin(), end = chunk.biomes().end()]() mutable {
+                 if (it == end)
+                    return 0;
+                 return *(it++);
+              });
 
       // write data
       chunk_data_writer.write_big_endian_array(biome_data.data(), biome_data.size());
@@ -127,21 +130,21 @@ Writer get_chunk_data(const Chunk &chunk) {
       ++index;
    }
 
-   for (int i = index; i < 16; ++i)  {
+   for (int i = index; i < 16; ++i) {
       chunk_data_writer.write_big_endian<short>(0);
 
       // TODO: Abstract palatalized containers
 
       // write palette
       chunk_data_writer.write_byte(0);
-      chunk_data_writer.write_varint(0); // AIR
+      chunk_data_writer.write_varint(0);// AIR
 
       // write data
       chunk_data_writer.write_big_endian_array<uint64_t>(nullptr, 0);
 
       // write biomes
-      chunk_data_writer.write_byte(0); // ignore palette
-      chunk_data_writer.write_varint(0); // default biome
+      chunk_data_writer.write_byte(0);  // ignore palette
+      chunk_data_writer.write_varint(0);// default biome
 
       chunk_data_writer.write_big_endian_array<uint64_t>(nullptr, 0);
    }

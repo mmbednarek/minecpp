@@ -1,9 +1,10 @@
-#include <sstream>
 #include <minecpp/game/dimension.h>
-#include <minecpp/nbt/writer.h>
 #include <minecpp/nbt/parser.h>
+#include <minecpp/nbt/writer.h>
+#include <sstream>
 
-int main() {
+int main()
+{
    using namespace minecpp;
 
    std::stringstream ss;

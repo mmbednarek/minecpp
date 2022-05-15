@@ -1,26 +1,20 @@
 #include "lexer.h"
 #include "parser.h"
-#include <iostream>
 #include <array>
-#include <sstream>
 #include <fstream>
+#include <iostream>
 #include <minecpp/nbt/parser.h>
+#include <sstream>
 
 std::array<std::string, 9> token_names{
-   "Identifier",
-   "String",
-   "Numeric",
-   "Colon",
-   "Comma",
-   "LeftBrace",
-   "RightBrace",
-   "LeftSquareBracket",
-   "RightSquareBracket",
+        "Identifier",         "String", "Numeric", "Colon", "Comma", "LeftBrace", "RightBrace", "LeftSquareBracket",
+        "RightSquareBracket",
 };
 
 extern std::string nbt;
 
-int main() {
+int main()
+{
    using namespace minecpp::tool::snbt_parser;
 
    StringReader reader(nbt);
@@ -36,16 +30,16 @@ int main() {
 
    auto content = result.unwrap();
    std::ofstream out("/home/ego/foo.bin");
-//   std::stringstream ss;
+   //   std::stringstream ss;
    content.serialize("", out);
-//
-//   minecpp::nbt::Parser nbt_parser(ss);
-//   auto content2 = nbt_parser.read_compound();
+   //
+   //   minecpp::nbt::Parser nbt_parser(ss);
+   //   auto content2 = nbt_parser.read_compound();
 
    return 0;
 }
 
-std::string nbt {R"(
+std::string nbt{R"(
 {
   "minecraft:dimension_type": {
     type: "minecraft:dimension_type",

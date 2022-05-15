@@ -7,7 +7,8 @@
 
 namespace minecpp::game::item {
 
-enum RecipeType {
+enum RecipeType
+{
    CraftingShaped,
    CraftingShapeless,
    Smelting,
@@ -18,41 +19,47 @@ enum RecipeType {
    Special,
 };
 
-class Recipe {
+class Recipe
+{
  public:
-   struct CraftingShaped {
+   struct CraftingShaped
+   {
       int width, height;
       std::vector<StackVariants> ingredients;
    };
 
-   struct CraftingShapeless {
+   struct CraftingShapeless
+   {
       std::vector<StackVariants> ingredients;
    };
 
-   struct HeatTreatment {
+   struct HeatTreatment
+   {
       StackVariants ingredient;
       float experience;
       int cooking_time;
    };
 
-   struct StoneCutting {
+   struct StoneCutting
+   {
       StackVariants ingredient;
    };
 
-   struct Special {};
+   struct Special
+   {};
 
    Recipe(ItemStack item, RecipeType method);
    Recipe(ItemStack item, std::string group, CraftingShaped details);
    Recipe(ItemStack item, std::string group, CraftingShapeless details);
-   Recipe(ItemStack item, std::string group, RecipeType method,
-          HeatTreatment details);
+   Recipe(ItemStack item, std::string group, RecipeType method, HeatTreatment details);
    Recipe(ItemStack item, std::string group, StoneCutting details);
 
    [[nodiscard]] const ItemStack &outcome() const;
    [[nodiscard]] RecipeType type() const;
 
    template<typename T>
-   T details() const {
+   T details() const
+   {
       if constexpr (std::is_same<T, CraftingShaped>::value) {
          if (_type == RecipeType::CraftingShaped) {
             return std::get<CraftingShaped>(_details);
@@ -64,14 +71,13 @@ class Recipe {
          }
       }
       if constexpr (std::is_same<T, HeatTreatment>::value) {
-          switch(_type) {
-          case Smelting:
-          case Blasting:
-          case Smoking:
-          case CampfireCooking:
-             return std::get<HeatTreatment>(_details);
-          default: break;
-          }
+         switch (_type) {
+         case Smelting:
+         case Blasting:
+         case Smoking:
+         case CampfireCooking: return std::get<HeatTreatment>(_details);
+         default: break;
+         }
       }
       if constexpr (std::is_same<T, StoneCutting>::value) {
          if (_type == RecipeType::StoneCutting) {
@@ -79,10 +85,9 @@ class Recipe {
          }
       }
    }
+
  private:
-   typedef std::variant<CraftingShaped, CraftingShapeless, HeatTreatment,
-                        StoneCutting, Special>
-           Details;
+   typedef std::variant<CraftingShaped, CraftingShapeless, HeatTreatment, StoneCutting, Special> Details;
 
    ItemStack _outcome_item;
    RecipeType _type;
@@ -90,4 +95,4 @@ class Recipe {
    std::string _group;
 };
 
-}// namespace minecpp::game
+}// namespace minecpp::game::item

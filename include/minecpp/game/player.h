@@ -15,18 +15,20 @@ class PlayerData;
 
 using boost::uuids::uuid;
 
-class Player {
+class Player
+{
    friend PlayerData;
 
  public:
-   struct Abilities {
-      float fly_speed = 0.05f;
-      bool flying = false;
+   struct Abilities
+   {
+      float fly_speed    = 0.05f;
+      bool flying        = false;
       bool instant_build = true;
-      bool invulnerable = false;
-      bool may_build = true;
-      bool may_fly = true;
-      float walk_speed = 0.1f;
+      bool invulnerable  = false;
+      bool may_build     = true;
+      bool may_fly       = true;
+      float walk_speed   = 0.1f;
 
       void from_proto(const proto::player::v1::Abilities &abilities);
       void as_proto(proto::player::v1::Abilities *abilities) const;
@@ -42,15 +44,15 @@ class Player {
 
    int ping{};
 
-   int xp_level = 0;
+   int xp_level    = 0;
    float xp_points = .0f;
-   int xp_seed = 0;
-   int xp_total = 0;
+   int xp_seed     = 0;
+   int xp_total    = 0;
 
-   int food_level = 20;
+   int food_level              = 20;
    float food_exhaustion_level = 0.16f;
    float food_saturation_level = 5.0f;
-   int food_tick_timer = 0;
+   int food_tick_timer         = 0;
 
    Abilities abilities;
 

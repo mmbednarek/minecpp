@@ -13,7 +13,8 @@ namespace minecpp::nbt::block::v1 {
 
 #ifndef MINECPP_NBT_BLOCK_V1_BLOCK_H_OFFSET_CLASS
 #define MINECPP_NBT_BLOCK_V1_BLOCK_H_OFFSET_CLASS
-class __nbt_idl_offset {
+class __nbt_idl_offset
+{
  public:
    mb::size offset{};
    mb::size size{};
@@ -21,10 +22,12 @@ class __nbt_idl_offset {
 };
 #endif//MINECPP_NBT_BLOCK_V1_BLOCK_H_OFFSET_CLASS
 
-class EnumState {
+class EnumState
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
@@ -52,10 +55,12 @@ class EnumState {
    static EnumState deserialize(std::istream &in);
 };
 
-class IntState {
+class IntState
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "MinValue") {
@@ -88,10 +93,12 @@ class IntState {
    static IntState deserialize(std::istream &in);
 };
 
-class BoolState {
+class BoolState
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
@@ -111,10 +118,12 @@ class BoolState {
    static BoolState deserialize(std::istream &in);
 };
 
-class Block {
+class Block
+{
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void __xx_put(const std::string &name, T &&value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::string>>) {
          if (name == "StateTags") {
@@ -134,5 +143,5 @@ class Block {
    static Block deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt::block::v1
 #endif//MINECPP_NBT_BLOCK_V1_BLOCK_H

@@ -2,22 +2,22 @@
 
 namespace minecpp::chat {
 
-static bool is_whitespace(char c) {
+static bool is_whitespace(char c)
+{
    switch (c) {
    case ' ':
    case '\n':
    case '\r':
-   case '\t':
-      return true;
-   default:
-      break;
+   case '\t': return true;
+   default: break;
    }
    return false;
 }
 
-static TokenType deduce_type(std::string_view value) {
+static TokenType deduce_type(std::string_view value)
+{
    bool numeric = true;
-   int dots = 0;
+   int dots     = 0;
    for (const auto &ch : value) {
       if ((ch < '0' || ch > '9') && ch != '.' && ch != '-') {
          numeric = false;
@@ -38,7 +38,8 @@ static TokenType deduce_type(std::string_view value) {
    return TokenType::Identifier;
 }
 
-std::vector<Token> lex(std::string_view command) {
+std::vector<Token> lex(std::string_view command)
+{
    std::vector<Token> result;
 
    Token t;
@@ -61,7 +62,8 @@ std::vector<Token> lex(std::string_view command) {
    return result;
 }
 
-mb::result<Command> parse(std::vector<Token> &tokens) {
+mb::result<Command> parse(std::vector<Token> &tokens)
+{
    if (tokens.empty()) {
       return mb::error("no tokens provided");
    }
@@ -70,7 +72,7 @@ mb::result<Command> parse(std::vector<Token> &tokens) {
    }
 
    Command result{
-       .name = tokens[0].value,
+           .name = tokens[0].value,
    };
 
    if (tokens.size() == 1) {
@@ -79,19 +81,13 @@ mb::result<Command> parse(std::vector<Token> &tokens) {
 
    for (std::size_t i = 1; i < tokens.size(); ++i) {
       switch (tokens[i].type) {
-      case TokenType::Identifier:
-         result.args.emplace_back(tokens[i].value);
-         break;
-      case TokenType::Integer:
-         result.args.emplace_back(std::stoi(tokens[i].value));
-         break;
-      case TokenType::Float:
-         result.args.emplace_back(std::stod(tokens[i].value));
-         break;
+      case TokenType::Identifier: result.args.emplace_back(tokens[i].value); break;
+      case TokenType::Integer: result.args.emplace_back(std::stoi(tokens[i].value)); break;
+      case TokenType::Float: result.args.emplace_back(std::stod(tokens[i].value)); break;
       }
    }
 
    return result;
 }
 
-} // namespace minecpp::chat
+}// namespace minecpp::chat

@@ -2,12 +2,13 @@
 #include <fmt/core.h>
 #include <fstream>
 #include <iostream>
+#include <minecpp/nbt/parser.h>
 #include <minecpp/util/compression.h>
 #include <minecpp/util/scriptw.h>
-#include <minecpp/nbt/parser.h>
 #include <set>
 
-static std::string to_camel_case(const std::string_view name) {
+static std::string to_camel_case(const std::string_view name)
+{
    std::string result;
 
    auto it = name.begin();
@@ -28,16 +29,16 @@ static std::string to_camel_case(const std::string_view name) {
    return result;
 }
 
-struct NameProvider {
+struct NameProvider
+{
    int index = 0;
    std::set<std::string> names;
    std::unordered_map<std::string, std::string> labels;
 
-   std::string next_name() {
-      return fmt::format("Type{}", index++);
-   }
+   std::string next_name() { return fmt::format("Type{}", index++); }
 
-   std::string register_name(std::string_view scoped_name, std::string_view parent_label, std::string_view label) {
+   std::string register_name(std::string_view scoped_name, std::string_view parent_label, std::string_view label)
+   {
       auto label_camel = to_camel_case(label);
       if (!names.contains(label_camel)) {
          names.insert(label_camel);
@@ -55,21 +56,22 @@ struct NameProvider {
       return register_name(scoped_name, parent_label, std::string(label) + "X");
    }
 
-   std::string_view get_type(std::string scoped_name) {
-      return labels[scoped_name];
-   }
+   std::string_view get_type(std::string scoped_name) { return labels[scoped_name]; }
 };
 
-struct Message {
+struct Message
+{
    minecpp::nbt::CompoundContent content;
    std::string name;
 };
 
-bool all_upper_case(const std::string_view name) {
+bool all_upper_case(const std::string_view name)
+{
    return std::all_of(name.begin(), name.end(), [](char c) { return std::isupper(c) || c == '_'; });
 }
 
-std::string format_name(const std::string_view name) {
+std::string format_name(const std::string_view name)
+{
    std::string result;
 
    if (all_upper_case(name)) {
@@ -77,7 +79,7 @@ std::string format_name(const std::string_view name) {
       return result;
    }
 
-   auto it = name.begin();
+   auto it    = name.begin();
    auto first = *it;
    if (std::isupper(first)) {
       result.push_back(std::tolower(first));
@@ -99,13 +101,15 @@ std::string format_name(const std::string_view name) {
    return result;
 }
 
-static std::string to_lower(std::string_view s) {
+static std::string to_lower(std::string_view s)
+{
    std::string out(s.size(), ' ');
-   std::transform(s.begin(), s.end(), out.begin(), [] (char c) { return std::tolower(c); });
+   std::transform(s.begin(), s.end(), out.begin(), [](char c) { return std::tolower(c); });
    return out;
 }
 
-static std::string element_name(std::string_view name) {
+static std::string element_name(std::string_view name)
+{
    if (name.empty()) {
       return "Element";
    }
@@ -118,40 +122,47 @@ static std::string element_name(std::string_view name) {
    return std::string(name) + "Element";
 }
 
-std::vector<Message> find_dependencies(minecpp::nbt::CompoundContent &content, std::string_view scope, std::string_view parent_label, NameProvider &np) {
+std::vector<Message> find_dependencies(minecpp::nbt::CompoundContent &content, std::string_view scope,
+                                       std::string_view parent_label, NameProvider &np)
+{
    std::vector<Message> m;
-   std::for_each(content.begin(), content.end(), [&np, &m, &scope, parent_label](std::pair<std::string, minecpp::nbt::Content> pair) {
-      if (pair.second.tag_id == minecpp::nbt::TagId::Compound) {
-         m.emplace_back(Message{
-                 .content = pair.second.as<minecpp::nbt::CompoundContent>(),
-                 .name = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, pair.first),
-         });
-      } else if (pair.second.tag_id == minecpp::nbt::TagId::List) {
-         auto list = pair.second.as<minecpp::nbt::ListContent>();
-         if (list.tag_id == minecpp::nbt::TagId::Compound) {
-            auto element = *list.begin();
-            m.emplace_back(Message{
-                    .content = element.as<minecpp::nbt::CompoundContent>(),
-                    .name = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, element_name(pair.first)),
-            });
-         }
-         if (list.tag_id == minecpp::nbt::TagId::List) {
-            auto lt = *list.begin();
-            auto list2 = lt.as<minecpp::nbt::ListContent>();
-            if (list2.tag_id == minecpp::nbt::TagId::Compound) {
-               auto element = *list2.begin();
-               m.emplace_back(Message{
-                       .content = element.as<minecpp::nbt::CompoundContent>(),
-                       .name = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, element_name(pair.first)),
-               });
-            }
-         }
-      }
-   });
+   std::for_each(
+           content.begin(), content.end(),
+           [&np, &m, &scope, parent_label](std::pair<std::string, minecpp::nbt::Content> pair) {
+              if (pair.second.tag_id == minecpp::nbt::TagId::Compound) {
+                 m.emplace_back(Message{
+                         .content = pair.second.as<minecpp::nbt::CompoundContent>(),
+                         .name    = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label, pair.first),
+                 });
+              } else if (pair.second.tag_id == minecpp::nbt::TagId::List) {
+                 auto list = pair.second.as<minecpp::nbt::ListContent>();
+                 if (list.tag_id == minecpp::nbt::TagId::Compound) {
+                    auto element = *list.begin();
+                    m.emplace_back(Message{
+                            .content = element.as<minecpp::nbt::CompoundContent>(),
+                            .name    = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label,
+                                                        element_name(pair.first)),
+                    });
+                 }
+                 if (list.tag_id == minecpp::nbt::TagId::List) {
+                    auto lt    = *list.begin();
+                    auto list2 = lt.as<minecpp::nbt::ListContent>();
+                    if (list2.tag_id == minecpp::nbt::TagId::Compound) {
+                       auto element = *list2.begin();
+                       m.emplace_back(Message{
+                               .content = element.as<minecpp::nbt::CompoundContent>(),
+                               .name    = np.register_name(fmt::format("{}_{}", scope, pair.first), parent_label,
+                                                           element_name(pair.first)),
+                       });
+                    }
+                 }
+              }
+           });
    return m;
 }
 
-std::string find_type(NameProvider &np, std::string_view scope, minecpp::nbt::Content &content) {
+std::string find_type(NameProvider &np, std::string_view scope, minecpp::nbt::Content &content)
+{
    switch (content.tag_id) {
    case minecpp::nbt::TagId::Byte: return "int8";
    case minecpp::nbt::TagId::Short: return "int16";
@@ -179,16 +190,21 @@ std::string find_type(NameProvider &np, std::string_view scope, minecpp::nbt::Co
    return "<unknown>";
 }
 
-void write_attribute(NameProvider &np, minecpp::util::ScriptWriter &w, std::string_view scope, std::string_view name, minecpp::nbt::Content content, int index) {
+void write_attribute(NameProvider &np, minecpp::util::ScriptWriter &w, std::string_view scope, std::string_view name,
+                     minecpp::nbt::Content content, int index)
+{
    auto formatted_name = format_name(name);
    if (formatted_name == name) {
       w.line("{} {} = {};", find_type(np, fmt::format("{}_{}", scope, name), content), format_name(name), index, name);
    } else {
-      w.line("{} {} = {} [label = \"{}\"];", find_type(np, fmt::format("{}_{}", scope, name), content), format_name(name), index, name);
+      w.line("{} {} = {} [label = \"{}\"];", find_type(np, fmt::format("{}_{}", scope, name), content),
+             format_name(name), index, name);
    }
 }
 
-void write_message(minecpp::util::ScriptWriter &w, NameProvider &np, const std::string_view scope, const std::string_view name, minecpp::nbt::CompoundContent cont) {
+void write_message(minecpp::util::ScriptWriter &w, NameProvider &np, const std::string_view scope,
+                   const std::string_view name, minecpp::nbt::CompoundContent cont)
+{
    auto dependencies = find_dependencies(cont, scope, name, np);
    for (auto &msg : dependencies) {
       write_message(w, np, fmt::format("{}_{}", scope, msg.name), msg.name, msg.content);
@@ -205,7 +221,8 @@ void write_message(minecpp::util::ScriptWriter &w, NameProvider &np, const std::
    w.line();
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
    if (argc < 3) {
       fmt::print(stderr, "not enough arguments");
       return 1;

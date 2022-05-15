@@ -1,12 +1,11 @@
 #include <gtest/gtest.h>
 #include <minecpp/squeezed/vector.h>
 
-TEST(Squeeze, vec) {
+TEST(Squeeze, vec)
+{
    auto gen_vec = [](std::size_t size) -> std::vector<int> {
       std::vector<int> result(size);
-      std::generate(result.begin(), result.end(), [i = 0]() mutable {
-         return i++;
-      });
+      std::generate(result.begin(), result.end(), [i = 0]() mutable { return i++; });
       return result;
    };
 
@@ -16,26 +15,23 @@ TEST(Squeeze, vec) {
       ASSERT_EQ(vec.size(), s);
 
       for (int bits = 5; bits < 17; ++bits) {
-         for (int i = 0; i < s; ++i) {
-            ASSERT_EQ(vec.at(i), i);
-         }
+         for (int i = 0; i < s; ++i) { ASSERT_EQ(vec.at(i), i); }
 
          std::for_each(vec.begin(), vec.end(), [i = 0](std::int32_t val) mutable {
-           ASSERT_EQ(val, i);
-           i++;
+            ASSERT_EQ(val, i);
+            i++;
          });
 
          vec.inc_bits();
       }
    }
 }
-TEST(Squeeze, set_test) {
+TEST(Squeeze, set_test)
+{
    auto gen_vec = [](std::size_t size) -> std::vector<int> {
-     std::vector<int> result(size);
-     std::generate(result.begin(), result.end(), [i = 0]() mutable {
-       return i++;
-     });
-     return result;
+      std::vector<int> result(size);
+      std::generate(result.begin(), result.end(), [i = 0]() mutable { return i++; });
+      return result;
    };
 
    minecpp::squeezed::Vector vec(4, gen_vec(5));

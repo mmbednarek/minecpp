@@ -6,7 +6,8 @@
 
 namespace minecpp::game::level {
 
-struct BorderInfo {
+struct BorderInfo
+{
    minecpp::util::Vec2 center;
    double damage_per_block;
    double size_lerp_target;
@@ -14,7 +15,8 @@ struct BorderInfo {
    double warning_blocks;
 };
 
-class Info {
+class Info
+{
  public:
    explicit Info(std::istream &s);
 
@@ -34,4 +36,4 @@ class Info {
    uint8_t snapshot;
 };
 
-} // namespace minecpp::game::level
+}// namespace minecpp::game::level

@@ -7,15 +7,17 @@ namespace minecpp::network::message {
 
 Reader::Reader(std::istream &s) : s(s) {}
 
-uint8_t Reader::read_byte() {
+uint8_t Reader::read_byte()
+{
    uint8_t result;
    s.read((char *) &result, sizeof(uint8_t));
    return result;
 }
 
-int Reader::read_varint() {
+int Reader::read_varint()
+{
    uint32_t result = 0u;
-   uint32_t shift = 0u;
+   uint32_t shift  = 0u;
 
    for (;;) {
       uint8_t b = read_byte();
@@ -30,14 +32,16 @@ int Reader::read_varint() {
    return result;
 }
 
-std::string Reader::read_string() {
+std::string Reader::read_string()
+{
    int size = read_varint();
    char buff[size];
    s.read(buff, size);
    return std::string(buff, size);
 }
 
-float Reader::read_float() {
+float Reader::read_float()
+{
    static_assert(sizeof(uint32_t) == sizeof(float));
    uint32_t value;
    s.read((char *) &value, sizeof(uint32_t));
@@ -45,7 +49,8 @@ float Reader::read_float() {
    return *reinterpret_cast<float *>(&value);
 }
 
-double Reader::read_double() {
+double Reader::read_double()
+{
    static_assert(sizeof(uint64_t) == sizeof(double));
    uint64_t value;
    s.read((char *) &value, sizeof(uint64_t));
@@ -53,12 +58,14 @@ double Reader::read_double() {
    return *reinterpret_cast<double *>(&value);
 }
 
-nbt::CompoundContent Reader::read_nbt_tag() {
+nbt::CompoundContent Reader::read_nbt_tag()
+{
    nbt::Parser p(s);
    return p.read_tag().content.as<nbt::CompoundContent>();
 }
 
-game::item::Recipe Reader::read_recipe() {
+game::item::Recipe Reader::read_recipe()
+{
    auto kind = read_string();
    auto name = read_string();
 
@@ -77,102 +84,102 @@ game::item::Recipe Reader::read_recipe() {
    } else if (kind == "minecraft:stonecutting") {
       return read_recipe_stone_cutting();
    } else {
-      return game::item::Recipe(game::item::ItemStack{.id = 0, .amount = 0},
-                          game::item::RecipeType::Special);
+      return game::item::Recipe(game::item::ItemStack{.id = 0, .amount = 0}, game::item::RecipeType::Special);
    }
 }
-game::item::Recipe Reader::read_recipe_shaped() {
-   auto width = read_varint();
+game::item::Recipe Reader::read_recipe_shaped()
+{
+   auto width  = read_varint();
    auto height = read_varint();
-   auto group = read_string();
+   auto group  = read_string();
 
    auto num = width * height;
 
    std::vector<game::item::StackVariants> ingredients(num);
-   for (int i = 0; i < num; i++) {
-      ingredients[i] = read_stack_variants();
-   }
+   for (int i = 0; i < num; i++) { ingredients[i] = read_stack_variants(); }
    auto crafted = read_stack();
 
    return game::item::Recipe(crafted, group,
-                       game::item::Recipe::CraftingShaped{
-                               .width = width,
-                               .height = height,
-                               .ingredients = std::move(ingredients),
-                       });
+                             game::item::Recipe::CraftingShaped{
+                                     .width       = width,
+                                     .height      = height,
+                                     .ingredients = std::move(ingredients),
+                             });
 }
 
-game::item::Recipe Reader::read_recipe_shapeless() {
+game::item::Recipe Reader::read_recipe_shapeless()
+{
    auto group = read_string();
-   auto num = read_varint();
+   auto num   = read_varint();
 
    std::vector<game::item::StackVariants> ingredients(num);
-   for (int i = 0; i < num; i++) {
-      ingredients[i] = read_stack_variants();
-   }
+   for (int i = 0; i < num; i++) { ingredients[i] = read_stack_variants(); }
    auto outcome = read_stack();
 
    return game::item::Recipe(outcome, group,
-                       game::item::Recipe::CraftingShapeless{
-                               .ingredients = std::move(ingredients),
-                       });
+                             game::item::Recipe::CraftingShapeless{
+                                     .ingredients = std::move(ingredients),
+                             });
 }
 
-game::item::Recipe Reader::read_recipe_heat_treatment(game::item::RecipeType type) {
-   auto group = read_string();
-   auto ingredient = read_stack_variants();
-   auto outcome = read_stack();
-   auto experience = read_float();
+game::item::Recipe Reader::read_recipe_heat_treatment(game::item::RecipeType type)
+{
+   auto group        = read_string();
+   auto ingredient   = read_stack_variants();
+   auto outcome      = read_stack();
+   auto experience   = read_float();
    auto cooking_time = read_varint();
    return game::item::Recipe(outcome, group, type,
-                       game::item::Recipe::HeatTreatment{
-                               .ingredient = std::move(ingredient),
-                               .experience = experience,
-                               .cooking_time = cooking_time,
-                       });
+                             game::item::Recipe::HeatTreatment{
+                                     .ingredient   = std::move(ingredient),
+                                     .experience   = experience,
+                                     .cooking_time = cooking_time,
+                             });
 }
 
-game::item::Recipe Reader::read_recipe_stone_cutting() {
-   auto group = read_string();
+game::item::Recipe Reader::read_recipe_stone_cutting()
+{
+   auto group      = read_string();
    auto ingredient = read_stack_variants();
-   auto outcome = read_stack();
+   auto outcome    = read_stack();
    return game::item::Recipe(outcome, group,
-                       game::item::Recipe::StoneCutting{
-                               .ingredient = std::move(ingredient),
-                       });
+                             game::item::Recipe::StoneCutting{
+                                     .ingredient = std::move(ingredient),
+                             });
 }
 
-game::item::StackVariants Reader::read_stack_variants() {
+game::item::StackVariants Reader::read_stack_variants()
+{
    auto num_variants = read_varint();
    game::item::StackVariants result(num_variants);
-   for (int v = 0; v < num_variants; v++) {
-      result[v] = read_stack();
-   }
+   for (int v = 0; v < num_variants; v++) { result[v] = read_stack(); }
    return result;
 }
 
-game::item::ItemStack Reader::read_stack() {
+game::item::ItemStack Reader::read_stack()
+{
    auto not_empty = read_byte();
    if (!not_empty) {
       return game::item::ItemStack{
-              .id = 0,
+              .id     = 0,
               .amount = 0,
       };
    }
-   auto id = read_varint();
-   auto amount = read_byte();
+   auto id              = read_varint();
+   auto amount          = read_byte();
    auto additional_data = read_nbt_tag();
    return game::item::ItemStack{
-           .id = id,
+           .id     = id,
            .amount = amount,
    };
 }
 
-std::string Reader::get_hex_data() {
+std::string Reader::get_hex_data()
+{
    std::string result;
    unsigned char c;
    while (s.read((char *) &c, 1)) {
-      auto most = c / 16;
+      auto most  = c / 16;
       auto least = c % 16;
 
       if (most > 9) {
@@ -191,11 +198,12 @@ std::string Reader::get_hex_data() {
    return result;
 }
 
-uint64_t Reader::read_long() {
+uint64_t Reader::read_long()
+{
    uint64_t value;
    s.read((char *) &value, sizeof(uint64_t));
    value = boost::endian::big_to_native(value);
    return value;
 }
 
-}// namespace minecpp::network::Message
+}// namespace minecpp::network::message

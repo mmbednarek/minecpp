@@ -3,13 +3,14 @@
 
 namespace minecpp::grpc {
 
-enum class EventType {
+enum class EventType
+{
    Accept,
    Write,
    Read,
    Disconnect,
 };
 
-}
+}// namespace minecpp::grpc
 
 #endif//MINECPP_GRPC_BIDI_H

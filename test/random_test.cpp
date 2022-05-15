@@ -3,7 +3,8 @@
 #include <minecpp/random/perlin.h>
 #include <minecpp/random/perlin3d.h>
 
-TEST(Rand, JavaRandom) {
+TEST(Rand, JavaRandom)
+{
    minecpp::random::JavaRandom r(1234);
    int v;
    v = r.next_int(12);
@@ -14,15 +15,15 @@ TEST(Rand, JavaRandom) {
    ASSERT_EQ(v, 29);
 }
 
-TEST(Rand, JavaRandomTwins) {
+TEST(Rand, JavaRandomTwins)
+{
    minecpp::random::JavaRandom a(2151901553968352745);
    minecpp::random::JavaRandom b(8091867987493326313);
-   for (int i = 0; i < 256; ++i) {
-      ASSERT_EQ(a.next_int(), b.next_int());
-   }
+   for (int i = 0; i < 256; ++i) { ASSERT_EQ(a.next_int(), b.next_int()); }
 }
 
-static char level_to_char(double v) {
+static char level_to_char(double v)
+{
    if (v >= 1.9) {
       return '@';
    }
@@ -53,14 +54,15 @@ static char level_to_char(double v) {
    return ' ';
 }
 
-TEST(Rand, Perlin) {
+TEST(Rand, Perlin)
+{
    minecpp::random::JavaRandom rand(8091867987493326313);
    minecpp::random::Perlin perlin(rand);
 
    double avg = 0.0;
    double min = 1000;
    double max = -1000;
-   int count = 0;
+   int count  = 0;
 
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {
@@ -71,7 +73,7 @@ TEST(Rand, Perlin) {
             min = value;
          }
          if (value > max) {
-             max = value;
+            max = value;
          }
          std::cerr << level_to_char(value);
       }
@@ -85,7 +87,8 @@ TEST(Rand, Perlin) {
    std::cerr << "max: " << max << '\n';
 }
 
-TEST(Rand, Perlin3d) {
+TEST(Rand, Perlin3d)
+{
    minecpp::random::JavaRandom rand(8091867987493326313);
    minecpp::random::Perlin3d perlin(rand);
 
@@ -98,7 +101,8 @@ TEST(Rand, Perlin3d) {
    }
 }
 
-TEST(Rand, DisplacedPerlin) {
+TEST(Rand, DisplacedPerlin)
+{
    minecpp::random::JavaRandom rand(8091867987493326313);
    minecpp::random::DisplacedPerlin perlin(rand, 2.0, 1.0);
    for (double z = 0.0; z <= 16.0; z += 0.1) {

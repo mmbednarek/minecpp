@@ -9,7 +9,8 @@
 
 namespace minecpp::game::worldgen::population {
 
-class Population {
+class Population
+{
    Chunks &m_chunks;
    std::uint64_t m_seed;
    std::unordered_map<std::uint64_t, std::unique_ptr<ChunkPlacements>> m_cache;

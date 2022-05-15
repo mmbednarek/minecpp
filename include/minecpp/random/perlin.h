@@ -4,7 +4,8 @@
 
 namespace minecpp::random {
 
-class Perlin {
+class Perlin
+{
    Random &rand;
    uint64_t coef1, coef2, coef3;
 
@@ -16,7 +17,8 @@ class Perlin {
    [[nodiscard]] minecpp::util::Vec2 grad(int x, int z);
 };
 
-class DisplacedPerlin {
+class DisplacedPerlin
+{
    Perlin base;
    Perlin dis_x;
    Perlin dis_z;

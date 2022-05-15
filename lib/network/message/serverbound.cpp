@@ -3,74 +3,83 @@
 
 namespace minecpp::network::message {
 
-void deserialize(Reader &r, ChatMessage &msg) {
+void deserialize(Reader &r, ChatMessage &msg)
+{
    //  1.18.2 OK
    msg.message = r.read_string();
 }
 
-void deserialize(Reader &r, ClientSettings &msg) {
+void deserialize(Reader &r, ClientSettings &msg)
+{
    // 1.18.2 OK
-   msg.lang = r.read_string();
-   msg.view = r.read_byte();
-   msg.visibility = static_cast<ChatVisibility>(r.read_byte());
-   msg.enable_colors = r.read_byte();
-   msg.model_part_flags = r.read_byte();
-   msg.hand_side = static_cast<game::HandSide>(r.read_byte());
+   msg.lang                  = r.read_string();
+   msg.view                  = r.read_byte();
+   msg.visibility            = static_cast<ChatVisibility>(r.read_byte());
+   msg.enable_colors         = r.read_byte();
+   msg.model_part_flags      = r.read_byte();
+   msg.hand_side             = static_cast<game::HandSide>(r.read_byte());
    msg.enable_text_filtering = r.read_byte();
-   msg.allow_server_listing = r.read_byte();
+   msg.allow_server_listing  = r.read_byte();
 }
 
-void deserialize(Reader &r, KeepAliveClient &msg) {
+void deserialize(Reader &r, KeepAliveClient &msg)
+{
    // 1.18.2 OK
    msg.time = r.read_big_endian<uint64_t>();
 }
 
-void deserialize(Reader &r, PlayerPosition &msg) {
+void deserialize(Reader &r, PlayerPosition &msg)
+{
    // 1.18.2 OK
-   msg.x = r.read_double();
-   msg.y = r.read_double();
-   msg.z = r.read_double();
+   msg.x         = r.read_double();
+   msg.y         = r.read_double();
+   msg.z         = r.read_double();
    msg.on_ground = r.read_byte();
 }
 
-void deserialize(Reader &r, PlayerPositionRotation &msg) {
+void deserialize(Reader &r, PlayerPositionRotation &msg)
+{
    // 1.18.2 OK
-   msg.x = r.read_double();
-   msg.y = r.read_double();
-   msg.z = r.read_double();
-   msg.yaw = r.read_float();
-   msg.pitch = r.read_float();
+   msg.x         = r.read_double();
+   msg.y         = r.read_double();
+   msg.z         = r.read_double();
+   msg.yaw       = r.read_float();
+   msg.pitch     = r.read_float();
    msg.on_ground = r.read_byte();
 }
 
-void deserialize(Reader &r, PlayerRotation &msg) {
+void deserialize(Reader &r, PlayerRotation &msg)
+{
    // 1.18.2 OK
-   msg.yaw = r.read_float();
-   msg.pitch = r.read_float();
+   msg.yaw       = r.read_float();
+   msg.pitch     = r.read_float();
    msg.on_ground = r.read_byte();
 }
 
-void deserialize(Reader &r, PlayerDigging &msg) {
+void deserialize(Reader &r, PlayerDigging &msg)
+{
    // 1.18.2 OK
-   msg.action = static_cast<game::PlayerDiggingState>(r.read_varint());
+   msg.action   = static_cast<game::PlayerDiggingState>(r.read_varint());
    msg.position = r.read_big_endian<uint64_t>();
-   msg.facing = static_cast<game::Face>(r.read_byte());
+   msg.facing   = static_cast<game::Face>(r.read_byte());
 }
 
-void deserialize(Reader &r, AnimateHandClient &msg) {
+void deserialize(Reader &r, AnimateHandClient &msg)
+{
    // 1.18.2 OK
    msg.hand = static_cast<PlayerHand>(r.read_varint());
 }
 
-void deserialize(Reader &r, PlayerBlockPlacement &msg) {
+void deserialize(Reader &r, PlayerBlockPlacement &msg)
+{
    // 1.18.2 OK
-   msg.hand = static_cast<PlayerHand>(r.read_varint());
-   msg.position = r.read_long();
-   msg.facing = static_cast<game::Face>(r.read_varint());
-   msg.x = r.read_float();
-   msg.y = r.read_float();
-   msg.z = r.read_float();
+   msg.hand         = static_cast<PlayerHand>(r.read_varint());
+   msg.position     = r.read_long();
+   msg.facing       = static_cast<game::Face>(r.read_varint());
+   msg.x            = r.read_float();
+   msg.y            = r.read_float();
+   msg.z            = r.read_float();
    msg.inside_block = r.read_byte();
 }
 
-} // namespace minecpp::network::Message
+}// namespace minecpp::network::message

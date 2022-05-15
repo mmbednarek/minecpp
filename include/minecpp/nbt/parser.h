@@ -5,7 +5,8 @@
 
 namespace minecpp::nbt {
 
-class Parser {
+class Parser
+{
    minecpp::util::Reader reader;
 
  public:
@@ -33,4 +34,4 @@ class Parser {
    std::vector<int64_t> read_content_long_array();
 };
 
-}// namespace NewNBT
+}// namespace minecpp::nbt

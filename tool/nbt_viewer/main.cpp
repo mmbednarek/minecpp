@@ -1,9 +1,10 @@
 #include <fstream>
 #include <iostream>
-#include <minecpp/util/compression.h>
 #include <minecpp/nbt/parser.h>
+#include <minecpp/util/compression.h>
 
-auto main(int argc, char *argv[]) -> int {
+auto main(int argc, char *argv[]) -> int
+{
    std::string filename;
    bool use_gzip = false;
 

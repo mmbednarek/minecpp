@@ -3,15 +3,17 @@
 #include <memory>
 #include <minecpp/util/format.h>
 
-enum class errclass {
-   Internal = 0,
+enum class errclass
+{
+   Internal        = 0,
    InvalidArgument = 1,
-   NotFound = 2,
-   NotImplemented = 3,
-   AlreadyExists = 4,
+   NotFound        = 2,
+   NotImplemented  = 3,
+   AlreadyExists   = 4,
 };
 
-class error {
+class error
+{
    std::string message;
    errclass _class = errclass::InvalidArgument;
 
@@ -29,6 +31,7 @@ class error {
 };
 
 template<typename... Args>
-error errorf(std::string fmt, Args... a) {
+error errorf(std::string fmt, Args... a)
+{
    return error(minecpp::util::format(fmt, a...));
 }

@@ -17,7 +17,8 @@ namespace minecpp::game {
 
 using boost::uuids::uuid;
 
-struct Chunk {
+struct Chunk
+{
    int m_pos_x, m_pos_z;
    bool m_full = false;
    std::array<int, 1024> m_biomes;
@@ -52,4 +53,4 @@ struct Chunk {
 
 }// namespace minecpp::game
 
-#endif //MINECPP_GAME_CHUNK_CHUNK_H
+#endif//MINECPP_GAME_CHUNK_CHUNK_H

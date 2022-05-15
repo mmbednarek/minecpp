@@ -4,7 +4,9 @@
 
 namespace minecpp::game {
 
-Player::Player(uuid id, std::string &name, Vec3 pos) : id(id), player_name(std::move(name)), tracking(std::make_unique<Tracking>(pos, 16)) {}
+Player::Player(uuid id, std::string &name, Vec3 pos) :
+    id(id), player_name(std::move(name)), tracking(std::make_unique<Tracking>(pos, 16))
+{}
 
 void Player::set_entity_id(uint32_t entity_id) { this->entity_id = entity_id; }
 
@@ -24,15 +26,12 @@ int Player::get_ping() const { return ping; }
 
 void Player::set_ping(int ping) { this->ping = ping; }
 
-void Player::on_movement(World &w, Vec3 pos) {
-   tracking->on_movement(w, *this, pos);
-}
+void Player::on_movement(World &w, Vec3 pos) { tracking->on_movement(w, *this, pos); }
 
-mb::result<mb::empty> Player::load_chunks(World &w) {
-   return tracking->load_chunks(w, *this);
-}
+mb::result<mb::empty> Player::load_chunks(World &w) { return tracking->load_chunks(w, *this); }
 
-void Player::Abilities::as_proto(proto::player::v1::Abilities *abilities) const {
+void Player::Abilities::as_proto(proto::player::v1::Abilities *abilities) const
+{
    abilities->set_fly_speed(fly_speed);
    abilities->set_walk_speed(walk_speed);
    abilities->set_flying(flying);
@@ -42,19 +41,21 @@ void Player::Abilities::as_proto(proto::player::v1::Abilities *abilities) const 
    abilities->set_invulnerable(invulnerable);
 }
 
-void Player::Abilities::from_proto(const proto::player::v1::Abilities &abilities) {
-   fly_speed = abilities.fly_speed();
-   walk_speed = abilities.walk_speed();
-   flying = abilities.flying();
+void Player::Abilities::from_proto(const proto::player::v1::Abilities &abilities)
+{
+   fly_speed     = abilities.fly_speed();
+   walk_speed    = abilities.walk_speed();
+   flying        = abilities.flying();
    instant_build = abilities.instant_build();
-   may_fly = abilities.may_fly();
-   may_build = abilities.may_build();
-   invulnerable = abilities.invulnerable();
+   may_fly       = abilities.may_fly();
+   may_build     = abilities.may_build();
+   invulnerable  = abilities.invulnerable();
 }
 
-uint32_t Player::Abilities::flags() {
+uint32_t Player::Abilities::flags()
+{
    return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
 }
 
-}
+}// namespace minecpp::game
 // namespace minecpp::game

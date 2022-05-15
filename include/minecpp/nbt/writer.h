@@ -7,7 +7,8 @@
 
 namespace minecpp::nbt {
 
-class Writer {
+class Writer
+{
  public:
    Writer(std::ostream &s);
 
@@ -45,7 +46,8 @@ class Writer {
    void put_byte(uint8_t b);
    void put_string(std::string_view s);
    template<typename I>
-   void put_big_endian(I v) {
+   void put_big_endian(I v)
+   {
       v = boost::endian::native_to_big(v);
       stream.write((char *) &v, sizeof(I));
    }

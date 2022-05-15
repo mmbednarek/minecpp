@@ -12,7 +12,8 @@ namespace minecpp::player {
 
 class Player;
 
-class Tracking {
+class Tracking
+{
    std::mutex m_mutex{};
    game::ChunkPosition m_chunk_pos{};
    int m_radius_sq{};

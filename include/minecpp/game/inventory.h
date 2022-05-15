@@ -6,7 +6,8 @@
 
 namespace minecpp::game {
 
-struct InventoryItem {
+struct InventoryItem
+{
    uint8_t count;
    uint8_t slot;
    std::string_view id;
@@ -15,4 +16,4 @@ struct InventoryItem {
    explicit InventoryItem(nbt::Reader &r);
 };
 
-} // namespace minecpp::game
+}// namespace minecpp::game

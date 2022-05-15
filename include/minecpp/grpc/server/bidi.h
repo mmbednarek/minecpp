@@ -12,7 +12,8 @@ template<typename TWrite, typename TRead, typename TTag>
 struct CompletionEvent;
 
 template<typename TWrite, typename TRead, typename TTag>
-struct BidiClient {
+struct BidiClient
+{
    ::grpc::ServerContext ctx;
    ::grpc::ServerAsyncReaderWriter<TWrite, TRead> stream;
    TTag tag{};
@@ -20,20 +21,23 @@ struct BidiClient {
    BidiClient() : stream(&ctx) {}
 
    template<typename TPool>
-   void write(TPool &pool, const TWrite &value) {
+   void write(TPool &pool, const TWrite &value)
+   {
       auto event = pool.construct(EventType::Write, this);
       stream.Write(value, event);
    }
 
    template<typename TPool, typename TReadPool>
-   void read(TPool &pool, TReadPool &read_pool) {
-      auto msg = read_pool.construct();
+   void read(TPool &pool, TReadPool &read_pool)
+   {
+      auto msg   = read_pool.construct();
       auto event = pool.construct(EventType::Read, this, msg);
       stream.Read(msg, event);
    }
 
    template<typename TPool>
-   void disconnect(TPool &pool) {
+   void disconnect(TPool &pool)
+   {
       auto event = pool.construct(EventType::Disconnect, this);
       ::grpc::Status status{};
       stream.Finish(status, event);
@@ -41,48 +45,47 @@ struct BidiClient {
 };
 
 template<typename TWrite, typename TRead, typename TTag>
-struct CompletionEvent {
+struct CompletionEvent
+{
    EventType tag;
    BidiClient<TWrite, TRead, TTag> *client;
    TRead *read_ptr;
 
-   CompletionEvent(EventType tag, BidiClient<TWrite, TRead, TTag> *client, TRead *read_ptr = nullptr) : tag(tag), client(client), read_ptr(read_ptr) {}
+   CompletionEvent(EventType tag, BidiClient<TWrite, TRead, TTag> *client, TRead *read_ptr = nullptr) :
+       tag(tag), client(client), read_ptr(read_ptr)
+   {
+   }
 };
 
 template<typename TWrite, typename TRead, typename TTag>
-class Stream {
+class Stream
+{
    BidiClient<TWrite, TRead, TTag> &m_client;
    util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &m_event_pool;
    util::AtomicPool<TRead> &m_read_pool;
 
  public:
-   Stream(BidiClient<TWrite, TRead, TTag> &client, util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &event_pool, util::AtomicPool<TRead> &read_pool) : m_client(client),
-                                                                                                                                                             m_event_pool(event_pool),
-                                                                                                                                                             m_read_pool(read_pool) {}
-
-   void write(const TWrite &message) {
-      m_client.write(m_event_pool, message);
+   Stream(BidiClient<TWrite, TRead, TTag> &client, util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &event_pool,
+          util::AtomicPool<TRead> &read_pool) :
+       m_client(client),
+       m_event_pool(event_pool), m_read_pool(read_pool)
+   {
    }
 
-   void read() {
-      m_client.read(m_event_pool, m_read_pool);
-   }
+   void write(const TWrite &message) { m_client.write(m_event_pool, message); }
 
-   void disconnect() {
-      m_client.disconnect(m_event_pool);
-   }
+   void read() { m_client.read(m_event_pool, m_read_pool); }
 
-   [[nodiscard]] const TTag &tag() const {
-      return m_client.tag;
-   }
+   void disconnect() { m_client.disconnect(m_event_pool); }
 
-   void set_tag(const TTag &tag) {
-      m_client.tag = tag;
-   }
+   [[nodiscard]] const TTag &tag() const { return m_client.tag; }
+
+   void set_tag(const TTag &tag) { m_client.tag = tag; }
 };
 
 template<typename TService, typename TWrite, typename TRead, typename TCallback, typename TTag, auto FRequest>
-class BidiServer {
+class BidiServer
+{
    TCallback &m_callback;
    TService m_service;
    std::unique_ptr<::grpc::CompletionQueue> m_queue;
@@ -94,7 +97,8 @@ class BidiServer {
    util::AtomicPool<TRead> m_read_pool;
 
  public:
-   mb::result<mb::empty> worker_routine() {
+   mb::result<mb::empty> worker_routine()
+   {
       for (;;) {
          void *tag_ptr;
          bool queue_ok, data_ok;
@@ -125,7 +129,8 @@ class BidiServer {
             continue;
          }
          case EventType::Read: {
-            m_callback.on_finish_read(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool), *event->read_ptr);
+            m_callback.on_finish_read(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool),
+                                      *event->read_ptr);
             m_read_pool.free(event->read_ptr);
             m_event_pool.free(event);
             continue;
@@ -142,52 +147,57 @@ class BidiServer {
       }
    }
 
-   explicit BidiServer(const std::string &bind_address, TCallback &callback, int worker_count) : m_callback(callback) {
+   explicit BidiServer(const std::string &bind_address, TCallback &callback, int worker_count) : m_callback(callback)
+   {
       ::grpc::ServerBuilder builder;
       builder.AddListeningPort(bind_address, ::grpc::InsecureServerCredentials());
       builder.RegisterService(&m_service);
-      m_queue = builder.AddCompletionQueue();
+      m_queue  = builder.AddCompletionQueue();
       m_server = builder.BuildAndStart();
       m_workers.resize(worker_count);
-      std::generate(m_workers.begin(), m_workers.end(), [this]() {
-         return std::async(std::launch::async, &BidiServer::worker_routine, this);
-      });
+      std::generate(m_workers.begin(), m_workers.end(),
+                    [this]() { return std::async(std::launch::async, &BidiServer::worker_routine, this); });
    }
 
-   ~BidiServer() {
+   ~BidiServer()
+   {
       m_server->Shutdown();
       m_queue->Shutdown();
       wait();
    }
 
-   auto accept() {
+   auto accept()
+   {
       // TODO: Free the context
       auto client_ptr = m_client_pool.construct();
-      auto event = m_event_pool.construct(EventType::Accept, client_ptr);
-      std::invoke(FRequest, &m_service, &(client_ptr->ctx), &(client_ptr->stream), m_queue.get(), dynamic_cast<::grpc::ServerCompletionQueue *>(m_queue.get()), event);
+      auto event      = m_event_pool.construct(EventType::Accept, client_ptr);
+      std::invoke(FRequest, &m_service, &(client_ptr->ctx), &(client_ptr->stream), m_queue.get(),
+                  dynamic_cast<::grpc::ServerCompletionQueue *>(m_queue.get()), event);
    }
 
-   mb::emptyres wait() {
+   mb::emptyres wait()
+   {
       std::vector<mb::emptyres> results;
       results.reserve(m_workers.size());
-      std::for_each(m_workers.begin(), m_workers.end(), [](std::future<mb::result<mb::empty>> &worker) {
-         worker.wait();
-      });
-      std::transform(m_workers.begin(), m_workers.end(), std::back_inserter(results), [](std::future<mb::result<mb::empty>> &worker) -> mb::result<mb::empty> {
-         if (!worker.valid())
-            return mb::ok;
-         return worker.get();
-      });
-      auto err_it = std::find_if(results.begin(), results.end(), [](const mb::result<mb::empty> &res) { return !res.ok(); });
+      std::for_each(m_workers.begin(), m_workers.end(),
+                    [](std::future<mb::result<mb::empty>> &worker) { worker.wait(); });
+      std::transform(m_workers.begin(), m_workers.end(), std::back_inserter(results),
+                     [](std::future<mb::result<mb::empty>> &worker) -> mb::result<mb::empty> {
+                        if (!worker.valid())
+                           return mb::ok;
+                        return worker.get();
+                     });
+      auto err_it =
+              std::find_if(results.begin(), results.end(), [](const mb::result<mb::empty> &res) { return !res.ok(); });
       if (err_it == results.end()) {
          return mb::ok;
       }
       return *err_it;
    }
 
-   BidiServer(const BidiServer &) = delete;
-   BidiServer &operator=(const BidiServer &) = delete;
-   BidiServer(BidiServer &&) noexcept = delete;
+   BidiServer(const BidiServer &)                = delete;
+   BidiServer &operator=(const BidiServer &)     = delete;
+   BidiServer(BidiServer &&) noexcept            = delete;
    BidiServer &operator=(BidiServer &&) noexcept = delete;
 };
 

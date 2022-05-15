@@ -14,7 +14,8 @@ class EntityManager;
 
 using encoded_uuid = std::pair<mb::u64, mb::u64>;
 
-class PlayerManager {
+class PlayerManager
+{
    using PlayerIndex = std::vector<player::Player>::size_type;
 
    std::vector<player::Player> m_players;

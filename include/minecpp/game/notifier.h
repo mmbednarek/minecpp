@@ -17,21 +17,25 @@ struct Movement;
 
 using boost::uuids::uuid;
 
-class Notifier {
+class Notifier
+{
  public:
    virtual void load_terrain(player::Id player, const ChunkPosition &central_chunk,
-                             std::vector<game::ChunkPosition> coords) = 0;
-   virtual void entity_move(player::Id player_id, minecpp::entity::Id entity_id, const minecpp::entity::Movement &movement, const minecpp::entity::Rotation &rotation) = 0;
-   virtual void add_player(player::Id player, const std::string &name, mb::u32 ping) = 0;
-   virtual void spawn_player(player::Id player, mb::u32 entity_id, minecpp::util::Vec3 position, const minecpp::entity::Rotation &rotation) = 0;
-   virtual void send_chat(chat::MessageType msg_type, const std::string &msg) = 0;
-   virtual void entity_look(player::Id player, mb::u32 entity_id, const minecpp::entity::Rotation &rotation) = 0;
-   virtual void remove_player(player::Id player, mb::u32 entity_id) = 0;
-   virtual void update_block(game::BlockPosition block, mb::u32 state) = 0;
-   virtual void update_block(mb::i32 x, mb::i32 y, mb::i32 z, mb::u32 state) = 0;
-   virtual void animate_hand(player::Id player, mb::u32 entity_id, mb::u32 hand) = 0;
-   virtual void acknowledge_player_digging(player::Id player_id, game::BlockPosition &pos, game::BlockState block_state, PlayerDiggingState state, bool successful) = 0;
-   virtual void unload_chunk(player::Id player, const game::ChunkPosition &chunk_position) = 0;
+                             std::vector<game::ChunkPosition> coords)                                             = 0;
+   virtual void entity_move(player::Id player_id, minecpp::entity::Id entity_id,
+                            const minecpp::entity::Movement &movement, const minecpp::entity::Rotation &rotation) = 0;
+   virtual void add_player(player::Id player, const std::string &name, mb::u32 ping)                              = 0;
+   virtual void spawn_player(player::Id player, mb::u32 entity_id, minecpp::util::Vec3 position,
+                             const minecpp::entity::Rotation &rotation)                                           = 0;
+   virtual void send_chat(chat::MessageType msg_type, const std::string &msg)                                     = 0;
+   virtual void entity_look(player::Id player, mb::u32 entity_id, const minecpp::entity::Rotation &rotation)      = 0;
+   virtual void remove_player(player::Id player, mb::u32 entity_id)                                               = 0;
+   virtual void update_block(game::BlockPosition block, mb::u32 state)                                            = 0;
+   virtual void update_block(mb::i32 x, mb::i32 y, mb::i32 z, mb::u32 state)                                      = 0;
+   virtual void animate_hand(player::Id player, mb::u32 entity_id, mb::u32 hand)                                  = 0;
+   virtual void acknowledge_player_digging(player::Id player_id, game::BlockPosition &pos, game::BlockState block_state,
+                                           PlayerDiggingState state, bool successful)                             = 0;
+   virtual void unload_chunk(player::Id player, const game::ChunkPosition &chunk_position)                        = 0;
 };
 
 }// namespace minecpp::game

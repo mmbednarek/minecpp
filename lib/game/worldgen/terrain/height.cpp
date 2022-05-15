@@ -2,11 +2,13 @@
 
 namespace minecpp::game::worldgen::terrain {
 
-HeightGenerator::HeightGenerator(uint64_t seed) : rand(seed), base_perlin(rand), perlin_det_amp(rand), perlin_detail0(rand, 0.8, 1.3), perlin_detail1(rand, 0.9, 1.5) {
-}
+HeightGenerator::HeightGenerator(uint64_t seed) :
+    rand(seed), base_perlin(rand), perlin_det_amp(rand), perlin_detail0(rand, 0.8, 1.3), perlin_detail1(rand, 0.9, 1.5)
+{}
 
-short HeightGenerator::at(int x, int z) {
-   double result = 70.0;
+short HeightGenerator::at(int x, int z)
+{
+   double result   = 70.0;
    auto perlin_pos = minecpp::util::Vec2(x, z);
 
    result += base_perlin.at(perlin_pos / 300.0) * 64;
@@ -14,7 +16,7 @@ short HeightGenerator::at(int x, int z) {
 
    if (result >= 50) {
       const auto df = result - 75;
-      result = 65 + df * df * df / 900;
+      result        = 65 + df * df * df / 900;
    }
 
    if (result > 90) {
@@ -26,4 +28,4 @@ short HeightGenerator::at(int x, int z) {
    return static_cast<short>(result);
 }
 
-}// namespace minecpp::game::worldgen
+}// namespace minecpp::game::worldgen::terrain

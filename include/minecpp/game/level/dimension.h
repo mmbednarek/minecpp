@@ -2,6 +2,11 @@
 
 namespace minecpp::game::level {
 
-enum Dimension { Overworld, Nether, End };
+enum Dimension
+{
+   Overworld,
+   Nether,
+   End
+};
 
-}
+}// namespace minecpp::game::level
