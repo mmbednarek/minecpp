@@ -106,6 +106,7 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
 void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id) {
    auto status = static_cast<game::PlayerDiggingState>(event.state());
 
+   /*
    switch (status) {
    case game::PlayerDiggingState::Digging:
    case game::PlayerDiggingState::CanceledDigging: {
@@ -122,6 +123,18 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
       auto block_position = game::BlockPosition::from_proto(event.block_position());
       m_dispatcher.acknowledge_player_digging(player_id, block_position, 0, status, true);
       m_dispatcher.update_block(block_position, 0);
+      m_world.set_block(block_position, 0);
+   } break;
+   default: break;
+   }
+    */
+
+   switch (status) {
+   case game::PlayerDiggingState::Digging:
+   case game::PlayerDiggingState::CanceledDigging:
+   case game::PlayerDiggingState::FinishedDigging: {
+      auto block_position = game::BlockPosition::from_proto(event.block_position());
+      m_dispatcher.acknowledge_player_digging(player_id, block_position, 0, status, true);
       m_world.set_block(block_position, 0);
    } break;
    default: break;

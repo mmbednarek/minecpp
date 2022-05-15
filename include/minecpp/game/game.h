@@ -162,7 +162,7 @@ struct ChunkPosition {
                                                            z(static_cast<int>(v.z)) {}
 
    [[nodiscard]] constexpr ChunkPosition operator+(const ChunkPosition &other) const {
-      return ChunkPosition(x + other.x, z + other.z);
+      return {x + other.x, z + other.z};
    }
 
    [[nodiscard]] constexpr ChunkHash hash() const {
@@ -170,7 +170,7 @@ struct ChunkPosition {
    }
 
    [[nodiscard]] constexpr BlockPosition block_at(int block_x, int block_y, int block_z) const {
-      return BlockPosition(x * g_chunk_width + block_x, block_y, z * g_chunk_depth + block_z);
+      return {x * g_chunk_width + block_x, block_y, z * g_chunk_depth + block_z};
    }
 
    [[nodiscard]] constexpr bool is_block_inside(int block_x, int block_z) const {
@@ -194,7 +194,7 @@ struct ChunkPosition {
 };
 
 constexpr ChunkPosition BlockPosition::chunk_position() const {
-   return ChunkPosition(x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1), z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1));
+   return {x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1), z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1)};
 }
 
 }// namespace minecpp::game
