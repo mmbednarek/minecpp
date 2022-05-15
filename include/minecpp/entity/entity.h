@@ -40,7 +40,11 @@ struct Rotation
 {
    float yaw, pitch;
 
-   constexpr Rotation(float yaw, float pitch) : yaw(yaw), pitch(pitch) {}
+   constexpr Rotation(float yaw, float pitch) :
+       yaw(yaw),
+       pitch(pitch)
+   {
+   }
 
    [[nodiscard]] inline proto::entity::v1::Rotation to_proto() const
    {

@@ -17,7 +17,11 @@ AttributeName to_attribute_name(const std::string &s)
 
 std::string g_player_type = "minecraft:player";
 
-Entity::Entity(uuid uid, const Type &type) : uid(uid), type(type) {}
+Entity::Entity(uuid uid, const Type &type) :
+    uid(uid),
+    type(type)
+{
+}
 
 Dimension Entity::get_dimension() const { return Dimension::Overworld; }
 

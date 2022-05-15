@@ -28,7 +28,8 @@ auto main() -> int
 
    boost::asio::io_context ctx;
    Server svr(ctx, static_cast<short>(conf.port), dynamic_cast<Protocol::Handler *>(&play_handler),
-              dynamic_cast<Protocol::Handler *>(&status_handler), dynamic_cast<Protocol::Handler *>(&login_handler));
+              dynamic_cast<Protocol::Handler *>(&status_handler),
+              dynamic_cast<Protocol::Handler *>(&login_handler));
 
    EventHandler handler(svr);
    minecpp::service::engine::Client engine_client(conf.engine_hosts[0], handler);

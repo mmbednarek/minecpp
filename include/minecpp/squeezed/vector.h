@@ -15,7 +15,9 @@ class Vector
 
  public:
    template<typename I>
-   Vector(mb::u8 bits, std::vector<I> values) : m_bits(bits), m_size(values.size())
+   Vector(mb::u8 bits, std::vector<I> values) :
+       m_bits(bits),
+       m_size(values.size())
    {
       int per_pack = 64 / bits;
       int packs    = values.size() / per_pack;
@@ -47,7 +49,9 @@ class Vector
    Vector(mb::u8 bits, mb::size size, std::function<mb::i32()> gen);
 
    [[nodiscard]] constexpr mb::size size() const { return m_size; }
+
    [[nodiscard]] constexpr mb::i8 bits() const { return m_bits; }
+
    [[nodiscard]] constexpr const std::vector<mb::u64> &raw() const { return m_data; }
 
    [[nodiscard]] mb::i32 at(mb::size i) const;

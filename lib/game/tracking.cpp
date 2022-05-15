@@ -4,7 +4,6 @@
 #include <minecpp/player/tracking.h>
 #include <spdlog/spdlog.h>
 
-
 namespace minecpp::game {
 
 static inline int pow2(int a) { return a * a; }
@@ -12,14 +11,17 @@ static inline int pow2(int a) { return a * a; }
 static int dist_sq(ChunkPosition a, ChunkPosition b) { return pow2(a.x - b.x) + pow2(a.z - b.z); }
 
 Tracking::Tracking(Vec3 position, int radius) :
-    m_chunk_pos((position.flat() / 16.0).truncate()), m_radius_sq(radius * radius), m_radius(radius)
-{}
+    m_chunk_pos((position.flat() / 16.0).truncate()),
+    m_radius_sq(radius * radius),
+    m_radius(radius)
+{
+}
 
 ChunkPosition to_chunk_pos(Vec3 &pos)
 {
-   return ChunkPosition(static_cast<int>(std::floor(pos.x / 16.0)), static_cast<int>(std::floor(pos.z / 16.0)));
+   return ChunkPosition(static_cast<int>(std::floor(pos.x / 16.0)),
+                        static_cast<int>(std::floor(pos.z / 16.0)));
 }
-
 
 void Tracking::on_movement(World &w, Player &p, Vec3 position)
 {
@@ -64,7 +66,9 @@ void Tracking::on_movement(World &w, Player &p, Vec3 position)
       if (auto res = w.free_refs(p.get_id(), chunks_to_free); !res.ok()) {
          return;
       }
-      for (const ChunkPosition &pos : chunks_to_free) { w.notifier().unload_chunk(p.get_id(), pos); }
+      for (const ChunkPosition &pos : chunks_to_free) {
+         w.notifier().unload_chunk(p.get_id(), pos);
+      }
    }
 
    if (!chunks_to_load.empty()) {
@@ -94,9 +98,10 @@ mb::result<mb::empty> Tracking::load_chunks(World &w, Player &p)
    }
 
    // sort so chunks closer to the player would load first
-   std::sort(chunks_to_load.begin(), chunks_to_load.end(), [this](const ChunkPosition &a, const ChunkPosition &b) {
-      return dist_sq(m_chunk_pos, a) < dist_sq(m_chunk_pos, b);
-   });
+   std::sort(chunks_to_load.begin(), chunks_to_load.end(),
+             [this](const ChunkPosition &a, const ChunkPosition &b) {
+                return dist_sq(m_chunk_pos, a) < dist_sq(m_chunk_pos, b);
+             });
 
    if (auto res = w.add_refs(p.get_id(), chunks_to_load); !res.ok()) {
       return res.err();
@@ -106,4 +111,5 @@ mb::result<mb::empty> Tracking::load_chunks(World &w, Player &p)
 }
 
 }// namespace minecpp::game
+
 // namespace minecpp::game

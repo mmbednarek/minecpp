@@ -7,8 +7,13 @@ namespace minecpp::random {
 using minecpp::util::Vec3;
 
 Perlin3d::Perlin3d(Random &rand) :
-    rand(rand), coef1(rand.next_int()), coef2(rand.next_int()), coef3(rand.next_int()), coef4(rand.next_int())
-{}
+    rand(rand),
+    coef1(rand.next_int()),
+    coef2(rand.next_int()),
+    coef3(rand.next_int()),
+    coef4(rand.next_int())
+{
+}
 
 [[nodiscard]] static double smooth(const double t) { return t * t * t * (t * (t * 6 - 15) + 10); }
 

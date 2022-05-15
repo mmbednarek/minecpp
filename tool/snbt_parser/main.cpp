@@ -7,7 +7,14 @@
 #include <sstream>
 
 std::array<std::string, 9> token_names{
-        "Identifier",         "String", "Numeric", "Colon", "Comma", "LeftBrace", "RightBrace", "LeftSquareBracket",
+        "Identifier",
+        "String",
+        "Numeric",
+        "Colon",
+        "Comma",
+        "LeftBrace",
+        "RightBrace",
+        "LeftSquareBracket",
         "RightSquareBracket",
 };
 

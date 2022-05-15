@@ -85,9 +85,17 @@ struct BlockPosition
 
    constexpr BlockPosition() = default;
 
-   constexpr BlockPosition(int x, int y, int z) : x(x), y(y), z(z) {}
+   constexpr BlockPosition(int x, int y, int z) :
+       x(x),
+       y(y),
+       z(z)
+   {
+   }
 
-   constexpr explicit BlockPosition(mb::u64 encoded) : x(decode_x(encoded)), y(decode_y(encoded)), z(decode_z(encoded))
+   constexpr explicit BlockPosition(mb::u64 encoded) :
+       x(decode_x(encoded)),
+       y(decode_y(encoded)),
+       z(decode_z(encoded))
    {
       if (x > 33554431) {
          x = 67108862 - x;
@@ -102,7 +110,8 @@ struct BlockPosition
       auto lx = x >= 0 ? static_cast<mb::u64>(x) : static_cast<mb::u64>(static_cast<mb::i64>(x) + (1 << 26));
       auto ly = y >= 0 ? static_cast<mb::u64>(y) : static_cast<mb::u64>(static_cast<mb::i64>(y) + (1 << 12));
       auto lz = z >= 0 ? static_cast<mb::u64>(z) : static_cast<mb::u64>(static_cast<mb::i64>(z) + (1 << 26));
-      return ((lx & g_block_position_mask_x) << g_block_position_bit_offset_x) | (ly & g_block_position_mask_y) |
+      return ((lx & g_block_position_mask_x) << g_block_position_bit_offset_x) |
+             (ly & g_block_position_mask_y) |
              ((lz & g_block_position_mask_z) << g_block_position_bit_offset_z);
    }
 
@@ -114,6 +123,7 @@ struct BlockPosition
    [[nodiscard]] constexpr ChunkPosition chunk_position() const;
 
    [[nodiscard]] constexpr mb::u8 offset_x() const { return x & (g_chunk_width - 1); }
+
    [[nodiscard]] constexpr mb::u8 offset_z() const { return z & (g_chunk_depth - 1); }
 
    [[nodiscard]] constexpr mb::u16 offset() const { return offset_x() << 12 | y | offset_z() << 8; }
@@ -161,9 +171,17 @@ struct ChunkPosition
 
    constexpr ChunkPosition() = default;
 
-   constexpr ChunkPosition(int x, int z) : x(x), z(z) {}
+   constexpr ChunkPosition(int x, int z) :
+       x(x),
+       z(z)
+   {
+   }
 
-   constexpr explicit ChunkPosition(const util::Vec2 &v) : x(static_cast<int>(v.x)), z(static_cast<int>(v.z)) {}
+   constexpr explicit ChunkPosition(const util::Vec2 &v) :
+       x(static_cast<int>(v.x)),
+       z(static_cast<int>(v.z))
+   {
+   }
 
    [[nodiscard]] constexpr ChunkPosition operator+(const ChunkPosition &other) const
    {

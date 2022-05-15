@@ -3,7 +3,10 @@
 
 namespace Lex {
 
-TokenReader::TokenReader(std::vector<Token> elements) : elements(std::move(elements)) {}
+TokenReader::TokenReader(std::vector<Token> elements) :
+    elements(std::move(elements))
+{
+}
 
 Token TokenReader::next()
 {

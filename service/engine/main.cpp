@@ -31,8 +31,9 @@ auto main() -> int
    EntityManager entities;
    PlayerManager players(player_path, entities);
 
-   auto channel       = grpc::CreateChannel(chunk_storage_address, grpc::InsecureChannelCredentials());
-   auto chunk_storage = minecpp::proto::service::chunk_storage::v1::ChunkStorage::ChunkStorage::NewStub(channel);
+   auto channel = grpc::CreateChannel(chunk_storage_address, grpc::InsecureChannelCredentials());
+   auto chunk_storage =
+           minecpp::proto::service::chunk_storage::v1::ChunkStorage::ChunkStorage::NewStub(channel);
 
    EventManager<BidiStream> manager;
    Dispatcher dispatcher(manager);
@@ -42,8 +43,9 @@ auto main() -> int
    ApiHandler api_handler(handler, manager);
    using BidiServer = minecpp::grpc::server::BidiServer<
            minecpp::proto::service::engine::v1::EngineService::AsyncService,
-           minecpp::proto::event::clientbound::v1::Event, minecpp::proto::event::serverbound::v1::Event, ApiHandler,
-           std::string, &minecpp::proto::service::engine::v1::EngineService::AsyncService::RequestJoin>;
+           minecpp::proto::event::clientbound::v1::Event, minecpp::proto::event::serverbound::v1::Event,
+           ApiHandler, std::string,
+           &minecpp::proto::service::engine::v1::EngineService::AsyncService::RequestJoin>;
    BidiServer server(listen, api_handler, 4);
    spdlog::info("starting grpc server on address {}", listen);
    server.accept();

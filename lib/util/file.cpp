@@ -2,7 +2,10 @@
 
 namespace minecpp::util {
 
-Reader::Reader(std::istream &s) : stream(s) {}
+Reader::Reader(std::istream &s) :
+    stream(s)
+{
+}
 
 std::vector<uint8_t> Reader::read_byte_vec() const
 {

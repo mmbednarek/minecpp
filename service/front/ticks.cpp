@@ -8,23 +8,35 @@
 
 namespace minecpp::service::front {
 
-TickManager::TickManager(Server &server, const ChunkService &chunks) : server(server), chunk_service(chunks) {}
+TickManager::TickManager(Server &server, const ChunkService &chunks) :
+    server(server),
+    chunk_service(chunks)
+{
+}
 
-constexpr int keep_alive_count = 160;
-constexpr int thread_limit     = 5;
+constexpr int keep_alive_count          = 800;
+constexpr int thread_limit              = 5;
+constexpr std::size_t max_future_chunks = 24;
 
 [[noreturn]] void TickManager::tick()
 {
    using namespace std::chrono_literals;
    uint64_t keep_alive_counter{};
    for (;;) {
+      auto start_time = util::now_milis();
+
       load_chunks();
       ++keep_alive_counter;
       if (keep_alive_counter >= keep_alive_count) {
          keep_alive_counter = 0;
          keep_alive();
       }
-      std::this_thread::sleep_for(50ms);
+
+      auto duration = util::now_milis() / start_time;
+      spdlog::debug("frame duration: {}", duration);
+      if (duration < 5) {
+         std::this_thread::sleep_for(10ms);
+      }
    }
 }
 
@@ -41,7 +53,7 @@ void TickManager::keep_alive()
 
 void TickManager::load_chunks()
 {
-   while (m_future_chunks.size() > 4) {
+   while (m_future_chunks.size() > max_future_chunks) {
       for (auto at = m_future_chunks.begin(); at != m_future_chunks.end();) {
          auto &future_ticket = *at;
          if (!future_ticket.valid()) {
@@ -53,7 +65,6 @@ void TickManager::load_chunks()
             auto ticket = future_ticket.get();
             m_future_chunks.erase(at);
             at = m_future_chunks.begin();
-            spdlog::info("sending chunk {} {}", ticket.chunk.pos_x(), ticket.chunk.pos_z());
             if (ticket.loaded) {
                send(ticket.conn, minecpp::network::message::ChunkData{
                                          .chunk = ticket.chunk,

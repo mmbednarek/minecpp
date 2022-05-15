@@ -8,9 +8,11 @@
 namespace minecpp::player {
 
 Tracking::Tracking(const util::Vec3 &position, int radius) :
-    m_chunk_pos(game::ChunkPosition::from_position(position)), m_radius_sq(radius * radius), m_radius(radius)
-{}
-
+    m_chunk_pos(game::ChunkPosition::from_position(position)),
+    m_radius_sq(radius * radius),
+    m_radius(radius)
+{
+}
 
 template<typename T>
 static constexpr auto pow2(T value)
@@ -89,7 +91,9 @@ void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position)
       if (auto res = w.free_refs(p.id(), chunks_to_free); !res.ok()) {
          return;
       }
-      for (const auto &pos : chunks_to_free) { w.notifier().unload_chunk(p.id(), pos); }
+      for (const auto &pos : chunks_to_free) {
+         w.notifier().unload_chunk(p.id(), pos);
+      }
    }
 
    if (!chunks_to_load.empty()) {

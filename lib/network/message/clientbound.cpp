@@ -182,7 +182,9 @@ Writer JoinGame::serialize() const
    w.write_byte(previous_game_mode);
 
    w.write_varint(available_dimensions.size());
-   for (const auto &d : available_dimensions) { w.write_string(d); }
+   for (const auto &d : available_dimensions) {
+      w.write_string(d);
+   }
 
    w.write_bytes(dimension_codec.data(), dimension_codec.size());
    w.write_bytes(dimension_type.data(), dimension_type.size());
@@ -348,7 +350,9 @@ Writer MultiBlockChange::serialize() const
    w.write_big_endian(chunk_position);
    w.write_byte(distrust_edges);
    w.write_varint(block_changes.size());
-   for (const auto &change : block_changes) { w.write_varlong(change); }
+   for (const auto &change : block_changes) {
+      w.write_varlong(change);
+   }
    return w;
 }
 

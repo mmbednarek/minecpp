@@ -16,8 +16,10 @@ struct CompletionEvent
    TRead *read_ptr;
 
    explicit CompletionEvent(EventType event_type, TRead *read_ptr = nullptr) :
-       event_type(event_type), read_ptr(read_ptr)
-   {}
+       event_type(event_type),
+       read_ptr(read_ptr)
+   {
+   }
 };
 
 static ::grpc::Status g_status{};
@@ -30,11 +32,13 @@ class Stream
    util::AtomicPool<TRead> &m_read_pool;
 
  public:
-   Stream(::grpc::ClientAsyncReaderWriter<TWrite, TRead> &client, util::AtomicPool<CompletionEvent<TRead>> &event_pool,
-          util::AtomicPool<TRead> &read_pool) :
+   Stream(::grpc::ClientAsyncReaderWriter<TWrite, TRead> &client,
+          util::AtomicPool<CompletionEvent<TRead>> &event_pool, util::AtomicPool<TRead> &read_pool) :
        m_stream(client),
-       m_event_pool(event_pool), m_read_pool(read_pool)
-   {}
+       m_event_pool(event_pool),
+       m_read_pool(read_pool)
+   {
+   }
 
    void write(const TWrite &message)
    {
@@ -102,7 +106,8 @@ class Connection
             continue;
          }
          case EventType::Read: {
-            m_callback.on_finish_read(Stream<TWrite, TRead>(*m_stream, m_event_pool, m_read_pool), *event->read_ptr);
+            m_callback.on_finish_read(Stream<TWrite, TRead>(*m_stream, m_event_pool, m_read_pool),
+                                      *event->read_ptr);
             m_read_pool.free(event->read_ptr);
             m_event_pool.free(event);
             continue;
@@ -120,7 +125,8 @@ class Connection
    }
 
    Connection(const std::string &address, TCallback &callback, std::size_t worker_count) :
-       m_callback(callback), m_channel(::grpc::CreateChannel(address, ::grpc::InsecureChannelCredentials())),
+       m_callback(callback),
+       m_channel(::grpc::CreateChannel(address, ::grpc::InsecureChannelCredentials())),
        m_stub(m_channel)
    {
       auto event = m_event_pool.construct(EventType::Accept);
@@ -146,8 +152,8 @@ class Connection
                            return mb::ok;
                         return worker.get();
                      });
-      auto err_it =
-              std::find_if(results.begin(), results.end(), [](const mb::result<mb::empty> &res) { return !res.ok(); });
+      auto err_it = std::find_if(results.begin(), results.end(),
+                                 [](const mb::result<mb::empty> &res) { return !res.ok(); });
       if (err_it == results.end()) {
          return mb::ok;
       }

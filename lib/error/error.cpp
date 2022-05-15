@@ -12,11 +12,19 @@ static grpc::StatusCode map_grpc_code(errclass c)
    return grpc::StatusCode::INTERNAL;
 }
 
-error::error(std::string message) noexcept : message(std::move(message)) {}
+error::error(std::string message) noexcept :
+    message(std::move(message))
+{
+}
 
-error::error(errclass cl, std::string message) : message(std::move(message)), _class(cl) {}
+error::error(errclass cl, std::string message) :
+    message(std::move(message)),
+    _class(cl)
+{
+}
 
 const std::string &error::msg() const { return message; }
+
 errclass error::err_class() const { return _class; }
 
 grpc::Status error::grpc_status() const { return grpc::Status(map_grpc_code(err_class()), msg()); }

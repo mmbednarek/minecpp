@@ -5,8 +5,11 @@
 namespace minecpp::service::engine {
 
 World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher) :
-    service(service), dispatcher(dispatcher), engine_id(engine_id)
-{}
+    service(service),
+    dispatcher(dispatcher),
+    engine_id(engine_id)
+{
+}
 
 minecpp::game::Notifier &World::notifier() { return dispatcher; }
 

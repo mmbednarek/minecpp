@@ -40,7 +40,8 @@ class Client
    static mb::result<Client> create(std::string_view address);
 
    mb::result<DiscoveryResponse> resolve(std::string_view service_name);
-   mb::result<mb::empty> register_service(std::string_view service_name, std::string_view address, mb::u32 port);
+   mb::result<mb::empty> register_service(std::string_view service_name, std::string_view address,
+                                          mb::u32 port);
 
  private:
    Client(std::shared_ptr<grpc::ChannelInterface> channel,

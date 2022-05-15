@@ -71,8 +71,9 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes)
          msg.attribs.resize(astMsg.attributes.size());
          std::transform(astMsg.attributes.begin(), astMsg.attributes.end(), msg.attribs.begin(),
                         [](const Syntax::Ast::Attribute &attrib) {
-                           return Attribute(Type(attrib.package, attrib.type, attrib.repeated, attrib.subtype),
-                                            attrib.name, attrib.label, attrib.pos);
+                           return Attribute(
+                                   Type(attrib.package, attrib.type, attrib.repeated, attrib.subtype),
+                                   attrib.name, attrib.label, attrib.pos);
                         });
          messages.emplace_back(msg);
          continue;
@@ -84,8 +85,11 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes)
    }
 }
 
-Type::Type(const std::vector<std::string> &ns, const std::string &name, int repeated, const std::string &subtype) :
-    m_repeated(repeated), ns(ns), name(name),
+Type::Type(const std::vector<std::string> &ns, const std::string &name, int repeated,
+           const std::string &subtype) :
+    m_repeated(repeated),
+    ns(ns),
+    name(name),
     subtype(subtype.empty() ? nullptr : std::make_unique<Type>(std::vector<std::string>(), subtype, 0, ""))
 {
    if (name == "int8") {
@@ -164,10 +168,16 @@ std::string Type::to_cpp_type() const
    }
 
    std::stringstream ss;
-   for (int i = 0; i < m_repeated; ++i) { ss << "std::vector<"; }
-   for (const auto &item : ns) { ss << item << "::"; }
+   for (int i = 0; i < m_repeated; ++i) {
+      ss << "std::vector<";
+   }
+   for (const auto &item : ns) {
+      ss << item << "::";
+   }
    ss << result;
-   for (int i = 0; i < m_repeated; ++i) { ss << ">"; }
+   for (int i = 0; i < m_repeated; ++i) {
+      ss << ">";
+   }
    return ss.str();
 }
 
@@ -204,17 +214,29 @@ Type &Type::operator=(const Type &type)
    return *this;
 }
 
-Type::Type(TypeVariant variant, int repeated) : variant(variant), m_repeated(repeated) {}
+Type::Type(TypeVariant variant, int repeated) :
+    variant(variant),
+    m_repeated(repeated)
+{
+}
 
 Type::Type(const Type &other) :
-    variant(other.variant), m_repeated(other.m_repeated), ns(other.ns), name(other.name),
+    variant(other.variant),
+    m_repeated(other.m_repeated),
+    ns(other.ns),
+    name(other.name),
     subtype(other.subtype == nullptr ? nullptr : std::make_unique<Type>(*other.subtype))
-{}
+{
+}
 
 Type::Type(Type &&other) noexcept :
-    variant(std::exchange(other.variant, TypeVariant::Struct)), m_repeated(std::exchange(other.m_repeated, 0)),
-    ns(std::exchange(other.ns, {})), name(std::move(other.name)), subtype(std::move(other.subtype))
-{}
+    variant(std::exchange(other.variant, TypeVariant::Struct)),
+    m_repeated(std::exchange(other.m_repeated, 0)),
+    ns(std::exchange(other.ns, {})),
+    name(std::move(other.name)),
+    subtype(std::move(other.subtype))
+{
+}
 
 Type &Type::operator=(Type &&other) noexcept
 {
@@ -349,10 +371,17 @@ std::string put_static_read(const StaticDeserializer &des)
    return "";
 }
 
-Message::Message(std::string name) : name(std::move(name)) {}
+Message::Message(std::string name) :
+    name(std::move(name))
+{
+}
 
 Attribute::Attribute(Type t, const std::string_view name, const std::string_view label, int id) :
-    type(std::move(t)), name(name), label(label.empty() ? name : label), id(id)
-{}
+    type(std::move(t)),
+    name(name),
+    label(label.empty() ? name : label),
+    id(id)
+{
+}
 
 }// namespace Semantics

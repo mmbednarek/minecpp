@@ -25,11 +25,23 @@ class State
    std::variant<BoolState, IntState, EnumState> m_detail;
 
  public:
-   explicit State(std::string_view name) : m_name(name), m_detail(BoolState{}) {}
-   State(std::string_view name, int min, int max) : m_name(name), m_detail(IntState{min, max}) {}
+   explicit State(std::string_view name) :
+       m_name(name),
+       m_detail{std::in_place_type<BoolState>}
+   {
+   }
+
+   State(std::string_view name, int min, int max) :
+       m_name(name),
+       m_detail{std::in_place_type<IntState>, min, max}
+   {
+   }
+
    State(std::string_view name, const std::vector<std::string> &enum_values) :
-       m_name(name), m_detail(EnumState{enum_values})
-   {}
+       m_name(name),
+       m_detail{std::in_place_type<EnumState>, enum_values}
+   {
+   }
 
    [[nodiscard]] constexpr int value_count() const
    {
@@ -81,7 +93,8 @@ class State
                     return std::atoi(value.data()) - detail.min;
                  }
                  if constexpr (std::is_same_v<T, EnumState>) {
-                    return std::find(detail.values.begin(), detail.values.end(), value) - detail.values.begin();
+                    return std::find(detail.values.begin(), detail.values.end(), value) -
+                           detail.values.begin();
                  }
                  return 0;
               },

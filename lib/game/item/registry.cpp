@@ -1,3 +1,4 @@
+#include <array>
 #include <map>
 #include <minecpp/game/item/registry.h>
 #include <minecpp/util/format.h>
@@ -7,7 +8,7 @@ namespace minecpp::game::item {
 
 constexpr int num_items = 884;
 
-const std::array<Item, num_items> items = {
+const std::array<Item, num_items> items{
         Item(0, "air", Misc),
         Item(1, "stone", BuildingBlocks),
         Item(2, "granite", BuildingBlocks),
@@ -897,7 +898,9 @@ const std::array<Item, num_items> items = {
 static std::map<std::string_view, int> read_tags()
 {
    std::map<std::string_view, int> result;
-   for (const auto &i : items) { result[i.tag()] = i.id(); }
+   for (const auto &i : items) {
+      result[i.tag()] = i.id();
+   }
    return result;
 }
 

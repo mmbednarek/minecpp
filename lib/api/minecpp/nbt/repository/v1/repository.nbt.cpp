@@ -182,13 +182,16 @@ void Repository::serialize_no_header(minecpp::nbt::Writer &w) const
 {
    w.write_header(minecpp::nbt::TagId::List, "EnumStates");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, enum_states.size());
-   std::for_each(enum_states.begin(), enum_states.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(enum_states.begin(), enum_states.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::List, "IntStates");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, int_states.size());
-   std::for_each(int_states.begin(), int_states.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(int_states.begin(), int_states.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::List, "BoolStates");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, bool_states.size());
-   std::for_each(bool_states.begin(), bool_states.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(bool_states.begin(), bool_states.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::List, "Blocks");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, blocks.size());
    std::for_each(blocks.begin(), blocks.end(), [&w](const auto &value) { value.serialize_no_header(w); });
@@ -214,32 +217,38 @@ Repository Repository::deserialize_no_header(minecpp::nbt::Reader &r)
             case minecpp::nbt::TagId::Compound: {
                if (name == "EnumStates") {
                   std::vector<EnumStateEntry> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() { return EnumStateEntry::deserialize_no_header(r); });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return EnumStateEntry::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                if (name == "IntStates") {
                   std::vector<IntStateEntry> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() { return IntStateEntry::deserialize_no_header(r); });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return IntStateEntry::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                if (name == "BoolStates") {
                   std::vector<BoolStateEntry> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() { return BoolStateEntry::deserialize_no_header(r); });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return BoolStateEntry::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                if (name == "Blocks") {
                   std::vector<BlockEntry> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() { return BlockEntry::deserialize_no_header(r); });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return BlockEntry::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                break;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }

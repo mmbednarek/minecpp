@@ -7,7 +7,10 @@
 
 namespace minecpp::service::front::Protocol {
 
-PlayHandler::PlayHandler(Service &service) : service(service) {}
+PlayHandler::PlayHandler(Service &service) :
+    service(service)
+{
+}
 
 void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
 {
@@ -72,6 +75,9 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
    }
 }
 
-void PlayHandler::handle_disconnect(Connection &conn) { service.on_player_disconnect(conn.service_id(), conn.uuid()); }
+void PlayHandler::handle_disconnect(Connection &conn)
+{
+   service.on_player_disconnect(conn.service_id(), conn.uuid());
+}
 
 }// namespace minecpp::service::front::Protocol

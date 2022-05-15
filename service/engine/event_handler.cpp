@@ -10,11 +10,14 @@
 
 namespace minecpp::service::engine {
 
-EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager,
-                           game::World &world) :
+EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager,
+                           EntityManager &entity_manager, game::World &world) :
     m_dispatcher(dispatcher),
-    m_player_manager(player_manager), m_entity_manager(entity_manager), m_world(world)
-{}
+    m_player_manager(player_manager),
+    m_entity_manager(entity_manager),
+    m_world(world)
+{
+}
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id)
 {
@@ -37,7 +40,8 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 }
 
-void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, player::Id player_id)
+void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,
+                                              player::Id player_id)
 {
    auto &entity         = MB_ESCAPE(m_player_manager.get_entity(player_id));
    auto player_position = entity::read_entity_position(event.position());
@@ -45,11 +49,13 @@ void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPos
    MB_ESCAPE(m_player_manager.get_player(player_id)).on_movement(m_world, player_position);
 }
 
-void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event, player::Id player_id)
+void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event,
+                                              player::Id player_id)
 {
    auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
    entity.set_rot(event.rotation().yaw(), event.rotation().pitch());
-   m_dispatcher.entity_look(player_id, entity.get_id(), entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+   m_dispatcher.entity_look(player_id, entity.get_id(),
+                            entity::Rotation(entity.get_yaw(), entity.get_pitch()));
 }
 
 void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, player::Id player_id)
@@ -67,9 +73,10 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
                 static_cast<mb::u64>(block_state) <= repository::StateManager::the().state_count()) {
                msg.bold(format::Color::Green, "INFO").text(" changed selected color to ");
 
-               m_selected_block             = static_cast<game::BlockState>(block_state);
-               const auto [block_id, state] = repository::StateManager::the().parse_block_id(m_selected_block);
-               auto &block                  = MB_ESCAPE(repository::Block::the().get_by_id(block_id));
+               m_selected_block = static_cast<game::BlockState>(block_state);
+               const auto [block_id, state] =
+                       repository::StateManager::the().parse_block_id(m_selected_block);
+               auto &block = MB_ESCAPE(repository::Block::the().get_by_id(block_id));
                msg.text(format::Color::Yellow, block.tag());
 
                if (!block.is_single_state()) {
@@ -167,7 +174,8 @@ void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event,
    m_dispatcher.animate_hand(player_id, player.entity_id(), event.hand());
 }
 
-void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id)
+void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event,
+                                              player::Id player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    auto res     = player.load_chunks(m_world);

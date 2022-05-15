@@ -9,9 +9,13 @@
 
 namespace minecpp::service::front {
 
-EventHandler::EventHandler(Server &server) : m_server(server) {}
+EventHandler::EventHandler(Server &server) :
+    m_server(server)
+{
+}
 
-void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg,
+                                     const std::vector<player::Id> &player_ids)
 {
    auto add_player = minecpp::network::message::AddPlayer{
            .id        = player::read_id_from_proto(msg.player_id()),
@@ -40,7 +44,8 @@ void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
    send_message_excluding(spawn_player, player_id);
 }
 
-void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
+                                      const std::vector<player::Id> &player_ids)
 {
    minecpp::network::message::EntityMove entity_move{
            .entity_id = static_cast<int>(pos.entity_id()),
@@ -56,7 +61,8 @@ void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos, con
    send_message_excluding(entity_move, player_id);
 }
 
-void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
+                                      const std::vector<player::Id> &player_ids)
 {
    minecpp::network::message::EntityLook entity_look{
            .entity_id = static_cast<int>(pos.entity_id()),
@@ -153,11 +159,14 @@ void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
                          .z = msg.central_chunk().z(),
                  });
 
-      for (const auto &coord : msg.coords()) { conn->push_chunk(coord.x(), coord.z()); }
+      for (const auto &coord : msg.coords()) {
+         conn->push_chunk(coord.x(), coord.z());
+      }
    }
 }
 
-const char *player_transfer_message = R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";
+const char *player_transfer_message =
+        R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";
 
 void EventHandler::handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
                                           const std::vector<player::Id> &player_ids)
@@ -259,13 +268,14 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
 
       // TODO: Send command list
 
-      send(conn, RecipeBook{
-                         .state                       = Init,
-                         .gui_open                    = msg.player().recipe_book().gui_open(),
-                         .filtering_craftable         = msg.player().recipe_book().filtering_craftable(),
-                         .furnace_gui_open            = msg.player().recipe_book().furnace_gui_open(),
-                         .furnace_filtering_craftable = msg.player().recipe_book().furnace_filtering_craftable(),
-                 });
+      send(conn,
+           RecipeBook{
+                   .state                       = Init,
+                   .gui_open                    = msg.player().recipe_book().gui_open(),
+                   .filtering_craftable         = msg.player().recipe_book().filtering_craftable(),
+                   .furnace_gui_open            = msg.player().recipe_book().furnace_gui_open(),
+                   .furnace_filtering_craftable = msg.player().recipe_book().furnace_filtering_craftable(),
+           });
 
       send(conn, PlayerPositionLook{
                          .x     = msg.player().position().x(),
@@ -284,7 +294,8 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
    }
 }
 
-void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg,
+                                      const std::vector<player::Id> &player_ids)
 {
    for (auto player_id : player_ids) {
       if (!m_server.has_connection(player_id)) {
@@ -305,7 +316,8 @@ void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg, con
    }
 }
 
-void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg,
+                                      const std::vector<player::Id> &player_ids)
 {
    for (auto player_id : player_ids) {
       if (!m_server.has_connection(player_id)) {
@@ -330,7 +342,8 @@ void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg, con
    }
 }
 
-void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
+                                      const std::vector<player::Id> &player_ids)
 {
    for (auto player_id : player_ids) {
       if (!m_server.has_connection(player_id)) {

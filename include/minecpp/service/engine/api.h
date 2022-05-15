@@ -26,9 +26,13 @@ class Stream
    util::StaticQueue<OutEvent, g_steam_queue_size> &m_out_queue;
 
  public:
-   Stream(ClientBidiStream &stream, std::mutex &mtx, util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue) :
-       m_stream(stream), m_mtx(mtx), m_out_queue(out_queue)
-   {}
+   Stream(ClientBidiStream &stream, std::mutex &mtx,
+          util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue) :
+       m_stream(stream),
+       m_mtx(mtx),
+       m_out_queue(out_queue)
+   {
+   }
 
    template<typename TEvent>
    void send(const TEvent &event, player::Id player_id) const
@@ -48,6 +52,7 @@ class Stream
 
 template<typename TVisitor>
 requires event::ClientboundVisitor<TVisitor>
+
 class ClientEventHandler
 {
    TVisitor &m_visitor;
@@ -56,7 +61,10 @@ class ClientEventHandler
    std::mutex m_mtx;
 
  public:
-   explicit ClientEventHandler(TVisitor &visitor) : m_visitor(visitor) {}
+   explicit ClientEventHandler(TVisitor &visitor) :
+       m_visitor(visitor)
+   {
+   }
 
    void on_connected(ClientBidiStream stream)
    {
@@ -97,8 +105,9 @@ class ClientEventHandler
 
 template<typename TVisitor>
 using BidiConnection =
-        grpc::client::Connection<proto::service::engine::v1::EngineService::Stub, proto::event::serverbound::v1::Event,
-                                 proto::event::clientbound::v1::Event, ClientEventHandler<TVisitor>,
+        grpc::client::Connection<proto::service::engine::v1::EngineService::Stub,
+                                 proto::event::serverbound::v1::Event, proto::event::clientbound::v1::Event,
+                                 ClientEventHandler<TVisitor>,
                                  &proto::service::engine::v1::EngineService::Stub::AsyncJoin>;
 
 template<typename TVisitor>
@@ -109,8 +118,10 @@ class Client
 
  public:
    explicit Client(const std::string &address, TVisitor &visitor) :
-       m_connection(address, m_handler, 4), m_handler(visitor)
-   {}
+       m_connection(address, m_handler, 4),
+       m_handler(visitor)
+   {
+   }
 
    [[nodiscard]] Stream join() { return m_handler.stream(); }
 };

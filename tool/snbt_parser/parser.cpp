@@ -2,7 +2,10 @@
 
 namespace minecpp::tool::snbt_parser {
 
-Parser::Parser(const std::vector<Token> &tokens) : m_reader(tokens) {}
+Parser::Parser(const std::vector<Token> &tokens) :
+    m_reader(tokens)
+{
+}
 
 mb::result<nbt::CompoundContent> Parser::read_compound()
 {

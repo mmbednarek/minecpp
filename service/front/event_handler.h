@@ -21,21 +21,29 @@ class EventHandler
    constexpr void set_stream(engine::Stream *stream) { m_stream = stream; }
 
    void handle_add_player(const clientbound_v1::AddPlayer &msg, const std::vector<player::Id> &player_ids);
-   void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos, const std::vector<player::Id> &player_ids);
+   void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
+                            const std::vector<player::Id> &player_ids);
    void handle_entity_move(const clientbound_v1::EntityMove &pos, const std::vector<player::Id> &player_ids);
    void handle_entity_look(const clientbound_v1::EntityLook &pos, const std::vector<player::Id> &player_ids);
    void handle_chat(const clientbound_v1::Chat &pos, const std::vector<player::Id> &player_ids);
-   void handle_remove_player(const clientbound_v1::RemovePlayer &msg, const std::vector<player::Id> &player_ids);
-   void handle_update_block(const clientbound_v1::UpdateBlock &msg, const std::vector<player::Id> &player_ids);
-   void handle_animate_hand(const clientbound_v1::AnimateHand &msg, const std::vector<player::Id> &player_ids);
+   void handle_remove_player(const clientbound_v1::RemovePlayer &msg,
+                             const std::vector<player::Id> &player_ids);
+   void handle_update_block(const clientbound_v1::UpdateBlock &msg,
+                            const std::vector<player::Id> &player_ids);
+   void handle_animate_hand(const clientbound_v1::AnimateHand &msg,
+                            const std::vector<player::Id> &player_ids);
    void handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg,
                                           const std::vector<player::Id> &player_ids);
-   void handle_load_terrain(const clientbound_v1::LoadTerrain &msg, const std::vector<player::Id> &player_ids);
-   void handle_transfer_player(const clientbound_v1::TransferPlayer &msg, const std::vector<player::Id> &player_ids);
+   void handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
+                            const std::vector<player::Id> &player_ids);
+   void handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
+                               const std::vector<player::Id> &player_ids);
    void handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg,
                                        const std::vector<player::Id> &player_ids);
-   void handle_unload_chunk(const clientbound_v1::UnloadChunk &msg, const std::vector<player::Id> &player_ids);
-   void handle_accept_player(const clientbound_v1::AcceptPlayer &msg, const std::vector<player::Id> &player_ids);
+   void handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
+                            const std::vector<player::Id> &player_ids);
+   void handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
+                             const std::vector<player::Id> &player_ids);
    void handle_deny_player(const clientbound_v1::DenyPlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_player_list(const clientbound_v1::PlayerList &msg, const std::vector<player::Id> &player_ids);
    void handle_entity_list(const clientbound_v1::EntityList &msg, const std::vector<player::Id> &player_ids);

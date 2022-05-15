@@ -56,7 +56,8 @@ class Reader : private minecpp::util::Reader
       }
    }
 
-   result<empty> try_read_compound(std::function<result<empty>(Reader &r, TagId type, std::string key)> for_value);
+   result<empty>
+   try_read_compound(std::function<result<empty>(Reader &r, TagId type, std::string key)> for_value);
    void read_list(std::function<void(Reader &)> for_elem);
    void foreach_long(std::function<void(long long value)> for_elem);
 
@@ -83,20 +84,32 @@ class Reader : private minecpp::util::Reader
       assert(size == s);
 
       std::array<uint64_t, s> result;
-      for (std::size_t i = 0; i < size; ++i) { result[i] = read_bswap<uint64_t>(); }
+      for (std::size_t i = 0; i < size; ++i) {
+         result[i] = read_bswap<uint64_t>();
+      }
       return result;
    }
 
    uint8_t read_byte() { return read_static<uint8_t>(0); }
+
    int16_t read_short() { return read_bswap<short>(); }
+
    int32_t read_int() { return read_bswap<int>(); }
+
    int64_t read_long() { return read_bswap<long long>(); }
+
    float read_float32() { return read_float(); }
+
    double read_float64() { return read_double(); }
+
    std::vector<uint8_t> read_byte_vector() { return read_byte_vec(); }
+
    std::string read_str() { return read_string(); }
+
    std::vector<int32_t> read_int_vec() { return read_int_list<int>(); }
+
    std::vector<int64_t> read_long_vec() { return read_int_list<int64_t>(); }
+
    CompoundContent read_compound_content();
 
    std::istream &raw_stream();
@@ -162,7 +175,9 @@ std::array<int, s> Reader::read_int_array()
    assert(size == s);
 
    std::array<int, s> result;
-   for (size_t i = 0; i < size; ++i) { result[i] = read_bswap<int>(); }
+   for (size_t i = 0; i < size; ++i) {
+      result[i] = read_bswap<int>();
+   }
    return result;
 }
 

@@ -9,7 +9,8 @@ Client::Client(std::shared_ptr<grpc::ChannelInterface> channel,
                std::unique_ptr<proto_discovery_v1::DiscoveryService::Stub> stub) :
     m_channel(std::move(channel)),
     m_stub(std::move(stub))
-{}
+{
+}
 
 mb::result<Client> Client::create(std::string_view address)
 {
@@ -40,12 +41,14 @@ mb::result<DiscoveryResponse> Client::resolve(std::string_view service_name)
 
    DiscoveryResponse result{.modified = true};
    result.endpoints.reserve(response.endpoints_size());
-   std::transform(response.endpoints().begin(), response.endpoints().end(), std::back_inserter(result.endpoints),
-                  [](const proto_discovery_v1::Endpoint &endpoint) { return Endpoint::from_proto(endpoint); });
+   std::transform(
+           response.endpoints().begin(), response.endpoints().end(), std::back_inserter(result.endpoints),
+           [](const proto_discovery_v1::Endpoint &endpoint) { return Endpoint::from_proto(endpoint); });
    return std::move(result);// must be fed into result
 }
 
-mb::result<mb::empty> Client::register_service(std::string_view service_name, std::string_view address, mb::u32 port)
+mb::result<mb::empty> Client::register_service(std::string_view service_name, std::string_view address,
+                                               mb::u32 port)
 {
    grpc::ClientContext ctx;
    proto_discovery_v1::RegisterRequest request{};
@@ -56,7 +59,8 @@ mb::result<mb::empty> Client::register_service(std::string_view service_name, st
    proto_discovery_v1::EmptyResult response{};
    auto status = m_stub->RegisterService(&ctx, request, &response);
    if (!status.ok()) {
-      return mb::error(fmt::format("could not register service {}: {}", service_name, status.error_message()));
+      return mb::error(
+              fmt::format("could not register service {}: {}", service_name, status.error_message()));
    }
 
    return mb::ok;

@@ -31,13 +31,22 @@ class ShapedObject : public PopObject
    std::array<int, w * l * h> shape;
 
  public:
-   ShapedObject(int occ, std::array<int, w * l * h> shape) : occurr(occ), shape(std::move(shape)) {}
+   ShapedObject(int occ, std::array<int, w * l * h> shape) :
+       occurr(occ),
+       shape(std::move(shape))
+   {
+   }
 
    [[nodiscard]] int width() const override { return w; }
+
    [[nodiscard]] int height() const override { return h; }
+
    [[nodiscard]] int length() const override { return l; }
+
    [[nodiscard]] int occurrence() const override { return occurr; };
+
    [[nodiscard]] Pos center() const override { return Pos{.x = w / 2, .z = l / 2}; };
+
    [[nodiscard]] int block_at(int x, int y, int z) const override
    {
       assert(x >= 0 && x < w);

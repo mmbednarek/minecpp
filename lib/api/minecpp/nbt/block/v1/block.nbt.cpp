@@ -36,7 +36,9 @@ EnumState EnumState::deserialize_no_header(minecpp::nbt::Reader &r)
                return;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }
@@ -137,7 +139,8 @@ void Block::serialize_no_header(minecpp::nbt::Writer &w) const
 {
    w.write_header(minecpp::nbt::TagId::List, "StateTags");
    w.begin_list_no_header(minecpp::nbt::TagId::String, state_tags.size());
-   std::for_each(state_tags.begin(), state_tags.end(), [&w](const auto &value) { w.write_string_content(value); });
+   std::for_each(state_tags.begin(), state_tags.end(),
+                 [&w](const auto &value) { w.write_string_content(value); });
    w.end_compound();
 }
 
@@ -164,7 +167,9 @@ Block Block::deserialize_no_header(minecpp::nbt::Reader &r)
                return;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }

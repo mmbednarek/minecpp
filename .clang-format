@@ -29,7 +29,7 @@ BreakBeforeConceptDeclarations: true
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
 BreakInheritanceList: AfterComma
-ColumnLimit: 120
+ColumnLimit: 110
 CompactNamespaces: true
 ContinuationIndentWidth: 8
 EmptyLineBeforeAccessModifier: LogicalBlock
@@ -44,10 +44,10 @@ MaxEmptyLinesToKeep: 2
 NamespaceIndentation: None
 ObjCSpaceAfterProperty: false
 ObjCSpaceBeforeProtocolList: true
-# PackConstructorInitializers: Never
+PackConstructorInitializers: Never
 PointerAlignment: Right
 ReflowComments: false
-# SeparateDefinitionBlocks: Always
+SeparateDefinitionBlocks: Always
 SortIncludes: CaseInsensitive
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: true

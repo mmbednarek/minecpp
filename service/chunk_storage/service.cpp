@@ -9,10 +9,13 @@
 
 namespace minecpp::service::chunk_storage {
 
-Service::Service(std::string_view region_path) : chunks(Regions(region_path)) {}
+Service::Service(std::string_view region_path) :
+    chunks(Regions(region_path))
+{
+}
 
-grpc::Status Service::LoadChunk(grpc::ServerContext *context, const chunk_storage_v1::LoadChunkRequest *request,
-                                chunk_v1::Chunk *response)
+grpc::Status Service::LoadChunk(grpc::ServerContext *context,
+                                const chunk_storage_v1::LoadChunkRequest *request, chunk_v1::Chunk *response)
 {
    auto &chunk = MCPP_GRPC_TRY(chunks.get_chunk(request->x(), request->z()));
    for (const auto &sec : chunk.m_sections) {
@@ -34,7 +37,8 @@ grpc::Status Service::SetBlock(grpc::ServerContext *context, const chunk_storage
 
 Service::~Service() = default;
 
-grpc::Status Service::AddReferences(grpc::ServerContext *context, const chunk_storage_v1::AddReferencesRequest *request,
+grpc::Status Service::AddReferences(grpc::ServerContext *context,
+                                    const chunk_storage_v1::AddReferencesRequest *request,
                                     chunk_storage_v1::AddReferencesResponse *response)
 {
    std::vector<minecpp::game::block::ChunkPos> coords(request->coords_size());

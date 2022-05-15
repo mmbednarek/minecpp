@@ -13,7 +13,10 @@ class TokenReader
    std::size_t m_at{};
 
  public:
-   constexpr explicit TokenReader(const std::vector<Token> &tokens) : m_tokens(tokens) {}
+   constexpr explicit TokenReader(const std::vector<Token> &tokens) :
+       m_tokens(tokens)
+   {
+   }
 
    Token next()
    {

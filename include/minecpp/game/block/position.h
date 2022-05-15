@@ -16,10 +16,12 @@ struct ChunkPos
    ChunkPos(int x, int z);
    explicit ChunkPos(minecpp::util::Vec2 v);
    ChunkPos operator+(ChunkPos &other) const;
+
    [[nodiscard]] constexpr std::uint64_t hash() const
    {
       return static_cast<int64_t>(z) + chunk_max_z * static_cast<int64_t>(x);
    }
+
    [[nodiscard]] Position block_at(int bx, int by, int bz) const;
    [[nodiscard]] bool is_block_inside(int bx, int bz) const;
 };
@@ -36,7 +38,9 @@ struct Position
    uint64_t as_long() const;
    [[nodiscard]] ChunkPos chunk_pos() const;
    [[nodiscard]] uint16_t offset() const;
+
    [[nodiscard]] constexpr mb::u8 offset_x() const { return x & 15; }
+
    [[nodiscard]] constexpr mb::u8 offset_z() const { return z & 15; }
 };
 

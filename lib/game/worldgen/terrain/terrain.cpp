@@ -8,7 +8,11 @@ namespace minecpp::game::worldgen::terrain {
 constexpr auto sea_level  = 63;
 constexpr auto sand_level = 64;
 
-Terrain::Terrain(uint64_t seed, int x, int z) : height_gen(seed), rand(seed), x(x), z(z)
+Terrain::Terrain(uint64_t seed, int x, int z) :
+    height_gen(seed),
+    rand(seed),
+    x(x),
+    z(z)
 {
    for (int rx = 0; rx < chunk_size; ++rx) {
       for (int rz = 0; rz < chunk_size; ++rz) {

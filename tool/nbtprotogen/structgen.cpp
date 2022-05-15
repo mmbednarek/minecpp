@@ -12,8 +12,10 @@ constexpr auto g_get_offset_id         = "__xx_get_id";
 constexpr auto g_put_method            = "__xx_put";
 constexpr auto g_offset_class_constant = "NBT_IDL_OFFSET_CLASS";
 
-Generator::Generator(Semantics::Structure &structure, const std::string &module_name, const std::string &header_path) :
-    m_header_name(make_header_constant(structure.package, module_name)), m_component(structure.package, m_header_name)
+Generator::Generator(Semantics::Structure &structure, const std::string &module_name,
+                     const std::string &header_path) :
+    m_header_name(make_header_constant(structure.package, module_name)),
+    m_component(structure.package, m_header_name)
 {
    using namespace mb::codegen;
    m_component.header_include("iostream");
@@ -30,7 +32,9 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       m_component.source_include(fmt::format("{}/{}.nbt.h", header_path, module_name));
    }
 
-   for (const auto &path : structure.imports) { m_component.header_include(path + ".h"); }
+   for (const auto &path : structure.imports) {
+      m_component.header_include(path + ".h");
+   }
 
    class_spec offset_class(g_offset_class_name, fmt::format("{}_OFFSET_CLASS", m_header_name));
    offset_class.add_public("mb::size", "offset");
@@ -40,9 +44,10 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
 
    std::for_each(structure.messages.begin(), structure.messages.end(), [this](const Semantics::Message &msg) {
       class_spec message_class(msg.name);
-      std::for_each(msg.attribs.begin(), msg.attribs.end(), [&message_class](const Semantics::Attribute &attr) {
-         message_class.add_public(attr.type.to_cpp_type(), attr.name);
-      });
+      std::for_each(msg.attribs.begin(), msg.attribs.end(),
+                    [&message_class](const Semantics::Attribute &attr) {
+                       message_class.add_public(attr.type.to_cpp_type(), attr.name);
+                    });
 
       std::map<std::string, std::vector<Semantics::Attribute>> type_names{};
       for (auto &attrib : msg.attribs) {
@@ -55,18 +60,20 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       message_class.add_public(default_constructor());
 
       // void serialize_no_header()
-      message_class.add_public(
-              method("void", "serialize_no_header",
-                     {
-                             {"minecpp::nbt::Writer", "&w"}
+      message_class.add_public(method("void", "serialize_no_header",
+                                      {
+                                              {"minecpp::nbt::Writer", "&w"}
       },
-                     true, [&msg](statement::collector &col) {
-                        std::for_each(msg.attribs.begin(), msg.attribs.end(), [&col](const Semantics::Attribute &attr) {
-                           col << call("w.write_header", raw(attr.type.nbt_tagid()), raw("\"{}\"", attr.label));
-                           put_serialize_logic(col, attr.type, raw(attr.name));
-                        });
-                        col << call("w.end_compound");
-                     }));
+                                      true, [&msg](statement::collector &col) {
+                                         std::for_each(msg.attribs.begin(), msg.attribs.end(),
+                                                       [&col](const Semantics::Attribute &attr) {
+                                                          col << call("w.write_header",
+                                                                      raw(attr.type.nbt_tagid()),
+                                                                      raw("\"{}\"", attr.label));
+                                                          put_serialize_logic(col, attr.type, raw(attr.name));
+                                                       });
+                                         col << call("w.end_compound");
+                                      }));
 
       // void serialize()
       message_class.add_public(method("void", "serialize",
@@ -108,26 +115,28 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
                                              [&msg](statement::collector &col) {
                                                 col << call("minecpp::nbt::Reader r", raw("in"));
                                                 col << assign("auto peek", call("r.peek_tag"));
-                                                col << if_statement(raw("peek.id != minecpp::nbt::TagId::Compound"),
-                                                                    [&msg](statement::collector &col) {
-                                                                       col << raw("return {}()", msg.name);
-                                                                    });
+                                                col << if_statement(
+                                                        raw("peek.id != minecpp::nbt::TagId::Compound"),
+                                                        [&msg](statement::collector &col) {
+                                                           col << raw("return {}()", msg.name);
+                                                        });
                                                 col << raw("return {}::deserialize_no_header(r)", msg.name);
                                              }));
 
       // public:
 
       items offset_map;
-      std::for_each(msg.attribs.begin(), msg.attribs.end(), [&msg, &offset_map](const Semantics::Attribute &attr) {
-         struct_constructor pair;
-         pair.add(raw("\"{}\"", attr.label));
-         struct_constructor offset;
-         offset.add(call("offsetof", raw(msg.name), raw(attr.name)));
-         offset.add(call("sizeof", raw("{}::{}", msg.name, attr.name)));
-         offset.add(raw("{}", attr.id));
-         pair.add(offset);
-         offset_map.add(pair);
-      });
+      std::for_each(msg.attribs.begin(), msg.attribs.end(),
+                    [&msg, &offset_map](const Semantics::Attribute &attr) {
+                       struct_constructor pair;
+                       pair.add(raw("\"{}\"", attr.label));
+                       struct_constructor offset;
+                       offset.add(call("offsetof", raw(msg.name), raw(attr.name)));
+                       offset.add(call("sizeof", raw("{}::{}", msg.name, attr.name)));
+                       offset.add(raw("{}", attr.id));
+                       pair.add(offset);
+                       offset_map.add(pair);
+                    });
       // static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
       //      message_class.add_private(static_attribute("std::unordered_map<std::string, __nbt_idl_offset>", g_offset_attribute, offset_map));
 
@@ -157,7 +166,8 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
                                for (auto &item : pair.second) {
                                   col << if_statement(raw("name == \"{}\"", item.label),
                                                       [&item](statement::collector &col) {
-                                                         col << raw("this->{} = std::forward<T>(value)", item.name);
+                                                         col << raw("this->{} = std::forward<T>(value)",
+                                                                    item.name);
                                                          col << raw("return");
                                                       });
                                }
@@ -227,62 +237,64 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
               if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
                  auto deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
                  tag_switch.add_noscope(raw("minecpp::nbt::TagId::Compound"), [&deserializer](
-                                                                                      statement::collector &col) {
+                                                                                      statement::collector
+                                                                                              &col) {
                     std::for_each(
                             deserializer.elems.begin(), deserializer.elems.end(),
                             [&col](const Semantics::CompoundDeserializer::Elem &elem) {
-                               col << if_statement(
-                                       raw("name == \"{}\"", elem.label), [&elem](statement::collector &col) {
-                                          switch (elem.kind) {
-                                          case Semantics::CompoundKind::Struct:
-                                             col << call("res.__xx_put", raw("name"),
-                                                         raw("{}::deserialize_no_header(r)", elem.typeName));
-                                             col << raw("return");
-                                             return;
-                                          case Semantics::CompoundKind::Map:
-                                             col << call(
-                                                     "r.read_compound",
-                                                     lambda(
-                                                             {
-                                                                     {"minecpp::nbt::Reader",    "&r"},
-                                                                     { "minecpp::nbt::TagId", "tagid"},
-                                                                     {   "const std::string", "&name"}
-                                             },
-                                                             [&elem](statement::collector &col) {
-                                                                col << if_statement(raw("tagid != {}",
-                                                                                        Semantics::variant_to_nbt_tag(
-                                                                                                elem.subtype)),
-                                                                                    [](statement::collector &col) {
-                                                                                       col << call("r.skip_payload",
-                                                                                                   raw("tagid"));
-                                                                                       col << raw("return");
-                                                                                    });
-                                                                if (elem.subtype == Semantics::TypeVariant::Struct) {
-                                                                   col << method_call(
-                                                                           raw("res.{}", elem.name), "insert",
-                                                                           call("std::make_pair", raw("name"),
-                                                                                call(raw("{}::deserialize_no_header",
-                                                                                         elem.subtypeName),
-                                                                                     raw("r"))));
-                                                                } else {
-                                                                   col << method_call(
-                                                                           raw("res.{}", elem.name), "insert",
-                                                                           call("std::make_pair", raw("name"),
-                                                                                raw(Semantics::put_static_read(
-                                                                                        Semantics::StaticDeserializer{
-                                                                                                elem.subtype}))));
-                                                                }
-                                                             },
-                                                             raw("&res")));
-                                             col << raw("return");
-                                             return;
-                                          case Semantics::CompoundKind::Compound:
-                                             col << call("res.__xx_put", raw("name"), call("r.read_compound_content"));
-                                             col << raw("return");
-                                             return;
-                                          }
-                                          col << raw("break");
-                                       });
+                               col << if_statement(raw("name == \"{}\"", elem.label), [&elem](statement::collector
+                                                                                                      &col) {
+                                  switch (elem.kind) {
+                                  case Semantics::CompoundKind::Struct:
+                                     col << call("res.__xx_put", raw("name"),
+                                                 raw("{}::deserialize_no_header(r)", elem.typeName));
+                                     col << raw("return");
+                                     return;
+                                  case Semantics::CompoundKind::Map:
+                                     col << call(
+                                             "r.read_compound",
+                                             lambda(
+                                                     {
+                                                             {"minecpp::nbt::Reader",    "&r"},
+                                                             { "minecpp::nbt::TagId", "tagid"},
+                                                             {   "const std::string", "&name"}
+                                     },
+                                                     [&elem](statement::collector &col) {
+                                                        col << if_statement(raw("tagid != {}",
+                                                                                Semantics::variant_to_nbt_tag(
+                                                                                        elem.subtype)),
+                                                                            [](statement::collector &col) {
+                                                                               col << call("r.skip_payload",
+                                                                                           raw("tagid"));
+                                                                               col << raw("return");
+                                                                            });
+                                                        if (elem.subtype == Semantics::TypeVariant::Struct) {
+                                                           col << method_call(
+                                                                   raw("res.{}", elem.name), "insert",
+                                                                   call("std::make_pair", raw("name"),
+                                                                        call(raw("{}::deserialize_no_header",
+                                                                                 elem.subtypeName),
+                                                                             raw("r"))));
+                                                        } else {
+                                                           col << method_call(
+                                                                   raw("res.{}", elem.name), "insert",
+                                                                   call("std::make_pair", raw("name"),
+                                                                        raw(Semantics::put_static_read(
+                                                                                Semantics::StaticDeserializer{
+                                                                                        elem.subtype}))));
+                                                        }
+                                                     },
+                                                     raw("&res")));
+                                     col << raw("return");
+                                     return;
+                                  case Semantics::CompoundKind::Compound:
+                                     col << call("res.__xx_put", raw("name"),
+                                                 call("r.read_compound_content"));
+                                     col << raw("return");
+                                     return;
+                                  }
+                                  col << raw("break");
+                               });
                             });
                     col << raw("break");
                  });
@@ -300,8 +312,8 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
    col << call("r.skip_payload", raw("tagid"));
 }
 
-void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer, mb::codegen::statement::collector &col,
-                                mb::size depth)
+void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
+                                mb::codegen::statement::collector &col, mb::size depth)
 {
    using namespace mb::codegen;
    using minecpp::util::repeat_string;
@@ -320,23 +332,27 @@ void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
                     auto elem_deserializer = std::any_cast<Semantics::StaticDeserializer>(pair.second);
                     list_type_switch.add(raw(Semantics::variant_to_nbt_tag(elem_deserializer.variant)),
                                          [depth, &elem_deserializer](statement::collector &col) {
-                                            put_deserialize_list_logic_static(elem_deserializer, col, 0, depth);
+                                            put_deserialize_list_logic_static(elem_deserializer, col, 0,
+                                                                              depth);
                                          });
                  }
 
                  if (pair.second.type() == typeid(Semantics::CompoundDeserializer)) {
                     auto elem_deserializer = std::any_cast<Semantics::CompoundDeserializer>(pair.second);
-                    list_type_switch.add(raw("minecpp::nbt::TagId::Compound"), [&elem_deserializer,
-                                                                                depth](statement::collector &col) {
-                       std::for_each(elem_deserializer.elems.begin(), elem_deserializer.elems.end(),
-                                     [&col, depth](const Semantics::CompoundDeserializer::Elem &elem) {
-                                        col << if_statement(raw("name == \"{}\"", elem.label),
-                                                            [&elem, depth](statement::collector &col) {
-                                                               put_deserialize_list_logic_compound(elem, col, 0, depth);
-                                                            });
-                                     });
-                       col << raw("break");
-                    });
+                    list_type_switch.add(
+                            raw("minecpp::nbt::TagId::Compound"),
+                            [&elem_deserializer, depth](statement::collector &col) {
+                               std::for_each(
+                                       elem_deserializer.elems.begin(), elem_deserializer.elems.end(),
+                                       [&col, depth](const Semantics::CompoundDeserializer::Elem &elem) {
+                                          col << if_statement(raw("name == \"{}\"", elem.label),
+                                                              [&elem, depth](statement::collector &col) {
+                                                                 put_deserialize_list_logic_compound(
+                                                                         elem, col, 0, depth);
+                                                              });
+                                       });
+                               col << raw("break");
+                            });
                  }
 
                  if (pair.second.type() == typeid(Semantics::ListDeserializer)) {
@@ -348,21 +364,24 @@ void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
                  }
               });
       col << list_type_switch;
-      col << for_statement(
-              raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"),
-              [depth](statement::collector &col) { col << call("r.skip_payload", raw("list_info{}.tagid", depth)); });
+      col << for_statement(raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"),
+                           [depth](statement::collector &col) {
+                              col << call("r.skip_payload", raw("list_info{}.tagid", depth));
+                           });
    });
    col << return_statement();
 }
 
 void put_deserialize_list_logic_static(const Semantics::StaticDeserializer &deserializer,
-                                       mb::codegen::statement::collector &col, mb::size depth, mb::size target_depth)
+                                       mb::codegen::statement::collector &col, mb::size depth,
+                                       mb::size target_depth)
 {
    using namespace mb::codegen;
    using minecpp::util::repeat_string;
 
    if (depth == target_depth) {
-      col << raw("std::vector<{}> ls(list_info{}.size)", Semantics::variant_to_type(deserializer.variant), depth);
+      col << raw("std::vector<{}> ls(list_info{}.size)", Semantics::variant_to_type(deserializer.variant),
+                 depth);
       col << call("std::generate", call("ls.begin"), call("ls.end"),
                   lambda(
                           {},
@@ -372,33 +391,34 @@ void put_deserialize_list_logic_static(const Semantics::StaticDeserializer &dese
                           raw("&r")));
    } else {
       col << raw("{}{}{} ls(list_info{}.size)", repeat_string("std::vector<", target_depth - depth + 1),
-                 Semantics::variant_to_type(deserializer.variant), std::string(target_depth - depth + 1, '>'), depth);
+                 Semantics::variant_to_type(deserializer.variant), std::string(target_depth - depth + 1, '>'),
+                 depth);
 
-      col << if_statement(raw("list_info{}.size != 0", depth),
-                          [&deserializer, depth, target_depth](statement::collector &col) {
-                             col << assign("auto it", call("ls.begin"));
-                             lambda gen_lambda_first(
-                                     {},
-                                     [&deserializer, depth, target_depth](statement::collector &col) {
-                                        put_deserialize_list_logic_static(deserializer, col, depth + 1, target_depth);
-                                     },
-                                     raw("&r"));
-                             for (mb::size i = depth + 1; i <= target_depth; ++i) {
-                                gen_lambda_first.add_capture(raw("&list_info{}", i));
-                             }
-                             col << assign("*it", call(gen_lambda_first));
-                             lambda gen_lambda(
-                                     {},
-                                     [&deserializer, depth, target_depth](statement::collector &col) {
-                                        col << raw("auto list_info{} = r.peek_list()", depth + 1);
-                                        put_deserialize_list_logic_static(deserializer, col, depth + 1, target_depth);
-                                     },
-                                     raw("&r"));
-                             for (mb::size i = depth + 2; i <= target_depth; ++i) {
-                                gen_lambda.add_capture(raw("&list_info{}", i));
-                             }
-                             col << call("std::generate", raw("it + 1"), call("ls.end"), gen_lambda);
-                          });
+      col << if_statement(raw("list_info{}.size != 0", depth), [&deserializer, depth,
+                                                                target_depth](statement::collector &col) {
+         col << assign("auto it", call("ls.begin"));
+         lambda gen_lambda_first(
+                 {},
+                 [&deserializer, depth, target_depth](statement::collector &col) {
+                    put_deserialize_list_logic_static(deserializer, col, depth + 1, target_depth);
+                 },
+                 raw("&r"));
+         for (mb::size i = depth + 1; i <= target_depth; ++i) {
+            gen_lambda_first.add_capture(raw("&list_info{}", i));
+         }
+         col << assign("*it", call(gen_lambda_first));
+         lambda gen_lambda(
+                 {},
+                 [&deserializer, depth, target_depth](statement::collector &col) {
+                    col << raw("auto list_info{} = r.peek_list()", depth + 1);
+                    put_deserialize_list_logic_static(deserializer, col, depth + 1, target_depth);
+                 },
+                 raw("&r"));
+         for (mb::size i = depth + 2; i <= target_depth; ++i) {
+            gen_lambda.add_capture(raw("&list_info{}", i));
+         }
+         col << call("std::generate", raw("it + 1"), call("ls.end"), gen_lambda);
+      });
    }
 
    if (depth == 0) {
@@ -410,7 +430,8 @@ void put_deserialize_list_logic_static(const Semantics::StaticDeserializer &dese
 }
 
 void put_deserialize_list_logic_compound(const Semantics::CompoundDeserializer::Elem &elem,
-                                         mb::codegen::statement::collector &col, mb::size depth, mb::size target_depth)
+                                         mb::codegen::statement::collector &col, mb::size depth,
+                                         mb::size target_depth)
 {
    using namespace mb::codegen;
    using minecpp::util::repeat_string;
@@ -425,29 +446,34 @@ void put_deserialize_list_logic_compound(const Semantics::CompoundDeserializer::
                           },
                           raw("&r")));
    } else {
-      col << raw("{}{}{} ls(list_info{}.size)", repeat_string("std::vector<", target_depth - depth + 1), elem.typeName,
-                 std::string(target_depth - depth + 1, '>'), depth);
+      col << raw("{}{}{} ls(list_info{}.size)", repeat_string("std::vector<", target_depth - depth + 1),
+                 elem.typeName, std::string(target_depth - depth + 1, '>'), depth);
 
-      col << if_statement(raw("list_info{}.size != 0", depth), [&elem, depth, target_depth](statement::collector &col) {
-         col << assign("auto it", call("ls.begin"));
-         lambda gen_lambda_first(
-                 {},
-                 [&elem, depth, target_depth](statement::collector &col) {
-                    put_deserialize_list_logic_compound(elem, col, depth + 1, target_depth);
-                 },
-                 raw("&r"));
-         for (mb::size i = depth + 1; i <= target_depth; ++i) { gen_lambda_first.add_capture(raw("&list_info{}", i)); }
-         col << assign("*it", call(gen_lambda_first));
-         lambda gen_lambda(
-                 {},
-                 [&elem, depth, target_depth](statement::collector &col) {
-                    col << raw("auto list_info{} = r.peek_list()", depth + 1);
-                    put_deserialize_list_logic_compound(elem, col, depth + 1, target_depth);
-                 },
-                 raw("&r"));
-         for (mb::size i = depth + 2; i <= target_depth; ++i) { gen_lambda.add_capture(raw("&list_info{}", i)); }
-         col << call("std::generate", raw("it + 1"), call("ls.end"), gen_lambda);
-      });
+      col << if_statement(
+              raw("list_info{}.size != 0", depth), [&elem, depth, target_depth](statement::collector &col) {
+                 col << assign("auto it", call("ls.begin"));
+                 lambda gen_lambda_first(
+                         {},
+                         [&elem, depth, target_depth](statement::collector &col) {
+                            put_deserialize_list_logic_compound(elem, col, depth + 1, target_depth);
+                         },
+                         raw("&r"));
+                 for (mb::size i = depth + 1; i <= target_depth; ++i) {
+                    gen_lambda_first.add_capture(raw("&list_info{}", i));
+                 }
+                 col << assign("*it", call(gen_lambda_first));
+                 lambda gen_lambda(
+                         {},
+                         [&elem, depth, target_depth](statement::collector &col) {
+                            col << raw("auto list_info{} = r.peek_list()", depth + 1);
+                            put_deserialize_list_logic_compound(elem, col, depth + 1, target_depth);
+                         },
+                         raw("&r"));
+                 for (mb::size i = depth + 2; i <= target_depth; ++i) {
+                    gen_lambda.add_capture(raw("&list_info{}", i));
+                 }
+                 col << call("std::generate", raw("it + 1"), call("ls.end"), gen_lambda);
+              });
    }
 
    if (depth == 0) {
@@ -473,7 +499,8 @@ void put_serialize_logic(mb::codegen::statement::collector &col, Semantics::Type
                                   {"const auto", "&value"}
       },
                           [&type](statement::collector &col) {
-                             put_serialize_logic(col, Semantics::Type(type.variant, type.m_repeated - 1), raw("value"));
+                             put_serialize_logic(col, Semantics::Type(type.variant, type.m_repeated - 1),
+                                                 raw("value"));
                           },
                           raw("&w")));
       return;
@@ -501,7 +528,8 @@ void put_serialize_logic(mb::codegen::statement::collector &col, Semantics::Type
                                      {"const auto", "&pair"}
          },
                              [&type](statement::collector &col) {
-                                col << call("w.write_header", raw(Semantics::variant_to_nbt_tag(type.subtype->variant)),
+                                col << call("w.write_header",
+                                            raw(Semantics::variant_to_nbt_tag(type.subtype->variant)),
                                             raw("pair.first"));
                                 put_serialize_logic(col, *type.subtype, raw("pair.second"));
                              },

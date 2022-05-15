@@ -7,8 +7,9 @@
 Config get_config()
 {
    Config response;
-   response.front_id = mb::getenv("FRONT_ID").unwrap(boost::uuids::to_string(boost::uuids::random_generator()()));
-   response.port     = std::stoi(mb::getenv("PORT").unwrap("25565"));
+   response.front_id =
+           mb::getenv("FRONT_ID").unwrap(boost::uuids::to_string(boost::uuids::random_generator()()));
+   response.port = std::stoi(mb::getenv("PORT").unwrap("25565"));
 
    auto cfg_filename = mb::getenv("CONFIG_FILE").unwrap("config.yml");
 

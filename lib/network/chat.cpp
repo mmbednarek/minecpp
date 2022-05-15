@@ -25,8 +25,8 @@ std::string format_left_message(std::string_view player_name)
 
 std::string format_join_message(std::string_view player_name)
 {
-   return minecpp::util::format(R"({"extra":[{"color": "yellow", "text": "{} joined the game"}], "text": ""})",
-                                player_name);
+   return minecpp::util::format(
+           R"({"extra":[{"color": "yellow", "text": "{} joined the game"}], "text": ""})", player_name);
 }
 
 }// namespace minecpp::network

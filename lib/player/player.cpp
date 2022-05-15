@@ -6,8 +6,11 @@
 namespace minecpp::player {
 
 Player::Player(minecpp::player::Id id, std::string_view name, const util::Vec3 &pos) :
-    m_id(id), m_name(name), m_tracking(std::make_unique<Tracking>(pos, 16))
-{}
+    m_id(id),
+    m_name(name),
+    m_tracking(std::make_unique<Tracking>(pos, 16))
+{
+}
 
 void Player::on_movement(game::World &w, util::Vec3 pos) { m_tracking->on_movement(w, *this, pos); }
 

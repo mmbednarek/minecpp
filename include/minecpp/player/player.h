@@ -9,6 +9,7 @@
 
 namespace minecpp::game {
 class World;
+
 namespace entity {
 class Entity;
 }

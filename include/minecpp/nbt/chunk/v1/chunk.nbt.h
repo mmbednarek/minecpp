@@ -13,6 +13,7 @@ namespace minecpp::nbt::chunk::v1 {
 
 #ifndef MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
 #define MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
+
 class __nbt_idl_offset
 {
  public:

@@ -5,7 +5,11 @@
 
 namespace minecpp::game::worldgen::population {
 
-ChunkPlacements::ChunkPlacements(game::Chunk &chunk, std::uint64_t seed) : m_seed(seed) { prepare_chunk(chunk); }
+ChunkPlacements::ChunkPlacements(game::Chunk &chunk, std::uint64_t seed) :
+    m_seed(seed)
+{
+   prepare_chunk(chunk);
+}
 
 Placement ChunkPlacements::get_placement(int x, int z)
 {
@@ -80,7 +84,8 @@ void ChunkPlacements::populate_chunk(game::Chunk &chunk)
    std::for_each(m_placements.begin(), m_placements.end(), [&chunk](auto &pair) {
       Placement &placement = pair.second;
       auto &obj            = ObjectRepository::the().get_object(placement.object_id);
-      if (placement.chunk_x < 0 || placement.chunk_x >= 16 || placement.chunk_z < 0 || placement.chunk_z >= 16)
+      if (placement.chunk_x < 0 || placement.chunk_x >= 16 || placement.chunk_z < 0 ||
+          placement.chunk_z >= 16)
          return;
       for (int y = 0; y < obj.height(); ++y) {
          auto state = obj.block_at(placement.x, y, placement.z);

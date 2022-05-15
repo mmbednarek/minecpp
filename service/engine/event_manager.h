@@ -22,7 +22,10 @@ class EventManager
       EventManager::Queue queue;
       std::mutex mutex;
 
-      explicit Client(TStream stream) : stream(stream) {}
+      explicit Client(TStream stream) :
+          stream(stream)
+      {
+      }
 
       void write(Event event)
       {

@@ -105,8 +105,12 @@ TEST(minecpp_util, Around)
    minecpp::util::around(1, 1, [&values](int x, int z) { values[z * 3 + x] = 1; });
 
    ASSERT_EQ(values[4], 0);
-   for (int x = 0; x < 4; ++x) { ASSERT_EQ(values[x], 1); }
-   for (int x = 5; x < 9; ++x) { ASSERT_EQ(values[x], 1); }
+   for (int x = 0; x < 4; ++x) {
+      ASSERT_EQ(values[x], 1);
+   }
+   for (int x = 5; x < 9; ++x) {
+      ASSERT_EQ(values[x], 1);
+   }
 }
 
 TEST(minecpp_util, StaticQueue)
@@ -114,10 +118,14 @@ TEST(minecpp_util, StaticQueue)
    minecpp::util::StaticQueue<int, 5> queue;
 
    std::thread t1([&queue]() {
-      for (int i = 0; i < 100; ++i) { queue.push(std::move(i)); }
+      for (int i = 0; i < 100; ++i) {
+         queue.push(std::move(i));
+      }
    });
 
-   for (int i = 0; i < 100; ++i) { ASSERT_EQ(queue.pop(), i); }
+   for (int i = 0; i < 100; ++i) {
+      ASSERT_EQ(queue.pop(), i);
+   }
 
    t1.join();
 }

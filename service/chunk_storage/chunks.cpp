@@ -7,9 +7,14 @@
 
 namespace minecpp::service::chunk_storage {
 
-ChunkManager::ChunkManager(Regions regions) : m_regions(std::move(regions)), gen(*this, 43254124543534345) {}
+ChunkManager::ChunkManager(Regions regions) :
+    m_regions(std::move(regions)),
+    gen(*this, 43254124543534345)
+{
+}
 
 constexpr int64_t max_z = 1875060;
+
 static constexpr int64_t hash_chunk_pos(int x, int z)
 {
    return static_cast<int64_t>(z) + max_z * static_cast<int64_t>(x);
@@ -108,7 +113,8 @@ mb::result<uuid> ChunkManager::add_refs(uuid engine_id, player::Id player_id,
    return target_engine;
 }
 
-mb::result<mb::empty> ChunkManager::free_refs(player::Id player_id, std::vector<minecpp::game::block::ChunkPos> coords)
+mb::result<mb::empty> ChunkManager::free_refs(player::Id player_id,
+                                              std::vector<minecpp::game::block::ChunkPos> coords)
 {
    for (const auto &coord : coords) {
       auto chunk = MB_TRY(get_chunk(coord.x, coord.z));

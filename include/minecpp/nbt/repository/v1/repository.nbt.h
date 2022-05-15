@@ -14,6 +14,7 @@ namespace minecpp::nbt::repository::v1 {
 
 #ifndef MINECPP_NBT_REPOSITORY_V1_REPOSITORY_H_OFFSET_CLASS
 #define MINECPP_NBT_REPOSITORY_V1_REPOSITORY_H_OFFSET_CLASS
+
 class __nbt_idl_offset
 {
  public:

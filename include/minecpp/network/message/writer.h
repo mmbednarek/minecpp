@@ -52,14 +52,18 @@ template<typename I>
 void Writer::write_big_endian_array(std::vector<I> vec)
 {
    write_varint(vec.size());
-   for (auto const &v : vec) { write_big_endian(v); }
+   for (auto const &v : vec) {
+      write_big_endian(v);
+   }
 }
 
 template<typename I>
 void Writer::write_big_endian_array(I *data, std::size_t size)
 {
    write_varint(size);
-   for (std::size_t i = 0; i < size; ++i) { write_big_endian(data[i]); }
+   for (std::size_t i = 0; i < size; ++i) {
+      write_big_endian(data[i]);
+   }
 }
 
 }// namespace minecpp::network::message

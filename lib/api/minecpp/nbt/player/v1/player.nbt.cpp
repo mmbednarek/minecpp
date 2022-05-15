@@ -252,7 +252,9 @@ RecipeBook RecipeBook::deserialize_no_header(minecpp::nbt::Reader &r)
                return;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }
@@ -280,7 +282,8 @@ void Player::serialize_no_header(minecpp::nbt::Writer &w) const
    w.write_short_content(air);
    w.write_header(minecpp::nbt::TagId::List, "Attributes");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, attributes.size());
-   std::for_each(attributes.begin(), attributes.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(attributes.begin(), attributes.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Compound, "Brain");
    brain.serialize_no_header(w);
    w.write_header(minecpp::nbt::TagId::Int, "DataVersion");
@@ -303,7 +306,8 @@ void Player::serialize_no_header(minecpp::nbt::Writer &w) const
    w.write_short_content(hurt_time);
    w.write_header(minecpp::nbt::TagId::List, "Inventory");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, inventory.size());
-   std::for_each(inventory.begin(), inventory.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(inventory.begin(), inventory.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Byte, "Invulnerable");
    w.write_byte_content(invulnerable);
    w.write_header(minecpp::nbt::TagId::List, "Motion");
@@ -423,14 +427,17 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r)
                }
                if (name == "Inventory") {
                   std::vector<InventoryElement> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() { return InventoryElement::deserialize_no_header(r); });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return InventoryElement::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                break;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }

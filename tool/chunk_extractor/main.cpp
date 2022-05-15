@@ -28,7 +28,9 @@ auto main(int argc, char *argv[]) -> int
    minecpp::util::ZlibInputStream zlib_stream(ss);
 
    char buff[256];
-   while (zlib_stream.read(buff, 256)) { std::cout.write(buff, 256); }
+   while (zlib_stream.read(buff, 256)) {
+      std::cout.write(buff, 256);
+   }
 
    //   minecpp::nbt::Reader cr(zlib_stream);
    //   cr.check_signature();

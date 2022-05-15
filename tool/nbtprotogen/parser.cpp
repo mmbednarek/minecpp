@@ -3,7 +3,10 @@
 
 namespace Syntax {
 
-Parser::Parser(Lex::TokenReader &reader) : reader(reader) {}
+Parser::Parser(Lex::TokenReader &reader) :
+    reader(reader)
+{
+}
 
 mb::result<std::vector<Ast::Node>> Parser::parse()
 {

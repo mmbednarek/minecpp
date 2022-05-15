@@ -13,10 +13,13 @@
 namespace minecpp::service::engine {
 
 PlayerManager::PlayerManager(std::string_view players_path, EntityManager &entities) :
-    m_players_path(players_path), m_entities(entities)
-{}
+    m_players_path(players_path),
+    m_entities(entities)
+{
+}
 
-mb::result<mb::empty> PlayerManager::join_player(minecpp::game::World &w, const std::string &name, player::Id id)
+mb::result<mb::empty> PlayerManager::join_player(minecpp::game::World &w, const std::string &name,
+                                                 player::Id id)
 {
    auto player_data = MB_TRY(load_player_data(w, id));
    auto entity_id   = m_entities.spawn(Entity::from_player_nbt(player_data));
@@ -28,7 +31,8 @@ mb::result<mb::empty> PlayerManager::join_player(minecpp::game::World &w, const 
    return mb::ok;
 }
 
-mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(minecpp::game::World &w, player::Id id)
+mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(minecpp::game::World &w,
+                                                                             player::Id id)
 {
    // TODO: cache player data
    std::ifstream f_player_data;
@@ -93,7 +97,9 @@ void PlayerManager::remap_ids()
 {
    m_id_map.clear();
    PlayerIndex index{};
-   for (auto const &p : m_players) { m_id_map[minecpp::util::write_uuid(p.id())] = index++; }
+   for (auto const &p : m_players) {
+      m_id_map[minecpp::util::write_uuid(p.id())] = index++;
+   }
 }
 
 std::size_t PlayerManager::player_count() { return m_players.size(); }

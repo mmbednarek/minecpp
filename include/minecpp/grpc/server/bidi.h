@@ -18,7 +18,10 @@ struct BidiClient
    ::grpc::ServerAsyncReaderWriter<TWrite, TRead> stream;
    TTag tag{};
 
-   BidiClient() : stream(&ctx) {}
+   BidiClient() :
+       stream(&ctx)
+   {
+   }
 
    template<typename TPool>
    void write(TPool &pool, const TWrite &value)
@@ -52,7 +55,9 @@ struct CompletionEvent
    TRead *read_ptr;
 
    CompletionEvent(EventType tag, BidiClient<TWrite, TRead, TTag> *client, TRead *read_ptr = nullptr) :
-       tag(tag), client(client), read_ptr(read_ptr)
+       tag(tag),
+       client(client),
+       read_ptr(read_ptr)
    {
    }
 };
@@ -65,10 +70,12 @@ class Stream
    util::AtomicPool<TRead> &m_read_pool;
 
  public:
-   Stream(BidiClient<TWrite, TRead, TTag> &client, util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &event_pool,
+   Stream(BidiClient<TWrite, TRead, TTag> &client,
+          util::AtomicPool<CompletionEvent<TWrite, TRead, TTag>> &event_pool,
           util::AtomicPool<TRead> &read_pool) :
        m_client(client),
-       m_event_pool(event_pool), m_read_pool(read_pool)
+       m_event_pool(event_pool),
+       m_read_pool(read_pool)
    {
    }
 
@@ -124,7 +131,8 @@ class BidiServer
             continue;
          }
          case EventType::Write: {
-            m_callback.on_finish_write(Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool));
+            m_callback.on_finish_write(
+                    Stream<TWrite, TRead, TTag>(*event->client, m_event_pool, m_read_pool));
             m_event_pool.free(event);
             continue;
          }
@@ -147,7 +155,8 @@ class BidiServer
       }
    }
 
-   explicit BidiServer(const std::string &bind_address, TCallback &callback, int worker_count) : m_callback(callback)
+   explicit BidiServer(const std::string &bind_address, TCallback &callback, int worker_count) :
+       m_callback(callback)
    {
       ::grpc::ServerBuilder builder;
       builder.AddListeningPort(bind_address, ::grpc::InsecureServerCredentials());
@@ -187,8 +196,8 @@ class BidiServer
                            return mb::ok;
                         return worker.get();
                      });
-      auto err_it =
-              std::find_if(results.begin(), results.end(), [](const mb::result<mb::empty> &res) { return !res.ok(); });
+      auto err_it = std::find_if(results.begin(), results.end(),
+                                 [](const mb::result<mb::empty> &res) { return !res.ok(); });
       if (err_it == results.end()) {
          return mb::ok;
       }

@@ -19,7 +19,9 @@ TEST(Rand, JavaRandomTwins)
 {
    minecpp::random::JavaRandom a(2151901553968352745);
    minecpp::random::JavaRandom b(8091867987493326313);
-   for (int i = 0; i < 256; ++i) { ASSERT_EQ(a.next_int(), b.next_int()); }
+   for (int i = 0; i < 256; ++i) {
+      ASSERT_EQ(a.next_int(), b.next_int());
+   }
 }
 
 static char level_to_char(double v)

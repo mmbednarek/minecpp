@@ -15,7 +15,9 @@ TEST(Squeeze, vec)
       ASSERT_EQ(vec.size(), s);
 
       for (int bits = 5; bits < 17; ++bits) {
-         for (int i = 0; i < s; ++i) { ASSERT_EQ(vec.at(i), i); }
+         for (int i = 0; i < s; ++i) {
+            ASSERT_EQ(vec.at(i), i);
+         }
 
          std::for_each(vec.begin(), vec.end(), [i = 0](std::int32_t val) mutable {
             ASSERT_EQ(val, i);
@@ -26,6 +28,7 @@ TEST(Squeeze, vec)
       }
    }
 }
+
 TEST(Squeeze, set_test)
 {
    auto gen_vec = [](std::size_t size) -> std::vector<int> {

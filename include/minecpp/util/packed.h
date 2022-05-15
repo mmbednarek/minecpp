@@ -11,7 +11,8 @@ void for_each_packed(const std::vector<int64_t> &data, uint8_t bits, uint32_t ar
 
 void set_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index, uint32_t value);
 
-std::vector<int64_t> generate_packed(uint8_t bits, uint32_t array_size, const std::function<uint32_t()> &generator);
+std::vector<int64_t> generate_packed(uint8_t bits, uint32_t array_size,
+                                     const std::function<uint32_t()> &generator);
 
 uint32_t get_packed(std::vector<int64_t> &data, uint8_t bits, uint32_t index);
 

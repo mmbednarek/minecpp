@@ -36,7 +36,8 @@ struct Type
    std::unique_ptr<Type> subtype;// subtype for map
 
    Type() = default;
-   Type(const std::vector<std::string> &ns, const std::string &name, int repeated, const std::string &subtype);
+   Type(const std::vector<std::string> &ns, const std::string &name, int repeated,
+        const std::string &subtype);
    Type(TypeVariant variant, int repeated);
    Type(const Type &type);
    Type &operator=(const Type &type);
@@ -103,6 +104,7 @@ struct CompoundDeserializer
       std::string subtypeName;
       std::string label;
    };
+
    std::vector<Elem> elems;
 };
 

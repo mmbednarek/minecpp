@@ -8,8 +8,10 @@
 namespace minecpp::nbt {
 
 NamedTag::NamedTag(std::string name, TagId tag_id, std::any content) :
-    name(std::move(name)), content{.tag_id = tag_id, .content = std::move(content)}
-{}
+    name(std::move(name)),
+    content{.tag_id = tag_id, .content = std::move(content)}
+{
+}
 
 static std::string pad(int padding) { return std::string(padding, '\t'); }
 
@@ -128,7 +130,9 @@ void serialize_content(nbt::Writer &w, const Content *c)
    case TagId::List: {
       auto list = c->as<ListContent>();
       w.begin_list_no_header(list.tag_id, list.elements.size());
-      for (auto elm : list) { serialize_content(w, &elm); }
+      for (auto elm : list) {
+         serialize_content(w, &elm);
+      }
       return;
    }
    case TagId::Compound: {

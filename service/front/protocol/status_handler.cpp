@@ -27,7 +27,9 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn)
    w.write_byte(0);
 
    format::Builder builder;
-   builder.bold(Color::Blue, "Minecpp").text(Color::Blue, " (FiberMC)").text(" - A minecraft server written in C++");
+   builder.bold(Color::Blue, "Minecpp")
+           .text(Color::Blue, " (FiberMC)")
+           .text(" - A minecraft server written in C++");
 
    std::stringstream ss;
    ss << R"({"description":)" << builder.build() << R"(,)";

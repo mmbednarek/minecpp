@@ -8,6 +8,7 @@
 
 struct empty
 {};
+
 constexpr empty result_ok = empty{};
 
 template<typename T>
@@ -17,6 +18,7 @@ class result
    {
       T value;
    };
+
    std::variant<container, std::unique_ptr<error>> value;
 
    result() = default;
@@ -37,16 +39,22 @@ class result
 };
 
 template<typename T>
-result<T>::result(T value) : value(container{std::forward<T>(value)})
-{}
+result<T>::result(T value) :
+    value(container{std::forward<T>(value)})
+{
+}
 
 template<typename T>
-result<T>::result(error e) : value(std::make_unique<error>(e))
-{}
+result<T>::result(error e) :
+    value(std::make_unique<error>(e))
+{
+}
 
 template<typename T>
-result<T>::result(error::ptr e) : value(std::move(e))
-{}
+result<T>::result(error::ptr e) :
+    value(std::move(e))
+{
+}
 
 template<typename T>
 result<T>::result(const result &other)

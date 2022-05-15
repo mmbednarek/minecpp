@@ -5,7 +5,10 @@
 
 namespace minecpp::network::message {
 
-Reader::Reader(std::istream &s) : s(s) {}
+Reader::Reader(std::istream &s) :
+    s(s)
+{
+}
 
 uint8_t Reader::read_byte()
 {
@@ -87,6 +90,7 @@ game::item::Recipe Reader::read_recipe()
       return game::item::Recipe(game::item::ItemStack{.id = 0, .amount = 0}, game::item::RecipeType::Special);
    }
 }
+
 game::item::Recipe Reader::read_recipe_shaped()
 {
    auto width  = read_varint();
@@ -96,7 +100,9 @@ game::item::Recipe Reader::read_recipe_shaped()
    auto num = width * height;
 
    std::vector<game::item::StackVariants> ingredients(num);
-   for (int i = 0; i < num; i++) { ingredients[i] = read_stack_variants(); }
+   for (int i = 0; i < num; i++) {
+      ingredients[i] = read_stack_variants();
+   }
    auto crafted = read_stack();
 
    return game::item::Recipe(crafted, group,
@@ -113,7 +119,9 @@ game::item::Recipe Reader::read_recipe_shapeless()
    auto num   = read_varint();
 
    std::vector<game::item::StackVariants> ingredients(num);
-   for (int i = 0; i < num; i++) { ingredients[i] = read_stack_variants(); }
+   for (int i = 0; i < num; i++) {
+      ingredients[i] = read_stack_variants();
+   }
    auto outcome = read_stack();
 
    return game::item::Recipe(outcome, group,
@@ -152,7 +160,9 @@ game::item::StackVariants Reader::read_stack_variants()
 {
    auto num_variants = read_varint();
    game::item::StackVariants result(num_variants);
-   for (int v = 0; v < num_variants; v++) { result[v] = read_stack(); }
+   for (int v = 0; v < num_variants; v++) {
+      result[v] = read_stack();
+   }
    return result;
 }
 

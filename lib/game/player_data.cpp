@@ -5,11 +5,16 @@ namespace minecpp::game {
 
 using nbt::TagId;
 
-PlayerData::PlayerData(boost::uuids::uuid id) : id(id) {}
-
-PlayerData::PlayerData(nbt::Reader &r) : id()
+PlayerData::PlayerData(boost::uuids::uuid id) :
+    id(id)
 {
-   r.read_compound([this](nbt::Reader &r, nbt::TagId tagid, const std::string &name) { load(r, tagid, name); });
+}
+
+PlayerData::PlayerData(nbt::Reader &r) :
+    id()
+{
+   r.read_compound(
+           [this](nbt::Reader &r, nbt::TagId tagid, const std::string &name) { load(r, tagid, name); });
 }
 
 void PlayerData::load(nbt::Reader &r, nbt::TagId tagid, const std::string &name)

@@ -2,7 +2,10 @@
 
 namespace minecpp::util {
 
-ScriptWriter::ScriptWriter(std::ostream &os) : os(os) {}
+ScriptWriter::ScriptWriter(std::ostream &os) :
+    os(os)
+{
+}
 
 void ScriptWriter::ident() { ++ident_level; }
 

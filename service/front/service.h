@@ -50,6 +50,7 @@ class Service
       std::string_view user_name;
       uuid id;
    };
+
    LoginResponse login_player(std::string &user_name);
 
    void init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name);
@@ -58,7 +59,8 @@ class Service
 
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ClientSettings msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerPosition msg);
-   void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerPositionRotation msg);
+   void on_message(uuid engine_id, player::Id player_id,
+                   minecpp::network::message::PlayerPositionRotation msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerRotation msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ChatMessage msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerDigging msg);

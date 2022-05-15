@@ -17,7 +17,8 @@ Server::Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play
 
 void Server::accept_conn()
 {
-   auto conn = std::make_shared<Connection>((boost::asio::io_context &) acceptor.get_executor().context(), this);
+   auto conn =
+           std::make_shared<Connection>((boost::asio::io_context &) acceptor.get_executor().context(), this);
    acceptor.async_accept(conn->m_socket, [this, conn](const boost::system::error_code &err) {
       if (err) {
          spdlog::error("error accepting connection: {}", err.message());

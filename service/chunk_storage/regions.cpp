@@ -8,7 +8,11 @@
 
 namespace minecpp::service::chunk_storage {
 
-RegionFile::RegionFile(std::fstream stream, std::string path) : m_file(std::move(stream)), m_path(std::move(path)) {}
+RegionFile::RegionFile(std::fstream stream, std::string path) :
+    m_file(std::move(stream)),
+    m_path(std::move(path))
+{
+}
 
 mb::result<std::unique_ptr<RegionFile>> RegionFile::load(const std::string &path)
 {
@@ -29,9 +33,13 @@ mb::result<mb::empty> RegionFile::reload()
    return mb::ok;
 }
 
-Regions::Regions(std::string_view path) : m_path(path) {}
+Regions::Regions(std::string_view path) :
+    m_path(path)
+{
+}
 
 constexpr int max_z = 62502;// two regions over world border
+
 static constexpr int64_t hash_chunk_pos(int x, int z)
 {
    return static_cast<int64_t>(z) + max_z * static_cast<int64_t>(x);

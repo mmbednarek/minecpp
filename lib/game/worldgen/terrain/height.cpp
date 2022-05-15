@@ -3,8 +3,13 @@
 namespace minecpp::game::worldgen::terrain {
 
 HeightGenerator::HeightGenerator(uint64_t seed) :
-    rand(seed), base_perlin(rand), perlin_det_amp(rand), perlin_detail0(rand, 0.8, 1.3), perlin_detail1(rand, 0.9, 1.5)
-{}
+    rand(seed),
+    base_perlin(rand),
+    perlin_det_amp(rand),
+    perlin_detail0(rand, 0.8, 1.3),
+    perlin_detail1(rand, 0.9, 1.5)
+{
+}
 
 short HeightGenerator::at(int x, int z)
 {

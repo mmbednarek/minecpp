@@ -25,12 +25,16 @@ template<std::uint8_t bits>
 TinyVec<bits>::TinyVec() = default;
 
 template<std::uint8_t bits>
-TinyVec<bits>::TinyVec(std::vector<std::uint8_t> data) : m_data(std::move(data))
-{}
+TinyVec<bits>::TinyVec(std::vector<std::uint8_t> data) :
+    m_data(std::move(data))
+{
+}
 
 template<std::uint8_t bits>
-TinyVec<bits>::TinyVec(std::size_t size) : m_data(size * bits / 8)
-{}
+TinyVec<bits>::TinyVec(std::size_t size) :
+    m_data(size * bits / 8)
+{
+}
 
 template<std::uint8_t bits>
 std::int8_t TinyVec<bits>::at(std::size_t i) const

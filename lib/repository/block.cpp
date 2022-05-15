@@ -22,8 +22,8 @@ mb::emptyres load_repository_from_file(std::string_view filename)
       states.register_resource(bool_state.tag, game::State(bool_state.state.name));
    }
    for (auto &int_state : repo.int_states) {
-      states.register_resource(int_state.tag,
-                               game::State(int_state.state.name, int_state.state.min_value, int_state.state.max_value));
+      states.register_resource(int_state.tag, game::State(int_state.state.name, int_state.state.min_value,
+                                                          int_state.state.max_value));
    }
    for (auto &enum_state : repo.enum_states) {
       states.register_resource(enum_state.tag, game::State(enum_state.state.name, enum_state.state.values));

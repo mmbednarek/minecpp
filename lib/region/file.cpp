@@ -5,7 +5,10 @@
 
 namespace minecpp::region {
 
-RegionFile::RegionFile(std::fstream &s) : m_stream(s) {}
+RegionFile::RegionFile(std::fstream &s) :
+    m_stream(s)
+{
+}
 
 mb::result<std::vector<uint8_t>> RegionFile::load_chunk(int x, int z) noexcept
 {
@@ -39,7 +42,8 @@ mb::result<std::vector<uint8_t>> RegionFile::load_chunk(int x, int z) noexcept
    m_stream.read((char *) data.data(), data_size);
 
    if (m_stream.gcount() != data_size) {
-      return mb::error(fmt::format("(x = {}, z = {}) invalid data count {} != {}", x, z, m_stream.gcount(), data_size));
+      return mb::error(fmt::format("(x = {}, z = {}) invalid data count {} != {}", x, z, m_stream.gcount(),
+                                   data_size));
    }
    return data;
 }

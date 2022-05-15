@@ -21,8 +21,8 @@ class Server
    using ConstConnectionIter = std::vector<ConnectionPtr>::const_iterator;
 
  public:
-   explicit Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play, Protocol::Handler *status,
-                   Protocol::Handler *login);
+   explicit Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play,
+                   Protocol::Handler *status, Protocol::Handler *login);
 
    void accept_conn();
 

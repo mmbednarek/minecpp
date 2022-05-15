@@ -4,7 +4,10 @@
 
 namespace minecpp::nbt {
 
-Reader::Reader(std::istream &s) : minecpp::util::Reader(s) {}
+Reader::Reader(std::istream &s) :
+    minecpp::util::Reader(s)
+{
+}
 
 void Reader::find_compound(std::string name)
 {
@@ -40,7 +43,9 @@ void Reader::skip_payload(TagId tagid)
    case TagId::List:
       elm_tagid = read_static(TagId::End);
       size      = read_bswap<int>();
-      for (int i = 0; i < size; i++) { skip_payload(elm_tagid); }
+      for (int i = 0; i < size; i++) {
+         skip_payload(elm_tagid);
+      }
       return;
    case TagId::Compound:
       for (;;) {
@@ -131,13 +136,17 @@ void Reader::read_list(std::function<void(Reader &)> for_elem)
    if (tagid == TagId::End)
       return;
 
-   for (int i = 0; i < size; i++) { for_elem(*this); }
+   for (int i = 0; i < size; i++) {
+      for_elem(*this);
+   }
 }
 
 void Reader::foreach_long(std::function<void(long long value)> for_elem)
 {
    auto size = read_bswap<int>();
-   for (int i = 0; i < size; i++) { for_elem(read_bswap<long long>()); }
+   for (int i = 0; i < size; i++) {
+      for_elem(read_bswap<long long>());
+   }
 }
 
 std::istream &Reader::raw_stream() { return get_stream(); }
@@ -150,7 +159,9 @@ minecpp::util::Vec3 Reader::read_vec3()
       return minecpp::util::Vec3();
 
    if (size != 3) {
-      for (int i = 0; i < size; ++i) { skip_payload(TagId::Double); }
+      for (int i = 0; i < size; ++i) {
+         skip_payload(TagId::Double);
+      }
       return minecpp::util::Vec3();
    }
 

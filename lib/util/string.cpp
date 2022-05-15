@@ -5,7 +5,9 @@ namespace minecpp::util {
 static int64_t pow(int64_t base, int64_t pow)
 {
    int64_t result = 1;
-   for (int64_t i = 0; i < pow; ++i) { result *= base; }
+   for (int64_t i = 0; i < pow; ++i) {
+      result *= base;
+   }
    return result;
 }
 
@@ -29,7 +31,9 @@ std::string repeat_string(std::string_view s, std::size_t n)
    auto full_size = s.size() * n;
    result.reserve(full_size);
 
-   for (std::size_t i = 0; i < full_size; i++) { result.push_back(s.at(i % s.size())); }
+   for (std::size_t i = 0; i < full_size; i++) {
+      result.push_back(s.at(i % s.size()));
+   }
 
    return result;
 }

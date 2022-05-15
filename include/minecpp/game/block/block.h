@@ -1,9 +1,11 @@
 #ifndef MINECPP_GAME_BLOCK_BLOCK_H
 #define MINECPP_GAME_BLOCK_BLOCK_H
 #include "material.h"
+#include "../state.h"
 #include <minecpp/game/state.h>
 #include <minecpp/util/string.h>
 #include <string_view>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -47,7 +49,10 @@ class Block
          return *this;
       }
 
-      [[nodiscard]] std::tuple<const game::State &, int> operator*() const { return {*it, state % it->value_count()}; }
+      [[nodiscard]] std::tuple<const game::State &, int> operator*() const
+      {
+         return {*it, state % it->value_count()};
+      }
 
       bool operator==(const StateIterator &rhs) const { return it == rhs.it; }
    };
@@ -62,8 +67,10 @@ class Block
       StateIterator end() { return StateIterator{block.m_states.crend(), 0, block}; }
    };
 
-   explicit Block(std::string_view tag, std::vector<State> states, const BlockStats &stats = {}) :
-       m_tag(std::string(tag)), m_states(std::move(states)), m_stats(stats)
+   Block(std::string_view tag, std::vector<State> states, BlockStats stats = {}) :
+       m_tag(std::string(tag)),
+       m_states(std::move(states)),
+       m_stats(std::move(stats))
    {
       if (tag == "minecraft:air") {
          m_stats.material = &Material::Air;

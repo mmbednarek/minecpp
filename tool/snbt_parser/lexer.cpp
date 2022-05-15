@@ -2,9 +2,15 @@
 
 namespace minecpp::tool::snbt_parser {
 
-[[nodiscard]] inline static bool is_white_space(int ch) { return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n'; }
+[[nodiscard]] inline static bool is_white_space(int ch)
+{
+   return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n';
+}
 
-Lexer::Lexer(Reader &reader) : m_reader(reader) {}
+Lexer::Lexer(Reader &reader) :
+    m_reader(reader)
+{
+}
 
 std::vector<Token> Lexer::lex()
 {
@@ -119,7 +125,10 @@ void Lexer::push_identifier()
 
 void Lexer::push_special_token(TokenType type) { m_result.push_back(Token{.type = type}); }
 
-StringReader::StringReader(std::string_view data) : m_data(data) {}
+StringReader::StringReader(std::string_view data) :
+    m_data(data)
+{
+}
 
 bool StringReader::has_next() { return m_at < m_data.size(); }
 

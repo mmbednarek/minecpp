@@ -40,6 +40,7 @@ std::vector<player::Id> read_recipients(const clientbound_v1::Event &event);
 
 template<typename T>
 requires ClientboundVisitor<T>
+
 void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
 {
    if (!event.has_payload())

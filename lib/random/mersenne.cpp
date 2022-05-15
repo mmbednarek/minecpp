@@ -2,7 +2,10 @@
 
 namespace minecpp::random {
 
-Mersenne::Mersenne(const uint64_t seed) : engine(seed) {}
+Mersenne::Mersenne(const uint64_t seed) :
+    engine(seed)
+{
+}
 
 int Mersenne::next_int() { return engine(); }
 

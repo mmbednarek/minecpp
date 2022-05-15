@@ -67,13 +67,18 @@ struct ListContent
 {
    TagId tag_id;
    std::vector<std::any> elements;
+
    class Iterator
    {
       ListContent &list;
       std::size_t at;
 
     public:
-      explicit Iterator(ListContent &list, std::size_t at = 0) : list(list), at(at) {}
+      explicit Iterator(ListContent &list, std::size_t at = 0) :
+          list(list),
+          at(at)
+      {
+      }
 
       Iterator &operator++()
       {

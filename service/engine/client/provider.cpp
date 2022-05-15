@@ -48,8 +48,10 @@ mb::result<Provider> Provider::create(const Config &cfg)
 }
 
 Provider::Provider(std::vector<Service> services, std::map<uuid, int> uuid_to_id) :
-    m_services(std::move(services)), m_uuid_to_id(std::move(uuid_to_id))
-{}
+    m_services(std::move(services)),
+    m_uuid_to_id(std::move(uuid_to_id))
+{
+}
 
 Provider::Service &Provider::get_random_service()
 {

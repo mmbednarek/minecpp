@@ -13,7 +13,11 @@ constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, block::ChunkPos pos)
    return seed * (chunk_seed_coef1 * pos.x + chunk_seed_coef2 * pos.z + chunk_seed_coef3) + chunk_seed_coef4;
 }
 
-Population::Population(Chunks &chunks, std::uint64_t seed) : m_chunks(chunks), m_seed(seed) {}
+Population::Population(Chunks &chunks, std::uint64_t seed) :
+    m_chunks(chunks),
+    m_seed(seed)
+{
+}
 
 void Population::populate_chunk(block::ChunkPos pos)
 {

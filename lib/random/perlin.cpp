@@ -8,8 +8,12 @@ namespace minecpp::random {
 using minecpp::util::Vec2;
 
 Perlin::Perlin(random::Random &rand) :
-    rand(rand), coef1(rand.next_int()), coef2(rand.next_int()), coef3(rand.next_int())
-{}
+    rand(rand),
+    coef1(rand.next_int()),
+    coef2(rand.next_int()),
+    coef3(rand.next_int())
+{
+}
 
 [[nodiscard]] static double smooth(const double t)
 {
@@ -51,9 +55,15 @@ minecpp::util::Vec2 Perlin::grad(int x, int z)
 }
 
 DisplacedPerlin::DisplacedPerlin(Random &rand, double scale, double amp) :
-    base(rand), dis_x(rand), dis_z(rand), scale(scale), amp(amp), move_dis_x(rand.next_double(), rand.next_double()),
+    base(rand),
+    dis_x(rand),
+    dis_z(rand),
+    scale(scale),
+    amp(amp),
+    move_dis_x(rand.next_double(), rand.next_double()),
     move_dis_z(rand.next_double(), rand.next_double())
-{}
+{
+}
 
 double DisplacedPerlin::at(const minecpp::util::Vec2 pos)
 {

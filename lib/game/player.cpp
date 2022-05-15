@@ -1,12 +1,14 @@
 #include <minecpp/game/player.h>
 #include <minecpp/player/player.h>
 
-
 namespace minecpp::game {
 
 Player::Player(uuid id, std::string &name, Vec3 pos) :
-    id(id), player_name(std::move(name)), tracking(std::make_unique<Tracking>(pos, 16))
-{}
+    id(id),
+    player_name(std::move(name)),
+    tracking(std::make_unique<Tracking>(pos, 16))
+{
+}
 
 void Player::set_entity_id(uint32_t entity_id) { this->entity_id = entity_id; }
 
@@ -58,4 +60,5 @@ uint32_t Player::Abilities::flags()
 }
 
 }// namespace minecpp::game
+
 // namespace minecpp::game

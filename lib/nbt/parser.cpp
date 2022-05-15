@@ -2,7 +2,10 @@
 
 namespace minecpp::nbt {
 
-Parser::Parser(std::istream &stream) : reader(stream) {}
+Parser::Parser(std::istream &stream) :
+    reader(stream)
+{
+}
 
 NamedTag Parser::read_tag()
 {

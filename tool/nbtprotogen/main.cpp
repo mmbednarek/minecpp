@@ -15,7 +15,8 @@ constexpr auto g_version = "0.0.1";
 
 std::string find_module_name(std::string scheme_file)
 {
-   auto beg = scheme_file.begin() + (scheme_file.rend() - std::find(scheme_file.rbegin(), scheme_file.rend(), '/'));
+   auto beg = scheme_file.begin() +
+              (scheme_file.rend() - std::find(scheme_file.rbegin(), scheme_file.rend(), '/'));
    return std::string(beg, std::find(beg, scheme_file.end(), '.'));
 }
 
@@ -33,11 +34,11 @@ int main(int argc, char *argv[])
 {
    opts::options_description desc("nbtc");
    desc.add_options()("help", "print help information")("version,v", "print version")(
-           "source-output,s", opts::value<std::string>(),
-           "specify source output path")("header-output,h", opts::value<std::string>(), "specify header output path")(
-           "module-name,m", opts::value<std::string>(),
-           "specify alternative module name")("include-path,I", opts::value<std::string>(), "specify include path")(
-           "scheme-file", opts::value<std::string>(), "specify a source scheme file");
+           "source-output,s", opts::value<std::string>(), "specify source output path")(
+           "header-output,h", opts::value<std::string>(), "specify header output path")(
+           "module-name,m", opts::value<std::string>(), "specify alternative module name")(
+           "include-path,I", opts::value<std::string>(),
+           "specify include path")("scheme-file", opts::value<std::string>(), "specify a source scheme file");
 
    opts::positional_options_description desc_pos;
    desc_pos.add("scheme-file", -1);

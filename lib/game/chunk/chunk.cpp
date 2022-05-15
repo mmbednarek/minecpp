@@ -17,7 +17,10 @@ inline int expected_data_version = 2230;
 
 Chunk::Chunk() = default;
 
-Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) : m_pos_x(x), m_pos_z(z), m_full(false)
+Chunk::Chunk(int x, int z, std::array<short, 256> &height_map) :
+    m_pos_x(x),
+    m_pos_z(z),
+    m_full(false)
 {
    int i    = 0;
    auto arr = minecpp::util::generate_packed(9, 256, [&height_map, &i]() { return height_map[i++]; });
@@ -47,12 +50,16 @@ void Chunk::as_proto(minecpp::proto::chunk::v1::Chunk *chunk)
       out_sec->set_ref_count(sec.second.ref_count);
       *out_sec->mutable_palette()     = {sec.second.palette.begin(), sec.second.palette.end()};
       *out_sec->mutable_data()        = {sec.second.data.raw().begin(), sec.second.data.raw().end()};
-      *out_sec->mutable_block_light() = {sec.second.block_light.raw().begin(), sec.second.block_light.raw().end()};
-      *out_sec->mutable_sky_light()   = {sec.second.sky_light.raw().begin(), sec.second.sky_light.raw().end()};
+      *out_sec->mutable_block_light() = {sec.second.block_light.raw().begin(),
+                                         sec.second.block_light.raw().end()};
+      *out_sec->mutable_sky_light() = {sec.second.sky_light.raw().begin(), sec.second.sky_light.raw().end()};
    }
 }
 
-constexpr uint32_t coord_to_offset(int x, int y, int z) { return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15); }
+constexpr uint32_t coord_to_offset(int x, int y, int z)
+{
+   return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15);
+}
 
 void Chunk::create_empty_section(int8_t sec)
 {
@@ -63,10 +70,10 @@ void Chunk::create_empty_section(int8_t sec)
    };
 }
 
-void Chunk::set_block(int x, int y, int z, uint32_t state)
+void Chunk::set_block(int x, int y, int z, game::BlockState state)
 {
-   int8_t sec = y / 16;
-   auto iter  = m_sections.find(sec);
+   auto sec  = static_cast<std::int8_t>(y / 16);
+   auto iter = m_sections.find(sec);
    if (iter == m_sections.end()) {
       create_empty_section(sec);
       iter = m_sections.find(sec);
@@ -74,7 +81,7 @@ void Chunk::set_block(int x, int y, int z, uint32_t state)
 
    auto &section = iter->second;
    auto index    = std::find(section.palette.begin(), section.palette.end(), state);
-   int value;
+   std::size_t value{};
    if (index == section.palette.end()) {
       value = section.palette.size();
       section.palette.emplace_back(state);
@@ -96,7 +103,7 @@ game::BlockState Chunk::get_block(int x, int y, int z)
    if (it_section == m_sections.end())
       return 0;
 
-   auto palette_index = it_section->second.data.at(coord_to_offset(x, y, z));
+   auto palette_index = static_cast<std::size_t>(it_section->second.data.at(coord_to_offset(x, y, z)));
    if (palette_index < 0 || palette_index >= it_section->second.palette.size())
       return 0;
 
@@ -185,7 +192,9 @@ std::array<short, 256> Chunk::get_height_map()
 {
    std::array<short, 256> result{};
    for (int z = 0; z < 16; ++z) {
-      for (int x = 0; x < 16; ++x) { result[z * 16 + x] = height_at(x, z); }
+      for (int x = 0; x < 16; ++x) {
+         result[z * 16 + x] = height_at(x, z);
+      }
    }
    return result;
 }
@@ -215,13 +224,15 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
                              [](const nbt_chunk_v1::PaletteItem &item) {
                                 // TODO: Remove these unwraps :C
                                 auto block_id = repository::Block::the().find_id_by_tag(item.name).unwrap();
-                                return repository::encode_state(static_cast<int>(block_id),
-                                                                repository::make_compound_encoder(item.properties))
+                                return repository::encode_state(
+                                               static_cast<int>(block_id),
+                                               repository::make_compound_encoder(item.properties))
                                         .unwrap();
                              });
               out_sec.ref_count = game::calculate_ref_count(sec.block_states, out_sec.palette);
               if (!sec.block_states.empty()) {
-                 out_sec.data = minecpp::squeezed::Vector(sec.block_states.size() * 64 / 4096, 4096, sec.block_states);
+                 out_sec.data = minecpp::squeezed::Vector(sec.block_states.size() * 64 / 4096, 4096,
+                                                          sec.block_states);
               }
               return std::make_pair(sec.y, out_sec);
            });
@@ -236,9 +247,11 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
    result.level.z_pos       = m_pos_z;
    result.level.last_update = static_cast<mb::i64>(minecpp::util::now());
    result.level.heightmaps.world_surface.resize(m_hm_world_surface.size());
-   std::copy(m_hm_world_surface.begin(), m_hm_world_surface.end(), result.level.heightmaps.world_surface.begin());
+   std::copy(m_hm_world_surface.begin(), m_hm_world_surface.end(),
+             result.level.heightmaps.world_surface.begin());
    result.level.heightmaps.motion_blocking.resize(m_hm_motion_blocking.size());
-   std::copy(m_hm_motion_blocking.begin(), m_hm_motion_blocking.end(), result.level.heightmaps.motion_blocking.begin());
+   std::copy(m_hm_motion_blocking.begin(), m_hm_motion_blocking.end(),
+             result.level.heightmaps.motion_blocking.begin());
    result.level.biomes.resize(m_biomes.size());
    std::copy(m_biomes.begin(), m_biomes.end(), result.level.biomes.begin());
    result.level.sections.reserve(m_sections.size());
@@ -249,11 +262,12 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
                      sec.sky_light   = pair.second.sky_light.raw();
                      sec.block_light = pair.second.block_light.raw();
                      sec.palette.resize(pair.second.palette.size());
-                     std::transform(pair.second.palette.begin(), pair.second.palette.end(), sec.palette.begin(),
-                                    [](const mb::u32 state) {
+                     std::transform(pair.second.palette.begin(), pair.second.palette.end(),
+                                    sec.palette.begin(), [](const mb::u32 state) {
                                        nbt_chunk_v1::PaletteItem item;
                                        auto [block_id, state_value] =
-                                               repository::StateManager::the().parse_block_id(static_cast<int>(state));
+                                               repository::StateManager::the().parse_block_id(
+                                                       static_cast<int>(state));
                                        auto res = repository::Block::the().get_by_id(block_id);
                                        if (!res.ok()) {
                                           return item;
@@ -263,7 +277,8 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
                                        return item;
                                     });
                      sec.block_states.resize(pair.second.data.raw().size());
-                     std::copy(pair.second.data.raw().begin(), pair.second.data.raw().end(), sec.block_states.begin());
+                     std::copy(pair.second.data.raw().begin(), pair.second.data.raw().end(),
+                               sec.block_states.begin());
                      return sec;
                   });
    return result;

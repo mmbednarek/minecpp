@@ -13,6 +13,7 @@ struct ChatMessage
 {
    std::string message;
 };
+
 void deserialize(Reader &r, ChatMessage &msg);
 
 // 0x05
@@ -27,6 +28,7 @@ struct ClientSettings
    bool enable_text_filtering;
    bool allow_server_listing;
 };
+
 void deserialize(Reader &r, ClientSettings &msg);
 
 // 0x0f
@@ -34,6 +36,7 @@ struct KeepAliveClient
 {
    uint64_t time;
 };
+
 void deserialize(Reader &r, KeepAliveClient &msg);
 
 // 0x11
@@ -42,6 +45,7 @@ struct PlayerPosition
    double x, y, z;
    bool on_ground;
 };
+
 void deserialize(Reader &r, PlayerPosition &msg);
 
 // 0x12
@@ -51,6 +55,7 @@ struct PlayerPositionRotation
    float yaw, pitch;
    bool on_ground;
 };
+
 void deserialize(Reader &r, PlayerPositionRotation &msg);
 
 // 0x13
@@ -59,6 +64,7 @@ struct PlayerRotation
    float yaw, pitch;
    bool on_ground;
 };
+
 void deserialize(Reader &r, PlayerRotation &msg);
 
 // 0x1a
@@ -68,6 +74,7 @@ struct PlayerDigging
    uint64_t position{};
    game::Face facing{};
 };
+
 void deserialize(Reader &r, PlayerDigging &msg);
 
 enum class PlayerHand : uint8_t
@@ -81,6 +88,7 @@ struct AnimateHandClient
 {
    PlayerHand hand;
 };
+
 void deserialize(Reader &r, AnimateHandClient &msg);
 
 // 0x2e
@@ -92,6 +100,7 @@ struct PlayerBlockPlacement
    float x, y, z;
    bool inside_block;
 };
+
 void deserialize(Reader &r, PlayerBlockPlacement &msg);
 
 

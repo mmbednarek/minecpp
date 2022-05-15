@@ -33,7 +33,9 @@ class Reader
    {
       auto size = read_bswap<int>();
       std::vector<T> result(size);
-      for (int i = 0; i < size; i++) { result[i] = read_bswap<T>(); }
+      for (int i = 0; i < size; i++) {
+         result[i] = read_bswap<T>();
+      }
       return result;
    }
 

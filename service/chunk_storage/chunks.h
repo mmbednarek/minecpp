@@ -38,7 +38,8 @@ class ChunkManager : public minecpp::game::Chunks
    [[nodiscard]] mb::result<mb::empty> save_chunk(int x, int z);
    mb::result<mb::empty> set_block(int x, int y, int z, uint32_t state);
    mb::result<int> height_at(int x, int z);
-   mb::result<uuid> add_refs(uuid engine_id, player::Id player_id, std::vector<minecpp::game::block::ChunkPos> coords);
+   mb::result<uuid> add_refs(uuid engine_id, player::Id player_id,
+                             std::vector<minecpp::game::block::ChunkPos> coords);
    mb::result<mb::empty> free_refs(player::Id player_id, std::vector<minecpp::game::block::ChunkPos> coords);
 };
 

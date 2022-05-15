@@ -142,6 +142,7 @@ extern int yyleng;
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
+
 struct yy_buffer_state
 {
 

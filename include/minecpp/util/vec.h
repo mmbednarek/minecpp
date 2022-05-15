@@ -7,7 +7,12 @@ namespace minecpp::util {
 struct Vec2
 {
    Vec2() = default;
-   constexpr Vec2(double x, double z) : x(x), z(z) {}
+
+   constexpr Vec2(double x, double z) :
+       x(x),
+       z(z)
+   {
+   }
 
    Vec2 operator*(double value) const;
    Vec2 operator/(double value) const;
@@ -16,6 +21,7 @@ struct Vec2
 
    Vec2 operator+(Vec2 other) const;
    Vec2 operator-(Vec2 other) const;
+
    [[nodiscard]] constexpr Vec2 truncate() const { return {std::floor(x), std::floor(z)}; }
 
    double x{}, z{};
@@ -24,7 +30,13 @@ struct Vec2
 struct Vec3
 {
    Vec3() = default;
-   constexpr Vec3(double x, double y, double z) : x(x), y(y), z(z) {}
+
+   constexpr Vec3(double x, double y, double z) :
+       x(x),
+       y(y),
+       z(z)
+   {
+   }
 
    void mul(double x, double y, double z);
 

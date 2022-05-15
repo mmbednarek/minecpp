@@ -45,6 +45,7 @@ class Writer
  private:
    void put_byte(uint8_t b);
    void put_string(std::string_view s);
+
    template<typename I>
    void put_big_endian(I v)
    {

@@ -178,10 +178,12 @@ void Entity::serialize_no_header(minecpp::nbt::Writer &w) const
                  [&w](const auto &value) { w.write_float_content(value); });
    w.write_header(minecpp::nbt::TagId::List, "ArmorItems");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, armor_items.size());
-   std::for_each(armor_items.begin(), armor_items.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(armor_items.begin(), armor_items.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::List, "Attributes");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, attributes.size());
-   std::for_each(attributes.begin(), attributes.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(attributes.begin(), attributes.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Compound, "Brain");
    brain.serialize_no_header(w);
    w.write_header(minecpp::nbt::TagId::Byte, "CanPickUpLoot");
@@ -204,7 +206,8 @@ void Entity::serialize_no_header(minecpp::nbt::Writer &w) const
                  [&w](const auto &value) { w.write_float_content(value); });
    w.write_header(minecpp::nbt::TagId::List, "HandItems");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, hand_items.size());
-   std::for_each(hand_items.begin(), hand_items.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(hand_items.begin(), hand_items.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Float, "Health");
    w.write_float_content(health);
    w.write_header(minecpp::nbt::TagId::Int, "HurtByTimestamp");
@@ -301,7 +304,9 @@ Entity Entity::deserialize_no_header(minecpp::nbt::Reader &r)
                break;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }
@@ -449,14 +454,17 @@ Section Section::deserialize_no_header(minecpp::nbt::Reader &r)
             case minecpp::nbt::TagId::Compound: {
                if (name == "Palette") {
                   std::vector<PaletteItem> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() { return PaletteItem::deserialize_no_header(r); });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return PaletteItem::deserialize_no_header(r); });
                   res.__xx_put(name, ls);
                   return;
                }
                break;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }
@@ -537,13 +545,14 @@ Structures Structures::deserialize_no_header(minecpp::nbt::Reader &r)
       switch (tagid) {
       case minecpp::nbt::TagId::Compound:
          if (name == "Starts") {
-            r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
-               if (tagid != minecpp::nbt::TagId::Compound) {
-                  r.skip_payload(tagid);
-                  return;
-               }
-               res.starts.insert(std::make_pair(name, Start::deserialize_no_header(r)));
-            });
+            r.read_compound(
+                    [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+                       if (tagid != minecpp::nbt::TagId::Compound) {
+                          r.skip_payload(tagid);
+                          return;
+                       }
+                       res.starts.insert(std::make_pair(name, Start::deserialize_no_header(r)));
+                    });
             return;
          }
          break;
@@ -718,12 +727,16 @@ Level Level::deserialize_no_header(minecpp::nbt::Reader &r)
                      return;
                   }
                   }
-                  for (mb::size i = 0; i < list_info1.size; ++i) { r.skip_payload(list_info1.tagid); }
+                  for (mb::size i = 0; i < list_info1.size; ++i) {
+                     r.skip_payload(list_info1.tagid);
+                  }
                }
                return;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }

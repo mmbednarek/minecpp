@@ -4,8 +4,11 @@
 namespace minecpp::game::worldgen {
 
 Generator::Generator(Chunks &provider, std::uint64_t seed) :
-    m_seed(seed), m_chunks(provider), m_population(provider, seed)
-{}
+    m_seed(seed),
+    m_chunks(provider),
+    m_population(provider, seed)
+{
+}
 
 void Generator::generate_chunk(int x, int z)
 {

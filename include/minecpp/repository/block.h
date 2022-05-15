@@ -2,6 +2,7 @@
 #define MINECPP_REPOSITORY_BLOCK_H
 #include "repository.h"
 #include "state.h"
+#include <functional>
 #include <minecpp/game/block/block.h>
 #include <minecpp/game/state.h>
 #include <minecpp/nbt/tag.h>

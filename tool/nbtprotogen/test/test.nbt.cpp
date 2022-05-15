@@ -30,13 +30,14 @@ Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r)
       case minecpp::nbt::TagId::String: res.__xx_put(name, r.read_str()); return;
       case minecpp::nbt::TagId::Compound:
          if (name == "stuff") {
-            r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
-               if (tagid != minecpp::nbt::TagId::Int) {
-                  r.skip_payload(tagid);
-                  return;
-               }
-               res.stuff.insert(std::make_pair(name, r.read_int()));
-            });
+            r.read_compound(
+                    [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+                       if (tagid != minecpp::nbt::TagId::Int) {
+                          r.skip_payload(tagid);
+                          return;
+                       }
+                       res.stuff.insert(std::make_pair(name, r.read_int()));
+                    });
             return;
          }
          break;
@@ -86,13 +87,14 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r)
       switch (tagid) {
       case minecpp::nbt::TagId::Compound:
          if (name == "foo_map") {
-            r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
-               if (tagid != minecpp::nbt::TagId::Compound) {
-                  r.skip_payload(tagid);
-                  return;
-               }
-               res.foo_map.insert(std::make_pair(name, Foo::deserialize_no_header(r)));
-            });
+            r.read_compound(
+                    [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+                       if (tagid != minecpp::nbt::TagId::Compound) {
+                          r.skip_payload(tagid);
+                          return;
+                       }
+                       res.foo_map.insert(std::make_pair(name, Foo::deserialize_no_header(r)));
+                    });
             return;
          }
          if (name == "meta") {
@@ -114,7 +116,9 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r)
                break;
             }
             }
-            for (mb::size i = 0; i < list_info0.size; ++i) { r.skip_payload(list_info0.tagid); }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
          }
          return;
       }

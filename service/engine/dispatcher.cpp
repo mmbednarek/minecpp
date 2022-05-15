@@ -9,14 +9,19 @@ namespace minecpp::service::engine {
 
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
-Dispatcher::Dispatcher(EventManager<BidiStream> &events) : m_events(events) {}
+Dispatcher::Dispatcher(EventManager<BidiStream> &events) :
+    m_events(events)
+{
+}
 
 void Dispatcher::load_terrain(player::Id player_id, const game::ChunkPosition &central_chunk,
                               std::vector<minecpp::game::ChunkPosition> coords)
 {
    clientbound_v1::LoadTerrain event;
    *event.mutable_central_chunk() = central_chunk.to_proto();
-   for (const auto &c : coords) { *event.add_coords() = c.to_proto(); }
+   for (const auto &c : coords) {
+      *event.add_coords() = c.to_proto();
+   }
    m_events.send_to(event, player_id);
 }
 
@@ -83,18 +88,10 @@ void Dispatcher::remove_player(player::Id player_id, mb::u32 entity_id)
    m_events.send_to_all(remove_player);
 }
 
-void Dispatcher::update_block(minecpp::game::BlockPosition block, mb::u32 state)
+void Dispatcher::update_block(minecpp::game::BlockPosition block, game::BlockState state)
 {
    clientbound_v1::UpdateBlock update_block;
    update_block.set_block_position(block.as_long());
-   update_block.set_state(state);
-   m_events.send_to_all(update_block);
-}
-
-void Dispatcher::update_block(mb::i32 x, mb::i32 y, mb::i32 z, mb::u32 state)
-{
-   clientbound_v1::UpdateBlock update_block;
-   update_block.set_block_position(minecpp::game::BlockPosition(x, y, z).as_long());
    update_block.set_state(state);
    m_events.send_to_all(update_block);
 }
@@ -147,7 +144,9 @@ void Dispatcher::player_list(player::Id player_id, const std::vector<player::Sta
 {
    clientbound_v1::PlayerList player_list;
    player_list.mutable_list()->Reserve(static_cast<int>(status_list.size()));
-   for (const auto &status : status_list) { *player_list.add_list() = status.to_proto(); }
+   for (const auto &status : status_list) {
+      *player_list.add_list() = status.to_proto();
+   }
    m_events.send_to(player_list, player_id);
 }
 
@@ -155,7 +154,9 @@ void Dispatcher::entity_list(player::Id player_id, const std::vector<game::entit
 {
    clientbound_v1::EntityList list;
    list.mutable_list()->Reserve(static_cast<int>(entity_list.size()));
-   for (const auto &entity : entity_list) { *list.add_list() = entity.to_proto(); }
+   for (const auto &entity : entity_list) {
+      *list.add_list() = entity.to_proto();
+   }
    m_events.send_to(list, player_id);
 }
 

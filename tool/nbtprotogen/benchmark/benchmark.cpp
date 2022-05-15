@@ -28,6 +28,7 @@ static void bm_repository_struct(benchmark::State &state)
       res.serialize(ss, "");
    }
 }
+
 BENCHMARK(bm_repository_struct);
 
 static void bm_repository_dynamic(benchmark::State &state)
@@ -49,6 +50,7 @@ static void bm_repository_dynamic(benchmark::State &state)
               .serialize("", ss);
    }
 }
+
 BENCHMARK(bm_repository_dynamic);
 
 BENCHMARK_MAIN();

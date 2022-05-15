@@ -6,8 +6,10 @@
 namespace minecpp::service::engine {
 
 ApiHandler::ApiHandler(EventHandler &event_handler, EventManager<BidiStream> &event_manager) :
-    m_event_handler(event_handler), m_event_manager(event_manager)
-{}
+    m_event_handler(event_handler),
+    m_event_manager(event_manager)
+{
+}
 
 void ApiHandler::on_connected(BidiStream stream)
 {

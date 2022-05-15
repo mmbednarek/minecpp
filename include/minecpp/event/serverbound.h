@@ -32,6 +32,7 @@ concept ServerboundVisitor = requires(T t)
 
 template<typename T>
 requires ServerboundVisitor<T>
+
 void visit_serverbound(const serverbound_v1::Event &event, T &visitor)
 {
    if (!event.has_payload())

@@ -19,8 +19,8 @@ int calculate_ref_count(const std::vector<std::int64_t> &data, const std::vector
    int count = 0;
    minecpp::util::for_each_packed(data, bits, 4096, [&count, palette](uint32_t value) {
       assert(value < palette.size());
-      auto [block_id, state_value] =
-              repository::StateManager::the().parse_block_id(static_cast<int>(palette[value % palette.size()]));
+      auto [block_id, state_value] = repository::StateManager::the().parse_block_id(
+              static_cast<int>(palette[value % palette.size()]));
 
       auto res = repository::Block::the().get_by_id(block_id);
       if (!res.ok())

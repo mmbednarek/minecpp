@@ -13,6 +13,7 @@ namespace minecpp::nbt::level::v1 {
 
 #ifndef MINECPP_NBT_LEVEL_V1_LEVEL_H_OFFSET_CLASS
 #define MINECPP_NBT_LEVEL_V1_LEVEL_H_OFFSET_CLASS
+
 class __nbt_idl_offset
 {
  public:

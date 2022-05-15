@@ -35,5 +35,7 @@ int main()
 
    fmt::print("modified: {}\n", result.modified);
    fmt::print("endpoints\n");
-   for (const auto &endpoint : result.endpoints) { fmt::print(" - {}\n", endpoint.to_string()); }
+   for (const auto &endpoint : result.endpoints) {
+      fmt::print(" - {}\n", endpoint.to_string());
+   }
 }

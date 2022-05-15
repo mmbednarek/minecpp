@@ -11,7 +11,12 @@ struct Location
    int line, col;
 
    Location() = default;
-   explicit Location(Lex::Token t) : line(t.line), col(t.col) {}
+
+   explicit Location(Lex::Token t) :
+       line(t.line),
+       col(t.col)
+   {
+   }
 };
 
 struct SyntaxInfo

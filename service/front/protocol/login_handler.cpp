@@ -4,8 +4,11 @@
 
 namespace minecpp::service::front::Protocol {
 
-LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler) : service(service), play_handler(play_handler)
-{}
+LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler) :
+    service(service),
+    play_handler(play_handler)
+{
+}
 
 void LoginHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
 {
@@ -18,7 +21,8 @@ void LoginHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::netw
 
 constexpr int compression_threshold = 256;
 
-void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
+                                      minecpp::network::message::Reader &r)
 {
    std::string user_name = r.read_string();
 

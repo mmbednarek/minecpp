@@ -13,14 +13,21 @@ constexpr uint64_t mask_z = (1u << num_z_bits) - 1;
 constexpr uint32_t bit_offset_x = num_y_bits + num_x_bits;
 constexpr uint32_t bit_offset_z = num_y_bits;
 
-Position::Position(int x, int y, int z) : x(x), y(y), z(z) {}
+Position::Position(int x, int y, int z) :
+    x(x),
+    y(y),
+    z(z)
+{
+}
 
 static_assert(-2 >> 1 == -1, "compiler does not support arithmetic shift");
 
 Position::Position(int64_t value) :
-    x(value >> (num_z_bits + num_y_bits)), y(value << (num_x_bits + num_z_bits) >> (num_x_bits + num_z_bits)),
+    x(value >> (num_z_bits + num_y_bits)),
+    y(value << (num_x_bits + num_z_bits) >> (num_x_bits + num_z_bits)),
     z(value << num_x_bits >> (num_x_bits + num_y_bits))
-{}
+{
+}
 
 uint64_t Position::as_long() const
 {
@@ -39,9 +46,17 @@ bool operator==(const ChunkPos &a, const ChunkPos &b) { return a.x == b.x && a.z
 
 ChunkPos ChunkPos::operator+(ChunkPos &other) const { return ChunkPos{x + other.x, z + other.z}; }
 
-ChunkPos::ChunkPos(int x, int z) : x(x), z(z) {}
+ChunkPos::ChunkPos(int x, int z) :
+    x(x),
+    z(z)
+{
+}
 
-ChunkPos::ChunkPos(minecpp::util::Vec2 v) : x(v.x), z(v.z) {}
+ChunkPos::ChunkPos(minecpp::util::Vec2 v) :
+    x(v.x),
+    z(v.z)
+{
+}
 
 Position ChunkPos::block_at(int bx, int by, int bz) const { return Position(x * 16 + bx, by, z * 16 + bz); }
 

@@ -13,6 +13,7 @@ namespace proto::nbt::test {
 
 #ifndef PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 #define PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
+
 class __nbt_idl_offset
 {
  public:

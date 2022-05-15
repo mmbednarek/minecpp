@@ -109,7 +109,9 @@ Writer get_chunk_data(const Chunk &chunk)
       // write palette
       chunk_data_writer.write_byte(sec.bits());
       chunk_data_writer.write_varint(sec.palette_size());
-      for (auto item : sec.palette()) { chunk_data_writer.write_varint(item); }
+      for (auto item : sec.palette()) {
+         chunk_data_writer.write_varint(item);
+      }
 
       // write data
       chunk_data_writer.write_big_endian_array(sec.data().data(), sec.data_size());
@@ -117,8 +119,8 @@ Writer get_chunk_data(const Chunk &chunk)
       // write biomes
       chunk_data_writer.write_byte(6);// ignore palette
 
-      auto biome_data =
-              util::generate_packed(6, 64, [it = chunk.biomes().begin(), end = chunk.biomes().end()]() mutable {
+      auto biome_data = util::generate_packed(
+              6, 64, [it = chunk.biomes().begin(), end = chunk.biomes().end()]() mutable {
                  if (it == end)
                     return 0;
                  return *(it++);

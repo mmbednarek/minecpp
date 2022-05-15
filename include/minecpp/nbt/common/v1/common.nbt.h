@@ -13,6 +13,7 @@ namespace minecpp::nbt::common::v1 {
 
 #ifndef MINECPP_NBT_COMMON_V1_COMMON_H_OFFSET_CLASS
 #define MINECPP_NBT_COMMON_V1_COMMON_H_OFFSET_CLASS
+
 class __nbt_idl_offset
 {
  public:

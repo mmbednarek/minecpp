@@ -8,7 +8,10 @@ namespace minecpp::game {
 
 SectionBuilder::SectionBuilder() = default;
 
-constexpr uint32_t coord_to_offset(int x, int y, int z) { return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15); }
+constexpr uint32_t coord_to_offset(int x, int y, int z)
+{
+   return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15);
+}
 
 void SectionBuilder::fill(std::function<int(short, short, short)> callback)
 {
@@ -34,10 +37,11 @@ void SectionBuilder::fill(std::function<int(short, short, short)> callback)
 int pow2(int v)
 {
    int result = 1;
-   for (int i = 0; i < v; i++) { result += 2; }
+   for (int i = 0; i < v; i++) {
+      result += 2;
+   }
    return result;
 }
-
 
 Section SectionBuilder::build()
 {
@@ -48,15 +52,20 @@ Section SectionBuilder::build()
    auto data = minecpp::util::generate_packed(bits, 4096, [this, &i]() { return content[i++]; });
 
    std::vector<std::uint32_t> out_palette(top_item);
-   std::for_each(palette.begin(), palette.end(), [&out_palette](auto &item) { out_palette[item.second] = item.first; });
+   std::for_each(palette.begin(), palette.end(),
+                 [&out_palette](auto &item) { out_palette[item.second] = item.first; });
 
    int ref_count = game::calculate_ref_count(data, out_palette);
 
    minecpp::squeezed::TinyVec<4> sky_light(4096);
-   for (mb::size n = 0; n < 4096; ++n) { sky_light.set(n, 0xf); }
+   for (mb::size n = 0; n < 4096; ++n) {
+      sky_light.set(n, 0xf);
+   }
 
    minecpp::squeezed::TinyVec<4> block_light(4096);
-   for (mb::size n = 0; n < 4096; ++n) { block_light.set(n, 0xf); }
+   for (mb::size n = 0; n < 4096; ++n) {
+      block_light.set(n, 0xf);
+   }
 
    return Section{
            .ref_count = ref_count,
