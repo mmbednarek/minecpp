@@ -18,8 +18,8 @@ include(FetchContent)
 
 if (${USE_LOCAL_GPRC})
     find_package(absl REQUIRED)
-    find_package(gRPC CONFIG REQUIRED)
     find_package(Protobuf REQUIRED)
+    find_package(gRPC CONFIG REQUIRED)
 else()
     fetchcontent_declare(
             gRPC
