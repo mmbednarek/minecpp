@@ -12,8 +12,9 @@ The server is an early stage of development.
 
 The target platform of the server x86_64 linux. It is probably possible to run the server on other platforms
 but that wasn't attempted yet.
-The easiest way to run the server is through docker. Simply run the `build-docker.sh` script and run the prepared docker
-compose file.
+The easiest way to run the server is through docker. If you have docker and docker-compose installed on your system.
+Just run `make docker-run`. All the necessary docker images will be built and the server will start through docker compose.
+If you want to just build the images run `make docker`. Docker compose file can be started with a simple `docker-compose up` command.
 
 ### Building from source
 
@@ -30,7 +31,7 @@ The build system is `cmake` the C++ standard is 20. The following dependencies a
 + **flex**
 + **google benchmark**
 + **protobuf**
-+ **gRPC**
++ **gRPC** _(may be provided with fetch content with cmake option **-DUSE_LOCAL_GPRC=OFF**)_
 + **yaml-cpp** _(provided through cmake fetch content)_
 + **mb** _(provided through cmake fetch content)_
 + **mb-codegen** _(provided through cmake fetch content)_
