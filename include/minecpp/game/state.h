@@ -1,5 +1,6 @@
 #ifndef MINECPP_STATE_H
 #define MINECPP_STATE_H
+#include <algorithm>
 #include <string>
 #include <variant>
 #include <vector>
