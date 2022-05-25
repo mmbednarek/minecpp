@@ -17,7 +17,7 @@ using ClientBidiStream =
 
 using OutEvent = proto::event::serverbound::v1::Event;
 
-constexpr std::size_t g_steam_queue_size = 1024;
+constexpr std::size_t g_steam_queue_size = 4 * 1024;
 
 class Stream
 {
@@ -118,7 +118,7 @@ class Client
 
  public:
    explicit Client(const std::string &address, TVisitor &visitor) :
-       m_connection(address, m_handler, 4),
+       m_connection(address, m_handler, 16),
        m_handler(visitor)
    {
    }

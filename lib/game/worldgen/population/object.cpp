@@ -1,9 +1,15 @@
 #include <minecpp/game/worldgen/population/object.h>
+#include <minecpp/game/worldgen/population/tree.h>
 #include <minecpp/repository/block.h>
 
 namespace minecpp::game::worldgen::population {
 
 ObjectRepository ObjectRepository::g_instance;
+
+template<typename T, typename... TArgs>
+std::unique_ptr<SimpleObjectFactory> make_simple_object(int occurrence, TArgs&&... args) {
+   return std::make_unique<SimpleObjectFactory>(occurrence, std::make_unique<T>(std::forward<TArgs>(args)...));
+}
 
 void ObjectRepository::register_objects()
 {
@@ -20,56 +26,78 @@ void ObjectRepository::register_objects()
    int poppy_id       = repository::encode_block_by_tag("minecraft:poppy");
    int blue_orchid_id = repository::encode_block_by_tag("minecraft:blue_orchid");
 
-   m_objects.push_back(std::make_unique<ShapedObject<5, 5, 7>>(
-           300,
-           std::array<int, 5 * 5 * 7>{
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    wood_id,   air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    wood_id,   air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    wood_id,   air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, wood_id,
-                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                   leaves_id, leaves_id, leaves_id, leaves_id, air_id,    leaves_id, leaves_id, leaves_id,
-                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                   wood_id,   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
-                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id, air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    leaves_id, leaves_id, leaves_id, air_id,    air_id,
-                   leaves_id, leaves_id, leaves_id, air_id,    air_id,    leaves_id, leaves_id, leaves_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    leaves_id, air_id,    air_id,
-                   air_id,    leaves_id, leaves_id, leaves_id, air_id,    air_id,    air_id,    leaves_id,
-                   air_id,    air_id,    air_id,    air_id,    air_id,    air_id,    air_id,
-           }));
+   m_objects.push_back(make_simple_object<ShapedObject<5, 5, 7>>(
+           300, std::array<int, 5 * 5 * 7>{
+                        // clang-format off
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    wood_id,   air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
 
-   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(5,// per 10 000 elements
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    wood_id,   air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    wood_id,   air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, wood_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+
+                   air_id,    leaves_id, leaves_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, wood_id,   leaves_id, leaves_id,
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+                   leaves_id, leaves_id, leaves_id, leaves_id, leaves_id,
+
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+                   air_id,    leaves_id, leaves_id, leaves_id, air_id,
+                   air_id,    leaves_id, leaves_id, leaves_id, air_id,
+                   air_id,    leaves_id, leaves_id, leaves_id, air_id,
+                   air_id,    air_id,    air_id,    air_id,    air_id,
+
+                   air_id,    air_id,     air_id,     air_id,    air_id,
+                   air_id,    air_id,    leaves_id,   air_id,    air_id,
+                   air_id,    leaves_id, leaves_id,   leaves_id, air_id,
+                   air_id,    air_id,    leaves_id,   air_id,    air_id,
+                   air_id,    air_id,    air_id,      air_id,    air_id,
+                        // clang-format on
+                }));
+
+   m_objects.push_back(make_simple_object<ShapedObject<1, 1, 1>>(5,// per 10 000 elements
                                                                std::array<int, 1 * 1 * 1>{
                                                                        pumpkin_id,
                                                                }));
 
    m_objects.push_back(
-           std::make_unique<ShapedObject<1, 1, 1>>(1800,// per 10 000 elements
+           make_simple_object<ShapedObject<1, 1, 1>>(1800,// per 10 000 elements
                                                    std::array<int, 1 * 1 * 1>{tall_grass_upper_id}));
 
-   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 2>>(500,// per 10 000 elements
+   m_objects.push_back(make_simple_object<ShapedObject<1, 1, 2>>(500,// per 10 000 elements
                                                                std::array<int, 1 * 1 * 2>{
                                                                        tall_grass_lower_id,
                                                                        tall_grass_upper_id,
                                                                }));
 
-   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(100,// per 10 000 elements
+   m_objects.push_back(make_simple_object<ShapedObject<1, 1, 1>>(100,// per 10 000 elements
                                                                std::array<int, 1 * 1 * 1>{dendelion_id}));
 
-   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(100,// per 10 000 elements
+   m_objects.push_back(make_simple_object<ShapedObject<1, 1, 1>>(100,// per 10 000 elements
                                                                std::array<int, 1 * 1 * 1>{poppy_id}));
 
-   m_objects.push_back(std::make_unique<ShapedObject<1, 1, 1>>(15,// per 10 000 elements
+   m_objects.push_back(make_simple_object<ShapedObject<1, 1, 1>>(15,// per 10 000 elements
                                                                std::array<int, 1 * 1 * 1>{blue_orchid_id}));
+
+   m_objects.push_back(std::make_unique<RandomTreeFactory>());
 }
 
 mb::size ObjectRepository::find_object_id(int value)

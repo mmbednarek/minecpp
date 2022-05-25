@@ -50,7 +50,9 @@ void ChunkPlacements::put_object(game::Chunk &chunk, int id, int x, int y, int z
 {
    if (id < 0)
       return;
-   const auto &obj = ObjectRepository::the().get_object(id);
+   unsigned object_seed = rand();// TODO: Replace with good random
+
+   const auto &obj = ObjectRepository::the().get_object(id, object_seed);
    auto center     = obj.center();
 
    std::uint16_t center_offset = z * 16 + x;
@@ -69,12 +71,13 @@ void ChunkPlacements::put_object(game::Chunk &chunk, int id, int x, int y, int z
    for (int _z = -center.z; _z < obj.length() - center.z; ++_z) {
       for (int _x = -center.x; _x < obj.width() - center.x; ++_x) {
          m_placements[chunk.pos().block_at(x + _x, 0, z + _z).as_long()] =
-                 Placement{.object_id = id,
-                           .x         = static_cast<short>(_x + center.x),
-                           .z         = static_cast<short>(_z + center.z),
-                           .chunk_x   = static_cast<short>(x + _x),
-                           .chunk_z   = static_cast<short>(z + _z),
-                           .height    = static_cast<short>(y)};
+                 Placement{.object_id   = id,
+                           .object_seed = object_seed,
+                           .x           = static_cast<short>(_x + center.x),
+                           .z           = static_cast<short>(_z + center.z),
+                           .chunk_x     = static_cast<short>(x + _x),
+                           .chunk_z     = static_cast<short>(z + _z),
+                           .height      = static_cast<short>(y)};
       }
    }
 }
@@ -83,7 +86,7 @@ void ChunkPlacements::populate_chunk(game::Chunk &chunk)
 {
    std::for_each(m_placements.begin(), m_placements.end(), [&chunk](auto &pair) {
       Placement &placement = pair.second;
-      auto &obj            = ObjectRepository::the().get_object(placement.object_id);
+      auto &obj            = ObjectRepository::the().get_object(placement.object_id, placement.object_seed);
       if (placement.chunk_x < 0 || placement.chunk_x >= 16 || placement.chunk_z < 0 ||
           placement.chunk_z >= 16)
          return;
@@ -100,7 +103,7 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, block::ChunkPos pos)
 {
    std::for_each(m_placements.begin(), m_placements.end(), [&chunk, pos](auto &pair) {
       Placement &placement = pair.second;
-      auto &obj            = ObjectRepository::the().get_object(placement.object_id);
+      auto &obj            = ObjectRepository::the().get_object(placement.object_id, placement.object_seed);
 
       auto x = placement.chunk_x + (pos.x - chunk.m_pos_x) * 16;
       auto z = placement.chunk_z + (pos.z - chunk.m_pos_z) * 16;

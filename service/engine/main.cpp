@@ -46,7 +46,7 @@ auto main() -> int
            minecpp::proto::event::clientbound::v1::Event, minecpp::proto::event::serverbound::v1::Event,
            ApiHandler, std::string,
            &minecpp::proto::service::engine::v1::EngineService::AsyncService::RequestJoin>;
-   BidiServer server(listen, api_handler, 4);
+   BidiServer server(listen, api_handler, 16);
    spdlog::info("starting grpc server on address {}", listen);
    server.accept();
    auto res = server.wait();

@@ -8,6 +8,7 @@ namespace minecpp::game::worldgen::population {
 struct Placement
 {
    int object_id;
+   unsigned object_seed;
    short x, z;
    short chunk_x, chunk_z;
    short height;
