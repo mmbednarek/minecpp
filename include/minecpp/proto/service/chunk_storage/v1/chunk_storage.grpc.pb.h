@@ -25,2113 +25,1009 @@
 #include <grpcpp/impl/codegen/stub_options.h>
 #include <grpcpp/impl/codegen/sync_stream.h>
 
-namespace minecpp { namespace proto { namespace service { namespace chunk_storage { namespace v1 {
+namespace minecpp {
+namespace proto {
+namespace service {
+namespace chunk_storage {
+namespace v1 {
 
-class ChunkStorage final
-{
+class ChunkStorage final {
  public:
-   static constexpr char const *service_full_name()
-   {
-      return "minecpp.proto.service.chunk_storage.v1.ChunkStorage";
-   }
-
-   class StubInterface
-   {
-    public:
-      virtual ~StubInterface() {}
-
-      virtual ::grpc::Status
-      LoadChunk(::grpc::ClientContext *context,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                ::minecpp::proto::chunk::v1::Chunk *response) = 0;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::chunk::v1::Chunk>>
-      AsyncLoadChunk(::grpc::ClientContext *context,
-                     const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                     ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<
-                 ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::chunk::v1::Chunk>>(
-                 AsyncLoadChunkRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::chunk::v1::Chunk>>
-      PrepareAsyncLoadChunk(::grpc::ClientContext *context,
-                            const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                            ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<
-                 ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::chunk::v1::Chunk>>(
-                 PrepareAsyncLoadChunkRaw(context, request, cq));
-      }
-
-      virtual ::grpc::Status
-      SetBlock(::grpc::ClientContext *context,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) = 0;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      AsyncSetBlock(::grpc::ClientContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                    ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 AsyncSetBlockRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      PrepareAsyncSetBlock(::grpc::ClientContext *context,
-                           const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                           ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 PrepareAsyncSetBlockRaw(context, request, cq));
-      }
-
-      virtual ::grpc::Status
-      AddReferences(::grpc::ClientContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-                    ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response) = 0;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>
-      AsyncAddReferences(::grpc::ClientContext *context,
-                         const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-                         ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(
-                 AsyncAddReferencesRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>
-      PrepareAsyncAddReferences(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-              ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(
-                 PrepareAsyncAddReferencesRaw(context, request, cq));
-      }
-
-      virtual ::grpc::Status
-      RemoveReference(::grpc::ClientContext *context,
-                      const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-                      ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) = 0;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      AsyncRemoveReference(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 AsyncRemoveReferenceRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      PrepareAsyncRemoveReference(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 PrepareAsyncRemoveReferenceRaw(context, request, cq));
-      }
-
-      virtual ::grpc::Status
-      HeightAt(::grpc::ClientContext *context,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response) = 0;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>
-      AsyncHeightAt(::grpc::ClientContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                    ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(
-                 AsyncHeightAtRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>
-      PrepareAsyncHeightAt(::grpc::ClientContext *context,
-                           const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                           ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
-                 ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(
-                 PrepareAsyncHeightAtRaw(context, request, cq));
-      }
-
-      virtual ::grpc::Status GetBlock(::grpc::ClientContext *context,
-                                      const ::minecpp::proto::common::v1::BlockPosition &request,
-                                      ::minecpp::proto::common::v1::BlockState *response) = 0;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::common::v1::BlockState>>
-      AsyncGetBlock(::grpc::ClientContext *context,
-                    const ::minecpp::proto::common::v1::BlockPosition &request, ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<
-                 ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::common::v1::BlockState>>(
-                 AsyncGetBlockRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::common::v1::BlockState>>
-      PrepareAsyncGetBlock(::grpc::ClientContext *context,
-                           const ::minecpp::proto::common::v1::BlockPosition &request,
-                           ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<
-                 ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::common::v1::BlockState>>(
-                 PrepareAsyncGetBlockRaw(context, request, cq));
-      }
-
-      class async_interface
-      {
-       public:
-         virtual ~async_interface() {}
-
-         virtual void LoadChunk(::grpc::ClientContext *context,
-                                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                                ::minecpp::proto::chunk::v1::Chunk *response,
-                                std::function<void(::grpc::Status)>) = 0;
-         virtual void LoadChunk(::grpc::ClientContext *context,
-                                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                                ::minecpp::proto::chunk::v1::Chunk *response,
-                                ::grpc::ClientUnaryReactor *reactor) = 0;
-         virtual void SetBlock(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-                               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                               std::function<void(::grpc::Status)>)  = 0;
-         virtual void SetBlock(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-                               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                               ::grpc::ClientUnaryReactor *reactor)  = 0;
-         virtual void
-         AddReferences(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response,
-                       std::function<void(::grpc::Status)>) = 0;
-         virtual void
-         AddReferences(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response,
-                       ::grpc::ClientUnaryReactor *reactor) = 0;
-         virtual void
-         RemoveReference(::grpc::ClientContext *context,
-                         const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest *request,
-                         ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                         std::function<void(::grpc::Status)>) = 0;
-         virtual void
-         RemoveReference(::grpc::ClientContext *context,
-                         const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest *request,
-                         ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                         ::grpc::ClientUnaryReactor *reactor)       = 0;
-         virtual void HeightAt(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-                               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response,
-                               std::function<void(::grpc::Status)>) = 0;
-         virtual void HeightAt(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-                               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response,
-                               ::grpc::ClientUnaryReactor *reactor) = 0;
-         virtual void GetBlock(::grpc::ClientContext *context,
-                               const ::minecpp::proto::common::v1::BlockPosition *request,
-                               ::minecpp::proto::common::v1::BlockState *response,
-                               std::function<void(::grpc::Status)>) = 0;
-         virtual void GetBlock(::grpc::ClientContext *context,
-                               const ::minecpp::proto::common::v1::BlockPosition *request,
-                               ::minecpp::proto::common::v1::BlockState *response,
-                               ::grpc::ClientUnaryReactor *reactor) = 0;
-      };
-      typedef class async_interface experimental_async_interface;
-
-      virtual class async_interface *async()
-      {
-         return nullptr;
-      }
-
-      class async_interface *experimental_async()
-      {
-         return async();
-      }
-
-    private:
-      virtual ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::chunk::v1::Chunk> *
-      AsyncLoadChunkRaw(::grpc::ClientContext *context,
-                        const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                        ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::chunk::v1::Chunk> *
-      PrepareAsyncLoadChunkRaw(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                               ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      AsyncSetBlockRaw(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                       ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      PrepareAsyncSetBlockRaw(::grpc::ClientContext *context,
-                              const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                              ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse> *
-      AsyncAddReferencesRaw(::grpc::ClientContext *context,
-                            const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-                            ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse> *
-      PrepareAsyncAddReferencesRaw(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-              ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      AsyncRemoveReferenceRaw(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      PrepareAsyncRemoveReferenceRaw(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse> *
-      AsyncHeightAtRaw(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                       ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<
-              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse> *
-      PrepareAsyncHeightAtRaw(::grpc::ClientContext *context,
-                              const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                              ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::common::v1::BlockState> *
-      AsyncGetBlockRaw(::grpc::ClientContext *context,
-                       const ::minecpp::proto::common::v1::BlockPosition &request,
-                       ::grpc::CompletionQueue *cq) = 0;
-      virtual ::grpc::ClientAsyncResponseReaderInterface<::minecpp::proto::common::v1::BlockState> *
-      PrepareAsyncGetBlockRaw(::grpc::ClientContext *context,
-                              const ::minecpp::proto::common::v1::BlockPosition &request,
-                              ::grpc::CompletionQueue *cq) = 0;
-   };
-
-   class Stub final : public StubInterface
-   {
-    public:
-      Stub(const std::shared_ptr<::grpc::ChannelInterface> &channel,
-           const ::grpc::StubOptions &options = ::grpc::StubOptions());
-      ::grpc::Status LoadChunk(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                               ::minecpp::proto::chunk::v1::Chunk *response) override;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::chunk::v1::Chunk>>
-      AsyncLoadChunk(::grpc::ClientContext *context,
-                     const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                     ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::chunk::v1::Chunk>>(
-                 AsyncLoadChunkRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::chunk::v1::Chunk>>
-      PrepareAsyncLoadChunk(::grpc::ClientContext *context,
-                            const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                            ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::chunk::v1::Chunk>>(
-                 PrepareAsyncLoadChunkRaw(context, request, cq));
-      }
-
-      ::grpc::Status SetBlock(::grpc::ClientContext *context,
-                              const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) override;
-
-      std::unique_ptr<
-              ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      AsyncSetBlock(::grpc::ClientContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                    ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 AsyncSetBlockRaw(context, request, cq));
-      }
-
-      std::unique_ptr<
-              ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      PrepareAsyncSetBlock(::grpc::ClientContext *context,
-                           const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                           ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 PrepareAsyncSetBlockRaw(context, request, cq));
-      }
-
-      ::grpc::Status
-      AddReferences(::grpc::ClientContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-                    ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response) override;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>
-      AsyncAddReferences(::grpc::ClientContext *context,
-                         const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-                         ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(
-                 AsyncAddReferencesRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>
-      PrepareAsyncAddReferences(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-              ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(
-                 PrepareAsyncAddReferencesRaw(context, request, cq));
-      }
-
-      ::grpc::Status
-      RemoveReference(::grpc::ClientContext *context,
-                      const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-                      ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) override;
-
-      std::unique_ptr<
-              ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      AsyncRemoveReference(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 AsyncRemoveReferenceRaw(context, request, cq));
-      }
-
-      std::unique_ptr<
-              ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>
-      PrepareAsyncRemoveReference(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(
-                 PrepareAsyncRemoveReferenceRaw(context, request, cq));
-      }
-
-      ::grpc::Status
-      HeightAt(::grpc::ClientContext *context,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response) override;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<
-              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>
-      AsyncHeightAt(::grpc::ClientContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                    ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(
-                 AsyncHeightAtRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<
-              ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>
-      PrepareAsyncHeightAt(::grpc::ClientContext *context,
-                           const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                           ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<
-                 ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(
-                 PrepareAsyncHeightAtRaw(context, request, cq));
-      }
-
-      ::grpc::Status GetBlock(::grpc::ClientContext *context,
-                              const ::minecpp::proto::common::v1::BlockPosition &request,
-                              ::minecpp::proto::common::v1::BlockState *response) override;
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::common::v1::BlockState>>
-      AsyncGetBlock(::grpc::ClientContext *context,
-                    const ::minecpp::proto::common::v1::BlockPosition &request, ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::common::v1::BlockState>>(
-                 AsyncGetBlockRaw(context, request, cq));
-      }
-
-      std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::common::v1::BlockState>>
-      PrepareAsyncGetBlock(::grpc::ClientContext *context,
-                           const ::minecpp::proto::common::v1::BlockPosition &request,
-                           ::grpc::CompletionQueue *cq)
-      {
-         return std::unique_ptr<::grpc::ClientAsyncResponseReader<::minecpp::proto::common::v1::BlockState>>(
-                 PrepareAsyncGetBlockRaw(context, request, cq));
-      }
-
-      class async final : public StubInterface::async_interface
-      {
-       public:
-         void LoadChunk(::grpc::ClientContext *context,
-                        const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                        ::minecpp::proto::chunk::v1::Chunk *response,
-                        std::function<void(::grpc::Status)>) override;
-         void LoadChunk(::grpc::ClientContext *context,
-                        const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                        ::minecpp::proto::chunk::v1::Chunk *response,
-                        ::grpc::ClientUnaryReactor *reactor) override;
-         void SetBlock(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                       std::function<void(::grpc::Status)>) override;
-         void SetBlock(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                       ::grpc::ClientUnaryReactor *reactor) override;
-         void AddReferences(::grpc::ClientContext *context,
-                            const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest *request,
-                            ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response,
-                            std::function<void(::grpc::Status)>) override;
-         void AddReferences(::grpc::ClientContext *context,
-                            const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest *request,
-                            ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response,
-                            ::grpc::ClientUnaryReactor *reactor) override;
-         void
-         RemoveReference(::grpc::ClientContext *context,
-                         const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest *request,
-                         ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                         std::function<void(::grpc::Status)>) override;
-         void
-         RemoveReference(::grpc::ClientContext *context,
-                         const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest *request,
-                         ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response,
-                         ::grpc::ClientUnaryReactor *reactor) override;
-         void HeightAt(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response,
-                       std::function<void(::grpc::Status)>) override;
-         void HeightAt(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response,
-                       ::grpc::ClientUnaryReactor *reactor) override;
-         void GetBlock(::grpc::ClientContext *context,
-                       const ::minecpp::proto::common::v1::BlockPosition *request,
-                       ::minecpp::proto::common::v1::BlockState *response,
-                       std::function<void(::grpc::Status)>) override;
-         void GetBlock(::grpc::ClientContext *context,
-                       const ::minecpp::proto::common::v1::BlockPosition *request,
-                       ::minecpp::proto::common::v1::BlockState *response,
-                       ::grpc::ClientUnaryReactor *reactor) override;
-
-       private:
-         friend class Stub;
-
-         explicit async(Stub *stub) :
-             stub_(stub)
-         {
-         }
-
-         Stub *stub()
-         {
-            return stub_;
-         }
-
-         Stub *stub_;
-      };
-
-      class async *async() override
-      {
-         return &async_stub_;
-      }
-
-    private:
-      std::shared_ptr<::grpc::ChannelInterface> channel_;
-
-      class async async_stub_
-      {
-         this
-      };
-
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::chunk::v1::Chunk> *
-      AsyncLoadChunkRaw(::grpc::ClientContext *context,
-                        const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                        ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::chunk::v1::Chunk> *
-      PrepareAsyncLoadChunkRaw(::grpc::ClientContext *context,
-                               const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest &request,
-                               ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      AsyncSetBlockRaw(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                       ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      PrepareAsyncSetBlockRaw(::grpc::ClientContext *context,
-                              const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest &request,
-                              ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse> *
-      AsyncAddReferencesRaw(::grpc::ClientContext *context,
-                            const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-                            ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse> *
-      PrepareAsyncAddReferencesRaw(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest &request,
-              ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      AsyncRemoveReferenceRaw(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *
-      PrepareAsyncRemoveReferenceRaw(
-              ::grpc::ClientContext *context,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest &request,
-              ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::HeightAtResponse> *
-      AsyncHeightAtRaw(::grpc::ClientContext *context,
-                       const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                       ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::service::chunk_storage::v1::HeightAtResponse> *
-      PrepareAsyncHeightAtRaw(::grpc::ClientContext *context,
-                              const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest &request,
-                              ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::common::v1::BlockState> *
-      AsyncGetBlockRaw(::grpc::ClientContext *context,
-                       const ::minecpp::proto::common::v1::BlockPosition &request,
-                       ::grpc::CompletionQueue *cq) override;
-      ::grpc::ClientAsyncResponseReader<::minecpp::proto::common::v1::BlockState> *
-      PrepareAsyncGetBlockRaw(::grpc::ClientContext *context,
-                              const ::minecpp::proto::common::v1::BlockPosition &request,
-                              ::grpc::CompletionQueue *cq) override;
-      const ::grpc::internal::RpcMethod rpcmethod_LoadChunk_;
-      const ::grpc::internal::RpcMethod rpcmethod_SetBlock_;
-      const ::grpc::internal::RpcMethod rpcmethod_AddReferences_;
-      const ::grpc::internal::RpcMethod rpcmethod_RemoveReference_;
-      const ::grpc::internal::RpcMethod rpcmethod_HeightAt_;
-      const ::grpc::internal::RpcMethod rpcmethod_GetBlock_;
-   };
-
-   static std::unique_ptr<Stub> NewStub(const std::shared_ptr<::grpc::ChannelInterface> &channel,
-                                        const ::grpc::StubOptions &options = ::grpc::StubOptions());
-
-   class Service : public ::grpc::Service
-   {
-    public:
-      Service();
-      virtual ~Service();
-      virtual ::grpc::Status
-      LoadChunk(::grpc::ServerContext *context,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                ::minecpp::proto::chunk::v1::Chunk *response);
-      virtual ::grpc::Status
-      SetBlock(::grpc::ServerContext *context,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response);
-      virtual ::grpc::Status
-      AddReferences(::grpc::ServerContext *context,
-                    const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest *request,
-                    ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse *response);
-      virtual ::grpc::Status
-      RemoveReference(::grpc::ServerContext *context,
-                      const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest *request,
-                      ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response);
-      virtual ::grpc::Status
-      HeightAt(::grpc::ServerContext *context,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response);
-      virtual ::grpc::Status GetBlock(::grpc::ServerContext *context,
-                                      const ::minecpp::proto::common::v1::BlockPosition *request,
-                                      ::minecpp::proto::common::v1::BlockState *response);
-   };
-
-   template<class BaseClass>
-   class WithAsyncMethod_LoadChunk : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithAsyncMethod_LoadChunk()
-      {
-         ::grpc::Service::MarkMethodAsync(0);
-      }
-
-      ~WithAsyncMethod_LoadChunk() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      LoadChunk(::grpc::ServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestLoadChunk(::grpc::ServerContext *context,
-                            ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                            ::grpc::ServerAsyncResponseWriter<::minecpp::proto::chunk::v1::Chunk> *response,
-                            ::grpc::CompletionQueue *new_call_cq,
-                            ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithAsyncMethod_SetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithAsyncMethod_SetBlock()
-      {
-         ::grpc::Service::MarkMethodAsync(1);
-      }
-
-      ~WithAsyncMethod_SetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      SetBlock(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestSetBlock(
-              ::grpc::ServerContext *context,
-              ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-              ::grpc::ServerAsyncResponseWriter<::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                      *response,
-              ::grpc::CompletionQueue *new_call_cq, ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithAsyncMethod_AddReferences : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithAsyncMethod_AddReferences()
-      {
-         ::grpc::Service::MarkMethodAsync(2);
-      }
-
-      ~WithAsyncMethod_AddReferences() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status AddReferences(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestAddReferences(
-              ::grpc::ServerContext *context,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest *request,
-              ::grpc::ServerAsyncResponseWriter<
-                      ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse> *response,
-              ::grpc::CompletionQueue *new_call_cq, ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithAsyncMethod_RemoveReference : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithAsyncMethod_RemoveReference()
-      {
-         ::grpc::Service::MarkMethodAsync(3);
-      }
-
-      ~WithAsyncMethod_RemoveReference() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status RemoveReference(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestRemoveReference(
-              ::grpc::ServerContext *context,
-              ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest *request,
-              ::grpc::ServerAsyncResponseWriter<::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                      *response,
-              ::grpc::CompletionQueue *new_call_cq, ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithAsyncMethod_HeightAt : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithAsyncMethod_HeightAt()
-      {
-         ::grpc::Service::MarkMethodAsync(4);
-      }
-
-      ~WithAsyncMethod_HeightAt() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      HeightAt(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestHeightAt(::grpc::ServerContext *context,
-                           ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-                           ::grpc::ServerAsyncResponseWriter<
-                                   ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse> *response,
-                           ::grpc::CompletionQueue *new_call_cq,
-                           ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithAsyncMethod_GetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithAsyncMethod_GetBlock()
-      {
-         ::grpc::Service::MarkMethodAsync(5);
-      }
-
-      ~WithAsyncMethod_GetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status GetBlock(::grpc::ServerContext * /*context*/,
-                              const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-                              ::minecpp::proto::common::v1::BlockState * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void
-      RequestGetBlock(::grpc::ServerContext *context, ::minecpp::proto::common::v1::BlockPosition *request,
-                      ::grpc::ServerAsyncResponseWriter<::minecpp::proto::common::v1::BlockState> *response,
-                      ::grpc::CompletionQueue *new_call_cq, ::grpc::ServerCompletionQueue *notification_cq,
-                      void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<WithAsyncMethod_AddReferences<
-           WithAsyncMethod_RemoveReference<WithAsyncMethod_HeightAt<WithAsyncMethod_GetBlock<Service>>>>>>
-           AsyncService;
-
-   template<class BaseClass>
-   class WithCallbackMethod_LoadChunk : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithCallbackMethod_LoadChunk()
-      {
-         ::grpc::Service::MarkMethodCallback(
-                 0,
-                 new ::grpc::internal::CallbackUnaryHandler<
-                         ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,
-                         ::minecpp::proto::chunk::v1::Chunk>(
-                         [this](::grpc::CallbackServerContext *context,
-                                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest *request,
-                                ::minecpp::proto::chunk::v1::Chunk *response) {
-                            return this->LoadChunk(context, request, response);
-                         }));
-      }
-
-      void SetMessageAllocatorFor_LoadChunk(
-              ::grpc::MessageAllocator<::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,
-                                       ::minecpp::proto::chunk::v1::Chunk> *allocator)
-      {
-         ::grpc::internal::MethodHandler *const handler = ::grpc::Service::GetHandler(0);
-         static_cast<::grpc::internal::CallbackUnaryHandler<
-                 ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,
-                 ::minecpp::proto::chunk::v1::Chunk> *>(handler)
-                 ->SetMessageAllocator(allocator);
-      }
-
-      ~WithCallbackMethod_LoadChunk() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      LoadChunk(::grpc::ServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *
-      LoadChunk(::grpc::CallbackServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithCallbackMethod_SetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithCallbackMethod_SetBlock()
-      {
-         ::grpc::Service::MarkMethodCallback(
-                 1,
-                 new ::grpc::internal::CallbackUnaryHandler<
-                         ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,
-                         ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
-                         [this](::grpc::CallbackServerContext *context,
-                                const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest *request,
-                                ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) {
-                            return this->SetBlock(context, request, response);
-                         }));
-      }
-
-      void SetMessageAllocatorFor_SetBlock(
-              ::grpc::MessageAllocator<::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,
-                                       ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                      *allocator)
-      {
-         ::grpc::internal::MethodHandler *const handler = ::grpc::Service::GetHandler(1);
-         static_cast<::grpc::internal::CallbackUnaryHandler<
-                 ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *>(handler)
-                 ->SetMessageAllocator(allocator);
-      }
-
-      ~WithCallbackMethod_SetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      SetBlock(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *
-      SetBlock(::grpc::CallbackServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithCallbackMethod_AddReferences : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithCallbackMethod_AddReferences()
-      {
-         ::grpc::Service::MarkMethodCallback(
-                 2, new ::grpc::internal::CallbackUnaryHandler<
-                            ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,
-                            ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>(
-                            [this](::grpc::CallbackServerContext *context,
-                                   const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest
-                                           *request,
-                                   ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse
-                                           *response) {
-                               return this->AddReferences(context, request, response);
-                            }));
-      }
-
-      void SetMessageAllocatorFor_AddReferences(
-              ::grpc::MessageAllocator<::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,
-                                       ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>
-                      *allocator)
-      {
-         ::grpc::internal::MethodHandler *const handler = ::grpc::Service::GetHandler(2);
-         static_cast<::grpc::internal::CallbackUnaryHandler<
-                 ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,
-                 ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse> *>(handler)
-                 ->SetMessageAllocator(allocator);
-      }
-
-      ~WithCallbackMethod_AddReferences() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status AddReferences(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *
-      AddReferences(::grpc::CallbackServerContext * /*context*/,
-                    const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-                    ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithCallbackMethod_RemoveReference : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithCallbackMethod_RemoveReference()
-      {
-         ::grpc::Service::MarkMethodCallback(
-                 3, new ::grpc::internal::CallbackUnaryHandler<
-                            ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,
-                            ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
-                            [this](::grpc::CallbackServerContext *context,
-                                   const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest
-                                           *request,
-                                   ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) {
-                               return this->RemoveReference(context, request, response);
-                            }));
-      }
-
-      void SetMessageAllocatorFor_RemoveReference(
-              ::grpc::MessageAllocator<::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,
-                                       ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                      *allocator)
-      {
-         ::grpc::internal::MethodHandler *const handler = ::grpc::Service::GetHandler(3);
-         static_cast<::grpc::internal::CallbackUnaryHandler<
-                 ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,
-                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse> *>(handler)
-                 ->SetMessageAllocator(allocator);
-      }
-
-      ~WithCallbackMethod_RemoveReference() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status RemoveReference(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *RemoveReference(
-              ::grpc::CallbackServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithCallbackMethod_HeightAt : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithCallbackMethod_HeightAt()
-      {
-         ::grpc::Service::MarkMethodCallback(
-                 4,
-                 new ::grpc::internal::CallbackUnaryHandler<
-                         ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,
-                         ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>(
-                         [this](::grpc::CallbackServerContext *context,
-                                const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest *request,
-                                ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse *response) {
-                            return this->HeightAt(context, request, response);
-                         }));
-      }
-
-      void SetMessageAllocatorFor_HeightAt(
-              ::grpc::MessageAllocator<::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,
-                                       ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>
-                      *allocator)
-      {
-         ::grpc::internal::MethodHandler *const handler = ::grpc::Service::GetHandler(4);
-         static_cast<::grpc::internal::CallbackUnaryHandler<
-                 ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,
-                 ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse> *>(handler)
-                 ->SetMessageAllocator(allocator);
-      }
-
-      ~WithCallbackMethod_HeightAt() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      HeightAt(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *
-      HeightAt(::grpc::CallbackServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithCallbackMethod_GetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithCallbackMethod_GetBlock()
-      {
-         ::grpc::Service::MarkMethodCallback(
-                 5, new ::grpc::internal::CallbackUnaryHandler<::minecpp::proto::common::v1::BlockPosition,
-                                                               ::minecpp::proto::common::v1::BlockState>(
-                            [this](::grpc::CallbackServerContext *context,
-                                   const ::minecpp::proto::common::v1::BlockPosition *request,
-                                   ::minecpp::proto::common::v1::BlockState *response) {
-                               return this->GetBlock(context, request, response);
-                            }));
-      }
-
-      void SetMessageAllocatorFor_GetBlock(
-              ::grpc::MessageAllocator<::minecpp::proto::common::v1::BlockPosition,
-                                       ::minecpp::proto::common::v1::BlockState> *allocator)
-      {
-         ::grpc::internal::MethodHandler *const handler = ::grpc::Service::GetHandler(5);
-         static_cast<::grpc::internal::CallbackUnaryHandler<::minecpp::proto::common::v1::BlockPosition,
-                                                            ::minecpp::proto::common::v1::BlockState> *>(
-                 handler)
-                 ->SetMessageAllocator(allocator);
-      }
-
-      ~WithCallbackMethod_GetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status GetBlock(::grpc::ServerContext * /*context*/,
-                              const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-                              ::minecpp::proto::common::v1::BlockState * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *
-      GetBlock(::grpc::CallbackServerContext * /*context*/,
-               const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-               ::minecpp::proto::common::v1::BlockState * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   typedef WithCallbackMethod_LoadChunk<
-           WithCallbackMethod_SetBlock<WithCallbackMethod_AddReferences<WithCallbackMethod_RemoveReference<
-                   WithCallbackMethod_HeightAt<WithCallbackMethod_GetBlock<Service>>>>>>
-           CallbackService;
-   typedef CallbackService ExperimentalCallbackService;
-
-   template<class BaseClass>
-   class WithGenericMethod_LoadChunk : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithGenericMethod_LoadChunk()
-      {
-         ::grpc::Service::MarkMethodGeneric(0);
-      }
-
-      ~WithGenericMethod_LoadChunk() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      LoadChunk(::grpc::ServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-   };
-
-   template<class BaseClass>
-   class WithGenericMethod_SetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithGenericMethod_SetBlock()
-      {
-         ::grpc::Service::MarkMethodGeneric(1);
-      }
-
-      ~WithGenericMethod_SetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      SetBlock(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-   };
-
-   template<class BaseClass>
-   class WithGenericMethod_AddReferences : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithGenericMethod_AddReferences()
-      {
-         ::grpc::Service::MarkMethodGeneric(2);
-      }
-
-      ~WithGenericMethod_AddReferences() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status AddReferences(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-   };
-
-   template<class BaseClass>
-   class WithGenericMethod_RemoveReference : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithGenericMethod_RemoveReference()
-      {
-         ::grpc::Service::MarkMethodGeneric(3);
-      }
-
-      ~WithGenericMethod_RemoveReference() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status RemoveReference(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-   };
-
-   template<class BaseClass>
-   class WithGenericMethod_HeightAt : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithGenericMethod_HeightAt()
-      {
-         ::grpc::Service::MarkMethodGeneric(4);
-      }
-
-      ~WithGenericMethod_HeightAt() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      HeightAt(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-   };
-
-   template<class BaseClass>
-   class WithGenericMethod_GetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithGenericMethod_GetBlock()
-      {
-         ::grpc::Service::MarkMethodGeneric(5);
-      }
-
-      ~WithGenericMethod_GetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status GetBlock(::grpc::ServerContext * /*context*/,
-                              const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-                              ::minecpp::proto::common::v1::BlockState * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawMethod_LoadChunk : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawMethod_LoadChunk()
-      {
-         ::grpc::Service::MarkMethodRaw(0);
-      }
-
-      ~WithRawMethod_LoadChunk() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      LoadChunk(::grpc::ServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestLoadChunk(::grpc::ServerContext *context, ::grpc::ByteBuffer *request,
-                            ::grpc::ServerAsyncResponseWriter<::grpc::ByteBuffer> *response,
-                            ::grpc::CompletionQueue *new_call_cq,
-                            ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawMethod_SetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawMethod_SetBlock()
-      {
-         ::grpc::Service::MarkMethodRaw(1);
-      }
-
-      ~WithRawMethod_SetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      SetBlock(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestSetBlock(::grpc::ServerContext *context, ::grpc::ByteBuffer *request,
-                           ::grpc::ServerAsyncResponseWriter<::grpc::ByteBuffer> *response,
-                           ::grpc::CompletionQueue *new_call_cq,
-                           ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawMethod_AddReferences : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawMethod_AddReferences()
-      {
-         ::grpc::Service::MarkMethodRaw(2);
-      }
-
-      ~WithRawMethod_AddReferences() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status AddReferences(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestAddReferences(::grpc::ServerContext *context, ::grpc::ByteBuffer *request,
-                                ::grpc::ServerAsyncResponseWriter<::grpc::ByteBuffer> *response,
-                                ::grpc::CompletionQueue *new_call_cq,
-                                ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawMethod_RemoveReference : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawMethod_RemoveReference()
-      {
-         ::grpc::Service::MarkMethodRaw(3);
-      }
-
-      ~WithRawMethod_RemoveReference() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status RemoveReference(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestRemoveReference(::grpc::ServerContext *context, ::grpc::ByteBuffer *request,
-                                  ::grpc::ServerAsyncResponseWriter<::grpc::ByteBuffer> *response,
-                                  ::grpc::CompletionQueue *new_call_cq,
-                                  ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawMethod_HeightAt : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawMethod_HeightAt()
-      {
-         ::grpc::Service::MarkMethodRaw(4);
-      }
-
-      ~WithRawMethod_HeightAt() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      HeightAt(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestHeightAt(::grpc::ServerContext *context, ::grpc::ByteBuffer *request,
-                           ::grpc::ServerAsyncResponseWriter<::grpc::ByteBuffer> *response,
-                           ::grpc::CompletionQueue *new_call_cq,
-                           ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawMethod_GetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawMethod_GetBlock()
-      {
-         ::grpc::Service::MarkMethodRaw(5);
-      }
-
-      ~WithRawMethod_GetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status GetBlock(::grpc::ServerContext * /*context*/,
-                              const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-                              ::minecpp::proto::common::v1::BlockState * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      void RequestGetBlock(::grpc::ServerContext *context, ::grpc::ByteBuffer *request,
-                           ::grpc::ServerAsyncResponseWriter<::grpc::ByteBuffer> *response,
-                           ::grpc::CompletionQueue *new_call_cq,
-                           ::grpc::ServerCompletionQueue *notification_cq, void *tag)
-      {
-         ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawCallbackMethod_LoadChunk : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawCallbackMethod_LoadChunk()
-      {
-         ::grpc::Service::MarkMethodRawCallback(
-                 0, new ::grpc::internal::CallbackUnaryHandler<::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-                            [this](::grpc::CallbackServerContext *context, const ::grpc::ByteBuffer *request,
-                                   ::grpc::ByteBuffer *response) {
-                               return this->LoadChunk(context, request, response);
-                            }));
-      }
-
-      ~WithRawCallbackMethod_LoadChunk() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      LoadChunk(::grpc::ServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *LoadChunk(::grpc::CallbackServerContext * /*context*/,
-                                                    const ::grpc::ByteBuffer * /*request*/,
-                                                    ::grpc::ByteBuffer * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawCallbackMethod_SetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawCallbackMethod_SetBlock()
-      {
-         ::grpc::Service::MarkMethodRawCallback(
-                 1, new ::grpc::internal::CallbackUnaryHandler<::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-                            [this](::grpc::CallbackServerContext *context, const ::grpc::ByteBuffer *request,
-                                   ::grpc::ByteBuffer *response) {
-                               return this->SetBlock(context, request, response);
-                            }));
-      }
-
-      ~WithRawCallbackMethod_SetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      SetBlock(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *SetBlock(::grpc::CallbackServerContext * /*context*/,
-                                                   const ::grpc::ByteBuffer * /*request*/,
-                                                   ::grpc::ByteBuffer * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawCallbackMethod_AddReferences : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawCallbackMethod_AddReferences()
-      {
-         ::grpc::Service::MarkMethodRawCallback(
-                 2, new ::grpc::internal::CallbackUnaryHandler<::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-                            [this](::grpc::CallbackServerContext *context, const ::grpc::ByteBuffer *request,
-                                   ::grpc::ByteBuffer *response) {
-                               return this->AddReferences(context, request, response);
-                            }));
-      }
-
-      ~WithRawCallbackMethod_AddReferences() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status AddReferences(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *AddReferences(::grpc::CallbackServerContext * /*context*/,
-                                                        const ::grpc::ByteBuffer * /*request*/,
-                                                        ::grpc::ByteBuffer * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawCallbackMethod_RemoveReference : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawCallbackMethod_RemoveReference()
-      {
-         ::grpc::Service::MarkMethodRawCallback(
-                 3, new ::grpc::internal::CallbackUnaryHandler<::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-                            [this](::grpc::CallbackServerContext *context, const ::grpc::ByteBuffer *request,
-                                   ::grpc::ByteBuffer *response) {
-                               return this->RemoveReference(context, request, response);
-                            }));
-      }
-
-      ~WithRawCallbackMethod_RemoveReference() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status RemoveReference(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *RemoveReference(::grpc::CallbackServerContext * /*context*/,
-                                                          const ::grpc::ByteBuffer * /*request*/,
-                                                          ::grpc::ByteBuffer * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawCallbackMethod_HeightAt : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawCallbackMethod_HeightAt()
-      {
-         ::grpc::Service::MarkMethodRawCallback(
-                 4, new ::grpc::internal::CallbackUnaryHandler<::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-                            [this](::grpc::CallbackServerContext *context, const ::grpc::ByteBuffer *request,
-                                   ::grpc::ByteBuffer *response) {
-                               return this->HeightAt(context, request, response);
-                            }));
-      }
-
-      ~WithRawCallbackMethod_HeightAt() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status
-      HeightAt(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *HeightAt(::grpc::CallbackServerContext * /*context*/,
-                                                   const ::grpc::ByteBuffer * /*request*/,
-                                                   ::grpc::ByteBuffer * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithRawCallbackMethod_GetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithRawCallbackMethod_GetBlock()
-      {
-         ::grpc::Service::MarkMethodRawCallback(
-                 5, new ::grpc::internal::CallbackUnaryHandler<::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-                            [this](::grpc::CallbackServerContext *context, const ::grpc::ByteBuffer *request,
-                                   ::grpc::ByteBuffer *response) {
-                               return this->GetBlock(context, request, response);
-                            }));
-      }
-
-      ~WithRawCallbackMethod_GetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable synchronous version of this method
-      ::grpc::Status GetBlock(::grpc::ServerContext * /*context*/,
-                              const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-                              ::minecpp::proto::common::v1::BlockState * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      virtual ::grpc::ServerUnaryReactor *GetBlock(::grpc::CallbackServerContext * /*context*/,
-                                                   const ::grpc::ByteBuffer * /*request*/,
-                                                   ::grpc::ByteBuffer * /*response*/)
-      {
-         return nullptr;
-      }
-   };
-
-   template<class BaseClass>
-   class WithStreamedUnaryMethod_LoadChunk : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithStreamedUnaryMethod_LoadChunk()
-      {
-         ::grpc::Service::MarkMethodStreamed(
-                 0, new ::grpc::internal::StreamedUnaryHandler<
-                            ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,
-                            ::minecpp::proto::chunk::v1::Chunk>(
-                            [this](::grpc::ServerContext *context,
-                                   ::grpc::ServerUnaryStreamer<
-                                           ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,
-                                           ::minecpp::proto::chunk::v1::Chunk> *streamer) {
-                               return this->StreamedLoadChunk(context, streamer);
-                            }));
-      }
-
-      ~WithStreamedUnaryMethod_LoadChunk() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable regular version of this method
-      ::grpc::Status
-      LoadChunk(::grpc::ServerContext * /*context*/,
-                const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest * /*request*/,
-                ::minecpp::proto::chunk::v1::Chunk * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      // replace default version of method with streamed unary
-      virtual ::grpc::Status StreamedLoadChunk(
-              ::grpc::ServerContext *context,
-              ::grpc::ServerUnaryStreamer<::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,
-                                          ::minecpp::proto::chunk::v1::Chunk> *server_unary_streamer) = 0;
-   };
-
-   template<class BaseClass>
-   class WithStreamedUnaryMethod_SetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithStreamedUnaryMethod_SetBlock()
-      {
-         ::grpc::Service::MarkMethodStreamed(
-                 1, new ::grpc::internal::StreamedUnaryHandler<
-                            ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,
-                            ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
-                            [this](::grpc::ServerContext *context,
-                                   ::grpc::ServerUnaryStreamer<
-                                           ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,
-                                           ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                                           *streamer) { return this->StreamedSetBlock(context, streamer); }));
-      }
-
-      ~WithStreamedUnaryMethod_SetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable regular version of this method
-      ::grpc::Status
-      SetBlock(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      // replace default version of method with streamed unary
-      virtual ::grpc::Status StreamedSetBlock(
-              ::grpc::ServerContext *context,
-              ::grpc::ServerUnaryStreamer<::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,
-                                          ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                      *server_unary_streamer) = 0;
-   };
-
-   template<class BaseClass>
-   class WithStreamedUnaryMethod_AddReferences : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithStreamedUnaryMethod_AddReferences()
-      {
-         ::grpc::Service::MarkMethodStreamed(
-                 2,
-                 new ::grpc::internal::StreamedUnaryHandler<
-                         ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,
-                         ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>(
-                         [this](::grpc::ServerContext *context,
-                                ::grpc::ServerUnaryStreamer<
-                                        ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,
-                                        ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>
-                                        *streamer) {
-                            return this->StreamedAddReferences(context, streamer);
-                         }));
-      }
-
-      ~WithStreamedUnaryMethod_AddReferences() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable regular version of this method
-      ::grpc::Status AddReferences(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      // replace default version of method with streamed unary
-      virtual ::grpc::Status StreamedAddReferences(
-              ::grpc::ServerContext *context,
-              ::grpc::ServerUnaryStreamer<::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,
-                                          ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>
-                      *server_unary_streamer) = 0;
-   };
-
-   template<class BaseClass>
-   class WithStreamedUnaryMethod_RemoveReference : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithStreamedUnaryMethod_RemoveReference()
-      {
-         ::grpc::Service::MarkMethodStreamed(
-                 3,
-                 new ::grpc::internal::StreamedUnaryHandler<
-                         ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,
-                         ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
-                         [this](::grpc::ServerContext *context,
-                                ::grpc::ServerUnaryStreamer<
-                                        ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,
-                                        ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                                        *streamer) {
-                            return this->StreamedRemoveReference(context, streamer);
-                         }));
-      }
-
-      ~WithStreamedUnaryMethod_RemoveReference() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable regular version of this method
-      ::grpc::Status RemoveReference(
-              ::grpc::ServerContext * /*context*/,
-              const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest * /*request*/,
-              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      // replace default version of method with streamed unary
-      virtual ::grpc::Status
-      StreamedRemoveReference(::grpc::ServerContext *context,
-                              ::grpc::ServerUnaryStreamer<
-                                      ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,
-                                      ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>
-                                      *server_unary_streamer) = 0;
-   };
-
-   template<class BaseClass>
-   class WithStreamedUnaryMethod_HeightAt : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithStreamedUnaryMethod_HeightAt()
-      {
-         ::grpc::Service::MarkMethodStreamed(
-                 4, new ::grpc::internal::StreamedUnaryHandler<
-                            ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,
-                            ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>(
-                            [this](::grpc::ServerContext *context,
-                                   ::grpc::ServerUnaryStreamer<
-                                           ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,
-                                           ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>
-                                           *streamer) { return this->StreamedHeightAt(context, streamer); }));
-      }
-
-      ~WithStreamedUnaryMethod_HeightAt() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable regular version of this method
-      ::grpc::Status
-      HeightAt(::grpc::ServerContext * /*context*/,
-               const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest * /*request*/,
-               ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      // replace default version of method with streamed unary
-      virtual ::grpc::Status StreamedHeightAt(
-              ::grpc::ServerContext *context,
-              ::grpc::ServerUnaryStreamer<::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,
-                                          ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>
-                      *server_unary_streamer) = 0;
-   };
-
-   template<class BaseClass>
-   class WithStreamedUnaryMethod_GetBlock : public BaseClass
-   {
-    private:
-      void BaseClassMustBeDerivedFromService(const Service * /*service*/) {}
-
-    public:
-      WithStreamedUnaryMethod_GetBlock()
-      {
-         ::grpc::Service::MarkMethodStreamed(
-                 5, new ::grpc::internal::StreamedUnaryHandler<::minecpp::proto::common::v1::BlockPosition,
-                                                               ::minecpp::proto::common::v1::BlockState>(
-                            [this](::grpc::ServerContext *context,
-                                   ::grpc::ServerUnaryStreamer<::minecpp::proto::common::v1::BlockPosition,
-                                                               ::minecpp::proto::common::v1::BlockState>
-                                           *streamer) { return this->StreamedGetBlock(context, streamer); }));
-      }
-
-      ~WithStreamedUnaryMethod_GetBlock() override
-      {
-         BaseClassMustBeDerivedFromService(this);
-      }
-
-      // disable regular version of this method
-      ::grpc::Status GetBlock(::grpc::ServerContext * /*context*/,
-                              const ::minecpp::proto::common::v1::BlockPosition * /*request*/,
-                              ::minecpp::proto::common::v1::BlockState * /*response*/) override
-      {
-         abort();
-         return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-      }
-
-      // replace default version of method with streamed unary
-      virtual ::grpc::Status
-      StreamedGetBlock(::grpc::ServerContext *context,
-                       ::grpc::ServerUnaryStreamer<::minecpp::proto::common::v1::BlockPosition,
-                                                   ::minecpp::proto::common::v1::BlockState>
-                               *server_unary_streamer) = 0;
-   };
-
-   typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<
-           WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<
-                   WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<Service>>>>>>
-           StreamedUnaryService;
-   typedef Service SplitStreamedService;
-   typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<
-           WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<
-                   WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<Service>>>>>>
-           StreamedService;
+  static constexpr char const* service_full_name() {
+    return "minecpp.proto.service.chunk_storage.v1.ChunkStorage";
+  }
+  class StubInterface {
+   public:
+    virtual ~StubInterface() {}
+    virtual ::grpc::Status LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::minecpp::proto::chunk::v1::Chunk* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::Chunk>> AsyncLoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::Chunk>>(AsyncLoadChunkRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::Chunk>> PrepareAsyncLoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::Chunk>>(PrepareAsyncLoadChunkRaw(context, request, cq));
+    }
+    virtual ::grpc::Status SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncSetBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncSetBlockRaw(context, request, cq));
+    }
+    virtual ::grpc::Status AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>> AsyncAddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(AsyncAddReferencesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>> PrepareAsyncAddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(PrepareAsyncAddReferencesRaw(context, request, cq));
+    }
+    virtual ::grpc::Status RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncRemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncRemoveReferenceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncRemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncRemoveReferenceRaw(context, request, cq));
+    }
+    virtual ::grpc::Status HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>> AsyncHeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(AsyncHeightAtRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>> PrepareAsyncHeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(PrepareAsyncHeightAtRaw(context, request, cq));
+    }
+    virtual ::grpc::Status GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::minecpp::proto::common::v1::BlockState* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>> AsyncGetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>>(AsyncGetBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>> PrepareAsyncGetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>>(PrepareAsyncGetBlockRaw(context, request, cq));
+    }
+    class async_interface {
+     public:
+      virtual ~async_interface() {}
+      virtual void LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+    };
+    typedef class async_interface experimental_async_interface;
+    virtual class async_interface* async() { return nullptr; }
+    class async_interface* experimental_async() { return async(); }
+   private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::Chunk>* AsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::Chunk>* PrepareAsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* AsyncAddReferencesRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* PrepareAsyncAddReferencesRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncRemoveReferenceRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncRemoveReferenceRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* AsyncHeightAtRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* PrepareAsyncHeightAtRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>* AsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>* PrepareAsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) = 0;
+  };
+  class Stub final : public StubInterface {
+   public:
+    Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+    ::grpc::Status LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::minecpp::proto::chunk::v1::Chunk* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::Chunk>> AsyncLoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::Chunk>>(AsyncLoadChunkRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::Chunk>> PrepareAsyncLoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::Chunk>>(PrepareAsyncLoadChunkRaw(context, request, cq));
+    }
+    ::grpc::Status SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncSetBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncSetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncSetBlockRaw(context, request, cq));
+    }
+    ::grpc::Status AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>> AsyncAddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(AsyncAddReferencesRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>> PrepareAsyncAddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>>(PrepareAsyncAddReferencesRaw(context, request, cq));
+    }
+    ::grpc::Status RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncRemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncRemoveReferenceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncRemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncRemoveReferenceRaw(context, request, cq));
+    }
+    ::grpc::Status HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>> AsyncHeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(AsyncHeightAtRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>> PrepareAsyncHeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>>(PrepareAsyncHeightAtRaw(context, request, cq));
+    }
+    ::grpc::Status GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::minecpp::proto::common::v1::BlockState* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>> AsyncGetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>>(AsyncGetBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>> PrepareAsyncGetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>>(PrepareAsyncGetBlockRaw(context, request, cq));
+    }
+    class async final :
+      public StubInterface::async_interface {
+     public:
+      void LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, std::function<void(::grpc::Status)>) override;
+      void LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetBlock(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, std::function<void(::grpc::Status)>) override;
+      void AddReferences(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void RemoveReference(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, std::function<void(::grpc::Status)>) override;
+      void HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, std::function<void(::grpc::Status)>) override;
+      void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, ::grpc::ClientUnaryReactor* reactor) override;
+     private:
+      friend class Stub;
+      explicit async(Stub* stub): stub_(stub) { }
+      Stub* stub() { return stub_; }
+      Stub* stub_;
+    };
+    class async* async() override { return &async_stub_; }
+
+   private:
+    std::shared_ptr< ::grpc::ChannelInterface> channel_;
+    class async async_stub_{this};
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::Chunk>* AsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::Chunk>* PrepareAsyncLoadChunkRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncSetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* AsyncAddReferencesRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* PrepareAsyncAddReferencesRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncRemoveReferenceRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncRemoveReferenceRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* AsyncHeightAtRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* PrepareAsyncHeightAtRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>* AsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>* PrepareAsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_LoadChunk_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetBlock_;
+    const ::grpc::internal::RpcMethod rpcmethod_AddReferences_;
+    const ::grpc::internal::RpcMethod rpcmethod_RemoveReference_;
+    const ::grpc::internal::RpcMethod rpcmethod_HeightAt_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetBlock_;
+  };
+  static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+
+  class Service : public ::grpc::Service {
+   public:
+    Service();
+    virtual ~Service();
+    virtual ::grpc::Status LoadChunk(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response);
+    virtual ::grpc::Status SetBlock(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response);
+    virtual ::grpc::Status AddReferences(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response);
+    virtual ::grpc::Status RemoveReference(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response);
+    virtual ::grpc::Status HeightAt(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response);
+    virtual ::grpc::Status GetBlock(::grpc::ServerContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response);
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_LoadChunk : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_LoadChunk() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_LoadChunk() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestLoadChunk(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::chunk::v1::Chunk>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetBlock() {
+      ::grpc::Service::MarkMethodAsync(1);
+    }
+    ~WithAsyncMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetBlock(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_AddReferences : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_AddReferences() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_AddReferences() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddReferences(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestAddReferences(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_RemoveReference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_RemoveReference() {
+      ::grpc::Service::MarkMethodAsync(3);
+    }
+    ~WithAsyncMethod_RemoveReference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RemoveReference(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRemoveReference(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_HeightAt : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_HeightAt() {
+      ::grpc::Service::MarkMethodAsync(4);
+    }
+    ~WithAsyncMethod_HeightAt() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status HeightAt(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestHeightAt(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetBlock() {
+      ::grpc::Service::MarkMethodAsync(5);
+    }
+    ~WithAsyncMethod_GetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetBlock(::grpc::ServerContext* context, ::minecpp::proto::common::v1::BlockPosition* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::common::v1::BlockState>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<WithAsyncMethod_AddReferences<WithAsyncMethod_RemoveReference<WithAsyncMethod_HeightAt<WithAsyncMethod_GetBlock<Service > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_LoadChunk : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_LoadChunk() {
+      ::grpc::Service::MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* request, ::minecpp::proto::chunk::v1::Chunk* response) { return this->LoadChunk(context, request, response); }));}
+    void SetMessageAllocatorFor_LoadChunk(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_LoadChunk() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* LoadChunk(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SetBlock() {
+      ::grpc::Service::MarkMethodCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) { return this->SetBlock(context, request, response); }));}
+    void SetMessageAllocatorFor_SetBlock(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_AddReferences : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_AddReferences() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* response) { return this->AddReferences(context, request, response); }));}
+    void SetMessageAllocatorFor_AddReferences(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_AddReferences() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddReferences(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* AddReferences(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_RemoveReference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_RemoveReference() {
+      ::grpc::Service::MarkMethodCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) { return this->RemoveReference(context, request, response); }));}
+    void SetMessageAllocatorFor_RemoveReference(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_RemoveReference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RemoveReference(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* RemoveReference(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_HeightAt : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_HeightAt() {
+      ::grpc::Service::MarkMethodCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response) { return this->HeightAt(context, request, response); }));}
+    void SetMessageAllocatorFor_HeightAt(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_HeightAt() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status HeightAt(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* HeightAt(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetBlock() {
+      ::grpc::Service::MarkMethodCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response) { return this->GetBlock(context, request, response); }));}
+    void SetMessageAllocatorFor_GetBlock(
+        ::grpc::MessageAllocator< ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_LoadChunk<WithCallbackMethod_SetBlock<WithCallbackMethod_AddReferences<WithCallbackMethod_RemoveReference<WithCallbackMethod_HeightAt<WithCallbackMethod_GetBlock<Service > > > > > > CallbackService;
+  typedef CallbackService ExperimentalCallbackService;
+  template <class BaseClass>
+  class WithGenericMethod_LoadChunk : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_LoadChunk() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_LoadChunk() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetBlock() {
+      ::grpc::Service::MarkMethodGeneric(1);
+    }
+    ~WithGenericMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_AddReferences : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_AddReferences() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_AddReferences() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddReferences(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_RemoveReference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_RemoveReference() {
+      ::grpc::Service::MarkMethodGeneric(3);
+    }
+    ~WithGenericMethod_RemoveReference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RemoveReference(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_HeightAt : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_HeightAt() {
+      ::grpc::Service::MarkMethodGeneric(4);
+    }
+    ~WithGenericMethod_HeightAt() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status HeightAt(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetBlock() {
+      ::grpc::Service::MarkMethodGeneric(5);
+    }
+    ~WithGenericMethod_GetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_LoadChunk : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_LoadChunk() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_LoadChunk() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestLoadChunk(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetBlock() {
+      ::grpc::Service::MarkMethodRaw(1);
+    }
+    ~WithRawMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetBlock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_AddReferences : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_AddReferences() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_AddReferences() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddReferences(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestAddReferences(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_RemoveReference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_RemoveReference() {
+      ::grpc::Service::MarkMethodRaw(3);
+    }
+    ~WithRawMethod_RemoveReference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RemoveReference(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestRemoveReference(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_HeightAt : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_HeightAt() {
+      ::grpc::Service::MarkMethodRaw(4);
+    }
+    ~WithRawMethod_HeightAt() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status HeightAt(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestHeightAt(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetBlock() {
+      ::grpc::Service::MarkMethodRaw(5);
+    }
+    ~WithRawMethod_GetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetBlock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_LoadChunk : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_LoadChunk() {
+      ::grpc::Service::MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->LoadChunk(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_LoadChunk() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* LoadChunk(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SetBlock() {
+      ::grpc::Service::MarkMethodRawCallback(1,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetBlock(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_AddReferences : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_AddReferences() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AddReferences(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_AddReferences() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status AddReferences(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* AddReferences(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_RemoveReference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_RemoveReference() {
+      ::grpc::Service::MarkMethodRawCallback(3,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->RemoveReference(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_RemoveReference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status RemoveReference(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* RemoveReference(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_HeightAt : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_HeightAt() {
+      ::grpc::Service::MarkMethodRawCallback(4,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->HeightAt(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_HeightAt() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status HeightAt(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* HeightAt(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetBlock() {
+      ::grpc::Service::MarkMethodRawCallback(5,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetBlock(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_LoadChunk : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_LoadChunk() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, ::minecpp::proto::chunk::v1::Chunk>* streamer) {
+                       return this->StreamedLoadChunk(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_LoadChunk() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status LoadChunk(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest* /*request*/, ::minecpp::proto::chunk::v1::Chunk* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedLoadChunk(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest,::minecpp::proto::chunk::v1::Chunk>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetBlock() {
+      ::grpc::Service::MarkMethodStreamed(1,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* streamer) {
+                       return this->StreamedSetBlock(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::SetBlockRequest,::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_AddReferences : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_AddReferences() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* streamer) {
+                       return this->StreamedAddReferences(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_AddReferences() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status AddReferences(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedAddReferences(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest,::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_RemoveReference : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_RemoveReference() {
+      ::grpc::Service::MarkMethodStreamed(3,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* streamer) {
+                       return this->StreamedRemoveReference(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_RemoveReference() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status RemoveReference(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedRemoveReference(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest,::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_HeightAt : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_HeightAt() {
+      ::grpc::Service::MarkMethodStreamed(4,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* streamer) {
+                       return this->StreamedHeightAt(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_HeightAt() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status HeightAt(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedHeightAt(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest,::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetBlock() {
+      ::grpc::Service::MarkMethodStreamed(5,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::common::v1::BlockPosition, ::minecpp::proto::common::v1::BlockState>* streamer) {
+                       return this->StreamedGetBlock(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::common::v1::BlockPosition,::minecpp::proto::common::v1::BlockState>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<Service > > > > > > StreamedUnaryService;
+  typedef Service SplitStreamedService;
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<Service > > > > > > StreamedService;
 };
 
-}}}}}// namespace minecpp::proto::service::chunk_storage::v1
+}  // namespace v1
+}  // namespace chunk_storage
+}  // namespace service
+}  // namespace proto
+}  // namespace minecpp
 
 
-#endif// GRPC_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto__INCLUDED
+#endif  // GRPC_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fchunk_5fstorage_2eproto__INCLUDED
