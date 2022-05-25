@@ -164,4 +164,9 @@ void Writer::write_long(uint64_t value)
    stream.write((char *) &value, sizeof(uint64_t));
 }
 
+void Writer::write_short(int16_t value) {
+   value = boost::endian::native_to_big(value);
+   stream.write((char *) &value, sizeof(int16_t));
+}
+
 }// namespace minecpp::network::message

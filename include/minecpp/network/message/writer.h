@@ -13,6 +13,7 @@ class Writer
    explicit Writer();
 
    void write_byte(uint8_t value);
+   void write_short(int16_t value);
    void write_long(uint64_t value);
    void write_varint(uint32_t value);
    void write_varlong(uint64_t value);
