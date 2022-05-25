@@ -90,25 +90,55 @@ class Reader : private minecpp::util::Reader
       return result;
    }
 
-   uint8_t read_byte() { return read_static<uint8_t>(0); }
+   uint8_t read_byte()
+   {
+      return read_static<uint8_t>(0);
+   }
 
-   int16_t read_short() { return read_bswap<short>(); }
+   int16_t read_short()
+   {
+      return read_bswap<short>();
+   }
 
-   int32_t read_int() { return read_bswap<int>(); }
+   int32_t read_int()
+   {
+      return read_bswap<int>();
+   }
 
-   int64_t read_long() { return read_bswap<long long>(); }
+   int64_t read_long()
+   {
+      return read_bswap<long long>();
+   }
 
-   float read_float32() { return read_float(); }
+   float read_float32()
+   {
+      return read_float();
+   }
 
-   double read_float64() { return read_double(); }
+   double read_float64()
+   {
+      return read_double();
+   }
 
-   std::vector<uint8_t> read_byte_vector() { return read_byte_vec(); }
+   std::vector<uint8_t> read_byte_vector()
+   {
+      return read_byte_vec();
+   }
 
-   std::string read_str() { return read_string(); }
+   std::string read_str()
+   {
+      return read_string();
+   }
 
-   std::vector<int32_t> read_int_vec() { return read_int_list<int>(); }
+   std::vector<int32_t> read_int_vec()
+   {
+      return read_int_list<int>();
+   }
 
-   std::vector<int64_t> read_long_vec() { return read_int_list<int64_t>(); }
+   std::vector<int64_t> read_long_vec()
+   {
+      return read_int_list<int64_t>();
+   }
 
    CompoundContent read_compound_content();
 

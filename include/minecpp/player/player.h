@@ -86,21 +86,45 @@ class Player
  public:
    Player(Id id, std::string_view name, const util::Vec3 &pos);
 
-   [[nodiscard]] constexpr Id id() const { return m_id; }
+   [[nodiscard]] constexpr Id id() const
+   {
+      return m_id;
+   }
 
-   [[nodiscard]] constexpr entity::Id entity_id() const { return m_entity_id; }
+   [[nodiscard]] constexpr entity::Id entity_id() const
+   {
+      return m_entity_id;
+   }
 
-   [[nodiscard]] constexpr game::Mode game_mode() const { return m_game_mode; }
+   [[nodiscard]] constexpr game::Mode game_mode() const
+   {
+      return m_game_mode;
+   }
 
-   [[nodiscard]] constexpr const Abilities &abilities() const { return m_abilities; }
+   [[nodiscard]] constexpr const Abilities &abilities() const
+   {
+      return m_abilities;
+   }
 
-   [[nodiscard]] constexpr const std::string &name() const { return m_name; }
+   [[nodiscard]] constexpr const std::string &name() const
+   {
+      return m_name;
+   }
 
-   [[nodiscard]] constexpr int ping() const { return m_ping; }
+   [[nodiscard]] constexpr int ping() const
+   {
+      return m_ping;
+   }
 
-   constexpr void set_entity_id(entity::Id entity_id) { m_entity_id = entity_id; }
+   constexpr void set_entity_id(entity::Id entity_id)
+   {
+      m_entity_id = entity_id;
+   }
 
-   constexpr void set_ping(int ping) { m_ping = ping; }
+   constexpr void set_ping(int ping)
+   {
+      m_ping = ping;
+   }
 
    [[nodiscard]] inline Status status() const
    {

@@ -201,9 +201,15 @@ std::string Type::nbt_tagid() const
    return "minecpp::nbt::TagId::Compound";
 }
 
-bool Type::operator==(const Type &other) const { return variant == other.variant; }
+bool Type::operator==(const Type &other) const
+{
+   return variant == other.variant;
+}
 
-bool Type::operator<(const Type &other) const { return variant < other.variant; }
+bool Type::operator<(const Type &other) const
+{
+   return variant < other.variant;
+}
 
 Type &Type::operator=(const Type &type)
 {

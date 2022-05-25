@@ -36,6 +36,9 @@ inline std::vector<int> write_id_to_nbt(Id id)
    return std::vector<int>{a, b, c, d};
 }
 
-inline std::string format_player_id(Id player_id) { return boost::uuids::to_string(player_id); }
+inline std::string format_player_id(Id player_id)
+{
+   return boost::uuids::to_string(player_id);
+}
 
 }// namespace minecpp::player

@@ -1,7 +1,7 @@
 #ifndef MINECPP_GAME_BLOCK_BLOCK_H
 #define MINECPP_GAME_BLOCK_BLOCK_H
-#include "material.h"
 #include "../state.h"
+#include "material.h"
 #include <minecpp/game/state.h>
 #include <minecpp/util/string.h>
 #include <string_view>
@@ -54,7 +54,10 @@ class Block
          return {*it, state % it->value_count()};
       }
 
-      bool operator==(const StateIterator &rhs) const { return it == rhs.it; }
+      bool operator==(const StateIterator &rhs) const
+      {
+         return it == rhs.it;
+      }
    };
 
    struct StateRange
@@ -62,9 +65,15 @@ class Block
       const Block &block;
       int state;
 
-      StateIterator begin() { return StateIterator{block.m_states.crbegin(), state, block}; }
+      StateIterator begin()
+      {
+         return StateIterator{block.m_states.crbegin(), state, block};
+      }
 
-      StateIterator end() { return StateIterator{block.m_states.crend(), 0, block}; }
+      StateIterator end()
+      {
+         return StateIterator{block.m_states.crend(), 0, block};
+      }
    };
 
    Block(std::string_view tag, std::vector<State> states, BlockStats stats = {}) :
@@ -81,17 +90,35 @@ class Block
 
    [[nodiscard]] std::size_t state_count() const;
 
-   [[nodiscard]] constexpr StateRange state_range(int state) const { return StateRange{*this, state}; }
+   [[nodiscard]] constexpr StateRange state_range(int state) const
+   {
+      return StateRange{*this, state};
+   }
 
-   [[nodiscard]] constexpr const std::string &tag() const { return m_tag; }
+   [[nodiscard]] constexpr const std::string &tag() const
+   {
+      return m_tag;
+   }
 
-   [[nodiscard]] constexpr const BlockStats &stats() const { return m_stats; }
+   [[nodiscard]] constexpr const BlockStats &stats() const
+   {
+      return m_stats;
+   }
 
-   [[nodiscard]] auto begin() const { return m_states.begin(); }
+   [[nodiscard]] auto begin() const
+   {
+      return m_states.begin();
+   }
 
-   [[nodiscard]] auto end() const { return m_states.end(); }
+   [[nodiscard]] auto end() const
+   {
+      return m_states.end();
+   }
 
-   [[nodiscard]] bool is_single_state() const { return m_states.empty(); }
+   [[nodiscard]] bool is_single_state() const
+   {
+      return m_states.empty();
+   }
 };
 
 }// namespace minecpp::game::block

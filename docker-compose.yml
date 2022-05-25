@@ -15,7 +15,7 @@ services:
     volumes:
       - '.:/config'
     environment:
-      CONFIG_FILE: /config/front-config-docker.yaml
+      CONFIG_FILE: /config/service/front/config-docker.yaml
       PORT: 25565
     ports:
       - "25565:25565"

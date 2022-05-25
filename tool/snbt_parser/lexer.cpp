@@ -123,15 +123,24 @@ void Lexer::push_identifier()
    m_identifier.clear();
 }
 
-void Lexer::push_special_token(TokenType type) { m_result.push_back(Token{.type = type}); }
+void Lexer::push_special_token(TokenType type)
+{
+   m_result.push_back(Token{.type = type});
+}
 
 StringReader::StringReader(std::string_view data) :
     m_data(data)
 {
 }
 
-bool StringReader::has_next() { return m_at < m_data.size(); }
+bool StringReader::has_next()
+{
+   return m_at < m_data.size();
+}
 
-char StringReader::next() { return m_data[m_at++]; }
+char StringReader::next()
+{
+   return m_data[m_at++];
+}
 
 }// namespace minecpp::tool::snbt_parser

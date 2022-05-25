@@ -48,11 +48,20 @@ class Vector
    Vector(mb::u8 bits, mb::size size, std::vector<mb::i64> i_data);
    Vector(mb::u8 bits, mb::size size, std::function<mb::i32()> gen);
 
-   [[nodiscard]] constexpr mb::size size() const { return m_size; }
+   [[nodiscard]] constexpr mb::size size() const
+   {
+      return m_size;
+   }
 
-   [[nodiscard]] constexpr mb::i8 bits() const { return m_bits; }
+   [[nodiscard]] constexpr mb::i8 bits() const
+   {
+      return m_bits;
+   }
 
-   [[nodiscard]] constexpr const std::vector<mb::u64> &raw() const { return m_data; }
+   [[nodiscard]] constexpr const std::vector<mb::u64> &raw() const
+   {
+      return m_data;
+   }
 
    [[nodiscard]] mb::i32 at(mb::size i) const;
    [[nodiscard]] mb::i32 operator[](mb::size i) const;

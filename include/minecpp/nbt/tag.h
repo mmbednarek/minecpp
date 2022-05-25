@@ -96,9 +96,15 @@ struct ListContent
          return value;
       }
 
-      bool operator==(Iterator other) const { return at == other.at; }
+      bool operator==(Iterator other) const
+      {
+         return at == other.at;
+      }
 
-      bool operator!=(Iterator other) const { return at != other.at; }
+      bool operator!=(Iterator other) const
+      {
+         return at != other.at;
+      }
 
       Content operator*() const
       {
@@ -123,9 +129,15 @@ struct ListContent
       };
    }
 
-   Iterator begin() { return Iterator(*this, 0); }
+   Iterator begin()
+   {
+      return Iterator(*this, 0);
+   }
 
-   Iterator end() { return Iterator(*this, elements.size()); }
+   Iterator end()
+   {
+      return Iterator(*this, elements.size());
+   }
 
    template<typename T>
    std::vector<T> as_vec()

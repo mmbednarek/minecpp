@@ -38,25 +38,37 @@ class RandomTree final : public PopObject
        r1(m_java_random.next_int(3) + 3),
        r2(m_java_random.next_int(3) + 3),
        r3(m_java_random.next_int(3) + 3),
-       x_min(std::min(x1-r1, std::min(x2-r2, x3-r3))),
-       x_max(std::max(x1+r1, std::max(x2+r2, x3+r3))),
-       y_min(std::min(y1-r1, std::min(y2-r2, y3-r3))),
-       y_max(std::max(y1+r1, std::max(y2+r2, y3+r3))),
-       z_min(std::min(z1-r1, std::min(z2-r2, z3-r3))),
-       z_max(std::max(z1+r1, std::max(z2+r2, z3+r3))),
+       x_min(std::min(x1 - r1, std::min(x2 - r2, x3 - r3))),
+       x_max(std::max(x1 + r1, std::max(x2 + r2, x3 + r3))),
+       y_min(std::min(y1 - r1, std::min(y2 - r2, y3 - r3))),
+       y_max(std::max(y1 + r1, std::max(y2 + r2, y3 + r3))),
+       z_min(std::min(z1 - r1, std::min(z2 - r2, z3 - r3))),
+       z_max(std::max(z1 + r1, std::max(z2 + r2, z3 + r3))),
        m_width(x_max - x_min),
        m_length(z_max - z_min),
        m_height(y_max - y_min)
    {
    }
 
-   [[nodiscard]] int width() const override { return m_width; }
+   [[nodiscard]] int width() const override
+   {
+      return m_width;
+   }
 
-   [[nodiscard]] int height() const override { return m_height + 2; }
+   [[nodiscard]] int height() const override
+   {
+      return m_height + 2;
+   }
 
-   [[nodiscard]] int length() const override { return m_length; }
+   [[nodiscard]] int length() const override
+   {
+      return m_length;
+   }
 
-   [[nodiscard]] Pos center() const override { return {m_width / 2, m_length / 2}; }
+   [[nodiscard]] Pos center() const override
+   {
+      return {m_width / 2, m_length / 2};
+   }
 
    [[nodiscard]] int block_at(int x, int y, int z) const override;
 };

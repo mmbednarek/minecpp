@@ -32,7 +32,7 @@ class Notifier
    virtual void entity_look(player::Id player, mb::u32 entity_id,
                             const minecpp::entity::Rotation &rotation)                     = 0;
    virtual void remove_player(player::Id player, mb::u32 entity_id)                        = 0;
-   virtual void update_block(game::BlockPosition block, game::BlockState state)                     = 0;
+   virtual void update_block(game::BlockPosition block, game::BlockState state)            = 0;
    virtual void animate_hand(player::Id player, mb::u32 entity_id, mb::u32 hand)           = 0;
    virtual void acknowledge_player_digging(player::Id player_id, game::BlockPosition &pos,
                                            game::BlockState block_state, PlayerDiggingState state,

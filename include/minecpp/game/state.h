@@ -123,7 +123,10 @@ class State
               m_detail);
    }
 
-   [[nodiscard]] inline std::string_view name() const { return m_name; }
+   [[nodiscard]] inline std::string_view name() const
+   {
+      return m_name;
+   }
 };
 }// namespace minecpp::game
 

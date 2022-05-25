@@ -103,11 +103,20 @@ class Enum
       return find_enum<Cmp, Enums...>(0);
    }
 
-   static constexpr size_t num() { return sizeof...(Enums); }
+   static constexpr size_t num()
+   {
+      return sizeof...(Enums);
+   }
 
-   [[nodiscard]] constexpr std::string_view str() const { return strings[i]; }
+   [[nodiscard]] constexpr std::string_view str() const
+   {
+      return strings[i];
+   }
 
-   [[nodiscard]] constexpr uint32_t index() const { return i; }
+   [[nodiscard]] constexpr uint32_t index() const
+   {
+      return i;
+   }
 };
 
 template<typename... Enums>

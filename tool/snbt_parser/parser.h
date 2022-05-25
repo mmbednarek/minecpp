@@ -32,9 +32,15 @@ class TokenReader
          ++m_at;
    }
 
-   TokenType token_type() { return m_tokens[m_at].type; }
+   TokenType token_type()
+   {
+      return m_tokens[m_at].type;
+   }
 
-   bool has_next() { return m_at < m_tokens.size(); }
+   bool has_next()
+   {
+      return m_at < m_tokens.size();
+   }
 };
 
 class Parser

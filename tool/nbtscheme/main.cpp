@@ -35,7 +35,10 @@ struct NameProvider
    std::set<std::string> names;
    std::unordered_map<std::string, std::string> labels;
 
-   std::string next_name() { return fmt::format("Type{}", index++); }
+   std::string next_name()
+   {
+      return fmt::format("Type{}", index++);
+   }
 
    std::string register_name(std::string_view scoped_name, std::string_view parent_label,
                              std::string_view label)
@@ -57,7 +60,10 @@ struct NameProvider
       return register_name(scoped_name, parent_label, std::string(label) + "X");
    }
 
-   std::string_view get_type(std::string scoped_name) { return labels[scoped_name]; }
+   std::string_view get_type(std::string scoped_name)
+   {
+      return labels[scoped_name];
+   }
 };
 
 struct Message

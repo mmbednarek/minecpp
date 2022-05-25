@@ -29,7 +29,10 @@ class StateManager
  public:
    std::tuple<int, int> parse_block_id(int block_id);
 
-   [[nodiscard]] static constexpr StateManager &the() { return g_instance; }
+   [[nodiscard]] static constexpr StateManager &the()
+   {
+      return g_instance;
+   }
 
    GETTER(state_count)
 
@@ -40,7 +43,10 @@ class StateManager
       m_state_count += state_count;
    }
 
-   [[nodiscard]] int block_base_state(int block_id) const { return m_block_id_to_state.at(block_id); }
+   [[nodiscard]] int block_base_state(int block_id) const
+   {
+      return m_block_id_to_state.at(block_id);
+   }
 };
 
 }// namespace minecpp::repository

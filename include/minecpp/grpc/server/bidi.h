@@ -79,15 +79,30 @@ class Stream
    {
    }
 
-   void write(const TWrite &message) { m_client.write(m_event_pool, message); }
+   void write(const TWrite &message)
+   {
+      m_client.write(m_event_pool, message);
+   }
 
-   void read() { m_client.read(m_event_pool, m_read_pool); }
+   void read()
+   {
+      m_client.read(m_event_pool, m_read_pool);
+   }
 
-   void disconnect() { m_client.disconnect(m_event_pool); }
+   void disconnect()
+   {
+      m_client.disconnect(m_event_pool);
+   }
 
-   [[nodiscard]] const TTag &tag() const { return m_client.tag; }
+   [[nodiscard]] const TTag &tag() const
+   {
+      return m_client.tag;
+   }
 
-   void set_tag(const TTag &tag) { m_client.tag = tag; }
+   void set_tag(const TTag &tag)
+   {
+      m_client.tag = tag;
+   }
 };
 
 template<typename TService, typename TWrite, typename TRead, typename TCallback, typename TTag, auto FRequest>

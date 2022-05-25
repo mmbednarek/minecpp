@@ -182,9 +182,15 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
    });
 }
 
-void Generator::write_header(std::ostream &out) { m_component.write_header(out); }
+void Generator::write_header(std::ostream &out)
+{
+   m_component.write_header(out);
+}
 
-void Generator::write_source(std::ostream &out) { m_component.write_source(out); }
+void Generator::write_source(std::ostream &out)
+{
+   m_component.write_source(out);
+}
 
 std::string make_header_constant(const std::string &package_name, const std::string &module_name)
 {

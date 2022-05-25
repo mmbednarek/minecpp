@@ -39,9 +39,15 @@ struct Position
    [[nodiscard]] ChunkPos chunk_pos() const;
    [[nodiscard]] uint16_t offset() const;
 
-   [[nodiscard]] constexpr mb::u8 offset_x() const { return x & 15; }
+   [[nodiscard]] constexpr mb::u8 offset_x() const
+   {
+      return x & 15;
+   }
 
-   [[nodiscard]] constexpr mb::u8 offset_z() const { return z & 15; }
+   [[nodiscard]] constexpr mb::u8 offset_z() const
+   {
+      return z & 15;
+   }
 };
 
 }// namespace minecpp::game::block

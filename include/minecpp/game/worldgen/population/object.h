@@ -46,9 +46,15 @@ class SimpleObjectFactory final : public ObjectFactory
    {
    }
 
-   PopObject &create(unsigned int seed) override { return *m_object; }
+   PopObject &create(unsigned int seed) override
+   {
+      return *m_object;
+   }
 
-   [[nodiscard]] int occurrence() const override { return m_occurrence; }
+   [[nodiscard]] int occurrence() const override
+   {
+      return m_occurrence;
+   }
 };
 
 template<int w, int l, int h>
@@ -62,13 +68,25 @@ class ShapedObject : public PopObject
    {
    }
 
-   [[nodiscard]] int width() const override { return w; }
+   [[nodiscard]] int width() const override
+   {
+      return w;
+   }
 
-   [[nodiscard]] int height() const override { return h; }
+   [[nodiscard]] int height() const override
+   {
+      return h;
+   }
 
-   [[nodiscard]] int length() const override { return l; }
+   [[nodiscard]] int length() const override
+   {
+      return l;
+   }
 
-   [[nodiscard]] Pos center() const override { return Pos{.x = w / 2, .z = l / 2}; };
+   [[nodiscard]] Pos center() const override
+   {
+      return Pos{.x = w / 2, .z = l / 2};
+   };
 
    [[nodiscard]] int block_at(int x, int y, int z) const override
    {
@@ -86,7 +104,10 @@ class ObjectRepository
    std::vector<std::unique_ptr<ObjectFactory>> m_objects;
 
  public:
-   [[nodiscard]] static ObjectRepository &the() { return g_instance; }
+   [[nodiscard]] static ObjectRepository &the()
+   {
+      return g_instance;
+   }
 
    void register_objects();
 

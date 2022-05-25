@@ -50,7 +50,10 @@ enum class Face
    return static_cast<proto::common::v1::Face>(face);
 }
 
-[[nodiscard]] constexpr Face face_from_proto(proto::common::v1::Face face) { return static_cast<Face>(face); }
+[[nodiscard]] constexpr Face face_from_proto(proto::common::v1::Face face)
+{
+   return static_cast<Face>(face);
+}
 
 constexpr int decode_x(mb::u64 pos)
 {
@@ -122,11 +125,20 @@ struct BlockPosition
 
    [[nodiscard]] constexpr ChunkPosition chunk_position() const;
 
-   [[nodiscard]] constexpr mb::u8 offset_x() const { return x & (g_chunk_width - 1); }
+   [[nodiscard]] constexpr mb::u8 offset_x() const
+   {
+      return x & (g_chunk_width - 1);
+   }
 
-   [[nodiscard]] constexpr mb::u8 offset_z() const { return z & (g_chunk_depth - 1); }
+   [[nodiscard]] constexpr mb::u8 offset_z() const
+   {
+      return z & (g_chunk_depth - 1);
+   }
 
-   [[nodiscard]] constexpr mb::u16 offset() const { return offset_x() << 12 | y | offset_z() << 8; }
+   [[nodiscard]] constexpr mb::u16 offset() const
+   {
+      return offset_x() << 12 | y | offset_z() << 8;
+   }
 
    [[nodiscard]] inline proto::common::v1::BlockPosition to_proto() const
    {

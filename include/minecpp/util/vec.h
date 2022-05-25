@@ -17,12 +17,18 @@ struct Vec2
    Vec2 operator*(double value) const;
    Vec2 operator/(double value) const;
 
-   constexpr Vec2 operator/(const Vec2 &other) const { return Vec2(x / other.x, z / other.z); }
+   constexpr Vec2 operator/(const Vec2 &other) const
+   {
+      return Vec2(x / other.x, z / other.z);
+   }
 
    Vec2 operator+(Vec2 other) const;
    Vec2 operator-(Vec2 other) const;
 
-   [[nodiscard]] constexpr Vec2 truncate() const { return {std::floor(x), std::floor(z)}; }
+   [[nodiscard]] constexpr Vec2 truncate() const
+   {
+      return {std::floor(x), std::floor(z)};
+   }
 
    double x{}, z{};
 };
@@ -44,7 +50,10 @@ struct Vec3
    Vec3 operator/(double value) const;
    Vec3 operator-(Vec3 value) const;
 
-   constexpr Vec3 operator/(const Vec3 &other) const { return Vec3(x / other.x, y / other.y, z / other.z); }
+   constexpr Vec3 operator/(const Vec3 &other) const
+   {
+      return Vec3(x / other.x, y / other.y, z / other.z);
+   }
 
    Vec2 flat() const;
    Vec3 truncate() const;

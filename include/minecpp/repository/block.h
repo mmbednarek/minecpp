@@ -14,7 +14,10 @@ class Block : public Repository<game::block::Block>
    static Block g_instance;
 
  public:
-   constexpr static Block &the() { return g_instance; }
+   constexpr static Block &the()
+   {
+      return g_instance;
+   }
 };
 
 class BlockState : public Repository<game::State>
@@ -22,7 +25,10 @@ class BlockState : public Repository<game::State>
    static BlockState g_instance;
 
  public:
-   constexpr static BlockState &the() { return g_instance; }
+   constexpr static BlockState &the()
+   {
+      return g_instance;
+   }
 };
 
 template<typename TFunc>

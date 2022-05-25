@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROTO_SOURCES_PATH="lib/api/minecpp/proto/api.cmake"
+PROTO_SOURCES_PATH="library/api/minecpp/proto/api.cmake"
 
 function contains_grpc_service() {
   grep "service" $1 &>/dev/null
@@ -15,21 +15,21 @@ for proto_source in $proto_sources; do
   fi
 done
 
-protoc --proto_path=./api --cpp_out=lib/api $proto_sources
-protoc --proto_path=./api --grpc_out=lib/api --plugin=protoc-gen-grpc=$(which grpc_cpp_plugin) ${grpc_sources[@]}
+protoc --proto_path=./api --cpp_out=library/api $proto_sources
+protoc --proto_path=./api --grpc_out=library/api --plugin=protoc-gen-grpc=$(which grpc_cpp_plugin) ${grpc_sources[@]}
 
 # move generated headers to include path
-for header in $(find . -path "./lib/api/minecpp/proto/*.pb.h"); do
+for header in $(find . -path "./library/api/minecpp/proto/*.pb.h"); do
   sed -i 's/#include \"minecpp\/proto\/\(.*\)\"/#include <minecpp\/proto\/\1>/' $header
-  suffix=${header#"./lib/api/minecpp/proto/"}
+  suffix=${header#"./library/api/minecpp/proto/"}
   mkdir -p ./include/minecpp/proto/${suffix%/*.pb.h}
   mv $header "./include/minecpp/proto/$suffix"
 done
 
 source_files=()
 # replace header include
-for source in $(find . -path "./lib/api/minecpp/proto/*.pb.cc"); do
-  source_files+=(${source#"./lib/api/minecpp/proto/"})
+for source in $(find . -path "./library/api/minecpp/proto/*.pb.cc"); do
+  source_files+=(${source#"./library/api/minecpp/proto/"})
   sed -i 's/#include \"minecpp\/proto\/\(.*\)\"/#include <minecpp\/proto\/\1>/' $source
 done
 
