@@ -109,6 +109,9 @@ extern RecipientSinglePlayerDefaultTypeInternal _RecipientSinglePlayer_default_i
 class RemovePlayer;
 struct RemovePlayerDefaultTypeInternal;
 extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
+class SetInventorySlot;
+struct SetInventorySlotDefaultTypeInternal;
+extern SetInventorySlotDefaultTypeInternal _SetInventorySlot_default_instance_;
 class SpawnPlayer;
 struct SpawnPlayerDefaultTypeInternal;
 extern SpawnPlayerDefaultTypeInternal _SpawnPlayer_default_instance_;
@@ -148,6 +151,7 @@ template<> ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Arena::
 template<> ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemovePlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetInventorySlot* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetInventorySlot>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SpawnPlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::TransferPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::TransferPlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::UnloadChunk* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UnloadChunk>(Arena*);
@@ -4055,6 +4059,158 @@ class DenyPlayer final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto;
 };
+// -------------------------------------------------------------------
+
+class SetInventorySlot final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetInventorySlot) */ {
+ public:
+  inline SetInventorySlot() : SetInventorySlot(nullptr) {}
+  ~SetInventorySlot() override;
+  explicit PROTOBUF_CONSTEXPR SetInventorySlot(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetInventorySlot(const SetInventorySlot& from);
+  SetInventorySlot(SetInventorySlot&& from) noexcept
+    : SetInventorySlot() {
+    *this = ::std::move(from);
+  }
+
+  inline SetInventorySlot& operator=(const SetInventorySlot& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetInventorySlot& operator=(SetInventorySlot&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetInventorySlot& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetInventorySlot* internal_default_instance() {
+    return reinterpret_cast<const SetInventorySlot*>(
+               &_SetInventorySlot_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  friend void swap(SetInventorySlot& a, SetInventorySlot& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetInventorySlot* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetInventorySlot* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SetInventorySlot* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetInventorySlot>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetInventorySlot& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SetInventorySlot& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetInventorySlot* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetInventorySlot";
+  }
+  protected:
+  explicit SetInventorySlot(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSlotFieldNumber = 1,
+  };
+  // .minecpp.proto.player.v1.Slot slot = 1;
+  bool has_slot() const;
+  private:
+  bool _internal_has_slot() const;
+  public:
+  void clear_slot();
+  const ::minecpp::proto::player::v1::Slot& slot() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Slot* release_slot();
+  ::minecpp::proto::player::v1::Slot* mutable_slot();
+  void set_allocated_slot(::minecpp::proto::player::v1::Slot* slot);
+  private:
+  const ::minecpp::proto::player::v1::Slot& _internal_slot() const;
+  ::minecpp::proto::player::v1::Slot* _internal_mutable_slot();
+  public:
+  void unsafe_arena_set_allocated_slot(
+      ::minecpp::proto::player::v1::Slot* slot);
+  ::minecpp::proto::player::v1::Slot* unsafe_arena_release_slot();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::minecpp::proto::player::v1::Slot* slot_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto;
+};
 // ===================================================================
 
 
@@ -7027,9 +7183,100 @@ inline void DenyPlayer::set_allocated_denial_reason(std::string* denial_reason) 
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
 }
 
+// -------------------------------------------------------------------
+
+// SetInventorySlot
+
+// .minecpp.proto.player.v1.Slot slot = 1;
+inline bool SetInventorySlot::_internal_has_slot() const {
+  return this != internal_default_instance() && slot_ != nullptr;
+}
+inline bool SetInventorySlot::has_slot() const {
+  return _internal_has_slot();
+}
+inline const ::minecpp::proto::player::v1::Slot& SetInventorySlot::_internal_slot() const {
+  const ::minecpp::proto::player::v1::Slot* p = slot_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::Slot&>(
+      ::minecpp::proto::player::v1::_Slot_default_instance_);
+}
+inline const ::minecpp::proto::player::v1::Slot& SetInventorySlot::slot() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+  return _internal_slot();
+}
+inline void SetInventorySlot::unsafe_arena_set_allocated_slot(
+    ::minecpp::proto::player::v1::Slot* slot) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(slot_);
+  }
+  slot_ = slot;
+  if (slot) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+}
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::release_slot() {
+  
+  ::minecpp::proto::player::v1::Slot* temp = slot_;
+  slot_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::unsafe_arena_release_slot() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+  
+  ::minecpp::proto::player::v1::Slot* temp = slot_;
+  slot_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::_internal_mutable_slot() {
+  
+  if (slot_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::Slot>(GetArenaForAllocation());
+    slot_ = p;
+  }
+  return slot_;
+}
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::mutable_slot() {
+  ::minecpp::proto::player::v1::Slot* _msg = _internal_mutable_slot();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+  return _msg;
+}
+inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::player::v1::Slot* slot) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(slot_);
+  }
+  if (slot) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(slot));
+    if (message_arena != submessage_arena) {
+      slot = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, slot, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  slot_ = slot;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

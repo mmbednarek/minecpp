@@ -381,4 +381,22 @@ Writer UpdateChunkPosition::serialize() const
    w.write_varint(z);
    return w;
 }
+
+Writer SetSlot::serialize() const
+{
+   Writer w;
+   w.write_byte(0x16);
+   w.write_byte(window_id);
+   w.write_varint(state_id);
+   w.write_short(slot);
+   if (item_id == 0) {
+      w.write_byte(0x00);
+   } else {
+      w.write_byte(0x01);
+      w.write_varint(item_id);
+      w.write_byte(count);
+      w.write_byte(0x00);
+   }
+   return w;
+}
 }// namespace minecpp::network::message

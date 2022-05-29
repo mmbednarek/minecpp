@@ -31,6 +31,13 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
    auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
 
+   if (!player.inventory().add_item(1, 64)) {
+      spdlog::info("player inventory is full");
+   }
+   if (!player.inventory().add_item(2, 32)) {
+      spdlog::info("player inventory is full");
+   }
+
    m_dispatcher.accept_player(player, entity);
    m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
    m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
@@ -182,6 +189,8 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    if (!res.ok()) {
       spdlog::error("error loading chunks: {}", res.msg());
    }
+
+   send_inventory_data(player);
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id)
@@ -191,6 +200,16 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    auto neighbour_position = block_position.neighbour_at(face);
    m_world.set_block(neighbour_position, m_selected_block);
    m_dispatcher.update_block(neighbour_position, m_selected_block);
+}
+
+void EventHandler::send_inventory_data(const player::Player &player) {
+   for  (player::SlotId id = 9; id < 5*9; ++id) {
+      auto slot = player.inventory().item_at(id);
+      if (slot.count == 0)
+         continue;
+
+      m_dispatcher.set_inventory_slot(player.id(), slot.item_id, id, slot.count);
+   }
 }
 
 }// namespace minecpp::service::engine

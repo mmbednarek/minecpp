@@ -38,3 +38,9 @@ message RecipeBook {
   bool furnace_gui_open = 3;
   bool furnace_filtering_craftable = 4;
 }
+
+message Slot {
+  uint32 slot_id = 1;
+  common.v1.ItemId item_id = 2;
+  uint32 count = 3;
+}

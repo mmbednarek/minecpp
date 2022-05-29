@@ -130,3 +130,7 @@ message AcceptPlayer {
 message DenyPlayer {
   string denial_reason = 1;
 }
+
+message SetInventorySlot {
+  player.v1.Slot slot = 1;
+}

@@ -105,6 +105,16 @@ struct Chat
    [[nodiscard]] Writer serialize() const;
 };
 
+struct SetSlot {
+   uint8_t window_id;
+   int state_id;
+   short slot;
+   int item_id;
+   uint8_t count;
+
+   [[nodiscard]] Writer serialize() const;
+};
+
 // 0x18
 struct ServerBrand
 {

@@ -375,4 +375,25 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
    }
 }
 
+void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg, const std::vector<player::Id> &player_ids)
+{
+   assert(player_ids.size() == 1);
+
+   const auto player_id = player_ids.front();
+
+   auto conn = m_server.connection_by_id(player_id);
+   if (!conn) {
+      spdlog::error("connection {} is null", player::format_player_id(player_id));
+      return;
+   }
+
+   send(conn, network::message::SetSlot{
+                      .window_id = 0,
+                      .state_id =  0,
+                      .slot = static_cast<short>(msg.slot().slot_id()),
+                      .item_id = static_cast<int>(msg.slot().item_id().id()),
+                      .count = static_cast<uint8_t>(msg.slot().count()),
+              });
+}
+
 }// namespace minecpp::service::front

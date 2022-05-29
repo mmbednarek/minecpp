@@ -35,6 +35,10 @@ message Vector3f {
   float z = 3;
 }
 
+message ItemId {
+  uint32 id = 1;
+}
+
 enum DimensionType {
   Overworld = 0;
   Nether = 1;

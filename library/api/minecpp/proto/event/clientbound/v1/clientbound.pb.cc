@@ -330,12 +330,24 @@ struct DenyPlayerDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DenyPlayerDefaultTypeInternal _DenyPlayer_default_instance_;
+PROTOBUF_CONSTEXPR SetInventorySlot::SetInventorySlot(
+    ::_pbi::ConstantInitialized)
+  : slot_(nullptr){}
+struct SetInventorySlotDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SetInventorySlotDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SetInventorySlotDefaultTypeInternal() {}
+  union {
+    SetInventorySlot _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetInventorySlotDefaultTypeInternal _SetInventorySlot_default_instance_;
 }  // namespace v1
 }  // namespace clientbound
 }  // namespace event
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto[23];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto[24];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto = nullptr;
 
@@ -532,6 +544,13 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbo
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DenyPlayer, denial_reason_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SetInventorySlot, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SetInventorySlot, slot_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::Event)},
@@ -557,6 +576,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 170, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::EntityList)},
   { 177, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::AcceptPlayer)},
   { 185, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::DenyPlayer)},
+  { 192, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::SetInventorySlot)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -583,6 +603,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::event::clientbound::v1::_EntityList_default_instance_._instance,
   &::minecpp::proto::event::clientbound::v1::_AcceptPlayer_default_instance_._instance,
   &::minecpp::proto::event::clientbound::v1::_DenyPlayer_default_instance_._instance,
+  &::minecpp::proto::event::clientbound::v1::_SetInventorySlot_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -659,7 +680,9 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_
   "\0223\n\010gameplay\030\001 \001(\0132!.minecpp.proto.commo"
   "n.v1.Gameplay\022/\n\006player\030\002 \001(\0132\037.minecpp."
   "proto.player.v1.Player\"#\n\nDenyPlayer\022\025\n\r"
-  "denial_reason\030\001 \001(\tb\006proto3"
+  "denial_reason\030\001 \001(\t\"\?\n\020SetInventorySlot\022"
+  "+\n\004slot\030\001 \001(\0132\035.minecpp.proto.player.v1."
+  "Slotb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_deps[5] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -670,9 +693,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto = {
-    false, false, 2947, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto,
+    false, false, 3012, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto,
     "minecpp/proto/event/clientbound/v1/clientbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_deps, 5, 23,
+    &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_deps, 5, 24,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto,
@@ -6010,6 +6033,199 @@ void DenyPlayer::InternalSwap(DenyPlayer* other) {
       file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto[22]);
 }
 
+// ===================================================================
+
+class SetInventorySlot::_Internal {
+ public:
+  static const ::minecpp::proto::player::v1::Slot& slot(const SetInventorySlot* msg);
+};
+
+const ::minecpp::proto::player::v1::Slot&
+SetInventorySlot::_Internal::slot(const SetInventorySlot* msg) {
+  return *msg->slot_;
+}
+void SetInventorySlot::clear_slot() {
+  if (GetArenaForAllocation() == nullptr && slot_ != nullptr) {
+    delete slot_;
+  }
+  slot_ = nullptr;
+}
+SetInventorySlot::SetInventorySlot(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+}
+SetInventorySlot::SetInventorySlot(const SetInventorySlot& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_slot()) {
+    slot_ = new ::minecpp::proto::player::v1::Slot(*from.slot_);
+  } else {
+    slot_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+}
+
+inline void SetInventorySlot::SharedCtor() {
+slot_ = nullptr;
+}
+
+SetInventorySlot::~SetInventorySlot() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SetInventorySlot::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete slot_;
+}
+
+void SetInventorySlot::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void SetInventorySlot::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && slot_ != nullptr) {
+    delete slot_;
+  }
+  slot_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetInventorySlot::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .minecpp.proto.player.v1.Slot slot = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_slot(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* SetInventorySlot::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .minecpp.proto.player.v1.Slot slot = 1;
+  if (this->_internal_has_slot()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::slot(this),
+        _Internal::slot(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  return target;
+}
+
+size_t SetInventorySlot::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .minecpp.proto.player.v1.Slot slot = 1;
+  if (this->_internal_has_slot()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *slot_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetInventorySlot::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    SetInventorySlot::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetInventorySlot::GetClassData() const { return &_class_data_; }
+
+void SetInventorySlot::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<SetInventorySlot *>(to)->MergeFrom(
+      static_cast<const SetInventorySlot &>(from));
+}
+
+
+void SetInventorySlot::MergeFrom(const SetInventorySlot& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_slot()) {
+    _internal_mutable_slot()->::minecpp::proto::player::v1::Slot::MergeFrom(from._internal_slot());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetInventorySlot::CopyFrom(const SetInventorySlot& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.clientbound.v1.SetInventorySlot)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetInventorySlot::IsInitialized() const {
+  return true;
+}
+
+void SetInventorySlot::InternalSwap(SetInventorySlot* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(slot_, other->slot_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetInventorySlot::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fclientbound_2eproto[23]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace clientbound
@@ -6108,6 +6324,10 @@ Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::AcceptPlaye
 template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::DenyPlayer*
 Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::DenyPlayer >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::DenyPlayer >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::SetInventorySlot*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::SetInventorySlot >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::SetInventorySlot >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

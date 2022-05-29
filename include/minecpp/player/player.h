@@ -1,6 +1,7 @@
 #pragma once
 #include "id.h"
 #include "tracking.h"
+#include "inventory.h"
 #include <minecpp/entity/entity.h>
 #include <minecpp/game/mode.h>
 #include <minecpp/proto/player/v1/player.pb.h>
@@ -82,6 +83,7 @@ class Player
    int m_food_tick_timer         = 0;
 
    Abilities m_abilities;
+   Inventory m_inventory;
 
  public:
    Player(Id id, std::string_view name, const util::Vec3 &pos);
@@ -104,6 +106,16 @@ class Player
    [[nodiscard]] constexpr const Abilities &abilities() const
    {
       return m_abilities;
+   }
+
+   [[nodiscard]] constexpr const Inventory &inventory() const
+   {
+      return m_inventory;
+   }
+
+   [[nodiscard]] constexpr Inventory &inventory()
+   {
+      return m_inventory;
    }
 
    [[nodiscard]] constexpr const std::string &name() const

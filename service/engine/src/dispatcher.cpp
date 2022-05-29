@@ -160,4 +160,14 @@ void Dispatcher::entity_list(player::Id player_id, const std::vector<game::entit
    m_events.send_to(list, player_id);
 }
 
+void Dispatcher::set_inventory_slot(player::Id player_id, game::item::ItemId item_id, player::SlotId slot_id,
+                                    std::size_t count)
+{
+   clientbound_v1::SetInventorySlot set_slot;
+   set_slot.mutable_slot()->set_slot_id(slot_id);
+   set_slot.mutable_slot()->set_count(static_cast<uint32_t>(count));
+   set_slot.mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(item_id));
+   m_events.send_to(set_slot, player_id);
+}
+
 }// namespace minecpp::service::engine

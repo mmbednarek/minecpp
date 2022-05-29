@@ -37,6 +37,9 @@ class EventHandler
    void handle_animate_hand(const serverbound_v1::AnimateHand &event, player::Id player_id);
    void handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, player::Id player_id);
    void handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id);
+
+ private:
+   void send_inventory_data(const player::Player &player);
 };
 
 }// namespace minecpp::service::engine
