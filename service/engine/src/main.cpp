@@ -24,7 +24,7 @@ auto main() -> int
 
    auto load_repo_res = minecpp::repository::load_repository_from_file(repo_file);
    if (!load_repo_res.ok()) {
-      spdlog::error("could not load repository: {}", load_repo_res.msg());
+      spdlog::error("could not load repository: {}", load_repo_res.err()->msg());
       return 1;
    }
 
@@ -51,6 +51,6 @@ auto main() -> int
    server.accept();
    auto res = server.wait();
    if (!res.ok()) {
-      spdlog::error("server error: {}", res.msg());
+      spdlog::error("server error: {}", res.err()->msg());
    }
 }

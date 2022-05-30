@@ -47,7 +47,7 @@ fetchcontent_makeavailable(yaml)
 fetchcontent_declare(
   libmb
   GIT_REPOSITORY https://github.com/mmbednarek/mb
-  GIT_TAG libmb-0.0.21
+  GIT_TAG libmb-0.0.23
 )
 fetchcontent_makeavailable(libmb)
 

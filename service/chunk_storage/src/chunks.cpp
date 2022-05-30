@@ -66,7 +66,7 @@ mb::result<mb::empty> ChunkManager::save_chunk(int x, int z)
 {
    auto chunk_it = m_chunks.find(hash_chunk_pos(x, z));
    if (chunk_it == m_chunks.end()) {
-      return mb::error(mb::error::status::NotFound, "chunk not found");
+      return mb::error("chunk not found");
    }
 
    auto nbt_chunk = chunk_it->second->to_nbt();
@@ -86,14 +86,14 @@ mb::result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t stat
 
    if (auto iter = m_chunks.find(hashed_pos); iter == m_chunks.end()) {
       if (auto res = load_chunk(chunk_pos.x, chunk_pos.z); !res.ok()) {
-         return res.err();
+         return std::move(res.err());
       }
    }
 
    m_chunks[hashed_pos]->set_block(pos.offset_x(), y, pos.offset_z(), state);
 
    if (auto res = save_chunk(chunk_pos.x, chunk_pos.z); !res.ok()) {
-      spdlog::error("could not save chunk: {}", res.msg());
+      spdlog::error("could not save chunk: {}", res.err()->msg());
       return res;
    }
    spdlog::info("successfully saved chunk!");
@@ -127,9 +127,9 @@ mb::result<int> ChunkManager::height_at(int x, int z)
 {
    auto res = get_chunk(minecpp::game::BlockPosition(x, 0, z).chunk_position());
    if (!res.ok()) {
-      return res.err();
+      return std::move(res.err());
    }
-   return res.unwrap().height_at(x, z);
+   return res.get().height_at(x, z);
 }
 
 mb::result<mb::empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<minecpp::game::Chunk> chunk)

@@ -5,6 +5,11 @@
 #include <minecpp/repository/repository.h>
 #include <spdlog/spdlog.h>
 
+struct Config {
+   MB_ENV("LISTEN_PORT")
+   int listen_port;
+};
+
 auto main() -> int
 {
    auto region_path = mb::getenv("REGION_PATH").unwrap("world/region");
@@ -13,7 +18,7 @@ auto main() -> int
 
    auto load_repo_res = minecpp::repository::load_repository_from_file(repo_file);
    if (!load_repo_res.ok()) {
-      spdlog::error("could not load repository: {}", load_repo_res.msg());
+      spdlog::error("could not load repository: {}", load_repo_res.err()->msg());
       return 1;
    }
 

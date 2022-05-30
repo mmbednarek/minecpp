@@ -18,7 +18,7 @@ mb::result<std::unique_ptr<RegionFile>> RegionFile::load(const std::string &path
 {
    std::fstream file(path, std::ios_base::binary | std::ios_base::out | std::ios_base::in);
    if (!file.is_open()) {
-      return mb::error(mb::error::status::NotFound, "file not found");
+      return mb::error("file not found");
    }
    return std::make_unique<RegionFile>(std::move(file), path);
 }
@@ -58,11 +58,16 @@ mb::result<RegionFile &> Regions::load_region(int x, int z)
 {
    auto region_path = fmt::format("{}/r.{}.{}.mca", m_path, x, z);
    spdlog::info("loading region file {}", region_path);
-   auto region      = MB_TRY(RegionFile::load(region_path));
+
+   auto load_chunk_result = RegionFile::load(region_path);
+   if (load_chunk_result.has_failed()) {
+      return std::move(load_chunk_result.err());
+   }
+
    auto hash        = hash_chunk_pos(x, z);
-   auto &region_ref = *region;
-   m_files[hash]    = std::move(region);
-   return region_ref;
+   auto *region_ref = load_chunk_result.get().get();
+   m_files[hash]    = std::move(load_chunk_result.get());
+   return *region_ref;
 }
 
 static constexpr int chunk_to_region(int cord)
@@ -76,7 +81,11 @@ mb::result<std::vector<uint8_t>> Regions::read_chunk(int x, int z)
    std::lock_guard<std::mutex> lock(region.m_mutex);
 
    minecpp::region::RegionFile r(region.m_file);
-   return r.load_chunk(x, z);
+   auto res = r.load_chunk(x, z);
+   if (res.has_failed()) {
+      return mb::error("could not load chunk");
+   }
+   return std::move(res.unwrap());
 }
 
 mb::result<mb::empty> Regions::write_chunk(mb::i32 x, mb::i32 z, const mb::view<char> chunk_data) noexcept
@@ -85,7 +94,9 @@ mb::result<mb::empty> Regions::write_chunk(mb::i32 x, mb::i32 z, const mb::view<
    std::lock_guard<std::mutex> lock(region.m_mutex);
 
    minecpp::region::RegionFile r(region.m_file);
-   MB_TRY(r.write_data(x, z, chunk_data));
+   if (auto err = r.write_data(x, z, chunk_data); err != region::WriteError::Ok) {
+      return mb::error("could not load region");
+   }
    return mb::ok;
 }
 

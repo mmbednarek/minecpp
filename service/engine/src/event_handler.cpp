@@ -25,7 +25,7 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    spdlog::info("player accept request from {}", event.name());
    auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
    if (!join_result.ok()) {
-      m_dispatcher.deny_player(player_id, join_result.msg());
+      m_dispatcher.deny_player(player_id, join_result.err()->msg());
       return;
    }
 
@@ -212,7 +212,7 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    auto res     = player.load_chunks(m_world);
    if (!res.ok()) {
-      spdlog::error("error loading chunks: {}", res.msg());
+      spdlog::error("error loading chunks: {}", res.err()->msg());
    }
 
    auto &entity = MB_ESCAPE(m_entity_manager.get_entity(player.entity_id()));

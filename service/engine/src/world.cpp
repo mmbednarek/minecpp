@@ -33,7 +33,7 @@ mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::Ch
    }
    auto status = service.AddReferences(&ctx, req, &result);
    if (!status.ok()) {
-      return mb::error(mb::error::status::Internal, status.error_message());
+      return mb::error(status.error_message());
    }
 
    if (result.status() == ReferenceStatus::MUST_MOVE) {
@@ -58,7 +58,7 @@ mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::C
 
    auto status = service.RemoveReference(&ctx, req, &res);
    if (!status.ok()) {
-      return mb::error(mb::error::status::Internal, status.error_message());
+      return mb::error(status.error_message());
    }
 
    return mb::ok;

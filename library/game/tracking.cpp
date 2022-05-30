@@ -104,7 +104,7 @@ mb::result<mb::empty> Tracking::load_chunks(World &w, Player &p)
              });
 
    if (auto res = w.add_refs(p.get_id(), chunks_to_load); !res.ok()) {
-      return res.err();
+      return std::move(res.err());
    }
    w.notifier().load_terrain(p.get_id(), m_chunk_pos, chunks_to_load);
    return mb::ok;
