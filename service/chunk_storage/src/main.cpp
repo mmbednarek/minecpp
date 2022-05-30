@@ -5,11 +5,6 @@
 #include <minecpp/repository/repository.h>
 #include <spdlog/spdlog.h>
 
-struct Config {
-   MB_ENV("LISTEN_PORT")
-   int listen_port;
-};
-
 auto main() -> int
 {
    auto region_path = mb::getenv("REGION_PATH").unwrap("world/region");
