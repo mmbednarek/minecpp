@@ -1,4 +1,5 @@
 #include "generator.h"
+#include <algorithm>
 #include <fmt/format.h>
 #include <set>
 #include <sstream>

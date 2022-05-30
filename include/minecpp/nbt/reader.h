@@ -90,9 +90,9 @@ class Reader : private minecpp::util::Reader
       return result;
    }
 
-   uint8_t read_byte()
+   int8_t read_byte()
    {
-      return read_static<uint8_t>(0);
+      return read_static<int8_t>(0);
    }
 
    int16_t read_short()

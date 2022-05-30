@@ -39,11 +39,11 @@ class Repository
       return m_description[id].resource;
    }
 
-   [[nodiscard]] mb::result<const TResource &> get_by_id(Id id)
+   [[nodiscard]] mb::result<const TResource &> get_by_id(Id id) const
    {
       if (id >= m_description.size())
          return mb::error("invalid id");
-      return m_description[id].resource;
+      return m_description.at(id).resource;
    }
 
    void register_resource(const std::string &tag, const TResource &res)

@@ -1,0 +1,8 @@
+syntax = "nbt";
+package minecpp.nbt.item.v1;
+
+message Item {
+    int8 is_block = 1 [label = "IsBlock"];
+    string corresponding_block_tag = 2 [label = "CorrespondingBlockTag"];
+    int32 max_item_stack = 3 [label = "MaxItemStack"];
+}

@@ -56,3 +56,13 @@ message BlockPlacement {
   common.v1.Vector3f crosshair = 4;
   bool inside_block = 5;
 }
+
+message ChangeInventoryItem {
+  int32 slot_id = 1;
+  common.v1.ItemId item_id = 2;
+  int32 item_count = 3;
+}
+
+message ChangeHeldItem {
+  int32 slot = 1;
+}

@@ -1,7 +1,8 @@
-#ifndef MINECPP_STATE_H
-#define MINECPP_STATE_H
+#ifndef MINECPP_GAME_STATE_H
+#define MINECPP_GAME_STATE_H
 #include <algorithm>
 #include <string>
+#include <utility>
 #include <variant>
 #include <vector>
 
@@ -13,11 +14,22 @@ struct BoolState
 struct IntState
 {
    int min{}, max{};
+
+   IntState(int min, int max) :
+       min(min),
+       max(max)
+   {
+   }
 };
 
 struct EnumState
 {
    std::vector<std::string> values{};
+
+   explicit EnumState(std::vector<std::string> values) :
+       values(std::move(values))
+   {
+   }
 };
 
 class State
@@ -34,13 +46,13 @@ class State
 
    State(std::string_view name, int min, int max) :
        m_name(name),
-       m_detail{std::in_place_type<IntState>, min, max}
+       m_detail{std::in_place_index<1>, min, max}
    {
    }
 
-   State(std::string_view name, const std::vector<std::string> &enum_values) :
+   State(std::string_view name, std::vector<std::string> enum_values) :
        m_name(name),
-       m_detail{std::in_place_type<EnumState>, enum_values}
+       m_detail{std::in_place_index<2>, std::move(enum_values)}
    {
    }
 
@@ -131,4 +143,4 @@ class State
 };
 }// namespace minecpp::game
 
-#endif//MINECPP_STATE_H
+#endif//MINECPP_GAME_STATE_H

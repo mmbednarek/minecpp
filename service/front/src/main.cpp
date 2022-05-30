@@ -36,9 +36,16 @@ auto main() -> int
 
    spdlog::info("attempting to connect to engine");
 
-   auto stream = engine_client.join();
-   service.set_stream(&stream);
-   handler.set_stream(&stream);
+   minecpp::service::engine::Stream *stream{};
+   while (stream == nullptr) {
+      using namespace std::chrono_literals;
+      stream = engine_client.join();
+      spdlog::info("awaiting engine connection...");
+      std::this_thread::sleep_for(1s);
+   }
+
+   service.set_stream(stream);
+   handler.set_stream(stream);
 
    spdlog::info("established connection, starting tick");
 

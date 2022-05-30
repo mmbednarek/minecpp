@@ -164,6 +164,32 @@ void Service::on_message(uuid engine_id, player::Id player_id,
    m_stream->send(block_placement, player_id);
 }
 
+void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ClickWindow msg)
+{
+   if (msg.window_id != 0)
+      return;
+
+   for (const auto &slot : msg.slots) {
+      serverbound_v1::ChangeInventoryItem change_item;
+      change_item.mutable_item_id()->set_id(static_cast<uint32_t>(slot.item_id));
+      change_item.set_slot_id(slot.slot_id);
+      change_item.set_item_count(slot.count);
+      m_stream->send(change_item, player_id);
+   }
+}
+
+void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::HeldItemChange msg)
+{
+   serverbound_v1::ChangeHeldItem held_item;
+   held_item.set_slot(msg.slot);
+   m_stream->send(held_item, player_id);
+}
+
+void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PluginMessage msg)
+{
+   spdlog::info("received plugin message channel={}, data={}", msg.channel, msg.data);
+}
+
 const char command_list[]{
         0x11, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x05, 0x01, 0x0a, 0x04,
         0x68, 0x65, 0x6c, 0x70, 0x05, 0x01, 0x0b, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x01, 0x01, 0x0c, 0x02, 0x6d,

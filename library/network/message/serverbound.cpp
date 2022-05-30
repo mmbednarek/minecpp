@@ -1,4 +1,5 @@
 #include "minecpp/game/game.h"
+#include <minecpp/nbt/reader.h>
 #include <minecpp/network/message/serverbound.h>
 
 namespace minecpp::network::message {
@@ -80,6 +81,45 @@ void deserialize(Reader &r, PlayerBlockPlacement &msg)
    msg.y            = r.read_float();
    msg.z            = r.read_float();
    msg.inside_block = r.read_byte();
+}
+
+void deserialize(Reader &r, ClickWindow &msg)
+{
+   msg.window_id = r.read_byte();
+   msg.state_id  = r.read_varint();
+   msg.slot      = r.read_short();
+   msg.button    = r.read_byte();
+   msg.mode      = r.read_varint();
+
+   auto size = r.read_varint();
+   msg.slots.resize(static_cast<unsigned long>(size));
+   std::generate(msg.slots.begin(), msg.slots.end(), [&r]() {
+      ClickWindow::Slot slot{};
+      slot.slot_id = r.read_short();
+      auto present = r.read_byte();
+      if (!present)
+         return slot;
+      slot.item_id = r.read_varint();
+      slot.count   = r.read_byte();
+      r.read_nbt_tag();
+      return slot;
+   });
+
+   auto carried_present = r.read_byte();
+   if (!carried_present)
+      return;
+   msg.carried_item_id = r.read_varint();
+   msg.carried_count   = r.read_byte();
+   r.read_nbt_tag();
+}
+
+void deserialize(Reader &r, HeldItemChange &msg) {
+   msg.slot = r.read_short();
+}
+
+void deserialize(Reader &r, PluginMessage &msg) {
+   msg.channel = r.read_string();
+   msg.data = r.read_string();
 }
 
 }// namespace minecpp::network::message

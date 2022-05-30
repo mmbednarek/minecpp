@@ -5,6 +5,7 @@
 #include <mb/int.h>
 #include <mb/result.h>
 #include <minecpp/nbt/block/v1/block.nbt.h>
+#include <minecpp/nbt/item/v1/item.nbt.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/writer.h>
 #include <string>
@@ -55,6 +56,39 @@ class BlockEntry
    void serialize(std::ostream &out, std::string_view name) const;
    static BlockEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static BlockEntry deserialize(std::istream &in);
+};
+
+class ItemEntry
+{
+
+   template<typename T>
+   void __xx_put(const std::string &name, T &&value)
+   {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, item::v1::Item>) {
+         if (name == "Item") {
+            this->item = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+      if constexpr (std::is_same_v<TDc, std::string>) {
+         if (name == "Tag") {
+            this->tag = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+   }
+
+ public:
+   item::v1::Item item{};
+   std::string tag{};
+   ItemEntry() = default;
+   void serialize_no_header(minecpp::nbt::Writer &w) const;
+   void serialize(std::ostream &out, std::string_view name) const;
+   static ItemEntry deserialize_no_header(minecpp::nbt::Reader &r);
+   static ItemEntry deserialize(std::istream &in);
 };
 
 class EnumStateEntry
@@ -191,6 +225,13 @@ class Repository
          }
          return;
       }
+      if constexpr (std::is_same_v<TDc, std::vector<ItemEntry>>) {
+         if (name == "Items") {
+            this->items = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
    }
 
  public:
@@ -198,6 +239,7 @@ class Repository
    std::vector<IntStateEntry> int_states{};
    std::vector<BoolStateEntry> bool_states{};
    std::vector<BlockEntry> blocks{};
+   std::vector<ItemEntry> items{};
    Repository() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name) const;

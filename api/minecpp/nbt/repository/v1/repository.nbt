@@ -2,9 +2,15 @@ syntax = "nbt";
 package minecpp.nbt.repository.v1;
 
 import "minecpp/nbt/block/v1/block.nbt";
+import "minecpp/nbt/item/v1/item.nbt";
 
 message BlockEntry {
     block.v1.Block block = 1 [label = "Block"];
+    string tag = 2 [label = "Tag"];
+}
+
+message ItemEntry {
+    item.v1.Item item = 1 [label = "Item"];
     string tag = 2 [label = "Tag"];
 }
 
@@ -28,4 +34,5 @@ message Repository {
     repeated IntStateEntry int_states = 2 [label = "IntStates"];
     repeated BoolStateEntry bool_states = 3 [label = "BoolStates"];
     repeated BlockEntry blocks = 4 [label = "Blocks"];
+    repeated ItemEntry items = 5 [label = "Items"];
 }

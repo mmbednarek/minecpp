@@ -167,12 +167,38 @@ struct BlockPlacementDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BlockPlacementDefaultTypeInternal _BlockPlacement_default_instance_;
+PROTOBUF_CONSTEXPR ChangeInventoryItem::ChangeInventoryItem(
+    ::_pbi::ConstantInitialized)
+  : item_id_(nullptr)
+  , slot_id_(0)
+  , item_count_(0){}
+struct ChangeInventoryItemDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChangeInventoryItemDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ChangeInventoryItemDefaultTypeInternal() {}
+  union {
+    ChangeInventoryItem _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChangeInventoryItemDefaultTypeInternal _ChangeInventoryItem_default_instance_;
+PROTOBUF_CONSTEXPR ChangeHeldItem::ChangeHeldItem(
+    ::_pbi::ConstantInitialized)
+  : slot_(0){}
+struct ChangeHeldItemDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChangeHeldItemDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ChangeHeldItemDefaultTypeInternal() {}
+  union {
+    ChangeHeldItem _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChangeHeldItemDefaultTypeInternal _ChangeHeldItem_default_instance_;
 }  // namespace v1
 }  // namespace serverbound
 }  // namespace event
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[11];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[13];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = nullptr;
 
@@ -261,6 +287,22 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbo
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, face_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, crosshair_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::BlockPlacement, inside_block_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem, slot_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem, item_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem, item_count_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::ChangeHeldItem, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::ChangeHeldItem, slot_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::Event)},
@@ -274,6 +316,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 60, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::AnimateHand)},
   { 67, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::LoadInitialChunks)},
   { 73, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::BlockPlacement)},
+  { 84, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem)},
+  { 93, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeHeldItem)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -288,6 +332,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::event::serverbound::v1::_AnimateHand_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_LoadInitialChunks_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_BlockPlacement_default_instance_._instance,
+  &::minecpp::proto::event::serverbound::v1::_ChangeInventoryItem_default_instance_._instance,
+  &::minecpp::proto::event::serverbound::v1::_ChangeHeldItem_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -317,7 +363,11 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_
   "p.proto.common.v1.BlockPosition\022+\n\004face\030"
   "\003 \001(\0162\035.minecpp.proto.common.v1.Face\0224\n\t"
   "crosshair\030\004 \001(\0132!.minecpp.proto.common.v"
-  "1.Vector3f\022\024\n\014inside_block\030\005 \001(\010b\006proto3"
+  "1.Vector3f\022\024\n\014inside_block\030\005 \001(\010\"l\n\023Chan"
+  "geInventoryItem\022\017\n\007slot_id\030\001 \001(\005\0220\n\007item"
+  "_id\030\002 \001(\0132\037.minecpp.proto.common.v1.Item"
+  "Id\022\022\n\nitem_count\030\003 \001(\005\"\036\n\016ChangeHeldItem"
+  "\022\014\n\004slot\030\001 \001(\005b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps[4] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -327,9 +377,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = {
-    false, false, 1080, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
+    false, false, 1222, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
     "minecpp/proto/event/serverbound/v1/serverbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps, 4, 11,
+    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps, 4, 13,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
@@ -2428,6 +2478,428 @@ void BlockPlacement::InternalSwap(BlockPlacement* other) {
       file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[10]);
 }
 
+// ===================================================================
+
+class ChangeInventoryItem::_Internal {
+ public:
+  static const ::minecpp::proto::common::v1::ItemId& item_id(const ChangeInventoryItem* msg);
+};
+
+const ::minecpp::proto::common::v1::ItemId&
+ChangeInventoryItem::_Internal::item_id(const ChangeInventoryItem* msg) {
+  return *msg->item_id_;
+}
+void ChangeInventoryItem::clear_item_id() {
+  if (GetArenaForAllocation() == nullptr && item_id_ != nullptr) {
+    delete item_id_;
+  }
+  item_id_ = nullptr;
+}
+ChangeInventoryItem::ChangeInventoryItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+}
+ChangeInventoryItem::ChangeInventoryItem(const ChangeInventoryItem& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_item_id()) {
+    item_id_ = new ::minecpp::proto::common::v1::ItemId(*from.item_id_);
+  } else {
+    item_id_ = nullptr;
+  }
+  ::memcpy(&slot_id_, &from.slot_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&item_count_) -
+    reinterpret_cast<char*>(&slot_id_)) + sizeof(item_count_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+}
+
+inline void ChangeInventoryItem::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&item_id_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&item_count_) -
+    reinterpret_cast<char*>(&item_id_)) + sizeof(item_count_));
+}
+
+ChangeInventoryItem::~ChangeInventoryItem() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void ChangeInventoryItem::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete item_id_;
+}
+
+void ChangeInventoryItem::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void ChangeInventoryItem::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && item_id_ != nullptr) {
+    delete item_id_;
+  }
+  item_id_ = nullptr;
+  ::memset(&slot_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&item_count_) -
+      reinterpret_cast<char*>(&slot_id_)) + sizeof(item_count_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ChangeInventoryItem::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 slot_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          slot_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.ItemId item_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_item_id(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 item_count = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          item_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ChangeInventoryItem::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 slot_id = 1;
+  if (this->_internal_slot_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_slot_id(), target);
+  }
+
+  // .minecpp.proto.common.v1.ItemId item_id = 2;
+  if (this->_internal_has_item_id()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::item_id(this),
+        _Internal::item_id(this).GetCachedSize(), target, stream);
+  }
+
+  // int32 item_count = 3;
+  if (this->_internal_item_count() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_item_count(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  return target;
+}
+
+size_t ChangeInventoryItem::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.ItemId item_id = 2;
+  if (this->_internal_has_item_id()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *item_id_);
+  }
+
+  // int32 slot_id = 1;
+  if (this->_internal_slot_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slot_id());
+  }
+
+  // int32 item_count = 3;
+  if (this->_internal_item_count() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_item_count());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ChangeInventoryItem::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ChangeInventoryItem::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ChangeInventoryItem::GetClassData() const { return &_class_data_; }
+
+void ChangeInventoryItem::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<ChangeInventoryItem *>(to)->MergeFrom(
+      static_cast<const ChangeInventoryItem &>(from));
+}
+
+
+void ChangeInventoryItem::MergeFrom(const ChangeInventoryItem& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_item_id()) {
+    _internal_mutable_item_id()->::minecpp::proto::common::v1::ItemId::MergeFrom(from._internal_item_id());
+  }
+  if (from._internal_slot_id() != 0) {
+    _internal_set_slot_id(from._internal_slot_id());
+  }
+  if (from._internal_item_count() != 0) {
+    _internal_set_item_count(from._internal_item_count());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ChangeInventoryItem::CopyFrom(const ChangeInventoryItem& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.serverbound.v1.ChangeInventoryItem)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ChangeInventoryItem::IsInitialized() const {
+  return true;
+}
+
+void ChangeInventoryItem::InternalSwap(ChangeInventoryItem* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ChangeInventoryItem, item_count_)
+      + sizeof(ChangeInventoryItem::item_count_)
+      - PROTOBUF_FIELD_OFFSET(ChangeInventoryItem, item_id_)>(
+          reinterpret_cast<char*>(&item_id_),
+          reinterpret_cast<char*>(&other->item_id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ChangeInventoryItem::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[11]);
+}
+
+// ===================================================================
+
+class ChangeHeldItem::_Internal {
+ public:
+};
+
+ChangeHeldItem::ChangeHeldItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+}
+ChangeHeldItem::ChangeHeldItem(const ChangeHeldItem& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  slot_ = from.slot_;
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+}
+
+inline void ChangeHeldItem::SharedCtor() {
+slot_ = 0;
+}
+
+ChangeHeldItem::~ChangeHeldItem() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void ChangeHeldItem::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void ChangeHeldItem::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void ChangeHeldItem::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  slot_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ChangeHeldItem::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 slot = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          slot_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ChangeHeldItem::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 slot = 1;
+  if (this->_internal_slot() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_slot(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  return target;
+}
+
+size_t ChangeHeldItem::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 slot = 1;
+  if (this->_internal_slot() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_slot());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ChangeHeldItem::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ChangeHeldItem::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ChangeHeldItem::GetClassData() const { return &_class_data_; }
+
+void ChangeHeldItem::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<ChangeHeldItem *>(to)->MergeFrom(
+      static_cast<const ChangeHeldItem &>(from));
+}
+
+
+void ChangeHeldItem::MergeFrom(const ChangeHeldItem& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_slot() != 0) {
+    _internal_set_slot(from._internal_slot());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ChangeHeldItem::CopyFrom(const ChangeHeldItem& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.serverbound.v1.ChangeHeldItem)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ChangeHeldItem::IsInitialized() const {
+  return true;
+}
+
+void ChangeHeldItem::InternalSwap(ChangeHeldItem* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(slot_, other->slot_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ChangeHeldItem::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto[12]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace serverbound
@@ -2478,6 +2950,14 @@ Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::LoadInitial
 template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::BlockPlacement*
 Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::BlockPlacement >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::BlockPlacement >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::ChangeInventoryItem*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::ChangeInventoryItem >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::ChangeInventoryItem >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::ChangeHeldItem*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::ChangeHeldItem >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::ChangeHeldItem >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

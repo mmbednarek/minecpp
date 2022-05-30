@@ -104,7 +104,7 @@ void Vector::set_bits(std::uint8_t new_bits)
                     uint64_t pack  = 0;
                     uint32_t shift = 0;
                     for (int j = 1; j < per_pack; ++j) {
-                       std::uint32_t val = *iter;
+                       auto val = static_cast<uint32_t>(*iter);
                        pack |= static_cast<std::uint64_t>(val & mask) << shift;
                        ++iter;
                        if (iter == end) {
@@ -112,7 +112,7 @@ void Vector::set_bits(std::uint8_t new_bits)
                        }
                        shift += new_bits;
                     }
-                    std::uint32_t val = *iter;
+                    auto val = static_cast<uint32_t>(*iter);
                     pack |= static_cast<std::uint64_t>(val & mask) << shift;
                     ++iter;
                     return pack;

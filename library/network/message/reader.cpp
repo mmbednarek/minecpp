@@ -216,4 +216,12 @@ uint64_t Reader::read_long()
    return value;
 }
 
+short Reader::read_short()
+{
+   short value;
+   s.read((char *) &value, sizeof(short));
+   value = boost::endian::big_to_native(value);
+   return value;
+}
+
 }// namespace minecpp::network::message

@@ -11,6 +11,8 @@ set(gRPC_PROTOBUF_PROVIDER "package")
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
+SET(MINECPP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp)
+
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)

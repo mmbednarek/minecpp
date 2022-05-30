@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <string>
 #include <string_view>
 #include <vector>
 
@@ -34,17 +35,38 @@ typedef std::vector<ItemStack> StackVariants;
 class Item
 {
  public:
-   Item(ItemId id, std::string_view tag_name, ItemGroup group);
+   struct Details
+   {
+      std::string_view tag{};
+      ItemGroup group{};
+      int max_stack_size{};
+      bool is_block{};
+      std::string_view corresponding_block_tag{};
+   };
 
-   [[nodiscard]] std::string_view tag() const;
-   [[nodiscard]] ItemId id() const;
+   explicit Item(Details details);
+
+   [[nodiscard]] constexpr const std::string &tag() const
+   {
+      return m_tag;
+   }
+
+   [[nodiscard]] constexpr bool is_block() const
+   {
+      return m_is_block;
+   }
+
+   [[nodiscard]] constexpr const std::string &corresponding_block_tag() const
+   {
+      return m_corresponding_block_tag;
+   }
 
  private:
-   ItemId _id;
-   std::string_view tag_name;
-   ItemGroup group;
-   int max_stack_size;
-   int max_damage;
+   std::string m_tag;
+   ItemGroup m_group;
+   int m_max_stack_size;
+   bool m_is_block;
+   std::string m_corresponding_block_tag;
 };
 
 }// namespace minecpp::game::item

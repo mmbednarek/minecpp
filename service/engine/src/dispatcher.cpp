@@ -157,6 +157,7 @@ void Dispatcher::entity_list(player::Id player_id, const std::vector<game::entit
    for (const auto &entity : entity_list) {
       *list.add_list() = entity.to_proto();
    }
+   spdlog::info("sending {} entities to the player", entity_list.size());
    m_events.send_to(list, player_id);
 }
 

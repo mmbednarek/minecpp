@@ -31,6 +31,37 @@ struct ClientSettings
 
 void deserialize(Reader &r, ClientSettings &msg);
 
+// 0x08
+struct ClickWindow
+{
+   struct Slot
+   {
+      short slot_id;
+      int item_id;
+      uint8_t count;
+   };
+
+   uint8_t window_id;
+   int state_id;
+   short slot;
+   uint8_t button;
+   int mode;
+   std::vector<Slot> slots;
+   int carried_item_id;
+   uint8_t carried_count;
+};
+
+void deserialize(Reader &r, ClickWindow &msg);
+
+// 0x0a
+struct PluginMessage
+{
+   std::string channel;
+   std::string data;
+};
+
+void deserialize(Reader &r, PluginMessage &msg);
+
 // 0x0f
 struct KeepAliveClient
 {
@@ -76,6 +107,13 @@ struct PlayerDigging
 };
 
 void deserialize(Reader &r, PlayerDigging &msg);
+
+struct HeldItemChange
+{
+   short slot;
+};
+
+void deserialize(Reader &r, HeldItemChange &msg);
 
 enum class PlayerHand : uint8_t
 {

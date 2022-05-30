@@ -44,6 +44,48 @@ BlockEntry BlockEntry::deserialize(std::istream &in) {
    return BlockEntry::deserialize_no_header(r);
 }
 
+void ItemEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
+   w.write_header(minecpp::nbt::TagId::Compound, "Item");
+   item.serialize_no_header(w);
+   w.write_header(minecpp::nbt::TagId::String, "Tag");
+   w.write_string_content(tag);
+   w.end_compound();
+}
+
+void ItemEntry::serialize(std::ostream &out, std::string_view name) const {
+   minecpp::nbt::Writer w(out);
+   w.begin_compound(name);
+   serialize_no_header(w);
+}
+
+ItemEntry ItemEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
+   ItemEntry res;
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.__xx_put(name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (name == "Item") {
+            res.__xx_put(name, item::v1::Item::deserialize_no_header(r));
+            return;
+         }
+         break;
+      }
+      r.skip_payload(tagid);
+   });
+   return res;
+}
+
+ItemEntry ItemEntry::deserialize(std::istream &in) {
+   minecpp::nbt::Reader r(in);
+   auto peek = r.peek_tag();
+   if (peek.id != minecpp::nbt::TagId::Compound) {
+      return ItemEntry();
+   }
+   return ItemEntry::deserialize_no_header(r);
+}
+
 void EnumStateEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Compound, "State");
    state.serialize_no_header(w);
@@ -191,6 +233,11 @@ void Repository::serialize_no_header(minecpp::nbt::Writer &w) const {
    std::for_each(blocks.begin(), blocks.end(), [&w](const auto &value) {
       value.serialize_no_header(w);
    });
+   w.write_header(minecpp::nbt::TagId::List, "Items");
+   w.begin_list_no_header(minecpp::nbt::TagId::Compound, items.size());
+   std::for_each(items.begin(), items.end(), [&w](const auto &value) {
+      value.serialize_no_header(w);
+   });
    w.end_compound();
 }
 
@@ -237,6 +284,14 @@ Repository Repository::deserialize_no_header(minecpp::nbt::Reader &r) {
                   std::vector<BlockEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return BlockEntry::deserialize_no_header(r);
+                  });
+                  res.__xx_put(name, ls);
+                  return;
+               }
+               if (name == "Items") {
+                  std::vector<ItemEntry> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return ItemEntry::deserialize_no_header(r);
                   });
                   res.__xx_put(name, ls);
                   return;

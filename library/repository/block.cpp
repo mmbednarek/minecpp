@@ -1,7 +1,9 @@
 #include <fstream>
 #include <minecpp/game/block/block.h>
+#include <minecpp/game/item/item.h>
 #include <minecpp/nbt/repository/v1/repository.nbt.h>
 #include <minecpp/repository/block.h>
+#include <minecpp/repository/item.h>
 #include <minecpp/repository/state.h>
 
 namespace minecpp::repository {
@@ -45,6 +47,17 @@ mb::emptyres load_repository_from_file(std::string_view filename)
       blocks.register_resource(block.tag, game::block::Block(block.tag, block_states));
 
       ++block_id;
+   }
+
+   auto &items = Item::the();
+   for (auto &nbt_item : repo.items) {
+      game::item::Item item(game::item::Item::Details{
+              .tag                     = nbt_item.tag,
+              .max_stack_size          = nbt_item.item.max_item_stack,
+              .is_block                = static_cast<bool>(nbt_item.item.is_block),
+              .corresponding_block_tag = nbt_item.item.corresponding_block_tag,
+      });
+      items.register_resource(nbt_item.tag, item);
    }
 
    return mb::ok;

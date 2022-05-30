@@ -30,6 +30,16 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
+   case 0x08: {
+      ClickWindow msg;
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
+   case 0x0a: {
+      PluginMessage msg;
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
    case 0x0f: {
       KeepAliveClient msg{};
       deserialize(r, msg);
@@ -52,6 +62,11 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
    } break;
    case 0x1a: {
       PlayerDigging msg;
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
+   case 0x25: {
+      HeldItemChange msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;

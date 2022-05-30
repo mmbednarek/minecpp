@@ -6,6 +6,7 @@
 #include <minecpp/format/format.h>
 #include <minecpp/game/world.h>
 #include <minecpp/repository/block.h>
+#include <minecpp/repository/item.h>
 #include <minecpp/repository/state.h>
 
 namespace minecpp::service::engine {
@@ -39,9 +40,7 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    }
 
    m_dispatcher.accept_player(player, entity);
-   m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
-   m_dispatcher.add_player(player.id(), player.name(), player.ping());
+   m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
    m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(),
                              entity::Rotation(entity.get_yaw(), entity.get_pitch()));
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
@@ -108,6 +107,32 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
                        .bold(format::Color::White, fmt::format("{}", block_state));
             }
             m_dispatcher.send_chat(chat::MessageType::SystemMessage, msg.build());
+         } else if (event.message().starts_with("/give ")) {
+            auto item_tag = event.message().substr(6, event.message().size());
+            auto res      = repository::Item::the().find_id_by_tag(item_tag);
+            if (!res.ok()) {
+               format::Builder builder;
+               builder.bold(format::Color::Red, "ERR ").text(fmt::format("invalid item tag {}", item_tag));
+               m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
+               return;
+            }
+
+            auto item_id = res.unwrap();
+            auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+
+            if (!player.inventory().add_item(item_id, 64)) {
+               format::Builder builder;
+               builder.bold(format::Color::Red, "ERR ").text("player inventory is full");
+               m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
+               return;
+            }
+
+            format::Builder builder;
+            builder.bold(format::Color::Green, "INFO ")
+                    .text(fmt::format("giving {} to the player {}.", item_id, player.name()));
+            m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
+
+            send_inventory_data(player);
          }
          return;
       }
@@ -190,7 +215,12 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
       spdlog::error("error loading chunks: {}", res.msg());
    }
 
+   auto &entity = MB_ESCAPE(m_entity_manager.get_entity(player.entity_id()));
+
    send_inventory_data(player);
+
+   m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
+   m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id)
@@ -198,18 +228,49 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    auto face               = game::face_from_proto(event.face());
    auto block_position     = game::BlockPosition::from_proto(event.position());
    auto neighbour_position = block_position.neighbour_at(face);
-   m_world.set_block(neighbour_position, m_selected_block);
-   m_dispatcher.update_block(neighbour_position, m_selected_block);
+
+   auto &player    = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto item_slot  = player.inventory().active_item();
+   auto &item      = MB_ESCAPE(repository::Item::the().get_by_id(item_slot.item_id));
+   auto id         = MB_ESCAPE(repository::Block::the().find_id_by_tag(item.corresponding_block_tag()));
+   auto base_state = repository::StateManager::the().block_base_state(id);
+
+   m_world.set_block(neighbour_position, static_cast<unsigned int>(base_state));
+   m_dispatcher.update_block(neighbour_position, static_cast<unsigned int>(base_state));
 }
 
-void EventHandler::send_inventory_data(const player::Player &player) {
-   for  (player::SlotId id = 9; id < 5*9; ++id) {
+void EventHandler::send_inventory_data(const player::Player &player)
+{
+   for (player::SlotId id = 9; id < 5 * 9; ++id) {
       auto slot = player.inventory().item_at(id);
-      if (slot.count == 0)
-         continue;
+      //      if (slot.count == 0)
+      //         continue;
 
       m_dispatcher.set_inventory_slot(player.id(), slot.item_id, id, slot.count);
    }
+}
+
+void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event,
+                                                player::Id player_id)
+{
+   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   player.inventory().set_slot(static_cast<player::SlotId>(event.slot_id()),
+                               player::ItemSlot{
+                                       .item_id = static_cast<game::item::ItemId>(event.item_id().id()),
+                                       .count   = static_cast<size_t>(event.item_count()),
+                               });
+
+   spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
+
+   m_dispatcher.set_inventory_slot(player_id, static_cast<game::item::ItemId>(event.item_id().id()),
+                                   static_cast<player::SlotId>(event.slot_id()),
+                                   static_cast<size_t>(event.item_count()));
+}
+
+void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, player::Id player_id)
+{
+   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));
 }
 
 }// namespace minecpp::service::engine

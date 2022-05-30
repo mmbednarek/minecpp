@@ -1,7 +1,7 @@
 #pragma once
 #include "id.h"
-#include "tracking.h"
 #include "inventory.h"
+#include "tracking.h"
 #include <minecpp/entity/entity.h>
 #include <minecpp/game/mode.h>
 #include <minecpp/proto/player/v1/player.pb.h>

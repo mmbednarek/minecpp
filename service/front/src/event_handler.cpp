@@ -359,8 +359,12 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
 
       for (auto const &entity : msg.list()) {
          auto id = player::read_id_from_proto(entity.id());
-         if (id == player_id)
+         spdlog::info("sending player data {}", to_string(id));
+
+         if (id == player_id) {
+            spdlog::info("skipping same as player id {}", to_string(player_id));
             continue;
+         }
 
          send(conn, network::message::SpawnPlayer{
                             .entity_id = entity.entity_id(),
@@ -375,7 +379,8 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
    }
 }
 
-void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
+                                             const std::vector<player::Id> &player_ids)
 {
    assert(player_ids.size() == 1);
 
@@ -389,10 +394,10 @@ void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventoryS
 
    send(conn, network::message::SetSlot{
                       .window_id = 0,
-                      .state_id =  0,
-                      .slot = static_cast<short>(msg.slot().slot_id()),
-                      .item_id = static_cast<int>(msg.slot().item_id().id()),
-                      .count = static_cast<uint8_t>(msg.slot().count()),
+                      .state_id  = 0,
+                      .slot      = static_cast<short>(msg.slot().slot_id()),
+                      .item_id   = static_cast<int>(msg.slot().item_id().id()),
+                      .count     = static_cast<uint8_t>(msg.slot().count()),
               });
 }
 

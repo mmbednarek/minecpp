@@ -1,6 +1,6 @@
 #include <boost/program_options.hpp>
 #include <fstream>
-#include <minecpp/game/item/registry.h>
+#include <minecpp/repository/item.h>
 #include <minecpp/network/message/io.h>
 
 namespace options = boost::program_options;
@@ -18,7 +18,7 @@ void print_shaped(minecpp::game::item::Recipe recipe)
             std::cout << "empty ";
             continue;
          }
-         auto item = minecpp::game::item::item_by_id(in[0].id);
+         auto item = MB_ESCAPE(minecpp::repository::Item::the().get_by_id(in[0].id));
          std::cout << item.tag() << " ";
       }
       std::cout << "\n";
@@ -60,7 +60,11 @@ auto main(int argc, char *argv[]) -> int
       auto recipe = reader.read_recipe();
 
       auto out_stack = recipe.outcome();
-      auto outcome   = minecpp::game::item::item_by_id(out_stack.id);
+      auto res = minecpp::repository::Item::the().get_by_id(out_stack.id);
+      if (!res.ok()) {
+         return 1;
+      }
+      const auto& outcome = res.unwrap();
 
       std::cout << "--------------------\n";
       std::cout << "outcome item = " << outcome.tag() << "\n";

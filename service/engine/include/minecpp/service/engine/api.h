@@ -21,7 +21,7 @@ constexpr std::size_t g_steam_queue_size = 4 * 1024;
 
 class Stream
 {
-   ClientBidiStream &m_stream;
+   ClientBidiStream m_stream;
    std::mutex &m_mtx;
    util::StaticQueue<OutEvent, g_steam_queue_size> &m_out_queue;
 
@@ -35,7 +35,7 @@ class Stream
    }
 
    template<typename TEvent>
-   void send(const TEvent &event, player::Id player_id) const
+   void send(const TEvent &event, player::Id player_id)
    {
       proto::event::serverbound::v1::Event proto_event;
       proto_event.mutable_payload()->PackFrom(event);
@@ -56,8 +56,9 @@ requires event::ClientboundVisitor<TVisitor>
 class ClientEventHandler
 {
    TVisitor &m_visitor;
-   std::unique_ptr<ClientBidiStream> m_stream;
    util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
+   std::unique_ptr<Stream> m_stream;
+   std::mutex m_stream_mtx;
    std::mutex m_mtx;
 
  public:
@@ -68,8 +69,12 @@ class ClientEventHandler
 
    void on_connected(ClientBidiStream stream)
    {
-      stream.read();
-      m_stream = std::make_unique<ClientBidiStream>(stream);
+      try {
+         stream.read();
+         m_stream = std::make_unique<Stream>(stream, m_mtx, m_out_queue);
+      } catch (std::runtime_error &err) {
+         spdlog::info("runtime error while receiving connection:  {}", err.what());
+      }
    };
 
    void on_finish_write(ClientBidiStream stream)
@@ -92,14 +97,9 @@ class ClientEventHandler
 
    void on_disconnect(ClientBidiStream stream) {}
 
-   Stream stream()
+   Stream *stream()
    {
-      while (m_stream == nullptr) {
-         using namespace std::chrono_literals;
-         spdlog::info("awaiting connection to engine...");
-         std::this_thread::sleep_for(1s);
-      }
-      return {*m_stream, m_mtx, m_out_queue};
+      return m_stream.get();
    }
 };
 
@@ -123,7 +123,7 @@ class Client
    {
    }
 
-   [[nodiscard]] Stream join()
+   [[nodiscard]] Stream *join()
    {
       return m_handler.stream();
    }

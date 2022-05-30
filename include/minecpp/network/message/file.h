@@ -41,6 +41,8 @@ class Reader
 
    uint64_t read_long();
 
+   short read_short();
+
  private:
    std::istream &s;
 };

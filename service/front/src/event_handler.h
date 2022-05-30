@@ -50,7 +50,8 @@ class EventHandler
    void handle_deny_player(const clientbound_v1::DenyPlayer &msg, const std::vector<player::Id> &player_ids);
    void handle_player_list(const clientbound_v1::PlayerList &msg, const std::vector<player::Id> &player_ids);
    void handle_entity_list(const clientbound_v1::EntityList &msg, const std::vector<player::Id> &player_ids);
-   void handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg, const std::vector<player::Id> &player_ids);
+   void handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
+                                  const std::vector<player::Id> &player_ids);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)

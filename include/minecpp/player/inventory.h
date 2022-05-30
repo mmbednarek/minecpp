@@ -5,21 +5,27 @@
 
 namespace minecpp::player {
 
-struct ItemSlot {
+struct ItemSlot
+{
    game::item::ItemId item_id{};
    std::size_t count{};
 };
 
 using SlotId = uint32_t;
 
-class Inventory {
-   std::array<ItemSlot, 9*4> m_slots{};
- public:
+class Inventory
+{
+   std::array<ItemSlot, 9 * 4> m_slots{};
+   std::size_t m_hot_bar_slot{};
 
+ public:
    [[nodiscard]] bool add_item(game::item::ItemId item, std::size_t count);
    [[nodiscard]] ItemSlot item_at(SlotId id) const;
+   void set_slot(SlotId id, const ItemSlot &slot);
+   void set_hot_bar_slot(std::size_t slot);
+   ItemSlot active_item();
 };
 
-}
+}// namespace minecpp::player
 
 #endif//MINECPP_INVENTORY_H

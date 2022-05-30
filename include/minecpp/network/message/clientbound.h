@@ -105,7 +105,8 @@ struct Chat
    [[nodiscard]] Writer serialize() const;
 };
 
-struct SetSlot {
+struct SetSlot
+{
    uint8_t window_id;
    int state_id;
    short slot;
