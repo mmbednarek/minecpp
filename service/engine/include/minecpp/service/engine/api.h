@@ -70,6 +70,7 @@ class ClientEventHandler
    void on_connected(ClientBidiStream stream)
    {
       try {
+         spdlog::info("calling on connected");
          stream.read();
          m_stream = std::make_unique<Stream>(stream, m_mtx, m_out_queue);
       } catch (std::runtime_error &err) {
@@ -118,7 +119,7 @@ class Client
 
  public:
    explicit Client(const std::string &address, TVisitor &visitor) :
-       m_connection(address, m_handler, 16),
+       m_connection(address, m_handler, 2),
        m_handler(visitor)
    {
    }

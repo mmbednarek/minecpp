@@ -3,7 +3,7 @@ project(minecpp)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Wno-gnu")
 
 option(USE_LOCAL_GPRC "Compile using local gRPC and Protobuf libraries" ON)
 
@@ -47,7 +47,7 @@ fetchcontent_makeavailable(yaml)
 fetchcontent_declare(
   libmb
   GIT_REPOSITORY https://github.com/mmbednarek/mb
-  GIT_TAG libmb-0.0.23
+  GIT_TAG libmb-0.0.25
 )
 fetchcontent_makeavailable(libmb)
 

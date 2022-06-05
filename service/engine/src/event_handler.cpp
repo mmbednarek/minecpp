@@ -1,6 +1,7 @@
 #include "event_handler.h"
 #include "dispatcher.h"
 #include "entities.h"
+#include "minecpp/command/command.h"
 #include "players.h"
 #include <minecpp/chat/chat.h>
 #include <minecpp/format/format.h>
@@ -8,6 +9,8 @@
 #include <minecpp/repository/block.h>
 #include <minecpp/repository/item.h>
 #include <minecpp/repository/state.h>
+#include <minecpp/command/core/echo.h>
+#include <minecpp/command/core/give.h>
 
 namespace minecpp::service::engine {
 
@@ -16,8 +19,12 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
     m_entity_manager(entity_manager),
-    m_world(world)
+    m_world(world),
+    m_command_std_stream(m_dispatcher),
+    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream)
 {
+   m_command_manager.register_command<command::core::Echo>("echo");
+   m_command_manager.register_command<command::core::Give>("give", m_player_manager);
 }
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id)
@@ -70,74 +77,14 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
       if (event.message().empty())
          return;
 
-      if (event.message()[0] == '/') {
-         if (event.message().starts_with("/sb ")) {
-            format::Builder msg;
-            // set block
-            auto block_state = std::stoi(event.message().substr(4, event.message().size()));
-            if (block_state >= 0 &&
-                static_cast<mb::u64>(block_state) <= repository::StateManager::the().state_count()) {
-               msg.bold(format::Color::Green, "INFO").text(" changed selected color to ");
+      auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
 
-               m_selected_block = static_cast<game::BlockState>(block_state);
-               const auto [block_id, state] =
-                       repository::StateManager::the().parse_block_id(m_selected_block);
-               auto &block = MB_ESCAPE(repository::Block::the().get_by_id(block_id));
-               msg.text(format::Color::Yellow, block.tag());
-
-               if (!block.is_single_state()) {
-                  msg.text(" (");
-                  std::stringstream ss;
-                  bool first = true;
-                  for (const auto &[state, value] : block.state_range(state)) {
-                     if (first) {
-                        first = false;
-                     } else {
-                        msg.text(", ");
-                     }
-                     msg.text(format::Color::Yellow, state.name())
-                             .text("=")
-                             .text(format::Color::White, state.value_from_index(value));
-                  }
-                  msg.text(")");
-               }
-            } else {
-               msg.bold(format::Color::Yellow, "WARN")
-                       .text(fmt::format(" invalid state id "))
-                       .bold(format::Color::White, fmt::format("{}", block_state));
-            }
-            m_dispatcher.send_chat(chat::MessageType::SystemMessage, msg.build());
-         } else if (event.message().starts_with("/give ")) {
-            auto item_tag = event.message().substr(6, event.message().size());
-            auto res      = repository::Item::the().find_id_by_tag(item_tag);
-            if (!res.ok()) {
-               format::Builder builder;
-               builder.bold(format::Color::Red, "ERR ").text(fmt::format("invalid item tag {}", item_tag));
-               m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
-               return;
-            }
-
-            auto item_id = res.unwrap();
-            auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-
-            if (!player.inventory().add_item(item_id, 64)) {
-               format::Builder builder;
-               builder.bold(format::Color::Red, "ERR ").text("player inventory is full");
-               m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
-               return;
-            }
-
-            format::Builder builder;
-            builder.bold(format::Color::Green, "INFO ")
-                    .text(fmt::format("giving {} to the player {}.", item_id, player.name()));
-            m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
-
-            send_inventory_data(player);
-         }
+      if (event.message().front() == '/') {
+         m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
+         m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
+         m_command_manager.evaluate(m_command_context, event.message().substr(1));
          return;
       }
-
-      auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
 
       spdlog::info("CHAT [{}] {}", player.name(), event.message());
       m_dispatcher.send_chat(chat::MessageType::PlayerMessage,

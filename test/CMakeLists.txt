@@ -1,3 +1,3 @@
 project(minecpp_tests)
-add_executable(minecpp_tests nbt_test.cpp utils_test.cpp packet_test.cpp position_test.cpp format_test.cpp random_test.cpp squeeze_test.cpp state_test.cpp)
-target_link_libraries(minecpp_tests LINK_PUBLIC minecpp_squeeze minecpp_utils minecpp_nbt minecpp_net minecpp_game minecpp_format minecpp_rand minecpp_repository gtest gtest_main pthread)
+add_executable(minecpp_tests nbt_test.cpp utils_test.cpp packet_test.cpp position_test.cpp format_test.cpp random_test.cpp squeeze_test.cpp state_test.cpp command_test.cpp)
+target_link_libraries(minecpp_tests LINK_PUBLIC minecpp_squeeze minecpp_utils minecpp_nbt minecpp_net minecpp_game minecpp_format minecpp_rand minecpp_repository minecpp_lexer minecpp_command gtest gtest_main pthread)

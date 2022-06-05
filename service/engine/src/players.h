@@ -5,6 +5,7 @@
 #include <minecpp/game/entity/entity.h>
 #include <minecpp/nbt/player/v1/player.nbt.h>
 #include <minecpp/player/player.h>
+#include <minecpp/player/provider.hpp>
 #include <random>
 #include <vector>
 
@@ -14,7 +15,7 @@ class EntityManager;
 
 using encoded_uuid = std::pair<mb::u64, mb::u64>;
 
-class PlayerManager
+class PlayerManager : public player::Provider
 {
    using PlayerIndex = std::vector<player::Player>::size_type;
 

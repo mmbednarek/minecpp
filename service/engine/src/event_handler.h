@@ -1,5 +1,8 @@
 #ifndef MINECPP_EVENT_HANDLER_H
 #define MINECPP_EVENT_HANDLER_H
+#include "minecpp/command/standard_stream.h"
+#include <minecpp/command/command_manager.h>
+#include <minecpp/command/runtime_context.h>
 #include <minecpp/player/player.h>
 #include <minecpp/proto/event/serverbound/v1/serverbound.pb.h>
 
@@ -22,6 +25,9 @@ class EventHandler
    EntityManager &m_entity_manager;
    game::World &m_world;
    game::BlockState m_selected_block = 1;
+   command::StandardStream m_command_std_stream;
+   command::CommandManager m_command_manager;
+   command::RuntimeContext m_command_context;
 
  public:
    EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager,

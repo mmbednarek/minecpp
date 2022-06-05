@@ -26,7 +26,7 @@ std::string uuid_to_string(uuid id)
 {
    char data[17];
    encode_uuid(data, id);
-   return std::string(data);
+   return {data};
 }
 
 }// namespace minecpp::util

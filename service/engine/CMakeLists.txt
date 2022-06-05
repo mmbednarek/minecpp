@@ -21,6 +21,8 @@ target_link_libraries(
   minecpp_format
   minecpp_net
   minecpp_repository
+  minecpp_command
+  minecpp_lexer
   grpc++
   Boost::system
   spdlog
