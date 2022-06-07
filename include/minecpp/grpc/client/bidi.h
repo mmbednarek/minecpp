@@ -27,40 +27,51 @@ static ::grpc::Status g_status{};
 template<typename TWrite, typename TRead>
 class Stream
 {
-   ::grpc::ClientAsyncReaderWriter<TWrite, TRead> &m_stream;
-   util::AtomicPool<CompletionEvent<TRead>> &m_event_pool;
-   util::AtomicPool<TRead> &m_read_pool;
+   util::AtomicPool<CompletionEvent<TRead>> m_event_pool;
+   util::AtomicPool<TRead> m_read_pool;
+   std::unique_ptr<::grpc::ClientAsyncReaderWriter<TWrite, TRead>> m_stream;
 
  public:
-   Stream(::grpc::ClientAsyncReaderWriter<TWrite, TRead> &client,
-          util::AtomicPool<CompletionEvent<TRead>> &event_pool, util::AtomicPool<TRead> &read_pool) :
-       m_stream(client),
-       m_event_pool(event_pool),
-       m_read_pool(read_pool)
+   enum class GetNextError {
+      Shutdown,
+      BrokenSocket,
+   };
+
+   template<typename TStartFunc, typename TStub>
+   explicit Stream(TStartFunc start, TStub *stub, ::grpc::ClientContext *ctx, ::grpc::CompletionQueue *queue) :
+       m_stream(std::invoke(start, stub, ctx, queue, m_event_pool.construct(EventType::Accept)))
    {
    }
 
    void write(const TWrite &message)
    {
       auto event = m_event_pool.construct(EventType::Write);
-      m_stream.Write(message, event);
+      m_stream->Write(message, event);
    }
 
    void read()
    {
       auto read_ptr = m_read_pool.construct();
       auto event    = m_event_pool.construct(EventType::Read, read_ptr);
-      m_stream.Read(read_ptr, event);
+      m_stream->Read(read_ptr, event);
    }
 
    void disconnect()
    {
       auto event = m_event_pool.construct(EventType::Disconnect);
-      m_stream.Finish(&g_status, event);
+      m_stream->Finish(&g_status, event);
+   }
+
+   void free_event(CompletionEvent<TRead> *event)  {
+      m_event_pool.free(event);
+   }
+
+   void free_object(TRead *event)  {
+      m_read_pool.free(event);
    }
 };
 
-template<typename TStub, typename TWrite, typename TRead, typename TCallback, auto FStart>
+template<typename TStub, typename TWrite, typename TRead, typename TCallback>
 class Connection
 {
    TCallback &m_callback;
@@ -69,52 +80,47 @@ class Connection
    std::shared_ptr<::grpc::Channel> m_channel;
    TStub m_stub;
    std::mutex m_next_lock;
-   std::unique_ptr<::grpc::ClientAsyncReaderWriter<TWrite, TRead>> m_stream;
-   util::AtomicPool<CompletionEvent<TRead>> m_event_pool;
-   util::AtomicPool<TRead> m_read_pool;
+   std::shared_ptr<Stream<TWrite, TRead>> m_stream;
    std::vector<std::future<mb::result<mb::empty>>> m_workers;
 
  public:
+   enum class GetNextError {
+      Shutdown,
+      BrokenSocket,
+   };
+
    mb::result<mb::empty> worker_routine()
    {
       for (;;) {
-         void *tag_ptr;
-         bool queue_ok, data_ok;
-         {
-            std::lock_guard<std::mutex> lock(m_next_lock);
-            queue_ok = m_queue.Next(&tag_ptr, &data_ok);
-         }
-         if (!queue_ok) {
-            //shutdown
-            return mb::ok;
-         }
-         if (!data_ok) {
+         auto event_res = get_next();
+         if (event_res.has_failed()) {
+            if (event_res.err() == GetNextError::Shutdown) {
+               return mb::ok;
+            }
             return mb::error("error reading message");
          }
-
-         auto event = static_cast<CompletionEvent<TRead> *>(tag_ptr);
+         auto &event = event_res.get();
 
          switch (event->event_type) {
          case EventType::Accept: {
-            m_callback.on_connected(Stream<TWrite, TRead>(*m_stream, m_event_pool, m_read_pool));
-            m_event_pool.free(event);
+            m_callback.on_connected(std::weak_ptr<Stream<TWrite, TRead>>(m_stream));
+            m_stream->free_event(event);
             continue;
          }
          case EventType::Write: {
-            m_callback.on_finish_write(Stream<TWrite, TRead>(*m_stream, m_event_pool, m_read_pool));
-            m_event_pool.free(event);
+            m_callback.on_finish_write(std::weak_ptr<Stream<TWrite, TRead>>(m_stream));
+            m_stream->free_event(event);
             continue;
          }
          case EventType::Read: {
-            m_callback.on_finish_read(Stream<TWrite, TRead>(*m_stream, m_event_pool, m_read_pool),
-                                      *event->read_ptr);
-            m_read_pool.free(event->read_ptr);
-            m_event_pool.free(event);
+            m_callback.on_finish_read(std::weak_ptr<Stream<TWrite, TRead>>(m_stream), *event->read_ptr);
+            m_stream->free_object(event->read_ptr);
+            m_stream->free_event(event);
             continue;
          }
          case EventType::Disconnect: {
-            m_callback.on_disconnect(Stream<TWrite, TRead>(*m_stream, m_event_pool, m_read_pool));
-            m_event_pool.free(event);
+            m_callback.on_disconnect(std::weak_ptr<Stream<TWrite, TRead>>(m_stream));
+            m_stream->free_event(event);
             m_queue.Shutdown();
             return mb::ok;
          }
@@ -124,13 +130,13 @@ class Connection
       }
    }
 
-   Connection(const std::string &address, TCallback &callback, std::size_t worker_count) :
+   template<typename TStartFunc>
+   Connection(TStartFunc start, const std::string &address, TCallback &callback, std::size_t worker_count) :
        m_callback(callback),
        m_channel(::grpc::CreateChannel(address, ::grpc::InsecureChannelCredentials())),
-       m_stub(m_channel)
+       m_stub(m_channel),
+       m_stream{std::make_shared<Stream<TWrite, TRead>>(start, &m_stub, &m_ctx, &m_queue)}
    {
-      auto event = m_event_pool.construct(EventType::Accept);
-      m_stream   = std::invoke(FStart, &m_stub, &m_ctx, &m_queue, event);
       m_workers.resize(worker_count);
       std::generate(m_workers.begin(), m_workers.end(),
                     [this]() { return std::async(&Connection::worker_routine, this); });
@@ -158,6 +164,24 @@ class Connection
          return mb::ok;
       }
       return *err_it;
+   }
+
+ private:
+   mb::result<CompletionEvent<TRead> *, GetNextError> get_next() {
+      void *tag_ptr;
+      bool queue_ok, data_ok;
+
+      std::lock_guard<std::mutex> lock(m_next_lock);
+      queue_ok = m_queue.Next(&tag_ptr, &data_ok);
+
+      if (!queue_ok) {
+         return GetNextError::Shutdown;
+      }
+      if (!data_ok) {
+         return GetNextError::BrokenSocket;
+      }
+
+      return static_cast<CompletionEvent<TRead> *>(tag_ptr);
    }
 };
 

@@ -161,7 +161,7 @@ void Dispatcher::entity_list(player::Id player_id, const std::vector<game::entit
    m_events.send_to(list, player_id);
 }
 
-void Dispatcher::set_inventory_slot(player::Id player_id, game::item::ItemId item_id, player::SlotId slot_id,
+void Dispatcher::set_inventory_slot(player::Id player_id, game::item::ItemId item_id, game::SlotId slot_id,
                                     std::size_t count)
 {
    clientbound_v1::SetInventorySlot set_slot;

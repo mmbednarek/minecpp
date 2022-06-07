@@ -23,7 +23,7 @@ mb::result<mb::empty> PlayerManager::join_player(minecpp::game::World &w, const 
 {
    auto player_data = MB_TRY(load_player_data(w, id));
    auto entity_id   = m_entities.spawn(Entity::from_player_nbt(player_data));
-   auto player      = player::Player::from_nbt(player_data, name);
+   auto player      = player::Player::from_nbt(player_data, name, w.notifier());
    player.set_entity_id(entity_id);
 
    m_id_map[minecpp::util::write_uuid(id)] = m_players.size();

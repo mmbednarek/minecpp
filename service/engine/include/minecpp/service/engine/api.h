@@ -9,11 +9,14 @@
 #include <spdlog/spdlog.h>
 #include <string_view>
 #include <thread>
+#include <utility>
 
 namespace minecpp::service::engine {
 
 using ClientBidiStream =
         grpc::client::Stream<proto::event::serverbound::v1::Event, proto::event::clientbound::v1::Event>;
+
+using StreamWeakPtr = std::weak_ptr<ClientBidiStream>;
 
 using OutEvent = proto::event::serverbound::v1::Event;
 
@@ -21,19 +24,10 @@ constexpr std::size_t g_steam_queue_size = 4 * 1024;
 
 class Stream
 {
-   ClientBidiStream m_stream;
-   std::mutex &m_mtx;
-   util::StaticQueue<OutEvent, g_steam_queue_size> &m_out_queue;
-
+   StreamWeakPtr m_stream;
+   std::mutex m_mtx;
+   util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
  public:
-   Stream(ClientBidiStream &stream, std::mutex &mtx,
-          util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue) :
-       m_stream(stream),
-       m_mtx(mtx),
-       m_out_queue(out_queue)
-   {
-   }
-
    template<typename TEvent>
    void send(const TEvent &event, player::Id player_id)
    {
@@ -41,45 +35,27 @@ class Stream
       proto_event.mutable_payload()->PackFrom(event);
       *proto_event.mutable_player_id() = player::write_id_to_proto(player_id);
       if (m_mtx.try_lock()) {
+         auto stream = m_stream.lock();
+         if (!stream) {
+            // client is not connected yet, or has disconnected, write to the queue
+            m_out_queue.push(std::move(proto_event));
+            return;
+         }
+
          // good we're free to write
-         m_stream.write(proto_event);
+         stream->write(proto_event);
          return;
       }
       // we're currently writing, just push it onto the queue
       m_out_queue.push(std::move(proto_event));
    }
-};
 
-template<typename TVisitor>
-requires event::ClientboundVisitor<TVisitor>
-
-class ClientEventHandler
-{
-   TVisitor &m_visitor;
-   util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
-   std::unique_ptr<Stream> m_stream;
-   std::mutex m_stream_mtx;
-   std::mutex m_mtx;
-
- public:
-   explicit ClientEventHandler(TVisitor &visitor) :
-       m_visitor(visitor)
+   void set_stream_reference(StreamWeakPtr ptr)
    {
+      m_stream = std::move(ptr);
    }
 
-   void on_connected(ClientBidiStream stream)
-   {
-      try {
-         spdlog::info("calling on connected");
-         stream.read();
-         m_stream = std::make_unique<Stream>(stream, m_mtx, m_out_queue);
-      } catch (std::runtime_error &err) {
-         spdlog::info("runtime error while receiving connection:  {}", err.what());
-      }
-   };
-
-   void on_finish_write(ClientBidiStream stream)
-   {
+   void on_finish_write(const StreamWeakPtr& weak_stream) {
       if (m_out_queue.empty()) {
          // queue is empty, we can unlock the mutex, so next
          // thread can write directly
@@ -87,20 +63,61 @@ class ClientEventHandler
          return;
       }
       // queue is not empty write another message
-      stream.write(m_out_queue.pop());
+      if (auto locked_stream = weak_stream.lock(); locked_stream) {
+         locked_stream->write(m_out_queue.pop());
+      }
    }
 
-   void on_finish_read(ClientBidiStream stream, const proto::event::clientbound::v1::Event &info)
+   [[nodiscard]] constexpr util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue()
    {
-      stream.read();// read next message
+      return m_out_queue;
+   }
+};
+
+template<typename TVisitor>
+   requires event::ClientboundVisitor<TVisitor>
+class ClientEventHandler
+{
+   TVisitor &m_visitor;
+   Stream m_stream;
+
+ public:
+   explicit ClientEventHandler(TVisitor &visitor) :
+       m_visitor(visitor)
+   {
+   }
+
+   void on_connected(const StreamWeakPtr& stream)
+   {
+      try {
+         spdlog::info("calling on connected");
+         if (auto locked_stream = stream.lock(); locked_stream) {
+            locked_stream->read();
+            m_stream.set_stream_reference(stream);
+         }
+      } catch (std::runtime_error &err) {
+         spdlog::info("runtime error while receiving connection:  {}", err.what());
+      }
+   };
+
+   void on_finish_write(const StreamWeakPtr& stream)
+   {
+      m_stream.on_finish_write(stream);
+   }
+
+   void on_finish_read(const StreamWeakPtr& stream, const proto::event::clientbound::v1::Event &info)
+   {
+      if (auto locked_stream = stream.lock(); locked_stream) {
+         locked_stream->read();
+      }
       event::visit_clientbound(info, m_visitor);
    }
 
-   void on_disconnect(ClientBidiStream stream) {}
+   void on_disconnect(const StreamWeakPtr& stream) {}
 
    Stream *stream()
    {
-      return m_stream.get();
+      return &m_stream;
    }
 };
 
@@ -108,8 +125,7 @@ template<typename TVisitor>
 using BidiConnection =
         grpc::client::Connection<proto::service::engine::v1::EngineService::Stub,
                                  proto::event::serverbound::v1::Event, proto::event::clientbound::v1::Event,
-                                 ClientEventHandler<TVisitor>,
-                                 &proto::service::engine::v1::EngineService::Stub::AsyncJoin>;
+                                 ClientEventHandler<TVisitor>>;
 
 template<typename TVisitor>
 class Client
@@ -119,7 +135,7 @@ class Client
 
  public:
    explicit Client(const std::string &address, TVisitor &visitor) :
-       m_connection(address, m_handler, 2),
+       m_connection(&proto::service::engine::v1::EngineService::Stub::AsyncJoin, address, m_handler, 8),
        m_handler(visitor)
    {
    }

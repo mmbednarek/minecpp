@@ -6,6 +6,7 @@
 namespace minecpp::game {
 
 using ChunkHash = mb::u64;
+using SlotId = mb::u32;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
 constexpr int g_chunk_width       = 16;

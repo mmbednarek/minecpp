@@ -11,6 +11,7 @@
 #include <minecpp/repository/state.h>
 #include <minecpp/command/core/echo.h>
 #include <minecpp/command/core/give.h>
+#include <minecpp/command/core/format.h>
 
 namespace minecpp::service::engine {
 
@@ -25,6 +26,39 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
 {
    m_command_manager.register_command<command::core::Echo>("echo");
    m_command_manager.register_command<command::core::Give>("give", m_player_manager);
+
+   m_command_manager.register_command<command::core::Format>("black", format::Color::Black, false);
+   m_command_manager.register_command<command::core::Format>("black-bold", format::Color::Black, true);
+   m_command_manager.register_command<command::core::Format>("dark-blue", format::Color::DarkBlue, false);
+   m_command_manager.register_command<command::core::Format>("dark-blue-bold", format::Color::DarkBlue, true);
+   m_command_manager.register_command<command::core::Format>("dark-green", format::Color::DarkGreen, false);
+   m_command_manager.register_command<command::core::Format>("dark-green-bold", format::Color::DarkGreen, true);
+   m_command_manager.register_command<command::core::Format>("dark-aqua", format::Color::DarkAqua, false);
+   m_command_manager.register_command<command::core::Format>("dark-aqua-bold", format::Color::DarkAqua, true);
+   m_command_manager.register_command<command::core::Format>("dark-red", format::Color::DarkRed, false);
+   m_command_manager.register_command<command::core::Format>("dark-red-bold", format::Color::DarkRed, true);
+   m_command_manager.register_command<command::core::Format>("dark-purple", format::Color::DarkPurple, false);
+   m_command_manager.register_command<command::core::Format>("dark-purple-bold", format::Color::DarkPurple, true);
+   m_command_manager.register_command<command::core::Format>("gold", format::Color::Gold, false);
+   m_command_manager.register_command<command::core::Format>("gold-bold", format::Color::Gold, true);
+   m_command_manager.register_command<command::core::Format>("gray", format::Color::Gray, false);
+   m_command_manager.register_command<command::core::Format>("gray-bold", format::Color::Gray, true);
+   m_command_manager.register_command<command::core::Format>("darkgray", format::Color::DarkGray, false);
+   m_command_manager.register_command<command::core::Format>("darkgray-bold", format::Color::DarkGray, true);
+   m_command_manager.register_command<command::core::Format>("blue", format::Color::Blue, false);
+   m_command_manager.register_command<command::core::Format>("blue-bold", format::Color::Blue, true);
+   m_command_manager.register_command<command::core::Format>("green", format::Color::Green, false);
+   m_command_manager.register_command<command::core::Format>("green-bold", format::Color::Green, true);
+   m_command_manager.register_command<command::core::Format>("aqua", format::Color::Aqua, false);
+   m_command_manager.register_command<command::core::Format>("aqua-bold", format::Color::Aqua, true);
+   m_command_manager.register_command<command::core::Format>("red", format::Color::Red, false);
+   m_command_manager.register_command<command::core::Format>("red-bold", format::Color::Red, true);
+   m_command_manager.register_command<command::core::Format>("light-purple", format::Color::LightPurple, false);
+   m_command_manager.register_command<command::core::Format>("light-purple-bold", format::Color::LightPurple, true);
+   m_command_manager.register_command<command::core::Format>("yellow", format::Color::Yellow, false);
+   m_command_manager.register_command<command::core::Format>("yellow-bold", format::Color::Yellow, true);
+   m_command_manager.register_command<command::core::Format>("white", format::Color::White, false);
+   m_command_manager.register_command<command::core::Format>("white-bold", format::Color::White, true);
 }
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id)
@@ -82,7 +116,12 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
       if (event.message().front() == '/') {
          m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
          m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
-         m_command_manager.evaluate(m_command_context, event.message().substr(1));
+         auto res = m_command_manager.evaluate(m_command_context, event.message().substr(1));
+         if (res != std::nullopt) {
+            format::Builder builder;
+            builder.bold(format::Color::Red, "COMMAND FAILED ").text(res->message);
+            m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
+         }
          return;
       }
 
@@ -188,7 +227,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
 
 void EventHandler::send_inventory_data(const player::Player &player)
 {
-   for (player::SlotId id = 9; id < 5 * 9; ++id) {
+   for (game::SlotId id = 9; id < 5 * 9; ++id) {
       auto slot = player.inventory().item_at(id);
       //      if (slot.count == 0)
       //         continue;
@@ -201,7 +240,7 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
                                                 player::Id player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.inventory().set_slot(static_cast<player::SlotId>(event.slot_id()),
+   player.inventory().set_slot(static_cast<game::SlotId>(event.slot_id()),
                                player::ItemSlot{
                                        .item_id = static_cast<game::item::ItemId>(event.item_id().id()),
                                        .count   = static_cast<size_t>(event.item_count()),
@@ -210,7 +249,7 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
    spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
 
    m_dispatcher.set_inventory_slot(player_id, static_cast<game::item::ItemId>(event.item_id().id()),
-                                   static_cast<player::SlotId>(event.slot_id()),
+                                   static_cast<game::SlotId>(event.slot_id()),
                                    static_cast<size_t>(event.item_count()));
 }
 

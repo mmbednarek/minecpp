@@ -86,7 +86,7 @@ class Player
    Inventory m_inventory;
 
  public:
-   Player(Id id, std::string_view name, const util::Vec3 &pos);
+   Player(Id id, std::string_view name, const util::Vec3 &pos, game::Notifier &notifier);
 
    [[nodiscard]] constexpr Id id() const
    {
@@ -151,7 +151,8 @@ class Player
    void on_movement(game::World &w, util::Vec3 pos);
    mb::result<mb::empty> load_chunks(game::World &w);
 
-   static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name);
+   static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name,
+                          game::Notifier &notifier);
 
    [[nodiscard]] proto::player::v1::Player to_proto(const game::entity::Entity &entity) const;
 };

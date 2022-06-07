@@ -5,10 +5,11 @@
 
 namespace minecpp::player {
 
-Player::Player(minecpp::player::Id id, std::string_view name, const util::Vec3 &pos) :
+Player::Player(Id id, std::string_view name, const util::Vec3 &pos, game::Notifier &notifier) :
     m_id(id),
     m_name(name),
-    m_tracking(std::make_unique<Tracking>(pos, 16))
+    m_tracking(std::make_unique<Tracking>(pos, 16)),
+    m_inventory(id, notifier)
 {
 }
 
@@ -42,9 +43,10 @@ minecpp::proto::player::v1::Abilities Abilities::to_proto() const
    return result;
 }
 
-Player Player::from_nbt(const nbt::player::v1::Player &player, const std::string &name)
+Player Player::from_nbt(const nbt::player::v1::Player &player, const std::string &name,
+                        game::Notifier &notifier)
 {
-   Player result(read_id_from_nbt(player.uuid), name, util::Vec3::from_nbt(player.pos));
+   Player result(read_id_from_nbt(player.uuid), name, util::Vec3::from_nbt(player.pos), notifier);
    result.m_xp_total                = player.xp_total;
    result.m_xp_points               = player.xp_p;
    result.m_xp_seed                 = player.xp_seed;

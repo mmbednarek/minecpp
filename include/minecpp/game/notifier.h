@@ -6,17 +6,13 @@
 #include <minecpp/game/game.h>
 #include <minecpp/game/item/item.h>
 #include <minecpp/player/id.h>
-#include <minecpp/player/inventory.h>
 #include <minecpp/util/vec.h>
 #include <string>
 #include <vector>
 
 namespace minecpp::game {
 
-namespace entity {
-struct Movement;
-}
-
+struct entity::Movement;
 using boost::uuids::uuid;
 
 class Notifier
@@ -40,7 +36,7 @@ class Notifier
                                            game::BlockState block_state, PlayerDiggingState state,
                                            bool successful)                                = 0;
    virtual void unload_chunk(player::Id player, const game::ChunkPosition &chunk_position) = 0;
-   virtual void set_inventory_slot(player::Id player_id, item::ItemId item_id, player::SlotId slot_id,
+   virtual void set_inventory_slot(player::Id player_id, item::ItemId item_id, SlotId slot_id,
                                    std::size_t count)                                      = 0;
 };
 

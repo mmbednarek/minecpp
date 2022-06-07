@@ -3,6 +3,8 @@ SET(MINECPP_COMMAND_CORE_INCLUDE_DIR ${MINECPP_COMMAND_INCLUDE_DIR}/core)
 target_sources(minecpp_command PRIVATE
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/echo.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/give.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/format.h
         ${CMAKE_CURRENT_SOURCE_DIR}/echo.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/give.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/format.cpp
 )
