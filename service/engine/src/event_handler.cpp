@@ -173,7 +173,7 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    case game::PlayerDiggingState::CanceledDigging:
    case game::PlayerDiggingState::FinishedDigging: {
       auto block_position = game::BlockPosition::from_proto(event.block_position());
-      m_dispatcher.acknowledge_player_digging(player_id, block_position, 0, status, true);
+      m_dispatcher.acknowledge_player_digging(player_id, event.sequence_id());
       m_world.set_block(block_position, 0);
    } break;
    default: break;

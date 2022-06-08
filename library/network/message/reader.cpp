@@ -40,7 +40,7 @@ std::string Reader::read_string()
    int size = read_varint();
    char buff[size];
    s.read(buff, size);
-   return std::string(buff, size);
+   return {buff, static_cast<std::size_t>(size)};
 }
 
 float Reader::read_float()

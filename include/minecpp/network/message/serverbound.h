@@ -12,6 +12,10 @@ namespace minecpp::network::message {
 struct ChatMessage
 {
    std::string message;
+   mb::u64 timestamp;
+   mb::u64 salt;
+   std::string salt_data;
+   bool preview;
 };
 
 void deserialize(Reader &r, ChatMessage &msg);
@@ -104,6 +108,7 @@ struct PlayerDigging
    game::PlayerDiggingState action{};
    uint64_t position{};
    game::Face facing{};
+   int sequence_id{};
 };
 
 void deserialize(Reader &r, PlayerDigging &msg);

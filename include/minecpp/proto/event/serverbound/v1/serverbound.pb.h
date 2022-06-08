@@ -1153,6 +1153,7 @@ class PlayerDigging final :
     kBlockPositionFieldNumber = 2,
     kStateFieldNumber = 1,
     kFaceFieldNumber = 3,
+    kSequenceIdFieldNumber = 4,
   };
   // .minecpp.proto.common.v1.BlockPosition block_position = 2;
   bool has_block_position() const;
@@ -1190,6 +1191,15 @@ class PlayerDigging final :
   void _internal_set_face(::minecpp::proto::common::v1::Face value);
   public:
 
+  // int32 sequence_id = 4;
+  void clear_sequence_id();
+  int32_t sequence_id() const;
+  void set_sequence_id(int32_t value);
+  private:
+  int32_t _internal_sequence_id() const;
+  void _internal_set_sequence_id(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.PlayerDigging)
  private:
   class _Internal;
@@ -1200,6 +1210,7 @@ class PlayerDigging final :
   ::minecpp::proto::common::v1::BlockPosition* block_position_;
   int state_;
   int face_;
+  int32_t sequence_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto;
 };
@@ -2765,6 +2776,26 @@ inline void PlayerDigging::_internal_set_face(::minecpp::proto::common::v1::Face
 inline void PlayerDigging::set_face(::minecpp::proto::common::v1::Face value) {
   _internal_set_face(value);
   // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.PlayerDigging.face)
+}
+
+// int32 sequence_id = 4;
+inline void PlayerDigging::clear_sequence_id() {
+  sequence_id_ = 0;
+}
+inline int32_t PlayerDigging::_internal_sequence_id() const {
+  return sequence_id_;
+}
+inline int32_t PlayerDigging::sequence_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.PlayerDigging.sequence_id)
+  return _internal_sequence_id();
+}
+inline void PlayerDigging::_internal_set_sequence_id(int32_t value) {
+  
+  sequence_id_ = value;
+}
+inline void PlayerDigging::set_sequence_id(int32_t value) {
+  _internal_set_sequence_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.PlayerDigging.sequence_id)
 }
 
 // -------------------------------------------------------------------

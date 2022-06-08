@@ -82,10 +82,9 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
 
 void EventHandler::handle_chat(const clientbound_v1::Chat &pos, const std::vector<player::Id> &player_ids)
 {
-   minecpp::network::message::Chat chat{
+   minecpp::network::message::SystemChat chat{
            .message = pos.message(),
            .type    = minecpp::network::ChatType::System,
-           .user_id = boost::uuids::uuid(),
    };
    send_message(chat, player_ids);
 }
@@ -127,11 +126,8 @@ void EventHandler::handle_animate_hand(const clientbound_v1::AnimateHand &msg,
 void EventHandler::handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg,
                                                      const std::vector<player::Id> &player_ids)
 {
-   minecpp::network::message::AcknowledgePlayerDigging acknowledge{
-           .position   = game::BlockPosition::from_proto(msg.position()).as_long(),
-           .block      = game::block_state_from_proto(msg.block_state()),
-           .state      = static_cast<game::PlayerDiggingState>(msg.digging_state()),
-           .successful = msg.successful(),
+   minecpp::network::message::AcknowledgeBlockChanges acknowledge{
+           .sequence_id =  msg.sequence_id(),
    };
    send_message(acknowledge, player_ids);
 }
@@ -187,7 +183,7 @@ void EventHandler::handle_update_player_abilities(const clientbound_v1::UpdatePl
    minecpp::network::message::PlayerAbilities player_abilities{
            .flags      = flags,
            .fly_speed  = msg.fly_speed(),
-           .walk_speed = msg.walk_speed(),
+           .field_of_view = msg.walk_speed(),
    };
 
    send_message(player_abilities, player_ids);
@@ -256,7 +252,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       send(conn, PlayerAbilities{
                          .flags      = static_cast<mb::u8>(abilities.flags()),
                          .fly_speed  = abilities.fly_speed,
-                         .walk_speed = abilities.walk_speed,
+                         .field_of_view = abilities.walk_speed,
                  });
 
       // TODO: Send recipes and tags

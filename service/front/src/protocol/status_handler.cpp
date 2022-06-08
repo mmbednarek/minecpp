@@ -35,7 +35,7 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn)
    ss << R"({"description":)" << builder.build() << R"(,)";
    ss << R"("favicon":"data:image/png;base64,)" << favicon << R"(",)";
    ss << R"("players":{"max":34,"online":2},)";
-   ss << R"("version":{"name": "1.18.2", "protocol": 758}})";
+   ss << R"("version":{"name": "1.19", "protocol": 759}})";
 
    w.write_string(ss.str());
    conn->send_and_read(conn, w, *this);

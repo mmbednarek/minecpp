@@ -31,6 +31,8 @@ void DimensionProperties::to_nbt(nbt::Writer &w) const
    w.write_double("coordinate_scale", 1.0);
    w.write_byte("ultrawarm", ultrawarm);
    w.write_byte("has_ceiling", has_ceiling);
+   w.write_int("monster_spawn_block_light_limit", 10);
+   w.write_int("monster_spawn_light_level", 5);
 }
 
 void write_dimension_codec(nbt::Writer &w)

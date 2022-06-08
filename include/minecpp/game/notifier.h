@@ -32,9 +32,7 @@ class Notifier
    virtual void remove_player(player::Id player, mb::u32 entity_id)                        = 0;
    virtual void update_block(game::BlockPosition block, game::BlockState state)            = 0;
    virtual void animate_hand(player::Id player, mb::u32 entity_id, mb::u32 hand)           = 0;
-   virtual void acknowledge_player_digging(player::Id player_id, game::BlockPosition &pos,
-                                           game::BlockState block_state, PlayerDiggingState state,
-                                           bool successful)                                = 0;
+   virtual void acknowledge_player_digging(player::Id player_id, int sequence_id)          = 0;
    virtual void unload_chunk(player::Id player, const game::ChunkPosition &chunk_position) = 0;
    virtual void set_inventory_slot(player::Id player_id, item::ItemId item_id, SlotId slot_id,
                                    std::size_t count)                                      = 0;

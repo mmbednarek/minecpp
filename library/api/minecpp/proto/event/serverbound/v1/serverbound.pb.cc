@@ -105,7 +105,8 @@ PROTOBUF_CONSTEXPR PlayerDigging::PlayerDigging(
   , state_(0)
 
   , face_(0)
-{}
+
+  , sequence_id_(0){}
 struct PlayerDiggingDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PlayerDiggingDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -256,6 +257,7 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbo
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::PlayerDigging, state_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::PlayerDigging, block_position_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::PlayerDigging, face_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::PlayerDigging, sequence_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::UpdatePing, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -312,12 +314,12 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 31, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChatMessage)},
   { 38, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::RemovePlayer)},
   { 44, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::PlayerDigging)},
-  { 53, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::UpdatePing)},
-  { 60, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::AnimateHand)},
-  { 67, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::LoadInitialChunks)},
-  { 73, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::BlockPlacement)},
-  { 84, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem)},
-  { 93, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeHeldItem)},
+  { 54, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::UpdatePing)},
+  { 61, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::AnimateHand)},
+  { 68, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::LoadInitialChunks)},
+  { 74, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::BlockPlacement)},
+  { 85, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem)},
+  { 94, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeHeldItem)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -351,23 +353,24 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_
   ".minecpp.proto.entity.v1.Position\"H\n\021Set"
   "PlayerRotation\0223\n\010rotation\030\001 \001(\0132!.minec"
   "pp.proto.entity.v1.Rotation\"\036\n\013ChatMessa"
-  "ge\022\017\n\007message\030\001 \001(\t\"\016\n\014RemovePlayer\"\270\001\n\r"
+  "ge\022\017\n\007message\030\001 \001(\t\"\016\n\014RemovePlayer\"\315\001\n\r"
   "PlayerDigging\022:\n\005state\030\001 \001(\0162+.minecpp.p"
   "roto.common.v1.PlayerDiggingState\022>\n\016blo"
   "ck_position\030\002 \001(\0132&.minecpp.proto.common"
   ".v1.BlockPosition\022+\n\004face\030\003 \001(\0162\035.minecp"
-  "p.proto.common.v1.Face\"\032\n\nUpdatePing\022\014\n\004"
-  "ping\030\001 \001(\005\"\033\n\013AnimateHand\022\014\n\004hand\030\001 \001(\005\""
-  "\023\n\021LoadInitialChunks\"\321\001\n\016BlockPlacement\022"
-  "\014\n\004hand\030\001 \001(\005\0228\n\010position\030\002 \001(\0132&.minecp"
-  "p.proto.common.v1.BlockPosition\022+\n\004face\030"
-  "\003 \001(\0162\035.minecpp.proto.common.v1.Face\0224\n\t"
-  "crosshair\030\004 \001(\0132!.minecpp.proto.common.v"
-  "1.Vector3f\022\024\n\014inside_block\030\005 \001(\010\"l\n\023Chan"
-  "geInventoryItem\022\017\n\007slot_id\030\001 \001(\005\0220\n\007item"
-  "_id\030\002 \001(\0132\037.minecpp.proto.common.v1.Item"
-  "Id\022\022\n\nitem_count\030\003 \001(\005\"\036\n\016ChangeHeldItem"
-  "\022\014\n\004slot\030\001 \001(\005b\006proto3"
+  "p.proto.common.v1.Face\022\023\n\013sequence_id\030\004 "
+  "\001(\005\"\032\n\nUpdatePing\022\014\n\004ping\030\001 \001(\005\"\033\n\013Anima"
+  "teHand\022\014\n\004hand\030\001 \001(\005\"\023\n\021LoadInitialChunk"
+  "s\"\321\001\n\016BlockPlacement\022\014\n\004hand\030\001 \001(\005\0228\n\010po"
+  "sition\030\002 \001(\0132&.minecpp.proto.common.v1.B"
+  "lockPosition\022+\n\004face\030\003 \001(\0162\035.minecpp.pro"
+  "to.common.v1.Face\0224\n\tcrosshair\030\004 \001(\0132!.m"
+  "inecpp.proto.common.v1.Vector3f\022\024\n\014insid"
+  "e_block\030\005 \001(\010\"l\n\023ChangeInventoryItem\022\017\n\007"
+  "slot_id\030\001 \001(\005\0220\n\007item_id\030\002 \001(\0132\037.minecpp"
+  ".proto.common.v1.ItemId\022\022\n\nitem_count\030\003 "
+  "\001(\005\"\036\n\016ChangeHeldItem\022\014\n\004slot\030\001 \001(\005b\006pro"
+  "to3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps[4] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -377,7 +380,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto = {
-    false, false, 1222, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
+    false, false, 1243, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto,
     "minecpp/proto/event/serverbound/v1/serverbound.proto",
     &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto_deps, 4, 13,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fserverbound_2eproto::offsets,
@@ -1550,16 +1553,16 @@ PlayerDigging::PlayerDigging(const PlayerDigging& from)
     block_position_ = nullptr;
   }
   ::memcpy(&state_, &from.state_,
-    static_cast<size_t>(reinterpret_cast<char*>(&face_) -
-    reinterpret_cast<char*>(&state_)) + sizeof(face_));
+    static_cast<size_t>(reinterpret_cast<char*>(&sequence_id_) -
+    reinterpret_cast<char*>(&state_)) + sizeof(sequence_id_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.PlayerDigging)
 }
 
 inline void PlayerDigging::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&block_position_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&face_) -
-    reinterpret_cast<char*>(&block_position_)) + sizeof(face_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&sequence_id_) -
+    reinterpret_cast<char*>(&block_position_)) + sizeof(sequence_id_));
 }
 
 PlayerDigging::~PlayerDigging() {
@@ -1591,8 +1594,8 @@ void PlayerDigging::Clear() {
   }
   block_position_ = nullptr;
   ::memset(&state_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&face_) -
-      reinterpret_cast<char*>(&state_)) + sizeof(face_));
+      reinterpret_cast<char*>(&sequence_id_) -
+      reinterpret_cast<char*>(&state_)) + sizeof(sequence_id_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1625,6 +1628,14 @@ const char* PlayerDigging::_InternalParse(const char* ptr, ::_pbi::ParseContext*
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_face(static_cast<::minecpp::proto::common::v1::Face>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 sequence_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          sequence_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -1678,6 +1689,12 @@ uint8_t* PlayerDigging::_InternalSerialize(
       3, this->_internal_face(), target);
   }
 
+  // int32 sequence_id = 4;
+  if (this->_internal_sequence_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_sequence_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1713,6 +1730,11 @@ size_t PlayerDigging::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_face());
   }
 
+  // int32 sequence_id = 4;
+  if (this->_internal_sequence_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_sequence_id());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -1744,6 +1766,9 @@ void PlayerDigging::MergeFrom(const PlayerDigging& from) {
   if (from._internal_face() != 0) {
     _internal_set_face(from._internal_face());
   }
+  if (from._internal_sequence_id() != 0) {
+    _internal_set_sequence_id(from._internal_sequence_id());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1762,8 +1787,8 @@ void PlayerDigging::InternalSwap(PlayerDigging* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PlayerDigging, face_)
-      + sizeof(PlayerDigging::face_)
+      PROTOBUF_FIELD_OFFSET(PlayerDigging, sequence_id_)
+      + sizeof(PlayerDigging::sequence_id_)
       - PROTOBUF_FIELD_OFFSET(PlayerDigging, block_position_)>(
           reinterpret_cast<char*>(&block_position_),
           reinterpret_cast<char*>(&other->block_position_));

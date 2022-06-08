@@ -20,7 +20,7 @@ struct SpawnObject
    uuid unique_id;
    int entity_type;
    double x, y, z;
-   uint8_t pitch, yaw;
+   uint8_t yaw, pitch, head_yaw;
    int data;
    uint16_t vel_x, vel_y, vel_z;
 
@@ -37,7 +37,7 @@ struct SpawnExperienceOrb
    [[nodiscard]] Writer serialize() const;
 };
 
-// 0x04
+// 0x02
 struct SpawnPlayer
 {
    mb::u32 entity_id;
@@ -57,14 +57,10 @@ struct AnimateHand
    [[nodiscard]] Writer serialize() const;
 };
 
-// 0x08
-struct AcknowledgePlayerDigging
+// 0x05
+struct AcknowledgeBlockChanges
 {
-   mb::u64 position;
-   game::BlockState block;
-   game::PlayerDiggingState state;
-   bool successful;
-
+   int sequence_id;
    [[nodiscard]] Writer serialize() const;
 };
 
@@ -96,11 +92,10 @@ struct Difficulty
 };
 
 // 0x0e
-struct Chat
+struct SystemChat
 {
    std::string message;
    ChatType type;
-   uuid user_id;
 
    [[nodiscard]] Writer serialize() const;
 };
@@ -190,6 +185,8 @@ struct JoinGame
    uint32_t simulation_distance{};
    bool reduced_debug_info{};
    bool immediate_respawn{};
+   bool has_last_death_location{};
+   std::uint64_t last_death_position{};
 
    [[nodiscard]] Writer serialize() const;
 };
@@ -237,7 +234,7 @@ enum PlayerAbilityFlag : uint8_t
 struct PlayerAbilities
 {
    uint8_t flags;
-   float fly_speed, walk_speed;
+   float fly_speed, field_of_view;
 
    [[nodiscard]] Writer serialize() const;
 };
