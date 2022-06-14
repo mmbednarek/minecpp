@@ -1,6 +1,5 @@
 #pragma once
 #include "file.h"
-#include <minecpp/game/direction.h>
 #include <minecpp/game/hand.h>
 #include <minecpp/network/chat.h>
 #include <string>

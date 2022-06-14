@@ -1,8 +1,9 @@
 #include "play_handler.h"
 #include "../connection.h"
 #include "../service.h"
+#include <fmt/core.h>
+#include <minecpp/chat/chat.h>
 #include <minecpp/network/message/serverbound.h>
-#include <minecpp/util/format.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::front::Protocol {
@@ -86,10 +87,9 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
    default:
-      spdlog::info("unknown op {}, packet data: {}", (int) op, r.get_hex_data());
+      spdlog::info("unknown op {}, packet data: {}", op, r.get_hex_data());
       send(conn, minecpp::network::message::SystemChat{
-                         .message = minecpp::network::format_system_info(
-                                 minecpp::util::format("unimplemented operation code {}", (int) op)),
+                         .message = minecpp::chat::format_warning_unknown_op_code(op),
                          .type = minecpp::network::ChatType::System,
                  });
    }

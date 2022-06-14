@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <map>
 #include <minecpp/error/result.h>
-#include <minecpp/game/block/position.h>
 #include <minecpp/random/random.h>
 
 namespace minecpp::game::worldgen::population {
@@ -18,10 +17,10 @@ class Population
  public:
    explicit Population(Chunks &chunks, std::uint64_t seed);
 
-   void populate_chunk(block::ChunkPos pos);
+   void populate_chunk(game::ChunkPosition pos);
    ChunkPlacements &load_chunk_placements(Chunk &chunk);
    ChunkPlacements &get_chunk_placements_by_chunk(Chunk &chunk);
-   ChunkPlacements &get_chunk_placements(block::ChunkPos pos);
+   ChunkPlacements &get_chunk_placements(game::ChunkPosition pos);
 };
 
 }// namespace minecpp::game::worldgen::population

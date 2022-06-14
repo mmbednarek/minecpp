@@ -1,4 +1,3 @@
-#include <minecpp/game/block/position.h>
 #include <minecpp/game/worldgen/population/chunk.h>
 #include <minecpp/game/worldgen/population/object.h>
 #include <minecpp/random/java_random.h>
@@ -13,7 +12,7 @@ ChunkPlacements::ChunkPlacements(game::Chunk &chunk, std::uint64_t seed) :
 
 Placement ChunkPlacements::get_placement(int x, int z)
 {
-   auto p = m_placements.find(block::Position(x, 0, z).as_long());
+   auto p = m_placements.find(game::BlockPosition{x, 0, z}.as_long());
    if (p == m_placements.end()) {
       return Placement{
               .object_id = -1,
@@ -99,7 +98,7 @@ void ChunkPlacements::populate_chunk(game::Chunk &chunk)
    });
 }
 
-void ChunkPlacements::populate_neighbour(Chunk &chunk, block::ChunkPos pos)
+void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
 {
    std::for_each(m_placements.begin(), m_placements.end(), [&chunk, pos](auto &pair) {
       Placement &placement = pair.second;

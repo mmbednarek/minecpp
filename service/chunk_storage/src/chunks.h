@@ -6,7 +6,6 @@
 #include <mb/result.h>
 #include <memory>
 #include <minecpp/error/result.h>
-#include <minecpp/game/block/position.h>
 #include <minecpp/game/chunk/chunk.h>
 #include <minecpp/game/chunks.h>
 #include <minecpp/game/game.h>
@@ -39,8 +38,8 @@ class ChunkManager : public minecpp::game::Chunks
    mb::result<mb::empty> set_block(int x, int y, int z, uint32_t state);
    mb::result<int> height_at(int x, int z);
    mb::result<uuid> add_refs(uuid engine_id, player::Id player_id,
-                             std::vector<minecpp::game::block::ChunkPos> coords);
-   mb::result<mb::empty> free_refs(player::Id player_id, std::vector<minecpp::game::block::ChunkPos> coords);
+                             std::vector<minecpp::game::ChunkPosition> coords);
+   mb::result<mb::empty> free_refs(player::Id player_id, std::vector<minecpp::game::ChunkPosition> coords);
 };
 
 }// namespace minecpp::service::chunk_storage

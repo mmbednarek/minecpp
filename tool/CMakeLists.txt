@@ -1,6 +1,5 @@
 add_subdirectory(chunk_extractor)
 add_subdirectory(chunk_viewer)
-add_subdirectory(dimension)
 add_subdirectory(discocli)
 add_subdirectory(nbtprotogen)
 add_subdirectory(nbtscheme)

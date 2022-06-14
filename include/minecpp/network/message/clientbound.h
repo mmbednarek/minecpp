@@ -177,7 +177,7 @@ struct JoinGame
    uint8_t previous_game_mode{};
    std::vector<std::string> available_dimensions{};
    std::string dimension_codec{};
-   std::string dimension_type{};
+   std::string dimension_name{};
    std::string world_name{};
    uint64_t seed{};
    uint8_t max_players{};
@@ -186,6 +186,8 @@ struct JoinGame
    bool reduced_debug_info{};
    bool immediate_respawn{};
    bool has_last_death_location{};
+   bool is_debug{};
+   bool is_flat{};
    std::uint64_t last_death_position{};
 
    [[nodiscard]] Writer serialize() const;

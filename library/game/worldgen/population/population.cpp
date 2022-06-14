@@ -8,9 +8,9 @@ constexpr std::uint64_t chunk_seed_coef2 = 0x1e3ca454fe3e7;
 constexpr std::uint64_t chunk_seed_coef3 = 0x9adacb410e23;
 constexpr std::uint64_t chunk_seed_coef4 = 0xf84606d2fff5;
 
-constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, block::ChunkPos pos)
+constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, game::ChunkPosition pos)
 {
-   return seed * (chunk_seed_coef1 * pos.x + chunk_seed_coef2 * pos.z + chunk_seed_coef3) + chunk_seed_coef4;
+   return seed * (chunk_seed_coef1 * static_cast<std::uint64_t>(pos.x) + chunk_seed_coef2 * static_cast<std::uint64_t>(pos.z) + chunk_seed_coef3) + chunk_seed_coef4;
 }
 
 Population::Population(Chunks &chunks, std::uint64_t seed) :
@@ -19,7 +19,7 @@ Population::Population(Chunks &chunks, std::uint64_t seed) :
 {
 }
 
-void Population::populate_chunk(block::ChunkPos pos)
+void Population::populate_chunk(game::ChunkPosition pos)
 {
    auto &chunk = m_chunks.get_incomplete_chunk(pos.x, pos.z);
 
@@ -28,7 +28,7 @@ void Population::populate_chunk(block::ChunkPos pos)
 
    // populate from chunks around
    minecpp::util::around(pos.x, pos.z, [this, &chunk](int x, int z) {
-      auto pos = block::ChunkPos(x, z);
+      game::ChunkPosition pos{x, z};
       get_chunk_placements(pos).populate_neighbour(chunk, pos);
    });
 
@@ -52,7 +52,7 @@ ChunkPlacements &Population::get_chunk_placements_by_chunk(Chunk &chunk)
    return load_chunk_placements(chunk);
 }
 
-ChunkPlacements &Population::get_chunk_placements(block::ChunkPos pos)
+ChunkPlacements &Population::get_chunk_placements(game::ChunkPosition pos)
 {
    auto iter = m_cache.find(pos.hash());
    if (iter != m_cache.end()) {

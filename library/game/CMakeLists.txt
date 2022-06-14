@@ -2,7 +2,6 @@ SET(MINECPP_GAME_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/game)
 
 add_library(minecpp_game
         rules.cpp
-        level/level.cpp
         item/recipe.cpp
         item/item.cpp
         chunk/chunk.cpp
@@ -10,15 +9,7 @@ add_library(minecpp_game
         block/block.cpp
         block/material.cpp
         block/block.cpp
-        block/color.cpp
-        player_data.cpp
-        inventory.cpp
         entity/entity.cpp
-        player.cpp
-        recipe_book.cpp
-        dimension.cpp
-        block/position.cpp
-        tracking.cpp
         world.cpp
         worldgen/terrain/terrain.cpp
         chunk/section.cpp

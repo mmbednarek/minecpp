@@ -184,7 +184,7 @@ Writer JoinGame::serialize() const
    }
 
    w.write_bytes(dimension_codec.data(), dimension_codec.size());
-   w.write_string("minecraft:overworld");
+   w.write_string(dimension_name);
    w.write_string(world_name);
    w.write_big_endian(seed);
    w.write_byte(max_players);
@@ -192,8 +192,8 @@ Writer JoinGame::serialize() const
    w.write_varint(simulation_distance);
    w.write_byte(reduced_debug_info);
    w.write_byte(!immediate_respawn);
-   w.write_byte(0);// is debug
-   w.write_byte(0);// is flat
+   w.write_byte(is_debug);
+   w.write_byte(is_flat);
    w.write_byte(has_last_death_location);
    if  (has_last_death_location) {
       w.write_long(last_death_position);

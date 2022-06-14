@@ -143,10 +143,10 @@ boost::uuids::uuid Connection::service_id()
 
 void Connection::push_chunk(int x, int z)
 {
-   m_chunk_queue.push(minecpp::game::block::ChunkPos(x, z));
+   m_chunk_queue.push({x, z});
 }
 
-minecpp::game::block::ChunkPos Connection::pop_chunk()
+minecpp::game::ChunkPosition Connection::pop_chunk()
 {
    return m_chunk_queue.pop();
 }

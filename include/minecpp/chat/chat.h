@@ -22,7 +22,9 @@ struct ChatMessage
    std::string to_string() const;
 };
 
-std::string format_system_info(std::string_view message);
+std::string format_system_warning(std::string_view message);
+
+std::string format_warning_unknown_op_code(int code);
 
 std::string format_chat_message(std::string_view player_name, std::string_view message);
 

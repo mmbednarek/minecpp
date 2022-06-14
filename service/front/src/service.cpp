@@ -5,7 +5,6 @@
 #include <boost/uuid/name_generator.hpp>
 #include <fstream>
 #include <minecpp/game/game.h>
-#include <minecpp/game/player.h>
 #include <minecpp/proto/event/serverbound/v1/serverbound.pb.h>
 #include <minecpp/util/time.h>
 #include <minecpp/util/uuid.h>

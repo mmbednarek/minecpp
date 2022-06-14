@@ -1,5 +1,4 @@
 #pragma once
-#include <minecpp/game/events.h>
 #include <minecpp/player/id.h>
 #include <minecpp/proto/event/clientbound/v1/clientbound.pb.h>
 #include <minecpp/util/static_queue.h>

@@ -31,6 +31,6 @@ void Generator::generate_terrain(int x, int z)
    m_chunks.put_chunk(x, z, std::move(chunk));
 }
 
-void Generator::populate_chunk(int x, int z) { m_population.populate_chunk(block::ChunkPos(x, z)); }
+void Generator::populate_chunk(int x, int z) { m_population.populate_chunk({x, z}); }
 
 }// namespace minecpp::game::worldgen

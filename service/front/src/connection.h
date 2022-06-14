@@ -8,7 +8,6 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <memory>
-#include <minecpp/game/block/position.h>
 #include <minecpp/network/message/io.h>
 #include <minecpp/network/message/message.h>
 #include <minecpp/util/static_queue.h>
@@ -58,7 +57,7 @@ class Connection
    [[nodiscard]] mb::size compression_threshold() const;
 
    void push_chunk(int x, int z);
-   minecpp::game::block::ChunkPos pop_chunk();
+   minecpp::game::ChunkPosition pop_chunk();
    bool has_chunks();
 
    [[nodiscard]] tcp::socket &socket();
@@ -77,7 +76,7 @@ class Connection
    Protocol::State m_state;
    mb::size m_compression_threshold = 0;
    boost::object_pool<mb::u8> m_byte_pool;
-   minecpp::util::StaticQueue<minecpp::game::block::ChunkPos, 200> m_chunk_queue{};
+   minecpp::util::StaticQueue<minecpp::game::ChunkPosition, 200> m_chunk_queue{};
 };
 
 void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,

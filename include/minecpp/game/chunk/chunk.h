@@ -5,7 +5,6 @@
 #include "section.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
-#include <minecpp/game/block/position.h>
 #include <minecpp/nbt/chunk/v1/chunk.nbt.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/tag.h>
@@ -45,7 +44,7 @@ struct Chunk
    [[nodiscard]] uuid get_lock() const;
    bool add_ref(uuid engine_id, player::Id player_id);
    void free_ref(player::Id player_id);
-   [[nodiscard]] block::ChunkPos pos() const;
+   [[nodiscard]] game::ChunkPosition pos() const;
 
    static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
    minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;

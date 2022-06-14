@@ -101,7 +101,7 @@ mb::result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t stat
 }
 
 mb::result<uuid> ChunkManager::add_refs(uuid engine_id, player::Id player_id,
-                                        std::vector<minecpp::game::block::ChunkPos> coords)
+                                        std::vector<minecpp::game::ChunkPosition> coords)
 {
    uuid target_engine{};
    for (const auto &coord : coords) {
@@ -114,7 +114,7 @@ mb::result<uuid> ChunkManager::add_refs(uuid engine_id, player::Id player_id,
 }
 
 mb::result<mb::empty> ChunkManager::free_refs(player::Id player_id,
-                                              std::vector<minecpp::game::block::ChunkPos> coords)
+                                              std::vector<minecpp::game::ChunkPosition> coords)
 {
    for (const auto &coord : coords) {
       auto chunk = MB_TRY(get_chunk(coord.x, coord.z));

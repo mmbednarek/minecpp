@@ -2,13 +2,8 @@
 #include "minecpp/game/notifier.h"
 #include <boost/uuid/uuid.hpp>
 #include <map>
-#include <minecpp/game/dimension.h>
 #include <minecpp/proto/entity/v1/entity.pb.h>
 #include <minecpp/util/vec.h>
-
-namespace minecpp::game {
-class PlayerData;
-}
 
 namespace minecpp::nbt::player::v1 {
 class Player;
@@ -49,8 +44,6 @@ struct Movement
 
 class Entity
 {
-   friend PlayerData;
-
    uint32_t id{};
    uuid uid;
    Type type;
@@ -82,7 +75,6 @@ class Entity
  public:
    Entity(uuid uid, const Type &type);
 
-   [[nodiscard]] Dimension get_dimension() const;
    [[nodiscard]] Vec3 get_pos() const;
    [[nodiscard]] float get_yaw() const;
    [[nodiscard]] float get_pitch() const;

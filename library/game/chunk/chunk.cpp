@@ -199,7 +199,7 @@ std::array<short, 256> Chunk::get_height_map()
    return result;
 }
 
-block::ChunkPos Chunk::pos() const { return block::ChunkPos(m_pos_x, m_pos_z); }
+game::ChunkPosition Chunk::pos() const { return {m_pos_x, m_pos_z}; }
 
 mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) noexcept
 {

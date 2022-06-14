@@ -1,7 +1,5 @@
 #include "event_handler.h"
 #include <boost/uuid/uuid_io.hpp>
-#include <minecpp/game/dimension.h>
-#include <minecpp/nbt/writer.h>
 #include <minecpp/player/player.h>
 #include <minecpp/repository/repository.h>
 #include <minecpp/util/time.h>
@@ -223,16 +221,12 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       std::stringstream dimension_codec;
       m_registry.serialize(dimension_codec, "");
 
-      std::stringstream current_dimension;
-      minecpp::nbt::Writer current_dimension_writer(current_dimension);
-      minecpp::game::write_dimension_type(current_dimension_writer);
-
       send(conn, JoinGame{
                          .player_id = static_cast<mb::u32>(msg.player().entity_id()),
                          .game_mode = static_cast<mb::u8>(msg.gameplay().mode()),
                          .available_dimensions{"overworld", "the_nether", "the_end", "overworld_caves"},
                          .dimension_codec    = dimension_codec.str(),
-                         .dimension_type     = current_dimension.str(),
+                         .dimension_name     = "minecraft:overworld",
                          .world_name         = "overworld",
                          .seed               = msg.gameplay().seed(),
                          .max_players        = static_cast<mb::u8>(msg.gameplay().max_players()),

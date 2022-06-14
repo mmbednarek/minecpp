@@ -1,2 +1,0 @@
-add_executable(minecpp_tool_dimension main.cpp)
-target_link_libraries(minecpp_tool_dimension minecpp_game minecpp_nbt)

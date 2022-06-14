@@ -4,10 +4,10 @@
 
 namespace minecpp::chat {
 
-std::string format_system_info(std::string_view message)
+std::string format_system_warning(std::string_view message)
 {
    using format::Color;
-   return format::Builder().bold(Color::Red, fmt::format("Server ")).text(Color::White, message).to_string();
+   return format::Builder().bold(Color::Yellow, fmt::format("WARN ")).text(Color::White, message).to_string();
 }
 
 std::string format_chat_message(std::string_view player_name, std::string_view message)
@@ -31,6 +31,12 @@ std::string format_join_message(std::string_view player_name)
 {
    using format::Color;
    return format::Builder().text(Color::Yellow, fmt::format("{} joined the game", player_name)).to_string();
+}
+
+std::string format_warning_unknown_op_code(int code)
+{
+   using format::Color;
+   return format::Builder().text(Color::Yellow, "WARN ").text("unknown serverbound message with op code ").text(Color::Yellow, fmt::format("{:#02x}", code)).to_string();
 }
 
 void ChatMessage::write(std::ostream &stream) const

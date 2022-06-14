@@ -23,7 +23,7 @@ class ChunkPlacements
    ChunkPlacements(game::Chunk &chunk, std::uint64_t seed);
 
    void populate_chunk(game::Chunk &chunk);
-   void populate_neighbour(game::Chunk &chunk, block::ChunkPos pos);
+   void populate_neighbour(game::Chunk &chunk, game::ChunkPosition pos);
    void check_pos();
 
  private:

@@ -23,8 +23,6 @@ Entity::Entity(uuid uid, const Type &type) :
 {
 }
 
-Dimension Entity::get_dimension() const { return Dimension::Overworld; }
-
 Vec3 Entity::get_pos() const { return pos; }
 
 float Entity::get_yaw() const { return yaw; }
