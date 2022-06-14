@@ -38,7 +38,7 @@ The build system is `cmake` the C++ standard is 20. The following dependencies a
 
 All the targets should compile on both `gcc` and `clang`. Please use recent version of gRPC (at least 1.45) and a matching
 version of protobuf. Remember to regenerate proto files using `protogen.sh` script for your version of gRPC. (`protoc` and `grpc_cpp_plugin`)
-You can  the server using standard CMake build procedure. Specify `-DUSE_LOCAL_GPRC=OFF` flag if you want to build gRPC
+You can build the server using standard CMake build procedure. Specify `-DUSE_LOCAL_GPRC=OFF` flag if you want to build gRPC
 using CMake's fetch content.
 
 ```bash
