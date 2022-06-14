@@ -5,9 +5,11 @@
 
 namespace minecpp::command::core {
 
-class Format : public Command {
+class Format : public Command
+{
    format::Color m_color;
    bool m_bold;
+
  public:
    Format(format::Color color, bool bold);
 
@@ -16,6 +18,6 @@ class Format : public Command {
    Object::Ptr run(RuntimeContext &ctx, CommandInput &input) const override;
 };
 
-}
+}// namespace minecpp::command::core
 
 #endif//MINECPP_FORMAT_H

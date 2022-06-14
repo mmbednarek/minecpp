@@ -32,7 +32,7 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn)
            .text(" - A minecraft server written in C++");
 
    std::stringstream ss;
-   ss << R"({"description":)" << builder.build() << R"(,)";
+   ss << R"({"description":)" << builder.to_string() << R"(,)";
    ss << R"("favicon":"data:image/png;base64,)" << favicon << R"(",)";
    ss << R"("players":{"max":34,"online":2},)";
    ss << R"("version":{"name": "1.19", "protocol": 759}})";

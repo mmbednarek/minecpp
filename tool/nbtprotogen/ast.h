@@ -51,7 +51,8 @@ enum class TypeName
 
 struct Attribute
 {
-   int repeated = 0;
+   int repeated  = 0;
+   bool optional = false;
    std::string type;
    std::vector<std::string> package;
    std::string name;   // C++ attribute name

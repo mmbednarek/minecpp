@@ -26,6 +26,8 @@ Attribute Attribute::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Double:
          res.__xx_put(name, r.read_float64());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -36,7 +38,7 @@ Attribute Attribute::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Attribute();
+      return {};
    }
    return Attribute::deserialize_no_header(r);
 }
@@ -63,7 +65,7 @@ Memories Memories::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Memories();
+      return {};
    }
    return Memories::deserialize_no_header(r);
 }
@@ -90,6 +92,8 @@ Brain Brain::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -100,7 +104,7 @@ Brain Brain::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Brain();
+      return {};
    }
    return Brain::deserialize_no_header(r);
 }
@@ -131,6 +135,8 @@ InventoryElement InventoryElement::deserialize_no_header(minecpp::nbt::Reader &r
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -141,7 +147,7 @@ InventoryElement InventoryElement::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return InventoryElement();
+      return {};
    }
    return InventoryElement::deserialize_no_header(r);
 }
@@ -180,6 +186,8 @@ Abilities Abilities::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Float:
          res.__xx_put(name, r.read_float32());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -190,7 +198,7 @@ Abilities Abilities::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Abilities();
+      return {};
    }
    return Abilities::deserialize_no_header(r);
 }
@@ -250,6 +258,8 @@ RecipeBook RecipeBook::deserialize_no_header(minecpp::nbt::Reader &r) {
                res.__xx_put(name, ls);
                return;
             }
+            default: 
+               break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -257,6 +267,8 @@ RecipeBook RecipeBook::deserialize_no_header(minecpp::nbt::Reader &r) {
          }
          return;
       }
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -267,7 +279,7 @@ RecipeBook RecipeBook::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return RecipeBook();
+      return {};
    }
    return RecipeBook::deserialize_no_header(r);
 }
@@ -456,6 +468,8 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
                }
                break;
             }
+            default: 
+               break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -463,6 +477,8 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
          }
          return;
       }
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -473,7 +489,7 @@ Player Player::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Player();
+      return {};
    }
    return Player::deserialize_no_header(r);
 }

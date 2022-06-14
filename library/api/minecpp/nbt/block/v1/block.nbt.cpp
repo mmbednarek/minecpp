@@ -38,6 +38,8 @@ EnumState EnumState::deserialize_no_header(minecpp::nbt::Reader &r) {
                res.__xx_put(name, ls);
                return;
             }
+            default: 
+               break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -45,6 +47,8 @@ EnumState EnumState::deserialize_no_header(minecpp::nbt::Reader &r) {
          }
          return;
       }
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -55,7 +59,7 @@ EnumState EnumState::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return EnumState();
+      return {};
    }
    return EnumState::deserialize_no_header(r);
 }
@@ -86,6 +90,8 @@ IntState IntState::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -96,7 +102,7 @@ IntState IntState::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return IntState();
+      return {};
    }
    return IntState::deserialize_no_header(r);
 }
@@ -120,6 +126,8 @@ BoolState BoolState::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -130,7 +138,7 @@ BoolState BoolState::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return BoolState();
+      return {};
    }
    return BoolState::deserialize_no_header(r);
 }
@@ -166,6 +174,8 @@ Block Block::deserialize_no_header(minecpp::nbt::Reader &r) {
                res.__xx_put(name, ls);
                return;
             }
+            default: 
+               break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -173,6 +183,8 @@ Block Block::deserialize_no_header(minecpp::nbt::Reader &r) {
          }
          return;
       }
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -183,7 +195,7 @@ Block Block::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Block();
+      return {};
    }
    return Block::deserialize_no_header(r);
 }

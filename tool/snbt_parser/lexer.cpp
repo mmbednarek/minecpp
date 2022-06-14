@@ -143,4 +143,18 @@ char StringReader::next()
    return m_data[m_at++];
 }
 
+IStreamReader::IStreamReader(std::istream &stream) :
+    m_stream(stream)
+{
+}
+
+bool IStreamReader::has_next()
+{
+   return not m_stream.eof();
+}
+
+char IStreamReader::next()
+{
+   return static_cast<char>(m_stream.get());
+}
 }// namespace minecpp::tool::snbt_parser

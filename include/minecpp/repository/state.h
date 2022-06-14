@@ -2,6 +2,7 @@
 #define MINECPP_REPOSITORY_STATE_H
 #include "mb/result.h"
 #include <map>
+#include <minecpp/game/game.h>
 #include <minecpp/util/util.h>
 #include <span>
 #include <tuple>
@@ -23,8 +24,8 @@ class StateManager
    static StateManager g_instance;
 
    std::map<int, int> m_state_to_block_id;
-   std::map<int, int> m_block_id_to_state;
-   std::size_t m_state_count;
+   std::map<int, game::BlockState> m_block_id_to_state;
+   game::BlockState m_top_state;
 
  public:
    std::tuple<int, int> parse_block_id(int block_id);
@@ -34,16 +35,16 @@ class StateManager
       return g_instance;
    }
 
-   GETTER(state_count)
+   GETTER(top_state)
 
    void add_state(int block_id, int state_count)
    {
-      m_state_to_block_id[static_cast<int>(m_state_count)] = block_id;
-      m_block_id_to_state[block_id]                        = static_cast<int>(m_state_count);
-      m_state_count += state_count;
+      m_state_to_block_id[static_cast<int>(m_top_state)] = block_id;
+      m_block_id_to_state[block_id]                      = m_top_state;
+      m_top_state += static_cast<game::BlockState>(state_count);
    }
 
-   [[nodiscard]] int block_base_state(int block_id) const
+   [[nodiscard]] game::BlockState block_base_state(int block_id) const
    {
       return m_block_id_to_state.at(block_id);
    }

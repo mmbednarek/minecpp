@@ -7,7 +7,7 @@ TEST(Format, ok)
                        .text("hello ")
                        .bold(minecpp::format::Color::DarkPurple, "purple ")
                        .text(minecpp::format::Color::Green, "world")
-                       .build();
+                       .to_string();
 
    EXPECT_EQ(
            text,

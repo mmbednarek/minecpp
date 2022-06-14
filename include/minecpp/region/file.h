@@ -9,12 +9,14 @@
 
 namespace minecpp::region {
 
-enum class LoadError {
+enum class LoadError
+{
    RegionNotFound,
    CorruptedData
 };
 
-enum class WriteError {
+enum class WriteError
+{
    Ok,
    NoChunkAtLocation,
    EmptyOffset,

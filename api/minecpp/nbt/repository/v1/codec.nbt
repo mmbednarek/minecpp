@@ -1,0 +1,142 @@
+syntax = "nbt";
+package minecpp.nbt.repository.v1;
+
+message DimensionTypeDescription {
+  int8 piglin_safe = 1;
+  int8 has_raids = 2;
+  int32 monster_spawn_light_level	= 3;
+  int32 monster_spawn_block_light_limit	= 4;
+  int8 natural = 5;
+  float ambient_light	= 6;
+  optional int64 fixed_time = 7;
+  string infiniburn	= 8;
+  int8 respawn_anchor_works	= 9;
+  int8 has_skylight	= 10;
+  int8 bed_works = 11;
+  string effects = 12;
+  int32 min_y	= 13;
+  int32 height = 14;
+  int32 logical_height = 15;
+  double coordinate_scale	= 16;
+  int8 ultrawarm = 17;
+  int8 has_ceiling = 18;
+}
+
+message DimensionTypeEntry {
+  string name = 1;
+  int32 id = 2;
+  DimensionTypeDescription element = 3;
+}
+
+message DimensionTypes {
+  string   type = 1;
+  repeated DimensionTypeEntry value = 2;
+}
+
+message BiomeMusic {
+  int8 replace_current_music = 1;
+  string sound = 2;
+  int32 max_delay = 3;
+  int32 min_delay = 4;
+}
+
+message BiomeAdditionsSound {
+  string sound = 1;
+  double tick_chance = 2;
+}
+
+message BiomeMoodSound {
+  string sound = 1;
+  double tick_delay = 2;
+  double offset = 3;
+  double block_search_extent = 4;
+}
+
+message BiomeParticleOptions {
+  string type = 1;
+}
+
+message BiomeParticle {
+  float probability = 1;
+  BiomeParticleOptions type = 2;
+}
+
+message BiomeEffects {
+  int32 sky_color	= 1;
+  int32 water_fog_color	= 2;
+  int32 fog_color	= 3;
+  int32 water_color	= 4;
+  optional int32 foliage_color	= 5;
+  optional int32 grass_color	=  6;
+  optional string grass_color_modifier	= 7;
+  optional BiomeMusic music = 8;
+  optional string ambient_sound = 9;
+  optional BiomeAdditionsSound additions_sound = 10;
+  optional BiomeMoodSound mood_sound	= 11;
+  optional BiomeParticle particle = 12;
+}
+
+message BiomeDescription {
+  string precipitation = 1;
+  float depth  = 2;
+  float temperature	= 3;
+  float scale = 4;
+  float downfall = 5;
+  string category = 6;
+  optional string temperature_modifier = 7;
+  BiomeEffects effects = 8;
+}
+
+message BiomeEntry {
+  string name = 1;
+  int32 id = 2;
+  BiomeDescription element = 3;
+}
+
+message Biomes {
+  string type = 1;
+  repeated BiomeEntry value = 2;
+}
+
+message ChatDecorationStyle {
+    string color = 1;
+    int8 italic = 2;
+    int8 bold = 2;
+}
+
+message ChatDecoration {
+    repeated string parameters = 1;
+    ChatDecorationStyle style = 2;
+    string translation_key = 3;
+}
+
+message ChatNarration {
+    optional ChatDecoration decoration = 1;
+    string priority = 2;
+}
+
+message ChatDetails {
+    optional ChatDecoration decoration = 1;
+}
+
+message ChatTypeDescription {
+    ChatDetails chat = 1;
+    ChatNarration narration = 2;
+}
+
+message ChatTypeEntry {
+  string name = 1;
+  int32 id = 2;
+  ChatTypeDescription element = 3;
+}
+
+message ChatTypes {
+  string type = 1;
+  repeated ChatTypeEntry value = 2;
+}
+
+message Registry {
+  DimensionTypes dimension_types = 1 [label = "minecraft:dimension_type"];
+  Biomes biomes = 2 [label = "minecraft:worldgen/biome"];
+  ChatTypes chat_types = 3 [label = "minecraft:chat_type"];
+}

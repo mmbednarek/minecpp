@@ -83,7 +83,7 @@ message AnimateHand {
   uint32 hand = 3;
 }
 
-message AcknowledgePlayerDigging {
+message AcknowledgeBlockChange {
   int32 sequence_id = 1;
 }
 

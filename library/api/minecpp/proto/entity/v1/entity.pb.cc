@@ -25,10 +25,11 @@ namespace proto {
 namespace entity {
 namespace v1 {
 PROTOBUF_CONSTEXPR Position::Position(
-    ::_pbi::ConstantInitialized)
-  : x_(0)
-  , y_(0)
-  , z_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PositionDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PositionDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -39,9 +40,10 @@ struct PositionDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PositionDefaultTypeInternal _Position_default_instance_;
 PROTOBUF_CONSTEXPR Rotation::Rotation(
-    ::_pbi::ConstantInitialized)
-  : yaw_(0)
-  , pitch_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.yaw_)*/0
+  , /*decltype(_impl_.pitch_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct RotationDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RotationDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -52,10 +54,11 @@ struct RotationDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RotationDefaultTypeInternal _Rotation_default_instance_;
 PROTOBUF_CONSTEXPR Movement::Movement(
-    ::_pbi::ConstantInitialized)
-  : x_(0)
-  , y_(0)
-  , z_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct MovementDefaultTypeInternal {
   PROTOBUF_CONSTEXPR MovementDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -66,11 +69,12 @@ struct MovementDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MovementDefaultTypeInternal _Movement_default_instance_;
 PROTOBUF_CONSTEXPR Entity::Entity(
-    ::_pbi::ConstantInitialized)
-  : id_(nullptr)
-  , position_(nullptr)
-  , rotation_(nullptr)
-  , entity_id_(0u){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.id_)*/nullptr
+  , /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.rotation_)*/nullptr
+  , /*decltype(_impl_.entity_id_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct EntityDefaultTypeInternal {
   PROTOBUF_CONSTEXPR EntityDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -95,36 +99,36 @@ const uint32_t TableStruct_minecpp_2fproto_2fentity_2fv1_2fentity_2eproto::offse
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Position, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Position, y_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Position, z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Position, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Position, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Position, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Rotation, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Rotation, yaw_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Rotation, pitch_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Rotation, _impl_.yaw_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Rotation, _impl_.pitch_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, y_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Movement, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, entity_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, position_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, rotation_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, _impl_.entity_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::entity::v1::Entity, _impl_.rotation_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::entity::v1::Position)},
@@ -185,23 +189,35 @@ class Position::_Internal {
 Position::Position(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.entity.v1.Position)
 }
 Position::Position(const Position& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Position* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.y_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.entity.v1.Position)
 }
 
-inline void Position::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+inline void Position::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.y_){0}
+    , decltype(_impl_.z_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 Position::~Position() {
@@ -218,7 +234,7 @@ inline void Position::SharedDtor() {
 }
 
 void Position::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void Position::Clear() {
@@ -227,9 +243,9 @@ void Position::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&z_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -242,7 +258,7 @@ const char* Position::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // double x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 9)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else
           goto handle_unusual;
@@ -250,7 +266,7 @@ const char* Position::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // double y = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 17)) {
-          y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else
           goto handle_unusual;
@@ -258,7 +274,7 @@ const char* Position::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // double z = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 25)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<double>(ptr);
           ptr += sizeof(double);
         } else
           goto handle_unusual;
@@ -365,25 +381,21 @@ size_t Position::ByteSizeLong() const {
     total_size += 1 + 8;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Position::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     Position::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Position::GetClassData() const { return &_class_data_; }
 
-void Position::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<Position *>(to)->MergeFrom(
-      static_cast<const Position &>(from));
-}
 
-
-void Position::MergeFrom(const Position& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Position)
-  GOOGLE_DCHECK_NE(&from, this);
+void Position::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Position*>(&to_msg);
+  auto& from = static_cast<const Position&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Position)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -392,23 +404,23 @@ void Position::MergeFrom(const Position& from) {
   uint64_t raw_x;
   memcpy(&raw_x, &tmp_x, sizeof(tmp_x));
   if (raw_x != 0) {
-    _internal_set_x(from._internal_x());
+    _this->_internal_set_x(from._internal_x());
   }
   static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
   double tmp_y = from._internal_y();
   uint64_t raw_y;
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
-    _internal_set_y(from._internal_y());
+    _this->_internal_set_y(from._internal_y());
   }
   static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
   double tmp_z = from._internal_z();
   uint64_t raw_z;
   memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
   if (raw_z != 0) {
-    _internal_set_z(from._internal_z());
+    _this->_internal_set_z(from._internal_z());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void Position::CopyFrom(const Position& from) {
@@ -426,11 +438,11 @@ void Position::InternalSwap(Position* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Position, z_)
-      + sizeof(Position::z_)
-      - PROTOBUF_FIELD_OFFSET(Position, x_)>(
-          reinterpret_cast<char*>(&x_),
-          reinterpret_cast<char*>(&other->x_));
+      PROTOBUF_FIELD_OFFSET(Position, _impl_.z_)
+      + sizeof(Position::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(Position, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Position::GetMetadata() const {
@@ -448,23 +460,33 @@ class Rotation::_Internal {
 Rotation::Rotation(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.entity.v1.Rotation)
 }
 Rotation::Rotation(const Rotation& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Rotation* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.yaw_){}
+    , decltype(_impl_.pitch_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&yaw_, &from.yaw_,
-    static_cast<size_t>(reinterpret_cast<char*>(&pitch_) -
-    reinterpret_cast<char*>(&yaw_)) + sizeof(pitch_));
+  ::memcpy(&_impl_.yaw_, &from._impl_.yaw_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.pitch_) -
+    reinterpret_cast<char*>(&_impl_.yaw_)) + sizeof(_impl_.pitch_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.entity.v1.Rotation)
 }
 
-inline void Rotation::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&yaw_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&pitch_) -
-    reinterpret_cast<char*>(&yaw_)) + sizeof(pitch_));
+inline void Rotation::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.yaw_){0}
+    , decltype(_impl_.pitch_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 Rotation::~Rotation() {
@@ -481,7 +503,7 @@ inline void Rotation::SharedDtor() {
 }
 
 void Rotation::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void Rotation::Clear() {
@@ -490,9 +512,9 @@ void Rotation::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&yaw_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&pitch_) -
-      reinterpret_cast<char*>(&yaw_)) + sizeof(pitch_));
+  ::memset(&_impl_.yaw_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.pitch_) -
+      reinterpret_cast<char*>(&_impl_.yaw_)) + sizeof(_impl_.pitch_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -505,7 +527,7 @@ const char* Rotation::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // float yaw = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 13)) {
-          yaw_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          _impl_.yaw_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
@@ -513,7 +535,7 @@ const char* Rotation::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // float pitch = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 21)) {
-          pitch_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          _impl_.pitch_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
@@ -601,25 +623,21 @@ size_t Rotation::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Rotation::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     Rotation::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Rotation::GetClassData() const { return &_class_data_; }
 
-void Rotation::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<Rotation *>(to)->MergeFrom(
-      static_cast<const Rotation &>(from));
-}
 
-
-void Rotation::MergeFrom(const Rotation& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Rotation)
-  GOOGLE_DCHECK_NE(&from, this);
+void Rotation::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Rotation*>(&to_msg);
+  auto& from = static_cast<const Rotation&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Rotation)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -628,16 +646,16 @@ void Rotation::MergeFrom(const Rotation& from) {
   uint32_t raw_yaw;
   memcpy(&raw_yaw, &tmp_yaw, sizeof(tmp_yaw));
   if (raw_yaw != 0) {
-    _internal_set_yaw(from._internal_yaw());
+    _this->_internal_set_yaw(from._internal_yaw());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_pitch = from._internal_pitch();
   uint32_t raw_pitch;
   memcpy(&raw_pitch, &tmp_pitch, sizeof(tmp_pitch));
   if (raw_pitch != 0) {
-    _internal_set_pitch(from._internal_pitch());
+    _this->_internal_set_pitch(from._internal_pitch());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void Rotation::CopyFrom(const Rotation& from) {
@@ -655,11 +673,11 @@ void Rotation::InternalSwap(Rotation* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Rotation, pitch_)
-      + sizeof(Rotation::pitch_)
-      - PROTOBUF_FIELD_OFFSET(Rotation, yaw_)>(
-          reinterpret_cast<char*>(&yaw_),
-          reinterpret_cast<char*>(&other->yaw_));
+      PROTOBUF_FIELD_OFFSET(Rotation, _impl_.pitch_)
+      + sizeof(Rotation::_impl_.pitch_)
+      - PROTOBUF_FIELD_OFFSET(Rotation, _impl_.yaw_)>(
+          reinterpret_cast<char*>(&_impl_.yaw_),
+          reinterpret_cast<char*>(&other->_impl_.yaw_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Rotation::GetMetadata() const {
@@ -677,23 +695,35 @@ class Movement::_Internal {
 Movement::Movement(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.entity.v1.Movement)
 }
 Movement::Movement(const Movement& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Movement* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.y_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.entity.v1.Movement)
 }
 
-inline void Movement::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+inline void Movement::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.y_){0}
+    , decltype(_impl_.z_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 Movement::~Movement() {
@@ -710,7 +740,7 @@ inline void Movement::SharedDtor() {
 }
 
 void Movement::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void Movement::Clear() {
@@ -719,9 +749,9 @@ void Movement::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&z_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -734,7 +764,7 @@ const char* Movement::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // int32 x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -742,7 +772,7 @@ const char* Movement::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // int32 y = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -750,7 +780,7 @@ const char* Movement::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // int32 z = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -833,38 +863,34 @@ size_t Movement::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Movement::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     Movement::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Movement::GetClassData() const { return &_class_data_; }
 
-void Movement::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<Movement *>(to)->MergeFrom(
-      static_cast<const Movement &>(from));
-}
 
-
-void Movement::MergeFrom(const Movement& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Movement)
-  GOOGLE_DCHECK_NE(&from, this);
+void Movement::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Movement*>(&to_msg);
+  auto& from = static_cast<const Movement&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Movement)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_x() != 0) {
-    _internal_set_x(from._internal_x());
+    _this->_internal_set_x(from._internal_x());
   }
   if (from._internal_y() != 0) {
-    _internal_set_y(from._internal_y());
+    _this->_internal_set_y(from._internal_y());
   }
   if (from._internal_z() != 0) {
-    _internal_set_z(from._internal_z());
+    _this->_internal_set_z(from._internal_z());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void Movement::CopyFrom(const Movement& from) {
@@ -882,11 +908,11 @@ void Movement::InternalSwap(Movement* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Movement, z_)
-      + sizeof(Movement::z_)
-      - PROTOBUF_FIELD_OFFSET(Movement, x_)>(
-          reinterpret_cast<char*>(&x_),
-          reinterpret_cast<char*>(&other->x_));
+      PROTOBUF_FIELD_OFFSET(Movement, _impl_.z_)
+      + sizeof(Movement::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(Movement, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Movement::GetMetadata() const {
@@ -906,55 +932,63 @@ class Entity::_Internal {
 
 const ::minecpp::proto::player::v1::PlayerId&
 Entity::_Internal::id(const Entity* msg) {
-  return *msg->id_;
+  return *msg->_impl_.id_;
 }
 const ::minecpp::proto::entity::v1::Position&
 Entity::_Internal::position(const Entity* msg) {
-  return *msg->position_;
+  return *msg->_impl_.position_;
 }
 const ::minecpp::proto::entity::v1::Rotation&
 Entity::_Internal::rotation(const Entity* msg) {
-  return *msg->rotation_;
+  return *msg->_impl_.rotation_;
 }
 void Entity::clear_id() {
-  if (GetArenaForAllocation() == nullptr && id_ != nullptr) {
-    delete id_;
+  if (GetArenaForAllocation() == nullptr && _impl_.id_ != nullptr) {
+    delete _impl_.id_;
   }
-  id_ = nullptr;
+  _impl_.id_ = nullptr;
 }
 Entity::Entity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.entity.v1.Entity)
 }
 Entity::Entity(const Entity& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Entity* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){nullptr}
+    , decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.rotation_){nullptr}
+    , decltype(_impl_.entity_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_id()) {
-    id_ = new ::minecpp::proto::player::v1::PlayerId(*from.id_);
-  } else {
-    id_ = nullptr;
+    _this->_impl_.id_ = new ::minecpp::proto::player::v1::PlayerId(*from._impl_.id_);
   }
   if (from._internal_has_position()) {
-    position_ = new ::minecpp::proto::entity::v1::Position(*from.position_);
-  } else {
-    position_ = nullptr;
+    _this->_impl_.position_ = new ::minecpp::proto::entity::v1::Position(*from._impl_.position_);
   }
   if (from._internal_has_rotation()) {
-    rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from.rotation_);
-  } else {
-    rotation_ = nullptr;
+    _this->_impl_.rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from._impl_.rotation_);
   }
-  entity_id_ = from.entity_id_;
+  _this->_impl_.entity_id_ = from._impl_.entity_id_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.entity.v1.Entity)
 }
 
-inline void Entity::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&id_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&entity_id_) -
-    reinterpret_cast<char*>(&id_)) + sizeof(entity_id_));
+inline void Entity::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.id_){nullptr}
+    , decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.rotation_){nullptr}
+    , decltype(_impl_.entity_id_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 Entity::~Entity() {
@@ -968,13 +1002,13 @@ Entity::~Entity() {
 
 inline void Entity::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete id_;
-  if (this != internal_default_instance()) delete position_;
-  if (this != internal_default_instance()) delete rotation_;
+  if (this != internal_default_instance()) delete _impl_.id_;
+  if (this != internal_default_instance()) delete _impl_.position_;
+  if (this != internal_default_instance()) delete _impl_.rotation_;
 }
 
 void Entity::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void Entity::Clear() {
@@ -983,19 +1017,19 @@ void Entity::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && id_ != nullptr) {
-    delete id_;
+  if (GetArenaForAllocation() == nullptr && _impl_.id_ != nullptr) {
+    delete _impl_.id_;
   }
-  id_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && position_ != nullptr) {
-    delete position_;
+  _impl_.id_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
   }
-  position_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && rotation_ != nullptr) {
-    delete rotation_;
+  _impl_.position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.rotation_ != nullptr) {
+    delete _impl_.rotation_;
   }
-  rotation_ = nullptr;
-  entity_id_ = 0u;
+  _impl_.rotation_ = nullptr;
+  _impl_.entity_id_ = 0u;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1016,7 +1050,7 @@ const char* Entity::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
       // uint32 entity_id = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1113,21 +1147,21 @@ size_t Entity::ByteSizeLong() const {
   if (this->_internal_has_id()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *id_);
+        *_impl_.id_);
   }
 
   // .minecpp.proto.entity.v1.Position position = 3;
   if (this->_internal_has_position()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *position_);
+        *_impl_.position_);
   }
 
   // .minecpp.proto.entity.v1.Rotation rotation = 4;
   if (this->_internal_has_rotation()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *rotation_);
+        *_impl_.rotation_);
   }
 
   // uint32 entity_id = 2;
@@ -1135,41 +1169,40 @@ size_t Entity::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_entity_id());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Entity::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     Entity::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Entity::GetClassData() const { return &_class_data_; }
 
-void Entity::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<Entity *>(to)->MergeFrom(
-      static_cast<const Entity &>(from));
-}
 
-
-void Entity::MergeFrom(const Entity& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Entity)
-  GOOGLE_DCHECK_NE(&from, this);
+void Entity::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Entity*>(&to_msg);
+  auto& from = static_cast<const Entity&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.entity.v1.Entity)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_has_id()) {
-    _internal_mutable_id()->::minecpp::proto::player::v1::PlayerId::MergeFrom(from._internal_id());
+    _this->_internal_mutable_id()->::minecpp::proto::player::v1::PlayerId::MergeFrom(
+        from._internal_id());
   }
   if (from._internal_has_position()) {
-    _internal_mutable_position()->::minecpp::proto::entity::v1::Position::MergeFrom(from._internal_position());
+    _this->_internal_mutable_position()->::minecpp::proto::entity::v1::Position::MergeFrom(
+        from._internal_position());
   }
   if (from._internal_has_rotation()) {
-    _internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(from._internal_rotation());
+    _this->_internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(
+        from._internal_rotation());
   }
   if (from._internal_entity_id() != 0) {
-    _internal_set_entity_id(from._internal_entity_id());
+    _this->_internal_set_entity_id(from._internal_entity_id());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void Entity::CopyFrom(const Entity& from) {
@@ -1187,11 +1220,11 @@ void Entity::InternalSwap(Entity* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Entity, entity_id_)
-      + sizeof(Entity::entity_id_)
-      - PROTOBUF_FIELD_OFFSET(Entity, id_)>(
-          reinterpret_cast<char*>(&id_),
-          reinterpret_cast<char*>(&other->id_));
+      PROTOBUF_FIELD_OFFSET(Entity, _impl_.entity_id_)
+      + sizeof(Entity::_impl_.entity_id_)
+      - PROTOBUF_FIELD_OFFSET(Entity, _impl_.id_)>(
+          reinterpret_cast<char*>(&_impl_.id_),
+          reinterpret_cast<char*>(&other->_impl_.id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Entity::GetMetadata() const {

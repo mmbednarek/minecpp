@@ -1,2 +1,2 @@
 add_executable(minecpp_tool_snbt_parser lexer.cpp main.cpp parser.cpp)
-target_link_libraries(minecpp_tool_snbt_parser minecpp_nbt)
+target_link_libraries(minecpp_tool_snbt_parser minecpp_nbt Boost::program_options)

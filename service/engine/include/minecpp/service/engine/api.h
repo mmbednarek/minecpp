@@ -27,6 +27,7 @@ class Stream
    StreamWeakPtr m_stream;
    std::mutex m_mtx;
    util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
+
  public:
    template<typename TEvent>
    void send(const TEvent &event, player::Id player_id)
@@ -55,7 +56,8 @@ class Stream
       m_stream = std::move(ptr);
    }
 
-   void on_finish_write(const StreamWeakPtr& weak_stream) {
+   void on_finish_write(const StreamWeakPtr &weak_stream)
+   {
       if (m_out_queue.empty()) {
          // queue is empty, we can unlock the mutex, so next
          // thread can write directly
@@ -75,7 +77,8 @@ class Stream
 };
 
 template<typename TVisitor>
-   requires event::ClientboundVisitor<TVisitor>
+requires event::ClientboundVisitor<TVisitor>
+
 class ClientEventHandler
 {
    TVisitor &m_visitor;
@@ -87,7 +90,7 @@ class ClientEventHandler
    {
    }
 
-   void on_connected(const StreamWeakPtr& stream)
+   void on_connected(const StreamWeakPtr &stream)
    {
       try {
          spdlog::info("calling on connected");
@@ -100,12 +103,12 @@ class ClientEventHandler
       }
    };
 
-   void on_finish_write(const StreamWeakPtr& stream)
+   void on_finish_write(const StreamWeakPtr &stream)
    {
       m_stream.on_finish_write(stream);
    }
 
-   void on_finish_read(const StreamWeakPtr& stream, const proto::event::clientbound::v1::Event &info)
+   void on_finish_read(const StreamWeakPtr &stream, const proto::event::clientbound::v1::Event &info)
    {
       if (auto locked_stream = stream.lock(); locked_stream) {
          locked_stream->read();
@@ -113,7 +116,7 @@ class ClientEventHandler
       event::visit_clientbound(info, m_visitor);
    }
 
-   void on_disconnect(const StreamWeakPtr& stream) {}
+   void on_disconnect(const StreamWeakPtr &stream) {}
 
    Stream *stream()
    {

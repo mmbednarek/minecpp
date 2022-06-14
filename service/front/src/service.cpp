@@ -161,6 +161,7 @@ void Service::on_message(uuid engine_id, player::Id player_id,
    block_placement.mutable_crosshair()->set_y(msg.y);
    block_placement.mutable_crosshair()->set_z(msg.z);
    block_placement.set_inside_block(msg.inside_block);
+   block_placement.set_sequence_id(msg.sequence_id);
    m_stream->send(block_placement, player_id);
 }
 
@@ -188,6 +189,14 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
 void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PluginMessage msg)
 {
    spdlog::info("received plugin message channel={}, data={}", msg.channel, msg.data);
+}
+
+void Service::on_message(uuid engine_id, player::Id player_id,
+                         const minecpp::network::message::ChatCommand &msg)
+{
+   serverbound_v1::IssueCommand command;
+   command.set_command(msg.command);
+   m_stream->send(command, player_id);
 }
 
 const char command_list[]{

@@ -25,38 +25,38 @@ if(${USE_LOCAL_GPRC})
   find_package(Protobuf REQUIRED)
   find_package(gRPC CONFIG REQUIRED)
 else()
-  fetchcontent_declare(
+  FetchContent_Declare(
     gRPC
     GIT_REPOSITORY https://github.com/grpc/grpc
     GIT_TAG v1.46.0
   )
-  fetchcontent_makeavailable(gRPC)
+  FetchContent_MakeAvailable(gRPC)
 endif()
 
 if(${SPDLOG_FMT_EXTERNAL})
   add_definitions(-DSPDLOG_FMT_EXTERNAL=1)
 endif()
 
-fetchcontent_declare(
+FetchContent_Declare(
   yaml
   GIT_REPOSITORY https://github.com/jbeder/yaml-cpp
   GIT_TAG yaml-cpp-0.7.0
 )
-fetchcontent_makeavailable(yaml)
+FetchContent_MakeAvailable(yaml)
 
-fetchcontent_declare(
+FetchContent_Declare(
   libmb
   GIT_REPOSITORY https://github.com/mmbednarek/mb
   GIT_TAG libmb-0.0.25
 )
-fetchcontent_makeavailable(libmb)
+FetchContent_MakeAvailable(libmb)
 
-fetchcontent_declare(
+FetchContent_Declare(
   libmb_codegen
   GIT_REPOSITORY https://github.com/mmbednarek/codegen
-  GIT_TAG codegen-0.0.27
+  GIT_TAG codegen-0.0.30
 )
-fetchcontent_makeavailable(libmb_codegen)
+FetchContent_MakeAvailable(libmb_codegen)
 
 include_directories(./include)
 include_directories(./service/protos/include)

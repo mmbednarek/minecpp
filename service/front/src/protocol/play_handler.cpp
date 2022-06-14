@@ -20,6 +20,11 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
    auto op = r.read_byte();
    switch (op) {
    case 0x00: break;// confirm teleport
+   case 0x03: {
+      ChatCommand msg;
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
    case 0x04: {
       ChatMessage msg;
       deserialize(r, msg);
@@ -65,7 +70,7 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x25: {
+   case 0x27: {
       HeldItemChange msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);

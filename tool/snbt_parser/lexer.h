@@ -25,6 +25,17 @@ class StringReader : public Reader
    char next() override;
 };
 
+class IStreamReader : public Reader
+{
+   std::istream &m_stream;
+
+ public:
+   explicit IStreamReader(std::istream &stream);
+
+   bool has_next() override;
+   char next() override;
+};
+
 class Lexer
 {
    enum class State

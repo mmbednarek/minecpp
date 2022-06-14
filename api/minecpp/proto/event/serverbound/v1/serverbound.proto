@@ -56,6 +56,7 @@ message BlockPlacement {
   common.v1.Face face = 3;
   common.v1.Vector3f crosshair = 4;
   bool inside_block = 5;
+  int32 sequence_id = 6;
 }
 
 message ChangeInventoryItem {
@@ -66,4 +67,8 @@ message ChangeInventoryItem {
 
 message ChangeHeldItem {
   int32 slot = 1;
+}
+
+message IssueCommand  {
+  string command = 1;
 }

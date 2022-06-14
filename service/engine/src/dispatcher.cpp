@@ -105,9 +105,9 @@ void Dispatcher::animate_hand(player::Id player_id, mb::u32 entity_id, mb::u32 h
    m_events.send_to_all(animate);
 }
 
-void Dispatcher::acknowledge_player_digging(player::Id player_id, int sequence_id)
+void Dispatcher::acknowledge_block_change(player::Id player_id, int sequence_id)
 {
-   clientbound_v1::AcknowledgePlayerDigging digging;
+   clientbound_v1::AcknowledgeBlockChange digging;
    digging.set_sequence_id(sequence_id);
    m_events.send_to(digging, player_id);
 }

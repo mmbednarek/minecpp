@@ -157,7 +157,7 @@ struct FormattedString : public Object
       for (const auto &node : nodes) {
          node.format(builder);
       }
-      return builder.build();
+      return builder.to_string();
    }
 };
 
@@ -184,7 +184,7 @@ struct RuntimeError : public FormattedString
       for (const auto &node : nodes) {
          node.format(builder);
       }
-      return builder.build();
+      return builder.to_string();
    }
 };
 

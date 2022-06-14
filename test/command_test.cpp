@@ -22,7 +22,12 @@ class EchoCommand : public minecpp::command::Command
       for (auto &obj : input.arguments) {
          ctx.out().write(obj);
       }
-       return {};
+      return {};
+   }
+
+   minecpp::command::ObjectType return_type(minecpp::command::RuntimeContext &ctx) const override
+   {
+      return minecpp::command::ObjectType::Null;
    }
 };
 

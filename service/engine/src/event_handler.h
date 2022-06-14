@@ -45,6 +45,7 @@ class EventHandler
    void handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id);
    void handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event, player::Id player_id);
    void handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, player::Id player_id);
+   void handle_issue_command(const serverbound_v1::IssueCommand &event, player::Id player_id);
 
  private:
    void send_inventory_data(const player::Player &player);

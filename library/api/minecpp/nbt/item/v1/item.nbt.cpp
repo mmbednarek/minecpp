@@ -31,6 +31,8 @@ Item Item::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -41,7 +43,7 @@ Item Item::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Item();
+      return {};
    }
    return Item::deserialize_no_header(r);
 }

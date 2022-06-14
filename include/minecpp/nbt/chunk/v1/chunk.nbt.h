@@ -6,22 +6,11 @@
 #include <mb/result.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/writer.h>
+#include <optional>
 #include <string>
 #include <vector>
 
 namespace minecpp::nbt::chunk::v1 {
-
-#ifndef MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
-#define MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
-
-class __nbt_idl_offset
-{
- public:
-   mb::size offset{};
-   mb::size size{};
-   int id{};
-};
-#endif//MINECPP_NBT_CHUNK_V1_CHUNK_H_OFFSET_CLASS
 
 class ArmorItem
 {

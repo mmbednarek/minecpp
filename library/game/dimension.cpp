@@ -94,6 +94,24 @@ void write_dimension_codec(nbt::Writer &w)
       w.end_compound();
    }
    w.end_compound();
+   w.begin_compound("minecraft:chat_type");
+   w.write_string("type", "minecraft:chat_type");
+   w.begin_list("value", nbt::TagId::Compound, 1);
+   {
+      w.write_string("name", "minecraft:system");
+      w.write_int("id", 0);
+
+      w.begin_compound("element");
+
+      w.begin_compound("narration");
+      w.write_string("priority", "system");
+      w.end_compound();
+
+      w.end_compound();
+
+      w.end_compound();
+   }
+   w.end_compound();
    w.end_compound();
 }
 
@@ -102,6 +120,102 @@ void write_dimension_type(nbt::Writer &w)
    w.begin_compound("");
    OverworldProps.to_nbt(w);
    w.end_compound();
+}
+
+nbt::repository::v1::DimensionTypeDescription get_overworld_description()
+{
+   nbt::repository::v1::DimensionTypeDescription out{};
+   out.piglin_safe                     = false;
+   out.natural                         = true;
+   out.ambient_light                   = 0.0f;
+   out.infiniburn                      = "#minecraft:infiniburn_overworld";
+   out.respawn_anchor_works            = false;
+   out.has_skylight                    = true;
+   out.bed_works                       = true;
+   out.has_raids                       = true;
+   out.min_y                           = 0;
+   out.logical_height                  = 256;
+   out.coordinate_scale                = 1.0;
+   out.ultrawarm                       = false;
+   out.has_ceiling                     = false;
+   out.monster_spawn_block_light_limit = 10;
+   out.monster_spawn_light_level       = 5;
+   return out;
+}
+
+nbt::repository::v1::BiomeDescription get_biome_plains_description()
+{
+   nbt::repository::v1::BiomeDescription biomes{};
+   biomes.precipitation           = "none";
+   biomes.depth                   = 1.5;
+   biomes.temperature             = 1.5;
+   biomes.scale                   = 1.0;
+   biomes.downfall                = 1.0;
+   biomes.category                = "plains";
+   biomes.effects.sky_color       = 12833240;
+   biomes.effects.water_fog_color = 16054521;
+   biomes.effects.fog_color       = 16054521;
+   biomes.effects.water_color     = 6326951;
+   return biomes;
+}
+
+nbt::repository::v1::BiomeDescription get_biome_moutains_description()
+{
+   nbt::repository::v1::BiomeDescription biomes{};
+   biomes.precipitation           = "none";
+   biomes.depth                   = 1.0;
+   biomes.temperature             = -0.5;
+   biomes.scale                   = 1.0;
+   biomes.downfall                = 1.0;
+   biomes.category                = "icy";
+   biomes.effects.sky_color       = 12833240;
+   biomes.effects.water_fog_color = 16054521;
+   biomes.effects.fog_color       = 16054521;
+   biomes.effects.water_color     = 6326951;
+   return biomes;
+}
+
+nbt::repository::v1::ChatTypeDescription get_system_chat_description()
+{
+   nbt::repository::v1::ChatTypeDescription chat{};
+   chat.narration.priority = "system";
+   return chat;
+}
+
+nbt::repository::v1::Registry get_registry()
+{
+   nbt::repository::v1::Registry registry;
+   registry.dimension_types.type = "minecraft:dimension_type";
+
+   nbt::repository::v1::DimensionTypeEntry overworld{};
+   overworld.name    = "minecraft:overworld";
+   overworld.id      = 0;
+   overworld.element = get_overworld_description();
+   registry.dimension_types.value.push_back(overworld);
+
+   registry.biomes.type = "minecraft:worldgen/biome";
+
+   nbt::repository::v1::BiomeEntry plains;
+   plains.name    = "minecraft:plains";
+   plains.id      = 0;
+   plains.element = get_biome_plains_description();
+   registry.biomes.value.push_back(plains);
+
+   nbt::repository::v1::BiomeEntry mountains;
+   plains.name    = "minecraft:mountains";
+   plains.id      = 1;
+   plains.element = get_biome_moutains_description();
+   registry.biomes.value.push_back(mountains);
+
+   registry.chat_types.type = "minecraft:chat_type";
+
+   nbt::repository::v1::ChatTypeEntry system;
+   system.name    = "minecraft:mountains";
+   system.id      = 1;
+   system.element = get_system_chat_description();
+   registry.chat_types.value.push_back(system);
+
+   return registry;
 }
 
 }// namespace minecpp::game

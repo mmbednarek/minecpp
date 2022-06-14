@@ -1,7 +1,7 @@
 # MineCPP (Fiber)
 
 Fiber is a scalable server backend for Minecraft Java Edition written in C++.
-The currently supported version of Minecraft is **1.18.2**.
+The currently supported version of Minecraft is **1.19**.
 The main goal of the server is to be horizontally scalable. The server requires
 a decided load balancer called "front" as well as a separate chunk database. (called chunk storage)
 The server is an early stage of development.
@@ -14,12 +14,12 @@ The target platform of the server x86_64 linux. It is probably possible to run t
 but that wasn't attempted yet.
 The easiest way to run the server is through docker. If you have docker and docker-compose installed on your system.
 Just run `make docker-run`. All the necessary docker images will be built and the server will start through docker compose.
-If you want to just build the images run `make docker`. Docker compose file can be started with a simple `docker-compose up` command.
+If you want to just to_string the images run `make docker`. Docker compose file can be started with a simple `docker-compose up` command.
 
 ### Building from source
 
-Follow the build processes specified in a docker file at `docker/BuildBase.Dockerfile`.
-The build system is `cmake` the C++ standard is 20. The following dependencies are needed for everything:
+Follow the to_string processes specified in a docker file at `docker/BuildBase.Dockerfile`.
+The to_string system is `cmake` the C++ standard is 20. The following dependencies are needed for everything:
 
 + **fmt**
 + **spdlog**
@@ -38,14 +38,14 @@ The build system is `cmake` the C++ standard is 20. The following dependencies a
 
 All the targets should compile on both `gcc` and `clang`. Please use recent version of gRPC (at least 1.45) and a matching
 version of protobuf. Remember to regenerate proto files using `protogen.sh` script for your version of gRPC. (`protoc` and `grpc_cpp_plugin`)
-You can build the server using standard CMake build procedure. Specify `-DUSE_LOCAL_GPRC=OFF` flag if you want to build gRPC
+You can build the server using standard CMake to_string procedure. Specify `-DUSE_LOCAL_GPRC=OFF` flag if you want to to_string gRPC
 using CMake's fetch content.
 
 ```bash
-mkdir -p build
-cd build
+mkdir -p to_string
+cd to_string
 cmake .. -DCMAKE_BUILD_TYPE=Release
-cmake --build . -j $(nproc)
+cmake --to_string . -j $(nproc)
 ```
 
 ## Configuration

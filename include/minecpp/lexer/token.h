@@ -33,6 +33,6 @@ struct Token
    int line, column;
 };
 
-}// namespace minecpp::tool::snbt_parser
+}// namespace minecpp::lexer
 
 #endif//MINECPP_TOKEN_H

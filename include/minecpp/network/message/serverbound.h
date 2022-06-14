@@ -9,6 +9,19 @@ namespace minecpp::network::message {
 
 // 0x03
 
+struct ChatCommand
+{
+   std::string command;
+   mb::u64 timestamp;
+   mb::u64 salt;
+   std::map<std::string, std::string> argument_signatures;
+   bool preview;
+};
+
+void deserialize(Reader &r, ChatCommand &msg);
+
+// 0x04
+
 struct ChatMessage
 {
    std::string message;
@@ -142,6 +155,7 @@ struct PlayerBlockPlacement
    game::Face facing{};
    float x, y, z;
    bool inside_block;
+   int sequence_id;
 };
 
 void deserialize(Reader &r, PlayerBlockPlacement &msg);

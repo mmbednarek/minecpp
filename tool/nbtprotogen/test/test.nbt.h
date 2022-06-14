@@ -6,22 +6,11 @@
 #include <mb/result.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/writer.h>
+#include <optional>
 #include <string>
 #include <vector>
 
 namespace proto::nbt::test {
-
-#ifndef PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
-#define PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
-
-class __nbt_idl_offset
-{
- public:
-   mb::size offset{};
-   mb::size size{};
-   int id{};
-};
-#endif//PROTO_NBT_TEST_TEST_H_OFFSET_CLASS
 
 class Foo
 {
@@ -42,12 +31,17 @@ class Foo
             this->value = std::forward<T>(value);
             return;
          }
+         if (name == "opt_str") {
+            this->opt_str = std::forward<T>(value);
+            return;
+         }
          return;
       }
    }
 
  public:
    std::string value{};
+   std::optional<std::string> opt_str{};
    std::map<std::string, std::int32_t> stuff{};
    Foo() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;

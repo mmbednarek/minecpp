@@ -21,32 +21,16 @@ mb::result<std::vector<Ast::Node>> Parser::parse()
 
       switch (tkn.tt) {
       case TokenType::Syntax: {
-         auto res = parse_syntax_info(Ast::Location(tkn));
-         if (!res.ok()) {
-            return res.err();
-         }
-         out.emplace_back(res.unwrap());
+         out.emplace_back(MB_TRY(parse_syntax_info(Ast::Location(tkn))));
       } break;
       case TokenType::Package: {
-         auto res = parse_package_info(Ast::Location(tkn));
-         if (!res.ok()) {
-            return res.err();
-         }
-         out.emplace_back(res.unwrap());
+         out.emplace_back(MB_TRY(parse_package_info(Ast::Location(tkn))));
       } break;
       case TokenType::Message: {
-         auto res = parse_message(Ast::Location(tkn));
-         if (!res.ok()) {
-            return res.err();
-         }
-         out.emplace_back(res.unwrap());
+         out.emplace_back(MB_TRY(parse_message(Ast::Location(tkn))));
       } break;
       case TokenType::Import: {
-         auto res = parse_import(Ast::Location(tkn));
-         if (!res.ok()) {
-            return res.err();
-         }
-         out.emplace_back(res.unwrap());
+         out.emplace_back(MB_TRY(parse_import(Ast::Location(tkn))));
       } break;
       default: return mb::error(fmt::format("[{}:{}] unexpected token \"{}\"", tkn.line, tkn.col, tkn.value));
       }
@@ -61,20 +45,12 @@ mb::result<Ast::SyntaxInfo> Parser::parse_syntax_info(Ast::Location loc)
    Ast::SyntaxInfo out;
    out.loc = loc;
 
-   if (auto res = reader.expect(TokenType::EqualSign); !res.ok()) {
-      return res.err();
-   }
+   MB_TRY(reader.expect(TokenType::EqualSign));
 
-   auto res = reader.expect(TokenType::String);
-   if (!res.ok()) {
-      return res.err();
-   }
-   auto tkn    = res.unwrap();
-   out.version = tkn.value;
+   auto syntax = MB_TRY(reader.expect(TokenType::String));
+   out.version = syntax.value;
 
-   if (auto res = reader.expect(TokenType::SemiCol); !res.ok()) {
-      return res.err();
-   }
+   MB_TRY(reader.expect(TokenType::SemiCol));
 
    return out;
 }
@@ -115,9 +91,7 @@ mb::result<Ast::Message> Parser::parse_message(Ast::Location loc)
    auto res = MB_TRY(reader.expect(TokenType::Identifier));
    out.name = res.value;
 
-   if (auto res = reader.expect(TokenType::LeftBrace); !res.ok()) {
-      return res.err();
-   }
+   MB_TRY(reader.expect(TokenType::LeftBrace));
 
    for (;;) {
       auto next = reader.next();
@@ -138,6 +112,10 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc)
    out.loc = loc;
 
    auto tkn = MB_TRY(reader.expect(TokenType::Identifier));
+   if (tkn.value == "optional") {
+      out.optional = true;
+      tkn          = MB_TRY(reader.expect(TokenType::Identifier));
+   }
    while (tkn.value == "repeated") {
       ++out.repeated;
       tkn = MB_TRY(reader.expect(TokenType::Identifier));
@@ -145,21 +123,19 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc)
    out.type = tkn.value;
 
    if (tkn.value == "map") {
-      if (auto res = reader.expect(TokenType::LeftAngle); !res.ok()) {
-         return res.err();
-      }
+      MB_TRY(reader.expect(TokenType::LeftAngle));
+
       auto string_token = MB_TRY(reader.expect(TokenType::Identifier));
       if (string_token.value != "string") {
          return mb::error("only string is supported as a map key");
       }
-      if (auto res = reader.expect(TokenType::Comma); !res.ok()) {
-         return res.err();
-      }
+
+      MB_TRY(reader.expect(TokenType::Comma));
+
       auto subtype_token = MB_TRY(reader.expect(TokenType::Identifier));
       out.subtype        = subtype_token.value;
-      if (auto res = reader.expect(TokenType::RightAngle); !res.ok()) {
-         return res.err();
-      }
+
+      MB_TRY(reader.expect(TokenType::RightAngle));
    }
 
    tkn = reader.next();
@@ -174,9 +150,7 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc)
    tkn      = MB_TRY(reader.expect(TokenType::Identifier));
    out.name = tkn.value;
 
-   if (auto res = reader.expect(TokenType::EqualSign); !res.ok()) {
-      return res.err();
-   }
+   MB_TRY(reader.expect(TokenType::EqualSign));
 
    tkn     = MB_TRY(reader.expect(TokenType::Integer));
    out.pos = std::stoi(tkn.value);
@@ -186,9 +160,8 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc)
    if (tkn.tt == TokenType::LeftSquare) {
       tkn = MB_TRY(reader.expect(TokenType::Identifier));
       if (tkn.value == "label" || tkn.value == "json_name") {
-         if (auto res = reader.expect(TokenType::EqualSign); !res.ok()) {
-            return res.err();
-         }
+         MB_TRY(reader.expect(TokenType::EqualSign));
+
          tkn       = MB_TRY(reader.expect(TokenType::String));
          out.label = tkn.value.substr(1, tkn.value.size() - 2);
       }
@@ -203,9 +176,7 @@ mb::result<Ast::Attribute> Parser::parse_attribute(Ast::Location loc)
       reader.back();
    }
 
-   if (auto res = reader.expect(TokenType::SemiCol); !res.ok()) {
-      return res.err();
-   }
+   MB_TRY(reader.expect(TokenType::SemiCol));
    return out;
 }
 

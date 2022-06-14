@@ -6,6 +6,10 @@ void Foo::serialize_no_header(minecpp::nbt::Writer &w) const
 {
    w.write_header(minecpp::nbt::TagId::String, "value");
    w.write_string_content(value);
+   if (opt_str.has_value()) {
+      w.write_header(minecpp::nbt::TagId::String, "opt_str");
+      w.write_string_content(*opt_str);
+   }
    w.write_header(minecpp::nbt::TagId::Compound, "stuff");
    std::for_each(stuff.begin(), stuff.end(), [&w](const auto &pair) {
       w.write_header(minecpp::nbt::TagId::Int, pair.first);
@@ -41,6 +45,7 @@ Foo Foo::deserialize_no_header(minecpp::nbt::Reader &r)
             return;
          }
          break;
+      default: break;
       }
       r.skip_payload(tagid);
    });
@@ -52,7 +57,7 @@ Foo Foo::deserialize(std::istream &in)
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Foo();
+      return {};
    }
    return Foo::deserialize_no_header(r);
 }
@@ -115,6 +120,7 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r)
                }
                break;
             }
+            default: break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -122,6 +128,7 @@ Bar Bar::deserialize_no_header(minecpp::nbt::Reader &r)
          }
          return;
       }
+      default: break;
       }
       r.skip_payload(tagid);
    });
@@ -133,7 +140,7 @@ Bar Bar::deserialize(std::istream &in)
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Bar();
+      return {};
    }
    return Bar::deserialize_no_header(r);
 }

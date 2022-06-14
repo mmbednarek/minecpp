@@ -11,8 +11,10 @@ mb::result<nbt::CompoundContent> Parser::read_compound()
 {
    minecpp::nbt::CompoundContent result;
    MB_TRY(assert_not_end());
-   if (m_reader.token_type() == TokenType::RightBrace)
+   if (m_reader.token_type() == TokenType::RightBrace) {
+      m_reader.skip_next();
       return result;
+   }
 
    for (;;) {
       auto label = MB_TRY(expect_identifier());

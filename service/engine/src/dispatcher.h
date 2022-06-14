@@ -36,7 +36,7 @@ class Dispatcher : public minecpp::game::Notifier
                      const entity::Rotation &rotation) override;
    void remove_player(player::Id player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
-   void acknowledge_player_digging(player::Id player_id, int sequence_id) override;
+   void acknowledge_block_change(player::Id player_id, int sequence_id) override;
    void animate_hand(player::Id player_id, mb::u32 entity_id, mb::u32 hand) override;
    void unload_chunk(player::Id player_id, const game::ChunkPosition &chunk_position) override;
 
