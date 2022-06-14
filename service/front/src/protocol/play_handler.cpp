@@ -21,68 +21,73 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
    switch (op) {
    case 0x00: break;// confirm teleport
    case 0x03: {
+      ChatCommand msg;
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
+   case 0x04: {
       ChatMessage msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x05: {
+   case 0x07: {
       ClientSettings msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x08: {
+   case 0x0a: {
       ClickWindow msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x0a: {
+   case 0x0c: {
       PluginMessage msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x0f: {
+   case 0x11: {
       KeepAliveClient msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x11: {
+   case 0x13: {
       PlayerPosition msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x12: {
+   case 0x14: {
       PlayerPositionRotation msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x13: {
+   case 0x15: {
       PlayerRotation msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x1a: {
+   case 0x1c: {
       PlayerDigging msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x25: {
+   case 0x27: {
       HeldItemChange msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x2c: {
+   case 0x2e: {
       AnimateHandClient msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x2e: {
+   case 0x30: {
       PlayerBlockPlacement msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
    default:
       spdlog::info("unknown op {}, packet data: {}", (int) op, r.get_hex_data());
-      send(conn, minecpp::network::message::Chat{
+      send(conn, minecpp::network::message::SystemChat{
                          .message = minecpp::network::format_system_info(
                                  minecpp::util::format("unimplemented operation code {}", (int) op)),
                          .type = minecpp::network::ChatType::System,

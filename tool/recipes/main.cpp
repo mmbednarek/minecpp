@@ -1,7 +1,7 @@
 #include <boost/program_options.hpp>
 #include <fstream>
-#include <minecpp/repository/item.h>
 #include <minecpp/network/message/io.h>
+#include <minecpp/repository/item.h>
 
 namespace options = boost::program_options;
 
@@ -60,11 +60,11 @@ auto main(int argc, char *argv[]) -> int
       auto recipe = reader.read_recipe();
 
       auto out_stack = recipe.outcome();
-      auto res = minecpp::repository::Item::the().get_by_id(out_stack.id);
+      auto res       = minecpp::repository::Item::the().get_by_id(out_stack.id);
       if (!res.ok()) {
          return 1;
       }
-      const auto& outcome = res.unwrap();
+      const auto &outcome = res.unwrap();
 
       std::cout << "--------------------\n";
       std::cout << "outcome item = " << outcome.tag() << "\n";

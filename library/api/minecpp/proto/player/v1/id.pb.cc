@@ -25,9 +25,10 @@ namespace proto {
 namespace player {
 namespace v1 {
 PROTOBUF_CONSTEXPR PlayerId::PlayerId(
-    ::_pbi::ConstantInitialized)
-  : lower_(uint64_t{0u})
-  , upper_(uint64_t{0u}){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.lower_)*/uint64_t{0u}
+  , /*decltype(_impl_.upper_)*/uint64_t{0u}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PlayerIdDefaultTypeInternal {
   PROTOBUF_CONSTEXPR PlayerIdDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -52,8 +53,8 @@ const uint32_t TableStruct_minecpp_2fproto_2fplayer_2fv1_2fid_2eproto::offsets[]
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerId, lower_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerId, upper_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerId, _impl_.lower_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::v1::PlayerId, _impl_.upper_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::player::v1::PlayerId)},
@@ -97,23 +98,33 @@ class PlayerId::_Internal {
 PlayerId::PlayerId(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.v1.PlayerId)
 }
 PlayerId::PlayerId(const PlayerId& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  PlayerId* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.lower_){}
+    , decltype(_impl_.upper_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&lower_, &from.lower_,
-    static_cast<size_t>(reinterpret_cast<char*>(&upper_) -
-    reinterpret_cast<char*>(&lower_)) + sizeof(upper_));
+  ::memcpy(&_impl_.lower_, &from._impl_.lower_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.upper_) -
+    reinterpret_cast<char*>(&_impl_.lower_)) + sizeof(_impl_.upper_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.v1.PlayerId)
 }
 
-inline void PlayerId::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&lower_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&upper_) -
-    reinterpret_cast<char*>(&lower_)) + sizeof(upper_));
+inline void PlayerId::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.lower_){uint64_t{0u}}
+    , decltype(_impl_.upper_){uint64_t{0u}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 PlayerId::~PlayerId() {
@@ -130,7 +141,7 @@ inline void PlayerId::SharedDtor() {
 }
 
 void PlayerId::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void PlayerId::Clear() {
@@ -139,9 +150,9 @@ void PlayerId::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&lower_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&upper_) -
-      reinterpret_cast<char*>(&lower_)) + sizeof(upper_));
+  ::memset(&_impl_.lower_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.upper_) -
+      reinterpret_cast<char*>(&_impl_.lower_)) + sizeof(_impl_.upper_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -154,7 +165,7 @@ const char* PlayerId::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // uint64 lower = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          lower_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _impl_.lower_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -162,7 +173,7 @@ const char* PlayerId::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
       // uint64 upper = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          upper_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _impl_.upper_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -234,35 +245,31 @@ size_t PlayerId::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_upper());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PlayerId::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     PlayerId::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PlayerId::GetClassData() const { return &_class_data_; }
 
-void PlayerId::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<PlayerId *>(to)->MergeFrom(
-      static_cast<const PlayerId &>(from));
-}
 
-
-void PlayerId::MergeFrom(const PlayerId& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.v1.PlayerId)
-  GOOGLE_DCHECK_NE(&from, this);
+void PlayerId::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<PlayerId*>(&to_msg);
+  auto& from = static_cast<const PlayerId&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.v1.PlayerId)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_lower() != 0) {
-    _internal_set_lower(from._internal_lower());
+    _this->_internal_set_lower(from._internal_lower());
   }
   if (from._internal_upper() != 0) {
-    _internal_set_upper(from._internal_upper());
+    _this->_internal_set_upper(from._internal_upper());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void PlayerId::CopyFrom(const PlayerId& from) {
@@ -280,11 +287,11 @@ void PlayerId::InternalSwap(PlayerId* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(PlayerId, upper_)
-      + sizeof(PlayerId::upper_)
-      - PROTOBUF_FIELD_OFFSET(PlayerId, lower_)>(
-          reinterpret_cast<char*>(&lower_),
-          reinterpret_cast<char*>(&other->lower_));
+      PROTOBUF_FIELD_OFFSET(PlayerId, _impl_.upper_)
+      + sizeof(PlayerId::_impl_.upper_)
+      - PROTOBUF_FIELD_OFFSET(PlayerId, _impl_.lower_)>(
+          reinterpret_cast<char*>(&_impl_.lower_),
+          reinterpret_cast<char*>(&other->_impl_.lower_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PlayerId::GetMetadata() const {

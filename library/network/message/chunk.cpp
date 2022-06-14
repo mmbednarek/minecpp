@@ -107,14 +107,14 @@ Writer get_chunk_data(const Chunk &chunk)
       chunk_data_writer.write_big_endian<short>(sec.ref_count());
 
       // write palette
-      chunk_data_writer.write_byte(sec.bits());
-      chunk_data_writer.write_varint(sec.palette_size());
+      chunk_data_writer.write_byte(static_cast<uint8_t>(sec.bits()));
+      chunk_data_writer.write_varint(static_cast<uint32_t>(sec.palette_size()));
       for (auto item : sec.palette()) {
-         chunk_data_writer.write_varint(item);
+         chunk_data_writer.write_varint(static_cast<uint32_t>(item));
       }
 
       // write data
-      chunk_data_writer.write_big_endian_array(sec.data().data(), sec.data_size());
+      chunk_data_writer.write_big_endian_array(sec.data().data(), static_cast<size_t>(sec.data_size()));
 
       // write biomes
       chunk_data_writer.write_byte(6);// ignore palette
@@ -146,7 +146,7 @@ Writer get_chunk_data(const Chunk &chunk)
 
       // write biomes
       chunk_data_writer.write_byte(0);  // ignore palette
-      chunk_data_writer.write_varint(0);// default biome
+      chunk_data_writer.write_varint(1);// default biome
 
       chunk_data_writer.write_big_endian_array<uint64_t>(nullptr, 0);
    }

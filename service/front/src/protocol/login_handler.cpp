@@ -40,9 +40,10 @@ void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
    conn->set_compression_threshold(compression_threshold);
 
    minecpp::network::message::Writer w;
-   w.write_byte(2);
+   w.write_byte(0x02);
    w.write_uuid(response.id);
    w.write_string(response.user_name);
+   w.write_varint(0);
    conn->send(conn, w);
 
    service.init_player(conn, response.id, response.user_name);

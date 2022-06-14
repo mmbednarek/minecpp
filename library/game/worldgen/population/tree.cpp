@@ -8,7 +8,7 @@ int RandomTree::block_at(int x, int y, int z) const
    const static auto air_id = repository::encode_block_by_tag("minecraft:air");
    const static auto wood_id =
            repository::encode_block_by_tag("minecraft:oak_wood", std::make_pair("axis", "y"));
-   const static auto leaves_id = repository::encode_block_by_tag("minecraft:oak_leaves");
+   const static auto leaves_id = repository::encode_block_by_tag("minecraft:oak_leaves", std::make_pair("waterlogged", "false"));
 
    //   return wood_id;
 

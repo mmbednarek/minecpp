@@ -1,7 +1,7 @@
 #ifndef MINECPP_READER_H
 #define MINECPP_READER_H
-#include "token.h"
 #include "error.h"
+#include "token.h"
 #include <optional>
 #include <vector>
 

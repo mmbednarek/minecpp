@@ -24,7 +24,7 @@ bool StandardStream::write(Object::Ptr obj)
 
    format::Builder builder;
    builder.text(obj->to_string());
-   m_notifier.send_chat(chat::MessageType::SystemMessage, builder.build());
+   m_notifier.send_chat(chat::MessageType::SystemMessage, builder.to_string());
    return true;
 }
 

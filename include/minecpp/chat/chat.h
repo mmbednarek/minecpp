@@ -1,5 +1,7 @@
 #ifndef MINECPP_CHAT_H
 #define MINECPP_CHAT_H
+#include <minecpp/format/format.h>
+#include <ostream>
 #include <string>
 #include <string_view>
 
@@ -9,6 +11,15 @@ enum class MessageType : int
 {
    PlayerMessage = 0,
    SystemMessage = 1,
+};
+
+struct ChatMessage
+{
+   std::string translate;
+   std::vector<format::Node> with;
+
+   void write(std::ostream &stream) const;
+   std::string to_string() const;
 };
 
 std::string format_system_info(std::string_view message);

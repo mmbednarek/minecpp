@@ -12,6 +12,7 @@ struct Config
    std::string tags_path;
    std::string chunk_storage_host;
    std::string front_id;
+   std::string registry_path;
 };
 
 Config get_config();

@@ -24,7 +24,7 @@ Memories Memories::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Memories();
+      return {};
    }
    return Memories::deserialize_no_header(r);
 }
@@ -51,6 +51,8 @@ Brain Brain::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -61,7 +63,7 @@ Brain Brain::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Brain();
+      return {};
    }
    return Brain::deserialize_no_header(r);
 }
@@ -100,6 +102,8 @@ Abilities Abilities::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Float:
          res.__xx_put(name, r.read_float32());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -110,7 +114,7 @@ Abilities Abilities::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Abilities();
+      return {};
    }
    return Abilities::deserialize_no_header(r);
 }
@@ -148,6 +152,8 @@ RecipeBook RecipeBook::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Byte:
          res.__xx_put(name, r.read_byte());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -158,7 +164,7 @@ RecipeBook RecipeBook::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return RecipeBook();
+      return {};
    }
    return RecipeBook::deserialize_no_header(r);
 }
@@ -192,6 +198,8 @@ Version Version::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -202,7 +210,7 @@ Version Version::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Version();
+      return {};
    }
    return Version::deserialize_no_header(r);
 }
@@ -238,6 +246,8 @@ BiomeSource BiomeSource::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -248,7 +258,7 @@ BiomeSource BiomeSource::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return BiomeSource();
+      return {};
    }
    return BiomeSource::deserialize_no_header(r);
 }
@@ -287,6 +297,8 @@ Generator Generator::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -297,7 +309,7 @@ Generator Generator::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Generator();
+      return {};
    }
    return Generator::deserialize_no_header(r);
 }
@@ -329,6 +341,8 @@ DimentionData DimentionData::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -339,7 +353,7 @@ DimentionData DimentionData::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return DimentionData();
+      return {};
    }
    return DimentionData::deserialize_no_header(r);
 }
@@ -378,6 +392,8 @@ Dimentions Dimentions::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -388,7 +404,7 @@ Dimentions Dimentions::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Dimentions();
+      return {};
    }
    return Dimentions::deserialize_no_header(r);
 }
@@ -427,6 +443,8 @@ WorldGen WorldGen::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -437,7 +455,7 @@ WorldGen WorldGen::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return WorldGen();
+      return {};
    }
    return WorldGen::deserialize_no_header(r);
 }
@@ -461,6 +479,8 @@ DataPacks DataPacks::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::LongArray:
          res.__xx_put(name, r.read_long_vec());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -471,7 +491,7 @@ DataPacks DataPacks::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return DataPacks();
+      return {};
    }
    return DataPacks::deserialize_no_header(r);
 }
@@ -497,6 +517,8 @@ DragonFight DragonFight::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Byte:
          res.__xx_put(name, r.read_byte());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -507,7 +529,7 @@ DragonFight DragonFight::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return DragonFight();
+      return {};
    }
    return DragonFight::deserialize_no_header(r);
 }
@@ -534,7 +556,7 @@ CustomBossEvents CustomBossEvents::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return CustomBossEvents();
+      return {};
    }
    return CustomBossEvents::deserialize_no_header(r);
 }
@@ -649,6 +671,8 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -659,7 +683,7 @@ Player Player::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Player();
+      return {};
    }
    return Player::deserialize_no_header(r);
 }
@@ -747,6 +771,8 @@ GameRules GameRules::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::String:
          res.__xx_put(name, r.read_str());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -757,7 +783,7 @@ GameRules GameRules::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return GameRules();
+      return {};
    }
    return GameRules::deserialize_no_header(r);
 }
@@ -899,6 +925,8 @@ LevelData LevelData::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -909,7 +937,7 @@ LevelData LevelData::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return LevelData();
+      return {};
    }
    return LevelData::deserialize_no_header(r);
 }
@@ -936,6 +964,8 @@ Level Level::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -946,7 +976,7 @@ Level Level::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Level();
+      return {};
    }
    return Level::deserialize_no_header(r);
 }

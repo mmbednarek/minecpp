@@ -105,15 +105,10 @@ void Dispatcher::animate_hand(player::Id player_id, mb::u32 entity_id, mb::u32 h
    m_events.send_to_all(animate);
 }
 
-void Dispatcher::acknowledge_player_digging(player::Id player_id, game::BlockPosition &pos,
-                                            game::BlockState block_state, game::PlayerDiggingState state,
-                                            bool successful)
+void Dispatcher::acknowledge_block_change(player::Id player_id, int sequence_id)
 {
-   clientbound_v1::AcknowledgePlayerDigging digging;
-   *digging.mutable_position()    = pos.to_proto();
-   *digging.mutable_block_state() = game::block_state_to_proto(block_state);
-   digging.set_digging_state(static_cast<proto::common::v1::PlayerDiggingState>(state));
-   digging.set_successful(successful);
+   clientbound_v1::AcknowledgeBlockChange digging;
+   digging.set_sequence_id(sequence_id);
    m_events.send_to(digging, player_id);
 }
 

@@ -4,15 +4,33 @@
 
 namespace minecpp::network::message {
 
+void deserialize(Reader &r, ChatCommand &msg) {
+   // 1.19 OK
+   msg.command = r.read_string();
+   msg.timestamp = r.read_long();
+   msg.salt = r.read_long();
+
+   auto map_size = r.read_varint();
+   std::generate_n(std::inserter(msg.argument_signatures, msg.argument_signatures.begin()), static_cast<std::size_t>(map_size), [&r]() {
+      return std::make_pair(r.read_string(), r.read_string());
+   });
+
+   msg.preview = r.read_byte();
+}
+
 void deserialize(Reader &r, ChatMessage &msg)
 {
-   //  1.18.2 OK
+   // 1.19 OK
    msg.message = r.read_string();
+   msg.timestamp = r.read_long();
+   msg.salt = r.read_long();
+   msg.salt_data = r.read_string();
+   msg.preview = r.read_byte();
 }
 
 void deserialize(Reader &r, ClientSettings &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.lang                  = r.read_string();
    msg.view                  = r.read_byte();
    msg.visibility            = static_cast<ChatVisibility>(r.read_byte());
@@ -25,13 +43,13 @@ void deserialize(Reader &r, ClientSettings &msg)
 
 void deserialize(Reader &r, KeepAliveClient &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.time = r.read_big_endian<uint64_t>();
 }
 
 void deserialize(Reader &r, PlayerPosition &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.x         = r.read_double();
    msg.y         = r.read_double();
    msg.z         = r.read_double();
@@ -40,7 +58,7 @@ void deserialize(Reader &r, PlayerPosition &msg)
 
 void deserialize(Reader &r, PlayerPositionRotation &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.x         = r.read_double();
    msg.y         = r.read_double();
    msg.z         = r.read_double();
@@ -51,7 +69,7 @@ void deserialize(Reader &r, PlayerPositionRotation &msg)
 
 void deserialize(Reader &r, PlayerRotation &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.yaw       = r.read_float();
    msg.pitch     = r.read_float();
    msg.on_ground = r.read_byte();
@@ -59,21 +77,22 @@ void deserialize(Reader &r, PlayerRotation &msg)
 
 void deserialize(Reader &r, PlayerDigging &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.action   = static_cast<game::PlayerDiggingState>(r.read_varint());
    msg.position = r.read_big_endian<uint64_t>();
    msg.facing   = static_cast<game::Face>(r.read_byte());
+   msg.sequence_id = r.read_varint();
 }
 
 void deserialize(Reader &r, AnimateHandClient &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.hand = static_cast<PlayerHand>(r.read_varint());
 }
 
 void deserialize(Reader &r, PlayerBlockPlacement &msg)
 {
-   // 1.18.2 OK
+   // 1.19 OK
    msg.hand         = static_cast<PlayerHand>(r.read_varint());
    msg.position     = r.read_long();
    msg.facing       = static_cast<game::Face>(r.read_varint());
@@ -81,6 +100,7 @@ void deserialize(Reader &r, PlayerBlockPlacement &msg)
    msg.y            = r.read_float();
    msg.z            = r.read_float();
    msg.inside_block = r.read_byte();
+   msg.sequence_id  = r.read_varint();
 }
 
 void deserialize(Reader &r, ClickWindow &msg)

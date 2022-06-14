@@ -29,6 +29,8 @@ BlockEntry BlockEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -39,7 +41,7 @@ BlockEntry BlockEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return BlockEntry();
+      return {};
    }
    return BlockEntry::deserialize_no_header(r);
 }
@@ -71,6 +73,8 @@ ItemEntry ItemEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -81,7 +85,7 @@ ItemEntry ItemEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return ItemEntry();
+      return {};
    }
    return ItemEntry::deserialize_no_header(r);
 }
@@ -113,6 +117,8 @@ EnumStateEntry EnumStateEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -123,7 +129,7 @@ EnumStateEntry EnumStateEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return EnumStateEntry();
+      return {};
    }
    return EnumStateEntry::deserialize_no_header(r);
 }
@@ -155,6 +161,8 @@ IntStateEntry IntStateEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -165,7 +173,7 @@ IntStateEntry IntStateEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return IntStateEntry();
+      return {};
    }
    return IntStateEntry::deserialize_no_header(r);
 }
@@ -197,6 +205,8 @@ BoolStateEntry BoolStateEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
             return;
          }
          break;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -207,7 +217,7 @@ BoolStateEntry BoolStateEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return BoolStateEntry();
+      return {};
    }
    return BoolStateEntry::deserialize_no_header(r);
 }
@@ -298,6 +308,8 @@ Repository Repository::deserialize_no_header(minecpp::nbt::Reader &r) {
                }
                break;
             }
+            default: 
+               break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -305,6 +317,8 @@ Repository Repository::deserialize_no_header(minecpp::nbt::Reader &r) {
          }
          return;
       }
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -315,7 +329,7 @@ Repository Repository::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return Repository();
+      return {};
    }
    return Repository::deserialize_no_header(r);
 }

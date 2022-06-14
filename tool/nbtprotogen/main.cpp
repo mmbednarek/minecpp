@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
    auto parser     = Syntax::Parser(tkn_reader);
    auto nodes_res  = parser.parse();
    if (!nodes_res.ok()) {
-      std::cerr << nodes_res.msg() << '\n';
+      std::cerr << nodes_res.err()->msg() << '\n';
       return 2;
    }
    auto nodes     = nodes_res.unwrap();

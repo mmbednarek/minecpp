@@ -59,12 +59,13 @@ class Service
 
    void on_player_disconnect(uuid engine_id, player::Id player_id);
 
+   void on_message(uuid engine_id, player::Id player_id, const minecpp::network::message::ChatCommand &msg);
+   void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ChatMessage msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ClientSettings msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerPosition msg);
    void on_message(uuid engine_id, player::Id player_id,
                    minecpp::network::message::PlayerPositionRotation msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerRotation msg);
-   void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ChatMessage msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerDigging msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::KeepAliveClient msg);
    void on_message(uuid engine_id, player::Id player_id, minecpp::network::message::AnimateHandClient msg);

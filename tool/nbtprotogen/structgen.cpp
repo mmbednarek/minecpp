@@ -1,16 +1,12 @@
 #include "structgen.h"
-#include "minecpp/util/string.h"
 #include <mb/codegen/class.h>
 #include <mb/codegen/lambda.h>
+#include <minecpp/util/string.h>
 #include <sstream>
 
 namespace minecpp::tool::nbt_idl {
 
-constexpr auto g_offset_class_name     = "__nbt_idl_offset";
-constexpr auto g_offset_attribute      = "__xx_offsets";
-constexpr auto g_get_offset_id         = "__xx_get_id";
-constexpr auto g_put_method            = "__xx_put";
-constexpr auto g_offset_class_constant = "NBT_IDL_OFFSET_CLASS";
+constexpr auto g_put_method = "__xx_put";
 
 Generator::Generator(Semantics::Structure &structure, const std::string &module_name,
                      const std::string &header_path) :
@@ -19,6 +15,7 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
 {
    using namespace mb::codegen;
    m_component.header_include("iostream");
+   m_component.header_include("optional");
    m_component.header_include("map");
    m_component.header_include("mb/result.h");
    m_component.header_include("mb/int.h");
@@ -36,12 +33,6 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       m_component.header_include(path + ".h");
    }
 
-   class_spec offset_class(g_offset_class_name, fmt::format("{}_OFFSET_CLASS", m_header_name));
-   offset_class.add_public("mb::size", "offset");
-   offset_class.add_public("mb::size", "size");
-   offset_class.add_public("int", "id");
-   m_component << offset_class;
-
    std::for_each(structure.messages.begin(), structure.messages.end(), [this](const Semantics::Message &msg) {
       class_spec message_class(msg.name);
       std::for_each(msg.attribs.begin(), msg.attribs.end(),
@@ -51,7 +42,9 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
 
       std::map<std::string, std::vector<Semantics::Attribute>> type_names{};
       for (auto &attrib : msg.attribs) {
-         auto name = attrib.type.to_cpp_type();
+         auto type       = attrib.type;
+         type.m_optional = false;
+         auto name       = type.to_cpp_type();
          type_names[name].push_back(attrib);
       }
 
@@ -60,20 +53,35 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       message_class.add_public(default_constructor());
 
       // void serialize_no_header()
-      message_class.add_public(method("void", "serialize_no_header",
-                                      {
-                                              {"minecpp::nbt::Writer", "&w"}
+      message_class.add_public(method(
+              "void", "serialize_no_header",
+              {
+                      {"minecpp::nbt::Writer", "&w"}
       },
-                                      true, [&msg](statement::collector &col) {
-                                         std::for_each(msg.attribs.begin(), msg.attribs.end(),
-                                                       [&col](const Semantics::Attribute &attr) {
-                                                          col << call("w.write_header",
-                                                                      raw(attr.type.nbt_tagid()),
-                                                                      raw("\"{}\"", attr.label));
-                                                          put_serialize_logic(col, attr.type, raw(attr.name));
-                                                       });
-                                         col << call("w.end_compound");
-                                      }));
+              true, [&msg](statement::collector &col) {
+                 std::for_each(msg.attribs.begin(), msg.attribs.end(),
+                               [&col](const Semantics::Attribute &attr) {
+                                  auto value = raw(attr.name);
+
+                                  if (attr.type.m_optional) {
+                                     col << if_statement(method_call(value, "has_value"),
+                                                         [&attr, &value](statement::collector &col) {
+                                                            col << call("w.write_header",
+                                                                        raw(attr.type.nbt_tagid()),
+                                                                        raw("\"{}\"", attr.label));
+                                                            Semantics::Type nonopt{attr.type};
+                                                            nonopt.m_optional = false;
+                                                            put_serialize_logic(col, nonopt, deref{value});
+                                                         });
+                                     return;
+                                  }
+
+                                  col << call("w.write_header", raw(attr.type.nbt_tagid()),
+                                              raw("\"{}\"", attr.label));
+                                  put_serialize_logic(col, attr.type, raw(attr.name));
+                               });
+                 col << call("w.end_compound");
+              }));
 
       // void serialize()
       message_class.add_public(method("void", "serialize",
@@ -108,20 +116,18 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
               }));
 
       // static Msg deserialize
-      message_class.add_public(static_method(msg.name, "deserialize",
-                                             {
-                                                     {"std::istream", "&in"}
+      message_class.add_public(static_method(
+              msg.name, "deserialize",
+              {
+                      {"std::istream", "&in"}
       },
-                                             [&msg](statement::collector &col) {
-                                                col << call("minecpp::nbt::Reader r", raw("in"));
-                                                col << assign("auto peek", call("r.peek_tag"));
-                                                col << if_statement(
-                                                        raw("peek.id != minecpp::nbt::TagId::Compound"),
-                                                        [&msg](statement::collector &col) {
-                                                           col << raw("return {}()", msg.name);
-                                                        });
-                                                col << raw("return {}::deserialize_no_header(r)", msg.name);
-                                             }));
+              [&msg](statement::collector &col) {
+                 col << call("minecpp::nbt::Reader r", raw("in"));
+                 col << assign("auto peek", call("r.peek_tag"));
+                 col << if_statement(raw("peek.id != minecpp::nbt::TagId::Compound"),
+                                     [](statement::collector &col) { col << raw("return {}"); });
+                 col << raw("return {}::deserialize_no_header(r)", msg.name);
+              }));
 
       // public:
 
@@ -137,19 +143,7 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
                        pair.add(offset);
                        offset_map.add(pair);
                     });
-      // static std::unordered_map<std::string, __nbt_idl_offset> __xx_offsets;
-      //      message_class.add_private(static_attribute("std::unordered_map<std::string, __nbt_idl_offset>", g_offset_attribute, offset_map));
 
-      // void __x_get_id()
-      //      message_class.add_private(method("int", g_get_offset_id, {{"const std::string", "&name"}}, true, [](statement::collector &col) {
-      //         col << assign("auto it", call("__xx_offsets.find", raw("name")));
-      //         col << if_statement(raw("it == __xx_offsets.end()"), [](statement::collector &col) {
-      //            col << raw("return -1");
-      //         });
-      //         col << raw("return it->second.id");
-      //      }));
-
-      // void __xx_put()
       message_class.add_private(method_template(
               "void", g_put_method,
               {
@@ -314,6 +308,7 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
                  return;
               }
            });
+   tag_switch.add_default_noscope([](auto &col) { col << raw("break"); });
    col << tag_switch;
    col << call("r.skip_payload", raw("tagid"));
 }
@@ -369,6 +364,7 @@ void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
                                          });
                  }
               });
+      list_type_switch.add_default_noscope([](auto &col) { col << raw("break"); });
       col << list_type_switch;
       col << for_statement(raw("mb::size i = 0"), raw("i < list_info{}.size", depth), raw("++i"),
                            [depth](statement::collector &col) {

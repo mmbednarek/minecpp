@@ -1,5 +1,6 @@
 #pragma once
 #include "server.h"
+#include <minecpp/nbt/repository/v1/codec.nbt.h>
 #include <minecpp/player/id.h>
 #include <minecpp/proto/event/clientbound/v1/clientbound.pb.h>
 #include <minecpp/service/engine/api.h>
@@ -14,9 +15,10 @@ class EventHandler
 {
    Server &m_server;
    engine::Stream *m_stream = nullptr;
+   nbt::repository::v1::Registry &m_registry;
 
  public:
-   explicit EventHandler(Server &server);
+   explicit EventHandler(Server &server, nbt::repository::v1::Registry &registry);
 
    constexpr void set_stream(engine::Stream *stream)
    {
@@ -35,8 +37,8 @@ class EventHandler
                             const std::vector<player::Id> &player_ids);
    void handle_animate_hand(const clientbound_v1::AnimateHand &msg,
                             const std::vector<player::Id> &player_ids);
-   void handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg,
-                                          const std::vector<player::Id> &player_ids);
+   void handle_acknowledge_block_change(const clientbound_v1::AcknowledgeBlockChange &msg,
+                                        const std::vector<player::Id> &player_ids);
    void handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
                             const std::vector<player::Id> &player_ids);
    void handle_transfer_player(const clientbound_v1::TransferPlayer &msg,

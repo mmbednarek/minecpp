@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <minecpp/nbt/repository/v1/codec.nbt.h>
 #include <minecpp/nbt/writer.h>
 #include <minecpp/proto/common/v1/common.pb.h>
 
@@ -24,6 +25,12 @@ class DimensionProperties
 
    void to_nbt(nbt::Writer &w) const;
 };
+
+nbt::repository::v1::DimensionTypeDescription get_overworld_description();
+nbt::repository::v1::BiomeDescription get_biome_plains_description();
+nbt::repository::v1::BiomeDescription get_biome_moutains_description();
+nbt::repository::v1::ChatTypeDescription get_system_chat_description();
+nbt::repository::v1::Registry get_registry();
 
 const DimensionProperties OverworldProps{};
 const DimensionProperties OverworldCavesProps{

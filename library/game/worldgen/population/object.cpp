@@ -17,7 +17,7 @@ void ObjectRepository::register_objects()
    int air_id     = repository::encode_block_by_tag("minecraft:air");
    int stone_id   = repository::encode_block_by_tag("minecraft:stone");
    int wood_id    = repository::encode_block_by_tag("minecraft:oak_wood", std::make_pair("axis", "y"));
-   int leaves_id  = repository::encode_block_by_tag("minecraft:oak_leaves");
+   int leaves_id  = repository::encode_block_by_tag("minecraft:oak_leaves", std::make_pair("waterlogged", "false"));
    int pumpkin_id = repository::encode_block_by_tag("minecraft:pumpkin");
    int tall_grass_upper_id =
            repository::encode_block_by_tag("minecraft:tall_grass", std::make_pair("half", "upper"));

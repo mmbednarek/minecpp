@@ -2,44 +2,52 @@
 
 namespace minecpp::format {
 
-Builder::Builder() { stream << "{\"extra\":["; }
-
 // TODO: Escape characters
 
 Builder &Builder::text(std::string_view s)
 {
-   if (!first) {
-      stream << ",";
+   if (m_first) {
+      m_node.text = s;
+      return *this;
    }
-   stream << R"({"color":"white","text":")" << s << "\"}";
-   first = false;
+
+   m_first = false;
+   m_node.children.push_back(Node{.text = std::string(s)});
+   m_first = false;
    return *this;
 }
 
 Builder &Builder::text(Color c, std::string_view s)
 {
-   if (!first) {
-      stream << ",";
-   }
-   stream << R"({"color":")" << color_to_str(c) << R"(","text":")" << s << "\"}";
-   first = false;
+   m_node.children.push_back(Node{
+           .text  = std::string(s),
+           .color = c,
+   });
+   m_first = false;
    return *this;
 }
 
 Builder &Builder::bold(Color c, std::string_view s)
 {
-   if (!first) {
-      stream << ",";
-   }
-   stream << R"({"color":")" << color_to_str(c) << R"(","bold":true,"text":")" << s << "\"}";
-   first = false;
+   m_node.children.push_back(Node{
+           .text  = std::string(s),
+           .color = c,
+           .bold  = true,
+   });
+   m_first = false;
    return *this;
 }
 
-std::string Builder::build()
+std::string Builder::to_string()
 {
-   stream << R"(],"text":""})";
-   return stream.str();
+   std::stringstream ss;
+   m_node.write(ss);
+   return ss.str();
+}
+
+Node Builder::node()
+{
+   return m_node;
 }
 
 std::string_view color_to_str(Color c)
@@ -66,4 +74,42 @@ std::string_view color_to_str(Color c)
    return "";
 }
 
+void Action::write(std::ostream &stream) const
+{
+   stream << R"({"action": ")" << action << R"(","value": ")" << value << "\"}";
+}
+
+void Node::write(std::ostream &stream) const
+{
+   stream << "{";
+   bool next_item = false;
+   stream << R"("text": ")" << text << R"(")";
+   if (color)
+      stream << R"(, "color": ")" << color_to_str(*color) << R"(")";
+   if (bold)
+      stream << R"(, "bold": ")" << *bold << R"(")";
+   if (click_event) {
+      stream << R"(, "clickEvent": )";
+      click_event->write(stream);
+   }
+   if (hover_event) {
+      stream << R"(, "hoverEvent": )";
+      hover_event->write(stream);
+   }
+
+   if (not children.empty()) {
+      stream << R"(, "extra": [)";
+      bool first = true;
+      for (const auto &child : children) {
+         if (first) {
+            first = false;
+         } else {
+            stream << ", ";
+         };
+         child.write(stream);
+      }
+      stream << "]";
+   }
+   stream << "}";
+}
 }// namespace minecpp::format

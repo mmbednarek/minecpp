@@ -3,14 +3,16 @@
 #include <minecpp/game/dimension.h>
 #include <minecpp/nbt/writer.h>
 #include <minecpp/player/player.h>
+#include <minecpp/repository/repository.h>
 #include <minecpp/util/time.h>
 #include <minecpp/util/uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::front {
 
-EventHandler::EventHandler(Server &server) :
-    m_server(server)
+EventHandler::EventHandler(Server &server, nbt::repository::v1::Registry &registry) :
+    m_server(server),
+    m_registry(registry)
 {
 }
 
@@ -82,10 +84,9 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
 
 void EventHandler::handle_chat(const clientbound_v1::Chat &pos, const std::vector<player::Id> &player_ids)
 {
-   minecpp::network::message::Chat chat{
+   minecpp::network::message::SystemChat chat{
            .message = pos.message(),
            .type    = minecpp::network::ChatType::System,
-           .user_id = boost::uuids::uuid(),
    };
    send_message(chat, player_ids);
 }
@@ -124,14 +125,11 @@ void EventHandler::handle_animate_hand(const clientbound_v1::AnimateHand &msg,
    send_message_excluding(animate, player_id);
 }
 
-void EventHandler::handle_acknowledge_player_digging(const clientbound_v1::AcknowledgePlayerDigging &msg,
-                                                     const std::vector<player::Id> &player_ids)
+void EventHandler::handle_acknowledge_block_change(const clientbound_v1::AcknowledgeBlockChange &msg,
+                                                   const std::vector<player::Id> &player_ids)
 {
-   minecpp::network::message::AcknowledgePlayerDigging acknowledge{
-           .position   = game::BlockPosition::from_proto(msg.position()).as_long(),
-           .block      = game::block_state_from_proto(msg.block_state()),
-           .state      = static_cast<game::PlayerDiggingState>(msg.digging_state()),
-           .successful = msg.successful(),
+   minecpp::network::message::AcknowledgeBlockChanges acknowledge{
+           .sequence_id = msg.sequence_id(),
    };
    send_message(acknowledge, player_ids);
 }
@@ -185,9 +183,9 @@ void EventHandler::handle_update_player_abilities(const clientbound_v1::UpdatePl
    flags |= msg.creative_mode() ? PlayerAbilityFlag::CreativeMode : 0;
 
    minecpp::network::message::PlayerAbilities player_abilities{
-           .flags      = flags,
-           .fly_speed  = msg.fly_speed(),
-           .walk_speed = msg.walk_speed(),
+           .flags         = flags,
+           .fly_speed     = msg.fly_speed(),
+           .field_of_view = msg.walk_speed(),
    };
 
    send_message(player_abilities, player_ids);
@@ -223,8 +221,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       }
 
       std::stringstream dimension_codec;
-      minecpp::nbt::Writer dimension_codec_writer(dimension_codec);
-      minecpp::game::write_dimension_codec(dimension_codec_writer);
+      m_registry.serialize(dimension_codec, "");
 
       std::stringstream current_dimension;
       minecpp::nbt::Writer current_dimension_writer(current_dimension);
@@ -233,10 +230,10 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       send(conn, JoinGame{
                          .player_id = static_cast<mb::u32>(msg.player().entity_id()),
                          .game_mode = static_cast<mb::u8>(msg.gameplay().mode()),
-                         .available_dimensions{"overworld", "the_nether", "the_end"},
+                         .available_dimensions{"overworld", "the_nether", "the_end", "overworld_caves"},
                          .dimension_codec    = dimension_codec.str(),
                          .dimension_type     = current_dimension.str(),
-                         .world_name         = "some_world",
+                         .world_name         = "overworld",
                          .seed               = msg.gameplay().seed(),
                          .max_players        = static_cast<mb::u8>(msg.gameplay().max_players()),
                          .view_distance      = static_cast<mb::u32>(msg.gameplay().view_distance()),
@@ -254,9 +251,9 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       auto abilities = minecpp::player::Abilities::from_proto(msg.player().abilities());
 
       send(conn, PlayerAbilities{
-                         .flags      = static_cast<mb::u8>(abilities.flags()),
-                         .fly_speed  = abilities.fly_speed,
-                         .walk_speed = abilities.walk_speed,
+                         .flags         = static_cast<mb::u8>(abilities.flags()),
+                         .fly_speed     = abilities.fly_speed,
+                         .field_of_view = abilities.walk_speed,
                  });
 
       // TODO: Send recipes and tags

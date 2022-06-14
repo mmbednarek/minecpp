@@ -23,6 +23,8 @@ ChunkPosition ChunkPosition::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Int:
          res.__xx_put(name, r.read_int());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -33,7 +35,7 @@ ChunkPosition ChunkPosition::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return ChunkPosition();
+      return {};
    }
    return ChunkPosition::deserialize_no_header(r);
 }
@@ -61,6 +63,8 @@ BlockPosition BlockPosition::deserialize_no_header(minecpp::nbt::Reader &r) {
       case minecpp::nbt::TagId::Int:
          res.__xx_put(name, r.read_int());
          return;
+      default: 
+         break;
       }
       r.skip_payload(tagid);
    });
@@ -71,7 +75,7 @@ BlockPosition BlockPosition::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
-      return BlockPosition();
+      return {};
    }
    return BlockPosition::deserialize_no_header(r);
 }

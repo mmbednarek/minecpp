@@ -26,7 +26,7 @@ namespace service {
 namespace health {
 namespace v1 {
 PROTOBUF_CONSTEXPR Request::Request(
-    ::_pbi::ConstantInitialized){}
+    ::_pbi::ConstantInitialized) {}
 struct RequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -37,9 +37,10 @@ struct RequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestDefaultTypeInternal _Request_default_instance_;
 PROTOBUF_CONSTEXPR ServiceStatus::ServiceStatus(
-    ::_pbi::ConstantInitialized)
-  : service_name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , service_version_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.service_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.service_version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ServiceStatusDefaultTypeInternal {
   PROTOBUF_CONSTEXPR ServiceStatusDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -71,8 +72,8 @@ const uint32_t TableStruct_minecpp_2fproto_2fservice_2fhealth_2fv1_2fhealth_2epr
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::health::v1::ServiceStatus, service_name_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::health::v1::ServiceStatus, service_version_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::health::v1::ServiceStatus, _impl_.service_name_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::health::v1::ServiceStatus, _impl_.service_version_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::service::health::v1::Request)},
@@ -128,6 +129,7 @@ Request::Request(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 }
 Request::Request(const Request& from)
   : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  Request* const _this = this; (void)_this;
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.health.v1.Request)
 }
@@ -163,40 +165,54 @@ class ServiceStatus::_Internal {
 ServiceStatus::ServiceStatus(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.health.v1.ServiceStatus)
 }
 ServiceStatus::ServiceStatus(const ServiceStatus& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ServiceStatus* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.service_name_){}
+    , decltype(_impl_.service_version_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  service_name_.InitDefault();
+  _impl_.service_name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    service_name_.Set("", GetArenaForAllocation());
+    _impl_.service_name_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_service_name().empty()) {
-    service_name_.Set(from._internal_service_name(), 
-      GetArenaForAllocation());
+    _this->_impl_.service_name_.Set(from._internal_service_name(), 
+      _this->GetArenaForAllocation());
   }
-  service_version_.InitDefault();
+  _impl_.service_version_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    service_version_.Set("", GetArenaForAllocation());
+    _impl_.service_version_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_service_version().empty()) {
-    service_version_.Set(from._internal_service_version(), 
-      GetArenaForAllocation());
+    _this->_impl_.service_version_.Set(from._internal_service_version(), 
+      _this->GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.health.v1.ServiceStatus)
 }
 
-inline void ServiceStatus::SharedCtor() {
-service_name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  service_name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-service_version_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  service_version_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void ServiceStatus::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.service_name_){}
+    , decltype(_impl_.service_version_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.service_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.service_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.service_version_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.service_version_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 ServiceStatus::~ServiceStatus() {
@@ -210,12 +226,12 @@ ServiceStatus::~ServiceStatus() {
 
 inline void ServiceStatus::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  service_name_.Destroy();
-  service_version_.Destroy();
+  _impl_.service_name_.Destroy();
+  _impl_.service_version_.Destroy();
 }
 
 void ServiceStatus::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void ServiceStatus::Clear() {
@@ -224,8 +240,8 @@ void ServiceStatus::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  service_name_.ClearToEmpty();
-  service_version_.ClearToEmpty();
+  _impl_.service_name_.ClearToEmpty();
+  _impl_.service_version_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -334,35 +350,31 @@ size_t ServiceStatus::ByteSizeLong() const {
         this->_internal_service_version());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ServiceStatus::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     ServiceStatus::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ServiceStatus::GetClassData() const { return &_class_data_; }
 
-void ServiceStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<ServiceStatus *>(to)->MergeFrom(
-      static_cast<const ServiceStatus &>(from));
-}
 
-
-void ServiceStatus::MergeFrom(const ServiceStatus& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.health.v1.ServiceStatus)
-  GOOGLE_DCHECK_NE(&from, this);
+void ServiceStatus::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ServiceStatus*>(&to_msg);
+  auto& from = static_cast<const ServiceStatus&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.health.v1.ServiceStatus)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_service_name().empty()) {
-    _internal_set_service_name(from._internal_service_name());
+    _this->_internal_set_service_name(from._internal_service_name());
   }
   if (!from._internal_service_version().empty()) {
-    _internal_set_service_version(from._internal_service_version());
+    _this->_internal_set_service_version(from._internal_service_version());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void ServiceStatus::CopyFrom(const ServiceStatus& from) {
@@ -382,12 +394,12 @@ void ServiceStatus::InternalSwap(ServiceStatus* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &service_name_, lhs_arena,
-      &other->service_name_, rhs_arena
+      &_impl_.service_name_, lhs_arena,
+      &other->_impl_.service_name_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &service_version_, lhs_arena,
-      &other->service_version_, rhs_arena
+      &_impl_.service_version_, lhs_arena,
+      &other->_impl_.service_version_, rhs_arena
   );
 }
 

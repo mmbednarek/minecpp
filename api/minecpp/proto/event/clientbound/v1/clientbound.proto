@@ -83,11 +83,8 @@ message AnimateHand {
   uint32 hand = 3;
 }
 
-message AcknowledgePlayerDigging {
-  common.v1.BlockPosition position = 1;
-  common.v1.BlockState block_state = 2;
-  common.v1.PlayerDiggingState digging_state = 3;
-  bool successful = 4;
+message AcknowledgeBlockChange {
+  int32 sequence_id = 1;
 }
 
 message LoadTerrain {

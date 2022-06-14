@@ -9,7 +9,8 @@ Config get_config()
    Config response;
    response.front_id =
            mb::getenv("FRONT_ID").unwrap(boost::uuids::to_string(boost::uuids::random_generator()()));
-   response.port = std::stoi(mb::getenv("PORT").unwrap("25565"));
+   response.port          = std::stoi(mb::getenv("PORT").unwrap("25565"));
+   response.registry_path = mb::getenv("REGISTRY_FILE").unwrap("registry.bin");
 
    auto cfg_filename = mb::getenv("CONFIG_FILE").unwrap("config-local.yaml");
 

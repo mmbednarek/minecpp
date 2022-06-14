@@ -39,8 +39,8 @@ class Writer
    void write_bytes(std::string_view name, const std::vector<uint8_t> &values);
    void write_ints(std::string_view name, const std::vector<int> &values);
    void write_longs(std::string_view name, const std::vector<int64_t> &values);
-   void begin_list(std::string_view name, nbt::TagId tag, int num_elements);
-   void begin_list_no_header(nbt::TagId tag, int num_elements);
+   void begin_list(std::string_view name, nbt::TagId tag, std::size_t num_elements);
+   void begin_list_no_header(nbt::TagId tag, std::size_t num_elements);
 
  private:
    void put_byte(uint8_t b);

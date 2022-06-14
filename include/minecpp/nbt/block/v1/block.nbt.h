@@ -6,22 +6,11 @@
 #include <mb/result.h>
 #include <minecpp/nbt/reader.h>
 #include <minecpp/nbt/writer.h>
+#include <optional>
 #include <string>
 #include <vector>
 
 namespace minecpp::nbt::block::v1 {
-
-#ifndef MINECPP_NBT_BLOCK_V1_BLOCK_H_OFFSET_CLASS
-#define MINECPP_NBT_BLOCK_V1_BLOCK_H_OFFSET_CLASS
-
-class __nbt_idl_offset
-{
- public:
-   mb::size offset{};
-   mb::size size{};
-   int id{};
-};
-#endif//MINECPP_NBT_BLOCK_V1_BLOCK_H_OFFSET_CLASS
 
 class EnumState
 {

@@ -26,9 +26,10 @@ namespace service {
 namespace chunk_storage {
 namespace v1 {
 PROTOBUF_CONSTEXPR LoadChunkRequest::LoadChunkRequest(
-    ::_pbi::ConstantInitialized)
-  : x_(0)
-  , z_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct LoadChunkRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR LoadChunkRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -39,11 +40,12 @@ struct LoadChunkRequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LoadChunkRequestDefaultTypeInternal _LoadChunkRequest_default_instance_;
 PROTOBUF_CONSTEXPR SetBlockRequest::SetBlockRequest(
-    ::_pbi::ConstantInitialized)
-  : x_(0)
-  , y_(0)
-  , z_(0)
-  , state_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_.state_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct SetBlockRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SetBlockRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -54,9 +56,10 @@ struct SetBlockRequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetBlockRequestDefaultTypeInternal _SetBlockRequest_default_instance_;
 PROTOBUF_CONSTEXPR Coord::Coord(
-    ::_pbi::ConstantInitialized)
-  : x_(0)
-  , z_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct CoordDefaultTypeInternal {
   PROTOBUF_CONSTEXPR CoordDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -67,10 +70,11 @@ struct CoordDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CoordDefaultTypeInternal _Coord_default_instance_;
 PROTOBUF_CONSTEXPR AddReferencesRequest::AddReferencesRequest(
-    ::_pbi::ConstantInitialized)
-  : coords_()
-  , engine_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , player_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.coords_)*/{}
+  , /*decltype(_impl_.engine_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.player_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct AddReferencesRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR AddReferencesRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -81,10 +85,10 @@ struct AddReferencesRequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddReferencesRequestDefaultTypeInternal _AddReferencesRequest_default_instance_;
 PROTOBUF_CONSTEXPR AddReferencesResponse::AddReferencesResponse(
-    ::_pbi::ConstantInitialized)
-  : target_engine_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , status_(0)
-{}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.target_engine_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.status_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct AddReferencesResponseDefaultTypeInternal {
   PROTOBUF_CONSTEXPR AddReferencesResponseDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -95,9 +99,10 @@ struct AddReferencesResponseDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AddReferencesResponseDefaultTypeInternal _AddReferencesResponse_default_instance_;
 PROTOBUF_CONSTEXPR RemoveReferencesRequest::RemoveReferencesRequest(
-    ::_pbi::ConstantInitialized)
-  : coords_()
-  , player_id_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.coords_)*/{}
+  , /*decltype(_impl_.player_id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct RemoveReferencesRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RemoveReferencesRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -108,9 +113,10 @@ struct RemoveReferencesRequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RemoveReferencesRequestDefaultTypeInternal _RemoveReferencesRequest_default_instance_;
 PROTOBUF_CONSTEXPR HeightAtRequest::HeightAtRequest(
-    ::_pbi::ConstantInitialized)
-  : x_(0)
-  , z_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/0
+  , /*decltype(_impl_.z_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct HeightAtRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR HeightAtRequestDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -121,8 +127,9 @@ struct HeightAtRequestDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeightAtRequestDefaultTypeInternal _HeightAtRequest_default_instance_;
 PROTOBUF_CONSTEXPR HeightAtResponse::HeightAtResponse(
-    ::_pbi::ConstantInitialized)
-  : height_(0){}
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.height_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct HeightAtResponseDefaultTypeInternal {
   PROTOBUF_CONSTEXPR HeightAtResponseDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -133,7 +140,7 @@ struct HeightAtResponseDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeightAtResponseDefaultTypeInternal _HeightAtResponse_default_instance_;
 PROTOBUF_CONSTEXPR EmptyResponse::EmptyResponse(
-    ::_pbi::ConstantInitialized){}
+    ::_pbi::ConstantInitialized) {}
 struct EmptyResponseDefaultTypeInternal {
   PROTOBUF_CONSTEXPR EmptyResponseDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -159,66 +166,66 @@ const uint32_t TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fch
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, y_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, z_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, state_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, _impl_.z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetBlockRequest, _impl_.state_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::Coord, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::Coord, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::Coord, z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::Coord, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::Coord, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, engine_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, player_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, coords_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, _impl_.engine_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, _impl_.player_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesRequest, _impl_.coords_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, status_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, target_engine_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, _impl_.status_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::AddReferencesResponse, _impl_.target_engine_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, player_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, coords_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, _impl_.player_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest, _impl_.coords_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtRequest, _impl_.z_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtResponse, height_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtResponse, _impl_.height_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::EmptyResponse, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -339,23 +346,33 @@ class LoadChunkRequest::_Internal {
 LoadChunkRequest::LoadChunkRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
 }
 LoadChunkRequest::LoadChunkRequest(const LoadChunkRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  LoadChunkRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
 }
 
-inline void LoadChunkRequest::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+inline void LoadChunkRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.z_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 LoadChunkRequest::~LoadChunkRequest() {
@@ -372,7 +389,7 @@ inline void LoadChunkRequest::SharedDtor() {
 }
 
 void LoadChunkRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void LoadChunkRequest::Clear() {
@@ -381,9 +398,9 @@ void LoadChunkRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&z_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -396,7 +413,7 @@ const char* LoadChunkRequest::_InternalParse(const char* ptr, ::_pbi::ParseConte
       // int32 x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -404,7 +421,7 @@ const char* LoadChunkRequest::_InternalParse(const char* ptr, ::_pbi::ParseConte
       // int32 z = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -476,35 +493,31 @@ size_t LoadChunkRequest::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData LoadChunkRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     LoadChunkRequest::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*LoadChunkRequest::GetClassData() const { return &_class_data_; }
 
-void LoadChunkRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<LoadChunkRequest *>(to)->MergeFrom(
-      static_cast<const LoadChunkRequest &>(from));
-}
 
-
-void LoadChunkRequest::MergeFrom(const LoadChunkRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
-  GOOGLE_DCHECK_NE(&from, this);
+void LoadChunkRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<LoadChunkRequest*>(&to_msg);
+  auto& from = static_cast<const LoadChunkRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.LoadChunkRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_x() != 0) {
-    _internal_set_x(from._internal_x());
+    _this->_internal_set_x(from._internal_x());
   }
   if (from._internal_z() != 0) {
-    _internal_set_z(from._internal_z());
+    _this->_internal_set_z(from._internal_z());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void LoadChunkRequest::CopyFrom(const LoadChunkRequest& from) {
@@ -522,11 +535,11 @@ void LoadChunkRequest::InternalSwap(LoadChunkRequest* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(LoadChunkRequest, z_)
-      + sizeof(LoadChunkRequest::z_)
-      - PROTOBUF_FIELD_OFFSET(LoadChunkRequest, x_)>(
-          reinterpret_cast<char*>(&x_),
-          reinterpret_cast<char*>(&other->x_));
+      PROTOBUF_FIELD_OFFSET(LoadChunkRequest, _impl_.z_)
+      + sizeof(LoadChunkRequest::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(LoadChunkRequest, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata LoadChunkRequest::GetMetadata() const {
@@ -544,23 +557,37 @@ class SetBlockRequest::_Internal {
 SetBlockRequest::SetBlockRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
 }
 SetBlockRequest::SetBlockRequest(const SetBlockRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  SetBlockRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.y_){}
+    , decltype(_impl_.z_){}
+    , decltype(_impl_.state_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&state_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(state_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.state_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.state_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
 }
 
-inline void SetBlockRequest::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&state_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(state_));
+inline void SetBlockRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.y_){0}
+    , decltype(_impl_.z_){0}
+    , decltype(_impl_.state_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 SetBlockRequest::~SetBlockRequest() {
@@ -577,7 +604,7 @@ inline void SetBlockRequest::SharedDtor() {
 }
 
 void SetBlockRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void SetBlockRequest::Clear() {
@@ -586,9 +613,9 @@ void SetBlockRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&state_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(state_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.state_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.state_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -601,7 +628,7 @@ const char* SetBlockRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
       // int32 x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -609,7 +636,7 @@ const char* SetBlockRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
       // int32 y = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -617,7 +644,7 @@ const char* SetBlockRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
       // int32 z = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -625,7 +652,7 @@ const char* SetBlockRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
       // int32 state = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          state_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.state_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -719,41 +746,37 @@ size_t SetBlockRequest::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_state());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetBlockRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     SetBlockRequest::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetBlockRequest::GetClassData() const { return &_class_data_; }
 
-void SetBlockRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<SetBlockRequest *>(to)->MergeFrom(
-      static_cast<const SetBlockRequest &>(from));
-}
 
-
-void SetBlockRequest::MergeFrom(const SetBlockRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
-  GOOGLE_DCHECK_NE(&from, this);
+void SetBlockRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<SetBlockRequest*>(&to_msg);
+  auto& from = static_cast<const SetBlockRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.SetBlockRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_x() != 0) {
-    _internal_set_x(from._internal_x());
+    _this->_internal_set_x(from._internal_x());
   }
   if (from._internal_y() != 0) {
-    _internal_set_y(from._internal_y());
+    _this->_internal_set_y(from._internal_y());
   }
   if (from._internal_z() != 0) {
-    _internal_set_z(from._internal_z());
+    _this->_internal_set_z(from._internal_z());
   }
   if (from._internal_state() != 0) {
-    _internal_set_state(from._internal_state());
+    _this->_internal_set_state(from._internal_state());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void SetBlockRequest::CopyFrom(const SetBlockRequest& from) {
@@ -771,11 +794,11 @@ void SetBlockRequest::InternalSwap(SetBlockRequest* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SetBlockRequest, state_)
-      + sizeof(SetBlockRequest::state_)
-      - PROTOBUF_FIELD_OFFSET(SetBlockRequest, x_)>(
-          reinterpret_cast<char*>(&x_),
-          reinterpret_cast<char*>(&other->x_));
+      PROTOBUF_FIELD_OFFSET(SetBlockRequest, _impl_.state_)
+      + sizeof(SetBlockRequest::_impl_.state_)
+      - PROTOBUF_FIELD_OFFSET(SetBlockRequest, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SetBlockRequest::GetMetadata() const {
@@ -793,23 +816,33 @@ class Coord::_Internal {
 Coord::Coord(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.Coord)
 }
 Coord::Coord(const Coord& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Coord* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.Coord)
 }
 
-inline void Coord::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+inline void Coord::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.z_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 Coord::~Coord() {
@@ -826,7 +859,7 @@ inline void Coord::SharedDtor() {
 }
 
 void Coord::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void Coord::Clear() {
@@ -835,9 +868,9 @@ void Coord::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&z_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -850,7 +883,7 @@ const char* Coord::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
       // int32 x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -858,7 +891,7 @@ const char* Coord::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
       // int32 z = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -930,35 +963,31 @@ size_t Coord::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Coord::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     Coord::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Coord::GetClassData() const { return &_class_data_; }
 
-void Coord::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<Coord *>(to)->MergeFrom(
-      static_cast<const Coord &>(from));
-}
 
-
-void Coord::MergeFrom(const Coord& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.Coord)
-  GOOGLE_DCHECK_NE(&from, this);
+void Coord::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Coord*>(&to_msg);
+  auto& from = static_cast<const Coord&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.Coord)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_x() != 0) {
-    _internal_set_x(from._internal_x());
+    _this->_internal_set_x(from._internal_x());
   }
   if (from._internal_z() != 0) {
-    _internal_set_z(from._internal_z());
+    _this->_internal_set_z(from._internal_z());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void Coord::CopyFrom(const Coord& from) {
@@ -976,11 +1005,11 @@ void Coord::InternalSwap(Coord* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Coord, z_)
-      + sizeof(Coord::z_)
-      - PROTOBUF_FIELD_OFFSET(Coord, x_)>(
-          reinterpret_cast<char*>(&x_),
-          reinterpret_cast<char*>(&other->x_));
+      PROTOBUF_FIELD_OFFSET(Coord, _impl_.z_)
+      + sizeof(Coord::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(Coord, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Coord::GetMetadata() const {
@@ -997,43 +1026,57 @@ class AddReferencesRequest::_Internal {
 
 AddReferencesRequest::AddReferencesRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  coords_(arena) {
-  SharedCtor();
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
 }
 AddReferencesRequest::AddReferencesRequest(const AddReferencesRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      coords_(from.coords_) {
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  AddReferencesRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.coords_){from._impl_.coords_}
+    , decltype(_impl_.engine_id_){}
+    , decltype(_impl_.player_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  engine_id_.InitDefault();
+  _impl_.engine_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    engine_id_.Set("", GetArenaForAllocation());
+    _impl_.engine_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_engine_id().empty()) {
-    engine_id_.Set(from._internal_engine_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.engine_id_.Set(from._internal_engine_id(), 
+      _this->GetArenaForAllocation());
   }
-  player_id_.InitDefault();
+  _impl_.player_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    player_id_.Set("", GetArenaForAllocation());
+    _impl_.player_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_player_id().empty()) {
-    player_id_.Set(from._internal_player_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.player_id_.Set(from._internal_player_id(), 
+      _this->GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
 }
 
-inline void AddReferencesRequest::SharedCtor() {
-engine_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  engine_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-player_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  player_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void AddReferencesRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.coords_){arena}
+    , decltype(_impl_.engine_id_){}
+    , decltype(_impl_.player_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.engine_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.engine_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.player_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.player_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 AddReferencesRequest::~AddReferencesRequest() {
@@ -1047,12 +1090,13 @@ AddReferencesRequest::~AddReferencesRequest() {
 
 inline void AddReferencesRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  engine_id_.Destroy();
-  player_id_.Destroy();
+  _impl_.coords_.~RepeatedPtrField();
+  _impl_.engine_id_.Destroy();
+  _impl_.player_id_.Destroy();
 }
 
 void AddReferencesRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void AddReferencesRequest::Clear() {
@@ -1061,9 +1105,9 @@ void AddReferencesRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  coords_.Clear();
-  engine_id_.ClearToEmpty();
-  player_id_.ClearToEmpty();
+  _impl_.coords_.Clear();
+  _impl_.engine_id_.ClearToEmpty();
+  _impl_.player_id_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1171,7 +1215,7 @@ size_t AddReferencesRequest::ByteSizeLong() const {
 
   // repeated .minecpp.proto.service.chunk_storage.v1.Coord coords = 3;
   total_size += 1UL * this->_internal_coords_size();
-  for (const auto& msg : this->coords_) {
+  for (const auto& msg : this->_impl_.coords_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -1190,36 +1234,32 @@ size_t AddReferencesRequest::ByteSizeLong() const {
         this->_internal_player_id());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AddReferencesRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     AddReferencesRequest::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddReferencesRequest::GetClassData() const { return &_class_data_; }
 
-void AddReferencesRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<AddReferencesRequest *>(to)->MergeFrom(
-      static_cast<const AddReferencesRequest &>(from));
-}
 
-
-void AddReferencesRequest::MergeFrom(const AddReferencesRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
-  GOOGLE_DCHECK_NE(&from, this);
+void AddReferencesRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<AddReferencesRequest*>(&to_msg);
+  auto& from = static_cast<const AddReferencesRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.AddReferencesRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  coords_.MergeFrom(from.coords_);
+  _this->_impl_.coords_.MergeFrom(from._impl_.coords_);
   if (!from._internal_engine_id().empty()) {
-    _internal_set_engine_id(from._internal_engine_id());
+    _this->_internal_set_engine_id(from._internal_engine_id());
   }
   if (!from._internal_player_id().empty()) {
-    _internal_set_player_id(from._internal_player_id());
+    _this->_internal_set_player_id(from._internal_player_id());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void AddReferencesRequest::CopyFrom(const AddReferencesRequest& from) {
@@ -1238,14 +1278,14 @@ void AddReferencesRequest::InternalSwap(AddReferencesRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  coords_.InternalSwap(&other->coords_);
+  _impl_.coords_.InternalSwap(&other->_impl_.coords_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &engine_id_, lhs_arena,
-      &other->engine_id_, rhs_arena
+      &_impl_.engine_id_, lhs_arena,
+      &other->_impl_.engine_id_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &player_id_, lhs_arena,
-      &other->player_id_, rhs_arena
+      &_impl_.player_id_, lhs_arena,
+      &other->_impl_.player_id_, rhs_arena
   );
 }
 
@@ -1264,30 +1304,43 @@ class AddReferencesResponse::_Internal {
 AddReferencesResponse::AddReferencesResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
 }
 AddReferencesResponse::AddReferencesResponse(const AddReferencesResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  AddReferencesResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.target_engine_id_){}
+    , decltype(_impl_.status_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  target_engine_id_.InitDefault();
+  _impl_.target_engine_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    target_engine_id_.Set("", GetArenaForAllocation());
+    _impl_.target_engine_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_target_engine_id().empty()) {
-    target_engine_id_.Set(from._internal_target_engine_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.target_engine_id_.Set(from._internal_target_engine_id(), 
+      _this->GetArenaForAllocation());
   }
-  status_ = from.status_;
+  _this->_impl_.status_ = from._impl_.status_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
 }
 
-inline void AddReferencesResponse::SharedCtor() {
-target_engine_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  target_engine_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-status_ = 0;
+inline void AddReferencesResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.target_engine_id_){}
+    , decltype(_impl_.status_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.target_engine_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.target_engine_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 AddReferencesResponse::~AddReferencesResponse() {
@@ -1301,11 +1354,11 @@ AddReferencesResponse::~AddReferencesResponse() {
 
 inline void AddReferencesResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  target_engine_id_.Destroy();
+  _impl_.target_engine_id_.Destroy();
 }
 
 void AddReferencesResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void AddReferencesResponse::Clear() {
@@ -1314,8 +1367,8 @@ void AddReferencesResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  target_engine_id_.ClearToEmpty();
-  status_ = 0;
+  _impl_.target_engine_id_.ClearToEmpty();
+  _impl_.status_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1414,35 +1467,31 @@ size_t AddReferencesResponse::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_status());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData AddReferencesResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     AddReferencesResponse::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*AddReferencesResponse::GetClassData() const { return &_class_data_; }
 
-void AddReferencesResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<AddReferencesResponse *>(to)->MergeFrom(
-      static_cast<const AddReferencesResponse &>(from));
-}
 
-
-void AddReferencesResponse::MergeFrom(const AddReferencesResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
-  GOOGLE_DCHECK_NE(&from, this);
+void AddReferencesResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<AddReferencesResponse*>(&to_msg);
+  auto& from = static_cast<const AddReferencesResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.AddReferencesResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_target_engine_id().empty()) {
-    _internal_set_target_engine_id(from._internal_target_engine_id());
+    _this->_internal_set_target_engine_id(from._internal_target_engine_id());
   }
   if (from._internal_status() != 0) {
-    _internal_set_status(from._internal_status());
+    _this->_internal_set_status(from._internal_status());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void AddReferencesResponse::CopyFrom(const AddReferencesResponse& from) {
@@ -1462,10 +1511,10 @@ void AddReferencesResponse::InternalSwap(AddReferencesResponse* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &target_engine_id_, lhs_arena,
-      &other->target_engine_id_, rhs_arena
+      &_impl_.target_engine_id_, lhs_arena,
+      &other->_impl_.target_engine_id_, rhs_arena
   );
-  swap(status_, other->status_);
+  swap(_impl_.status_, other->_impl_.status_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata AddReferencesResponse::GetMetadata() const {
@@ -1482,31 +1531,43 @@ class RemoveReferencesRequest::_Internal {
 
 RemoveReferencesRequest::RemoveReferencesRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
-  coords_(arena) {
-  SharedCtor();
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
 }
 RemoveReferencesRequest::RemoveReferencesRequest(const RemoveReferencesRequest& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      coords_(from.coords_) {
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  RemoveReferencesRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.coords_){from._impl_.coords_}
+    , decltype(_impl_.player_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  player_id_.InitDefault();
+  _impl_.player_id_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    player_id_.Set("", GetArenaForAllocation());
+    _impl_.player_id_.Set("", GetArenaForAllocation());
   #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_player_id().empty()) {
-    player_id_.Set(from._internal_player_id(), 
-      GetArenaForAllocation());
+    _this->_impl_.player_id_.Set(from._internal_player_id(), 
+      _this->GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
 }
 
-inline void RemoveReferencesRequest::SharedCtor() {
-player_id_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  player_id_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+inline void RemoveReferencesRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.coords_){arena}
+    , decltype(_impl_.player_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.player_id_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.player_id_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 RemoveReferencesRequest::~RemoveReferencesRequest() {
@@ -1520,11 +1581,12 @@ RemoveReferencesRequest::~RemoveReferencesRequest() {
 
 inline void RemoveReferencesRequest::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  player_id_.Destroy();
+  _impl_.coords_.~RepeatedPtrField();
+  _impl_.player_id_.Destroy();
 }
 
 void RemoveReferencesRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void RemoveReferencesRequest::Clear() {
@@ -1533,8 +1595,8 @@ void RemoveReferencesRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  coords_.Clear();
-  player_id_.ClearToEmpty();
+  _impl_.coords_.Clear();
+  _impl_.player_id_.ClearToEmpty();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1627,7 +1689,7 @@ size_t RemoveReferencesRequest::ByteSizeLong() const {
 
   // repeated .minecpp.proto.service.chunk_storage.v1.Coord coords = 2;
   total_size += 1UL * this->_internal_coords_size();
-  for (const auto& msg : this->coords_) {
+  for (const auto& msg : this->_impl_.coords_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -1639,33 +1701,29 @@ size_t RemoveReferencesRequest::ByteSizeLong() const {
         this->_internal_player_id());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData RemoveReferencesRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     RemoveReferencesRequest::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RemoveReferencesRequest::GetClassData() const { return &_class_data_; }
 
-void RemoveReferencesRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<RemoveReferencesRequest *>(to)->MergeFrom(
-      static_cast<const RemoveReferencesRequest &>(from));
-}
 
-
-void RemoveReferencesRequest::MergeFrom(const RemoveReferencesRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
-  GOOGLE_DCHECK_NE(&from, this);
+void RemoveReferencesRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<RemoveReferencesRequest*>(&to_msg);
+  auto& from = static_cast<const RemoveReferencesRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.RemoveReferencesRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  coords_.MergeFrom(from.coords_);
+  _this->_impl_.coords_.MergeFrom(from._impl_.coords_);
   if (!from._internal_player_id().empty()) {
-    _internal_set_player_id(from._internal_player_id());
+    _this->_internal_set_player_id(from._internal_player_id());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void RemoveReferencesRequest::CopyFrom(const RemoveReferencesRequest& from) {
@@ -1684,10 +1742,10 @@ void RemoveReferencesRequest::InternalSwap(RemoveReferencesRequest* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  coords_.InternalSwap(&other->coords_);
+  _impl_.coords_.InternalSwap(&other->_impl_.coords_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &player_id_, lhs_arena,
-      &other->player_id_, rhs_arena
+      &_impl_.player_id_, lhs_arena,
+      &other->_impl_.player_id_, rhs_arena
   );
 }
 
@@ -1706,23 +1764,33 @@ class HeightAtRequest::_Internal {
 HeightAtRequest::HeightAtRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
 }
 HeightAtRequest::HeightAtRequest(const HeightAtRequest& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  HeightAtRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&x_, &from.x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
 }
 
-inline void HeightAtRequest::SharedCtor() {
-::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
-    reinterpret_cast<char*>(&x_)) + sizeof(z_));
+inline void HeightAtRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){0}
+    , decltype(_impl_.z_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 HeightAtRequest::~HeightAtRequest() {
@@ -1739,7 +1807,7 @@ inline void HeightAtRequest::SharedDtor() {
 }
 
 void HeightAtRequest::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void HeightAtRequest::Clear() {
@@ -1748,9 +1816,9 @@ void HeightAtRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&z_) -
-      reinterpret_cast<char*>(&x_)) + sizeof(z_));
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1763,7 +1831,7 @@ const char* HeightAtRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
       // int32 x = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1771,7 +1839,7 @@ const char* HeightAtRequest::_InternalParse(const char* ptr, ::_pbi::ParseContex
       // int32 z = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1843,35 +1911,31 @@ size_t HeightAtRequest::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_z());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData HeightAtRequest::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     HeightAtRequest::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*HeightAtRequest::GetClassData() const { return &_class_data_; }
 
-void HeightAtRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<HeightAtRequest *>(to)->MergeFrom(
-      static_cast<const HeightAtRequest &>(from));
-}
 
-
-void HeightAtRequest::MergeFrom(const HeightAtRequest& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
-  GOOGLE_DCHECK_NE(&from, this);
+void HeightAtRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<HeightAtRequest*>(&to_msg);
+  auto& from = static_cast<const HeightAtRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.HeightAtRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_x() != 0) {
-    _internal_set_x(from._internal_x());
+    _this->_internal_set_x(from._internal_x());
   }
   if (from._internal_z() != 0) {
-    _internal_set_z(from._internal_z());
+    _this->_internal_set_z(from._internal_z());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void HeightAtRequest::CopyFrom(const HeightAtRequest& from) {
@@ -1889,11 +1953,11 @@ void HeightAtRequest::InternalSwap(HeightAtRequest* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(HeightAtRequest, z_)
-      + sizeof(HeightAtRequest::z_)
-      - PROTOBUF_FIELD_OFFSET(HeightAtRequest, x_)>(
-          reinterpret_cast<char*>(&x_),
-          reinterpret_cast<char*>(&other->x_));
+      PROTOBUF_FIELD_OFFSET(HeightAtRequest, _impl_.z_)
+      + sizeof(HeightAtRequest::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(HeightAtRequest, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata HeightAtRequest::GetMetadata() const {
@@ -1911,18 +1975,29 @@ class HeightAtResponse::_Internal {
 HeightAtResponse::HeightAtResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor();
+  SharedCtor(arena, is_message_owned);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
 }
 HeightAtResponse::HeightAtResponse(const HeightAtResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
+  HeightAtResponse* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.height_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  height_ = from.height_;
+  _this->_impl_.height_ = from._impl_.height_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
 }
 
-inline void HeightAtResponse::SharedCtor() {
-height_ = 0;
+inline void HeightAtResponse::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.height_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
 }
 
 HeightAtResponse::~HeightAtResponse() {
@@ -1939,7 +2014,7 @@ inline void HeightAtResponse::SharedDtor() {
 }
 
 void HeightAtResponse::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
+  _impl_._cached_size_.Set(size);
 }
 
 void HeightAtResponse::Clear() {
@@ -1948,7 +2023,7 @@ void HeightAtResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  height_ = 0;
+  _impl_.height_ = 0;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1961,7 +2036,7 @@ const char* HeightAtResponse::_InternalParse(const char* ptr, ::_pbi::ParseConte
       // int32 height = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          height_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.height_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2022,32 +2097,28 @@ size_t HeightAtResponse::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_height());
   }
 
-  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData HeightAtResponse::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
     HeightAtResponse::MergeImpl
 };
 const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*HeightAtResponse::GetClassData() const { return &_class_data_; }
 
-void HeightAtResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
-                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<HeightAtResponse *>(to)->MergeFrom(
-      static_cast<const HeightAtResponse &>(from));
-}
 
-
-void HeightAtResponse::MergeFrom(const HeightAtResponse& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
-  GOOGLE_DCHECK_NE(&from, this);
+void HeightAtResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<HeightAtResponse*>(&to_msg);
+  auto& from = static_cast<const HeightAtResponse&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.HeightAtResponse)
+  GOOGLE_DCHECK_NE(&from, _this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_height() != 0) {
-    _internal_set_height(from._internal_height());
+    _this->_internal_set_height(from._internal_height());
   }
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
 void HeightAtResponse::CopyFrom(const HeightAtResponse& from) {
@@ -2064,7 +2135,7 @@ bool HeightAtResponse::IsInitialized() const {
 void HeightAtResponse::InternalSwap(HeightAtResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(height_, other->height_);
+  swap(_impl_.height_, other->_impl_.height_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata HeightAtResponse::GetMetadata() const {
@@ -2086,6 +2157,7 @@ EmptyResponse::EmptyResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 }
 EmptyResponse::EmptyResponse(const EmptyResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  EmptyResponse* const _this = this; (void)_this;
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.EmptyResponse)
 }

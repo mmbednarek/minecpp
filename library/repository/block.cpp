@@ -5,6 +5,7 @@
 #include <minecpp/repository/block.h>
 #include <minecpp/repository/item.h>
 #include <minecpp/repository/state.h>
+#include "minecpp/repository/repository.h"
 
 namespace minecpp::repository {
 
@@ -84,6 +85,14 @@ int encode_block_by_tag(std::string_view tag)
 {
    auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
+}
+
+mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename) {
+   std::ifstream in_file(filename.data());
+   if (!in_file.is_open()) {
+      return mb::error("could not open file");
+   }
+   return std::move(minecpp::nbt::repository::v1::Registry::deserialize(in_file));
 }
 
 }// namespace minecpp::repository

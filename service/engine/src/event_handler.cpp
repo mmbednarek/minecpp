@@ -4,14 +4,14 @@
 #include "minecpp/command/command.h"
 #include "players.h"
 #include <minecpp/chat/chat.h>
+#include <minecpp/command/core/echo.h>
+#include <minecpp/command/core/format.h>
+#include <minecpp/command/core/give.h>
 #include <minecpp/format/format.h>
 #include <minecpp/game/world.h>
 #include <minecpp/repository/block.h>
 #include <minecpp/repository/item.h>
 #include <minecpp/repository/state.h>
-#include <minecpp/command/core/echo.h>
-#include <minecpp/command/core/give.h>
-#include <minecpp/command/core/format.h>
 
 namespace minecpp::service::engine {
 
@@ -32,13 +32,15 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    m_command_manager.register_command<command::core::Format>("dark-blue", format::Color::DarkBlue, false);
    m_command_manager.register_command<command::core::Format>("dark-blue-bold", format::Color::DarkBlue, true);
    m_command_manager.register_command<command::core::Format>("dark-green", format::Color::DarkGreen, false);
-   m_command_manager.register_command<command::core::Format>("dark-green-bold", format::Color::DarkGreen, true);
+   m_command_manager.register_command<command::core::Format>("dark-green-bold", format::Color::DarkGreen,
+                                                             true);
    m_command_manager.register_command<command::core::Format>("dark-aqua", format::Color::DarkAqua, false);
    m_command_manager.register_command<command::core::Format>("dark-aqua-bold", format::Color::DarkAqua, true);
    m_command_manager.register_command<command::core::Format>("dark-red", format::Color::DarkRed, false);
    m_command_manager.register_command<command::core::Format>("dark-red-bold", format::Color::DarkRed, true);
    m_command_manager.register_command<command::core::Format>("dark-purple", format::Color::DarkPurple, false);
-   m_command_manager.register_command<command::core::Format>("dark-purple-bold", format::Color::DarkPurple, true);
+   m_command_manager.register_command<command::core::Format>("dark-purple-bold", format::Color::DarkPurple,
+                                                             true);
    m_command_manager.register_command<command::core::Format>("gold", format::Color::Gold, false);
    m_command_manager.register_command<command::core::Format>("gold-bold", format::Color::Gold, true);
    m_command_manager.register_command<command::core::Format>("gray", format::Color::Gray, false);
@@ -53,8 +55,10 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    m_command_manager.register_command<command::core::Format>("aqua-bold", format::Color::Aqua, true);
    m_command_manager.register_command<command::core::Format>("red", format::Color::Red, false);
    m_command_manager.register_command<command::core::Format>("red-bold", format::Color::Red, true);
-   m_command_manager.register_command<command::core::Format>("light-purple", format::Color::LightPurple, false);
-   m_command_manager.register_command<command::core::Format>("light-purple-bold", format::Color::LightPurple, true);
+   m_command_manager.register_command<command::core::Format>("light-purple", format::Color::LightPurple,
+                                                             false);
+   m_command_manager.register_command<command::core::Format>("light-purple-bold", format::Color::LightPurple,
+                                                             true);
    m_command_manager.register_command<command::core::Format>("yellow", format::Color::Yellow, false);
    m_command_manager.register_command<command::core::Format>("yellow-bold", format::Color::Yellow, true);
    m_command_manager.register_command<command::core::Format>("white", format::Color::White, false);
@@ -113,18 +117,6 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
 
       auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
 
-      if (event.message().front() == '/') {
-         m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
-         m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
-         auto res = m_command_manager.evaluate(m_command_context, event.message().substr(1));
-         if (res != std::nullopt) {
-            format::Builder builder;
-            builder.bold(format::Color::Red, "COMMAND FAILED ").text(res->message);
-            m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.build());
-         }
-         return;
-      }
-
       spdlog::info("CHAT [{}] {}", player.name(), event.message());
       m_dispatcher.send_chat(chat::MessageType::PlayerMessage,
                              chat::format_chat_message(player.name(), event.message()));
@@ -144,36 +136,13 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
 void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id)
 {
    auto status = static_cast<game::PlayerDiggingState>(event.state());
-
-   /*
-   switch (status) {
-   case game::PlayerDiggingState::Digging:
-   case game::PlayerDiggingState::CanceledDigging: {
-      auto block_position = game::BlockPosition::from_proto(event.block_position());
-      auto block_state_res = m_world.get_block(block_position);
-      if (!block_state_res.ok()) {
-         spdlog::info("error fetching block state: {}", block_state_res.msg());
-         return;
-      }
-      auto block_state = block_state_res.unwrap();
-      m_dispatcher.acknowledge_player_digging(player_id, block_position, block_state, status, true);
-   } break;
-   case game::PlayerDiggingState::FinishedDigging: {
-      auto block_position = game::BlockPosition::from_proto(event.block_position());
-      m_dispatcher.acknowledge_player_digging(player_id, block_position, 0, status, true);
-      m_dispatcher.update_block(block_position, 0);
-      m_world.set_block(block_position, 0);
-   } break;
-   default: break;
-   }
-    */
-
    switch (status) {
    case game::PlayerDiggingState::Digging:
    case game::PlayerDiggingState::CanceledDigging:
    case game::PlayerDiggingState::FinishedDigging: {
       auto block_position = game::BlockPosition::from_proto(event.block_position());
-      m_dispatcher.acknowledge_player_digging(player_id, block_position, 0, status, true);
+      m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
+      m_dispatcher.update_block(block_position, 0);
       m_world.set_block(block_position, 0);
    } break;
    default: break;
@@ -215,13 +184,30 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    auto block_position     = game::BlockPosition::from_proto(event.position());
    auto neighbour_position = block_position.neighbour_at(face);
 
-   auto &player    = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto item_slot  = player.inventory().active_item();
-   auto &item      = MB_ESCAPE(repository::Item::the().get_by_id(item_slot.item_id));
-   auto id         = MB_ESCAPE(repository::Block::the().find_id_by_tag(item.corresponding_block_tag()));
-   auto base_state = repository::StateManager::the().block_base_state(id);
+   auto &player   = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto item_slot = player.inventory().active_item();
 
-   m_world.set_block(neighbour_position, static_cast<unsigned int>(base_state));
+   if (item_slot.count == 0)
+      return;
+
+   auto &item = MB_ESCAPE(repository::Item::the().get_by_id(static_cast<std::size_t>(item_slot.item_id)));
+   if (not item.is_block())
+      return;
+
+   if (not player.inventory().take_from_active_slot(1)) {
+      spdlog::error("cannot take item from player inventory");
+      return;
+   }
+
+   auto id         = MB_ESCAPE(repository::Block::the().find_id_by_tag(item.corresponding_block_tag()));
+   auto base_state = repository::StateManager::the().block_base_state(static_cast<int>(id));
+
+   auto res = m_world.set_block(neighbour_position, static_cast<unsigned int>(base_state));
+   if (not res.ok()) {
+      spdlog::error("could not set block: {}", res.err()->msg());
+   }
+
+   m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
    m_dispatcher.update_block(neighbour_position, static_cast<unsigned int>(base_state));
 }
 
@@ -229,9 +215,6 @@ void EventHandler::send_inventory_data(const player::Player &player)
 {
    for (game::SlotId id = 9; id < 5 * 9; ++id) {
       auto slot = player.inventory().item_at(id);
-      //      if (slot.count == 0)
-      //         continue;
-
       m_dispatcher.set_inventory_slot(player.id(), slot.item_id, id, slot.count);
    }
 }
@@ -257,6 +240,21 @@ void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem 
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));
+}
+
+void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, player::Id player_id)
+{
+   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+
+   m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
+   m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
+
+   auto res = m_command_manager.evaluate(m_command_context, event.command());
+   if (res.has_value()) {
+      format::Builder builder;
+      builder.bold(format::Color::Red, "COMMAND FAILED ").text(res->message);
+      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
+   }
 }
 
 }// namespace minecpp::service::engine

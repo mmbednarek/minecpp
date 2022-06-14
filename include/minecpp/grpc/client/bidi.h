@@ -32,13 +32,15 @@ class Stream
    std::unique_ptr<::grpc::ClientAsyncReaderWriter<TWrite, TRead>> m_stream;
 
  public:
-   enum class GetNextError {
+   enum class GetNextError
+   {
       Shutdown,
       BrokenSocket,
    };
 
    template<typename TStartFunc, typename TStub>
-   explicit Stream(TStartFunc start, TStub *stub, ::grpc::ClientContext *ctx, ::grpc::CompletionQueue *queue) :
+   explicit Stream(TStartFunc start, TStub *stub, ::grpc::ClientContext *ctx,
+                   ::grpc::CompletionQueue *queue) :
        m_stream(std::invoke(start, stub, ctx, queue, m_event_pool.construct(EventType::Accept)))
    {
    }
@@ -62,11 +64,13 @@ class Stream
       m_stream->Finish(&g_status, event);
    }
 
-   void free_event(CompletionEvent<TRead> *event)  {
+   void free_event(CompletionEvent<TRead> *event)
+   {
       m_event_pool.free(event);
    }
 
-   void free_object(TRead *event)  {
+   void free_object(TRead *event)
+   {
       m_read_pool.free(event);
    }
 };
@@ -84,7 +88,8 @@ class Connection
    std::vector<std::future<mb::result<mb::empty>>> m_workers;
 
  public:
-   enum class GetNextError {
+   enum class GetNextError
+   {
       Shutdown,
       BrokenSocket,
    };
@@ -167,7 +172,8 @@ class Connection
    }
 
  private:
-   mb::result<CompletionEvent<TRead> *, GetNextError> get_next() {
+   mb::result<CompletionEvent<TRead> *, GetNextError> get_next()
+   {
       void *tag_ptr;
       bool queue_ok, data_ok;
 
