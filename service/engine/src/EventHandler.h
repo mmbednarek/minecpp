@@ -1,8 +1,9 @@
 #ifndef MINECPP_EVENT_HANDLER_H
 #define MINECPP_EVENT_HANDLER_H
-#include "minecpp/command/StandardStream.h"
 #include <minecpp/command/CommandManager.h>
 #include <minecpp/command/RuntimeContext.h>
+#include <minecpp/command/StandardStream.h>
+#include <minecpp/game/controller/BlockManager.h>
 #include <minecpp/player/Player.h>
 #include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
 
@@ -27,6 +28,7 @@ class EventHandler
    command::StandardStream m_command_std_stream;
    command::CommandManager m_command_manager;
    command::RuntimeContext m_command_context;
+   game::controller::BlockManager m_block_manager;
 
  public:
    EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager,

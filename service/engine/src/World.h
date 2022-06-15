@@ -1,5 +1,6 @@
 #pragma once
 #include "Dispatcher.h"
+#include "Players.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
 #include <minecpp/game/World.h>
@@ -15,12 +16,13 @@ using minecpp::game::ChunkPosition;
 class World : public minecpp::game::World
 {
    ChunkService &service;
-   Dispatcher &dispatcher;
+   Dispatcher &m_dispatcher;
+   PlayerManager &m_player_manager;
    uuid engine_id;
 
  public:
-   World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher);
-
+   World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager);
+   player::Provider &players() override;
    minecpp::game::Notifier &notifier() override;
    mb::result<mb::empty> add_refs(player::Id player, std::vector<game::ChunkPosition> refs) override;
    mb::result<mb::empty> free_refs(player::Id player, std::vector<game::ChunkPosition> refs) override;

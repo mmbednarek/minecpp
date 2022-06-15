@@ -18,6 +18,7 @@ add_library(minecpp_game
 
 add_subdirectory("block")
 add_subdirectory("chunk")
+add_subdirectory("controller")
 add_subdirectory("entity")
 add_subdirectory("item")
 add_subdirectory("worldgen")

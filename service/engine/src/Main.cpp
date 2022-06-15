@@ -37,7 +37,7 @@ auto main() -> int
 
    EventManager<BidiStream> manager;
    Dispatcher dispatcher(manager);
-   World world(boost::uuids::uuid(), *chunk_storage, dispatcher);
+   World world(boost::uuids::uuid(), *chunk_storage, dispatcher, players);
    EventHandler handler(dispatcher, players, entities, world);
 
    ApiHandler api_handler(handler, manager);

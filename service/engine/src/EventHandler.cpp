@@ -180,60 +180,33 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id)
 {
-   auto face               = game::face_from_proto(event.face());
-   auto block_position     = game::BlockPosition::from_proto(event.position());
-   auto neighbour_position = block_position.neighbour_at(face);
+   auto face           = game::face_from_proto(event.face());
+   auto block_position = game::BlockPosition::from_proto(event.position());
 
-   auto &player   = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto item_slot = player.inventory().active_item();
+   auto player = m_world.players().get_player(player_id);
+   if (player.has_failed()) {
+      return;
+   }
 
+   auto item_slot = player->inventory().active_item();
    if (item_slot.count == 0)
       return;
 
-   auto &item = MB_ESCAPE(repository::Item::the().get_by_id(static_cast<std::size_t>(item_slot.item_id)));
-   if (not item.is_block())
+   auto item = repository::Item::the().get_by_id(static_cast<std::size_t>(item_slot.item_id));
+   if (item.has_failed())
       return;
 
-   if (not player.inventory().take_from_active_slot(1)) {
-      spdlog::error("cannot take item from player inventory");
+   if (not item->is_block())
       return;
-   }
 
-   auto source_block_state = m_world.get_block(neighbour_position);
-   if (source_block_state.has_failed()) {
-      spdlog::error("could not obtain source block");
+   auto block_id = repository::Block::the().find_id_by_tag(item->corresponding_block_tag());
+   if (block_id.has_failed())
       return;
+
+   if (m_block_manager.on_player_place_block(m_world, player_id, static_cast<int>(*block_id), block_position,
+                                             face)) {
+      m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
    }
-
-   const auto air_id = static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:air").unwrap(0));
-   const auto water_id =
-           static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:water").unwrap(0));
-
-   auto [source_block_id, _] = repository::StateManager::the().parse_block_id(*source_block_state);
-
-   if (source_block_id != air_id && source_block_id != water_id) {
-      return;
-   }
-
-   auto id    = MB_ESCAPE(repository::Block::the().find_id_by_tag(item.corresponding_block_tag()));
-   auto block = repository::Block::the().get_by_id(id);
-   auto state = repository::StateManager::the().block_base_state(static_cast<int>(id));
-
-   if (block->find_state("waterlogged") != std::nullopt) {
-      if (source_block_id == water_id) {
-         state = repository::encode_block_by_tag(block->tag(), std::make_pair("waterlogged", "true"));
-      } else {
-         state = repository::encode_block_by_tag(block->tag(), std::make_pair("waterlogged", "false"));
-      }
-   }
-
-   auto res = m_world.set_block(neighbour_position, state);
-   if (not res.ok()) {
-      spdlog::error("could not set block: {}", res.err()->msg());
-   }
-
-   m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
-   m_dispatcher.update_block(neighbour_position, state);
 }
 
 void EventHandler::send_inventory_data(const player::Player &player)

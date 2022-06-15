@@ -4,16 +4,17 @@
 
 namespace minecpp::service::engine {
 
-World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher) :
+World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager) :
     service(service),
-    dispatcher(dispatcher),
+    m_dispatcher(dispatcher),
+    m_player_manager(player_manager),
     engine_id(engine_id)
 {
 }
 
 minecpp::game::Notifier &World::notifier()
 {
-   return dispatcher;
+   return m_dispatcher;
 }
 
 mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::ChunkPosition> refs)
@@ -37,7 +38,7 @@ mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::Ch
    }
 
    if (result.status() == ReferenceStatus::MUST_MOVE) {
-      dispatcher.transfer_player(player_id, MB_TRY(minecpp::util::make_uuid(result.target_engine_id())));
+      m_dispatcher.transfer_player(player_id, MB_TRY(minecpp::util::make_uuid(result.target_engine_id())));
    }
 
    return mb::ok;
@@ -91,6 +92,7 @@ mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::Blo
    if (!status.ok()) {
       return mb::error(status.error_message());
    }
+   m_dispatcher.update_block(pos, state);
    return mb::ok;
 }
 
@@ -107,6 +109,11 @@ mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos)
    }
 
    return game::block_state_from_proto(state);
+}
+
+player::Provider &World::players()
+{
+   return m_player_manager;
 }
 
 }// namespace minecpp::service::engine
