@@ -36,14 +36,18 @@ std::string format_join_message(std::string_view player_name)
 std::string format_warning_unknown_op_code(int code)
 {
    using format::Color;
-   return format::Builder().text(Color::Yellow, "WARN ").text("unknown serverbound message with op code ").text(Color::Yellow, fmt::format("{:#02x}", code)).to_string();
+   return format::Builder()
+           .text(Color::Yellow, "WARN ")
+           .text("unknown serverbound message with op code ")
+           .text(Color::Yellow, fmt::format("{:#02x}", code))
+           .to_string();
 }
 
 void ChatMessage::write(std::ostream &stream) const
 {
    stream << R"({"translate": ")" << translate << R"(", "with": [)";
    bool first = true;
-   for (auto node : with) {
+   for (const auto &node : with) {
       if (first) {
          first = false;
       } else {

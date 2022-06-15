@@ -90,7 +90,7 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       spdlog::info("unknown op {}, packet data: {}", op, r.get_hex_data());
       send(conn, minecpp::network::message::SystemChat{
                          .message = minecpp::chat::format_warning_unknown_op_code(op),
-                         .type = minecpp::network::ChatType::System,
+                         .type    = minecpp::chat::MessageType::SystemMessage,
                  });
    }
 }

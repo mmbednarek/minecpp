@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <map>
 #include <mb/int.h>
-#include <minecpp/network/chat.h>
+#include <minecpp/chat/chat.h>
 #include <minecpp/proto/chunk/v1/chunk.pb.h>
 #include <string_view>
 
@@ -95,7 +95,7 @@ struct Difficulty
 struct SystemChat
 {
    std::string message;
-   ChatType type;
+   chat::MessageType type;
 
    [[nodiscard]] Writer serialize() const;
 };

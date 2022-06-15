@@ -30,7 +30,7 @@ class EventHandler
                             const std::vector<player::Id> &player_ids);
    void handle_entity_move(const clientbound_v1::EntityMove &pos, const std::vector<player::Id> &player_ids);
    void handle_entity_look(const clientbound_v1::EntityLook &pos, const std::vector<player::Id> &player_ids);
-   void handle_chat(const clientbound_v1::Chat &pos, const std::vector<player::Id> &player_ids);
+   void handle_chat(const clientbound_v1::Chat &chat_msg, const std::vector<player::Id> &player_ids);
    void handle_remove_player(const clientbound_v1::RemovePlayer &msg,
                              const std::vector<player::Id> &player_ids);
    void handle_update_block(const clientbound_v1::UpdateBlock &msg,

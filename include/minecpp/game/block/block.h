@@ -4,6 +4,7 @@
 #include "material.h"
 #include <minecpp/game/state.h>
 #include <minecpp/util/string.h>
+#include <optional>
 #include <string_view>
 #include <tuple>
 #include <utility>
@@ -87,6 +88,8 @@ class Block
       }
       m_stats.material = &Material::Rock;
    }
+
+   std::optional<State> find_state(std::string_view state) const;
 
    [[nodiscard]] std::size_t state_count() const;
 

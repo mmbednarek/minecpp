@@ -48,7 +48,7 @@ std::function<int(const game::State &)> make_compound_encoder(const nbt::Compoun
 int encode_block_by_tag(std::string_view tag);
 
 template<typename TField, typename... TRest>
-int encode_block_inner(const game::State &state, TField field, TRest... values)
+game::BlockState encode_block_inner(const game::State &state, TField field, TRest... values)
 {
    if (state.name() == field.first) {
       return state.index_from_value(field.second);
@@ -60,11 +60,11 @@ int encode_block_inner(const game::State &state, TField field, TRest... values)
 }
 
 template<typename... T>
-int encode_block_by_tag(std::string_view tag, T... values)
+game::BlockState encode_block_by_tag(std::string_view tag, T... values)
 {
    auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
    return repository::encode_state(
-                  static_cast<int>(block_id),
+                  static_cast<game::BlockState>(block_id),
                   [values...](const game::State &state) { return encode_block_inner(state, values...); })
            .unwrap();
 }

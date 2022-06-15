@@ -199,16 +199,40 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
       return;
    }
 
-   auto id         = MB_ESCAPE(repository::Block::the().find_id_by_tag(item.corresponding_block_tag()));
-   auto base_state = repository::StateManager::the().block_base_state(static_cast<int>(id));
+   auto source_block_state = m_world.get_block(neighbour_position);
+   if (source_block_state.has_failed()) {
+      spdlog::error("could not obtain source block");
+      return;
+   }
 
-   auto res = m_world.set_block(neighbour_position, static_cast<unsigned int>(base_state));
+   const auto air_id = static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:air").unwrap(0));
+   const auto water_id = static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:water").unwrap(0));
+
+   auto [source_block_id, _] = repository::StateManager::the().parse_block_id(*source_block_state);
+
+   if (source_block_id != air_id && source_block_id != water_id)  {
+      return;
+   }
+
+   auto id    = MB_ESCAPE(repository::Block::the().find_id_by_tag(item.corresponding_block_tag()));
+   auto block = repository::Block::the().get_by_id(id);
+   auto state = repository::StateManager::the().block_base_state(static_cast<int>(id));
+
+   if (block->find_state("waterlogged") != std::nullopt) {
+      if (source_block_id == water_id) {
+         state = repository::encode_block_by_tag(block->tag(), std::make_pair("waterlogged", "true"));
+      } else {
+         state = repository::encode_block_by_tag(block->tag(), std::make_pair("waterlogged", "false"));
+      }
+   }
+
+   auto res = m_world.set_block(neighbour_position, state);
    if (not res.ok()) {
       spdlog::error("could not set block: {}", res.err()->msg());
    }
 
    m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
-   m_dispatcher.update_block(neighbour_position, static_cast<unsigned int>(base_state));
+   m_dispatcher.update_block(neighbour_position, state);
 }
 
 void EventHandler::send_inventory_data(const player::Player &player)

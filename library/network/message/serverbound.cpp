@@ -33,7 +33,7 @@ void deserialize(Reader &r, ClientSettings &msg)
    // 1.19 OK
    msg.lang                  = r.read_string();
    msg.view                  = r.read_byte();
-   msg.visibility            = static_cast<ChatVisibility>(r.read_byte());
+   msg.visibility            = static_cast<chat::ChatVisibility>(r.read_byte());
    msg.enable_colors         = r.read_byte();
    msg.model_part_flags      = r.read_byte();
    msg.hand_side             = static_cast<game::HandSide>(r.read_byte());

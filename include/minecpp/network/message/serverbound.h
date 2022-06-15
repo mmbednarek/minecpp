@@ -1,7 +1,7 @@
 #pragma once
 #include "file.h"
 #include <minecpp/game/hand.h>
-#include <minecpp/network/chat.h>
+#include <minecpp/chat/chat.h>
 #include <string>
 
 namespace minecpp::network::message {
@@ -37,7 +37,7 @@ struct ClientSettings
 {
    std::string lang;
    uint8_t view;
-   ChatVisibility visibility;
+   chat::ChatVisibility visibility;
    bool enable_colors;
    uint8_t model_part_flags;
    game::HandSide hand_side;

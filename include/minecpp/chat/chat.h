@@ -13,6 +13,13 @@ enum class MessageType : int
    SystemMessage = 1,
 };
 
+enum class ChatVisibility : uint8_t
+{
+   Full,
+   System,
+   Hidden
+};
+
 struct ChatMessage
 {
    std::string translate;
