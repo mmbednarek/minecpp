@@ -22,27 +22,26 @@ Object::Ptr Echo::run(RuntimeContext &ctx, CommandInput &input) const
 
    bool first = true;
 
-   for (const auto& obj : input.arguments) {
+   for (const auto &obj : input.arguments) {
       if (first) {
          first = false;
       } else {
          fmt->text(format::Color::White, " ");
       }
       if (obj->type() == ObjectType::FormattedString) {
-         if (auto *str = cast<FormattedString>(obj); str != nullptr)  {
-            std::copy(str->nodes.begin(), str->nodes.end(),
-                      std::back_inserter(fmt->nodes));
+         if (auto *str = cast<FormattedString>(obj); str != nullptr) {
+            std::copy(str->nodes.begin(), str->nodes.end(), std::back_inserter(fmt->nodes));
             continue;
          }
       }
       fmt->text(format::Color::White, obj->to_string());
    }
 
-//   ss << (*it)->to_string();
-//   std::for_each(it + 1, end, [&ss](Object::Ptr &obj) {
-//      ss << ' ' << obj->to_string();
-//
-//   });
+   //   ss << (*it)->to_string();
+   //   std::for_each(it + 1, end, [&ss](Object::Ptr &obj) {
+   //      ss << ' ' << obj->to_string();
+   //
+   //   });
 
    return fmt;
 }

@@ -195,7 +195,7 @@ Writer JoinGame::serialize() const
    w.write_byte(is_debug);
    w.write_byte(is_flat);
    w.write_byte(has_last_death_location);
-   if  (has_last_death_location) {
+   if (has_last_death_location) {
       w.write_long(last_death_position);
    }
    return w;

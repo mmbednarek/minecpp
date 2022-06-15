@@ -23,8 +23,17 @@ error::error(errclass cl, std::string message) :
 {
 }
 
-const std::string &error::msg() const { return message; }
+const std::string &error::msg() const
+{
+   return message;
+}
 
-errclass error::err_class() const { return _class; }
+errclass error::err_class() const
+{
+   return _class;
+}
 
-grpc::Status error::grpc_status() const { return grpc::Status(map_grpc_code(err_class()), msg()); }
+grpc::Status error::grpc_status() const
+{
+   return grpc::Status(map_grpc_code(err_class()), msg());
+}

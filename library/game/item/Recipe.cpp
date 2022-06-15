@@ -4,9 +4,15 @@
 
 namespace minecpp::game::item {
 
-const ItemStack &Recipe::outcome() const { return _outcome_item; }
+const ItemStack &Recipe::outcome() const
+{
+   return _outcome_item;
+}
 
-RecipeType Recipe::type() const { return _type; }
+RecipeType Recipe::type() const
+{
+   return _type;
+}
 
 Recipe::Recipe(ItemStack item, std::string group, Recipe::CraftingShaped details) :
     _outcome_item(item),

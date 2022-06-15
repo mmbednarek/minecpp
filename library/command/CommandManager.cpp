@@ -1,7 +1,7 @@
-#include <minecpp/command/CommandManager.h>
-#include <minecpp/command/RuntimeContext.h>
 #include <minecpp/command/Command.h>
+#include <minecpp/command/CommandManager.h>
 #include <minecpp/command/Parser.h>
+#include <minecpp/command/RuntimeContext.h>
 #include <minecpp/lexer/Lexer.h>
 #include <minecpp/lexer/Reader.h>
 
@@ -14,7 +14,7 @@ Command *CommandManager::command(const std::string &name) const
    return m_commands.at(name).get();
 }
 
-std::optional<Error> CommandManager::evaluate(RuntimeContext& ctx, std::string_view value)
+std::optional<Error> CommandManager::evaluate(RuntimeContext &ctx, std::string_view value)
 {
    minecpp::lexer::StringReader reader{value};
    minecpp::lexer::Lexer lex(reader);

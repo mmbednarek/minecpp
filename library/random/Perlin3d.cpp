@@ -15,7 +15,10 @@ Perlin3d::Perlin3d(Random &rand) :
 {
 }
 
-[[nodiscard]] static double smooth(const double t) { return t * t * t * (t * (t * 6 - 15) + 10); }
+[[nodiscard]] static double smooth(const double t)
+{
+   return t * t * t * (t * (t * 6 - 15) + 10);
+}
 
 double Perlin3d::at(minecpp::util::Vec3 pos)
 {

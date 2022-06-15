@@ -1,5 +1,5 @@
-#include <minecpp/command/CommandManager.h>
 #include <minecpp/command/Command.h>
+#include <minecpp/command/CommandManager.h>
 #include <minecpp/command/Parser.h>
 
 namespace minecpp::command {
@@ -35,8 +35,8 @@ Result<ast::Command> Parser::read_command()
          if (expr.has_failed())
             return std::move(expr.err());
          commandAst.params[param_name] = std::move(expr.get());
-         read_param_value = false;
-               continue;
+         read_param_value              = false;
+         continue;
       }
 
       auto token = m_reader.next();
@@ -58,9 +58,8 @@ Result<ast::Command> Parser::read_command()
             continue;
          }
 
-         std::for_each(token->value.begin()+1, token->value.end()-1, [&commandAst](const char flag) {
-            commandAst.flags.insert(std::string(1, flag));
-         });
+         std::for_each(token->value.begin() + 1, token->value.end() - 1,
+                       [&commandAst](const char flag) { commandAst.flags.insert(std::string(1, flag)); });
 
          param_name = std::string(1, token->value.back());
          if (command->is_flag(param_name)) {

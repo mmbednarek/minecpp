@@ -13,7 +13,10 @@ NamedTag::NamedTag(std::string name, TagId tag_id, std::any content) :
 {
 }
 
-static std::string pad(int padding) { return std::string(padding, '\t'); }
+static std::string pad(int padding)
+{
+   return std::string(padding, '\t');
+}
 
 template<typename I, char prefix>
 static std::string format_int_vec(std::vector<I> vec, int padding = 0)
@@ -105,7 +108,10 @@ std::string Content::to_string(int padding) const
    return std::string();
 }
 
-bool Content::empty() const { return tag_id == TagId::End; }
+bool Content::empty() const
+{
+   return tag_id == TagId::End;
+}
 
 void serialize_compound_content(nbt::Writer &w, const CompoundContent &cc)
 {

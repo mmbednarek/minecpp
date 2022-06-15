@@ -23,7 +23,7 @@ class StateManager
 {
    static StateManager g_instance;
 
-   std::map<game::BlockState , int> m_state_to_block_id;
+   std::map<game::BlockState, int> m_state_to_block_id;
    std::map<int, game::BlockState> m_block_id_to_state;
    game::BlockState m_top_state;
 

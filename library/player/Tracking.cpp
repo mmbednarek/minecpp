@@ -20,7 +20,10 @@ static constexpr auto pow2(T value)
    return value * value;
 }
 
-static int dist_sq(game::ChunkPosition a, game::ChunkPosition b) { return pow2(a.x - b.x) + pow2(a.z - b.z); }
+static int dist_sq(game::ChunkPosition a, game::ChunkPosition b)
+{
+   return pow2(a.x - b.x) + pow2(a.z - b.z);
+}
 
 mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p)
 {

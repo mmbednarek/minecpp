@@ -20,12 +20,12 @@ bool Give::is_flag(std::string_view name) const
 
 Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
 {
-   if(input.arguments.empty())
+   if (input.arguments.empty())
       return {};
 
    auto item_name_obj = input.arguments.front();
-   auto item_name = item_name_obj->to_string();
-   auto item_id   = repository::Item::the().find_id_by_tag(item_name);
+   auto item_name     = item_name_obj->to_string();
+   auto item_id       = repository::Item::the().find_id_by_tag(item_name);
    if (item_id.has_failed()) {
       auto err = std::make_shared<RuntimeError>("give");
       err->text("invalid item tag ").text(format::Color::Yellow, item_name);
@@ -42,7 +42,8 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    auto player = m_provider.get_player(player_id->value);
    if (player.has_failed()) {
       auto err = std::make_shared<RuntimeError>("give");
-      err->text("could not get player with id ").text(format::Color::Yellow, boost::uuids::to_string(player_id->value));
+      err->text("could not get player with id ")
+              .text(format::Color::Yellow, boost::uuids::to_string(player_id->value));
       return err;
    }
 

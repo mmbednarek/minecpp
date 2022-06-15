@@ -18,9 +18,15 @@ NamedTag Parser::read_tag()
    return NamedTag(name, tag_id, content);
 }
 
-TagId Parser::read_tag_id() { return reader.read_static(TagId::End); }
+TagId Parser::read_tag_id()
+{
+   return reader.read_static(TagId::End);
+}
 
-std::any Parser::read_content(const TagId id) { return content_reader(id)(); }
+std::any Parser::read_content(const TagId id)
+{
+   return content_reader(id)();
+}
 
 std::function<std::any()> Parser::content_reader(const TagId id)
 {
@@ -49,21 +55,45 @@ std::vector<std::any> Parser::read_content_n(const TagId id, std::size_t amount)
    return result;
 }
 
-int8_t Parser::read_content_byte() { return reader.read_static(static_cast<int8_t>(0)); }
+int8_t Parser::read_content_byte()
+{
+   return reader.read_static(static_cast<int8_t>(0));
+}
 
-int16_t Parser::read_content_short() { return reader.read_bswap<short>(); }
+int16_t Parser::read_content_short()
+{
+   return reader.read_bswap<short>();
+}
 
-int32_t Parser::read_content_int() { return reader.read_bswap<int>(); }
+int32_t Parser::read_content_int()
+{
+   return reader.read_bswap<int>();
+}
 
-int64_t Parser::read_content_long() { return reader.read_bswap<uint64_t>(); }
+int64_t Parser::read_content_long()
+{
+   return reader.read_bswap<uint64_t>();
+}
 
-float Parser::read_content_float() { return reader.read_float(); }
+float Parser::read_content_float()
+{
+   return reader.read_float();
+}
 
-double Parser::read_content_double() { return reader.read_double(); }
+double Parser::read_content_double()
+{
+   return reader.read_double();
+}
 
-std::vector<uint8_t> Parser::read_content_byte_array() { return reader.read_byte_vec(); }
+std::vector<uint8_t> Parser::read_content_byte_array()
+{
+   return reader.read_byte_vec();
+}
 
-std::string Parser::read_content_string() { return reader.read_string(); }
+std::string Parser::read_content_string()
+{
+   return reader.read_string();
+}
 
 ListContent Parser::read_content_list()
 {
@@ -72,9 +102,15 @@ ListContent Parser::read_content_list()
    return ListContent{.tag_id = tag_id, .elements = read_content_n(tag_id, size)};
 }
 
-std::vector<int32_t> Parser::read_content_int_array() { return reader.read_int_list<int32_t>(); }
+std::vector<int32_t> Parser::read_content_int_array()
+{
+   return reader.read_int_list<int32_t>();
+}
 
-std::vector<int64_t> Parser::read_content_long_array() { return reader.read_int_list<int64_t>(); }
+std::vector<int64_t> Parser::read_content_long_array()
+{
+   return reader.read_int_list<int64_t>();
+}
 
 std::map<std::string, Content> Parser::read_compound()
 {

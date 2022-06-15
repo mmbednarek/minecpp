@@ -7,7 +7,10 @@ ScriptWriter::ScriptWriter(std::ostream &os) :
 {
 }
 
-void ScriptWriter::ident() { ++ident_level; }
+void ScriptWriter::ident()
+{
+   ++ident_level;
+}
 
 void ScriptWriter::deindent()
 {
@@ -16,11 +19,20 @@ void ScriptWriter::deindent()
    --ident_level;
 }
 
-std::ostream &ScriptWriter::raw() { return os; }
+std::ostream &ScriptWriter::raw()
+{
+   return os;
+}
 
-void ScriptWriter::line() { os << "\n"; }
+void ScriptWriter::line()
+{
+   os << "\n";
+}
 
-void ScriptWriter::descope_flat() { os << "}\n"; }
+void ScriptWriter::descope_flat()
+{
+   os << "}\n";
+}
 
 void ScriptWriter::line(std::string_view sv)
 {

@@ -10,7 +10,9 @@ constexpr std::uint64_t chunk_seed_coef4 = 0xf84606d2fff5;
 
 constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, game::ChunkPosition pos)
 {
-   return seed * (chunk_seed_coef1 * static_cast<std::uint64_t>(pos.x) + chunk_seed_coef2 * static_cast<std::uint64_t>(pos.z) + chunk_seed_coef3) + chunk_seed_coef4;
+   return seed * (chunk_seed_coef1 * static_cast<std::uint64_t>(pos.x) +
+                  chunk_seed_coef2 * static_cast<std::uint64_t>(pos.z) + chunk_seed_coef3) +
+          chunk_seed_coef4;
 }
 
 Population::Population(Chunks &chunks, std::uint64_t seed) :

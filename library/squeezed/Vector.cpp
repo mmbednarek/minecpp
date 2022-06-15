@@ -2,7 +2,10 @@
 
 namespace minecpp::squeezed {
 
-constexpr std::uint32_t bitsLimit(std::uint8_t bits) { return 1u << bits; }
+constexpr std::uint32_t bitsLimit(std::uint8_t bits)
+{
+   return 1u << bits;
+}
 
 Vector::Vector(std::uint8_t bits, std::size_t size, std::vector<std::uint64_t> data) :
     m_data(std::move(data)),
@@ -60,7 +63,10 @@ std::int32_t Vector::at(std::size_t i) const
    return (full_pack >> offset) & mask;
 }
 
-std::int32_t Vector::operator[](std::size_t i) const { return at(i); }
+std::int32_t Vector::operator[](std::size_t i) const
+{
+   return at(i);
+}
 
 void Vector::set(std::size_t i, std::int32_t value)
 {
@@ -79,7 +85,10 @@ void Vector::set(std::size_t i, std::int32_t value)
    m_data[pack] = full_pack;
 }
 
-Vector::Iterator Vector::begin() { return Iterator{.vec = *this, .pack = 0, .offset = 0}; }
+Vector::Iterator Vector::begin()
+{
+   return Iterator{.vec = *this, .pack = 0, .offset = 0};
+}
 
 Vector::Iterator Vector::end()
 {
@@ -125,7 +134,10 @@ void Vector::set_bits(std::uint8_t new_bits)
    m_bits = new_bits;
 }
 
-void Vector::inc_bits() { set_bits(m_bits + 1); }
+void Vector::inc_bits()
+{
+   set_bits(m_bits + 1);
+}
 
 Vector::Iterator &Vector::Iterator::operator++()
 {

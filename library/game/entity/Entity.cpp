@@ -23,11 +23,20 @@ Entity::Entity(uuid uid, const Type &type) :
 {
 }
 
-Vec3 Entity::get_pos() const { return pos; }
+Vec3 Entity::get_pos() const
+{
+   return pos;
+}
 
-float Entity::get_yaw() const { return yaw; }
+float Entity::get_yaw() const
+{
+   return yaw;
+}
 
-float Entity::get_pitch() const { return pitch; }
+float Entity::get_pitch() const
+{
+   return pitch;
+}
 
 void Entity::set_pos(Notifier &n, Vec3 pos)
 {
@@ -44,9 +53,15 @@ void Entity::set_rot(float yaw, float pitch)
    this->pitch = pitch;
 }
 
-void Entity::set_id(uint32_t id) { this->id = id; }
+void Entity::set_id(uint32_t id)
+{
+   this->id = id;
+}
 
-uint32_t Entity::get_id() { return id; }
+uint32_t Entity::get_id()
+{
+   return id;
+}
 
 minecpp::entity::Movement Entity::process_movement()
 {
@@ -73,9 +88,15 @@ void Entity::sync_tracking()
    tracking.z = pos.z * 4096.0;
 }
 
-void Attributes::set_attribute(AttributeName name, double value) { attributes[name] = value; }
+void Attributes::set_attribute(AttributeName name, double value)
+{
+   attributes[name] = value;
+}
 
-bool Movement::nil() { return x == 0 && y == 0 && z == 0; }
+bool Movement::nil()
+{
+   return x == 0 && y == 0 && z == 0;
+}
 
 Entity Entity::from_player_nbt(const nbt::player::v1::Player &player)
 {

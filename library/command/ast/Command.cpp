@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <minecpp/command/ast/Ast.h>
-#include <minecpp/command/CommandManager.h>
 #include <minecpp/command/Command.h>
+#include <minecpp/command/CommandManager.h>
 #include <minecpp/command/RuntimeContext.h>
 
 namespace minecpp::command::ast {
@@ -40,7 +40,7 @@ Object::Ptr Variable::execute(RuntimeContext &ctx)
    return ctx.variable(name);
 }
 
-ObjectType Variable::type(RuntimeContext& ctx) const
+ObjectType Variable::type(RuntimeContext &ctx) const
 {
    return ctx.variable(name)->type();
 }

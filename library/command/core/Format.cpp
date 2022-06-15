@@ -3,8 +3,8 @@
 namespace minecpp::command::core {
 
 Format::Format(format::Color color, bool bold) :
-        m_color(color),
-        m_bold(bold)
+    m_color(color),
+    m_bold(bold)
 {
 }
 

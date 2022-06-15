@@ -13,9 +13,15 @@ Player::Player(Id id, std::string_view name, const util::Vec3 &pos, game::Notifi
 {
 }
 
-void Player::on_movement(game::World &w, util::Vec3 pos) { m_tracking->on_movement(w, *this, pos); }
+void Player::on_movement(game::World &w, util::Vec3 pos)
+{
+   m_tracking->on_movement(w, *this, pos);
+}
 
-mb::result<mb::empty> Player::load_chunks(game::World &w) { return m_tracking->load_chunks(w, *this); }
+mb::result<mb::empty> Player::load_chunks(game::World &w)
+{
+   return m_tracking->load_chunks(w, *this);
+}
 
 Abilities Abilities::from_proto(const proto::player::v1::Abilities &abilities)
 {

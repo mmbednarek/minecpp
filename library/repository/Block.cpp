@@ -1,3 +1,4 @@
+#include "minecpp/repository/Repository.h"
 #include <fstream>
 #include <minecpp/game/block/Block.h>
 #include <minecpp/game/item/Item.h>
@@ -5,7 +6,6 @@
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
-#include "minecpp/repository/Repository.h"
 
 namespace minecpp::repository {
 
@@ -87,7 +87,8 @@ int encode_block_by_tag(std::string_view tag)
    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
-mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename) {
+mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename)
+{
    std::ifstream in_file(filename.data());
    if (!in_file.is_open()) {
       return mb::error("could not open file");

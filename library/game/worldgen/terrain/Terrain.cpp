@@ -132,10 +132,19 @@ std::unique_ptr<Chunk> Terrain::generate()
    return result;
 }
 
-constexpr short Terrain::height_at(const int x, const int z) { return height_map[x + z * chunk_size]; }
+constexpr short Terrain::height_at(const int x, const int z)
+{
+   return height_map[x + z * chunk_size];
+}
 
-constexpr short Terrain::orig_height_at(int x, int z) { return orig_height_map[x + z * chunk_size]; }
+constexpr short Terrain::orig_height_at(int x, int z)
+{
+   return orig_height_map[x + z * chunk_size];
+}
 
-constexpr void Terrain::set_height_at(int x, int z, short value) { height_map[x + z * chunk_size] = value; }
+constexpr void Terrain::set_height_at(int x, int z, short value)
+{
+   height_map[x + z * chunk_size] = value;
+}
 
 }// namespace minecpp::game::worldgen::terrain

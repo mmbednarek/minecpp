@@ -39,6 +39,9 @@ double Reader::read_double() const
    return *reinterpret_cast<double *>(&v);
 }
 
-std::istream &Reader::get_stream() { return stream; }
+std::istream &Reader::get_stream()
+{
+   return stream;
+}
 
 }// namespace minecpp::util

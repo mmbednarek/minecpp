@@ -18,7 +18,8 @@ RuntimeContext::RuntimeContext(const CommandManager &manager, InputStream &input
 {
 }
 
-void RuntimeContext::set_variable(const std::string &name, std::shared_ptr<Object> value) {
+void RuntimeContext::set_variable(const std::string &name, std::shared_ptr<Object> value)
+{
    m_variables[name] = std::move(value);
 }
 

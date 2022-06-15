@@ -80,7 +80,8 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
    send_message_excluding(entity_head_look, player_id);
 }
 
-void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg, const std::vector<player::Id> &player_ids)
+void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg,
+                               const std::vector<player::Id> &player_ids)
 {
    minecpp::network::message::SystemChat chat{
            .message = chat_msg.message(),

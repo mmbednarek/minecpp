@@ -1,9 +1,9 @@
 #include "EventHandler.h"
 #include "Dispatcher.h"
 #include "Entities.h"
-#include "minecpp/command/Command.h"
 #include "Players.h"
 #include <minecpp/chat/Chat.h>
+#include <minecpp/command/Command.h>
 #include <minecpp/command/core/Echo.h>
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
@@ -206,11 +206,12 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    }
 
    const auto air_id = static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:air").unwrap(0));
-   const auto water_id = static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:water").unwrap(0));
+   const auto water_id =
+           static_cast<int>(repository::Block::the().find_id_by_tag("minecraft:water").unwrap(0));
 
    auto [source_block_id, _] = repository::StateManager::the().parse_block_id(*source_block_state);
 
-   if (source_block_id != air_id && source_block_id != water_id)  {
+   if (source_block_id != air_id && source_block_id != water_id) {
       return;
    }
 

@@ -4,16 +4,17 @@
 
 namespace minecpp::network::message {
 
-void deserialize(Reader &r, ChatCommand &msg) {
+void deserialize(Reader &r, ChatCommand &msg)
+{
    // 1.19 OK
-   msg.command = r.read_string();
+   msg.command   = r.read_string();
    msg.timestamp = r.read_long();
-   msg.salt = r.read_long();
+   msg.salt      = r.read_long();
 
    auto map_size = r.read_varint();
-   std::generate_n(std::inserter(msg.argument_signatures, msg.argument_signatures.begin()), static_cast<std::size_t>(map_size), [&r]() {
-      return std::make_pair(r.read_string(), r.read_string());
-   });
+   std::generate_n(std::inserter(msg.argument_signatures, msg.argument_signatures.begin()),
+                   static_cast<std::size_t>(map_size),
+                   [&r]() { return std::make_pair(r.read_string(), r.read_string()); });
 
    msg.preview = r.read_byte();
 }
@@ -21,11 +22,11 @@ void deserialize(Reader &r, ChatCommand &msg) {
 void deserialize(Reader &r, ChatMessage &msg)
 {
    // 1.19 OK
-   msg.message = r.read_string();
+   msg.message   = r.read_string();
    msg.timestamp = r.read_long();
-   msg.salt = r.read_long();
+   msg.salt      = r.read_long();
    msg.salt_data = r.read_string();
-   msg.preview = r.read_byte();
+   msg.preview   = r.read_byte();
 }
 
 void deserialize(Reader &r, ClientSettings &msg)
@@ -78,9 +79,9 @@ void deserialize(Reader &r, PlayerRotation &msg)
 void deserialize(Reader &r, PlayerDigging &msg)
 {
    // 1.19 OK
-   msg.action   = static_cast<game::PlayerDiggingState>(r.read_varint());
-   msg.position = r.read_big_endian<uint64_t>();
-   msg.facing   = static_cast<game::Face>(r.read_byte());
+   msg.action      = static_cast<game::PlayerDiggingState>(r.read_varint());
+   msg.position    = r.read_big_endian<uint64_t>();
+   msg.facing      = static_cast<game::Face>(r.read_byte());
    msg.sequence_id = r.read_varint();
 }
 
@@ -133,13 +134,15 @@ void deserialize(Reader &r, ClickWindow &msg)
    r.read_nbt_tag();
 }
 
-void deserialize(Reader &r, HeldItemChange &msg) {
+void deserialize(Reader &r, HeldItemChange &msg)
+{
    msg.slot = r.read_short();
 }
 
-void deserialize(Reader &r, PluginMessage &msg) {
+void deserialize(Reader &r, PluginMessage &msg)
+{
    msg.channel = r.read_string();
-   msg.data = r.read_string();
+   msg.data    = r.read_string();
 }
 
 }// namespace minecpp::network::message

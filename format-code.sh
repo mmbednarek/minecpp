@@ -2,7 +2,7 @@
 
 source_directories=(
   include
-  lib
+  library
   test
   service
   tool

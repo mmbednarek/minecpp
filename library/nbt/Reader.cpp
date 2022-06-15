@@ -149,7 +149,10 @@ void Reader::foreach_long(std::function<void(long long value)> for_elem)
    }
 }
 
-std::istream &Reader::raw_stream() { return get_stream(); }
+std::istream &Reader::raw_stream()
+{
+   return get_stream();
+}
 
 minecpp::util::Vec3 Reader::read_vec3()
 {

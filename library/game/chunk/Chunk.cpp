@@ -179,14 +179,20 @@ void Chunk::free_ref(player::Id player_id)
    }
 }
 
-uuid Chunk::get_lock() const { return m_engine_lock; }
+uuid Chunk::get_lock() const
+{
+   return m_engine_lock;
+}
 
 int Chunk::height_at(int x, int z)
 {
    return minecpp::util::get_packed(m_hm_world_surface, 9, 16 * (z & 15) + (x & 15));
 }
 
-void Chunk::put_section(int8_t level, Section sec) { m_sections[level] = std::move(sec); }
+void Chunk::put_section(int8_t level, Section sec)
+{
+   m_sections[level] = std::move(sec);
+}
 
 std::array<short, 256> Chunk::get_height_map()
 {
@@ -199,7 +205,10 @@ std::array<short, 256> Chunk::get_height_map()
    return result;
 }
 
-game::ChunkPosition Chunk::pos() const { return {m_pos_x, m_pos_z}; }
+game::ChunkPosition Chunk::pos() const
+{
+   return {m_pos_x, m_pos_z};
+}
 
 mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) noexcept
 {

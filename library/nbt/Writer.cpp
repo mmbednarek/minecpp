@@ -15,7 +15,10 @@ void Writer::write_string(std::string_view name, std::string_view str)
    put_string(str);
 }
 
-void Writer::write_byte_content(uint8_t byte) { put_byte(byte); }
+void Writer::write_byte_content(uint8_t byte)
+{
+   put_byte(byte);
+}
 
 void Writer::write_byte(std::string_view name, uint8_t byte)
 {
@@ -24,7 +27,10 @@ void Writer::write_byte(std::string_view name, uint8_t byte)
    put_byte(byte);
 }
 
-void Writer::write_short_content(short value) { put_big_endian(value); }
+void Writer::write_short_content(short value)
+{
+   put_big_endian(value);
+}
 
 void Writer::write_short(std::string_view name, short value)
 {
@@ -33,7 +39,10 @@ void Writer::write_short(std::string_view name, short value)
    put_big_endian(value);
 }
 
-void Writer::write_int_content(int value) { put_big_endian(value); }
+void Writer::write_int_content(int value)
+{
+   put_big_endian(value);
+}
 
 void Writer::write_int(std::string_view name, int value)
 {
@@ -42,7 +51,10 @@ void Writer::write_int(std::string_view name, int value)
    put_big_endian(value);
 }
 
-void Writer::write_long_content(int64_t value) { put_big_endian(value); }
+void Writer::write_long_content(int64_t value)
+{
+   put_big_endian(value);
+}
 
 void Writer::write_long(std::string_view name, int64_t value)
 {
@@ -51,9 +63,15 @@ void Writer::write_long(std::string_view name, int64_t value)
    put_big_endian(value);
 }
 
-void Writer::put_byte(uint8_t b) { stream.write((char *) &b, sizeof(uint8_t)); }
+void Writer::put_byte(uint8_t b)
+{
+   stream.write((char *) &b, sizeof(uint8_t));
+}
 
-void Writer::write_string_content(std::string_view str) { put_string(str); }
+void Writer::write_string_content(std::string_view str)
+{
+   put_string(str);
+}
 
 void Writer::put_string(const std::string_view s)
 {
@@ -67,7 +85,10 @@ void Writer::begin_compound(const std::string_view name)
    put_string(name);
 }
 
-void Writer::end_compound() { put_byte(0x00); }
+void Writer::end_compound()
+{
+   put_byte(0x00);
+}
 
 void Writer::write_long_array(std::string_view name, const long *array, size_t size)
 {
