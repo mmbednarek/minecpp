@@ -2,8 +2,8 @@ SET(MINECPP_GAME_ENTITY_INCLUDE_DIR ${MINECPP_GAME_INCLUDE_DIR}/entity)
 
 target_sources(minecpp_game PRIVATE
         # Header files
-        ${MINECPP_GAME_ENTITY_INCLUDE_DIR}/entity.h
+        ${MINECPP_GAME_ENTITY_INCLUDE_DIR}/Entity.h
 
         # Source files
-        ${CMAKE_CURRENT_SOURCE_DIR}/entity.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp
 )

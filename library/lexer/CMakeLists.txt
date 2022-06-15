@@ -1,9 +1,9 @@
 SET(MINECPP_LEXER_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/lexer)
 
 add_library(minecpp_lexer
-        lexer.cpp
-        ${MINECPP_LEXER_INCLUDE_DIR}/lexer.h
-        ${MINECPP_LEXER_INCLUDE_DIR}/token.h
-        ${MINECPP_LEXER_INCLUDE_DIR}/reader.h
-        ${MINECPP_LEXER_INCLUDE_DIR}/error.h
+        Lexer.cpp
+        ${MINECPP_LEXER_INCLUDE_DIR}/Lexer.h
+        ${MINECPP_LEXER_INCLUDE_DIR}/Token.h
+        ${MINECPP_LEXER_INCLUDE_DIR}/Reader.h
+        ${MINECPP_LEXER_INCLUDE_DIR}/Error.h
 )

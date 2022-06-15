@@ -1,11 +1,11 @@
 target_sources(
   minecpp_chunk_storage PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/chunks.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/chunks.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/regions.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/regions.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/service.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/service.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Chunks.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Chunks.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Regions.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Regions.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Service.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Service.h
 )
 

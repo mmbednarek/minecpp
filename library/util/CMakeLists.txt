@@ -1,2 +1,2 @@
-add_library(minecpp_utils file.cpp vec.cpp format.cpp compression.cpp packed.cpp uuid.cpp hex.cpp string.cpp time.cpp scriptw.cpp loop.cpp grpc.cpp)
+add_library(minecpp_utils File.cpp Vec.cpp Format.cpp Compression.cpp Packed.cpp Uuid.cpp Hex.cpp String.cpp Time.cpp Scriptw.cpp Loop.cpp Grpc.cpp)
 target_link_libraries(minecpp_utils Boost::iostreams fmt libmb grpc++ libmb)

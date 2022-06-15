@@ -2,19 +2,18 @@ set(MINECPP_GAME_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/game)
 
 add_library(minecpp_game
         # Source files
-        rules.cpp
-        world.cpp
+        Rules.cpp
+        World.cpp
 
         # Header files
-        ${MINECPP_GAME_INCLUDE_DIR}/block_controller.h
-        ${MINECPP_GAME_INCLUDE_DIR}/chunks.h
-        ${MINECPP_GAME_INCLUDE_DIR}/game.h
-        ${MINECPP_GAME_INCLUDE_DIR}/hand.h
-        ${MINECPP_GAME_INCLUDE_DIR}/mode.h
-        ${MINECPP_GAME_INCLUDE_DIR}/notifier.h
-        ${MINECPP_GAME_INCLUDE_DIR}/rules.h
-        ${MINECPP_GAME_INCLUDE_DIR}/state.h
-        ${MINECPP_GAME_INCLUDE_DIR}/world.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Chunks.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Game.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Hand.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Mode.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Notifier.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Rules.h
+        ${MINECPP_GAME_INCLUDE_DIR}/State.h
+        ${MINECPP_GAME_INCLUDE_DIR}/World.h
 )
 
 add_subdirectory("block")

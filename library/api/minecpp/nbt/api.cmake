@@ -1,10 +1,10 @@
 set(nbt_api_sources 
- repository/v1/codec.nbt.cpp
- repository/v1/repository.nbt.cpp
- chunk/v1/chunk.nbt.cpp
- block/v1/block.nbt.cpp
- item/v1/item.nbt.cpp
- common/v1/common.nbt.cpp
- level/v1/level.nbt.cpp
- player/v1/player.nbt.cpp
+ repository/v1/Repository.nbt.cpp
+ repository/v1/Codec.nbt.cpp
+ chunk/v1/Chunk.nbt.cpp
+ block/v1/Block.nbt.cpp
+ item/v1/Item.nbt.cpp
+ common/v1/Common.nbt.cpp
+ level/v1/Level.nbt.cpp
+ player/v1/Player.nbt.cpp
 )

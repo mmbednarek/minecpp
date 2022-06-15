@@ -1,6 +1,6 @@
 SET(MINECPP_COMMAND_AST_INCLUDE_DIR ${MINECPP_COMMAND_INCLUDE_DIR}/ast)
 
 target_sources(minecpp_command PRIVATE
-        ${MINECPP_COMMAND_AST_INCLUDE_DIR}/ast.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/command.cpp
+        ${MINECPP_COMMAND_AST_INCLUDE_DIR}/Ast.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Command.cpp
 )

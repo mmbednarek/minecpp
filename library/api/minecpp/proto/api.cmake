@@ -1,17 +1,17 @@
 set(proto_api_sources 
- service/health/v1/health.grpc.pb.cc
- service/health/v1/health.pb.cc
- service/discovery/v1/discovery.pb.cc
- service/discovery/v1/discovery.grpc.pb.cc
- service/engine/v1/engine.pb.cc
- service/engine/v1/engine.grpc.pb.cc
- service/chunk_storage/v1/chunk_storage.grpc.pb.cc
- service/chunk_storage/v1/chunk_storage.pb.cc
- chunk/v1/chunk.pb.cc
- event/clientbound/v1/clientbound.pb.cc
- event/serverbound/v1/serverbound.pb.cc
- common/v1/common.pb.cc
- player/v1/player.pb.cc
- player/v1/id.pb.cc
- entity/v1/entity.pb.cc
+ service/health/v1/Health.grpc.pb.cc
+ service/health/v1/Health.pb.cc
+ service/discovery/v1/Discovery.pb.cc
+ service/discovery/v1/Discovery.grpc.pb.cc
+ service/engine/v1/Engine.pb.cc
+ service/engine/v1/Engine.grpc.pb.cc
+ service/chunk_storage/v1/ChunkStorage.grpc.pb.cc
+ service/chunk_storage/v1/ChunkStorage.pb.cc
+ chunk/v1/Chunk.pb.cc
+ event/clientbound/v1/Clientbound.pb.cc
+ event/serverbound/v1/Serverbound.pb.cc
+ common/v1/Common.pb.cc
+ player/v1/Player.pb.cc
+ player/v1/Id.pb.cc
+ entity/v1/Entity.pb.cc
 )

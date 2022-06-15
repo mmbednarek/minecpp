@@ -1,8 +1,8 @@
 target_sources(
   minecpp_service_discovery PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/cache.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/cache.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/service.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/service.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cache.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Cache.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Service.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/Service.h
 )
