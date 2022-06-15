@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-file="./include/minecpp/entity/entity.h"
+file=$1
 
 base=$(basename $file)
 dir=$(dirname $file)
@@ -10,7 +10,7 @@ changed_base=$(./to_pascal.py $base)
 source_directories=(
   api
   include
-  lib
+  library
   test
   service
   tool

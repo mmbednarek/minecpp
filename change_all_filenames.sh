@@ -3,7 +3,7 @@
 source_directories=(
   api
   include
-  lib
+  library
   test
   service
   tool
