@@ -16,8 +16,10 @@ source_directories=(
   tool
 )
 
+mv "$dir/$base" "$dir/changed_base"
+
 for dir in "${source_directories[@]}"; do
   while IFS= read -r file; do
-    echo "chaining $file"
+    sed  -i "s/$base/$changed_base/g" $file
   done <  <(find $dir -regex '.+\.h' -or -regex '.+\.cpp' -or -regex '.+\.hpp' -or -regex '.+\.cc' -or -regex '.+\.proto' -or -regex '.+\.nbt' -or -name 'CMakeLists.txt')
 done
