@@ -1,0 +1,15 @@
+SET(MINECPP_GAME_WORLDGEN_POPULATION_INCLUDE_DIR ${MINECPP_GAME_WORLDGEN_INCLUDE_DIR}/population)
+
+target_sources(minecpp_game PRIVATE
+        # Header files
+        ${MINECPP_GAME_WORLDGEN_POPULATION_INCLUDE_DIR}/chunk.h
+        ${MINECPP_GAME_WORLDGEN_POPULATION_INCLUDE_DIR}/object.h
+        ${MINECPP_GAME_WORLDGEN_POPULATION_INCLUDE_DIR}/population.h
+        ${MINECPP_GAME_WORLDGEN_POPULATION_INCLUDE_DIR}/tree.h
+
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/chunk.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/object.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/population.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tree.cpp
+)
