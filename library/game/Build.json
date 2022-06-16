@@ -1,0 +1,15 @@
+{
+  "name": "minecpp_game",
+  "dependencies": {
+    "public": [
+      "minecpp_utils",
+      "minecpp_nbt",
+      "minecpp_api_nbt",
+      "minecpp_error",
+      "minecpp_squeeze",
+      "spdlog",
+      "${Protobuf_LIBRARIES}",
+      "grpc++"
+    ]
+  }
+}
