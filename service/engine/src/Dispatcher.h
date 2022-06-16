@@ -25,7 +25,7 @@ class Dispatcher : public minecpp::game::Notifier
    void load_terrain(player::Id player_id, const game::ChunkPosition &central_chunk,
                      std::vector<minecpp::game::ChunkPosition> coords) override;
    void transfer_player(player::Id player_id, boost::uuids::uuid target_engine);
-   void update_block(game::BlockPosition block, game::BlockState state) override;
+   void update_block(game::BlockPosition block, game::BlockStateId state) override;
 
    void entity_move(player::Id player_id, entity::Id entity_id, const entity::Movement &movement,
                     const entity::Rotation &rotation) override;

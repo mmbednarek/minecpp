@@ -70,7 +70,7 @@ void Chunk::create_empty_section(int8_t sec)
    };
 }
 
-void Chunk::set_block(int x, int y, int z, game::BlockState state)
+void Chunk::set_block(int x, int y, int z, game::BlockStateId state)
 {
    auto sec  = static_cast<std::int8_t>(y / 16);
    auto iter = m_sections.find(sec);
@@ -95,7 +95,7 @@ void Chunk::set_block(int x, int y, int z, game::BlockState state)
    set_sky_light(x, y, z, 15);
 }
 
-game::BlockState Chunk::get_block(int x, int y, int z)
+game::BlockStateId Chunk::get_block(int x, int y, int z)
 {
    auto section_id = static_cast<int8_t>(y / 16);
 

@@ -1,12 +1,18 @@
 #pragma once
 #include <mb/int.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/util/Uuid.h>
 #include <minecpp/util/Vec.h>
+#include <string_view>
 
 namespace minecpp::game {
 
-using ChunkHash = mb::u64;
-using SlotId    = mb::u32;
+using ChunkHash    = mb::u64;
+using SlotId       = mb::u32;
+using PlayerId     = minecpp::util::uuid;
+using BlockId      = int;
+using EntityId     = mb::u32;
+using BlockStateId = mb::u32;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
 constexpr int g_chunk_width       = 16;
@@ -45,6 +51,34 @@ enum class Face
    West   = 4,
    East   = 5,
 };
+
+constexpr std::array<Face, 6> g_faces{
+        Face::Bottom, Face::Top, Face::North, Face::South, Face::West, Face::East,
+};
+
+[[nodiscard]] constexpr std::string_view to_string(Face face)
+{
+   switch (face) {
+   case Face::Bottom: return "bottom";
+   case Face::Top: return "top";
+   case Face::North: return "north";
+   case Face::South: return "south";
+   case Face::West: return "west";
+   case Face::East: return "east";
+   }
+   return "";
+}
+
+[[nodiscard]] constexpr Face opposite_face(Face face) {
+   switch(face) {
+   case Face::Bottom: return Face::Top;
+   case Face::Top: return Face::Bottom;
+   case Face::North: return Face::South;
+   case Face::South: return Face::North;
+   case Face::West: return Face::East;
+   case Face::East: return Face::West;
+   }
+}
 
 [[nodiscard]] constexpr proto::common::v1::Face face_to_proto(Face face)
 {
@@ -162,16 +196,19 @@ struct BlockPosition
       }
       return {x, y, z};
    }
+
+   [[nodiscard]] constexpr util::Vec3 to_vec3()
+   {
+      return {static_cast<double>(x), static_cast<double>(y), static_cast<double>(z)};
+   }
 };
 
-using BlockState = mb::u32;
-
-[[nodiscard]] inline BlockState block_state_from_proto(const proto::common::v1::BlockState &state)
+[[nodiscard]] inline BlockStateId block_state_from_proto(const proto::common::v1::BlockState &state)
 {
-   return static_cast<BlockState>(state.block_state());
+   return static_cast<BlockStateId>(state.block_state());
 }
 
-[[nodiscard]] inline proto::common::v1::BlockState block_state_to_proto(BlockState state)
+[[nodiscard]] inline proto::common::v1::BlockState block_state_to_proto(BlockStateId state)
 {
    proto::common::v1::BlockState proto;
    proto.set_block_state(state);
@@ -238,6 +275,68 @@ constexpr ChunkPosition BlockPosition::chunk_position() const
 {
    return {x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1),
            z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1)};
+}
+
+enum class WoodType
+{
+   Oak,
+   Spruce,
+   Birch,
+   Jungle,
+   Acacia,
+   DarkOak,
+   Mangrove
+};
+
+constexpr std::array<WoodType, 7> g_wood_types{WoodType::Oak,     WoodType::Spruce, WoodType::Birch,
+                                               WoodType::Jungle,  WoodType::Acacia, WoodType::DarkOak,
+                                               WoodType::Mangrove};
+
+[[nodiscard]] constexpr std::string_view to_string(WoodType wood_type)
+{
+   switch (wood_type) {
+   case WoodType::Oak: return "oak";
+   case WoodType::Spruce: return "spruce";
+   case WoodType::Birch: return "birch";
+   case WoodType::Jungle: return "jungle";
+   case WoodType::Acacia: return "acacia";
+   case WoodType::DarkOak: return "dark_oak";
+   case WoodType::Mangrove: return "mangrove";
+   }
+   return "";
+}
+
+enum class Direction
+{
+   West,
+   East,
+   South,
+   North
+};
+
+[[nodiscard]] constexpr std::string_view to_string(Direction direction)
+{
+   switch (direction) {
+   case Direction::West: return "west";
+   case Direction::East: return "east";
+   case Direction::South: return "south";
+   case Direction::North: return "north";
+   }
+   return "";
+}
+
+[[nodiscard]] constexpr Direction direction_from_vec2(const util::Vec2 &vec)
+{
+   bool x_dominant = std::abs(vec.x) > std::abs(vec.z);
+   if (x_dominant) {
+      if (vec.x > 0.0)
+         return Direction::East;
+      return Direction::West;
+   }
+
+   if (vec.z > 0.0)
+      return Direction::South;
+   return Direction::North;
 }
 
 }// namespace minecpp::game

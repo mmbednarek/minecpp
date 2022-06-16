@@ -89,7 +89,8 @@ class Block
       m_stats.material = &Material::Rock;
    }
 
-   std::optional<State> find_state(std::string_view state) const;
+   [[nodiscard]] std::optional<State> find_state(std::string_view state) const;
+   [[nodiscard]] bool has_state(std::string_view state) const;
 
    [[nodiscard]] std::size_t state_count() const;
 

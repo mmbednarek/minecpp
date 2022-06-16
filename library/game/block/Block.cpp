@@ -21,4 +21,9 @@ std::optional<State> Block::find_state(std::string_view target) const
    return *it;
 }
 
+bool Block::has_state(std::string_view state) const
+{
+   return find_state(state) != std::nullopt;
+}
+
 }// namespace minecpp::game::block

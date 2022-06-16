@@ -83,7 +83,7 @@ mb::result<std::vector<uint8_t>> Regions::read_chunk(int x, int z)
    minecpp::region::RegionFile r(region.m_file);
    auto res = r.load_chunk(x, z);
    if (res.has_failed()) {
-      return mb::error("could not load chunk");
+      return mb::error("could not init chunk");
    }
    return std::move(res.unwrap());
 }
@@ -95,7 +95,7 @@ mb::result<mb::empty> Regions::write_chunk(mb::i32 x, mb::i32 z, const mb::view<
 
    minecpp::region::RegionFile r(region.m_file);
    if (auto err = r.write_data(x, z, chunk_data); err != region::WriteError::Ok) {
-      return mb::error("could not load region");
+      return mb::error("could not init region");
    }
    return mb::ok;
 }

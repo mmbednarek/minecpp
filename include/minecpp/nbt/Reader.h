@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <cstring>
 #include <functional>
-#include <minecpp/error/Result.h>
+#include <mb/result.h>
 #include <minecpp/util/Concepts.h>
 #include <minecpp/util/Format.h>
 #include <minecpp/util/Reader.h>
@@ -56,8 +56,8 @@ class Reader : private minecpp::util::Reader
       }
    }
 
-   result<empty>
-   try_read_compound(std::function<result<empty>(Reader &r, TagId type, std::string key)> for_value);
+   mb::emptyres
+   try_read_compound(std::function<mb::emptyres(Reader &r, TagId type, std::string key)> for_value);
    void read_list(std::function<void(Reader &)> for_elem);
    void foreach_long(std::function<void(long long value)> for_elem);
 

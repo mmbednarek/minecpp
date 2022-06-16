@@ -1,0 +1,33 @@
+#pragma once
+#include "block/Default.h"
+#include "BlockController.hpp"
+#include <map>
+#include <memory>
+#include <minecpp/game/World.h>
+#include <minecpp/player/Id.h>
+
+namespace minecpp::controller {
+
+class BlockManager
+{
+   std::map<game::BlockId, std::unique_ptr<BlockController>> m_controllers;
+   block::Default m_default_controller;
+
+ public:
+   bool on_player_place_block(game::World &world, player::Id player_id, game::BlockId block_id,
+                              game::BlockPosition position, game::Face face);
+
+   std::optional<game::BlockStateId> on_neighbour_change(game::World &world, game::BlockStateId block_state_id,
+                            game::BlockStateId neighbour_block_state_id, game::BlockPosition position,
+                            game::Face face);
+
+   BlockController &controller(game::BlockId block_id);
+
+   template<typename TController, typename... TArgs>
+   void register_controller(game::BlockId block_id, TArgs &&...args)
+   {
+      m_controllers[block_id] = std::make_unique<TController>(std::forward<TArgs>(args)...);
+   }
+};
+
+}// namespace minecpp::controller

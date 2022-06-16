@@ -116,16 +116,13 @@ void Reader::check_signature()
    }
 }
 
-result<empty> Reader::try_read_compound(std::function<result<empty>(Reader &, TagId, std::string)> for_value)
+mb::emptyres Reader::try_read_compound(std::function<mb::emptyres(Reader &, TagId, std::string)> for_value)
 {
    for (;;) {
       auto header = peek_tag();
       if (header.id == nbt::TagId::End)
-         return result_ok;
-      auto res = for_value(*this, header.id, header.name);
-      if (!res.ok()) {
-         return res.err();
-      }
+         return mb::ok;
+      MB_TRY(for_value(*this, header.id, header.name));
    }
 }
 

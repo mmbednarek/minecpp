@@ -24,7 +24,7 @@ auto main() -> int
 
    auto load_repo_res = minecpp::repository::load_repository_from_file(repo_file);
    if (!load_repo_res.ok()) {
-      spdlog::error("could not load repository: {}", load_repo_res.err()->msg());
+      spdlog::error("could not init repository: {}", load_repo_res.err()->msg());
       return 1;
    }
 
@@ -37,8 +37,9 @@ auto main() -> int
 
    EventManager<BidiStream> manager;
    Dispatcher dispatcher(manager);
-   World world(boost::uuids::uuid(), *chunk_storage, dispatcher, players);
-   EventHandler handler(dispatcher, players, entities, world);
+   minecpp::controller::BlockManager block_manager;
+   World world(boost::uuids::uuid(), *chunk_storage, dispatcher, players, entities, block_manager);
+   EventHandler handler(dispatcher, players, entities, world, block_manager);
 
    ApiHandler api_handler(handler, manager);
    using BidiServer = minecpp::grpc::server::BidiServer<

@@ -32,8 +32,8 @@ struct Chunk
 
    void as_proto(minecpp::proto::chunk::v1::Chunk *chunk);
    void create_empty_section(int8_t sec);
-   void set_block(int x, int y, int z, game::BlockState state);
-   game::BlockState get_block(int x, int y, int z);
+   void set_block(int x, int y, int z, game::BlockStateId state);
+   game::BlockStateId get_block(int x, int y, int z);
    uint8_t get_block_light(int x, int y, int z);
    void set_block_light(int x, int y, int z, uint8_t value);
    void set_sky_light(int x, int y, int z, uint8_t value);

@@ -3,7 +3,7 @@ project(minecpp)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Wno-gnu")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Wno-unknown-pragmas")
 
 option(USE_LOCAL_GPRC "Compile using local gRPC and Protobuf libraries" ON)
 

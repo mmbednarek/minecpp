@@ -39,7 +39,7 @@ mb::emptyres load_repository_from_file(std::string_view filename)
       std::vector<game::State> block_states;
       int block_state_count = 1;
       for (const auto &tag : block.block.state_tags) {
-         auto state = MB_TRY(states.find_block_by_tag(tag));
+         auto state = MB_TRY(states.find_by_tag(tag));
          block_states.push_back(state);
          block_state_count *= state.value_count();
       }
@@ -87,6 +87,36 @@ int encode_block_by_tag(std::string_view tag)
    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
+std::optional<game::BlockStateId> set_state(game::BlockId block_id, int block_state, std::string_view name,
+                                            std::string_view value)
+{
+   auto block = Block::the().get_by_id(block_id);
+   if (block.has_failed())
+      return std::nullopt;
+
+   std::vector<std::pair<game::BlockStateId, game::BlockStateId>> values;
+   values.reserve(block->state_count());
+
+   for (auto const &[state, state_index] : block->state_range(block_state)) {
+      if (state.name() != name) {
+         values.emplace_back(static_cast<game::BlockStateId>(state.value_count()),
+                             static_cast<game::BlockStateId>(state_index));
+         continue;
+      }
+
+      values.emplace_back(static_cast<game::BlockStateId>(state.value_count()),
+                          static_cast<game::BlockStateId>(state.index_from_value(value)));
+   }
+
+   game::BlockStateId state_id{0};
+   std::for_each(values.crbegin(), values.crend(), [&state_id](auto pair) {
+     state_id *= pair.first;
+     state_id += pair.second;
+   });
+
+   return StateManager::the().block_base_state(block_id) + state_id;
+}
+
 mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename)
 {
    std::ifstream in_file(filename.data());
@@ -94,6 +124,32 @@ mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::s
       return mb::error("could not open file");
    }
    return std::move(minecpp::nbt::repository::v1::Registry::deserialize(in_file));
+}
+
+BlockIds &BlockIds::the()
+{
+   static BlockIds instance{};
+   if (not instance.m_initialised) {
+      instance.init();
+   }
+   return instance;
+}
+
+#define REGISTER_BLOCK_ID(name) {\
+      auto res = Block::the().find_id_by_tag("minecraft:" #name); \
+      if (res.has_failed()) { \
+      return; \
+      } \
+      (name) = *res;                 \
+}
+
+void BlockIds::init()
+{
+   m_initialised = false;
+   REGISTER_BLOCK_ID(air);
+   REGISTER_BLOCK_ID(water);
+
+   m_initialised = true;
 }
 
 }// namespace minecpp::repository

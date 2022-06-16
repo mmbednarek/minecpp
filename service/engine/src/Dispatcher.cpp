@@ -88,7 +88,7 @@ void Dispatcher::remove_player(player::Id player_id, mb::u32 entity_id)
    m_events.send_to_all(remove_player);
 }
 
-void Dispatcher::update_block(minecpp::game::BlockPosition block, game::BlockState state)
+void Dispatcher::update_block(minecpp::game::BlockPosition block, game::BlockStateId state)
 {
    clientbound_v1::UpdateBlock update_block;
    update_block.set_block_position(block.as_long());

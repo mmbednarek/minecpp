@@ -13,7 +13,7 @@ auto main() -> int
 
    auto load_repo_res = minecpp::repository::load_repository_from_file(repo_file);
    if (!load_repo_res.ok()) {
-      spdlog::error("could not load repository: {}", load_repo_res.err()->msg());
+      spdlog::error("could not init repository: {}", load_repo_res.err()->msg());
       return 1;
    }
 

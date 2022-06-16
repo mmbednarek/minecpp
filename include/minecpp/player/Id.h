@@ -1,11 +1,11 @@
 #pragma once
 #include <boost/uuid/uuid_io.hpp>
+#include <minecpp/game/Game.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
-#include <minecpp/util/Uuid.h>
 
 namespace minecpp::player {
 
-using Id = minecpp::util::uuid;
+using Id = game::PlayerId;
 
 inline Id read_id_from_proto(const proto::player::v1::PlayerId &id)
 {

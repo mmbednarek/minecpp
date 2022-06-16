@@ -4,10 +4,13 @@
 
 namespace minecpp::service::engine {
 
-World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager) :
+World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager,
+             EntityManager &entity_manager, controller::BlockManager &block_controller) :
     service(service),
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
+    m_entity_manager(entity_manager),
+    m_block_controller(block_controller),
     engine_id(engine_id)
 {
 }
@@ -79,7 +82,7 @@ mb::result<int> World::height_at(int x, int z)
    return res.height();
 }
 
-mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::BlockState state)
+mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
 {
    ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::SetBlockRequest req;
@@ -92,11 +95,23 @@ mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::Blo
    if (!status.ok()) {
       return mb::error(status.error_message());
    }
+
    m_dispatcher.update_block(pos, state);
+
    return mb::ok;
 }
 
-mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos)
+mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::BlockStateId state)
+{
+   if (auto res = set_block_no_notify(pos, state); res.has_failed()) {
+      return std::move(res.err());
+   }
+
+   notify_neighbours(pos, state);
+   return mb::ok;
+}
+
+mb::result<game::BlockStateId> World::get_block(const game::BlockPosition &pos)
 {
    ::grpc::ClientContext ctx;
 
@@ -114,6 +129,33 @@ mb::result<game::BlockState> World::get_block(const game::BlockPosition &pos)
 player::Provider &World::players()
 {
    return m_player_manager;
+}
+
+EntityManager &World::entities()
+{
+   return m_entity_manager;
+}
+
+void World::notify_neighbours(game::BlockPosition position, game::BlockStateId state)
+{
+   for (auto face : game::g_faces) {
+      auto neighbour_pos = position.neighbour_at(face);
+
+      auto old_neighbour_state = get_block(neighbour_pos);
+      if (old_neighbour_state.has_failed())
+         continue;
+
+      spdlog::info("calling neighbour change");
+
+      auto new_neighbour_state = m_block_controller.on_neighbour_change(
+              *this, *old_neighbour_state, state, neighbour_pos, game::opposite_face(face));
+      if (not new_neighbour_state.has_value())
+         continue;
+
+      if (*new_neighbour_state != *old_neighbour_state) {
+         set_block_no_notify(neighbour_pos, *new_neighbour_state);
+      }
+   }
 }
 
 }// namespace minecpp::service::engine

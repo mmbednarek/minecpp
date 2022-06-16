@@ -23,12 +23,12 @@ class StateManager
 {
    static StateManager g_instance;
 
-   std::map<game::BlockState, int> m_state_to_block_id;
-   std::map<int, game::BlockState> m_block_id_to_state;
-   game::BlockState m_top_state;
+   std::map<game::BlockStateId, game::BlockId> m_state_to_block_id;
+   std::map<game::BlockId, game::BlockStateId> m_block_id_to_state;
+   game::BlockStateId m_top_state;
 
  public:
-   std::tuple<int, int> parse_block_id(game::BlockState block_id);
+   std::tuple<int, int> parse_block_id(game::BlockStateId block_id);
 
    [[nodiscard]] static constexpr StateManager &the()
    {
@@ -39,12 +39,12 @@ class StateManager
 
    void add_state(int block_id, int state_count)
    {
-      m_state_to_block_id[static_cast<int>(m_top_state)] = block_id;
+      m_state_to_block_id[m_top_state] = block_id;
       m_block_id_to_state[block_id]                      = m_top_state;
-      m_top_state += static_cast<game::BlockState>(state_count);
+      m_top_state += static_cast<game::BlockStateId>(state_count);
    }
 
-   [[nodiscard]] game::BlockState block_base_state(int block_id) const
+   [[nodiscard]] game::BlockStateId block_base_state(game::BlockId block_id) const
    {
       return m_block_id_to_state.at(block_id);
    }

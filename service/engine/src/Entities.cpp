@@ -2,15 +2,15 @@
 
 namespace minecpp::service::engine {
 
-EntityId EntityManager::spawn(Entity e)
+game::EntityId EntityManager::spawn(Entity e)
 {
-   EntityId id = m_entities.size();
+   auto id = static_cast<game::EntityId>(m_entities.size());
    e.set_id(id);
    m_entities.emplace_back(std::move(e));
    return id;
 }
 
-mb::result<Entity &> EntityManager::get_entity(EntityId id)
+mb::result<Entity &> EntityManager::get_entity(game::EntityId id)
 {
    if (id >= m_entities.size()) {
       return mb::error("invalid entity id");

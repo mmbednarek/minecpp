@@ -7,6 +7,9 @@
 #include <minecpp/command/core/Echo.h>
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
+#include <minecpp/controller/block/Door.h>
+#include <minecpp/controller/block/Fence.h>
+#include <minecpp/controller/block/Wood.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/World.h>
 #include <minecpp/repository/Block.h>
@@ -16,13 +19,15 @@
 namespace minecpp::service::engine {
 
 EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager,
-                           EntityManager &entity_manager, game::World &world) :
+                           EntityManager &entity_manager, game::World &world,
+                           controller::BlockManager &block_manager) :
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
     m_entity_manager(entity_manager),
     m_world(world),
     m_command_std_stream(m_dispatcher),
-    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream)
+    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream),
+    m_block_manager(block_manager)
 {
    m_command_manager.register_command<command::core::Echo>("echo");
    m_command_manager.register_command<command::core::Give>("give", m_player_manager);
@@ -63,6 +68,41 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    m_command_manager.register_command<command::core::Format>("yellow-bold", format::Color::Yellow, true);
    m_command_manager.register_command<command::core::Format>("white", format::Color::White, false);
    m_command_manager.register_command<command::core::Format>("white-bold", format::Color::White, true);
+
+   for (auto wood_type : game::g_wood_types) {
+      if (auto wood_id = repository::Block::the().find_id_by_tag(
+                  fmt::format("minecraft:{}_wood", game::to_string(wood_type)));
+          wood_id.ok()) {
+         m_block_manager.register_controller<controller::block::Wood>(*wood_id);
+      } else {
+         spdlog::error("no such block id minecraft:{}_wood", game::to_string(wood_type));
+      }
+
+      if (auto log_id = repository::Block::the().find_id_by_tag(
+                  fmt::format("minecraft:{}_log", game::to_string(wood_type)));
+          log_id.ok()) {
+         m_block_manager.register_controller<controller::block::Wood>(*log_id);
+      } else {
+         spdlog::error("no such block id minecraft:{}_log", game::to_string(wood_type));
+      }
+
+      if (auto door_id = repository::Block::the().find_id_by_tag(
+                  fmt::format("minecraft:{}_door", game::to_string(wood_type)));
+          door_id.ok()) {
+         m_block_manager.register_controller<controller::block::Door>(*door_id);
+      } else {
+         spdlog::error("no such block id minecraft:{}_door", game::to_string(wood_type));
+      }
+
+
+      if (auto fence_id = repository::Block::the().find_id_by_tag(
+                  fmt::format("minecraft:{}_fence", game::to_string(wood_type)));
+          fence_id.ok()) {
+         m_block_manager.register_controller<controller::block::Fence>(*fence_id);
+      } else {
+         spdlog::error("no such block id minecraft:{}_fence", game::to_string(wood_type));
+      }
+   }
 }
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id)

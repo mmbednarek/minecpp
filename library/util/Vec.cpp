@@ -20,7 +20,7 @@ Vec2 Vec2::operator+(Vec2 other) const
 
 Vec2 Vec2::operator-(Vec2 other) const
 {
-   return Vec2(x - other.x, z - other.z);
+   return {x - other.x, z - other.z};
 }
 
 void Vec3::mul(double x, double y, double z)
@@ -32,22 +32,22 @@ void Vec3::mul(double x, double y, double z)
 
 Vec3 Vec3::operator*(double value) const
 {
-   return Vec3(x * value, y * value, z * value);
+   return {x * value, y * value, z * value};
 }
 
 Vec3 Vec3::operator/(double value) const
 {
-   return Vec3(x / value, y / value, z / value);
+   return {x / value, y / value, z / value};
 }
 
 Vec3 Vec3::operator-(Vec3 v) const
 {
-   return Vec3(x - v.x, y - v.y, z - v.z);
+   return {x - v.x, y - v.y, z - v.z};
 }
 
 Vec2 Vec3::flat() const
 {
-   return Vec2(x, z);
+   return {x, z};
 }
 
 Vec3 Vec3::truncate() const
