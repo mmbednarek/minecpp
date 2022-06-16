@@ -1,0 +1,14 @@
+set(MINECPP_CONTROLLER_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/controller)
+
+target_sources(minecpp_controller PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/BlockManager.cpp
+
+        # Header files
+        ${MINECPP_CONTROLLER_INCLUDE_DIR}/BlockController.hpp
+        ${MINECPP_CONTROLLER_INCLUDE_DIR}/BlockManager.h
+)
+
+# Subdirectories
+add_subdirectory("block")
+

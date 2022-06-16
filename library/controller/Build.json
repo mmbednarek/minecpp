@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_controller",
+  "dependencies": {
+    "public": [
+      "minecpp_game",
+      "minecpp_repository"
+    ]
+  }
+}

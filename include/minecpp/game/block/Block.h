@@ -39,9 +39,30 @@ class Block
  public:
    struct StateIterator
    {
-      typename std::vector<game::State>::const_reverse_iterator it;
+      using vector_iterator   = typename std::vector<game::State>::const_reverse_iterator;
+      using iterator_category = std::forward_iterator_tag;
+      using difference_type   = std::ptrdiff_t;
+      using value_type        = std::pair<const game::State &, int>;
+      using pointer           = value_type *;
+      using reference         = value_type &;
+
+      vector_iterator it;
       int state;
       const Block &block;
+
+      StateIterator(int state, const Block &block) :
+          it{block.m_states.crbegin()},
+          state{state},
+          block{block}
+      {
+      }
+
+      explicit StateIterator(const Block &block) :
+          it{block.m_states.crend()},
+          state{0},
+          block{block}
+      {
+      }
 
       StateIterator &operator++()
       {
@@ -50,14 +71,25 @@ class Block
          return *this;
       }
 
-      [[nodiscard]] std::tuple<const game::State &, int> operator*() const
+      [[nodiscard]] value_type operator*() const
       {
          return {*it, state % it->value_count()};
+      }
+
+      [[nodiscard]] auto value() const
+      {
+         auto current_value = operator*();
+         return current_value.first.value_from_index(current_value.second);
       }
 
       bool operator==(const StateIterator &rhs) const
       {
          return it == rhs.it;
+      }
+
+      bool operator!=(const StateIterator &rhs) const
+      {
+         return it != rhs.it;
       }
    };
 
@@ -68,12 +100,12 @@ class Block
 
       StateIterator begin()
       {
-         return StateIterator{block.m_states.crbegin(), state, block};
+         return StateIterator{state, block};
       }
 
       StateIterator end()
       {
-         return StateIterator{block.m_states.crend(), 0, block};
+         return StateIterator{block};
       }
    };
 
@@ -91,6 +123,7 @@ class Block
 
    [[nodiscard]] std::optional<State> find_state(std::string_view state) const;
    [[nodiscard]] bool has_state(std::string_view state) const;
+   [[nodiscard]] std::string state_value(std::string_view name, int state_id) const;
 
    [[nodiscard]] std::size_t state_count() const;
 

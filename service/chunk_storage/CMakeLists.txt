@@ -12,7 +12,7 @@ target_link_libraries(
   minecpp_region
   minecpp_api_proto
   minecpp_error
-  minecpp_rand
+  minecpp_random
   minecpp_repository
   grpc++
   Boost::system

@@ -9,6 +9,7 @@
 #include <minecpp/command/core/Give.h>
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
+#include <minecpp/controller/block/Stairs.h>
 #include <minecpp/controller/block/Wood.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/World.h>
@@ -94,7 +95,6 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
          spdlog::error("no such block id minecraft:{}_door", game::to_string(wood_type));
       }
 
-
       if (auto fence_id = repository::Block::the().find_id_by_tag(
                   fmt::format("minecraft:{}_fence", game::to_string(wood_type)));
           fence_id.ok()) {
@@ -102,6 +102,24 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
       } else {
          spdlog::error("no such block id minecraft:{}_fence", game::to_string(wood_type));
       }
+
+      if (auto stairs_id = repository::Block::the().find_id_by_tag(
+                  fmt::format("minecraft:{}_stairs", game::to_string(wood_type)));
+          stairs_id.ok()) {
+         m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
+      } else {
+         spdlog::error("no such block id minecraft:{}_stairs", game::to_string(wood_type));
+      }
+   }
+
+   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:stone_stairs"); stairs_id.ok()) {
+      m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
+   }
+   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:cobblestone_stairs"); stairs_id.ok()) {
+      m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
+   }
+   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:stone_brick_stairs"); stairs_id.ok()) {
+      m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
    }
 }
 

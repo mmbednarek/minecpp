@@ -64,4 +64,18 @@ bool Default::verify_source_block(game::World &world, game::BlockPosition pos)
    return source_block_type.has_value();
 }
 
+std::optional<game::Direction> Default::find_player_direction(game::World &world, game::PlayerId player_id, game::BlockPosition position)
+{
+   auto player = world.players().get_player(player_id);
+   if (player.has_failed())
+      return std::nullopt;
+
+   auto player_entity = world.entities().get_entity(player->entity_id());
+   if (player_entity.has_failed())
+      return std::nullopt;
+
+   const auto block_pos = position.to_vec3().flat();
+   return game::direction_from_vec2(block_pos - player_entity->get_pos().flat());
+}
+
 }// namespace minecpp::controller::block

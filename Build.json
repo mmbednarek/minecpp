@@ -1,5 +1,7 @@
 {
   "libraries": [
+    "controller",
+    "format",
     "game"
   ]
 }
