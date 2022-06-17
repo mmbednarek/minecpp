@@ -15,7 +15,7 @@ add_library(minecpp_command
         ${MINECPP_COMMAND_INCLUDE_DIR}/StandardStream.h
 )
 
-target_link_libraries(minecpp_command PRIVATE libmb fmt minecpp_lexer minecpp_format)
+target_link_libraries(minecpp_command PRIVATE libmb fmt minecpp_lexer minecpp_format minecpp_game)
 
 add_subdirectory(ast)
 add_subdirectory(core)

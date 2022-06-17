@@ -1,4 +1,4 @@
-set(MINECPP_GAME_BLOCK_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/game/block)
+set(MINECPP_GAME_BLOCK_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game/block)
 
 target_sources(minecpp_game PUBLIC
         # Source files

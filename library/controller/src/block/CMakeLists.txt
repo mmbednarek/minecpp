@@ -1,4 +1,4 @@
-set(MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/controller/block)
+set(MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR ${MINECPP_CONTROLLER_DIR}/include/minecpp/controller/block)
 
 target_sources(minecpp_controller PUBLIC
         # Source files

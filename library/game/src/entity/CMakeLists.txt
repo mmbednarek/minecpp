@@ -1,4 +1,4 @@
-set(MINECPP_GAME_ENTITY_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/game/entity)
+set(MINECPP_GAME_ENTITY_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game/entity)
 
 target_sources(minecpp_game PUBLIC
         # Source files

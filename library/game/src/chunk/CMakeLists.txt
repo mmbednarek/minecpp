@@ -1,4 +1,4 @@
-set(MINECPP_GAME_CHUNK_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/game/chunk)
+set(MINECPP_GAME_CHUNK_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game/chunk)
 
 target_sources(minecpp_game PUBLIC
         # Source files

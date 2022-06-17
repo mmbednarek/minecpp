@@ -1,2 +1,2 @@
 add_library(minecpp_event Event.cpp)
-target_link_libraries(minecpp_event minecpp_api_proto minecpp_utils)
+target_link_libraries(minecpp_event PRIVATE minecpp_api_proto minecpp_utils minecpp_player)

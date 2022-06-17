@@ -10,4 +10,4 @@ add_library(minecpp_player
         Tracking.cpp
         Inventory.cpp
 )
-target_link_libraries(minecpp_player PUBLIC minecpp_utils spdlog libmb)
+target_link_libraries(minecpp_player PUBLIC minecpp_utils minecpp_game spdlog libmb)

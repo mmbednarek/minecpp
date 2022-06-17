@@ -6,11 +6,11 @@ sublib=$3
 
 sublibs=$(find "library/$libname/src$sublib" -mindepth 1 -maxdepth 1 -type d | sort)
 source_files=$(find "library/$libname/src$sublib" -maxdepth 1  -name "*.cpp" | sort)
-include_files=$(find "include/minecpp/${libname}${sublib}" -maxdepth 1  -name "*.h" -or -name "*.hpp" | sort)
+include_files=$(find "library/$libname/include/minecpp/${libname}${sublib}" -maxdepth 1  -name "*.h" -or -name "*.hpp" | sort)
 
 sublib2=${sublib//\//_}
 
-echo "set(MINECPP_${libname^^}${sublib2^^}_INCLUDE_DIR \${MINECPP_INCLUDE_DIR}/$libname$sublib)"
+echo "set(MINECPP_${libname^^}${sublib2^^}_INCLUDE_DIR \${MINECPP_${libname^^}_DIR}/include/minecpp/$libname$sublib)"
 echo ""
 echo "target_sources($targetname PUBLIC"
 echo "        # Source files"

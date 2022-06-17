@@ -2,10 +2,11 @@
   "name": "minecpp_game",
   "dependencies": {
     "public": [
+      "minecpp_api_nbt",
+      "minecpp_chat",
+      "minecpp_error",
       "minecpp_utils",
       "minecpp_nbt",
-      "minecpp_api_nbt",
-      "minecpp_error",
       "minecpp_squeeze",
       "minecpp_random",
       "spdlog",

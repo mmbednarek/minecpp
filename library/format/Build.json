@@ -1,6 +1,4 @@
 {
   "name": "minecpp_format",
-  "dependencies": {
-    "public": []
-  }
+  "dependencies": {}
 }

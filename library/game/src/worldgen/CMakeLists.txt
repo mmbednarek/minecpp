@@ -1,4 +1,4 @@
-set(MINECPP_GAME_WORLDGEN_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/game/worldgen)
+set(MINECPP_GAME_WORLDGEN_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game/worldgen)
 
 target_sources(minecpp_game PUBLIC
         # Source files
