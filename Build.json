@@ -1,8 +1,22 @@
 {
   "libraries": [
+    "api/minecpp/nbt",
+    "api/minecpp/proto",
+    "chat",
     "controller",
+    "command",
+    "event",
     "format",
     "game",
+    "grpc",
+    "lexer",
+    "nbt",
+    "network",
+    "random",
+    "region",
+    "repository",
+    "squeezed",
+    "util",
     "world"
   ]
 }

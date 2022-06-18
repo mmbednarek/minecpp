@@ -1,0 +1,8 @@
+{
+  "name": "minecpp_random",
+  "dependencies": {
+    "private": [
+      "minecpp_utils"
+    ]
+  }
+}

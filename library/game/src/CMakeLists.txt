@@ -1,5 +1,4 @@
 set(MINECPP_GAME_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game)
-
 target_sources(minecpp_game PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Rules.cpp

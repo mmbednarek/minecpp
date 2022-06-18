@@ -1,0 +1,14 @@
+set(MINECPP_REPOSITORY_INCLUDE_DIR ${MINECPP_REPOSITORY_DIR}/include/minecpp/repository)
+target_sources(minecpp_repository PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Block.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Item.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/State.cpp
+
+        # Header files
+        ${MINECPP_REPOSITORY_INCLUDE_DIR}/Block.h
+        ${MINECPP_REPOSITORY_INCLUDE_DIR}/Item.h
+        ${MINECPP_REPOSITORY_INCLUDE_DIR}/Repository.h
+        ${MINECPP_REPOSITORY_INCLUDE_DIR}/State.h
+)
+

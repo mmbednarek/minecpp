@@ -13,13 +13,15 @@ add_subdirectory(api)
 target_link_libraries(
         minecpp_engine LINK_PUBLIC
         minecpp_controller
+        minecpp_event
+        minecpp_grpc
         minecpp_utils
         minecpp_game
         minecpp_api_proto
         minecpp_nbt
         minecpp_chat
         minecpp_format
-        minecpp_net
+        minecpp_network
         minecpp_repository
         minecpp_command
         minecpp_lexer

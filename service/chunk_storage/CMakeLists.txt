@@ -8,7 +8,7 @@ target_link_libraries(
   minecpp_chunk_storage LINK_PUBLIC
   minecpp_utils
   minecpp_game
-  minecpp_net
+  minecpp_network
   minecpp_region
   minecpp_api_proto
   minecpp_random

@@ -1,5 +1,4 @@
 set(MINECPP_WORLD_TERRAIN_INCLUDE_DIR ${MINECPP_WORLD_DIR}/include/minecpp/world/terrain)
-
 target_sources(minecpp_world PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Height.cpp
@@ -9,6 +8,4 @@ target_sources(minecpp_world PUBLIC
         ${MINECPP_WORLD_TERRAIN_INCLUDE_DIR}/Height.h
         ${MINECPP_WORLD_TERRAIN_INCLUDE_DIR}/Terrain.h
 )
-
-# Subdirectories
 

@@ -1,0 +1,10 @@
+set(MINECPP_SQUEEZED_INCLUDE_DIR ${MINECPP_SQUEEZED_DIR}/include/minecpp/squeezed)
+target_sources(minecpp_squeezed PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Vector.cpp
+
+        # Header files
+        ${MINECPP_SQUEEZED_INCLUDE_DIR}/Tiny.h
+        ${MINECPP_SQUEEZED_INCLUDE_DIR}/Vector.h
+)
+

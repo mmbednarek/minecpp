@@ -7,7 +7,7 @@
       "minecpp_chat",
       "minecpp_utils",
       "minecpp_nbt",
-      "minecpp_squeeze",
+      "minecpp_squeezed",
       "minecpp_random",
       "spdlog",
       "${Protobuf_LIBRARIES}",

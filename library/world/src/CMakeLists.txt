@@ -1,5 +1,4 @@
 set(MINECPP_WORLD_INCLUDE_DIR ${MINECPP_WORLD_DIR}/include/minecpp/world)
-
 target_sources(minecpp_world PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Chunk.cpp

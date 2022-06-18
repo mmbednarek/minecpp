@@ -1,0 +1,15 @@
+{
+  "name": "minecpp_command",
+  "dependencies": {
+    "public": [
+      "libmb",
+      "fmt",
+      "minecpp_lexer",
+      "minecpp_format",
+      "minecpp_game"
+    ],
+    "private": [
+      "minecpp_repository"
+    ]
+  }
+}

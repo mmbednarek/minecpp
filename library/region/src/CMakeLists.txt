@@ -1,0 +1,9 @@
+set(MINECPP_REGION_INCLUDE_DIR ${MINECPP_REGION_DIR}/include/minecpp/region)
+target_sources(minecpp_region PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
+
+        # Header files
+        ${MINECPP_REGION_INCLUDE_DIR}/File.h
+)
+

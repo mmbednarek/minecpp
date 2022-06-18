@@ -1,0 +1,10 @@
+set(MINECPP_EVENT_INCLUDE_DIR ${MINECPP_EVENT_DIR}/include/minecpp/event)
+target_sources(minecpp_event PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Event.cpp
+
+        # Header files
+        ${MINECPP_EVENT_INCLUDE_DIR}/Clientbound.h
+        ${MINECPP_EVENT_INCLUDE_DIR}/Serverbound.h
+)
+

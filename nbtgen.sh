@@ -1,7 +1,5 @@
 #!/bin/bash
 
-NBT_SOURCES_PATH="library/api/minecpp/nbt/api.cmake"
-
 source_files=()
 
 for scheme in $(find . -path "./api/minecpp/nbt/*.nbt"); do
@@ -10,8 +8,8 @@ for scheme in $(find . -path "./api/minecpp/nbt/*.nbt"); do
   suff=${scheme#"./api/minecpp/nbt/"}
   path=${suff%/*.nbt}
 
-  cc_path="library/api/minecpp/nbt/$path"
-  h_path="include/minecpp/nbt/$path"
+  cc_path="library/api/minecpp/nbt/src/$path"
+  h_path="library/api/minecpp/nbt/include/minecpp/nbt/$path"
   i_path="minecpp/nbt/$path"
 
   source_files+=($suff.cpp)
@@ -21,11 +19,3 @@ for scheme in $(find . -path "./api/minecpp/nbt/*.nbt"); do
 
   nbtc "$scheme" -s $cc_path -h $h_path -I $i_path
 done
-
-SOURCES_SCRIPT="set(nbt_api_sources \n"
-for source in ${source_files[@]}; do
-  SOURCES_SCRIPT+="   $source\n"
-done
-SOURCES_SCRIPT+=")"
-
-echo -ne $SOURCES_SCRIPT >$NBT_SOURCES_PATH

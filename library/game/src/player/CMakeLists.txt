@@ -1,5 +1,4 @@
 set(MINECPP_GAME_PLAYER_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game/player)
-
 target_sources(minecpp_game PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Inventory.cpp
@@ -13,6 +12,4 @@ target_sources(minecpp_game PUBLIC
         ${MINECPP_GAME_PLAYER_INCLUDE_DIR}/Provider.hpp
         ${MINECPP_GAME_PLAYER_INCLUDE_DIR}/Tracking.h
 )
-
-# Subdirectories
 

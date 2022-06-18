@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_grpc",
+  "header_only": true,
+  "dependencies": {
+    "interface": [
+      "minecpp_utils"
+    ]
+  }
+}

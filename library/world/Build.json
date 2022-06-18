@@ -2,8 +2,10 @@
   "name": "minecpp_world",
   "dependencies": {
     "public": [
+      "minecpp_api_proto",
       "minecpp_game",
-      "minecpp_repository"
+      "minecpp_repository",
+      "minecpp_squeezed"
     ]
   }
 }

@@ -1,2 +1,18 @@
-add_library(minecpp_utils File.cpp Vec.cpp Format.cpp Compression.cpp Packed.cpp Uuid.cpp Hex.cpp String.cpp Time.cpp Scriptw.cpp Loop.cpp Grpc.cpp)
-target_link_libraries(minecpp_utils Boost::iostreams fmt libmb grpc++ libmb)
+set(MINECPP_UTIL_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(minecpp_utils STATIC)
+
+# Public include headers
+target_include_directories(minecpp_utils PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_utils
+        LINK_PUBLIC
+        libmb
+        LINK_PRIVATE
+        Boost::iostreams
+        fmt
+        grpc++
+)

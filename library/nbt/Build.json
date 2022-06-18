@@ -1,0 +1,6 @@
+{
+  "name": "minecpp_nbt",
+  "dependencies": {
+    "public": ["minecpp_utils"]
+  }
+}

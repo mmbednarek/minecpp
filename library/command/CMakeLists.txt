@@ -1,21 +1,20 @@
-SET(MINECPP_COMMAND_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/command)
+set(MINECPP_COMMAND_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(minecpp_command
-        Command.cpp
-        Parser.cpp
-        RuntimeContext.cpp
-        CommandManager.cpp
-        StandardStream.cpp
-        ${MINECPP_COMMAND_INCLUDE_DIR}/Object.h
-        ${MINECPP_COMMAND_INCLUDE_DIR}/Command.h
-        ${MINECPP_COMMAND_INCLUDE_DIR}/Parser.h
-        ${MINECPP_COMMAND_INCLUDE_DIR}/RuntimeContext.h
-        ${MINECPP_COMMAND_INCLUDE_DIR}/Result.h
-        ${MINECPP_COMMAND_INCLUDE_DIR}/CommandManager.h
-        ${MINECPP_COMMAND_INCLUDE_DIR}/StandardStream.h
+add_library(minecpp_command STATIC)
+
+# Public include headers
+target_include_directories(minecpp_command PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_command
+        LINK_PUBLIC
+        libmb
+        fmt
+        minecpp_lexer
+        minecpp_format
+        minecpp_game
+        LINK_PRIVATE
+        minecpp_repository
 )
-
-target_link_libraries(minecpp_command PRIVATE libmb fmt minecpp_lexer minecpp_format minecpp_game)
-
-add_subdirectory(ast)
-add_subdirectory(core)

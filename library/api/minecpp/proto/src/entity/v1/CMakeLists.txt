@@ -1,0 +1,9 @@
+set(MINECPP_API_MINECPP_PROTO_ENTITY_V1_INCLUDE_DIR ${MINECPP_API_MINECPP_PROTO_DIR}/include/minecpp/proto/entity/v1)
+target_sources(minecpp_api_proto PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Entity.pb.cc
+
+        # Header files
+        ${MINECPP_API_MINECPP_PROTO_ENTITY_V1_INCLUDE_DIR}/Entity.pb.h
+)
+

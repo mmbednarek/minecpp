@@ -1,0 +1,11 @@
+set(MINECPP_CHAT_INCLUDE_DIR ${MINECPP_CHAT_DIR}/include/minecpp/chat)
+target_sources(minecpp_chat PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Chat.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Parser.cpp
+
+        # Header files
+        ${MINECPP_CHAT_INCLUDE_DIR}/Chat.h
+        ${MINECPP_CHAT_INCLUDE_DIR}/Parser.h
+)
+

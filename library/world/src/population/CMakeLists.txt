@@ -1,5 +1,4 @@
 set(MINECPP_WORLD_POPULATION_INCLUDE_DIR ${MINECPP_WORLD_DIR}/include/minecpp/world/population)
-
 target_sources(minecpp_world PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Chunk.cpp
@@ -13,6 +12,4 @@ target_sources(minecpp_world PUBLIC
         ${MINECPP_WORLD_POPULATION_INCLUDE_DIR}/Population.h
         ${MINECPP_WORLD_POPULATION_INCLUDE_DIR}/Tree.h
 )
-
-# Subdirectories
 

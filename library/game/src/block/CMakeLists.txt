@@ -1,5 +1,4 @@
 set(MINECPP_GAME_BLOCK_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game/block)
-
 target_sources(minecpp_game PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Block.cpp
@@ -10,6 +9,4 @@ target_sources(minecpp_game PUBLIC
         ${MINECPP_GAME_BLOCK_INCLUDE_DIR}/Color.h
         ${MINECPP_GAME_BLOCK_INCLUDE_DIR}/Material.h
 )
-
-# Subdirectories
 

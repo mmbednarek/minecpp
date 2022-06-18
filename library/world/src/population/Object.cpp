@@ -1,4 +1,3 @@
-#include "minecpp/command/Object.h"
 #include <minecpp/world/population/Object.h>
 #include <minecpp/world/population/Tree.h>
 #include <minecpp/repository/Block.h>

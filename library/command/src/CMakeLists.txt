@@ -1,0 +1,23 @@
+set(MINECPP_COMMAND_INCLUDE_DIR ${MINECPP_COMMAND_DIR}/include/minecpp/command)
+target_sources(minecpp_command PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Command.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/CommandManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/RuntimeContext.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/StandardStream.cpp
+
+        # Header files
+        ${MINECPP_COMMAND_INCLUDE_DIR}/Command.h
+        ${MINECPP_COMMAND_INCLUDE_DIR}/CommandManager.h
+        ${MINECPP_COMMAND_INCLUDE_DIR}/Object.h
+        ${MINECPP_COMMAND_INCLUDE_DIR}/Parser.h
+        ${MINECPP_COMMAND_INCLUDE_DIR}/Result.h
+        ${MINECPP_COMMAND_INCLUDE_DIR}/RuntimeContext.h
+        ${MINECPP_COMMAND_INCLUDE_DIR}/StandardStream.h
+)
+
+# Subdirectories
+add_subdirectory("ast")
+add_subdirectory("core")
+

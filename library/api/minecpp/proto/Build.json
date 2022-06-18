@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_api_proto",
+  "include_path": "minecpp/proto",
+  "dependencies": {
+    "public": [
+      "grpc++",
+      "protobuf",
+      "absl::base",
+      "absl::synchronization"
+    ]
+  }
+}

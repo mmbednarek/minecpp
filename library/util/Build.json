@@ -1,0 +1,13 @@
+{
+  "name": "minecpp_utils",
+  "dependencies": {
+    "public": [
+      "libmb"
+    ],
+    "private": [
+      "Boost::iostreams",
+      "fmt",
+      "grpc++"
+    ]
+  }
+}

@@ -1,9 +1,12 @@
-SET(MINECPP_LEXER_INCLUDE_DIR ${MINECPP_INCLUDE_DIR}/lexer)
+set(MINECPP_LEXER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(minecpp_lexer
-        Lexer.cpp
-        ${MINECPP_LEXER_INCLUDE_DIR}/Lexer.h
-        ${MINECPP_LEXER_INCLUDE_DIR}/Token.h
-        ${MINECPP_LEXER_INCLUDE_DIR}/Reader.h
-        ${MINECPP_LEXER_INCLUDE_DIR}/Error.h
+add_library(minecpp_lexer STATIC)
+
+# Public include headers
+target_include_directories(minecpp_lexer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_lexer
 )

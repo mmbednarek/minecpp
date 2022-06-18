@@ -1,2 +1,14 @@
-add_library(minecpp_nbt Exception.cpp Reader.cpp Writer.cpp Tag.cpp Parser.cpp)
-target_link_libraries(minecpp_nbt LINK_PUBLIC minecpp_utils)
+set(MINECPP_NBT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(minecpp_nbt STATIC)
+
+# Public include headers
+target_include_directories(minecpp_nbt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_nbt
+        LINK_PUBLIC
+        minecpp_utils
+)

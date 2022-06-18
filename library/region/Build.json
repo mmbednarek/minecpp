@@ -1,0 +1,13 @@
+{
+  "name": "minecpp_region",
+  "dependencies": {
+    "public": [
+      "Boost::iostreams",
+      "libmb",
+      "fmt"
+    ],
+    "private": [
+      "minecpp_utils"
+    ]
+  }
+}

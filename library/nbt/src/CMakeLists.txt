@@ -1,0 +1,17 @@
+set(MINECPP_NBT_INCLUDE_DIR ${MINECPP_NBT_DIR}/include/minecpp/nbt)
+target_sources(minecpp_nbt PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Exception.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Parser.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Reader.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Tag.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Writer.cpp
+
+        # Header files
+        ${MINECPP_NBT_INCLUDE_DIR}/Exception.h
+        ${MINECPP_NBT_INCLUDE_DIR}/Parser.h
+        ${MINECPP_NBT_INCLUDE_DIR}/Reader.h
+        ${MINECPP_NBT_INCLUDE_DIR}/Tag.h
+        ${MINECPP_NBT_INCLUDE_DIR}/Writer.h
+)
+

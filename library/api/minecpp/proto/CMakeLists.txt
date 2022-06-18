@@ -1,3 +1,17 @@
-include(api.cmake)
-add_library(minecpp_api_proto ${proto_api_sources})
-target_link_libraries(minecpp_api_proto LINK_PUBLIC grpc++ protobuf absl::base absl::synchronization)
+set(MINECPP_API_MINECPP_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(minecpp_api_proto STATIC)
+
+# Public include headers
+target_include_directories(minecpp_api_proto PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_api_proto
+        LINK_PUBLIC
+        grpc++
+        protobuf
+        absl::base
+        absl::synchronization
+)

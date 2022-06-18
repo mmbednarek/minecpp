@@ -1,2 +1,15 @@
-add_library(minecpp_squeeze Vector.cpp)
-target_link_libraries(minecpp_squeeze PUBLIC minecpp_utils libmb)
+set(MINECPP_SQUEEZED_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(minecpp_squeezed STATIC)
+
+# Public include headers
+target_include_directories(minecpp_squeezed PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_squeezed
+        LINK_PRIVATE
+        minecpp_utils
+        libmb
+)

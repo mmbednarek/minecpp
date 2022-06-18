@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_chat",
+  "dependencies": {
+    "public": [
+      "minecpp_format"
+    ],
+    "private": [
+      "minecpp_utils",
+      "fmt"
+    ]
+  }
+}

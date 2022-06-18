@@ -1,2 +1,17 @@
-add_library(minecpp_net message/Reader.cpp message/Writer.cpp message/Clientbound.cpp message/Chunk.cpp message/Serverbound.cpp Chat.cpp)
-target_link_libraries(minecpp_net PUBLIC minecpp_nbt minecpp_game minecpp_world Boost::system)
+set(MINECPP_NETWORK_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(minecpp_network STATIC)
+
+# Public include headers
+target_include_directories(minecpp_network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_network
+        LINK_PRIVATE
+        minecpp_nbt
+        minecpp_game
+        minecpp_world
+        Boost::system
+)

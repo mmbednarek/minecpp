@@ -1,0 +1,11 @@
+{
+  "name": "minecpp_network",
+  "dependencies": {
+    "private": [
+      "minecpp_nbt",
+      "minecpp_game",
+      "minecpp_world",
+      "Boost::system"
+    ]
+  }
+}

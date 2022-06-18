@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_squeezed",
+  "dependencies": {
+    "private": [
+      "minecpp_utils",
+      "libmb"
+    ]
+  }
+}
