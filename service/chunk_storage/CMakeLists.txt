@@ -11,7 +11,6 @@ target_link_libraries(
   minecpp_net
   minecpp_region
   minecpp_api_proto
-  minecpp_error
   minecpp_random
   minecpp_repository
   minecpp_world

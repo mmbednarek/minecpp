@@ -5,7 +5,6 @@
 #include <map>
 #include <mb/result.h>
 #include <memory>
-#include <minecpp/error/Result.h>
 #include <minecpp/game/Game.h>
 #include <minecpp/game/player/Id.h>
 #include <minecpp/random/JavaRandom.h>

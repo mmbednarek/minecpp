@@ -13,7 +13,6 @@ target_link_libraries(minecpp_game
         minecpp_api_proto
         minecpp_api_nbt
         minecpp_chat
-        minecpp_error
         minecpp_utils
         minecpp_nbt
         minecpp_squeeze
