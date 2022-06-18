@@ -6,7 +6,6 @@ target_sources(minecpp_game PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/World.cpp
 
         # Header files
-        ${MINECPP_GAME_INCLUDE_DIR}/Chunks.h
         ${MINECPP_GAME_INCLUDE_DIR}/EntityManager.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h
         ${MINECPP_GAME_INCLUDE_DIR}/Hand.h
@@ -19,8 +18,7 @@ target_sources(minecpp_game PUBLIC
 
 # Subdirectories
 add_subdirectory("block")
-add_subdirectory("chunk")
 add_subdirectory("entity")
 add_subdirectory("item")
-add_subdirectory("worldgen")
+add_subdirectory("player")
 

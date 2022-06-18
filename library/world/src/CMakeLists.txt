@@ -1,0 +1,21 @@
+set(MINECPP_WORLD_INCLUDE_DIR ${MINECPP_WORLD_DIR}/include/minecpp/world)
+
+target_sources(minecpp_world PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Chunk.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Generator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Section.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Util.cpp
+
+        # Header files
+        ${MINECPP_WORLD_INCLUDE_DIR}/Chunk.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/Chunks.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/Generator.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/Section.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/Util.h
+)
+
+# Subdirectories
+add_subdirectory("population")
+add_subdirectory("terrain")
+

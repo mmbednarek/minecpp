@@ -30,11 +30,11 @@ class Stream
 
  public:
    template<typename TEvent>
-   void send(const TEvent &event, player::Id player_id)
+   void send(const TEvent &event, game::PlayerId player_id)
    {
       proto::event::serverbound::v1::Event proto_event;
       proto_event.mutable_payload()->PackFrom(event);
-      *proto_event.mutable_player_id() = player::write_id_to_proto(player_id);
+      *proto_event.mutable_player_id() = game::player::write_id_to_proto(player_id);
       if (m_mtx.try_lock()) {
          auto stream = m_stream.lock();
          if (!stream) {

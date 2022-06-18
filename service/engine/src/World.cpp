@@ -20,7 +20,7 @@ minecpp::game::Notifier &World::notifier()
    return m_dispatcher;
 }
 
-mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::ChunkPosition> refs)
+mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
    using proto::service::chunk_storage::v1::ReferenceStatus;
 
@@ -47,7 +47,7 @@ mb::result<mb::empty> World::add_refs(player::Id player_id, std::vector<game::Ch
    return mb::ok;
 }
 
-mb::result<mb::empty> World::free_refs(player::Id player_id, std::vector<game::ChunkPosition> refs)
+mb::result<mb::empty> World::free_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
    ::grpc::ClientContext ctx;
    proto::service::chunk_storage::v1::RemoveReferencesRequest req;
@@ -126,7 +126,7 @@ mb::result<game::BlockStateId> World::get_block(const game::BlockPosition &pos)
    return game::block_state_from_proto(state);
 }
 
-player::Provider &World::players()
+game::player::Provider &World::players()
 {
    return m_player_manager;
 }

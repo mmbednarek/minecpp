@@ -123,7 +123,7 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    }
 }
 
-void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, player::Id player_id)
+void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id)
 {
    spdlog::info("player accept request from {}", event.name());
    auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
@@ -150,7 +150,7 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,
-                                              player::Id player_id)
+                                              game::PlayerId player_id)
 {
    auto &entity         = MB_ESCAPE(m_player_manager.get_entity(player_id));
    auto player_position = entity::read_entity_position(event.position());
@@ -159,7 +159,7 @@ void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPos
 }
 
 void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event,
-                                              player::Id player_id)
+                                              game::PlayerId player_id)
 {
    auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
    entity.set_rot(event.rotation().yaw(), event.rotation().pitch());
@@ -167,7 +167,7 @@ void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRot
                             entity::Rotation(entity.get_yaw(), entity.get_pitch()));
 }
 
-void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, player::Id player_id)
+void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, game::PlayerId player_id)
 {
    try {
       if (event.message().empty())
@@ -183,7 +183,7 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
    }
 }
 
-void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, player::Id player_id)
+void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player.name()));
@@ -191,7 +191,7 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
    m_player_manager.remove_player(player_id);
 }
 
-void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, player::Id player_id)
+void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, game::PlayerId player_id)
 {
    auto status = static_cast<game::PlayerDiggingState>(event.state());
    switch (status) {
@@ -207,20 +207,20 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    }
 }
 
-void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, player::Id player_id)
+void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.set_ping(event.ping());
 }
 
-void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, player::Id player_id)
+void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    m_dispatcher.animate_hand(player_id, player.entity_id(), event.hand());
 }
 
 void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event,
-                                              player::Id player_id)
+                                              game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    auto res     = player.load_chunks(m_world);
@@ -236,7 +236,7 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
 }
 
-void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, player::Id player_id)
+void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, game::PlayerId player_id)
 {
    auto face           = game::face_from_proto(event.face());
    auto block_position = game::BlockPosition::from_proto(event.position());
@@ -267,7 +267,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    }
 }
 
-void EventHandler::send_inventory_data(const player::Player &player)
+void EventHandler::send_inventory_data(const game::player::Player &player)
 {
    for (game::SlotId id = 9; id < 5 * 9; ++id) {
       auto slot = player.inventory().item_at(id);
@@ -276,11 +276,11 @@ void EventHandler::send_inventory_data(const player::Player &player)
 }
 
 void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event,
-                                                player::Id player_id)
+                                                game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_slot(static_cast<game::SlotId>(event.slot_id()),
-                               player::ItemSlot{
+                               game::player::ItemSlot{
                                        .item_id = static_cast<game::item::ItemId>(event.item_id().id()),
                                        .count   = static_cast<size_t>(event.item_count()),
                                });
@@ -292,13 +292,13 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
                                    static_cast<size_t>(event.item_count()));
 }
 
-void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, player::Id player_id)
+void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));
 }
 
-void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, player::Id player_id)
+void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
 

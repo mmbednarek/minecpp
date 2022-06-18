@@ -2,7 +2,7 @@
 #define MINECPP_GIVE_H
 #include "../Command.h"
 
-namespace minecpp::player {
+namespace minecpp::game::player {
 class Provider;
 }
 
@@ -10,12 +10,12 @@ namespace minecpp::command::core {
 
 class Give : public Command
 {
-   player::Provider &m_provider;
+   game::player::Provider &m_provider;
 
  public:
    static constexpr auto command_return_type = ObjectType::String;
 
-   explicit Give(player::Provider &provider);
+   explicit Give(game::player::Provider &provider);
    [[nodiscard]] bool is_flag(std::string_view name) const override;
    Object::Ptr run(RuntimeContext &ctx, CommandInput &input) const override;
    ObjectType return_type(RuntimeContext &ctx) const override;

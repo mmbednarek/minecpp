@@ -1,7 +1,8 @@
 #pragma once
-#include "minecpp/game/Notifier.h"
+#include "minecpp/game/player/Id.h"
 #include <boost/uuid/uuid.hpp>
 #include <map>
+#include <minecpp/game/Notifier.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 #include <minecpp/util/Vec.h>
 
@@ -95,7 +96,7 @@ class Entity
       entity.mutable_position()->set_x(pos.x);
       entity.mutable_position()->set_y(pos.y);
       entity.mutable_position()->set_z(pos.z);
-      *entity.mutable_id() = player::write_id_to_proto(uid);
+      *entity.mutable_id() = game::player::write_id_to_proto(uid);
       return entity;
    }
 

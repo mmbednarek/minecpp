@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_world",
+  "dependencies": {
+    "public": [
+      "minecpp_game",
+      "minecpp_repository"
+    ]
+  }
+}

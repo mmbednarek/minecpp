@@ -1,10 +1,10 @@
 #include "Service.h"
-#include <minecpp/game/chunk/Chunk.h>
 #include <minecpp/region/File.h>
 #include <minecpp/util/Compression.h>
 #include <minecpp/util/Format.h>
 #include <minecpp/util/Grpc.h>
 #include <minecpp/util/Uuid.h>
+#include <minecpp/world/Chunk.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::chunk_storage {

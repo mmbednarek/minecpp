@@ -2,6 +2,7 @@
   "libraries": [
     "controller",
     "format",
-    "game"
+    "game",
+    "world"
   ]
 }

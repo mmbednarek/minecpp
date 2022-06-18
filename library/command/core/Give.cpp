@@ -1,11 +1,11 @@
 #include <minecpp/command/core/Give.h>
 #include <minecpp/command/RuntimeContext.h>
-#include <minecpp/player/Provider.hpp>
+#include <minecpp/game/player/Provider.hpp>
 #include <minecpp/repository/Item.h>
 
 namespace minecpp::command::core {
 
-Give::Give(player::Provider &provider) :
+Give::Give(game::player::Provider &provider) :
     m_provider(provider)
 {
 }

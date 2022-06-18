@@ -3,7 +3,7 @@
 
 namespace minecpp::controller {
 
-bool controller::BlockManager::on_player_place_block(game::World &world, player::Id player_id,
+bool controller::BlockManager::on_player_place_block(game::World &world, game::PlayerId player_id,
                                                      game::BlockId block_id, game::BlockPosition position,
                                                      game::Face face)
 {

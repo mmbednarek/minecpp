@@ -3,8 +3,8 @@
 #include "BlockController.hpp"
 #include <map>
 #include <memory>
+#include <minecpp/game/Game.h>
 #include <minecpp/game/World.h>
-#include <minecpp/player/Id.h>
 
 namespace minecpp::controller {
 
@@ -14,12 +14,13 @@ class BlockManager
    block::Default m_default_controller;
 
  public:
-   bool on_player_place_block(game::World &world, player::Id player_id, game::BlockId block_id,
+   bool on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,
                               game::BlockPosition position, game::Face face);
 
-   std::optional<game::BlockStateId> on_neighbour_change(game::World &world, game::BlockStateId block_state_id,
-                            game::BlockStateId neighbour_block_state_id, game::BlockPosition position,
-                            game::Face face);
+   std::optional<game::BlockStateId> on_neighbour_change(game::World &world,
+                                                         game::BlockStateId block_state_id,
+                                                         game::BlockStateId neighbour_block_state_id,
+                                                         game::BlockPosition position, game::Face face);
 
    BlockController &controller(game::BlockId block_id);
 

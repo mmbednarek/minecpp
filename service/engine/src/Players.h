@@ -4,8 +4,8 @@
 #include <mb/result.h>
 #include <minecpp/game/entity/Entity.h>
 #include <minecpp/nbt/player/v1/Player.nbt.h>
-#include <minecpp/player/Player.h>
-#include <minecpp/player/Provider.hpp>
+#include <minecpp/game/player/Player.h>
+#include <minecpp/game/player/Provider.hpp>
 #include <random>
 #include <vector>
 
@@ -15,11 +15,11 @@ class EntityManager;
 
 using encoded_uuid = std::pair<mb::u64, mb::u64>;
 
-class PlayerManager : public player::Provider
+class PlayerManager : public game::player::Provider
 {
-   using PlayerIndex = std::vector<player::Player>::size_type;
+   using PlayerIndex = std::vector<game::player::Player>::size_type;
 
-   std::vector<player::Player> m_players;
+   std::vector<game::player::Player> m_players;
    std::map<encoded_uuid, PlayerIndex> m_id_map;
    std::string m_players_path;
    EntityManager &m_entities;
@@ -28,18 +28,18 @@ class PlayerManager : public player::Provider
  public:
    PlayerManager(std::string_view players_path, EntityManager &entities);
 
-   mb::result<mb::empty> join_player(minecpp::game::World &w, const std::string &name, player::Id id);
-   mb::result<nbt::player::v1::Player> load_player_data(minecpp::game::World &w, player::Id id);
+   mb::result<mb::empty> join_player(minecpp::game::World &w, const std::string &name, game::PlayerId id);
+   mb::result<nbt::player::v1::Player> load_player_data(minecpp::game::World &w, game::PlayerId id);
 
    mb::result<minecpp::util::Vec3> get_spawn_position(minecpp::game::World &w);
-   mb::result<minecpp::player::Player &> get_player(player::Id id);
-   mb::result<minecpp::game::entity::Entity &> get_entity(player::Id id);
-   void for_each_player(const std::function<void(minecpp::player::Player &)> &callback);
-   void remove_player(player::Id id);
+   mb::result<minecpp::game::player::Player &> get_player(game::PlayerId id) override;
+   mb::result<minecpp::game::entity::Entity &> get_entity(game::PlayerId id);
+   void for_each_player(const std::function<void(minecpp::game::player::Player &)> &callback);
+   void remove_player(game::PlayerId id);
    void remap_ids();
    std::size_t player_count();
 
-   [[nodiscard]] std::vector<player::Status> player_status_list() const;
+   [[nodiscard]] std::vector<game::player::Status> player_status_list() const;
 };
 
 }// namespace minecpp::service::engine

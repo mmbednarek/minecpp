@@ -10,6 +10,7 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_game
         LINK_PUBLIC
+        minecpp_api_proto
         minecpp_api_nbt
         minecpp_chat
         minecpp_error

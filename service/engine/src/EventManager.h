@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/player/Id.h>
+#include <minecpp/game/player/Id.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <minecpp/util/StaticQueue.h>
 #include <queue>
@@ -43,11 +43,11 @@ class EventManager
  public:
    EventManager() = default;
 
-   void send_to(auto &event, player::Id player_id)
+   void send_to(auto &event, game::PlayerId player_id)
    {
       for (auto &q : m_queues) {
          Event proto_event;
-         *proto_event.mutable_single_player()->mutable_player_id() = player::write_id_to_proto(player_id);
+         *proto_event.mutable_single_player()->mutable_player_id() = game::player::write_id_to_proto(player_id);
          proto_event.mutable_payload()->PackFrom(event);
          // TODO: Get front id from player manager
          q.second.write(std::move(proto_event));

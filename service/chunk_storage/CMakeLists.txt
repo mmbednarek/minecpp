@@ -14,6 +14,7 @@ target_link_libraries(
   minecpp_error
   minecpp_random
   minecpp_repository
+  minecpp_world
   grpc++
   Boost::system
   spdlog

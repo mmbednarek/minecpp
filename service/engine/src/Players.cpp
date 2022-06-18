@@ -18,12 +18,12 @@ PlayerManager::PlayerManager(std::string_view players_path, EntityManager &entit
 {
 }
 
-mb::result<mb::empty> PlayerManager::join_player(minecpp::game::World &w, const std::string &name,
-                                                 player::Id id)
+mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::string &name,
+                                                 game::PlayerId id)
 {
    auto player_data = MB_TRY(load_player_data(w, id));
    auto entity_id   = m_entities.spawn(Entity::from_player_nbt(player_data));
-   auto player      = player::Player::from_nbt(player_data, name, w.notifier());
+   auto player      = game::player::Player::from_nbt(player_data, name, w.notifier());
    player.set_entity_id(entity_id);
 
    m_id_map[minecpp::util::write_uuid(id)] = m_players.size();
@@ -31,8 +31,8 @@ mb::result<mb::empty> PlayerManager::join_player(minecpp::game::World &w, const 
    return mb::ok;
 }
 
-mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(minecpp::game::World &w,
-                                                                             player::Id id)
+mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::World &w,
+                                                                             game::PlayerId id)
 {
    // TODO: cache player data
    std::ifstream f_player_data;
@@ -40,7 +40,7 @@ mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(min
    if (!f_player_data.is_open()) {
       minecpp::nbt::player::v1::Player data;
       auto pos  = MB_TRY(get_spawn_position(w));
-      data.uuid = player::write_id_to_nbt(id);
+      data.uuid = game::player::write_id_to_nbt(id);
       data.pos.resize(3);
       data.pos[0]              = pos.x;
       data.pos[1]              = pos.y;
@@ -63,10 +63,10 @@ mb::result<minecpp::util::Vec3> PlayerManager::get_spawn_position(minecpp::game:
    auto x = 0;
    auto z = 0;
    auto y = MB_TRY(w.height_at(x, z)) + 2;
-   return minecpp::util::Vec3(x, y, z);
+   return util::Vec3(x, y, z);
 }
 
-mb::result<minecpp::player::Player &> PlayerManager::get_player(player::Id id)
+mb::result<game::player::Player &> PlayerManager::get_player(game::PlayerId id)
 {
    auto it_player = m_id_map.find(minecpp::util::write_uuid(id));
    if (it_player == m_id_map.end()) {
@@ -75,17 +75,17 @@ mb::result<minecpp::player::Player &> PlayerManager::get_player(player::Id id)
    return m_players.at(it_player->second);
 }
 
-mb::result<minecpp::game::entity::Entity &> PlayerManager::get_entity(player::Id id)
+mb::result<minecpp::game::entity::Entity &> PlayerManager::get_entity(game::PlayerId id)
 {
    return m_entities.get_entity(MB_TRY(get_player(id)).entity_id());
 }
 
-void PlayerManager::for_each_player(const std::function<void(minecpp::player::Player &)> &callback)
+void PlayerManager::for_each_player(const std::function<void(game::player::Player &)> &callback)
 {
    std::for_each(m_players.begin(), m_players.end(), callback);
 }
 
-void PlayerManager::remove_player(player::Id id)
+void PlayerManager::remove_player(game::PlayerId id)
 {
    using DifferenceType = decltype(m_players)::iterator::difference_type;
    auto index           = m_id_map.at(minecpp::util::write_uuid(id));
@@ -107,11 +107,11 @@ std::size_t PlayerManager::player_count()
    return m_players.size();
 }
 
-std::vector<player::Status> PlayerManager::player_status_list() const
+std::vector<game::player::Status> PlayerManager::player_status_list() const
 {
-   std::vector<player::Status> status_list(m_players.size());
-   std::transform(m_players.begin(), m_players.end(), status_list.begin(), [](const player::Player &player) {
-      return player::Status{
+   std::vector<game::player::Status> status_list(m_players.size());
+   std::transform(m_players.begin(), m_players.end(), status_list.begin(), [](const game::player::Player &player) {
+      return game::player::Status{
               .name = player.name(),
               .ping = player.ping(),
               .mode = player.game_mode(),

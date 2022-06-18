@@ -6,7 +6,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <functional>
 #include <map>
-#include <minecpp/player/Id.h>
+#include <minecpp/game/player/Id.h>
 #include <string>
 #include <vector>
 
@@ -52,9 +52,9 @@ class Server
 
    void for_each_connection(std::function<void(const std::shared_ptr<Connection> &)>);
 
-   bool has_connection(player::Id player_id);
+   bool has_connection(game::PlayerId player_id);
 
-   std::shared_ptr<Connection> connection_by_id(player::Id player_id);
+   std::shared_ptr<Connection> connection_by_id(game::PlayerId player_id);
 
    Protocol::Handler &get_handler(Protocol::State state);
 

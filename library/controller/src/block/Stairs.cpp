@@ -3,7 +3,7 @@
 
 namespace minecpp::controller::block {
 
-bool Stairs::on_player_place_block(game::World &world, player::Id player_id, game::BlockId block_id,
+bool Stairs::on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,
                                    game::BlockPosition position, game::Face face)
 {
    auto pos = position.neighbour_at(face);

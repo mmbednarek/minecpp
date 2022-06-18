@@ -5,7 +5,7 @@
 
 namespace minecpp::controller::block {
 
-bool Default::on_player_place_block(game::World &world, player::Id, game::BlockId block_id,
+bool Default::on_player_place_block(game::World &world, game::PlayerId, game::BlockId block_id,
                                     game::BlockPosition position, game::Face face)
 {
    const auto neighbour_position = position.neighbour_at(face);

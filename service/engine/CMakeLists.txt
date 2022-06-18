@@ -14,7 +14,6 @@ target_link_libraries(
         minecpp_engine LINK_PUBLIC
         minecpp_controller
         minecpp_utils
-        minecpp_player
         minecpp_game
         minecpp_api_proto
         minecpp_nbt

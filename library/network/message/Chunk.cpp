@@ -1,4 +1,3 @@
-#include <minecpp/game/chunk/Utils.h>
 #include <minecpp/nbt/Writer.h>
 #include <minecpp/network/message/Chunk.h>
 #include <minecpp/util/Packed.h>

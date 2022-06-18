@@ -75,18 +75,18 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
    m_stream->send(accept_player, id);
 }
 
-void Service::on_player_disconnect(uuid engine_id, player::Id player_id)
+void Service::on_player_disconnect(uuid engine_id, game::PlayerId player_id)
 {
    proto::event::serverbound::v1::RemovePlayer remove_player{};
    m_stream->send(remove_player, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ClientSettings msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClientSettings msg)
 {
-   spdlog::info("client {} language: {}", player::format_player_id(player_id), msg.lang);
+   spdlog::info("client {} language: {}", game::player::format_player_id(player_id), msg.lang);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerPosition msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerPosition msg)
 {
    serverbound_v1::SetPlayerPosition player_position;
    player_position.mutable_position()->set_x(msg.x);
@@ -95,7 +95,7 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    m_stream->send(player_position, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id,
+void Service::on_message(uuid engine_id, game::PlayerId player_id,
                          minecpp::network::message::PlayerPositionRotation msg)
 {
    serverbound_v1::SetPlayerPosition player_position;
@@ -110,7 +110,7 @@ void Service::on_message(uuid engine_id, player::Id player_id,
    m_stream->send(player_rotation, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerRotation msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerRotation msg)
 {
    serverbound_v1::SetPlayerRotation player_rotation;
    player_rotation.mutable_rotation()->set_yaw(msg.yaw);
@@ -118,14 +118,14 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    m_stream->send(player_rotation, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ChatMessage msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ChatMessage msg)
 {
    serverbound_v1::ChatMessage chat_message;
    chat_message.set_message(msg.message);
    m_stream->send(chat_message, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PlayerDigging msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerDigging msg)
 {
    serverbound_v1::PlayerDigging player_digging;
    player_digging.set_state(static_cast<proto::common::v1::PlayerDiggingState>(msg.action));
@@ -134,14 +134,14 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    m_stream->send(player_digging, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::KeepAliveClient msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::KeepAliveClient msg)
 {
    serverbound_v1::UpdatePing update_ping;
    update_ping.set_ping(static_cast<int>(minecpp::util::now_milis() - msg.time));
    m_stream->send(update_ping, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id,
+void Service::on_message(uuid engine_id, game::PlayerId player_id,
                          minecpp::network::message::AnimateHandClient msg)
 {
    serverbound_v1::AnimateHand animate_hand;
@@ -149,7 +149,7 @@ void Service::on_message(uuid engine_id, player::Id player_id,
    m_stream->send(animate_hand, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id,
+void Service::on_message(uuid engine_id, game::PlayerId player_id,
                          minecpp::network::message::PlayerBlockPlacement msg)
 {
    serverbound_v1::BlockPlacement block_placement;
@@ -164,7 +164,7 @@ void Service::on_message(uuid engine_id, player::Id player_id,
    m_stream->send(block_placement, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::ClickWindow msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClickWindow msg)
 {
    if (msg.window_id != 0)
       return;
@@ -178,19 +178,19 @@ void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network:
    }
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::HeldItemChange msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::HeldItemChange msg)
 {
    serverbound_v1::ChangeHeldItem held_item;
    held_item.set_slot(msg.slot);
    m_stream->send(held_item, player_id);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id, minecpp::network::message::PluginMessage msg)
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PluginMessage msg)
 {
    spdlog::info("received plugin message channel={}, data={}", msg.channel, msg.data);
 }
 
-void Service::on_message(uuid engine_id, player::Id player_id,
+void Service::on_message(uuid engine_id, game::PlayerId player_id,
                          const minecpp::network::message::ChatCommand &msg)
 {
    serverbound_v1::IssueCommand command;

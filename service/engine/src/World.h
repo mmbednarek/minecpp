@@ -28,11 +28,11 @@ class World : public minecpp::game::World
    World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager,
          EntityManager &entity_manager, controller::BlockManager &block_controller);
 
-   player::Provider &players() override;
+   game::player::Provider &players() override;
    EntityManager &entities() override;
    minecpp::game::Notifier &notifier() override;
-   mb::result<mb::empty> add_refs(player::Id player, std::vector<game::ChunkPosition> refs) override;
-   mb::result<mb::empty> free_refs(player::Id player, std::vector<game::ChunkPosition> refs) override;
+   mb::result<mb::empty> add_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
+   mb::result<mb::empty> free_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<int> height_at(int x, int z) override;
    mb::result<mb::empty> set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state);
    mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state) override;
