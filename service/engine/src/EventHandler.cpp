@@ -145,7 +145,7 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    m_dispatcher.accept_player(player, entity);
    m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
    m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(),
-                             entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+                             game::entity::Rotation(entity.get_yaw(), entity.get_pitch()));
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 }
 
@@ -153,7 +153,7 @@ void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPos
                                               game::PlayerId player_id)
 {
    auto &entity         = MB_ESCAPE(m_player_manager.get_entity(player_id));
-   auto player_position = entity::read_entity_position(event.position());
+   auto player_position = game::entity::read_entity_position(event.position());
    entity.set_pos(m_dispatcher, player_position);
    MB_ESCAPE(m_player_manager.get_player(player_id)).on_movement(m_world, player_position);
 }
@@ -164,7 +164,7 @@ void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRot
    auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
    entity.set_rot(event.rotation().yaw(), event.rotation().pitch());
    m_dispatcher.entity_look(player_id, entity.get_id(),
-                            entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+                            game::entity::Rotation(entity.get_yaw(), entity.get_pitch()));
 }
 
 void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, game::PlayerId player_id)

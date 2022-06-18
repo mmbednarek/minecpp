@@ -27,18 +27,12 @@ constexpr boost::uuids::uuid g_player_uuid_namespace{
 class Service
 {
    boost::random::mt19937 rand;
-   engine::Stream *m_stream;
+   engine::Stream *m_stream{};
 
    ChunkService m_chunk_service;
 
-   char *cached_recipes = nullptr;
-   std::size_t cached_recipes_size;
-   char *cached_tags = nullptr;
-   std::size_t cached_tags_size;
-
  public:
    explicit Service(Config &conf, ChunkService chunk_service);
-   ~Service();
 
    constexpr void set_stream(engine::Stream *stream)
    {

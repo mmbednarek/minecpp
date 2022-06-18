@@ -20,32 +20,6 @@ const char *internal_reason =
 Service::Service(Config &conf, ChunkService chunk_service) :
     m_chunk_service(std::move(chunk_service))
 {
-   std::ifstream recipe_st;
-   recipe_st.open(conf.recipe_path);
-   if (!recipe_st.is_open()) {
-      throw std::runtime_error("could not open recipe file");
-   }
-   recipe_st.seekg(0, std::ios::end);
-   cached_recipes_size = recipe_st.tellg();
-   recipe_st.seekg(0, std::ios::beg);
-   cached_recipes = new char[cached_recipes_size];
-   recipe_st.read(cached_recipes, cached_recipes_size);
-
-   std::ifstream tags_st;
-   tags_st.open(conf.tags_path);
-   if (!tags_st.is_open()) {
-      throw std::runtime_error("could not open recipe file");
-   }
-   tags_st.seekg(0, std::ios::end);
-   cached_tags_size = tags_st.tellg();
-   tags_st.seekg(0, std::ios::beg);
-   cached_tags = new char[cached_tags_size];
-   tags_st.read(cached_tags, cached_tags_size);
-}
-
-Service::~Service()
-{
-   delete[] cached_recipes;
 }
 
 Service::LoginResponse Service::login_player(std::string &user_name)

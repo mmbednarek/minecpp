@@ -2,7 +2,6 @@
 #include "Id.h"
 #include "Inventory.h"
 #include "Tracking.h"
-#include <minecpp/entity/Entity.h>
 #include <minecpp/game/Mode.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
 #include <minecpp/util/Vec.h>

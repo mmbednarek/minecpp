@@ -63,12 +63,12 @@ uint32_t Entity::get_id()
    return id;
 }
 
-minecpp::entity::Movement Entity::process_movement()
+Movement Entity::process_movement()
 {
    Vec3 tracked_pos = Vec3(tracking.x, tracking.y, tracking.z) / 4096.0;
    Vec3 diff        = pos - tracked_pos;
 
-   auto movement = minecpp::entity::Movement{
+   auto movement = Movement{
            .x = static_cast<short>(diff.x * 4096),
            .y = static_cast<short>(diff.y * 4096),
            .z = static_cast<short>(diff.z * 4096),
@@ -91,11 +91,6 @@ void Entity::sync_tracking()
 void Attributes::set_attribute(AttributeName name, double value)
 {
    attributes[name] = value;
-}
-
-bool Movement::nil()
-{
-   return x == 0 && y == 0 && z == 0;
 }
 
 Entity Entity::from_player_nbt(const nbt::player::v1::Player &player)

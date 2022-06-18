@@ -32,8 +32,8 @@ void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid ta
    m_events.send_to(event, player_id);
 }
 
-void Dispatcher::entity_move(game::PlayerId player_id, entity::Id entity_id, const entity::Movement &movement,
-                             const entity::Rotation &rotation)
+void Dispatcher::entity_move(game::PlayerId player_id, game::EntityId entity_id, const game::entity::Movement &movement,
+                             const game::entity::Rotation &rotation)
 {
    clientbound_v1::EntityMove event;
    event.set_entity_id(entity_id);
@@ -52,13 +52,13 @@ void Dispatcher::add_player(game::PlayerId player_id, const std::string &name, m
    m_events.send_to_all(add_player);
 }
 
-void Dispatcher::spawn_player(game::PlayerId player_id, mb::u32 entity_id, minecpp::util::Vec3 position,
-                              const entity::Rotation &rotation)
+void Dispatcher::spawn_player(game::PlayerId player_id, game::EntityId entity_id, minecpp::util::Vec3 position,
+                              const game::entity::Rotation &rotation)
 {
    clientbound_v1::SpawnPlayer spawn_player;
    *spawn_player.mutable_player_id() = game::player::write_id_to_proto(player_id);
    spawn_player.set_entity_id(entity_id);
-   *spawn_player.mutable_position() = entity::write_entity_position(position);
+   *spawn_player.mutable_position() = game::entity::write_entity_position(position);
    *spawn_player.mutable_rotation() = rotation.to_proto();
    m_events.send_to_all(spawn_player);
 }
@@ -71,7 +71,7 @@ void Dispatcher::send_chat(chat::MessageType msg_type, const std::string &msg)
    m_events.send_to_all(chat);
 }
 
-void Dispatcher::entity_look(game::PlayerId player_id, mb::u32 entity_id, const entity::Rotation &rotation)
+void Dispatcher::entity_look(game::PlayerId player_id, mb::u32 entity_id, const game::entity::Rotation &rotation)
 {
    clientbound_v1::EntityLook event;
    *event.mutable_player_id() = game::player::write_id_to_proto(player_id);

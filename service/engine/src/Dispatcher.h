@@ -27,13 +27,13 @@ class Dispatcher : public minecpp::game::Notifier
    void transfer_player(game::PlayerId player_id, boost::uuids::uuid target_engine);
    void update_block(game::BlockPosition block, game::BlockStateId state) override;
 
-   void entity_move(game::PlayerId player_id, entity::Id entity_id, const entity::Movement &movement,
-                    const entity::Rotation &rotation) override;
-   void entity_look(game::PlayerId player_id, mb::u32 entity_id, const entity::Rotation &rotation) override;
+   void entity_move(game::PlayerId player_id, game::EntityId entity_id, const game::entity::Movement &movement,
+                    const game::entity::Rotation &rotation) override;
+   void entity_look(game::PlayerId player_id, mb::u32 entity_id, const game::entity::Rotation &rotation) override;
 
    void add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping) override;
    void spawn_player(game::PlayerId player_id, mb::u32 entity_id, minecpp::util::Vec3 position,
-                     const entity::Rotation &rotation) override;
+                     const game::entity::Rotation &rotation) override;
    void remove_player(game::PlayerId player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
    void acknowledge_block_change(game::PlayerId player_id, int sequence_id) override;

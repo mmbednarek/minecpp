@@ -11,8 +11,6 @@ set(gRPC_PROTOBUF_PROVIDER "package")
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-SET(MINECPP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp)
-
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
@@ -57,9 +55,6 @@ FetchContent_Declare(
   GIT_TAG codegen-0.0.30
 )
 FetchContent_MakeAvailable(libmb_codegen)
-
-include_directories(./include)
-include_directories(./service/protos/include)
 
 # Libraries
 add_subdirectory(library)
