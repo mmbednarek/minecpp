@@ -5,7 +5,9 @@
       "minecpp_api_proto",
       "minecpp_api_nbt",
       "minecpp_chat",
-      "minecpp_utils",
+      "minecpp_utils"
+    ],
+    "private": [
       "minecpp_nbt",
       "minecpp_squeezed",
       "minecpp_random",

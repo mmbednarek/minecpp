@@ -10,7 +10,7 @@ namespace minecpp::game {
 
 using ChunkHash    = mb::u64;
 using SlotId       = mb::u32;
-using PlayerId     = minecpp::util::uuid;
+using PlayerId     = util::uuid;
 using BlockId      = int;
 using EntityId     = mb::u32;
 using BlockStateId = mb::u32;

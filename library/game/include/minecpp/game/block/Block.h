@@ -3,7 +3,6 @@
 #include "../State.h"
 #include "Material.h"
 #include <minecpp/game/State.h>
-#include <minecpp/util/String.h>
 #include <optional>
 #include <string_view>
 #include <tuple>

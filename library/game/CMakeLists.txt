@@ -14,6 +14,7 @@ target_link_libraries(minecpp_game
         minecpp_api_nbt
         minecpp_chat
         minecpp_utils
+        LINK_PRIVATE
         minecpp_nbt
         minecpp_squeezed
         minecpp_random

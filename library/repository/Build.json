@@ -1,9 +1,11 @@
 {
   "name": "minecpp_repository",
   "dependencies": {
-    "private": [
-      "minecpp_game",
+    "public": [
       "libmb"
+    ],
+    "private": [
+      "minecpp_game"
     ]
   }
 }

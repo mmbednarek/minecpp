@@ -4,6 +4,7 @@
     "public": [
       "minecpp_api_proto",
       "minecpp_game",
+      "minecpp_random",
       "minecpp_repository",
       "minecpp_squeezed"
     ]

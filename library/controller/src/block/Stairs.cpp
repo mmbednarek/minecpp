@@ -1,5 +1,6 @@
 #include "minecpp/repository/Block.h"
 #include <minecpp/controller/block/Stairs.h>
+#include <minecpp/util/String.h>
 
 namespace minecpp::controller::block {
 
