@@ -11,6 +11,7 @@
 #include <minecpp/controller/block/Fence.h>
 #include <minecpp/controller/block/Stairs.h>
 #include <minecpp/controller/block/Wood.h>
+#include <minecpp/controller/block/Torch.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/World.h>
 #include <minecpp/repository/Block.h>
@@ -121,6 +122,13 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:stone_brick_stairs"); stairs_id.ok()) {
       m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
    }
+
+   if (auto torch_id = repository::Block::the().find_id_by_tag("minecraft:torch"); torch_id.ok()) {
+      m_block_manager.register_controller<controller::block::Torch>(*torch_id);
+   }
+   if (auto torch_id = repository::Block::the().find_id_by_tag("minecraft:wall_torch"); torch_id.ok()) {
+      m_block_manager.register_controller<controller::block::Torch>(*torch_id);
+   }
 }
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id)
@@ -193,14 +201,14 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
 
 void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &event, game::PlayerId player_id)
 {
+   m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
+
    auto status = static_cast<game::PlayerDiggingState>(event.state());
    switch (status) {
    case game::PlayerDiggingState::Digging:
    case game::PlayerDiggingState::CanceledDigging:
    case game::PlayerDiggingState::FinishedDigging: {
       auto block_position = game::BlockPosition::from_proto(event.block_position());
-      m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
-      m_dispatcher.update_block(block_position, 0);
       m_world.set_block(block_position, 0);
    } break;
    default: break;
@@ -259,6 +267,9 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
 
    auto block_id = repository::Block::the().find_id_by_tag(item->corresponding_block_tag());
    if (block_id.has_failed())
+      return;
+
+   if (not player->inventory().take_from_active_slot(1))
       return;
 
    if (m_block_manager.on_player_place_block(m_world, player_id, static_cast<int>(*block_id), block_position,

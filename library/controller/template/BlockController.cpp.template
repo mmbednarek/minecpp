@@ -1,0 +1,6 @@
+#[[#include]]# "minecpp/repository/Block.h"
+#[[#include]]# <minecpp/controller/block/${NAME}.h>
+
+namespace minecpp::controller::block {
+
+}// namespace minecpp::controller::block

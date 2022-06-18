@@ -3,6 +3,7 @@
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/util/Vec.h>
+#include <optional>
 #include <string_view>
 
 namespace minecpp::game {
@@ -56,6 +57,17 @@ constexpr std::array<Face, 6> g_faces{
         Face::Bottom, Face::Top, Face::North, Face::South, Face::West, Face::East,
 };
 
+[[nodiscard]] constexpr std::optional<Face> parse_face(std::string_view face)
+{
+   if (face == "bottom") return Face::Bottom;
+   if (face == "top") return Face::Top;
+   if (face == "north") return Face::North;
+   if (face == "south") return Face::South;
+   if (face == "west") return Face::West;
+   if (face == "east") return Face::East;
+   return std::nullopt;
+}
+
 [[nodiscard]] constexpr std::string_view to_string(Face face)
 {
    switch (face) {
@@ -69,8 +81,9 @@ constexpr std::array<Face, 6> g_faces{
    return "";
 }
 
-[[nodiscard]] constexpr Face opposite_face(Face face) {
-   switch(face) {
+[[nodiscard]] constexpr Face opposite_face(Face face)
+{
+   switch (face) {
    case Face::Bottom: return Face::Top;
    case Face::Top: return Face::Bottom;
    case Face::North: return Face::South;
@@ -308,11 +321,22 @@ constexpr std::array<WoodType, 7> g_wood_types{WoodType::Oak,     WoodType::Spru
 
 enum class Direction
 {
-   West,
    East,
+   West,
    South,
    North
 };
+
+[[nodiscard]] constexpr std::optional<Face> direction_to_face(Direction direction)
+{
+   switch (direction) {
+   case Direction::North: return Face::North;
+   case Direction::South: return Face::South;
+   case Direction::West: return Face::West;
+   case Direction::East: return Face::East;
+   }
+   return std::nullopt;
+}
 
 [[nodiscard]] constexpr std::string_view to_string(Direction direction)
 {

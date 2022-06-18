@@ -148,6 +148,8 @@ void BlockIds::init()
    m_initialised = false;
    REGISTER_BLOCK_ID(air);
    REGISTER_BLOCK_ID(water);
+   REGISTER_BLOCK_ID(torch);
+   REGISTER_BLOCK_ID(wall_torch);
 
    m_initialised = true;
 }

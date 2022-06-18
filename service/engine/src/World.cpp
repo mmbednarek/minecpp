@@ -145,8 +145,6 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
       if (old_neighbour_state.has_failed())
          continue;
 
-      spdlog::info("calling neighbour change");
-
       auto new_neighbour_state = m_block_controller.on_neighbour_change(
               *this, *old_neighbour_state, state, neighbour_pos, game::opposite_face(face));
       if (not new_neighbour_state.has_value())

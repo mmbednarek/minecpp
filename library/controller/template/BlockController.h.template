@@ -1,0 +1,10 @@
+#[[#pragma]]# once
+#[[#include]]# "Default.h"
+
+namespace minecpp::controller::block {
+
+class ${NAME} : public Default  {
+ public:
+};
+
+}

@@ -65,6 +65,8 @@ struct BlockIds
 {
    game::BlockId air;
    game::BlockId water;
+   game::BlockId torch;
+   game::BlockId wall_torch;
 
    void init();
    [[nodiscard]] static BlockIds &the();
