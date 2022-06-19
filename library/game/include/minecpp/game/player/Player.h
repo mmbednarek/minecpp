@@ -156,4 +156,4 @@ class Player
    [[nodiscard]] proto::player::v1::Player to_proto(const game::entity::Entity &entity) const;
 };
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

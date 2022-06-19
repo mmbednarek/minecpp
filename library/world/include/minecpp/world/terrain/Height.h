@@ -19,4 +19,4 @@ class HeightGenerator
    short at(int x, int z);
 };
 
-}// namespace minecpp::game::worldgen::terrain
+}// namespace minecpp::world::terrain

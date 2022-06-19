@@ -29,10 +29,18 @@ bool Default::on_player_place_block(game::World &world, game::PlayerId, game::Bl
    return world.set_block(neighbour_position, target_state).ok();
 }
 
-std::optional<game::BlockStateId> Default::on_neighbour_change(game::World &, game::BlockStateId, game::BlockStateId, game::BlockPosition,
-                                  game::Face)
+std::optional<game::BlockStateId> Default::on_neighbour_change(game::World &, game::BlockStateId,
+                                                               game::BlockStateId, game::BlockPosition,
+                                                               game::Face)
 {
    return std::nullopt;
+}
+
+bool Default::on_player_action(game::World &world, game::PlayerId player_id,
+                               game::BlockStateId block_state_id, game::BlockPosition position,
+                               game::Face face, util::Vec3 crosshair_position)
+{
+   return false;
 }
 
 std::optional<Default::SourceBlockType> Default::get_source_block_type(game::World &world,
@@ -64,7 +72,8 @@ bool Default::verify_source_block(game::World &world, game::BlockPosition pos)
    return source_block_type.has_value();
 }
 
-std::optional<game::Direction> Default::find_player_direction(game::World &world, game::PlayerId player_id, game::BlockPosition position)
+std::optional<game::Direction> Default::find_player_direction(game::World &world, game::PlayerId player_id,
+                                                              game::BlockPosition position)
 {
    auto player = world.players().get_player(player_id);
    if (player.has_failed())

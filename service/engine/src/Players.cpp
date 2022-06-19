@@ -18,8 +18,7 @@ PlayerManager::PlayerManager(std::string_view players_path, EntityManager &entit
 {
 }
 
-mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::string &name,
-                                                 game::PlayerId id)
+mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::string &name, game::PlayerId id)
 {
    auto player_data = MB_TRY(load_player_data(w, id));
    auto entity_id   = m_entities.spawn(Entity::from_player_nbt(player_data));
@@ -110,13 +109,15 @@ std::size_t PlayerManager::player_count()
 std::vector<game::player::Status> PlayerManager::player_status_list() const
 {
    std::vector<game::player::Status> status_list(m_players.size());
-   std::transform(m_players.begin(), m_players.end(), status_list.begin(), [](const game::player::Player &player) {
-      return game::player::Status{
-              .name = player.name(),
-              .ping = player.ping(),
-              .mode = player.game_mode(),
-      };
-   });
+   std::transform(m_players.begin(), m_players.end(), status_list.begin(),
+                  [](const game::player::Player &player) {
+                     return game::player::Status{
+                             .id   = player.id(),
+                             .name = player.name(),
+                             .ping = player.ping(),
+                             .mode = player.game_mode(),
+                     };
+                  });
    return status_list;
 }
 

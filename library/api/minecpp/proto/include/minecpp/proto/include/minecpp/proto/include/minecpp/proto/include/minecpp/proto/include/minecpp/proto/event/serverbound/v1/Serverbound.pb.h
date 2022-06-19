@@ -81,6 +81,9 @@ extern IssueCommandDefaultTypeInternal _IssueCommand_default_instance_;
 class LoadInitialChunks;
 struct LoadInitialChunksDefaultTypeInternal;
 extern LoadInitialChunksDefaultTypeInternal _LoadInitialChunks_default_instance_;
+class LoadPlayerList;
+struct LoadPlayerListDefaultTypeInternal;
+extern LoadPlayerListDefaultTypeInternal _LoadPlayerList_default_instance_;
 class PlayerDigging;
 struct PlayerDiggingDefaultTypeInternal;
 extern PlayerDiggingDefaultTypeInternal _PlayerDigging_default_instance_;
@@ -111,6 +114,7 @@ template<> ::minecpp::proto::event::serverbound::v1::ChatMessage* Arena::CreateM
 template<> ::minecpp::proto::event::serverbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Event>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::IssueCommand* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::IssueCommand>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::LoadInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadInitialChunks>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::LoadPlayerList* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadPlayerList>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::PlayerDigging* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PlayerDigging>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::RemovePlayer>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerPosition* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerPosition>(Arena*);
@@ -2365,6 +2369,124 @@ class IssueCommand final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
 };
+// -------------------------------------------------------------------
+
+class LoadPlayerList final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.LoadPlayerList) */ {
+ public:
+  inline LoadPlayerList() : LoadPlayerList(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR LoadPlayerList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  LoadPlayerList(const LoadPlayerList& from);
+  LoadPlayerList(LoadPlayerList&& from) noexcept
+    : LoadPlayerList() {
+    *this = ::std::move(from);
+  }
+
+  inline LoadPlayerList& operator=(const LoadPlayerList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline LoadPlayerList& operator=(LoadPlayerList&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const LoadPlayerList& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const LoadPlayerList* internal_default_instance() {
+    return reinterpret_cast<const LoadPlayerList*>(
+               &_LoadPlayerList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(LoadPlayerList& a, LoadPlayerList& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(LoadPlayerList* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(LoadPlayerList* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  LoadPlayerList* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<LoadPlayerList>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const LoadPlayerList& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const LoadPlayerList& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.LoadPlayerList";
+  }
+  protected:
+  explicit LoadPlayerList(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.LoadPlayerList)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
+};
 // ===================================================================
 
 
@@ -3538,9 +3660,15 @@ inline void IssueCommand::set_allocated_command(std::string* command) {
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.IssueCommand.command)
 }
 
+// -------------------------------------------------------------------
+
+// LoadPlayerList
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

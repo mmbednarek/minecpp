@@ -23,7 +23,7 @@ bool Wood::on_player_place_block(game::World &world, game::PlayerId player_id, g
                                  game::BlockPosition position, game::Face face)
 {
    const auto neighbour_position = position.neighbour_at(face);
-   if (not verify_source_block(world, neighbour_position))  {
+   if (not verify_source_block(world, neighbour_position)) {
       return false;
    }
 

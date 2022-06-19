@@ -1,7 +1,7 @@
 #include <algorithm>
-#include <minecpp/game/World.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Tracking.h>
+#include <minecpp/game/World.h>
 #include <minecpp/util/Vec.h>
 #include <spdlog/spdlog.h>
 
@@ -112,4 +112,4 @@ void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position)
    }
 }
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

@@ -1,6 +1,6 @@
-#include <minecpp/world/terrain/Terrain.h>
 #include <minecpp/random/JavaRandom.h>
 #include <minecpp/repository/Block.h>
+#include <minecpp/world/terrain/Terrain.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::world::terrain {
@@ -147,4 +147,4 @@ constexpr void Terrain::set_height_at(int x, int z, short value)
    height_map[x + z * chunk_size] = value;
 }
 
-}// namespace minecpp::game::worldgen::terrain
+}// namespace minecpp::world::terrain

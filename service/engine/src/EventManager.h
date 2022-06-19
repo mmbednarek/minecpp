@@ -47,7 +47,8 @@ class EventManager
    {
       for (auto &q : m_queues) {
          Event proto_event;
-         *proto_event.mutable_single_player()->mutable_player_id() = game::player::write_id_to_proto(player_id);
+         *proto_event.mutable_single_player()->mutable_player_id() =
+                 game::player::write_id_to_proto(player_id);
          proto_event.mutable_payload()->PackFrom(event);
          // TODO: Get front id from player manager
          q.second.write(std::move(proto_event));

@@ -82,6 +82,6 @@ class RandomTreeFactory : public ObjectFactory
    int occurrence() const override;
 };
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population
 
 #endif//MINECPP_TREE_H

@@ -1,5 +1,5 @@
-#include <minecpp/world/population/Population.h>
 #include <minecpp/util/Loop.h>
+#include <minecpp/world/population/Population.h>
 
 namespace minecpp::world::population {
 
@@ -63,4 +63,4 @@ ChunkPlacements &Population::get_chunk_placements(game::ChunkPosition pos)
    return load_chunk_placements(m_chunks.get_incomplete_chunk(pos.x, pos.z));
 }
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population

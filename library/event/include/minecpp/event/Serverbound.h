@@ -25,12 +25,12 @@ concept ServerboundVisitor = requires(T t)
    t.handle_issue_command(serverbound_v1::IssueCommand(), game::PlayerId());
 };
 
-#define MINECPP_EVENT_HANDLE_SERVICEBOUND(event_type, handler_method)                \
-   if (event.payload().Is<serverbound_v1::event_type>()) {                           \
-      serverbound_v1::event_type _event;                                             \
-      event.payload().UnpackTo(&_event);                                             \
+#define MINECPP_EVENT_HANDLE_SERVICEBOUND(event_type, handler_method)                      \
+   if (event.payload().Is<serverbound_v1::event_type>()) {                                 \
+      serverbound_v1::event_type _event;                                                   \
+      event.payload().UnpackTo(&_event);                                                   \
       visitor.handler_method(_event, game::player::read_id_from_proto(event.player_id())); \
-      return;                                                                        \
+      return;                                                                              \
    }
 
 template<typename T>

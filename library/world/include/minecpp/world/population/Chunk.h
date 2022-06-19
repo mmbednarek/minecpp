@@ -32,4 +32,4 @@ class ChunkPlacements
    void put_object(Chunk &chunk, int id, int x, int y, int z);
 };
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population

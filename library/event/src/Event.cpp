@@ -11,8 +11,9 @@ std::vector<game::PlayerId> read_recipients(const clientbound_v1::Event &event)
    case proto::event::clientbound::v1::Event::kMultiplePlayers: {
       std::vector<game::PlayerId> result(event.multiple_players().player_ids_size());
       auto &player_ids = event.multiple_players().player_ids();
-      std::transform(player_ids.begin(), player_ids.end(), result.begin(),
-                     [](const proto::player::v1::PlayerId &id) { return game::player::read_id_from_proto(id); });
+      std::transform(
+              player_ids.begin(), player_ids.end(), result.begin(),
+              [](const proto::player::v1::PlayerId &id) { return game::player::read_id_from_proto(id); });
       return result;
    }
    case proto::event::clientbound::v1::Event::kAllPlayers:

@@ -33,4 +33,4 @@ short HeightGenerator::at(int x, int z)
    return static_cast<short>(result);
 }
 
-}// namespace minecpp::game::worldgen::terrain
+}// namespace minecpp::world::terrain

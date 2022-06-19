@@ -1,6 +1,6 @@
+#include <minecpp/random/JavaRandom.h>
 #include <minecpp/world/population/Chunk.h>
 #include <minecpp/world/population/Object.h>
-#include <minecpp/random/JavaRandom.h>
 
 namespace minecpp::world::population {
 
@@ -118,4 +118,4 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
    });
 }
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population

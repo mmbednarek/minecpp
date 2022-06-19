@@ -1,6 +1,6 @@
+#include <minecpp/repository/Block.h>
 #include <minecpp/world/population/Object.h>
 #include <minecpp/world/population/Tree.h>
-#include <minecpp/repository/Block.h>
 
 namespace minecpp::world::population {
 
@@ -124,4 +124,4 @@ mb::size ObjectRepository::find_object_id(int value)
    return i;
 }
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population

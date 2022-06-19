@@ -30,4 +30,4 @@ class SectionBuilder
    Section build();
 };
 
-}// namespace minecpp::game
+}// namespace minecpp::world

@@ -30,9 +30,8 @@ std::string Block::state_value(std::string_view name, int state_id) const
 {
    auto range = state_range(state_id);
 
-   auto half_it        = std::find_if(
-           range.begin(), range.end(),
-           [name](const auto &state) { return state.first.name() == name; });
+   auto half_it = std::find_if(range.begin(), range.end(),
+                               [name](const auto &state) { return state.first.name() == name; });
 
    return half_it.value();
 }

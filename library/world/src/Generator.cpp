@@ -36,4 +36,4 @@ void Generator::populate_chunk(int x, int z)
    m_population.populate_chunk({x, z});
 }
 
-}// namespace minecpp::game::worldgen
+}// namespace minecpp::world

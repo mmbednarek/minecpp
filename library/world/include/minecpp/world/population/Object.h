@@ -119,4 +119,4 @@ class ObjectRepository
    }
 };
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population

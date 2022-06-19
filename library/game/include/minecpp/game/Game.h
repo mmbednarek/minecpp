@@ -53,18 +53,39 @@ enum class Face
    East   = 5,
 };
 
+enum class Side
+{
+   Left,
+   Right
+};
+
+[[nodiscard]] constexpr std::string to_string(Side side)
+{
+   switch (side) {
+   case Side::Left: return "left";
+   case Side::Right: return "right";
+   }
+   return "";
+}
+
 constexpr std::array<Face, 6> g_faces{
         Face::Bottom, Face::Top, Face::North, Face::South, Face::West, Face::East,
 };
 
 [[nodiscard]] constexpr std::optional<Face> parse_face(std::string_view face)
 {
-   if (face == "bottom") return Face::Bottom;
-   if (face == "top") return Face::Top;
-   if (face == "north") return Face::North;
-   if (face == "south") return Face::South;
-   if (face == "west") return Face::West;
-   if (face == "east") return Face::East;
+   if (face == "bottom")
+      return Face::Bottom;
+   if (face == "top")
+      return Face::Top;
+   if (face == "north")
+      return Face::North;
+   if (face == "south")
+      return Face::South;
+   if (face == "west")
+      return Face::West;
+   if (face == "east")
+      return Face::East;
    return std::nullopt;
 }
 
@@ -327,6 +348,17 @@ enum class Direction
    North
 };
 
+[[nodiscard]] constexpr Direction opposite_direction(Direction direction)
+{
+   switch (direction) {
+   case Direction::East: return Direction::West;
+   case Direction::West: return Direction::East;
+   case Direction::South: return Direction::North;
+   case Direction::North: return Direction::South;
+   }
+   return Direction::West;
+}
+
 [[nodiscard]] constexpr std::optional<Face> direction_to_face(Direction direction)
 {
    switch (direction) {
@@ -347,6 +379,29 @@ enum class Direction
    case Direction::North: return "north";
    }
    return "";
+}
+
+[[nodiscard]] constexpr std::optional<Direction> direction_at(Direction dir, Side side)
+{
+   if (side == Side::Left) {
+      switch (dir) {
+      case Direction::North: return Direction::West;
+      case Direction::South: return Direction::East;
+      case Direction::West: return Direction::South;
+      case Direction::East: return Direction::North;
+      }
+
+      return std::nullopt;
+   }
+
+   switch (dir) {
+   case Direction::North: return Direction::East;
+   case Direction::South: return Direction::West;
+   case Direction::West: return Direction::North;
+   case Direction::East: return Direction::South;
+   }
+
+   return std::nullopt;
 }
 
 [[nodiscard]] constexpr Direction direction_from_vec2(const util::Vec2 &vec)

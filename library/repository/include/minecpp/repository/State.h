@@ -40,7 +40,7 @@ class StateManager
    void add_state(int block_id, int state_count)
    {
       m_state_to_block_id[m_top_state] = block_id;
-      m_block_id_to_state[block_id]                      = m_top_state;
+      m_block_id_to_state[block_id]    = m_top_state;
       m_top_state += static_cast<game::BlockStateId>(state_count);
    }
 

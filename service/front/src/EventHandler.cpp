@@ -279,7 +279,6 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                          .tp_id = 0,
                  });
 
-
       if (m_stream != nullptr) {
          m_stream->send(proto::event::serverbound::v1::LoadInitialChunks{}, player_id);
       }

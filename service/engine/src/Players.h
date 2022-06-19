@@ -3,9 +3,9 @@
 #include <functional>
 #include <mb/result.h>
 #include <minecpp/game/entity/Entity.h>
-#include <minecpp/nbt/player/v1/Player.nbt.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Provider.hpp>
+#include <minecpp/nbt/player/v1/Player.nbt.h>
 #include <random>
 #include <vector>
 

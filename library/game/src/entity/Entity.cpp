@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <minecpp/game/entity/Entity.h>
-#include <minecpp/nbt/player/v1/Player.nbt.h>
 #include <minecpp/game/player/Id.h>
+#include <minecpp/nbt/player/v1/Player.nbt.h>
 
 namespace minecpp::game::entity {
 

@@ -129,8 +129,8 @@ struct Rotation
    float yaw, pitch;
 
    constexpr Rotation(float yaw, float pitch) :
-           yaw(yaw),
-           pitch(pitch)
+       yaw(yaw),
+       pitch(pitch)
    {
    }
 

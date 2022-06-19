@@ -1,8 +1,8 @@
 #include "Service.h"
 #include <grpcpp/server_builder.h>
 #include <mb/core.h>
-#include <minecpp/world/population/Object.h>
 #include <minecpp/repository/Repository.h>
+#include <minecpp/world/population/Object.h>
 #include <spdlog/spdlog.h>
 
 auto main() -> int

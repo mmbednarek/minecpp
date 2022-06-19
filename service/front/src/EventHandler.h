@@ -1,7 +1,7 @@
 #pragma once
 #include "Server.h"
-#include <minecpp/nbt/repository/v1/Codec.nbt.h>
 #include <minecpp/game/player/Id.h>
+#include <minecpp/nbt/repository/v1/Codec.nbt.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <minecpp/service/engine/Api.h>
 #include <string>
@@ -16,6 +16,7 @@ class EventHandler
    Server &m_server;
    engine::Stream *m_stream = nullptr;
    nbt::repository::v1::Registry &m_registry;
+   std::unique_ptr<std::future<bool>> m_player_list{};
 
  public:
    explicit EventHandler(Server &server, nbt::repository::v1::Registry &registry);
@@ -25,11 +26,14 @@ class EventHandler
       m_stream = stream;
    }
 
-   void handle_add_player(const clientbound_v1::AddPlayer &msg, const std::vector<game::player::Id> &player_ids);
+   void handle_add_player(const clientbound_v1::AddPlayer &msg,
+                          const std::vector<game::player::Id> &player_ids);
    void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
                             const std::vector<game::player::Id> &player_ids);
-   void handle_entity_move(const clientbound_v1::EntityMove &pos, const std::vector<game::player::Id> &player_ids);
-   void handle_entity_look(const clientbound_v1::EntityLook &pos, const std::vector<game::player::Id> &player_ids);
+   void handle_entity_move(const clientbound_v1::EntityMove &pos,
+                           const std::vector<game::player::Id> &player_ids);
+   void handle_entity_look(const clientbound_v1::EntityLook &pos,
+                           const std::vector<game::player::Id> &player_ids);
    void handle_chat(const clientbound_v1::Chat &chat_msg, const std::vector<game::player::Id> &player_ids);
    void handle_remove_player(const clientbound_v1::RemovePlayer &msg,
                              const std::vector<game::player::Id> &player_ids);
@@ -49,9 +53,12 @@ class EventHandler
                             const std::vector<game::player::Id> &player_ids);
    void handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                              const std::vector<game::player::Id> &player_ids);
-   void handle_deny_player(const clientbound_v1::DenyPlayer &msg, const std::vector<game::player::Id> &player_ids);
-   void handle_player_list(const clientbound_v1::PlayerList &msg, const std::vector<game::player::Id> &player_ids);
-   void handle_entity_list(const clientbound_v1::EntityList &msg, const std::vector<game::player::Id> &player_ids);
+   void handle_deny_player(const clientbound_v1::DenyPlayer &msg,
+                           const std::vector<game::player::Id> &player_ids);
+   void handle_player_list(const clientbound_v1::PlayerList &msg,
+                           const std::vector<game::player::Id> &player_ids);
+   void handle_entity_list(const clientbound_v1::EntityList &msg,
+                           const std::vector<game::player::Id> &player_ids);
    void handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
                                   const std::vector<game::player::Id> &player_ids);
 

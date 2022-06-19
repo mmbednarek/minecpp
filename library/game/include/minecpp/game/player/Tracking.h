@@ -26,4 +26,4 @@ class Tracking
    void on_movement(game::World &w, Player &p, util::Vec3 position);
 };
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

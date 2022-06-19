@@ -1,7 +1,7 @@
 #include <minecpp/game/entity/Entity.h>
-#include <minecpp/nbt/player/v1/Player.nbt.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Tracking.h>
+#include <minecpp/nbt/player/v1/Player.nbt.h>
 
 namespace minecpp::game::player {
 
@@ -87,4 +87,4 @@ proto::player::v1::Player Player::to_proto(const game::entity::Entity &entity) c
    return result;
 }
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

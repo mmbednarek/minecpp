@@ -1,5 +1,5 @@
-#include <minecpp/world/population/Tree.h>
 #include <minecpp/repository/Block.h>
+#include <minecpp/world/population/Tree.h>
 
 namespace minecpp::world::population {
 
@@ -69,4 +69,4 @@ int RandomTreeFactory::occurrence() const
    return 200;
 }
 
-}// namespace minecpp::game::worldgen::population
+}// namespace minecpp::world::population

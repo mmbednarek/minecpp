@@ -5,8 +5,8 @@
 #include <boost/random.hpp>
 #include <grpcpp/channel.h>
 #include <grpcpp/client_context.h>
-#include <minecpp/network/message/Serverbound.h>
 #include <minecpp/game/player/Id.h>
+#include <minecpp/network/message/Serverbound.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
 #include <minecpp/proto/service/engine/v1/Engine.grpc.pb.h>
@@ -53,7 +53,8 @@ class Service
 
    void on_player_disconnect(uuid engine_id, game::PlayerId player_id);
 
-   void on_message(uuid engine_id, game::PlayerId player_id, const minecpp::network::message::ChatCommand &msg);
+   void on_message(uuid engine_id, game::PlayerId player_id,
+                   const minecpp::network::message::ChatCommand &msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ChatMessage msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClientSettings msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerPosition msg);
@@ -62,8 +63,10 @@ class Service
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerRotation msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerDigging msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::KeepAliveClient msg);
-   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::AnimateHandClient msg);
-   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerBlockPlacement msg);
+   void on_message(uuid engine_id, game::PlayerId player_id,
+                   minecpp::network::message::AnimateHandClient msg);
+   void on_message(uuid engine_id, game::PlayerId player_id,
+                   minecpp::network::message::PlayerBlockPlacement msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClickWindow msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::HeldItemChange msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PluginMessage msg);

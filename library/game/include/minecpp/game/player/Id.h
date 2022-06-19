@@ -41,4 +41,4 @@ inline std::string format_player_id(Id player_id)
    return boost::uuids::to_string(player_id);
 }
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

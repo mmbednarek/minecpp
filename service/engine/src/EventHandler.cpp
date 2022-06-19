@@ -10,8 +10,8 @@
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
 #include <minecpp/controller/block/Stairs.h>
-#include <minecpp/controller/block/Wood.h>
 #include <minecpp/controller/block/Torch.h>
+#include <minecpp/controller/block/Wood.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/World.h>
 #include <minecpp/repository/Block.h>
@@ -116,10 +116,12 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:stone_stairs"); stairs_id.ok()) {
       m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
    }
-   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:cobblestone_stairs"); stairs_id.ok()) {
+   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:cobblestone_stairs");
+       stairs_id.ok()) {
       m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
    }
-   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:stone_brick_stairs"); stairs_id.ok()) {
+   if (auto stairs_id = repository::Block::the().find_id_by_tag("minecraft:stone_brick_stairs");
+       stairs_id.ok()) {
       m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
    }
 
@@ -239,15 +241,26 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    auto &entity = MB_ESCAPE(m_entity_manager.get_entity(player.entity_id()));
 
    send_inventory_data(player);
-
-   m_dispatcher.player_list(player.id(), m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player.id(), m_entity_manager.entities());
+   m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
+   m_dispatcher.entity_list(player_id, m_entity_manager.entities());
 }
 
-void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event, game::PlayerId player_id)
+void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
+                                          game::PlayerId player_id)
 {
    auto face           = game::face_from_proto(event.face());
    auto block_position = game::BlockPosition::from_proto(event.position());
+
+   auto state_id = m_world.get_block(block_position);
+   if (state_id.has_failed())
+      return;
+
+   if (m_block_manager.on_player_action(
+               m_world, player_id, *state_id, block_position, face,
+               {event.crosshair().x(), event.crosshair().y(), event.crosshair().z()})) {
+      m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
+      return;
+   }
 
    auto player = m_world.players().get_player(player_id);
    if (player.has_failed()) {
@@ -303,7 +316,8 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
                                    static_cast<size_t>(event.item_count()));
 }
 
-void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, game::PlayerId player_id)
+void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event,
+                                           game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));

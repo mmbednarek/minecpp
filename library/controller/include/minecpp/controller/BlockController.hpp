@@ -17,6 +17,18 @@ class BlockController
                                                                  game::BlockStateId neighbour_block_state_id,
                                                                  game::BlockPosition position,
                                                                  game::Face face) = 0;
+
+   /**
+    *
+    * @param world
+    * @param player_id
+    * @param block_state_id
+    * @param position
+    * @return supress block placement
+    */
+   virtual bool on_player_action(game::World &world, game::PlayerId player_id,
+                                 game::BlockStateId block_state_id, game::BlockPosition position,
+                                 game::Face face, util::Vec3 crosshair_position) = 0;
 };
 
 }// namespace minecpp::controller

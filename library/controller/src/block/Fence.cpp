@@ -53,8 +53,8 @@ bool Fence::on_player_place_block(game::World &world, game::PlayerId, game::Bloc
 }
 
 std::optional<game::BlockStateId> Fence::on_neighbour_change(game::World &, game::BlockStateId block_state_id,
-                                game::BlockStateId neighbour_block_state_id, game::BlockPosition,
-                                game::Face face)
+                                                             game::BlockStateId neighbour_block_state_id,
+                                                             game::BlockPosition, game::Face face)
 {
    if (face == game::Face::Top || face == game::Face::Bottom)
       return std::nullopt;

@@ -134,4 +134,4 @@ bool Inventory::take_from_active_slot(std::size_t count)
    return take_from_slot(index_to_slot_id(m_hot_bar_slot), count);
 }
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

@@ -55,14 +55,13 @@ TEST(State, loadStates)
       minecpp::nbt::CompoundContent cont;
 
       auto range = block.state_range(state);
-      std::for_each(range.begin(), range.end(),
-                    [&cont](const auto &pair) {
-                       auto [block_state, value_index] = pair;
-                       cont[std::string(block_state.name())] =
-                               minecpp::nbt::make_string(block_state.value_from_index(value_index));
-                       std::cout << "    " << block_state.name() << "="
-                                 << block_state.value_from_index(value_index) << '\n';
-                    });
+      std::for_each(range.begin(), range.end(), [&cont](const auto &pair) {
+         auto [block_state, value_index] = pair;
+         cont[std::string(block_state.name())] =
+                 minecpp::nbt::make_string(block_state.value_from_index(value_index));
+         std::cout << "    " << block_state.name() << "=" << block_state.value_from_index(value_index)
+                   << '\n';
+      });
 
       auto encoded =
               minecpp::repository::encode_state(block_id, minecpp::repository::make_compound_encoder(cont))

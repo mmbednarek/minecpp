@@ -110,8 +110,8 @@ std::optional<game::BlockStateId> set_state(game::BlockId block_id, int block_st
 
    game::BlockStateId state_id{0};
    std::for_each(values.crbegin(), values.crend(), [&state_id](auto pair) {
-     state_id *= pair.first;
-     state_id += pair.second;
+      state_id *= pair.first;
+      state_id += pair.second;
    });
 
    return StateManager::the().block_base_state(block_id) + state_id;
@@ -135,13 +135,14 @@ BlockIds &BlockIds::the()
    return instance;
 }
 
-#define REGISTER_BLOCK_ID(name) {\
+#define REGISTER_BLOCK_ID(name)                                   \
+   {                                                              \
       auto res = Block::the().find_id_by_tag("minecraft:" #name); \
-      if (res.has_failed()) { \
-      return; \
-      } \
-      (name) = *res;                 \
-}
+      if (res.has_failed()) {                                     \
+         return;                                                  \
+      }                                                           \
+      (name) = *res;                                              \
+   }
 
 void BlockIds::init()
 {
