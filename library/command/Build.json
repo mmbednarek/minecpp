@@ -4,9 +4,9 @@
     "public": [
       "libmb",
       "fmt",
-      "minecpp_lexer",
       "minecpp_format",
-      "minecpp_game"
+      "minecpp_game",
+      "minecpp_lexer"
     ],
     "private": [
       "minecpp_repository"

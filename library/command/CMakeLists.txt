@@ -12,9 +12,9 @@ target_link_libraries(minecpp_command
         LINK_PUBLIC
         libmb
         fmt
-        minecpp_lexer
         minecpp_format
         minecpp_game
+        minecpp_lexer
         LINK_PRIVATE
         minecpp_repository
 )

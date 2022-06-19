@@ -11,5 +11,4 @@ add_subdirectory("src")
 target_link_libraries(minecpp_event
         LINK_PUBLIC
         minecpp_game
-        minecpp_repository
 )

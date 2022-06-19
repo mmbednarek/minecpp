@@ -2,8 +2,7 @@
   "name": "minecpp_event",
   "dependencies": {
     "public": [
-      "minecpp_game",
-      "minecpp_repository"
+      "minecpp_game"
     ]
   }
 }
