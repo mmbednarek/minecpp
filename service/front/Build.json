@@ -1,0 +1,21 @@
+{
+  "name": "minecpp_front",
+  "dependencies": {
+    "public": [
+      "minecpp_utils",
+      "minecpp_engine_api",
+      "minecpp_grpc",
+      "minecpp_api_proto",
+      "minecpp_event",
+      "minecpp_network",
+      "minecpp_format",
+      "minecpp_repository",
+      "minecpp_chat",
+      "yaml-cpp",
+      "Boost::system",
+      "grpc++",
+      "spdlog",
+      "libmb"
+    ]
+  }
+}

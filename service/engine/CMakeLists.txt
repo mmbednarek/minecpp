@@ -1,19 +1,18 @@
+set(MINECPP_ENGINE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
 add_executable(minecpp_engine)
 
 # Public include headers
 target_include_directories(minecpp_engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Source files
-add_subdirectory(src)
+# Source subdirectory
+add_subdirectory("src")
 
-# API files
-add_subdirectory(api)
-
-# Link targets
-target_link_libraries(
-        minecpp_engine LINK_PUBLIC
+target_link_libraries(minecpp_engine
+        LINK_PUBLIC
         minecpp_controller
         minecpp_event
+        minecpp_engine_api
         minecpp_grpc
         minecpp_utils
         minecpp_game
@@ -31,3 +30,5 @@ target_link_libraries(
         libmb
         gpr
 )
+
+add_subdirectory("api")

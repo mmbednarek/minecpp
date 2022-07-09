@@ -1,0 +1,9 @@
+set(MINECPP_DISCOVERY_API_INCLUDE_DIR ${MINECPP_DISCOVERY_API_DIR}/include/minecpp/service/discovery)
+target_sources(minecpp_discovery_api PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Api.cpp
+
+        # Header files
+        ${MINECPP_DISCOVERY_API_INCLUDE_DIR}/Api.h
+)
+

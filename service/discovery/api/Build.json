@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_discovery_api",
+  "include_path": "minecpp/service/discovery",
+  "dependencies": {
+    "public": [
+      "minecpp_api_proto",
+      "grpc++",
+      "libmb",
+      "fmt"
+    ]
+  }
+}

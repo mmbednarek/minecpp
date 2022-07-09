@@ -1,7 +1,27 @@
+set(MINECPP_FRONT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
 add_executable(minecpp_front)
 
-# Source subdirectory
-add_subdirectory(src)
+# Public include headers
+target_include_directories(minecpp_front PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Link Target
-target_link_libraries(minecpp_front LINK_PUBLIC minecpp_utils minecpp_grpc minecpp_api_proto minecpp_service_engine_api minecpp_event minecpp_network minecpp_format minecpp_repository minecpp_chat yaml-cpp Boost::system grpc++ spdlog libmb)
+# Source subdirectory
+add_subdirectory("src")
+
+target_link_libraries(minecpp_front
+        LINK_PUBLIC
+        minecpp_utils
+        minecpp_engine_api
+        minecpp_grpc
+        minecpp_api_proto
+        minecpp_event
+        minecpp_network
+        minecpp_format
+        minecpp_repository
+        minecpp_chat
+        yaml-cpp
+        Boost::system
+        grpc++
+        spdlog
+        libmb
+)

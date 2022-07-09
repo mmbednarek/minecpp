@@ -1,5 +1,5 @@
-target_sources(
-        minecpp_front PUBLIC
+target_sources(minecpp_front PUBLIC
+        # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Config.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Connection.cpp
@@ -15,4 +15,6 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/Ticks.h
 )
 
-add_subdirectory(protocol)
+# Subdirectories
+add_subdirectory("protocol")
+

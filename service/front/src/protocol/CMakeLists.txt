@@ -1,12 +1,13 @@
-target_sources(
-  minecpp_front PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/Handler.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/LoginHandler.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/LoginHandler.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/PlayHandler.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/PlayHandler.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/Protocol.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/Protocol.h
-  ${CMAKE_CURRENT_SOURCE_DIR}/StatusHandler.cpp
-  ${CMAKE_CURRENT_SOURCE_DIR}/StatusHandler.h
+target_sources(minecpp_front PUBLIC
+        # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Handler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/LoginHandler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/LoginHandler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/PlayHandler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/PlayHandler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Protocol.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Protocol.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/StatusHandler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/StatusHandler.h
 )
+
