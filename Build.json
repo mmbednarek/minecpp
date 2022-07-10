@@ -25,6 +25,16 @@
     "engine",
     "front"
   ],
+  "tools": [
+    "chunk_extractor",
+    "chunk_viewer",
+    "discocli",
+    "nbt_viewer",
+    "nbtprotogen",
+    "nbtscheme",
+    "recipes",
+    "snbt_parser"
+  ],
   "external": [
     {
       "link_name": "fmt",

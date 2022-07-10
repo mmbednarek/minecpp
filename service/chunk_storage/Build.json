@@ -1,7 +1,7 @@
 {
   "name": "minecpp_chunk_storage",
   "dependencies": {
-    "public": [
+    "private": [
       "minecpp_utils",
       "minecpp_game",
       "minecpp_network",

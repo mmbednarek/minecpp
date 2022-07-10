@@ -1,0 +1,11 @@
+{
+  "name": "minecpp_chunk_viewer",
+  "dependencies": {
+    "private": [
+      "minecpp_game",
+      "minecpp_nbt",
+      "minecpp_utils",
+      "fmt"
+    ]
+  }
+}

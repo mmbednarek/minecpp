@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_tool_snbt_parser",
+  "dependencies": {
+    "private": [
+      "minecpp_nbt",
+      "Boost::program_options"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_nbtscheme",
+  "dependencies": {
+    "private": [
+      "minecpp_nbt",
+      "minecpp_utils",
+      "fmt"
+    ]
+  }
+}

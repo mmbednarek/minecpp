@@ -2,10 +2,9 @@
   "name": "minecpp_discovery",
   "api_library": "true",
   "dependencies": {
-    "public": [
-      "minecpp_service_discovery",
+    "private": [
       "minecpp_api_proto",
-      "minecpp_service_discovery_api",
+      "minecpp_discovery_api",
       "libmb",
       "spdlog"
     ]

@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_recipes",
+  "dependencies": {
+    "private": [
+      "minecpp_network",
+      "minecpp_game",
+      "minecpp_repository",
+      "Boost::program_options",
+      "Boost::iostreams"
+    ]
+  }
+}

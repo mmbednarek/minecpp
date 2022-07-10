@@ -1,0 +1,16 @@
+{
+  "name": "minecpp_chunk_extractor",
+  "dependencies": {
+    "private": [
+      "minecpp_region",
+      "minecpp_network",
+      "minecpp_repository",
+      "minecpp_nbt",
+      "minecpp_utils",
+      "minecpp_game",
+      "minecpp_network",
+      "minecpp_api_proto",
+      "grpc++"
+    ]
+  }
+}

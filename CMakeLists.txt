@@ -11,6 +11,8 @@ set(gRPC_PROTOBUF_PROVIDER "package")
 
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
+option(BUILD_FMT_SOURCE "The build source of fmt library" "conan")
+
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)

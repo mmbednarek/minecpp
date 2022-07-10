@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_tool_discocli",
+  "dependencies": {
+    "private": [
+      "minecpp_discovery_api",
+      "fmt"
+    ]
+  }
+}

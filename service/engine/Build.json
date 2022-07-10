@@ -2,7 +2,7 @@
   "name": "minecpp_engine",
   "api_library": "true",
   "dependencies": {
-    "public": [
+    "private": [
       "minecpp_controller",
       "minecpp_event",
       "minecpp_engine_api",

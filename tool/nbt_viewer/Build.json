@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_nbt_viewer",
+  "dependencies": {
+    "private": [
+      "minecpp_nbt",
+      "minecpp_utils",
+      "fmt"
+    ]
+  }
+}
