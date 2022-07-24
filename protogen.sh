@@ -16,14 +16,6 @@ done
 protoc --proto_path=./api --cpp_out=library/api $proto_sources
 protoc --proto_path=./api --grpc_out=library/api --plugin=protoc-gen-grpc=$(which grpc_cpp_plugin) ${grpc_sources[@]}
 
-# move generated headers to include path
-for header in $(find . -path "./library/api/minecpp/proto/*.pb.h"); do
-  sed -i 's/#include \"minecpp\/proto\/\(.*\)\"/#include <minecpp\/proto\/\1>/' $header
-  suffix=${header#"./library/api/minecpp/proto/"}
-  mkdir -p ./library/api/minecpp/proto/include/minecpp/proto/${suffix%/*.pb.h}
-  mv $header "./library/api/minecpp/proto/include/minecpp/proto/$suffix"
-done
-
 # replace header include
 for source in $(find . -path "./library/api/minecpp/proto/*.pb.cc"); do
   sed -i 's/#include \"minecpp\/proto\/\(.*\)\"/#include <minecpp\/proto\/\1>/' $source
@@ -37,4 +29,12 @@ for lib in $source_libs; do
   fi
   rm -rf ./library/api/minecpp/proto/src/$lib
   mv ./library/api/minecpp/proto/$lib ./library/api/minecpp/proto/src/$lib
+done
+
+# move generated headers to include path
+for header in $(find . -path "./library/api/minecpp/proto/src/*.pb.h"); do
+  sed -i 's/#include \"minecpp\/proto\/\(.*\)\"/#include <minecpp\/proto\/\1>/' $header
+  suffix=${header#"./library/api/minecpp/proto/src/"}
+  mkdir -p ./library/api/minecpp/proto/include/minecpp/proto/${suffix%/*.pb.h}
+  mv $header "./library/api/minecpp/proto/include/minecpp/proto/$suffix"
 done
