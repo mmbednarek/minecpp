@@ -116,12 +116,25 @@ struct ItemIdDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ItemIdDefaultTypeInternal _ItemId_default_instance_;
+PROTOBUF_CONSTEXPR LightLevel::LightLevel(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.level_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct LightLevelDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR LightLevelDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~LightLevelDefaultTypeInternal() {}
+  union {
+    LightLevel _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LightLevelDefaultTypeInternal _LightLevel_default_instance_;
 }  // namespace v1
 }  // namespace common
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[6];
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[6];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[7];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[7];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto = nullptr;
 
 const uint32_t TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -181,6 +194,13 @@ const uint32_t TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto::offse
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::ItemId, _impl_.id_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::LightLevel, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::LightLevel, _impl_.level_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::common::v1::ChunkPosition)},
@@ -189,6 +209,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 24, -1, -1, sizeof(::minecpp::proto::common::v1::Gameplay)},
   { 40, -1, -1, sizeof(::minecpp::proto::common::v1::Vector3f)},
   { 49, -1, -1, sizeof(::minecpp::proto::common::v1::ItemId)},
+  { 56, -1, -1, sizeof(::minecpp::proto::common::v1::LightLevel)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -198,6 +219,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::common::v1::_Gameplay_default_instance_._instance,
   &::minecpp::proto::common::v1::_Vector3f_default_instance_._instance,
   &::minecpp::proto::common::v1::_ItemId_default_instance_._instance,
+  &::minecpp::proto::common::v1::_LightLevel_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -216,25 +238,26 @@ const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2epr
   "respawn\030\t \001(\010\0227\n\ndifficulty\030\n \001(\0162#.mine"
   "cpp.proto.common.v1.Difficulty\"+\n\010Vector"
   "3f\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\"\024\n\006I"
-  "temId\022\n\n\002id\030\001 \001(\r*3\n\rDimensionType\022\r\n\tOv"
-  "erworld\020\000\022\n\n\006Nether\020\001\022\007\n\003End\020\002*,\n\nDiffic"
-  "ulty\022\010\n\004Easy\020\000\022\n\n\006Normal\020\001\022\010\n\004Hard\020\002*D\n\010"
-  "GameMode\022\014\n\010Survival\020\000\022\014\n\010Creative\020\001\022\r\n\t"
-  "Adventure\020\002\022\r\n\tSpectator\020\003*R\n\tWorldType\022"
-  "\013\n\007Default\020\000\022\010\n\004Flat\020\001\022\017\n\013LargeBiomes\020\002\022"
-  "\r\n\tAmplified\020\003\022\016\n\nCustomised\020\004*\222\001\n\022Playe"
-  "rDiggingState\022\013\n\007Digging\020\000\022\023\n\017CanceledDi"
-  "gging\020\001\022\023\n\017FinishedDigging\020\002\022\020\n\014DropAllI"
-  "tems\020\003\022\014\n\010DropItem\020\004\022\022\n\016ReleaseUseItem\020\005"
-  "\022\021\n\rSwapHeldItems\020\006*E\n\004Face\022\n\n\006Bottom\020\000\022"
-  "\007\n\003Top\020\001\022\t\n\005North\020\002\022\t\n\005South\020\003\022\010\n\004West\020\004"
-  "\022\010\n\004East\020\005b\006proto3"
+  "temId\022\n\n\002id\030\001 \001(\r\"\033\n\nLightLevel\022\r\n\005level"
+  "\030\001 \001(\r*3\n\rDimensionType\022\r\n\tOverworld\020\000\022\n"
+  "\n\006Nether\020\001\022\007\n\003End\020\002*,\n\nDifficulty\022\010\n\004Eas"
+  "y\020\000\022\n\n\006Normal\020\001\022\010\n\004Hard\020\002*D\n\010GameMode\022\014\n"
+  "\010Survival\020\000\022\014\n\010Creative\020\001\022\r\n\tAdventure\020\002"
+  "\022\r\n\tSpectator\020\003*R\n\tWorldType\022\013\n\007Default\020"
+  "\000\022\010\n\004Flat\020\001\022\017\n\013LargeBiomes\020\002\022\r\n\tAmplifie"
+  "d\020\003\022\016\n\nCustomised\020\004*\222\001\n\022PlayerDiggingSta"
+  "te\022\013\n\007Digging\020\000\022\023\n\017CanceledDigging\020\001\022\023\n\017"
+  "FinishedDigging\020\002\022\020\n\014DropAllItems\020\003\022\014\n\010D"
+  "ropItem\020\004\022\022\n\016ReleaseUseItem\020\005\022\021\n\rSwapHel"
+  "dItems\020\006*E\n\004Face\022\n\n\006Bottom\020\000\022\007\n\003Top\020\001\022\t\n"
+  "\005North\020\002\022\t\n\005South\020\003\022\010\n\004West\020\004\022\010\n\004East\020\005*"
+  "\037\n\tLightType\022\t\n\005Block\020\000\022\007\n\003Sky\020\001b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto = {
-    false, false, 1098, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
+    false, false, 1160, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
     "minecpp/proto/common/v1/Common.proto",
-    &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_once, nullptr, 0, 6,
+    &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_once, nullptr, 0, 7,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
@@ -343,6 +366,20 @@ bool Face_IsValid(int value) {
     case 3:
     case 4:
     case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* LightType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto);
+  return file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[6];
+}
+bool LightType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
       return true;
     default:
       return false;
@@ -1838,6 +1875,184 @@ void ItemId::InternalSwap(ItemId* other) {
       file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[5]);
 }
 
+// ===================================================================
+
+class LightLevel::_Internal {
+ public:
+};
+
+LightLevel::LightLevel(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.common.v1.LightLevel)
+}
+LightLevel::LightLevel(const LightLevel& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  LightLevel* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.level_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _this->_impl_.level_ = from._impl_.level_;
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.common.v1.LightLevel)
+}
+
+inline void LightLevel::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.level_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+LightLevel::~LightLevel() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.common.v1.LightLevel)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void LightLevel::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void LightLevel::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void LightLevel::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.common.v1.LightLevel)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.level_ = 0u;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* LightLevel::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 level = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* LightLevel::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.common.v1.LightLevel)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 level = 1;
+  if (this->_internal_level() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_level(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.common.v1.LightLevel)
+  return target;
+}
+
+size_t LightLevel::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.common.v1.LightLevel)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint32 level = 1;
+  if (this->_internal_level() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_level());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData LightLevel::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    LightLevel::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*LightLevel::GetClassData() const { return &_class_data_; }
+
+
+void LightLevel::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<LightLevel*>(&to_msg);
+  auto& from = static_cast<const LightLevel&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.common.v1.LightLevel)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_level() != 0) {
+    _this->_internal_set_level(from._internal_level());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void LightLevel::CopyFrom(const LightLevel& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.common.v1.LightLevel)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool LightLevel::IsInitialized() const {
+  return true;
+}
+
+void LightLevel::InternalSwap(LightLevel* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_.level_, other->_impl_.level_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata LightLevel::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_getter, &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[6]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace common
@@ -1867,6 +2082,10 @@ Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::Vector3f >(Arena* arena
 template<> PROTOBUF_NOINLINE ::minecpp::proto::common::v1::ItemId*
 Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::ItemId >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::common::v1::ItemId >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::common::v1::LightLevel*
+Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::LightLevel >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::common::v1::LightLevel >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

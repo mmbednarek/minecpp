@@ -59,12 +59,12 @@ Section SectionBuilder::build()
 
    minecpp::squeezed::TinyVec<4> sky_light(4096);
    for (mb::size n = 0; n < 4096; ++n) {
-      sky_light.set(n, 0xf);
+      sky_light.set(n, 0x0);
    }
 
    minecpp::squeezed::TinyVec<4> block_light(4096);
    for (mb::size n = 0; n < 4096; ++n) {
-      block_light.set(n, 0xf);
+      block_light.set(n, 0x0);
    }
 
    return Section{

@@ -81,6 +81,20 @@ class ChunkStorage final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>> PrepareAsyncGetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>>(PrepareAsyncGetBlockRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::minecpp::proto::common::v1::LightLevel* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>> AsyncGetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>>(AsyncGetLightLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>> PrepareAsyncGetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>>(PrepareAsyncGetLightLevelRaw(context, request, cq));
+    }
+    virtual ::grpc::Status SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncSetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncSetLightLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncSetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncSetLightLevelRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -96,6 +110,10 @@ class ChunkStorage final {
       virtual void HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -113,6 +131,10 @@ class ChunkStorage final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* PrepareAsyncHeightAtRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>* AsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::BlockState>* PrepareAsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>* AsyncGetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>* PrepareAsyncGetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -159,6 +181,20 @@ class ChunkStorage final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>> PrepareAsyncGetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>>(PrepareAsyncGetBlockRaw(context, request, cq));
     }
+    ::grpc::Status GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::minecpp::proto::common::v1::LightLevel* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>> AsyncGetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>>(AsyncGetLightLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>> PrepareAsyncGetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>>(PrepareAsyncGetLightLevelRaw(context, request, cq));
+    }
+    ::grpc::Status SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncSetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncSetLightLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncSetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncSetLightLevelRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -174,6 +210,10 @@ class ChunkStorage final {
       void HeightAt(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, std::function<void(::grpc::Status)>) override;
       void GetBlock(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response, std::function<void(::grpc::Status)>) override;
+      void GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -197,12 +237,18 @@ class ChunkStorage final {
     ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse>* PrepareAsyncHeightAtRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>* AsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::BlockState>* PrepareAsyncGetBlockRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::BlockPosition& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>* AsyncGetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>* PrepareAsyncGetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_LoadChunk_;
     const ::grpc::internal::RpcMethod rpcmethod_SetBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_AddReferences_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveReference_;
     const ::grpc::internal::RpcMethod rpcmethod_HeightAt_;
     const ::grpc::internal::RpcMethod rpcmethod_GetBlock_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetLightLevel_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetLightLevel_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -216,6 +262,8 @@ class ChunkStorage final {
     virtual ::grpc::Status RemoveReference(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response);
     virtual ::grpc::Status HeightAt(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::HeightAtRequest* request, ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse* response);
     virtual ::grpc::Status GetBlock(::grpc::ServerContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response);
+    virtual ::grpc::Status GetLightLevel(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response);
+    virtual ::grpc::Status SetLightLevel(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_LoadChunk : public BaseClass {
@@ -337,7 +385,47 @@ class ChunkStorage final {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<WithAsyncMethod_AddReferences<WithAsyncMethod_RemoveReference<WithAsyncMethod_HeightAt<WithAsyncMethod_GetBlock<Service > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetLightLevel() {
+      ::grpc::Service::MarkMethodAsync(6);
+    }
+    ~WithAsyncMethod_GetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetLightLevel(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::common::v1::LightLevel>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_SetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetLightLevel() {
+      ::grpc::Service::MarkMethodAsync(7);
+    }
+    ~WithAsyncMethod_SetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetLightLevel(::grpc::ServerContext* context, ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<WithAsyncMethod_AddReferences<WithAsyncMethod_RemoveReference<WithAsyncMethod_HeightAt<WithAsyncMethod_GetBlock<WithAsyncMethod_GetLightLevel<WithAsyncMethod_SetLightLevel<Service > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_LoadChunk : public BaseClass {
    private:
@@ -500,7 +588,61 @@ class ChunkStorage final {
     virtual ::grpc::ServerUnaryReactor* GetBlock(
       ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_LoadChunk<WithCallbackMethod_SetBlock<WithCallbackMethod_AddReferences<WithCallbackMethod_RemoveReference<WithCallbackMethod_HeightAt<WithCallbackMethod_GetBlock<Service > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetLightLevel() {
+      ::grpc::Service::MarkMethodCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, ::minecpp::proto::common::v1::LightLevel>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response) { return this->GetLightLevel(context, request, response); }));}
+    void SetMessageAllocatorFor_GetLightLevel(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, ::minecpp::proto::common::v1::LightLevel>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, ::minecpp::proto::common::v1::LightLevel>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetLightLevel(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_SetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SetLightLevel() {
+      ::grpc::Service::MarkMethodCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) { return this->SetLightLevel(context, request, response); }));}
+    void SetMessageAllocatorFor_SetLightLevel(
+        ::grpc::MessageAllocator< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetLightLevel(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_LoadChunk<WithCallbackMethod_SetBlock<WithCallbackMethod_AddReferences<WithCallbackMethod_RemoveReference<WithCallbackMethod_HeightAt<WithCallbackMethod_GetBlock<WithCallbackMethod_GetLightLevel<WithCallbackMethod_SetLightLevel<Service > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_LoadChunk : public BaseClass {
@@ -600,6 +742,40 @@ class ChunkStorage final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetBlock(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::BlockPosition* /*request*/, ::minecpp::proto::common::v1::BlockState* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetLightLevel() {
+      ::grpc::Service::MarkMethodGeneric(6);
+    }
+    ~WithGenericMethod_GetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetLightLevel() {
+      ::grpc::Service::MarkMethodGeneric(7);
+    }
+    ~WithGenericMethod_SetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -722,6 +898,46 @@ class ChunkStorage final {
     }
     void RequestGetBlock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetLightLevel() {
+      ::grpc::Service::MarkMethodRaw(6);
+    }
+    ~WithRawMethod_GetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetLightLevel(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetLightLevel() {
+      ::grpc::Service::MarkMethodRaw(7);
+    }
+    ~WithRawMethod_SetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetLightLevel(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -854,6 +1070,50 @@ class ChunkStorage final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetLightLevel() {
+      ::grpc::Service::MarkMethodRawCallback(6,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetLightLevel(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetLightLevel(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SetLightLevel() {
+      ::grpc::Service::MarkMethodRawCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetLightLevel(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetLightLevel(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1018,9 +1278,63 @@ class ChunkStorage final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::common::v1::BlockPosition,::minecpp::proto::common::v1::BlockState>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<Service > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetLightLevel() {
+      ::grpc::Service::MarkMethodStreamed(6,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, ::minecpp::proto::common::v1::LightLevel>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, ::minecpp::proto::common::v1::LightLevel>* streamer) {
+                       return this->StreamedGetLightLevel(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* /*request*/, ::minecpp::proto::common::v1::LightLevel* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetLightLevel(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest,::minecpp::proto::common::v1::LightLevel>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetLightLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetLightLevel() {
+      ::grpc::Service::MarkMethodStreamed(7,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* streamer) {
+                       return this->StreamedSetLightLevel(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SetLightLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetLightLevel(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest,::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<WithStreamedUnaryMethod_GetLightLevel<WithStreamedUnaryMethod_SetLightLevel<Service > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<Service > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<WithStreamedUnaryMethod_GetLightLevel<WithStreamedUnaryMethod_SetLightLevel<Service > > > > > > > > StreamedService;
 };
 
 }  // namespace v1

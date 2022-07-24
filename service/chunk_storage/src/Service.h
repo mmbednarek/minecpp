@@ -34,6 +34,14 @@ class Service final : public chunk_storage_v1::ChunkStorage::Service
    grpc::Status GetBlock(::grpc::ServerContext *context,
                          const ::minecpp::proto::common::v1::BlockPosition *request,
                          ::minecpp::proto::common::v1::BlockState *response) override;
+   grpc::Status
+   GetLightLevel(::grpc::ServerContext *context,
+                 const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest *request,
+                 ::minecpp::proto::common::v1::LightLevel *response) override;
+   grpc::Status
+   SetLightLevel(::grpc::ServerContext *context,
+                 const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest *request,
+                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) override;
 };
 
 }// namespace minecpp::service::chunk_storage

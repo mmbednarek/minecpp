@@ -139,6 +139,35 @@ struct HeightAtResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 HeightAtResponseDefaultTypeInternal _HeightAtResponse_default_instance_;
+PROTOBUF_CONSTEXPR SetLightLevelRequest::SetLightLevelRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.level_)*/nullptr
+  , /*decltype(_impl_.light_type_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct SetLightLevelRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SetLightLevelRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SetLightLevelRequestDefaultTypeInternal() {}
+  union {
+    SetLightLevelRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetLightLevelRequestDefaultTypeInternal _SetLightLevelRequest_default_instance_;
+PROTOBUF_CONSTEXPR GetLightLevelRequest::GetLightLevelRequest(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.light_type_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct GetLightLevelRequestDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR GetLightLevelRequestDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~GetLightLevelRequestDefaultTypeInternal() {}
+  union {
+    GetLightLevelRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 GetLightLevelRequestDefaultTypeInternal _GetLightLevelRequest_default_instance_;
 PROTOBUF_CONSTEXPR EmptyResponse::EmptyResponse(
     ::_pbi::ConstantInitialized) {}
 struct EmptyResponseDefaultTypeInternal {
@@ -155,7 +184,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 }  // namespace service
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[9];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[11];
 static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto = nullptr;
 
@@ -227,6 +256,23 @@ const uint32_t TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fCh
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::HeightAtResponse, _impl_.height_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, _impl_.light_type_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest, _impl_.level_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, _impl_.light_type_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest, _impl_.position_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::chunk_storage::v1::EmptyResponse, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -242,7 +288,9 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 43, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::RemoveReferencesRequest)},
   { 51, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::HeightAtRequest)},
   { 59, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::HeightAtResponse)},
-  { 66, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::EmptyResponse)},
+  { 66, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest)},
+  { 75, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest)},
+  { 83, -1, -1, sizeof(::minecpp::proto::service::chunk_storage::v1::EmptyResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -254,6 +302,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::service::chunk_storage::v1::_RemoveReferencesRequest_default_instance_._instance,
   &::minecpp::proto::service::chunk_storage::v1::_HeightAtRequest_default_instance_._instance,
   &::minecpp::proto::service::chunk_storage::v1::_HeightAtResponse_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_SetLightLevelRequest_default_instance_._instance,
+  &::minecpp::proto::service::chunk_storage::v1::_GetLightLevelRequest_default_instance_._instance,
   &::minecpp::proto::service::chunk_storage::v1::_EmptyResponse_default_instance_._instance,
 };
 
@@ -276,27 +326,42 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage
   "id\030\001 \001(\014\022=\n\006coords\030\002 \003(\0132-.minecpp.proto"
   ".service.chunk_storage.v1.Coord\"\'\n\017Heigh"
   "tAtRequest\022\t\n\001x\030\001 \001(\005\022\t\n\001z\030\002 \001(\005\"\"\n\020Heig"
-  "htAtResponse\022\016\n\006height\030\001 \001(\005\"\017\n\rEmptyRes"
-  "ponse*(\n\017ReferenceStatus\022\006\n\002OK\020\000\022\r\n\tMUST"
-  "_MOVE\020\0012\343\005\n\014ChunkStorage\022d\n\tLoadChunk\0228."
-  "minecpp.proto.service.chunk_storage.v1.L"
-  "oadChunkRequest\032\035.minecpp.proto.chunk.v1"
-  ".Chunk\022z\n\010SetBlock\0227.minecpp.proto.servi"
-  "ce.chunk_storage.v1.SetBlockRequest\0325.mi"
-  "necpp.proto.service.chunk_storage.v1.Emp"
-  "tyResponse\022\214\001\n\rAddReferences\022<.minecpp.p"
-  "roto.service.chunk_storage.v1.AddReferen"
-  "cesRequest\032=.minecpp.proto.service.chunk"
-  "_storage.v1.AddReferencesResponse\022\211\001\n\017Re"
-  "moveReference\022\?.minecpp.proto.service.ch"
-  "unk_storage.v1.RemoveReferencesRequest\0325"
+  "htAtResponse\022\016\n\006height\030\001 \001(\005\"\274\001\n\024SetLigh"
+  "tLevelRequest\0226\n\nlight_type\030\001 \001(\0162\".mine"
+  "cpp.proto.common.v1.LightType\0228\n\010positio"
+  "n\030\002 \001(\0132&.minecpp.proto.common.v1.BlockP"
+  "osition\0222\n\005level\030\003 \001(\0132#.minecpp.proto.c"
+  "ommon.v1.LightLevel\"\210\001\n\024GetLightLevelReq"
+  "uest\0226\n\nlight_type\030\001 \001(\0162\".minecpp.proto"
+  ".common.v1.LightType\0228\n\010position\030\002 \001(\0132&"
+  ".minecpp.proto.common.v1.BlockPosition\"\017"
+  "\n\rEmptyResponse*(\n\017ReferenceStatus\022\006\n\002OK"
+  "\020\000\022\r\n\tMUST_MOVE\020\0012\336\007\n\014ChunkStorage\022d\n\tLo"
+  "adChunk\0228.minecpp.proto.service.chunk_st"
+  "orage.v1.LoadChunkRequest\032\035.minecpp.prot"
+  "o.chunk.v1.Chunk\022z\n\010SetBlock\0227.minecpp.p"
+  "roto.service.chunk_storage.v1.SetBlockRe"
+  "quest\0325.minecpp.proto.service.chunk_stor"
+  "age.v1.EmptyResponse\022\214\001\n\rAddReferences\022<"
   ".minecpp.proto.service.chunk_storage.v1."
-  "EmptyResponse\022}\n\010HeightAt\0227.minecpp.prot"
-  "o.service.chunk_storage.v1.HeightAtReque"
-  "st\0328.minecpp.proto.service.chunk_storage"
-  ".v1.HeightAtResponse\022W\n\010GetBlock\022&.minec"
-  "pp.proto.common.v1.BlockPosition\032#.minec"
-  "pp.proto.common.v1.BlockStateb\006proto3"
+  "AddReferencesRequest\032=.minecpp.proto.ser"
+  "vice.chunk_storage.v1.AddReferencesRespo"
+  "nse\022\211\001\n\017RemoveReference\022\?.minecpp.proto."
+  "service.chunk_storage.v1.RemoveReference"
+  "sRequest\0325.minecpp.proto.service.chunk_s"
+  "torage.v1.EmptyResponse\022}\n\010HeightAt\0227.mi"
+  "necpp.proto.service.chunk_storage.v1.Hei"
+  "ghtAtRequest\0328.minecpp.proto.service.chu"
+  "nk_storage.v1.HeightAtResponse\022W\n\010GetBlo"
+  "ck\022&.minecpp.proto.common.v1.BlockPositi"
+  "on\032#.minecpp.proto.common.v1.BlockState\022"
+  "r\n\rGetLightLevel\022<.minecpp.proto.service"
+  ".chunk_storage.v1.GetLightLevelRequest\032#"
+  ".minecpp.proto.common.v1.LightLevel\022\204\001\n\r"
+  "SetLightLevel\022<.minecpp.proto.service.ch"
+  "unk_storage.v1.SetLightLevelRequest\0325.mi"
+  "necpp.proto.service.chunk_storage.v1.Emp"
+  "tyResponseb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_deps[2] = {
   &::descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto,
@@ -304,9 +369,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fs
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto = {
-    false, false, 1557, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto,
+    false, false, 2138, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto,
     "minecpp/proto/service/chunk_storage/v1/ChunkStorage.proto",
-    &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_deps, 2, 9,
+    &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_deps, 2, 11,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto,
@@ -2146,6 +2211,519 @@ void HeightAtResponse::InternalSwap(HeightAtResponse* other) {
 
 // ===================================================================
 
+class SetLightLevelRequest::_Internal {
+ public:
+  static const ::minecpp::proto::common::v1::BlockPosition& position(const SetLightLevelRequest* msg);
+  static const ::minecpp::proto::common::v1::LightLevel& level(const SetLightLevelRequest* msg);
+};
+
+const ::minecpp::proto::common::v1::BlockPosition&
+SetLightLevelRequest::_Internal::position(const SetLightLevelRequest* msg) {
+  return *msg->_impl_.position_;
+}
+const ::minecpp::proto::common::v1::LightLevel&
+SetLightLevelRequest::_Internal::level(const SetLightLevelRequest* msg) {
+  return *msg->_impl_.level_;
+}
+void SetLightLevelRequest::clear_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+}
+void SetLightLevelRequest::clear_level() {
+  if (GetArenaForAllocation() == nullptr && _impl_.level_ != nullptr) {
+    delete _impl_.level_;
+  }
+  _impl_.level_ = nullptr;
+}
+SetLightLevelRequest::SetLightLevelRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+}
+SetLightLevelRequest::SetLightLevelRequest(const SetLightLevelRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  SetLightLevelRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.level_){nullptr}
+    , decltype(_impl_.light_type_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_position()) {
+    _this->_impl_.position_ = new ::minecpp::proto::common::v1::BlockPosition(*from._impl_.position_);
+  }
+  if (from._internal_has_level()) {
+    _this->_impl_.level_ = new ::minecpp::proto::common::v1::LightLevel(*from._impl_.level_);
+  }
+  _this->_impl_.light_type_ = from._impl_.light_type_;
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+}
+
+inline void SetLightLevelRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.level_){nullptr}
+    , decltype(_impl_.light_type_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+SetLightLevelRequest::~SetLightLevelRequest() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SetLightLevelRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.position_;
+  if (this != internal_default_instance()) delete _impl_.level_;
+}
+
+void SetLightLevelRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void SetLightLevelRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.level_ != nullptr) {
+    delete _impl_.level_;
+  }
+  _impl_.level_ = nullptr;
+  _impl_.light_type_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetLightLevelRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .minecpp.proto.common.v1.LightType light_type = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_light_type(static_cast<::minecpp::proto::common::v1::LightType>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.BlockPosition position = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.LightLevel level = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_level(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* SetLightLevelRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.LightType light_type = 1;
+  if (this->_internal_light_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_light_type(), target);
+  }
+
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
+  }
+
+  // .minecpp.proto.common.v1.LightLevel level = 3;
+  if (this->_internal_has_level()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::level(this),
+        _Internal::level(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  return target;
+}
+
+size_t SetLightLevelRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.position_);
+  }
+
+  // .minecpp.proto.common.v1.LightLevel level = 3;
+  if (this->_internal_has_level()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.level_);
+  }
+
+  // .minecpp.proto.common.v1.LightType light_type = 1;
+  if (this->_internal_light_type() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_light_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetLightLevelRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    SetLightLevelRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetLightLevelRequest::GetClassData() const { return &_class_data_; }
+
+
+void SetLightLevelRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<SetLightLevelRequest*>(&to_msg);
+  auto& from = static_cast<const SetLightLevelRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_position()) {
+    _this->_internal_mutable_position()->::minecpp::proto::common::v1::BlockPosition::MergeFrom(
+        from._internal_position());
+  }
+  if (from._internal_has_level()) {
+    _this->_internal_mutable_level()->::minecpp::proto::common::v1::LightLevel::MergeFrom(
+        from._internal_level());
+  }
+  if (from._internal_light_type() != 0) {
+    _this->_internal_set_light_type(from._internal_light_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetLightLevelRequest::CopyFrom(const SetLightLevelRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.service.chunk_storage.v1.SetLightLevelRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetLightLevelRequest::IsInitialized() const {
+  return true;
+}
+
+void SetLightLevelRequest::InternalSwap(SetLightLevelRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SetLightLevelRequest, _impl_.light_type_)
+      + sizeof(SetLightLevelRequest::_impl_.light_type_)
+      - PROTOBUF_FIELD_OFFSET(SetLightLevelRequest, _impl_.position_)>(
+          reinterpret_cast<char*>(&_impl_.position_),
+          reinterpret_cast<char*>(&other->_impl_.position_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetLightLevelRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[8]);
+}
+
+// ===================================================================
+
+class GetLightLevelRequest::_Internal {
+ public:
+  static const ::minecpp::proto::common::v1::BlockPosition& position(const GetLightLevelRequest* msg);
+};
+
+const ::minecpp::proto::common::v1::BlockPosition&
+GetLightLevelRequest::_Internal::position(const GetLightLevelRequest* msg) {
+  return *msg->_impl_.position_;
+}
+void GetLightLevelRequest::clear_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+}
+GetLightLevelRequest::GetLightLevelRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+}
+GetLightLevelRequest::GetLightLevelRequest(const GetLightLevelRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  GetLightLevelRequest* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.light_type_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_position()) {
+    _this->_impl_.position_ = new ::minecpp::proto::common::v1::BlockPosition(*from._impl_.position_);
+  }
+  _this->_impl_.light_type_ = from._impl_.light_type_;
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+}
+
+inline void GetLightLevelRequest::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.light_type_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+GetLightLevelRequest::~GetLightLevelRequest() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void GetLightLevelRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.position_;
+}
+
+void GetLightLevelRequest::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void GetLightLevelRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+  _impl_.light_type_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GetLightLevelRequest::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .minecpp.proto.common.v1.LightType light_type = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_light_type(static_cast<::minecpp::proto::common::v1::LightType>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.BlockPosition position = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* GetLightLevelRequest::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.LightType light_type = 1;
+  if (this->_internal_light_type() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_light_type(), target);
+  }
+
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  return target;
+}
+
+size_t GetLightLevelRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.BlockPosition position = 2;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.position_);
+  }
+
+  // .minecpp.proto.common.v1.LightType light_type = 1;
+  if (this->_internal_light_type() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_light_type());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GetLightLevelRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    GetLightLevelRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetLightLevelRequest::GetClassData() const { return &_class_data_; }
+
+
+void GetLightLevelRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<GetLightLevelRequest*>(&to_msg);
+  auto& from = static_cast<const GetLightLevelRequest&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_position()) {
+    _this->_internal_mutable_position()->::minecpp::proto::common::v1::BlockPosition::MergeFrom(
+        from._internal_position());
+  }
+  if (from._internal_light_type() != 0) {
+    _this->_internal_set_light_type(from._internal_light_type());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GetLightLevelRequest::CopyFrom(const GetLightLevelRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.service.chunk_storage.v1.GetLightLevelRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetLightLevelRequest::IsInitialized() const {
+  return true;
+}
+
+void GetLightLevelRequest::InternalSwap(GetLightLevelRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GetLightLevelRequest, _impl_.light_type_)
+      + sizeof(GetLightLevelRequest::_impl_.light_type_)
+      - PROTOBUF_FIELD_OFFSET(GetLightLevelRequest, _impl_.position_)>(
+          reinterpret_cast<char*>(&_impl_.position_),
+          reinterpret_cast<char*>(&other->_impl_.position_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetLightLevelRequest::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[9]);
+}
+
+// ===================================================================
+
 class EmptyResponse::_Internal {
  public:
 };
@@ -2181,7 +2759,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*EmptyResponse::GetClassData() 
 ::PROTOBUF_NAMESPACE_ID::Metadata EmptyResponse::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[8]);
+      file_level_metadata_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto[10]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2222,6 +2800,14 @@ Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::HeightA
 template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse*
 Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::HeightAtResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest*
+Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest >(arena);
 }
 template<> PROTOBUF_NOINLINE ::minecpp::proto::service::chunk_storage::v1::EmptyResponse*
 Arena::CreateMaybeMessage< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse >(Arena* arena) {

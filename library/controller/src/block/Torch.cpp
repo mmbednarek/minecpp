@@ -27,6 +27,13 @@ bool Torch::on_player_place_block(game::World &world, game::PlayerId player_id, 
 
    auto state = repository::encode_block_state_by_id(block_ids.wall_torch,
                                                      std::make_pair("facing", game::to_string(face)));
+
+   world.set_light(game::LightType::Block, torch_pos, 15);
+
+   for (unsigned face_id{0}; face_id < 6; ++face_id) {
+      world.recalculate_light(game::LightType::Block, torch_pos.neighbour_at(static_cast<game::Face>(face_id)));
+   }
+
    return world.set_block(torch_pos, state).ok();
 }
 

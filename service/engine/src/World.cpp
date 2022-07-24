@@ -2,6 +2,8 @@
 #include <minecpp/util/Uuid.h>
 #include <utility>
 
+using minecpp::game::Face;
+
 namespace minecpp::service::engine {
 
 World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager,
@@ -154,6 +156,73 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
          set_block_no_notify(neighbour_pos, *new_neighbour_state);
       }
    }
+}
+
+mb::result<game::LightLevel> World::get_light(game::LightType light_type, const game::BlockPosition &pos)
+{
+   proto::service::chunk_storage::v1::GetLightLevelRequest req{};
+   req.set_light_type(static_cast<proto::common::v1::LightType>(light_type));
+   *req.mutable_position() = pos.to_proto();
+
+   proto::common::v1::LightLevel level;
+
+   ::grpc::ClientContext ctx;
+   auto status = service.GetLightLevel(&ctx, req, &level);
+   if (!status.ok()) {
+      return mb::error(status.error_message());
+   }
+
+   return level.level();
+}
+
+mb::emptyres World::set_light(game::LightType light_type, const game::BlockPosition &pos,
+                              game::LightLevel level)
+{
+   proto::service::chunk_storage::v1::SetLightLevelRequest req{};
+   req.set_light_type(static_cast<proto::common::v1::LightType>(light_type));
+   req.mutable_level()->set_level(static_cast<mb::u32>(level));
+   *req.mutable_position() = pos.to_proto();
+
+   proto::service::chunk_storage::v1::EmptyResponse resp{};
+   ::grpc::ClientContext ctx;
+   auto status = service.SetLightLevel(&ctx, req, &resp);
+   if (!status.ok()) {
+      return mb::error(status.error_message());
+   }
+
+   return mb::ok;
+}
+
+mb::emptyres World::recalculate_light(game::LightType light_type, const game::BlockPosition &pos)
+{
+   auto original_light_value = MB_TRY(get_light(light_type, pos));
+
+   std::array<game::LightLevel, 6> neighbour_light_levels{
+           MB_TRY(get_light(light_type, pos.neighbour_at(Face::Bottom))),
+           MB_TRY(get_light(light_type, pos.neighbour_at(Face::Top))),
+           MB_TRY(get_light(light_type, pos.neighbour_at(Face::North))),
+           MB_TRY(get_light(light_type, pos.neighbour_at(Face::South))),
+           MB_TRY(get_light(light_type, pos.neighbour_at(Face::West))),
+           MB_TRY(get_light(light_type, pos.neighbour_at(Face::East))),
+   };
+
+   auto max_neighbour = std::max_element(neighbour_light_levels.begin(), neighbour_light_levels.end());
+   auto projected_light_level = *max_neighbour - 1;
+
+   if (projected_light_level <= original_light_value) {
+      return mb::ok;
+   }
+
+   set_light(light_type, pos, static_cast<game::LightLevel>(projected_light_level));
+
+   for (unsigned face_id{0}; face_id < 6; ++face_id) {
+      if ((projected_light_level - 1) <= neighbour_light_levels[face_id])
+         continue;
+
+      recalculate_light(light_type, pos.neighbour_at(static_cast<Face>(face_id)));
+   }
+
+   return mb::ok;
 }
 
 }// namespace minecpp::service::engine

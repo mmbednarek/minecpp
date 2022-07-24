@@ -11,6 +11,8 @@ service ChunkStorage {
   rpc RemoveReference (RemoveReferencesRequest) returns (EmptyResponse);
   rpc HeightAt (HeightAtRequest) returns (HeightAtResponse);
   rpc GetBlock (common.v1.BlockPosition) returns (common.v1.BlockState);
+  rpc GetLightLevel (GetLightLevelRequest) returns (common.v1.LightLevel);
+  rpc SetLightLevel (SetLightLevelRequest) returns (EmptyResponse);
 }
 
 message LoadChunkRequest {
@@ -58,6 +60,17 @@ message HeightAtRequest {
 
 message HeightAtResponse {
   int32 height = 1;
+}
+
+message SetLightLevelRequest {
+  common.v1.LightType light_type = 1;
+  common.v1.BlockPosition position = 2;
+  common.v1.LightLevel level = 3;
+}
+
+message GetLightLevelRequest {
+  common.v1.LightType light_type = 1;
+  common.v1.BlockPosition position = 2;
 }
 
 message EmptyResponse {

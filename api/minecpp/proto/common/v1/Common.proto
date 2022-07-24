@@ -84,3 +84,12 @@ enum Face {
   West = 4;
   East = 5;
 }
+
+enum LightType {
+  Block = 0;
+  Sky = 1;
+}
+
+message LightLevel {
+  uint32 level = 1;
+}

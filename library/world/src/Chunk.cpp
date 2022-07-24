@@ -90,8 +90,8 @@ void Chunk::set_block(int x, int y, int z, game::BlockStateId state)
 
    section.data.set(coord_to_offset(x, y, z), value);
 
-   set_block_light(x, y, z, 15);
-   set_sky_light(x, y, z, 15);
+   set_block_light(game::BlockPosition{x, y, z}, 0);
+   set_sky_light(game::BlockPosition{x, y, z}, 0);
 }
 
 game::BlockStateId Chunk::get_block(int x, int y, int z)
@@ -109,49 +109,64 @@ game::BlockStateId Chunk::get_block(int x, int y, int z)
    return it_section->second.palette[palette_index];
 }
 
-uint8_t Chunk::get_block_light(int x, int y, int z)
+mb::result<game::LightLevel> Chunk::get_block_light(game::BlockPosition position)
 {
-   int8_t sec = y / 16;
-   auto iter  = m_sections.find(sec);
-   if (iter == m_sections.end()) {
-      return 0;
+   auto section = section_from_y_level(position.y);
+   if (section.has_failed()) {
+      return std::move(section.err());
    }
 
-   if (iter->second.block_light.empty()) {
-      return 0;
+   if (section->block_light.empty()) {
+      return mb::error("this section has empty block light");
    }
 
-   return iter->second.block_light.at(coord_to_offset(x, y, z));
+   return static_cast<game::LightLevel>(section->block_light.at(position.offset_within_section()));
 }
 
-void Chunk::set_block_light(int x, int y, int z, uint8_t value)
+mb::result<game::LightLevel> Chunk::get_sky_light(game::BlockPosition position)
 {
-   int8_t sec = y / 16;
-   auto iter  = m_sections.find(sec);
-   if (iter == m_sections.end()) {
-      return;
+   auto section = section_from_y_level(position.y);
+   if (section.has_failed()) {
+      return std::move(section.err());
    }
 
-   if (iter->second.block_light.empty()) {
-      iter->second.block_light = minecpp::squeezed::TinyVec<4>(4096);
+   if (section->sky_light.empty()) {
+      return mb::error("this section has empty sky light");
    }
 
-   iter->second.block_light.set(coord_to_offset(x, y, z), value);
+   return static_cast<game::LightLevel>(section->sky_light.at(position.offset_within_section()));
 }
 
-void Chunk::set_sky_light(int x, int y, int z, uint8_t value)
+mb::emptyres Chunk::set_block_light(game::BlockPosition position, game::LightLevel value)
 {
-   int8_t sec = y / 16;
-   auto iter  = m_sections.find(sec);
-   if (iter == m_sections.end()) {
-      return;
+   auto section = section_from_y_level(position.y);
+   if (section.has_failed()) {
+      return std::move(section.err());
    }
 
-   if (iter->second.sky_light.empty()) {
-      iter->second.sky_light = minecpp::squeezed::TinyVec<4>(4096);
+   if (section->block_light.empty()) {
+      section->block_light = minecpp::squeezed::TinyVec<4>(4096);
    }
 
-   iter->second.sky_light.set(coord_to_offset(x, y, z), value);
+   section->block_light.set(static_cast<mb::size>(position.offset_within_section()),
+                            static_cast<mb::i8>(value));
+   return mb::ok;
+}
+
+mb::emptyres Chunk::set_sky_light(game::BlockPosition position, game::LightLevel value)
+{
+   auto section = section_from_y_level(position.y);
+   if (section.has_failed()) {
+      return std::move(section.err());
+   }
+
+   if (section->sky_light.empty()) {
+      section->sky_light = minecpp::squeezed::TinyVec<4>(4096);
+   }
+
+   section->sky_light.set(static_cast<mb::size>(position.offset_within_section()),
+                          static_cast<mb::i8>(value));
+   return mb::ok;
 }
 
 bool Chunk::add_ref(uuid engine_id, game::PlayerId player_id)
@@ -289,6 +304,16 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
                      return sec;
                   });
    return result;
+}
+
+mb::result<Section &> Chunk::section_from_y_level(int y)
+{
+   auto sec  = static_cast<mb::i8>(y / 16);
+   auto iter = m_sections.find(sec);
+   if (iter == m_sections.end()) {
+      return mb::error("no such section");
+   }
+   return iter->second;
 }
 
 }// namespace minecpp::world

@@ -14,10 +14,12 @@ using PlayerId     = util::uuid;
 using BlockId      = int;
 using EntityId     = mb::u32;
 using BlockStateId = mb::u32;
+using LightLevel   = mb::u8;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
 constexpr int g_chunk_width       = 16;
 constexpr int g_chunk_depth       = 16;
+constexpr int g_section_height    = 16;
 
 constexpr mb::u32 g_block_position_x_bits = 26;
 constexpr mb::u32 g_block_position_y_bits = 64 - 26 - 26;
@@ -199,6 +201,11 @@ struct BlockPosition
       return x & (g_chunk_width - 1);
    }
 
+   [[nodiscard]] constexpr mb::u8 section_offset_y() const
+   {
+      return y & (g_section_height - 1);
+   }
+
    [[nodiscard]] constexpr mb::u8 offset_z() const
    {
       return z & (g_chunk_depth - 1);
@@ -207,6 +214,11 @@ struct BlockPosition
    [[nodiscard]] constexpr mb::u16 offset() const
    {
       return offset_x() << 12 | y | offset_z() << 8;
+   }
+
+   [[nodiscard]] constexpr mb::u32 offset_within_section() const
+   {
+      return (static_cast<mb::u32>(section_offset_y()) << 8) | (static_cast<mb::u32>(offset_z()) << 4) | static_cast<mb::u32>(offset_x());
    }
 
    [[nodiscard]] inline proto::common::v1::BlockPosition to_proto() const
@@ -218,7 +230,7 @@ struct BlockPosition
       return block_position;
    }
 
-   [[nodiscard]] constexpr BlockPosition neighbour_at(Face facing)
+   [[nodiscard]] constexpr BlockPosition neighbour_at(Face facing) const
    {
       switch (facing) {
       case Face::Bottom: return {x, y - 1, z};
@@ -417,5 +429,11 @@ enum class Direction
       return Direction::South;
    return Direction::North;
 }
+
+enum class LightType
+{
+   Block,
+   Sky
+};
 
 }// namespace minecpp::game

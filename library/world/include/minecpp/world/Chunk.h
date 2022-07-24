@@ -33,9 +33,10 @@ struct Chunk
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, game::BlockStateId state);
    game::BlockStateId get_block(int x, int y, int z);
-   uint8_t get_block_light(int x, int y, int z);
-   void set_block_light(int x, int y, int z, uint8_t value);
-   void set_sky_light(int x, int y, int z, uint8_t value);
+   mb::result<game::LightLevel> get_block_light(game::BlockPosition position);
+   mb::result<game::LightLevel> get_sky_light(game::BlockPosition position);
+   mb::emptyres set_block_light(game::BlockPosition position, game::LightLevel value);
+   mb::emptyres set_sky_light(game::BlockPosition position, game::LightLevel value);
    int height_at(int x, int z);
    void put_section(int8_t level, Section sec);
    std::array<short, 256> get_height_map();
@@ -47,6 +48,9 @@ struct Chunk
 
    static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
    minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;
+
+ private:
+   mb::result<Section &> section_from_y_level(int y);
 };
 
 }// namespace minecpp::world
