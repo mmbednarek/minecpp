@@ -65,7 +65,7 @@ std::optional<game::BlockStateId> Fence::on_neighbour_change(game::World &, game
       return std::nullopt;
 
    auto is_fence = is_fence_block(neighbour_block_state_id);
-   return repository::set_state(block_id, block_state, game::to_string(face), util::to_string(is_fence));
+   return repository::set_state(block_id, block_state, face.to_string(), util::to_string(is_fence));
 }
 
 }// namespace minecpp::controller::block

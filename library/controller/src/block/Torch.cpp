@@ -1,40 +1,51 @@
-#include "minecpp/repository/Block.h"
 #include <minecpp/controller/block/Torch.h>
-#include <spdlog/spdlog.h>
+#include <minecpp/repository/Block.h>
+#include <minecpp/world/BlockState.h>
 
 namespace minecpp::controller::block {
 
-bool Torch::on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,
-                                  game::BlockPosition position, game::Face face)
+using game::BlockId;
+using game::BlockPosition;
+using game::Face;
+using game::LightType;
+using game::PlayerId;
+using game::World;
+using world::BlockState;
+
+static std::optional<Face> find_connected_face(const BlockState &state);
+
+bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId /*block_id*/,
+                                  BlockPosition position, Face place_face)
 {
-   if (face == game::Face::Bottom)
+   // Cannot place torch on a ceiling
+   if (place_face == Face::Bottom)
       return false;
 
-   auto torch_pos = position.neighbour_at(face);
+   // Find the position where torch should be placed
+   auto torch_pos = position.neighbour_at(place_face);
 
-   const auto source_block_type = get_source_block_type(world, torch_pos);
-   if (not source_block_type.has_value())
+   // Torch can be placed only within an air block
+   if (not verify_source_is_air(world, torch_pos))
       return false;
-   if (*source_block_type != SourceBlockType::Air)
-      return false;
 
-   auto &block_ids = repository::BlockIds::the();
-
-   if (face == game::Face::Top) {
-      return world.set_block(torch_pos, repository::StateManager::the().block_base_state(block_ids.torch))
-              .ok();
+   // If we're placing the torch on a floor we should place minecraft:torch
+   if (place_face == Face::Top) {
+      return world.set_block(torch_pos, BlockState(BLOCK_ID(Torch), 0).block_state_id()).ok();
    }
 
-   auto state = repository::encode_block_state_by_id(block_ids.wall_torch,
-                                                     std::make_pair("facing", game::to_string(face)));
+   // Create new wall torch state and set facing to the same we are placing it
+   BlockState state(BLOCK_ID(WallTorch), 0);
+   state.set("facing", place_face);
 
-   world.set_light(game::LightType::Block, torch_pos, 15);
-
-   for (unsigned face_id{0}; face_id < 6; ++face_id) {
-      world.recalculate_light(game::LightType::Block, torch_pos.neighbour_at(static_cast<game::Face>(face_id)));
+   // Update the light value
+   // TODO: Replace with block params
+   world.set_light(LightType::Block, torch_pos, 15);
+   for (auto face : Face::Values) {
+      world.recalculate_light(LightType::Block, torch_pos.neighbour_at(face));
    }
 
-   return world.set_block(torch_pos, state).ok();
+   // Set the final state id
+   return world.set_block(torch_pos, state.block_state_id()).ok();
 }
 
 std::optional<game::BlockStateId> Torch::on_neighbour_change(game::World &world,
@@ -42,23 +53,22 @@ std::optional<game::BlockStateId> Torch::on_neighbour_change(game::World &world,
                                                              game::BlockStateId neighbour_block_state_id,
                                                              game::BlockPosition position, game::Face face)
 {
-   game::Face connected_face{};
+   auto connected_face = find_connected_face(BlockState{block_state_id});
 
-   auto &block_ids = repository::BlockIds::the();
-
-   auto [block_id, state_id] = repository::StateManager::the().parse_block_id(block_state_id);
-   if (block_id == block_ids.torch) {
-      connected_face = game::Face::Bottom;
-   } else {
-      auto block     = repository::Block::the().get_by_id(block_id);
-      connected_face = game::opposite_face(
-              game::parse_face(block->state_value("facing", state_id)).value_or(game::Face::Bottom));
-   }
-
-   if (connected_face == face)
-      return block_ids.air;
+   // If the block on the connected face of the torch has been changed
+   // we need to replace it with air
+   if (connected_face.has_value() && *connected_face == face)
+      return BLOCK_ID(Air);
 
    return std::nullopt;
 }
+
+std::optional<Face> find_connected_face(const BlockState &state)
+{
+   if (state.block_id() == BLOCK_ID(Torch))
+      return Face::Bottom;
+
+   return state.get<Face>("facing");
+};
 
 }// namespace minecpp::controller::block

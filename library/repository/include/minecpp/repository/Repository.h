@@ -8,6 +8,8 @@
 #include <unordered_map>
 #include <vector>
 
+#define BLOCK_ID(name) (::minecpp::repository::BlockIds::the().name)
+
 namespace minecpp::repository {
 
 template<typename TResource, typename TId>
@@ -63,11 +65,11 @@ class Repository
 
 struct BlockIds
 {
-   game::BlockId air;
-   game::BlockId water;
-   game::BlockId torch;
-   game::BlockId wall_torch;
-   game::BlockId door;
+   game::BlockId Air;
+   game::BlockId Water;
+   game::BlockId Torch;
+   game::BlockId WallTorch;
+   game::BlockId OakDoor;
 
    void init();
    [[nodiscard]] static BlockIds &the();
@@ -75,6 +77,7 @@ struct BlockIds
  private:
    bool m_initialised = false;
 };
+
 
 mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename);
 mb::emptyres load_repository_from_file(std::string_view filename);

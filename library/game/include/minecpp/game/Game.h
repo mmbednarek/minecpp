@@ -1,4 +1,5 @@
 #pragma once
+#include <mb/enum.h>
 #include <mb/int.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/util/Uuid.h>
@@ -15,6 +16,7 @@ using BlockId      = int;
 using EntityId     = mb::u32;
 using BlockStateId = mb::u32;
 using LightLevel   = mb::u8;
+using StateOffset  = mb::i32;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
 constexpr int g_chunk_width       = 16;
@@ -45,7 +47,7 @@ enum class PlayerDiggingState : int
    SwapHeldItems   = 6,
 };
 
-enum class Face
+enum class FaceValue
 {
    Bottom = 0,
    Top    = 1,
@@ -53,6 +55,44 @@ enum class Face
    South  = 3,
    West   = 4,
    East   = 5,
+};
+
+using Face_Base = mb::enum_wrapper<FaceValue, "bottom", "top", "north", "south", "west", "east">;
+
+class Face final : public Face_Base
+{
+ public:
+   MB_ENUM_TRAITS(Face)
+
+   MB_ENUM_FIELD(Bottom)
+   MB_ENUM_FIELD(Top)
+   MB_ENUM_FIELD(North)
+   MB_ENUM_FIELD(South)
+   MB_ENUM_FIELD(West)
+   MB_ENUM_FIELD(East)
+
+   static constexpr Face from_proto(const proto::common::v1::Face face)
+   {
+      return Face{static_cast<FaceValue>(face)};
+   }
+
+   constexpr proto::common::v1::Face to_proto()
+   {
+      return static_cast<proto::common::v1::Face>(index());
+   }
+
+   [[nodiscard]] constexpr Face opposite_face()
+   {
+      switch (index()) {
+      case Face::Bottom: return Face::Top;
+      case Face::Top: return Face::Bottom;
+      case Face::North: return Face::South;
+      case Face::South: return Face::North;
+      case Face::West: return Face::East;
+      case Face::East: return Face::West;
+      }
+      assert(false && "SHOULD NOT BE REACHED");
+   }
 };
 
 enum class Side
@@ -68,62 +108,6 @@ enum class Side
    case Side::Right: return "right";
    }
    return "";
-}
-
-constexpr std::array<Face, 6> g_faces{
-        Face::Bottom, Face::Top, Face::North, Face::South, Face::West, Face::East,
-};
-
-[[nodiscard]] constexpr std::optional<Face> parse_face(std::string_view face)
-{
-   if (face == "bottom")
-      return Face::Bottom;
-   if (face == "top")
-      return Face::Top;
-   if (face == "north")
-      return Face::North;
-   if (face == "south")
-      return Face::South;
-   if (face == "west")
-      return Face::West;
-   if (face == "east")
-      return Face::East;
-   return std::nullopt;
-}
-
-[[nodiscard]] constexpr std::string_view to_string(Face face)
-{
-   switch (face) {
-   case Face::Bottom: return "bottom";
-   case Face::Top: return "top";
-   case Face::North: return "north";
-   case Face::South: return "south";
-   case Face::West: return "west";
-   case Face::East: return "east";
-   }
-   return "";
-}
-
-[[nodiscard]] constexpr Face opposite_face(Face face)
-{
-   switch (face) {
-   case Face::Bottom: return Face::Top;
-   case Face::Top: return Face::Bottom;
-   case Face::North: return Face::South;
-   case Face::South: return Face::North;
-   case Face::West: return Face::East;
-   case Face::East: return Face::West;
-   }
-}
-
-[[nodiscard]] constexpr proto::common::v1::Face face_to_proto(Face face)
-{
-   return static_cast<proto::common::v1::Face>(face);
-}
-
-[[nodiscard]] constexpr Face face_from_proto(proto::common::v1::Face face)
-{
-   return static_cast<Face>(face);
 }
 
 constexpr int decode_x(mb::u64 pos)
@@ -218,7 +202,8 @@ struct BlockPosition
 
    [[nodiscard]] constexpr mb::u32 offset_within_section() const
    {
-      return (static_cast<mb::u32>(section_offset_y()) << 8) | (static_cast<mb::u32>(offset_z()) << 4) | static_cast<mb::u32>(offset_x());
+      return (static_cast<mb::u32>(section_offset_y()) << 8) | (static_cast<mb::u32>(offset_z()) << 4) |
+             static_cast<mb::u32>(offset_x());
    }
 
    [[nodiscard]] inline proto::common::v1::BlockPosition to_proto() const

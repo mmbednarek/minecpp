@@ -108,7 +108,7 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    serverbound_v1::PlayerDigging player_digging;
    player_digging.set_state(static_cast<proto::common::v1::PlayerDiggingState>(msg.action));
    *player_digging.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
-   player_digging.set_face(static_cast<proto::common::v1::Face>(msg.facing));
+   player_digging.set_face(msg.facing.to_proto());
    m_stream->send(player_digging, player_id);
 }
 
@@ -134,7 +134,7 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    serverbound_v1::BlockPlacement block_placement;
    block_placement.set_hand(static_cast<int32_t>(msg.hand));
    *block_placement.mutable_position() = game::BlockPosition(msg.position).to_proto();
-   block_placement.set_face(static_cast<minecpp::proto::common::v1::Face>(msg.facing));
+   block_placement.set_face(msg.facing.to_proto());
    block_placement.mutable_crosshair()->set_x(msg.x);
    block_placement.mutable_crosshair()->set_y(msg.y);
    block_placement.mutable_crosshair()->set_z(msg.z);

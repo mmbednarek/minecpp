@@ -56,10 +56,10 @@ class State
    {
    }
 
-   [[nodiscard]] constexpr int value_count() const
+   [[nodiscard]] constexpr game::StateOffset value_count() const
    {
       return std::visit(
-              [](auto &&detail) -> int {
+              [](auto &&detail) -> game::StateOffset {
                  using T = std::decay_t<decltype(detail)>;
                  if constexpr (std::is_same_v<T, BoolState>) {
                     return 2;

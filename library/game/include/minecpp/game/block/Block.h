@@ -1,7 +1,7 @@
 #ifndef MINECPP_GAME_BLOCK_BLOCK_H
 #define MINECPP_GAME_BLOCK_BLOCK_H
-#include "../State.h"
 #include "Material.h"
+#include <minecpp/game/Game.h>
 #include <minecpp/game/State.h>
 #include <optional>
 #include <string_view>
@@ -46,10 +46,10 @@ class Block
       using reference         = value_type &;
 
       vector_iterator it;
-      int state;
+      game::StateOffset state;
       const Block &block;
 
-      StateIterator(int state, const Block &block) :
+      StateIterator(game::StateOffset state, const Block &block) :
           it{block.m_states.crbegin()},
           state{state},
           block{block}
@@ -95,7 +95,7 @@ class Block
    struct StateRange
    {
       const Block &block;
-      int state;
+      game::StateOffset state;
 
       StateIterator begin()
       {
@@ -122,11 +122,11 @@ class Block
 
    [[nodiscard]] std::optional<State> find_state(std::string_view state) const;
    [[nodiscard]] bool has_state(std::string_view state) const;
-   [[nodiscard]] std::string state_value(std::string_view name, int state_id) const;
+   [[nodiscard]] std::string state_value(std::string_view name, game::StateOffset state_id) const;
 
    [[nodiscard]] std::size_t state_count() const;
 
-   [[nodiscard]] constexpr StateRange state_range(int state) const
+   [[nodiscard]] constexpr StateRange state_range(game::StateOffset state) const
    {
       return StateRange{*this, state};
    }

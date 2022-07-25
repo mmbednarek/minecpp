@@ -81,7 +81,7 @@ void deserialize(Reader &r, PlayerDigging &msg)
    // 1.19 OK
    msg.action      = static_cast<game::PlayerDiggingState>(r.read_varint());
    msg.position    = r.read_big_endian<uint64_t>();
-   msg.facing      = static_cast<game::Face>(r.read_byte());
+   msg.facing      = game::Face::Values[r.read_byte()];
    msg.sequence_id = r.read_varint();
 }
 
@@ -96,7 +96,7 @@ void deserialize(Reader &r, PlayerBlockPlacement &msg)
    // 1.19 OK
    msg.hand         = static_cast<PlayerHand>(r.read_varint());
    msg.position     = r.read_long();
-   msg.facing       = static_cast<game::Face>(r.read_varint());
+   msg.facing       = game::Face::Values[static_cast<std::size_t>(r.read_varint())];
    msg.x            = r.read_float();
    msg.y            = r.read_float();
    msg.z            = r.read_float();

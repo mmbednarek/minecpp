@@ -140,7 +140,7 @@ EntityManager &World::entities()
 
 void World::notify_neighbours(game::BlockPosition position, game::BlockStateId state)
 {
-   for (auto face : game::g_faces) {
+   for (Face face : game::Face::Values) {
       auto neighbour_pos = position.neighbour_at(face);
 
       auto old_neighbour_state = get_block(neighbour_pos);
@@ -148,7 +148,7 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
          continue;
 
       auto new_neighbour_state = m_block_controller.on_neighbour_change(
-              *this, *old_neighbour_state, state, neighbour_pos, game::opposite_face(face));
+              *this, *old_neighbour_state, state, neighbour_pos, face.opposite_face());
       if (not new_neighbour_state.has_value())
          continue;
 
@@ -215,11 +215,11 @@ mb::emptyres World::recalculate_light(game::LightType light_type, const game::Bl
 
    set_light(light_type, pos, static_cast<game::LightLevel>(projected_light_level));
 
-   for (unsigned face_id{0}; face_id < 6; ++face_id) {
-      if ((projected_light_level - 1) <= neighbour_light_levels[face_id])
+   for (auto face : game::Face::Values) {
+      if ((projected_light_level - 1) <= neighbour_light_levels[static_cast<std::size_t>(face)])
          continue;
 
-      recalculate_light(light_type, pos.neighbour_at(static_cast<Face>(face_id)));
+      recalculate_light(light_type, pos.neighbour_at(face));
    }
 
    return mb::ok;

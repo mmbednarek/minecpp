@@ -82,7 +82,7 @@ std::optional<game::BlockStateId> Door::on_neighbour_change(game::World &world,
            repository::StateManager::the().parse_block_id(neighbour_block_state_id);
 
    if (other_half_block_id != block_id)
-      return repository::BlockIds::the().air;
+      return repository::BlockIds::the().Air;
 
    return repository::set_state(block_id, other_half_state_id, "half", half);
 }
@@ -130,7 +130,7 @@ bool Door::check_side(game::World &world, game::BlockPosition pos, game::Directi
 
    auto ids = repository::BlockIds::the();
 
-   return block_id != ids.air && block_id != door_id;
+   return block_id != ids.Air && block_id != door_id;
 }
 
 }// namespace minecpp::controller::block

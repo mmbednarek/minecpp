@@ -248,7 +248,7 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
                                           game::PlayerId player_id)
 {
-   auto face           = game::face_from_proto(event.face());
+   auto face           = game::Face::from_proto(event.face());
    auto block_position = game::BlockPosition::from_proto(event.position());
 
    auto state_id = m_world.get_block(block_position);

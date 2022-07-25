@@ -1,9 +1,12 @@
 {
   "name": "minecpp_controller",
   "dependencies": {
+    "public": [
+      "minecpp_world",
+      "minecpp_repository"
+    ],
     "private": [
       "minecpp_game",
-      "minecpp_repository",
       "minecpp_utils"
     ]
   }

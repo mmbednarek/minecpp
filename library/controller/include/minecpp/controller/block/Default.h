@@ -31,6 +31,7 @@ class Default : public BlockController
    [[nodiscard]] static std::optional<SourceBlockType> get_source_block_type(game::World &world,
                                                                              game::BlockPosition pos);
    [[nodiscard]] static bool verify_source_block(game::World &world, game::BlockPosition pos);
+   [[nodiscard]] static bool verify_source_is_air(game::World &world, game::BlockPosition pos);
    [[nodiscard]] static std::optional<game::Direction>
    find_player_direction(game::World &world, game::PlayerId player_id, game::BlockPosition position);
 };

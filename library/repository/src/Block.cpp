@@ -87,7 +87,7 @@ int encode_block_by_tag(std::string_view tag)
    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
-std::optional<game::BlockStateId> set_state(game::BlockId block_id, int block_state, std::string_view name,
+std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateOffset block_state, std::string_view name,
                                             std::string_view value)
 {
    auto block = Block::the().get_by_id(block_id);
@@ -135,22 +135,23 @@ BlockIds &BlockIds::the()
    return instance;
 }
 
-#define REGISTER_BLOCK_ID(name)                                   \
-   {                                                              \
-      auto res = Block::the().find_id_by_tag("minecraft:" #name); \
-      if (res.has_failed()) {                                     \
-         return;                                                  \
-      }                                                           \
-      (name) = *res;                                              \
+#define REGISTER_BLOCK_ID(identifier, tag_name)         \
+   {                                                    \
+      auto res = Block::the().find_id_by_tag(tag_name); \
+      if (res.has_failed()) {                           \
+         return;                                        \
+      }                                                 \
+      (identifier) = *res;                                \
    }
 
 void BlockIds::init()
 {
    m_initialised = false;
-   REGISTER_BLOCK_ID(air);
-   REGISTER_BLOCK_ID(water);
-   REGISTER_BLOCK_ID(torch);
-   REGISTER_BLOCK_ID(wall_torch);
+   REGISTER_BLOCK_ID(Air, "minecraft:air");
+   REGISTER_BLOCK_ID(Water, "minecraft:water");
+   REGISTER_BLOCK_ID(Torch, "minecraft:torch");
+   REGISTER_BLOCK_ID(WallTorch, "minecraft:wall_torch");
+   REGISTER_BLOCK_ID(OakDoor, "minecraft:oak_door");
 
    m_initialised = true;
 }

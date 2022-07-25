@@ -3,12 +3,14 @@
 set(MINECPP_WORLD_INCLUDE_DIR ${MINECPP_WORLD_DIR}/include/minecpp/world)
 target_sources(minecpp_world PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/BlockState.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Chunk.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Generator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Section.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Util.cpp
 
         # Header files
+        ${MINECPP_WORLD_INCLUDE_DIR}/BlockState.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Chunk.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Chunks.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Generator.h

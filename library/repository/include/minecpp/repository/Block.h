@@ -44,7 +44,7 @@ mb::result<game::BlockStateId> encode_state(game::BlockId block_id, TFunc fn)
    return StateManager::the().block_base_state(block_id) + state_id;
 }
 
-std::optional<game::BlockStateId> set_state(game::BlockId block_id, int block_state, std::string_view name,
+std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateOffset block_state, std::string_view name,
                                             std::string_view value);
 
 std::function<int(const game::State &)> make_compound_encoder(const nbt::CompoundContent &cnt);

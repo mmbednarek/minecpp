@@ -28,7 +28,7 @@ class StateManager
    game::BlockStateId m_top_state;
 
  public:
-   std::tuple<int, int> parse_block_id(game::BlockStateId block_id);
+   std::tuple<game::BlockId, game::StateOffset> parse_block_id(game::BlockStateId block_id);
 
    [[nodiscard]] static constexpr StateManager &the()
    {

@@ -55,11 +55,11 @@ std::optional<Default::SourceBlockType> Default::get_source_block_type(game::Wor
 
    auto [source_block_id, _] = repository::StateManager::the().parse_block_id(*source_block_state);
 
-   if (source_block_id == block_ids.air) {
+   if (source_block_id == block_ids.Air) {
       return SourceBlockType::Air;
    }
 
-   if (source_block_id == block_ids.water) {
+   if (source_block_id == block_ids.Water) {
       return SourceBlockType::Water;
    }
 
@@ -85,6 +85,11 @@ std::optional<game::Direction> Default::find_player_direction(game::World &world
 
    const auto block_pos = position.to_vec3().flat();
    return game::direction_from_vec2(block_pos - player_entity->get_pos().flat());
+}
+
+bool Default::verify_source_is_air(game::World &world, game::BlockPosition pos)
+{
+   return get_source_block_type(world, pos) == SourceBlockType::Air;
 }
 
 }// namespace minecpp::controller::block

@@ -11,8 +11,10 @@ target_include_directories(minecpp_controller PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 add_subdirectory("src")
 
 target_link_libraries(minecpp_controller
+        LINK_PUBLIC
+        minecpp_world
+        minecpp_repository
         LINK_PRIVATE
         minecpp_game
-        minecpp_repository
         minecpp_utils
 )

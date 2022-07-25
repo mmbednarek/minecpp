@@ -26,7 +26,7 @@ bool Block::has_state(std::string_view state) const
    return find_state(state) != std::nullopt;
 }
 
-std::string Block::state_value(std::string_view name, int state_id) const
+std::string Block::state_value(std::string_view name, game::StateOffset state_id) const
 {
    auto range = state_range(state_id);
 
