@@ -104,24 +104,15 @@ message ChatDecorationStyle {
     int8 bold = 2;
 }
 
-message ChatDecoration {
-    repeated string parameters = 1;
-    ChatDecorationStyle style = 2;
-    string translation_key = 3;
-}
-
-message ChatNarration {
-    optional ChatDecoration decoration = 1;
-    string priority = 2;
-}
-
 message ChatDetails {
-    optional ChatDecoration decoration = 1;
+    repeated string parameters = 1;
+    optional ChatDecorationStyle style = 2;
+    string translation_key = 3;
 }
 
 message ChatTypeDescription {
     ChatDetails chat = 1;
-    ChatNarration narration = 2;
+    ChatDetails narration = 2;
 }
 
 message ChatTypeEntry {
