@@ -1,14 +1,14 @@
 #ifndef MINECPP_INVENTORY_H
 #define MINECPP_INVENTORY_H
 #include <array>
-#include <minecpp/game/item/Item.h>
+#include <minecpp/game/Game.h>
 #include <minecpp/game/Notifier.h>
 
 namespace minecpp::game::player {
 
 struct ItemSlot
 {
-   game::item::ItemId item_id{};
+   game::ItemId item_id{};
    std::size_t count{};
 };
 
@@ -25,8 +25,8 @@ class Inventory
    Inventory(Inventory &&other) noexcept;
    Inventory &operator=(Inventory &&other) noexcept;
 
-   [[nodiscard]] bool add_item(game::item::ItemId item, std::size_t count);
-   [[maybe_unused]] [[nodiscard]] std::size_t take_item(game::item::ItemId item, std::size_t count);
+   [[nodiscard]] bool add_item(game::ItemId item, std::size_t count);
+   [[maybe_unused]] [[nodiscard]] std::size_t take_item(game::ItemId item, std::size_t count);
    [[nodiscard]] bool take_from_slot(game::SlotId id, std::size_t count);
    [[nodiscard]] bool take_from_active_slot(std::size_t count);
    [[nodiscard]] ItemSlot item_at(game::SlotId id) const;

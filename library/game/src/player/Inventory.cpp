@@ -42,7 +42,7 @@ Inventory &Inventory::operator=(Inventory &&other) noexcept
    return *this;
 }
 
-bool Inventory::add_item(game::item::ItemId item, std::size_t count)
+bool Inventory::add_item(game::ItemId item, std::size_t count)
 {
    auto it = std::find_if(m_slots.begin(), m_slots.end(), [item, count](const ItemSlot &slot) {
       if (slot.count == 0) {
@@ -64,7 +64,7 @@ bool Inventory::add_item(game::item::ItemId item, std::size_t count)
    return true;
 }
 
-[[maybe_unused]] std::size_t Inventory::take_item(game::item::ItemId item, std::size_t count)
+[[maybe_unused]] std::size_t Inventory::take_item(game::ItemId item, std::size_t count)
 {
    auto it           = m_slots.begin();
    auto left_to_take = count;

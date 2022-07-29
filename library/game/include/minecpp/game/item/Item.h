@@ -1,12 +1,11 @@
 #pragma once
+#include "../Game.h"
 #include <cstdint>
 #include <string>
 #include <string_view>
 #include <vector>
 
 namespace minecpp::game::item {
-
-typedef int ItemId;
 
 enum ItemGroup
 {

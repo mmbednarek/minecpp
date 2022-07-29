@@ -47,7 +47,7 @@ class Dispatcher : public minecpp::game::Notifier
    void accept_player(const game::player::Player &player_id, const game::entity::Entity &entity);
    void deny_player(const game::PlayerId &player_id, const std::string &reason);
 
-   void set_inventory_slot(game::PlayerId player_id, game::item::ItemId item_id, game::SlotId slot_id,
+   void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            std::size_t count) override;
 };
 

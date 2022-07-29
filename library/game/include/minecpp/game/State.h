@@ -1,5 +1,6 @@
 #ifndef MINECPP_GAME_STATE_H
 #define MINECPP_GAME_STATE_H
+#include "Game.h"
 #include <algorithm>
 #include <string>
 #include <utility>
@@ -68,7 +69,7 @@ class State
                     return detail.max - detail.min + 1;
                  }
                  if constexpr (std::is_same_v<T, EnumState>) {
-                    return detail.values.size();
+                    return static_cast<game::StateOffset>(detail.values.size());
                  }
                  return 0;
               },

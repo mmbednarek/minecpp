@@ -1,136 +1,121 @@
-#include "minecpp/repository/Block.h"
-#include "minecpp/util/String.h"
 #include <minecpp/controller/block/Door.h>
-#include <spdlog/spdlog.h>
+#include <minecpp/repository/Block.h>
+#include <minecpp/world/BlockState.h>
 
 namespace minecpp::controller::block {
 
-namespace {
-game::Direction direction_to_face_direction(game::Direction dir)
-{
-   switch (dir) {
-   case game::Direction::West: return game::Direction::South;
-   case game::Direction::East: return game::Direction::North;
-   case game::Direction::South: return game::Direction::East;
-   case game::Direction::North: return game::Direction::West;
-   }
+using game::BlockId;
+using game::BlockPosition;
+using game::BlockStateId;
+using game::Direction;
+using game::Face;
+using game::Half;
+using game::PlayerId;
+using game::Side;
+using game::World;
+using world::BlockState;
 
-   return game::Direction::North;
-}
-}// namespace
+static bool check_side(World &world, BlockPosition pos, Direction dir, Side side, BlockId door_id);
 
-bool Door::on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,
-                                 game::BlockPosition position, game::Face face)
+static Side find_side(World &world, BlockPosition upper, BlockPosition lower, Direction dir, BlockId door_id);
+
+bool Door::on_player_place_block(World &world, PlayerId player_id, BlockId block_id, BlockPosition position,
+                                 Face face)
 {
    auto lower_pos = position.neighbour_at(face);
-   auto upper_pos = lower_pos;
-   ++upper_pos.y;
+   auto upper_pos = lower_pos.neighbour_at(Face::Top);
 
-   if (not verify_source_block(world, lower_pos))
-      return false;
-
-   if (not verify_source_block(world, upper_pos))
+   if (not verify_source_block(world, lower_pos) || not verify_source_block(world, upper_pos))
       return false;
 
    const auto player_direction = find_player_direction(world, player_id, lower_pos);
    if (not player_direction.has_value())
       return false;
 
-   auto door_direction = direction_to_face_direction(*player_direction);
+   auto door_direction = player_direction->turn(Side::Left);
 
-   game::Side hinge_side{find_side(world, upper_pos, lower_pos, *player_direction, block_id)};
-   if (hinge_side == game::Side::Right)
+   auto hinge_side = find_side(world, upper_pos, lower_pos, *player_direction, block_id);
+   if (hinge_side == Side::Right)
       door_direction = game::opposite_direction(door_direction);
 
-   const auto direction_str = game::to_string(door_direction);
+   BlockState lower_state{block_id, 0};
+   lower_state.set<Half>("half", Half::Lower);
+   lower_state.set<Side>("hinge", hinge_side);
+   lower_state.set<Direction>("facing", door_direction);
 
-   auto lower_state = repository::encode_block_state_by_id(block_id, std::make_pair("half", "lower"), std::make_pair("hinge", game::to_string(hinge_side)),
-                                                           std::make_pair("facing", direction_str));
-
-   if (world.set_block(lower_pos, lower_state).has_failed())
+   if (world.set_block(lower_pos, lower_state.block_state_id()).has_failed())
       return false;
 
-   auto upper_state = repository::encode_block_state_by_id(block_id, std::make_pair("half", "upper"), std::make_pair("hinge", game::to_string(hinge_side)),
-                                                           std::make_pair("facing", direction_str));
+   BlockState upper_state{block_id, 0};
+   upper_state.set<Half>("half", Half::Upper);
+   upper_state.set<Side>("hinge", hinge_side);
+   upper_state.set<Direction>("facing", door_direction);
 
-   return world.set_block(upper_pos, upper_state).ok();
+   return world.set_block(upper_pos, upper_state.block_state_id()).ok();
 }
 
-std::optional<game::BlockStateId> Door::on_neighbour_change(game::World &world,
-                                                            game::BlockStateId block_state_id,
-                                                            game::BlockStateId neighbour_block_state_id,
-                                                            game::BlockPosition position, game::Face face)
+std::optional<BlockStateId> Door::on_neighbour_change(World & /*world*/, BlockStateId block_state_id,
+                                                      BlockStateId neighbour_block_state_id,
+                                                      BlockPosition /*position*/, Face face)
 {
-   auto [block_id, state_id] = repository::StateManager::the().parse_block_id(block_state_id);
-   auto block                = repository::Block::the().get_by_id(block_id);
-   if (block.has_failed())
+   BlockState state{block_state_id};
+
+   auto half = state.get<Half>("half");
+   if (not half.has_value())
       return std::nullopt;
 
-   auto half = block->state_value("half", state_id);
-
-   if (half == "lower") {
-      if (face != game::Face::Top)
-         return std::nullopt;
-   } else if (half == "upper") {
-      if (face != game::Face::Bottom)
-         return std::nullopt;
-   } else {
+   auto corresponding_face = (*half == Half::Lower) ? Face::Top : Face::Bottom;
+   if (face != corresponding_face)
       return std::nullopt;
+
+   BlockState other_half_state{neighbour_block_state_id};
+
+   if (other_half_state.block_id() != state.block_id())
+      return BLOCK_ID(Air);
+
+   other_half_state.set<Half>("half", *half);
+
+   return other_half_state.block_state_id();
+}
+
+bool Door::on_player_action(World &world, PlayerId /*player_id*/, BlockStateId block_state_id,
+                            BlockPosition position, Face /*face*/, util::Vec3 /*crosshair_position*/)
+{
+   BlockState state{block_state_id};
+   auto open = state.get<bool>("open");
+   if (not open.has_value()) {
+      return false;
    }
 
-   auto [other_half_block_id, other_half_state_id] =
-           repository::StateManager::the().parse_block_id(neighbour_block_state_id);
+   state.set("open", not (*open));
 
-   if (other_half_block_id != block_id)
-      return repository::BlockIds::the().Air;
-
-   return repository::set_state(block_id, other_half_state_id, "half", half);
+   return world.set_block(position, state.block_state_id()).ok();
 }
 
-bool Door::on_player_action(game::World &world, game::PlayerId player_id, game::BlockStateId block_state_id,
-                            game::BlockPosition position, game::Face face, util::Vec3 crosshair_position)
+bool check_side(World &world, BlockPosition pos, Direction dir, Side side, BlockId door_id)
 {
-   const auto [block_id, state_id] = repository::StateManager::the().parse_block_id(block_state_id);
-   auto block                = repository::Block::the().get_by_id(block_id);
+   auto block = world.get_block(pos.neighbour_at(dir.turn(side).to_face()));
    if (block.has_failed())
       return false;
 
-   const auto open_str = block->state_value("open", state_id);
-   const auto open = open_str == "true";
+   BlockState state{*block};
 
-   auto state = repository::set_state(block_id, state_id, "open", util::to_string(not open));
-   if (not state.has_value())
-      return false;
-
-   return world.set_block(position, *state).ok();
+   return state.block_id() != BLOCK_ID(Air) && state.block_id() != door_id;
 }
 
-game::Side Door::find_side(game::World &world, game::BlockPosition upper, game::BlockPosition lower, game::Direction dir, game::BlockId door_id)
+Side find_side(World &world, BlockPosition upper, BlockPosition lower, Direction dir, BlockId door_id)
 {
-   if (check_side(world, upper, dir, game::Side::Right, door_id))
-      return game::Side::Left;
-   if (check_side(world, lower, dir, game::Side::Right, door_id))
-      return game::Side::Left;
+   if (check_side(world, upper, dir, Side::Right, door_id))
+      return Side::Left;
+   if (check_side(world, lower, dir, Side::Right, door_id))
+      return Side::Left;
 
-   if (check_side(world, upper, dir, game::Side::Left, door_id))
-      return game::Side::Right;
-   if (check_side(world, lower, dir, game::Side::Left, door_id))
-      return game::Side::Right;
+   if (check_side(world, upper, dir, Side::Left, door_id))
+      return Side::Right;
+   if (check_side(world, lower, dir, Side::Left, door_id))
+      return Side::Right;
 
-   return game::Side::Right;
-}
-
-bool Door::check_side(game::World &world, game::BlockPosition pos, game::Direction dir, game::Side side, game::BlockId door_id)
-{
-   auto block = world.get_block(pos.neighbour_at(game::direction_to_face(game::direction_at(dir, side).value_or(game::Direction::North)).value_or(game::Face::North)));
-   if (block.has_failed())
-      return false;
-
-   auto [block_id, _] = repository::StateManager::the().parse_block_id(*block);
-
-   auto ids = repository::BlockIds::the();
-
-   return block_id != ids.Air && block_id != door_id;
+   return Side::Right;
 }
 
 }// namespace minecpp::controller::block

@@ -15,8 +15,6 @@ class Door : public Default
                                                          game::BlockPosition position,
                                                          game::Face face) override;
 
-   game::Side find_side(game::World &world, game::BlockPosition upper, game::BlockPosition lower, game::Direction dir, game::BlockId door_id);
-   bool check_side(game::World &world, game::BlockPosition pos, game::Direction dir, game::Side side, game::BlockId door_id);
    bool on_player_action(game::World &world, game::PlayerId player_id, game::BlockStateId block_state_id,
                          game::BlockPosition position, game::Face face,
                          util::Vec3 crosshair_position) override;

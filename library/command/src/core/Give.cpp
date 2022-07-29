@@ -47,7 +47,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
       return err;
    }
 
-   if (!player->inventory().add_item(static_cast<game::item::ItemId>(item_id.get()), 64)) {
+   if (!player->inventory().add_item(static_cast<game::ItemId>(item_id.get()), 64)) {
       auto err = std::make_shared<RuntimeError>("give");
       err->text("player inventory is full");
       return err;
@@ -62,7 +62,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    return info;
 }
 
-ObjectType Give::return_type(RuntimeContext &ctx) const
+ObjectType Give::return_type(RuntimeContext &/*ctx*/) const
 {
    return command_return_type;
 }

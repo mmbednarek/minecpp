@@ -34,7 +34,7 @@ class Notifier
    virtual void animate_hand(PlayerId player, mb::u32 entity_id, mb::u32 hand)                    = 0;
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                     = 0;
    virtual void unload_chunk(PlayerId player, const game::ChunkPosition &chunk_position)          = 0;
-   virtual void set_inventory_slot(PlayerId player_id, item::ItemId item_id, SlotId slot_id,
+   virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id,
                                    std::size_t count)                                             = 0;
 };
 

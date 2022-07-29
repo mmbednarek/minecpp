@@ -12,11 +12,12 @@ namespace minecpp::game {
 using ChunkHash    = mb::u64;
 using SlotId       = mb::u32;
 using PlayerId     = util::uuid;
-using BlockId      = int;
+using BlockId      = mb::i32;
 using EntityId     = mb::u32;
 using BlockStateId = mb::u32;
 using LightLevel   = mb::u8;
 using StateOffset  = mb::i32;
+using ItemId       = mb::i32;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
 constexpr int g_chunk_width       = 16;
@@ -95,10 +96,21 @@ class Face final : public Face_Base
    }
 };
 
-enum class Side
+enum class SideValue
 {
    Left,
    Right
+};
+
+using Side_Base = mb::enum_wrapper<SideValue, "left", "right">;
+
+class Side final : public Side_Base
+{
+ public:
+   MB_ENUM_TRAITS(Side);
+
+   MB_ENUM_FIELD(Left)
+   MB_ENUM_FIELD(Right)
 };
 
 [[nodiscard]] constexpr std::string to_string(Side side)
@@ -197,7 +209,7 @@ struct BlockPosition
 
    [[nodiscard]] constexpr mb::u16 offset() const
    {
-      return offset_x() << 12 | y | offset_z() << 8;
+      return static_cast<mb::u16>(offset_x() << 12u | y | offset_z() << 8u);
    }
 
    [[nodiscard]] constexpr mb::u32 offset_within_section() const
@@ -337,12 +349,57 @@ constexpr std::array<WoodType, 7> g_wood_types{WoodType::Oak,     WoodType::Spru
    return "";
 }
 
-enum class Direction
+enum class DirectionValues
 {
    East,
    West,
    South,
    North
+};
+
+using Direction_Base = mb::enum_wrapper<DirectionValues, "east", "west", "south", "north">;
+
+class Direction final : public Direction_Base
+{
+ public:
+   MB_ENUM_TRAITS(Direction);
+
+   MB_ENUM_FIELD(East)
+   MB_ENUM_FIELD(West)
+   MB_ENUM_FIELD(South)
+   MB_ENUM_FIELD(North)
+
+   [[nodiscard]] constexpr Direction turn(Side side) const
+   {
+      if (side == Side::Left) {
+         switch (index()) {
+         case Direction::North: return Direction::West;
+         case Direction::South: return Direction::East;
+         case Direction::West: return Direction::South;
+         case Direction::East: return Direction::North;
+         }
+      } else {
+         switch (index()) {
+         case Direction::North: return Direction::East;
+         case Direction::South: return Direction::West;
+         case Direction::West: return Direction::North;
+         case Direction::East: return Direction::South;
+         }
+      }
+
+      assert(false && "not reachable");
+   }
+
+   [[nodiscard]] constexpr Face to_face()
+   {
+      switch (index()) {
+      case Direction::North: return Face::North;
+      case Direction::South: return Face::South;
+      case Direction::West: return Face::West;
+      case Direction::East: return Face::East;
+      }
+      assert(false && "not reachable");
+   }
 };
 
 [[nodiscard]] constexpr Direction opposite_direction(Direction direction)
@@ -419,6 +476,23 @@ enum class LightType
 {
    Block,
    Sky
+};
+
+enum class HalfValue
+{
+   Lower,
+   Upper
+};
+
+using Half_Base = mb::enum_wrapper<HalfValue, "lower", "upper">;
+
+class Half final : public Half_Base
+{
+ public:
+   MB_ENUM_TRAITS(Half);
+
+   MB_ENUM_FIELD(Lower)
+   MB_ENUM_FIELD(Upper)
 };
 
 }// namespace minecpp::game

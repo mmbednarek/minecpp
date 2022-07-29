@@ -271,7 +271,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    if (item_slot.count == 0)
       return;
 
-   auto item = repository::Item::the().get_by_id(static_cast<std::size_t>(item_slot.item_id));
+   auto item = repository::Item::the().get_by_id(item_slot.item_id);
    if (item.has_failed())
       return;
 
@@ -305,13 +305,13 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_slot(static_cast<game::SlotId>(event.slot_id()),
                                game::player::ItemSlot{
-                                       .item_id = static_cast<game::item::ItemId>(event.item_id().id()),
+                                       .item_id = static_cast<game::ItemId>(event.item_id().id()),
                                        .count   = static_cast<size_t>(event.item_count()),
                                });
 
    spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
 
-   m_dispatcher.set_inventory_slot(player_id, static_cast<game::item::ItemId>(event.item_id().id()),
+   m_dispatcher.set_inventory_slot(player_id, static_cast<game::ItemId>(event.item_id().id()),
                                    static_cast<game::SlotId>(event.slot_id()),
                                    static_cast<size_t>(event.item_count()));
 }

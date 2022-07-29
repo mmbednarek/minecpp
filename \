@@ -25,6 +25,9 @@ class BlockState
       return TResult::from_string(block->state_value(name, m_state_offset));
    };
 
+   template<>
+   [[nodiscard]] std::optional<bool> get<bool>(std::string_view name) const;
+
    template<typename TValue>
    bool set(std::string_view name, TValue value)
    {
@@ -55,6 +58,9 @@ class BlockState
       return true;
    };
 
+   template<>
+   bool set<bool>(std::string_view name, bool value);
+
    [[nodiscard]] constexpr game::BlockId block_id() const
    {
       return m_block_id;
@@ -71,11 +77,5 @@ class BlockState
    game::BlockId m_block_id{};
    game::StateOffset m_state_offset{};
 };
-
-template<>
-[[nodiscard]] std::optional<bool> BlockState::get<bool>(std::string_view name) const;
-
-template<>
-bool BlockState::set<bool>(std::string_view name, bool value);
 
 }// namespace minecpp::world
