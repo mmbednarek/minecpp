@@ -87,8 +87,8 @@ int encode_block_by_tag(std::string_view tag)
    return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
-std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateOffset block_state, std::string_view name,
-                                            std::string_view value)
+std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateOffset block_state,
+                                            std::string_view name, std::string_view value)
 {
    auto block = Block::the().get_by_id(block_id);
    if (block.has_failed())
@@ -141,7 +141,7 @@ BlockIds &BlockIds::the()
       if (res.has_failed()) {                           \
          return;                                        \
       }                                                 \
-      (identifier) = *res;                                \
+      (identifier) = *res;                              \
    }
 
 void BlockIds::init()

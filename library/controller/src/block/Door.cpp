@@ -87,7 +87,7 @@ bool Door::on_player_action(World &world, PlayerId /*player_id*/, BlockStateId b
       return false;
    }
 
-   state.set("open", not (*open));
+   state.set("open", not(*open));
 
    return world.set_block(position, state.block_state_id()).ok();
 }

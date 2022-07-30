@@ -38,8 +38,10 @@ class World : public minecpp::game::World
    mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state) override;
    mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos) override;
    mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) override;
-   mb::result<game::LightLevel> get_light(game::LightType light_type, const game::BlockPosition &pos) override;
-   mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos, game::LightLevel level) override;
+   mb::result<game::LightLevel> get_light(game::LightType light_type,
+                                          const game::BlockPosition &pos) override;
+   mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
+                          game::LightLevel level) override;
 
  private:
    void notify_neighbours(game::BlockPosition position, game::BlockStateId state);

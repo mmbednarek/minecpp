@@ -22,7 +22,7 @@ class World
    virtual mb::result<game::LightLevel> get_light(game::LightType light_type,
                                                   const game::BlockPosition &pos)                     = 0;
    virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                  game::LightLevel level)                                              = 0;
+                                  game::LightLevel level)                                             = 0;
 };
 
 }// namespace minecpp::game

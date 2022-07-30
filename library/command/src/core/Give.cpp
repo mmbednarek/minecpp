@@ -62,7 +62,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    return info;
 }
 
-ObjectType Give::return_type(RuntimeContext &/*ctx*/) const
+ObjectType Give::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }

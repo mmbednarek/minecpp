@@ -95,7 +95,7 @@ grpc::Status Service::GetBlock(::grpc::ServerContext *context,
 }
 
 grpc::Status
-Service::GetLightLevel(::grpc::ServerContext */*context*/,
+Service::GetLightLevel(::grpc::ServerContext * /*context*/,
                        const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest *request,
                        ::minecpp::proto::common::v1::LightLevel *response)
 {
@@ -109,14 +109,9 @@ Service::GetLightLevel(::grpc::ServerContext */*context*/,
 
    mb::result<game::LightLevel> lightLevel{0};
    switch (request->light_type()) {
-   case proto::common::v1::Block:
-      lightLevel = chunk->get_block_light(block_pos);
-      break;
-   case proto::common::v1::Sky:
-      lightLevel = chunk->get_sky_light(block_pos);
-      break;
-   default:
-      return {grpc::StatusCode::INVALID_ARGUMENT, ""};
+   case proto::common::v1::Block: lightLevel = chunk->get_block_light(block_pos); break;
+   case proto::common::v1::Sky: lightLevel = chunk->get_sky_light(block_pos); break;
+   default: return {grpc::StatusCode::INVALID_ARGUMENT, ""};
    }
 
    if (lightLevel.has_failed()) {
@@ -128,9 +123,9 @@ Service::GetLightLevel(::grpc::ServerContext */*context*/,
 }
 
 grpc::Status
-Service::SetLightLevel(::grpc::ServerContext */*context*/,
+Service::SetLightLevel(::grpc::ServerContext * /*context*/,
                        const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest *request,
-                       ::minecpp::proto::service::chunk_storage::v1::EmptyResponse */*response*/)
+                       ::minecpp::proto::service::chunk_storage::v1::EmptyResponse * /*response*/)
 {
    auto block_pos = game::BlockPosition::from_proto(request->position());
    auto chunk_pos = block_pos.chunk_position();
@@ -148,8 +143,7 @@ Service::SetLightLevel(::grpc::ServerContext */*context*/,
    case proto::common::v1::Sky:
       result = chunk->set_sky_light(block_pos, static_cast<mb::u8>(request->level().level()));
       break;
-   default:
-      return {grpc::StatusCode::INVALID_ARGUMENT, ""};
+   default: return {grpc::StatusCode::INVALID_ARGUMENT, ""};
    }
 
    if (result.has_failed()) {

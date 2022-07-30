@@ -20,7 +20,8 @@ class BlockManager : public BlockController
    std::optional<game::BlockStateId> on_neighbour_change(game::World &world,
                                                          game::BlockStateId block_state_id,
                                                          game::BlockStateId neighbour_block_state_id,
-                                                         game::BlockPosition position, game::Face face) override;
+                                                         game::BlockPosition position,
+                                                         game::Face face) override;
 
    bool on_player_action(game::World &world, game::PlayerId player_id, game::BlockStateId block_state_id,
                          game::BlockPosition position, game::Face face,
