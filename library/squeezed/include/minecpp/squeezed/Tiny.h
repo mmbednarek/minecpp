@@ -19,6 +19,17 @@ class TinyVec
    [[nodiscard]] std::size_t size() const;
    [[nodiscard]] bool empty() const;
    void set(std::size_t i, std::int8_t value);
+
+   void reset()
+   {
+      std::fill(m_data.begin(), m_data.end(), 0);
+   }
+
+   void fill(int size, int value)
+   {
+      m_data.resize(size);
+      std::fill(m_data.begin(), m_data.end(), value);
+   }
 };
 
 template<std::uint8_t bits>

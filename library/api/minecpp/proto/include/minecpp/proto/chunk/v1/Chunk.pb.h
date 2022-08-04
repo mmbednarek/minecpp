@@ -30,6 +30,7 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
+#include <minecpp/proto/common/v1/Common.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto
@@ -51,16 +52,24 @@ namespace v1 {
 class Chunk;
 struct ChunkDefaultTypeInternal;
 extern ChunkDefaultTypeInternal _Chunk_default_instance_;
-class Chunk_Section;
-struct Chunk_SectionDefaultTypeInternal;
-extern Chunk_SectionDefaultTypeInternal _Chunk_Section_default_instance_;
+class Section;
+struct SectionDefaultTypeInternal;
+extern SectionDefaultTypeInternal _Section_default_instance_;
+class SectionSlice;
+struct SectionSliceDefaultTypeInternal;
+extern SectionSliceDefaultTypeInternal _SectionSlice_default_instance_;
+class SectionWithPosition;
+struct SectionWithPositionDefaultTypeInternal;
+extern SectionWithPositionDefaultTypeInternal _SectionWithPosition_default_instance_;
 }  // namespace v1
 }  // namespace chunk
 }  // namespace proto
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
 template<> ::minecpp::proto::chunk::v1::Chunk* Arena::CreateMaybeMessage<::minecpp::proto::chunk::v1::Chunk>(Arena*);
-template<> ::minecpp::proto::chunk::v1::Chunk_Section* Arena::CreateMaybeMessage<::minecpp::proto::chunk::v1::Chunk_Section>(Arena*);
+template<> ::minecpp::proto::chunk::v1::Section* Arena::CreateMaybeMessage<::minecpp::proto::chunk::v1::Section>(Arena*);
+template<> ::minecpp::proto::chunk::v1::SectionSlice* Arena::CreateMaybeMessage<::minecpp::proto::chunk::v1::SectionSlice>(Arena*);
+template<> ::minecpp::proto::chunk::v1::SectionWithPosition* Arena::CreateMaybeMessage<::minecpp::proto::chunk::v1::SectionWithPosition>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace proto {
@@ -69,24 +78,24 @@ namespace v1 {
 
 // ===================================================================
 
-class Chunk_Section final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.chunk.v1.Chunk.Section) */ {
+class Section final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.chunk.v1.Section) */ {
  public:
-  inline Chunk_Section() : Chunk_Section(nullptr) {}
-  ~Chunk_Section() override;
-  explicit PROTOBUF_CONSTEXPR Chunk_Section(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline Section() : Section(nullptr) {}
+  ~Section() override;
+  explicit PROTOBUF_CONSTEXPR Section(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  Chunk_Section(const Chunk_Section& from);
-  Chunk_Section(Chunk_Section&& from) noexcept
-    : Chunk_Section() {
+  Section(const Section& from);
+  Section(Section&& from) noexcept
+    : Section() {
     *this = ::std::move(from);
   }
 
-  inline Chunk_Section& operator=(const Chunk_Section& from) {
+  inline Section& operator=(const Section& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Chunk_Section& operator=(Chunk_Section&& from) noexcept {
+  inline Section& operator=(Section&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -109,20 +118,20 @@ class Chunk_Section final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const Chunk_Section& default_instance() {
+  static const Section& default_instance() {
     return *internal_default_instance();
   }
-  static inline const Chunk_Section* internal_default_instance() {
-    return reinterpret_cast<const Chunk_Section*>(
-               &_Chunk_Section_default_instance_);
+  static inline const Section* internal_default_instance() {
+    return reinterpret_cast<const Section*>(
+               &_Section_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(Chunk_Section& a, Chunk_Section& b) {
+  friend void swap(Section& a, Section& b) {
     a.Swap(&b);
   }
-  inline void Swap(Chunk_Section* other) {
+  inline void Swap(Section* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -135,7 +144,7 @@ class Chunk_Section final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Chunk_Section* other) {
+  void UnsafeArenaSwap(Section* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -143,14 +152,14 @@ class Chunk_Section final :
 
   // implements Message ----------------------------------------------
 
-  Chunk_Section* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Chunk_Section>(arena);
+  Section* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Section>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Chunk_Section& from);
+  void CopyFrom(const Section& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Chunk_Section& from) {
-    Chunk_Section::MergeImpl(*this, from);
+  void MergeFrom( const Section& from) {
+    Section::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -168,15 +177,15 @@ class Chunk_Section final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Chunk_Section* other);
+  void InternalSwap(Section* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.chunk.v1.Chunk.Section";
+    return "minecpp.proto.chunk.v1.Section";
   }
   protected:
-  explicit Chunk_Section(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit Section(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -192,6 +201,7 @@ class Chunk_Section final :
   enum : int {
     kPaletteFieldNumber = 4,
     kDataFieldNumber = 5,
+    kLightSourcesFieldNumber = 8,
     kBlockLightFieldNumber = 6,
     kSkyLightFieldNumber = 7,
     kYFieldNumber = 1,
@@ -241,6 +251,24 @@ class Chunk_Section final :
       data() const;
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t >*
       mutable_data();
+
+  // repeated .minecpp.proto.common.v1.LightSource light_sources = 8;
+  int light_sources_size() const;
+  private:
+  int _internal_light_sources_size() const;
+  public:
+  void clear_light_sources();
+  ::minecpp::proto::common::v1::LightSource* mutable_light_sources(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::LightSource >*
+      mutable_light_sources();
+  private:
+  const ::minecpp::proto::common::v1::LightSource& _internal_light_sources(int index) const;
+  ::minecpp::proto::common::v1::LightSource* _internal_add_light_sources();
+  public:
+  const ::minecpp::proto::common::v1::LightSource& light_sources(int index) const;
+  ::minecpp::proto::common::v1::LightSource* add_light_sources();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::LightSource >&
+      light_sources() const;
 
   // bytes block_light = 6;
   void clear_block_light();
@@ -297,7 +325,7 @@ class Chunk_Section final :
   void _internal_set_ref_count(int32_t value);
   public:
 
-  // @@protoc_insertion_point(class_scope:minecpp.proto.chunk.v1.Chunk.Section)
+  // @@protoc_insertion_point(class_scope:minecpp.proto.chunk.v1.Section)
  private:
   class _Internal;
 
@@ -309,6 +337,7 @@ class Chunk_Section final :
     mutable std::atomic<int> _palette_cached_byte_size_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t > data_;
     mutable std::atomic<int> _data_cached_byte_size_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::LightSource > light_sources_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr block_light_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sky_light_;
     int32_t y_;
@@ -439,8 +468,6 @@ class Chunk final :
 
   // nested types ----------------------------------------------------
 
-  typedef Chunk_Section Section;
-
   // accessors -------------------------------------------------------
 
   enum : int {
@@ -518,22 +545,22 @@ class Chunk final :
   ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t >*
       mutable_hm_motion_blocking();
 
-  // repeated .minecpp.proto.chunk.v1.Chunk.Section sections = 7;
+  // repeated .minecpp.proto.chunk.v1.Section sections = 7;
   int sections_size() const;
   private:
   int _internal_sections_size() const;
   public:
   void clear_sections();
-  ::minecpp::proto::chunk::v1::Chunk_Section* mutable_sections(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Chunk_Section >*
+  ::minecpp::proto::chunk::v1::Section* mutable_sections(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Section >*
       mutable_sections();
   private:
-  const ::minecpp::proto::chunk::v1::Chunk_Section& _internal_sections(int index) const;
-  ::minecpp::proto::chunk::v1::Chunk_Section* _internal_add_sections();
+  const ::minecpp::proto::chunk::v1::Section& _internal_sections(int index) const;
+  ::minecpp::proto::chunk::v1::Section* _internal_add_sections();
   public:
-  const ::minecpp::proto::chunk::v1::Chunk_Section& sections(int index) const;
-  ::minecpp::proto::chunk::v1::Chunk_Section* add_sections();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Chunk_Section >&
+  const ::minecpp::proto::chunk::v1::Section& sections(int index) const;
+  ::minecpp::proto::chunk::v1::Section* add_sections();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Section >&
       sections() const;
 
   // int32 pos_x = 1;
@@ -577,10 +604,364 @@ class Chunk final :
     mutable std::atomic<int> _hm_world_surface_cached_byte_size_;
     ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t > hm_motion_blocking_;
     mutable std::atomic<int> _hm_motion_blocking_cached_byte_size_;
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Chunk_Section > sections_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Section > sections_;
     int32_t pos_x_;
     int32_t pos_z_;
     bool full_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SectionWithPosition final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.chunk.v1.SectionWithPosition) */ {
+ public:
+  inline SectionWithPosition() : SectionWithPosition(nullptr) {}
+  ~SectionWithPosition() override;
+  explicit PROTOBUF_CONSTEXPR SectionWithPosition(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SectionWithPosition(const SectionWithPosition& from);
+  SectionWithPosition(SectionWithPosition&& from) noexcept
+    : SectionWithPosition() {
+    *this = ::std::move(from);
+  }
+
+  inline SectionWithPosition& operator=(const SectionWithPosition& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SectionWithPosition& operator=(SectionWithPosition&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SectionWithPosition& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SectionWithPosition* internal_default_instance() {
+    return reinterpret_cast<const SectionWithPosition*>(
+               &_SectionWithPosition_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(SectionWithPosition& a, SectionWithPosition& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SectionWithPosition* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SectionWithPosition* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SectionWithPosition* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SectionWithPosition>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SectionWithPosition& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SectionWithPosition& from) {
+    SectionWithPosition::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SectionWithPosition* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.chunk.v1.SectionWithPosition";
+  }
+  protected:
+  explicit SectionWithPosition(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 1,
+    kSectionFieldNumber = 2,
+  };
+  // .minecpp.proto.common.v1.ChunkSectionPosition position = 1;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::ChunkSectionPosition& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkSectionPosition* release_position();
+  ::minecpp::proto::common::v1::ChunkSectionPosition* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::ChunkSectionPosition* position);
+  private:
+  const ::minecpp::proto::common::v1::ChunkSectionPosition& _internal_position() const;
+  ::minecpp::proto::common::v1::ChunkSectionPosition* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::ChunkSectionPosition* position);
+  ::minecpp::proto::common::v1::ChunkSectionPosition* unsafe_arena_release_position();
+
+  // .minecpp.proto.chunk.v1.Section section = 2;
+  bool has_section() const;
+  private:
+  bool _internal_has_section() const;
+  public:
+  void clear_section();
+  const ::minecpp::proto::chunk::v1::Section& section() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::chunk::v1::Section* release_section();
+  ::minecpp::proto::chunk::v1::Section* mutable_section();
+  void set_allocated_section(::minecpp::proto::chunk::v1::Section* section);
+  private:
+  const ::minecpp::proto::chunk::v1::Section& _internal_section() const;
+  ::minecpp::proto::chunk::v1::Section* _internal_mutable_section();
+  public:
+  void unsafe_arena_set_allocated_section(
+      ::minecpp::proto::chunk::v1::Section* section);
+  ::minecpp::proto::chunk::v1::Section* unsafe_arena_release_section();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.chunk.v1.SectionWithPosition)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::ChunkSectionPosition* position_;
+    ::minecpp::proto::chunk::v1::Section* section_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SectionSlice final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.chunk.v1.SectionSlice) */ {
+ public:
+  inline SectionSlice() : SectionSlice(nullptr) {}
+  ~SectionSlice() override;
+  explicit PROTOBUF_CONSTEXPR SectionSlice(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SectionSlice(const SectionSlice& from);
+  SectionSlice(SectionSlice&& from) noexcept
+    : SectionSlice() {
+    *this = ::std::move(from);
+  }
+
+  inline SectionSlice& operator=(const SectionSlice& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SectionSlice& operator=(SectionSlice&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SectionSlice& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SectionSlice* internal_default_instance() {
+    return reinterpret_cast<const SectionSlice*>(
+               &_SectionSlice_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(SectionSlice& a, SectionSlice& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SectionSlice* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SectionSlice* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SectionSlice* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SectionSlice>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SectionSlice& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SectionSlice& from) {
+    SectionSlice::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SectionSlice* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.chunk.v1.SectionSlice";
+  }
+  protected:
+  explicit SectionSlice(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSectionsFieldNumber = 2,
+    kRangeFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.chunk.v1.SectionWithPosition sections = 2;
+  int sections_size() const;
+  private:
+  int _internal_sections_size() const;
+  public:
+  void clear_sections();
+  ::minecpp::proto::chunk::v1::SectionWithPosition* mutable_sections(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::SectionWithPosition >*
+      mutable_sections();
+  private:
+  const ::minecpp::proto::chunk::v1::SectionWithPosition& _internal_sections(int index) const;
+  ::minecpp::proto::chunk::v1::SectionWithPosition* _internal_add_sections();
+  public:
+  const ::minecpp::proto::chunk::v1::SectionWithPosition& sections(int index) const;
+  ::minecpp::proto::chunk::v1::SectionWithPosition* add_sections();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::SectionWithPosition >&
+      sections() const;
+
+  // .minecpp.proto.common.v1.SectionRange range = 1;
+  bool has_range() const;
+  private:
+  bool _internal_has_range() const;
+  public:
+  void clear_range();
+  const ::minecpp::proto::common::v1::SectionRange& range() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::SectionRange* release_range();
+  ::minecpp::proto::common::v1::SectionRange* mutable_range();
+  void set_allocated_range(::minecpp::proto::common::v1::SectionRange* range);
+  private:
+  const ::minecpp::proto::common::v1::SectionRange& _internal_range() const;
+  ::minecpp::proto::common::v1::SectionRange* _internal_mutable_range();
+  public:
+  void unsafe_arena_set_allocated_range(
+      ::minecpp::proto::common::v1::SectionRange* range);
+  ::minecpp::proto::common::v1::SectionRange* unsafe_arena_release_range();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.chunk.v1.SectionSlice)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::SectionWithPosition > sections_;
+    ::minecpp::proto::common::v1::SectionRange* range_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -595,198 +976,198 @@ class Chunk final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Chunk_Section
+// Section
 
 // int32 y = 1;
-inline void Chunk_Section::clear_y() {
+inline void Section::clear_y() {
   _impl_.y_ = 0;
 }
-inline int32_t Chunk_Section::_internal_y() const {
+inline int32_t Section::_internal_y() const {
   return _impl_.y_;
 }
-inline int32_t Chunk_Section::y() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.y)
+inline int32_t Section::y() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.y)
   return _internal_y();
 }
-inline void Chunk_Section::_internal_set_y(int32_t value) {
+inline void Section::_internal_set_y(int32_t value) {
   
   _impl_.y_ = value;
 }
-inline void Chunk_Section::set_y(int32_t value) {
+inline void Section::set_y(int32_t value) {
   _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.y)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.y)
 }
 
 // int32 bits = 2;
-inline void Chunk_Section::clear_bits() {
+inline void Section::clear_bits() {
   _impl_.bits_ = 0;
 }
-inline int32_t Chunk_Section::_internal_bits() const {
+inline int32_t Section::_internal_bits() const {
   return _impl_.bits_;
 }
-inline int32_t Chunk_Section::bits() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.bits)
+inline int32_t Section::bits() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.bits)
   return _internal_bits();
 }
-inline void Chunk_Section::_internal_set_bits(int32_t value) {
+inline void Section::_internal_set_bits(int32_t value) {
   
   _impl_.bits_ = value;
 }
-inline void Chunk_Section::set_bits(int32_t value) {
+inline void Section::set_bits(int32_t value) {
   _internal_set_bits(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.bits)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.bits)
 }
 
 // int32 ref_count = 3;
-inline void Chunk_Section::clear_ref_count() {
+inline void Section::clear_ref_count() {
   _impl_.ref_count_ = 0;
 }
-inline int32_t Chunk_Section::_internal_ref_count() const {
+inline int32_t Section::_internal_ref_count() const {
   return _impl_.ref_count_;
 }
-inline int32_t Chunk_Section::ref_count() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.ref_count)
+inline int32_t Section::ref_count() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.ref_count)
   return _internal_ref_count();
 }
-inline void Chunk_Section::_internal_set_ref_count(int32_t value) {
+inline void Section::_internal_set_ref_count(int32_t value) {
   
   _impl_.ref_count_ = value;
 }
-inline void Chunk_Section::set_ref_count(int32_t value) {
+inline void Section::set_ref_count(int32_t value) {
   _internal_set_ref_count(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.ref_count)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.ref_count)
 }
 
 // repeated int32 palette = 4;
-inline int Chunk_Section::_internal_palette_size() const {
+inline int Section::_internal_palette_size() const {
   return _impl_.palette_.size();
 }
-inline int Chunk_Section::palette_size() const {
+inline int Section::palette_size() const {
   return _internal_palette_size();
 }
-inline void Chunk_Section::clear_palette() {
+inline void Section::clear_palette() {
   _impl_.palette_.Clear();
 }
-inline int32_t Chunk_Section::_internal_palette(int index) const {
+inline int32_t Section::_internal_palette(int index) const {
   return _impl_.palette_.Get(index);
 }
-inline int32_t Chunk_Section::palette(int index) const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.palette)
+inline int32_t Section::palette(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.palette)
   return _internal_palette(index);
 }
-inline void Chunk_Section::set_palette(int index, int32_t value) {
+inline void Section::set_palette(int index, int32_t value) {
   _impl_.palette_.Set(index, value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.palette)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.palette)
 }
-inline void Chunk_Section::_internal_add_palette(int32_t value) {
+inline void Section::_internal_add_palette(int32_t value) {
   _impl_.palette_.Add(value);
 }
-inline void Chunk_Section::add_palette(int32_t value) {
+inline void Section::add_palette(int32_t value) {
   _internal_add_palette(value);
-  // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.Chunk.Section.palette)
+  // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.Section.palette)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
-Chunk_Section::_internal_palette() const {
+Section::_internal_palette() const {
   return _impl_.palette_;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
-Chunk_Section::palette() const {
-  // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.Chunk.Section.palette)
+Section::palette() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.Section.palette)
   return _internal_palette();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
-Chunk_Section::_internal_mutable_palette() {
+Section::_internal_mutable_palette() {
   return &_impl_.palette_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
-Chunk_Section::mutable_palette() {
-  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.Chunk.Section.palette)
+Section::mutable_palette() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.Section.palette)
   return _internal_mutable_palette();
 }
 
 // repeated int64 data = 5;
-inline int Chunk_Section::_internal_data_size() const {
+inline int Section::_internal_data_size() const {
   return _impl_.data_.size();
 }
-inline int Chunk_Section::data_size() const {
+inline int Section::data_size() const {
   return _internal_data_size();
 }
-inline void Chunk_Section::clear_data() {
+inline void Section::clear_data() {
   _impl_.data_.Clear();
 }
-inline int64_t Chunk_Section::_internal_data(int index) const {
+inline int64_t Section::_internal_data(int index) const {
   return _impl_.data_.Get(index);
 }
-inline int64_t Chunk_Section::data(int index) const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.data)
+inline int64_t Section::data(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.data)
   return _internal_data(index);
 }
-inline void Chunk_Section::set_data(int index, int64_t value) {
+inline void Section::set_data(int index, int64_t value) {
   _impl_.data_.Set(index, value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.data)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.data)
 }
-inline void Chunk_Section::_internal_add_data(int64_t value) {
+inline void Section::_internal_add_data(int64_t value) {
   _impl_.data_.Add(value);
 }
-inline void Chunk_Section::add_data(int64_t value) {
+inline void Section::add_data(int64_t value) {
   _internal_add_data(value);
-  // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.Chunk.Section.data)
+  // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.Section.data)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t >&
-Chunk_Section::_internal_data() const {
+Section::_internal_data() const {
   return _impl_.data_;
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t >&
-Chunk_Section::data() const {
-  // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.Chunk.Section.data)
+Section::data() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.Section.data)
   return _internal_data();
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t >*
-Chunk_Section::_internal_mutable_data() {
+Section::_internal_mutable_data() {
   return &_impl_.data_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int64_t >*
-Chunk_Section::mutable_data() {
-  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.Chunk.Section.data)
+Section::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.Section.data)
   return _internal_mutable_data();
 }
 
 // bytes block_light = 6;
-inline void Chunk_Section::clear_block_light() {
+inline void Section::clear_block_light() {
   _impl_.block_light_.ClearToEmpty();
 }
-inline const std::string& Chunk_Section::block_light() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.block_light)
+inline const std::string& Section::block_light() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.block_light)
   return _internal_block_light();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void Chunk_Section::set_block_light(ArgT0&& arg0, ArgT... args) {
+void Section::set_block_light(ArgT0&& arg0, ArgT... args) {
  
  _impl_.block_light_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.block_light)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.block_light)
 }
-inline std::string* Chunk_Section::mutable_block_light() {
+inline std::string* Section::mutable_block_light() {
   std::string* _s = _internal_mutable_block_light();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.Chunk.Section.block_light)
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.Section.block_light)
   return _s;
 }
-inline const std::string& Chunk_Section::_internal_block_light() const {
+inline const std::string& Section::_internal_block_light() const {
   return _impl_.block_light_.Get();
 }
-inline void Chunk_Section::_internal_set_block_light(const std::string& value) {
+inline void Section::_internal_set_block_light(const std::string& value) {
   
   _impl_.block_light_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Chunk_Section::_internal_mutable_block_light() {
+inline std::string* Section::_internal_mutable_block_light() {
   
   return _impl_.block_light_.Mutable(GetArenaForAllocation());
 }
-inline std::string* Chunk_Section::release_block_light() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.Chunk.Section.block_light)
+inline std::string* Section::release_block_light() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.Section.block_light)
   return _impl_.block_light_.Release();
 }
-inline void Chunk_Section::set_allocated_block_light(std::string* block_light) {
+inline void Section::set_allocated_block_light(std::string* block_light) {
   if (block_light != nullptr) {
     
   } else {
@@ -798,45 +1179,45 @@ inline void Chunk_Section::set_allocated_block_light(std::string* block_light) {
     _impl_.block_light_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.Chunk.Section.block_light)
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.Section.block_light)
 }
 
 // bytes sky_light = 7;
-inline void Chunk_Section::clear_sky_light() {
+inline void Section::clear_sky_light() {
   _impl_.sky_light_.ClearToEmpty();
 }
-inline const std::string& Chunk_Section::sky_light() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.Section.sky_light)
+inline const std::string& Section::sky_light() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.sky_light)
   return _internal_sky_light();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void Chunk_Section::set_sky_light(ArgT0&& arg0, ArgT... args) {
+void Section::set_sky_light(ArgT0&& arg0, ArgT... args) {
  
  _impl_.sky_light_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Chunk.Section.sky_light)
+  // @@protoc_insertion_point(field_set:minecpp.proto.chunk.v1.Section.sky_light)
 }
-inline std::string* Chunk_Section::mutable_sky_light() {
+inline std::string* Section::mutable_sky_light() {
   std::string* _s = _internal_mutable_sky_light();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.Chunk.Section.sky_light)
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.Section.sky_light)
   return _s;
 }
-inline const std::string& Chunk_Section::_internal_sky_light() const {
+inline const std::string& Section::_internal_sky_light() const {
   return _impl_.sky_light_.Get();
 }
-inline void Chunk_Section::_internal_set_sky_light(const std::string& value) {
+inline void Section::_internal_set_sky_light(const std::string& value) {
   
   _impl_.sky_light_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Chunk_Section::_internal_mutable_sky_light() {
+inline std::string* Section::_internal_mutable_sky_light() {
   
   return _impl_.sky_light_.Mutable(GetArenaForAllocation());
 }
-inline std::string* Chunk_Section::release_sky_light() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.Chunk.Section.sky_light)
+inline std::string* Section::release_sky_light() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.Section.sky_light)
   return _impl_.sky_light_.Release();
 }
-inline void Chunk_Section::set_allocated_sky_light(std::string* sky_light) {
+inline void Section::set_allocated_sky_light(std::string* sky_light) {
   if (sky_light != nullptr) {
     
   } else {
@@ -848,7 +1229,44 @@ inline void Chunk_Section::set_allocated_sky_light(std::string* sky_light) {
     _impl_.sky_light_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.Chunk.Section.sky_light)
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.Section.sky_light)
+}
+
+// repeated .minecpp.proto.common.v1.LightSource light_sources = 8;
+inline int Section::_internal_light_sources_size() const {
+  return _impl_.light_sources_.size();
+}
+inline int Section::light_sources_size() const {
+  return _internal_light_sources_size();
+}
+inline ::minecpp::proto::common::v1::LightSource* Section::mutable_light_sources(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.Section.light_sources)
+  return _impl_.light_sources_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::LightSource >*
+Section::mutable_light_sources() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.Section.light_sources)
+  return &_impl_.light_sources_;
+}
+inline const ::minecpp::proto::common::v1::LightSource& Section::_internal_light_sources(int index) const {
+  return _impl_.light_sources_.Get(index);
+}
+inline const ::minecpp::proto::common::v1::LightSource& Section::light_sources(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Section.light_sources)
+  return _internal_light_sources(index);
+}
+inline ::minecpp::proto::common::v1::LightSource* Section::_internal_add_light_sources() {
+  return _impl_.light_sources_.Add();
+}
+inline ::minecpp::proto::common::v1::LightSource* Section::add_light_sources() {
+  ::minecpp::proto::common::v1::LightSource* _add = _internal_add_light_sources();
+  // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.Section.light_sources)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::LightSource >&
+Section::light_sources() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.Section.light_sources)
+  return _impl_.light_sources_;
 }
 
 // -------------------------------------------------------------------
@@ -1056,7 +1474,7 @@ Chunk::mutable_hm_motion_blocking() {
   return _internal_mutable_hm_motion_blocking();
 }
 
-// repeated .minecpp.proto.chunk.v1.Chunk.Section sections = 7;
+// repeated .minecpp.proto.chunk.v1.Section sections = 7;
 inline int Chunk::_internal_sections_size() const {
   return _impl_.sections_.size();
 }
@@ -1066,39 +1484,351 @@ inline int Chunk::sections_size() const {
 inline void Chunk::clear_sections() {
   _impl_.sections_.Clear();
 }
-inline ::minecpp::proto::chunk::v1::Chunk_Section* Chunk::mutable_sections(int index) {
+inline ::minecpp::proto::chunk::v1::Section* Chunk::mutable_sections(int index) {
   // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.Chunk.sections)
   return _impl_.sections_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Chunk_Section >*
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Section >*
 Chunk::mutable_sections() {
   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.Chunk.sections)
   return &_impl_.sections_;
 }
-inline const ::minecpp::proto::chunk::v1::Chunk_Section& Chunk::_internal_sections(int index) const {
+inline const ::minecpp::proto::chunk::v1::Section& Chunk::_internal_sections(int index) const {
   return _impl_.sections_.Get(index);
 }
-inline const ::minecpp::proto::chunk::v1::Chunk_Section& Chunk::sections(int index) const {
+inline const ::minecpp::proto::chunk::v1::Section& Chunk::sections(int index) const {
   // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.Chunk.sections)
   return _internal_sections(index);
 }
-inline ::minecpp::proto::chunk::v1::Chunk_Section* Chunk::_internal_add_sections() {
+inline ::minecpp::proto::chunk::v1::Section* Chunk::_internal_add_sections() {
   return _impl_.sections_.Add();
 }
-inline ::minecpp::proto::chunk::v1::Chunk_Section* Chunk::add_sections() {
-  ::minecpp::proto::chunk::v1::Chunk_Section* _add = _internal_add_sections();
+inline ::minecpp::proto::chunk::v1::Section* Chunk::add_sections() {
+  ::minecpp::proto::chunk::v1::Section* _add = _internal_add_sections();
   // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.Chunk.sections)
   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Chunk_Section >&
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::Section >&
 Chunk::sections() const {
   // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.Chunk.sections)
+  return _impl_.sections_;
+}
+
+// -------------------------------------------------------------------
+
+// SectionWithPosition
+
+// .minecpp.proto.common.v1.ChunkSectionPosition position = 1;
+inline bool SectionWithPosition::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
+}
+inline bool SectionWithPosition::has_position() const {
+  return _internal_has_position();
+}
+inline const ::minecpp::proto::common::v1::ChunkSectionPosition& SectionWithPosition::_internal_position() const {
+  const ::minecpp::proto::common::v1::ChunkSectionPosition* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkSectionPosition&>(
+      ::minecpp::proto::common::v1::_ChunkSectionPosition_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::ChunkSectionPosition& SectionWithPosition::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.SectionWithPosition.position)
+  return _internal_position();
+}
+inline void SectionWithPosition::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::ChunkSectionPosition* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.chunk.v1.SectionWithPosition.position)
+}
+inline ::minecpp::proto::common::v1::ChunkSectionPosition* SectionWithPosition::release_position() {
+  
+  ::minecpp::proto::common::v1::ChunkSectionPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::ChunkSectionPosition* SectionWithPosition::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.SectionWithPosition.position)
+  
+  ::minecpp::proto::common::v1::ChunkSectionPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::ChunkSectionPosition* SectionWithPosition::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkSectionPosition>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
+}
+inline ::minecpp::proto::common::v1::ChunkSectionPosition* SectionWithPosition::mutable_position() {
+  ::minecpp::proto::common::v1::ChunkSectionPosition* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.SectionWithPosition.position)
+  return _msg;
+}
+inline void SectionWithPosition::set_allocated_position(::minecpp::proto::common::v1::ChunkSectionPosition* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.SectionWithPosition.position)
+}
+
+// .minecpp.proto.chunk.v1.Section section = 2;
+inline bool SectionWithPosition::_internal_has_section() const {
+  return this != internal_default_instance() && _impl_.section_ != nullptr;
+}
+inline bool SectionWithPosition::has_section() const {
+  return _internal_has_section();
+}
+inline void SectionWithPosition::clear_section() {
+  if (GetArenaForAllocation() == nullptr && _impl_.section_ != nullptr) {
+    delete _impl_.section_;
+  }
+  _impl_.section_ = nullptr;
+}
+inline const ::minecpp::proto::chunk::v1::Section& SectionWithPosition::_internal_section() const {
+  const ::minecpp::proto::chunk::v1::Section* p = _impl_.section_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::chunk::v1::Section&>(
+      ::minecpp::proto::chunk::v1::_Section_default_instance_);
+}
+inline const ::minecpp::proto::chunk::v1::Section& SectionWithPosition::section() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.SectionWithPosition.section)
+  return _internal_section();
+}
+inline void SectionWithPosition::unsafe_arena_set_allocated_section(
+    ::minecpp::proto::chunk::v1::Section* section) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.section_);
+  }
+  _impl_.section_ = section;
+  if (section) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.chunk.v1.SectionWithPosition.section)
+}
+inline ::minecpp::proto::chunk::v1::Section* SectionWithPosition::release_section() {
+  
+  ::minecpp::proto::chunk::v1::Section* temp = _impl_.section_;
+  _impl_.section_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::chunk::v1::Section* SectionWithPosition::unsafe_arena_release_section() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.SectionWithPosition.section)
+  
+  ::minecpp::proto::chunk::v1::Section* temp = _impl_.section_;
+  _impl_.section_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::chunk::v1::Section* SectionWithPosition::_internal_mutable_section() {
+  
+  if (_impl_.section_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::chunk::v1::Section>(GetArenaForAllocation());
+    _impl_.section_ = p;
+  }
+  return _impl_.section_;
+}
+inline ::minecpp::proto::chunk::v1::Section* SectionWithPosition::mutable_section() {
+  ::minecpp::proto::chunk::v1::Section* _msg = _internal_mutable_section();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.SectionWithPosition.section)
+  return _msg;
+}
+inline void SectionWithPosition::set_allocated_section(::minecpp::proto::chunk::v1::Section* section) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.section_;
+  }
+  if (section) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(section);
+    if (message_arena != submessage_arena) {
+      section = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, section, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.section_ = section;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.SectionWithPosition.section)
+}
+
+// -------------------------------------------------------------------
+
+// SectionSlice
+
+// .minecpp.proto.common.v1.SectionRange range = 1;
+inline bool SectionSlice::_internal_has_range() const {
+  return this != internal_default_instance() && _impl_.range_ != nullptr;
+}
+inline bool SectionSlice::has_range() const {
+  return _internal_has_range();
+}
+inline const ::minecpp::proto::common::v1::SectionRange& SectionSlice::_internal_range() const {
+  const ::minecpp::proto::common::v1::SectionRange* p = _impl_.range_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::SectionRange&>(
+      ::minecpp::proto::common::v1::_SectionRange_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::SectionRange& SectionSlice::range() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.SectionSlice.range)
+  return _internal_range();
+}
+inline void SectionSlice::unsafe_arena_set_allocated_range(
+    ::minecpp::proto::common::v1::SectionRange* range) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.range_);
+  }
+  _impl_.range_ = range;
+  if (range) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.chunk.v1.SectionSlice.range)
+}
+inline ::minecpp::proto::common::v1::SectionRange* SectionSlice::release_range() {
+  
+  ::minecpp::proto::common::v1::SectionRange* temp = _impl_.range_;
+  _impl_.range_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::SectionRange* SectionSlice::unsafe_arena_release_range() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.chunk.v1.SectionSlice.range)
+  
+  ::minecpp::proto::common::v1::SectionRange* temp = _impl_.range_;
+  _impl_.range_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::SectionRange* SectionSlice::_internal_mutable_range() {
+  
+  if (_impl_.range_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::SectionRange>(GetArenaForAllocation());
+    _impl_.range_ = p;
+  }
+  return _impl_.range_;
+}
+inline ::minecpp::proto::common::v1::SectionRange* SectionSlice::mutable_range() {
+  ::minecpp::proto::common::v1::SectionRange* _msg = _internal_mutable_range();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.SectionSlice.range)
+  return _msg;
+}
+inline void SectionSlice::set_allocated_range(::minecpp::proto::common::v1::SectionRange* range) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.range_);
+  }
+  if (range) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(range));
+    if (message_arena != submessage_arena) {
+      range = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, range, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.range_ = range;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.chunk.v1.SectionSlice.range)
+}
+
+// repeated .minecpp.proto.chunk.v1.SectionWithPosition sections = 2;
+inline int SectionSlice::_internal_sections_size() const {
+  return _impl_.sections_.size();
+}
+inline int SectionSlice::sections_size() const {
+  return _internal_sections_size();
+}
+inline void SectionSlice::clear_sections() {
+  _impl_.sections_.Clear();
+}
+inline ::minecpp::proto::chunk::v1::SectionWithPosition* SectionSlice::mutable_sections(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.chunk.v1.SectionSlice.sections)
+  return _impl_.sections_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::SectionWithPosition >*
+SectionSlice::mutable_sections() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.chunk.v1.SectionSlice.sections)
+  return &_impl_.sections_;
+}
+inline const ::minecpp::proto::chunk::v1::SectionWithPosition& SectionSlice::_internal_sections(int index) const {
+  return _impl_.sections_.Get(index);
+}
+inline const ::minecpp::proto::chunk::v1::SectionWithPosition& SectionSlice::sections(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.chunk.v1.SectionSlice.sections)
+  return _internal_sections(index);
+}
+inline ::minecpp::proto::chunk::v1::SectionWithPosition* SectionSlice::_internal_add_sections() {
+  return _impl_.sections_.Add();
+}
+inline ::minecpp::proto::chunk::v1::SectionWithPosition* SectionSlice::add_sections() {
+  ::minecpp::proto::chunk::v1::SectionWithPosition* _add = _internal_add_sections();
+  // @@protoc_insertion_point(field_add:minecpp.proto.chunk.v1.SectionSlice.sections)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::chunk::v1::SectionWithPosition >&
+SectionSlice::sections() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.chunk.v1.SectionSlice.sections)
   return _impl_.sections_;
 }
 
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

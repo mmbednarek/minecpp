@@ -392,4 +392,29 @@ void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventoryS
               });
 }
 
+void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLight &msg,
+                                             const std::vector<game::player::Id> &player_ids)
+{
+   for (auto &chunk : msg.block_light()) {
+      network::message::UpdateBlockLight update_block_light{};
+      update_block_light.chunk_position = game::ChunkPosition::from_proto(chunk.position());
+      for (auto &section : chunk.sections()) {
+         std::vector<char> data;
+         data.resize(section.block_light().size());
+         std::copy(section.block_light().begin(), section.block_light().end(), data.begin());
+         update_block_light.block_light[section.y()] = std::move(data);
+      }
+
+      for (auto player_id : player_ids) {
+         auto conn = m_server.connection_by_id(player_id);
+         if (not conn) {
+            spdlog::error("connection {} is null", game::player::format_player_id(player_id));
+            return;
+         }
+
+         send(conn, update_block_light);
+      }
+   }
+}
+
 }// namespace minecpp::service::front

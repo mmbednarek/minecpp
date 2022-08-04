@@ -153,4 +153,28 @@ Service::SetLightLevel(::grpc::ServerContext * /*context*/,
    return {};
 }
 
+grpc::Status Service::GetSlice(::grpc::ServerContext *context,
+                               const ::minecpp::proto::common::v1::SectionRange *request,
+                               ::minecpp::proto::chunk::v1::SectionSlice *response)
+{
+   auto slice = chunks.get_slice(game::SectionRange::from_proto(*request));
+   if (slice.has_failed()) {
+      return {grpc::StatusCode::INVALID_ARGUMENT, slice.err()->msg()};
+   }
+   *response = slice->to_proto();
+   return {};
+}
+
+grpc::Status Service::ApplySlice(::grpc::ServerContext *context,
+                                 const ::minecpp::proto::chunk::v1::SectionSlice *request,
+                                 ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response)
+{
+   auto section_slice = world::SectionSlice::from_proto(*request);
+   auto res = chunks.apply_slice(section_slice);
+   if (res.has_failed()) {
+      return {grpc::StatusCode::INVALID_ARGUMENT, res.err()->msg()};
+   }
+   return {};
+}
+
 }// namespace minecpp::service::chunk_storage

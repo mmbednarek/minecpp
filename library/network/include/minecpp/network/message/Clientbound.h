@@ -168,6 +168,13 @@ struct UpdateLight
    [[nodiscard]] Writer serialize() const;
 };
 
+struct UpdateBlockLight {
+   game::ChunkPosition chunk_position;
+   std::map<int, std::vector<char>> block_light;
+
+   [[nodiscard]] Writer serialize() const;
+};
+
 // 0x26
 struct JoinGame
 {

@@ -131,3 +131,17 @@ message DenyPlayer {
 message SetInventorySlot {
   player.v1.Slot slot = 1;
 }
+
+message SectionBlockLight {
+  int32 y = 1;
+  bytes block_light = 2;
+}
+
+message ChunkBlockLight {
+  common.v1.ChunkPosition position = 1;
+  repeated SectionBlockLight sections = 2;
+}
+
+message UpdateBlockLight {
+  repeated ChunkBlockLight block_light = 1;
+}

@@ -61,6 +61,8 @@ class EventHandler
                            const std::vector<game::player::Id> &player_ids);
    void handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
                                   const std::vector<game::player::Id> &player_ids);
+   void handle_update_block_light(const clientbound_v1::UpdateBlockLight &msg,
+                                  const std::vector<game::player::Id> &player_ids);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)

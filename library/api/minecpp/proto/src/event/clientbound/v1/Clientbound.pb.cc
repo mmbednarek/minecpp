@@ -360,12 +360,53 @@ struct SetInventorySlotDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SetInventorySlotDefaultTypeInternal _SetInventorySlot_default_instance_;
+PROTOBUF_CONSTEXPR SectionBlockLight::SectionBlockLight(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.block_light_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.y_)*/0
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct SectionBlockLightDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SectionBlockLightDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SectionBlockLightDefaultTypeInternal() {}
+  union {
+    SectionBlockLight _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SectionBlockLightDefaultTypeInternal _SectionBlockLight_default_instance_;
+PROTOBUF_CONSTEXPR ChunkBlockLight::ChunkBlockLight(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.sections_)*/{}
+  , /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct ChunkBlockLightDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR ChunkBlockLightDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~ChunkBlockLightDefaultTypeInternal() {}
+  union {
+    ChunkBlockLight _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChunkBlockLightDefaultTypeInternal _ChunkBlockLight_default_instance_;
+PROTOBUF_CONSTEXPR UpdateBlockLight::UpdateBlockLight(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.block_light_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct UpdateBlockLightDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR UpdateBlockLightDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~UpdateBlockLightDefaultTypeInternal() {}
+  union {
+    UpdateBlockLight _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 UpdateBlockLightDefaultTypeInternal _UpdateBlockLight_default_instance_;
 }  // namespace v1
 }  // namespace clientbound
 }  // namespace event
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[24];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[27];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = nullptr;
 
@@ -566,6 +607,29 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbo
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SetInventorySlot, _impl_.slot_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SectionBlockLight, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SectionBlockLight, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SectionBlockLight, _impl_.block_light_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::ChunkBlockLight, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::ChunkBlockLight, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::ChunkBlockLight, _impl_.sections_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::UpdateBlockLight, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::UpdateBlockLight, _impl_.block_light_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::Event)},
@@ -592,6 +656,9 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 174, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::AcceptPlayer)},
   { 182, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::DenyPlayer)},
   { 189, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::SetInventorySlot)},
+  { 196, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::SectionBlockLight)},
+  { 204, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::ChunkBlockLight)},
+  { 212, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::UpdateBlockLight)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -619,6 +686,9 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::event::clientbound::v1::_AcceptPlayer_default_instance_._instance,
   &::minecpp::proto::event::clientbound::v1::_DenyPlayer_default_instance_._instance,
   &::minecpp::proto::event::clientbound::v1::_SetInventorySlot_default_instance_._instance,
+  &::minecpp::proto::event::clientbound::v1::_SectionBlockLight_default_instance_._instance,
+  &::minecpp::proto::event::clientbound::v1::_ChunkBlockLight_default_instance_._instance,
+  &::minecpp::proto::event::clientbound::v1::_UpdateBlockLight_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -692,7 +762,15 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_
   "\001(\0132\037.minecpp.proto.player.v1.Player\"#\n\n"
   "DenyPlayer\022\025\n\rdenial_reason\030\001 \001(\t\"\?\n\020Set"
   "InventorySlot\022+\n\004slot\030\001 \001(\0132\035.minecpp.pr"
-  "oto.player.v1.Slotb\006proto3"
+  "oto.player.v1.Slot\"3\n\021SectionBlockLight\022"
+  "\t\n\001y\030\001 \001(\005\022\023\n\013block_light\030\002 \001(\014\"\224\001\n\017Chun"
+  "kBlockLight\0228\n\010position\030\001 \001(\0132&.minecpp."
+  "proto.common.v1.ChunkPosition\022G\n\010section"
+  "s\030\002 \003(\01325.minecpp.proto.event.clientboun"
+  "d.v1.SectionBlockLight\"\\\n\020UpdateBlockLig"
+  "ht\022H\n\013block_light\030\001 \003(\01323.minecpp.proto."
+  "event.clientbound.v1.ChunkBlockLightb\006pr"
+  "oto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps[5] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -703,9 +781,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = {
-    false, false, 2826, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
+    false, false, 3124, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
     "minecpp/proto/event/clientbound/v1/Clientbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps, 5, 24,
+    &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps, 5, 27,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
@@ -6274,6 +6352,649 @@ void SetInventorySlot::InternalSwap(SetInventorySlot* other) {
       file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[23]);
 }
 
+// ===================================================================
+
+class SectionBlockLight::_Internal {
+ public:
+};
+
+SectionBlockLight::SectionBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+}
+SectionBlockLight::SectionBlockLight(const SectionBlockLight& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  SectionBlockLight* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.block_light_){}
+    , decltype(_impl_.y_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.block_light_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.block_light_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_block_light().empty()) {
+    _this->_impl_.block_light_.Set(from._internal_block_light(), 
+      _this->GetArenaForAllocation());
+  }
+  _this->_impl_.y_ = from._impl_.y_;
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+}
+
+inline void SectionBlockLight::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.block_light_){}
+    , decltype(_impl_.y_){0}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.block_light_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.block_light_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+SectionBlockLight::~SectionBlockLight() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SectionBlockLight::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.block_light_.Destroy();
+}
+
+void SectionBlockLight::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void SectionBlockLight::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.block_light_.ClearToEmpty();
+  _impl_.y_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SectionBlockLight::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 y = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bytes block_light = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_block_light();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* SectionBlockLight::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 y = 1;
+  if (this->_internal_y() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_y(), target);
+  }
+
+  // bytes block_light = 2;
+  if (!this->_internal_block_light().empty()) {
+    target = stream->WriteBytesMaybeAliased(
+        2, this->_internal_block_light(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  return target;
+}
+
+size_t SectionBlockLight::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // bytes block_light = 2;
+  if (!this->_internal_block_light().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_block_light());
+  }
+
+  // int32 y = 1;
+  if (this->_internal_y() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_y());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SectionBlockLight::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    SectionBlockLight::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SectionBlockLight::GetClassData() const { return &_class_data_; }
+
+
+void SectionBlockLight::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<SectionBlockLight*>(&to_msg);
+  auto& from = static_cast<const SectionBlockLight&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_block_light().empty()) {
+    _this->_internal_set_block_light(from._internal_block_light());
+  }
+  if (from._internal_y() != 0) {
+    _this->_internal_set_y(from._internal_y());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SectionBlockLight::CopyFrom(const SectionBlockLight& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SectionBlockLight::IsInitialized() const {
+  return true;
+}
+
+void SectionBlockLight::InternalSwap(SectionBlockLight* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.block_light_, lhs_arena,
+      &other->_impl_.block_light_, rhs_arena
+  );
+  swap(_impl_.y_, other->_impl_.y_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SectionBlockLight::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[24]);
+}
+
+// ===================================================================
+
+class ChunkBlockLight::_Internal {
+ public:
+  static const ::minecpp::proto::common::v1::ChunkPosition& position(const ChunkBlockLight* msg);
+};
+
+const ::minecpp::proto::common::v1::ChunkPosition&
+ChunkBlockLight::_Internal::position(const ChunkBlockLight* msg) {
+  return *msg->_impl_.position_;
+}
+void ChunkBlockLight::clear_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+}
+ChunkBlockLight::ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+}
+ChunkBlockLight::ChunkBlockLight(const ChunkBlockLight& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  ChunkBlockLight* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.sections_){from._impl_.sections_}
+    , decltype(_impl_.position_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_position()) {
+    _this->_impl_.position_ = new ::minecpp::proto::common::v1::ChunkPosition(*from._impl_.position_);
+  }
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+}
+
+inline void ChunkBlockLight::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.sections_){arena}
+    , decltype(_impl_.position_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+ChunkBlockLight::~ChunkBlockLight() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void ChunkBlockLight::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.sections_.~RepeatedPtrField();
+  if (this != internal_default_instance()) delete _impl_.position_;
+}
+
+void ChunkBlockLight::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void ChunkBlockLight::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.sections_.Clear();
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* ChunkBlockLight::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .minecpp.proto.common.v1.ChunkPosition position = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_sections(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* ChunkBlockLight::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
+  }
+
+  // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_sections_size()); i < n; i++) {
+    const auto& repfield = this->_internal_sections(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  return target;
+}
+
+size_t ChunkBlockLight::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
+  total_size += 1UL * this->_internal_sections_size();
+  for (const auto& msg : this->_impl_.sections_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.position_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ChunkBlockLight::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    ChunkBlockLight::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ChunkBlockLight::GetClassData() const { return &_class_data_; }
+
+
+void ChunkBlockLight::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<ChunkBlockLight*>(&to_msg);
+  auto& from = static_cast<const ChunkBlockLight&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.sections_.MergeFrom(from._impl_.sections_);
+  if (from._internal_has_position()) {
+    _this->_internal_mutable_position()->::minecpp::proto::common::v1::ChunkPosition::MergeFrom(
+        from._internal_position());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void ChunkBlockLight::CopyFrom(const ChunkBlockLight& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ChunkBlockLight::IsInitialized() const {
+  return true;
+}
+
+void ChunkBlockLight::InternalSwap(ChunkBlockLight* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.sections_.InternalSwap(&other->_impl_.sections_);
+  swap(_impl_.position_, other->_impl_.position_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata ChunkBlockLight::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[25]);
+}
+
+// ===================================================================
+
+class UpdateBlockLight::_Internal {
+ public:
+};
+
+UpdateBlockLight::UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+}
+UpdateBlockLight::UpdateBlockLight(const UpdateBlockLight& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  UpdateBlockLight* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.block_light_){from._impl_.block_light_}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+}
+
+inline void UpdateBlockLight::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.block_light_){arena}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+UpdateBlockLight::~UpdateBlockLight() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void UpdateBlockLight::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.block_light_.~RepeatedPtrField();
+}
+
+void UpdateBlockLight::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void UpdateBlockLight::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.block_light_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* UpdateBlockLight::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_block_light(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* UpdateBlockLight::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_block_light_size()); i < n; i++) {
+    const auto& repfield = this->_internal_block_light(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  return target;
+}
+
+size_t UpdateBlockLight::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
+  total_size += 1UL * this->_internal_block_light_size();
+  for (const auto& msg : this->_impl_.block_light_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData UpdateBlockLight::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    UpdateBlockLight::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*UpdateBlockLight::GetClassData() const { return &_class_data_; }
+
+
+void UpdateBlockLight::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<UpdateBlockLight*>(&to_msg);
+  auto& from = static_cast<const UpdateBlockLight&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  _this->_impl_.block_light_.MergeFrom(from._impl_.block_light_);
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void UpdateBlockLight::CopyFrom(const UpdateBlockLight& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UpdateBlockLight::IsInitialized() const {
+  return true;
+}
+
+void UpdateBlockLight::InternalSwap(UpdateBlockLight* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  _impl_.block_light_.InternalSwap(&other->_impl_.block_light_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata UpdateBlockLight::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[26]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace clientbound
@@ -6376,6 +7097,18 @@ Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::DenyPlayer 
 template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::SetInventorySlot*
 Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::SetInventorySlot >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::SetInventorySlot >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::SectionBlockLight*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::ChunkBlockLight*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::UpdateBlockLight*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::UpdateBlockLight >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::UpdateBlockLight >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

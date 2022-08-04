@@ -62,11 +62,8 @@ constexpr uint32_t coord_to_offset(int x, int y, int z)
 
 void Chunk::create_empty_section(int8_t sec)
 {
-   m_sections[sec] = Section{
-           .ref_count = 4096,
-           .palette{0                  },
-           .data{ 4, 4096, []() { return 0; }},
-   };
+   m_sections[sec]      = Section{};
+   m_sections[sec].data = {4, 4096, []() { return 0; }};
 }
 
 void Chunk::set_block(int x, int y, int z, game::BlockStateId state)

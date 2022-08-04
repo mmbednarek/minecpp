@@ -20,6 +20,7 @@ using StateOffset  = mb::i32;
 using ItemId       = mb::i32;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
+constexpr ChunkHash g_chunk_max_x = 1875060;
 constexpr int g_chunk_width       = 16;
 constexpr int g_chunk_depth       = 16;
 constexpr int g_section_height    = 16;
@@ -36,6 +37,7 @@ constexpr mb::u32 g_block_position_bit_offset_x = g_block_position_y_bits + g_bl
 constexpr mb::u32 g_block_position_bit_offset_z = g_block_position_y_bits;
 
 struct ChunkPosition;
+struct ChunkSectionPosition;
 
 enum class PlayerDiggingState : int
 {
@@ -192,6 +194,13 @@ struct BlockPosition
 
    [[nodiscard]] constexpr ChunkPosition chunk_position() const;
 
+   [[nodiscard]] constexpr ChunkSectionPosition chunk_section_position() const;
+
+   [[nodiscard]] constexpr mb::u32 section_offset() const
+   {
+      return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15);
+   }
+
    [[nodiscard]] constexpr mb::u8 offset_x() const
    {
       return x & (g_chunk_width - 1);
@@ -240,7 +249,7 @@ struct BlockPosition
       return {x, y, z};
    }
 
-   [[nodiscard]] constexpr util::Vec3 to_vec3()
+   [[nodiscard]] constexpr util::Vec3 to_vec3() const
    {
       return {static_cast<double>(x), static_cast<double>(y), static_cast<double>(z)};
    }
@@ -305,6 +314,11 @@ struct ChunkPosition
       return ChunkPosition((v.flat() / util::Vec2(g_chunk_width, g_chunk_depth)).truncate());
    }
 
+   [[nodiscard]] static inline ChunkPosition from_proto(const proto::common::v1::ChunkPosition &pos)
+   {
+      return {pos.x(), pos.z()};
+   }
+
    [[nodiscard]] inline proto::common::v1::ChunkPosition to_proto() const
    {
       proto::common::v1::ChunkPosition result;
@@ -312,12 +326,78 @@ struct ChunkPosition
       result.set_z(z);
       return result;
    }
+
+   [[nodiscard]] constexpr bool operator!=(const ChunkPosition &other) const
+   {
+      return x != other.x || z != other.z;
+   }
 };
 
 constexpr ChunkPosition BlockPosition::chunk_position() const
 {
    return {x >= 0 ? (x / g_chunk_width) : ((x + 1) / g_chunk_width - 1),
            z >= 0 ? (z / g_chunk_depth) : ((z + 1) / g_chunk_depth - 1)};
+}
+
+struct ChunkSectionPosition
+{
+   ChunkPosition chunk_position{};
+   int y{};
+
+   constexpr ChunkSectionPosition() = default;
+
+   constexpr ChunkSectionPosition(int x, int y, int z) :
+       chunk_position{x, z},
+       y{y}
+   {
+   }
+
+   constexpr ChunkSectionPosition(ChunkPosition chunk_position, int y) :
+       chunk_position{chunk_position},
+       y{y}
+   {
+   }
+
+   [[nodiscard]] constexpr mb::u64 hash() const
+   {
+      auto lx = chunk_position.x >= 0
+                        ? static_cast<mb::u64>(chunk_position.x)
+                        : static_cast<mb::u64>(static_cast<mb::i64>(chunk_position.x) + (1 << 26));
+      auto ly = y >= 0 ? static_cast<mb::u64>(y) : static_cast<mb::u64>(static_cast<mb::i64>(y) + (1 << 12));
+      auto lz = chunk_position.z >= 0
+                        ? static_cast<mb::u64>(chunk_position.z)
+                        : static_cast<mb::u64>(static_cast<mb::i64>(chunk_position.z) + (1 << 26));
+      return ((lx & g_block_position_mask_x) << g_block_position_bit_offset_x) |
+             (ly & g_block_position_mask_y) |
+             ((lz & g_block_position_mask_z) << g_block_position_bit_offset_z);
+   }
+
+   [[nodiscard]] constexpr bool operator!=(const ChunkSectionPosition &other) const
+   {
+      return chunk_position != other.chunk_position || y != other.y;
+   }
+
+   [[nodiscard]] static inline ChunkSectionPosition
+   from_proto(const proto::common::v1::ChunkSectionPosition &position)
+   {
+      return {
+              ChunkPosition::from_proto(position.chunk_position()),
+              position.y(),
+      };
+   }
+
+   [[nodiscard]] inline proto::common::v1::ChunkSectionPosition to_proto() const
+   {
+      proto::common::v1::ChunkSectionPosition result;
+      *result.mutable_chunk_position() = chunk_position.to_proto();
+      result.set_y(y);
+      return result;
+   }
+};
+
+constexpr ChunkSectionPosition BlockPosition::chunk_section_position() const
+{
+   return {chunk_position(), y / 16};
 }
 
 enum class WoodType
@@ -493,6 +573,131 @@ class Half final : public Half_Base
 
    MB_ENUM_FIELD(Lower)
    MB_ENUM_FIELD(Upper)
+};
+
+struct SectionRange
+{
+   struct Iterator
+   {
+      SectionRange &range;
+      ChunkSectionPosition at;
+
+      constexpr Iterator &operator++()
+      {
+         if (at.chunk_position.x < range.to.chunk_position.x) {
+            ++at.chunk_position.x;
+            return *this;
+         }
+         at.chunk_position.x = range.from.chunk_position.x;
+
+         if (at.chunk_position.z < range.to.chunk_position.z) {
+            ++at.chunk_position.z;
+            return *this;
+         }
+         at.chunk_position.z = range.from.chunk_position.z;
+
+         if (at.y <= range.to.y) {
+            ++at.y;
+         }
+
+         return *this;
+      }
+
+      [[nodiscard]] constexpr bool operator>(const Iterator &other) const
+      {
+         if (at.y > other.at.y)
+            return true;
+         if (at.y < other.at.y)
+            return false;
+
+         if (at.chunk_position.z > other.at.chunk_position.z)
+            return true;
+         if (at.chunk_position.z < other.at.chunk_position.z)
+            return false;
+
+         return at.chunk_position.x > other.at.chunk_position.x;
+      }
+
+      [[nodiscard]] constexpr bool operator!=(const Iterator &other) const
+      {
+         return at != other.at;
+      }
+
+      [[nodiscard]] constexpr ChunkSectionPosition operator*() const
+      {
+         return at;
+      }
+   };
+
+   ChunkSectionPosition from;
+   ChunkSectionPosition to;
+
+   [[nodiscard]] constexpr Iterator begin()
+   {
+      return Iterator{*this, from};
+   }
+
+   [[nodiscard]] constexpr Iterator end()
+   {
+      return Iterator{
+              *this,
+              {to.chunk_position, to.y + 1}
+      };
+   }
+
+   [[nodiscard]] static inline SectionRange from_proto(const proto::common::v1::SectionRange &range)
+   {
+      return SectionRange{
+              .from = ChunkSectionPosition::from_proto(range.from()),
+              .to   = ChunkSectionPosition::from_proto(range.to()),
+      };
+   }
+
+   [[nodiscard]] inline proto::common::v1::SectionRange to_proto() const
+   {
+      proto::common::v1::SectionRange result;
+      *result.mutable_from() = from.to_proto();
+      *result.mutable_to()   = to.to_proto();
+      return result;
+   }
+
+   [[nodiscard]] constexpr SectionRange grow(int amount) const
+   {
+      return SectionRange{
+              .from{from.chunk_position.x - amount, from.y - amount, from.chunk_position.z - amount},
+              .to{  to.chunk_position.x + amount,   to.y + amount,   to.chunk_position.z + amount},
+      };
+   }
+};
+
+struct LightSource
+{
+   BlockPosition position{};
+   int strength{};
+
+   LightSource() = default;
+
+   LightSource(const BlockPosition &position, int strength) :
+       position(position),
+       strength(strength)
+   {
+   }
+
+   [[nodiscard]] static inline LightSource from_proto(const proto::common::v1::LightSource &source)
+   {
+      return {
+              BlockPosition::from_proto(source.position()),
+              source.strength(),
+      };
+   }
+
+   [[nodiscard]] inline proto::common::v1::LightSource to_proto() const
+   {
+      proto::common::v1::LightSource result;
+      *result.mutable_position() = position.to_proto();
+      result.set_strength(strength);
+      return result;
+   }
 };
 
 }// namespace minecpp::game

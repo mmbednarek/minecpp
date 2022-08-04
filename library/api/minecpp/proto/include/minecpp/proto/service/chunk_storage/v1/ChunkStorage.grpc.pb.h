@@ -95,6 +95,20 @@ class ChunkStorage final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncSetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncSetLightLevelRaw(context, request, cq));
     }
+    virtual ::grpc::Status GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::minecpp::proto::chunk::v1::SectionSlice* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::SectionSlice>> AsyncGetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::SectionSlice>>(AsyncGetSliceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::SectionSlice>> PrepareAsyncGetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::SectionSlice>>(PrepareAsyncGetSliceRaw(context, request, cq));
+    }
+    virtual ::grpc::Status ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncApplySliceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncApplySliceRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -114,6 +128,10 @@ class ChunkStorage final {
       virtual void GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -135,6 +153,10 @@ class ChunkStorage final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::common::v1::LightLevel>* PrepareAsyncGetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::SectionSlice>* AsyncGetSliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::chunk::v1::SectionSlice>* PrepareAsyncGetSliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncApplySliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncApplySliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -195,6 +217,20 @@ class ChunkStorage final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncSetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncSetLightLevelRaw(context, request, cq));
     }
+    ::grpc::Status GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::minecpp::proto::chunk::v1::SectionSlice* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>> AsyncGetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>>(AsyncGetSliceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>> PrepareAsyncGetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>>(PrepareAsyncGetSliceRaw(context, request, cq));
+    }
+    ::grpc::Status ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> AsyncApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(AsyncApplySliceRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>> PrepareAsyncApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>>(PrepareAsyncApplySliceRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -214,6 +250,10 @@ class ChunkStorage final {
       void GetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response, ::grpc::ClientUnaryReactor* reactor) override;
       void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
       void SetLightLevel(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response, std::function<void(::grpc::Status)>) override;
+      void GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)>) override;
+      void ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -241,6 +281,10 @@ class ChunkStorage final {
     ::grpc::ClientAsyncResponseReader< ::minecpp::proto::common::v1::LightLevel>* PrepareAsyncGetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncSetLightLevelRaw(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>* AsyncGetSliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>* PrepareAsyncGetSliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* AsyncApplySliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* PrepareAsyncApplySliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_LoadChunk_;
     const ::grpc::internal::RpcMethod rpcmethod_SetBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_AddReferences_;
@@ -249,6 +293,8 @@ class ChunkStorage final {
     const ::grpc::internal::RpcMethod rpcmethod_GetBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_GetLightLevel_;
     const ::grpc::internal::RpcMethod rpcmethod_SetLightLevel_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetSlice_;
+    const ::grpc::internal::RpcMethod rpcmethod_ApplySlice_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -264,6 +310,8 @@ class ChunkStorage final {
     virtual ::grpc::Status GetBlock(::grpc::ServerContext* context, const ::minecpp::proto::common::v1::BlockPosition* request, ::minecpp::proto::common::v1::BlockState* response);
     virtual ::grpc::Status GetLightLevel(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::GetLightLevelRequest* request, ::minecpp::proto::common::v1::LightLevel* response);
     virtual ::grpc::Status SetLightLevel(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response);
+    virtual ::grpc::Status GetSlice(::grpc::ServerContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response);
+    virtual ::grpc::Status ApplySlice(::grpc::ServerContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_LoadChunk : public BaseClass {
@@ -425,7 +473,47 @@ class ChunkStorage final {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<WithAsyncMethod_AddReferences<WithAsyncMethod_RemoveReference<WithAsyncMethod_HeightAt<WithAsyncMethod_GetBlock<WithAsyncMethod_GetLightLevel<WithAsyncMethod_SetLightLevel<Service > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_GetSlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetSlice() {
+      ::grpc::Service::MarkMethodAsync(8);
+    }
+    ~WithAsyncMethod_GetSlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSlice(::grpc::ServerContext* context, ::minecpp::proto::common::v1::SectionRange* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::chunk::v1::SectionSlice>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_ApplySlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ApplySlice() {
+      ::grpc::Service::MarkMethodAsync(9);
+    }
+    ~WithAsyncMethod_ApplySlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ApplySlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestApplySlice(::grpc::ServerContext* context, ::minecpp::proto::chunk::v1::SectionSlice* request, ::grpc::ServerAsyncResponseWriter< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_LoadChunk<WithAsyncMethod_SetBlock<WithAsyncMethod_AddReferences<WithAsyncMethod_RemoveReference<WithAsyncMethod_HeightAt<WithAsyncMethod_GetBlock<WithAsyncMethod_GetLightLevel<WithAsyncMethod_SetLightLevel<WithAsyncMethod_GetSlice<WithAsyncMethod_ApplySlice<Service > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_LoadChunk : public BaseClass {
    private:
@@ -642,7 +730,61 @@ class ChunkStorage final {
     virtual ::grpc::ServerUnaryReactor* SetLightLevel(
       ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_LoadChunk<WithCallbackMethod_SetBlock<WithCallbackMethod_AddReferences<WithCallbackMethod_RemoveReference<WithCallbackMethod_HeightAt<WithCallbackMethod_GetBlock<WithCallbackMethod_GetLightLevel<WithCallbackMethod_SetLightLevel<Service > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetSlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetSlice() {
+      ::grpc::Service::MarkMethodCallback(8,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response) { return this->GetSlice(context, request, response); }));}
+    void SetMessageAllocatorFor_GetSlice(
+        ::grpc::MessageAllocator< ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetSlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSlice(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_ApplySlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ApplySlice() {
+      ::grpc::Service::MarkMethodCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) { return this->ApplySlice(context, request, response); }));}
+    void SetMessageAllocatorFor_ApplySlice(
+        ::grpc::MessageAllocator< ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_ApplySlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ApplySlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ApplySlice(
+      ::grpc::CallbackServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_LoadChunk<WithCallbackMethod_SetBlock<WithCallbackMethod_AddReferences<WithCallbackMethod_RemoveReference<WithCallbackMethod_HeightAt<WithCallbackMethod_GetBlock<WithCallbackMethod_GetLightLevel<WithCallbackMethod_SetLightLevel<WithCallbackMethod_GetSlice<WithCallbackMethod_ApplySlice<Service > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_LoadChunk : public BaseClass {
@@ -776,6 +918,40 @@ class ChunkStorage final {
     }
     // disable synchronous version of this method
     ::grpc::Status SetLightLevel(::grpc::ServerContext* /*context*/, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetSlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetSlice() {
+      ::grpc::Service::MarkMethodGeneric(8);
+    }
+    ~WithGenericMethod_GetSlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_ApplySlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ApplySlice() {
+      ::grpc::Service::MarkMethodGeneric(9);
+    }
+    ~WithGenericMethod_ApplySlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ApplySlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -938,6 +1114,46 @@ class ChunkStorage final {
     }
     void RequestSetLightLevel(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetSlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetSlice() {
+      ::grpc::Service::MarkMethodRaw(8);
+    }
+    ~WithRawMethod_GetSlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSlice(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_ApplySlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ApplySlice() {
+      ::grpc::Service::MarkMethodRaw(9);
+    }
+    ~WithRawMethod_ApplySlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ApplySlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestApplySlice(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1114,6 +1330,50 @@ class ChunkStorage final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* SetLightLevel(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetSlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetSlice() {
+      ::grpc::Service::MarkMethodRawCallback(8,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetSlice(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetSlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSlice(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_ApplySlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ApplySlice() {
+      ::grpc::Service::MarkMethodRawCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ApplySlice(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_ApplySlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ApplySlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ApplySlice(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1332,9 +1592,63 @@ class ChunkStorage final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSetLightLevel(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest,::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<WithStreamedUnaryMethod_GetLightLevel<WithStreamedUnaryMethod_SetLightLevel<Service > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetSlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetSlice() {
+      ::grpc::Service::MarkMethodStreamed(8,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice>* streamer) {
+                       return this->StreamedGetSlice(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetSlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetSlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::common::v1::SectionRange* /*request*/, ::minecpp::proto::chunk::v1::SectionSlice* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetSlice(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::common::v1::SectionRange,::minecpp::proto::chunk::v1::SectionSlice>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_ApplySlice : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ApplySlice() {
+      ::grpc::Service::MarkMethodStreamed(9,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* streamer) {
+                       return this->StreamedApplySlice(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_ApplySlice() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ApplySlice(::grpc::ServerContext* /*context*/, const ::minecpp::proto::chunk::v1::SectionSlice* /*request*/, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedApplySlice(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::minecpp::proto::chunk::v1::SectionSlice,::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<WithStreamedUnaryMethod_GetLightLevel<WithStreamedUnaryMethod_SetLightLevel<WithStreamedUnaryMethod_GetSlice<WithStreamedUnaryMethod_ApplySlice<Service > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<WithStreamedUnaryMethod_GetLightLevel<WithStreamedUnaryMethod_SetLightLevel<Service > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_LoadChunk<WithStreamedUnaryMethod_SetBlock<WithStreamedUnaryMethod_AddReferences<WithStreamedUnaryMethod_RemoveReference<WithStreamedUnaryMethod_HeightAt<WithStreamedUnaryMethod_GetBlock<WithStreamedUnaryMethod_GetLightLevel<WithStreamedUnaryMethod_SetLightLevel<WithStreamedUnaryMethod_GetSlice<WithStreamedUnaryMethod_ApplySlice<Service > > > > > > > > > > StreamedService;
 };
 
 }  // namespace v1

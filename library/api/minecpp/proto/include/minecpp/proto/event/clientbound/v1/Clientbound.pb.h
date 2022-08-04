@@ -70,6 +70,9 @@ extern AnimateHandDefaultTypeInternal _AnimateHand_default_instance_;
 class Chat;
 struct ChatDefaultTypeInternal;
 extern ChatDefaultTypeInternal _Chat_default_instance_;
+class ChunkBlockLight;
+struct ChunkBlockLightDefaultTypeInternal;
+extern ChunkBlockLightDefaultTypeInternal _ChunkBlockLight_default_instance_;
 class DenyPlayer;
 struct DenyPlayerDefaultTypeInternal;
 extern DenyPlayerDefaultTypeInternal _DenyPlayer_default_instance_;
@@ -109,6 +112,9 @@ extern RecipientSinglePlayerDefaultTypeInternal _RecipientSinglePlayer_default_i
 class RemovePlayer;
 struct RemovePlayerDefaultTypeInternal;
 extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
+class SectionBlockLight;
+struct SectionBlockLightDefaultTypeInternal;
+extern SectionBlockLightDefaultTypeInternal _SectionBlockLight_default_instance_;
 class SetInventorySlot;
 struct SetInventorySlotDefaultTypeInternal;
 extern SetInventorySlotDefaultTypeInternal _SetInventorySlot_default_instance_;
@@ -124,6 +130,9 @@ extern UnloadChunkDefaultTypeInternal _UnloadChunk_default_instance_;
 class UpdateBlock;
 struct UpdateBlockDefaultTypeInternal;
 extern UpdateBlockDefaultTypeInternal _UpdateBlock_default_instance_;
+class UpdateBlockLight;
+struct UpdateBlockLightDefaultTypeInternal;
+extern UpdateBlockLightDefaultTypeInternal _UpdateBlockLight_default_instance_;
 class UpdatePlayerAbilities;
 struct UpdatePlayerAbilitiesDefaultTypeInternal;
 extern UpdatePlayerAbilitiesDefaultTypeInternal _UpdatePlayerAbilities_default_instance_;
@@ -138,6 +147,7 @@ template<> ::minecpp::proto::event::clientbound::v1::AcknowledgeBlockChange* Are
 template<> ::minecpp::proto::event::clientbound::v1::AddPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AddPlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::AnimateHand* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AnimateHand>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::Chat* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Chat>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::ChunkBlockLight>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::DenyPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::DenyPlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::EntityList* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityList>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::EntityLook* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityLook>(Arena*);
@@ -151,11 +161,13 @@ template<> ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Arena::
 template<> ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemovePlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SectionBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SectionBlockLight>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SetInventorySlot* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetInventorySlot>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SpawnPlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::TransferPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::TransferPlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::UnloadChunk* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UnloadChunk>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::UpdateBlock* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdateBlock>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::UpdateBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdateBlockLight>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::UpdatePlayerAbilities* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdatePlayerAbilities>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
@@ -4274,6 +4286,504 @@ class SetInventorySlot final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
+// -------------------------------------------------------------------
+
+class SectionBlockLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SectionBlockLight) */ {
+ public:
+  inline SectionBlockLight() : SectionBlockLight(nullptr) {}
+  ~SectionBlockLight() override;
+  explicit PROTOBUF_CONSTEXPR SectionBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SectionBlockLight(const SectionBlockLight& from);
+  SectionBlockLight(SectionBlockLight&& from) noexcept
+    : SectionBlockLight() {
+    *this = ::std::move(from);
+  }
+
+  inline SectionBlockLight& operator=(const SectionBlockLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SectionBlockLight& operator=(SectionBlockLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SectionBlockLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SectionBlockLight* internal_default_instance() {
+    return reinterpret_cast<const SectionBlockLight*>(
+               &_SectionBlockLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  friend void swap(SectionBlockLight& a, SectionBlockLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SectionBlockLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SectionBlockLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SectionBlockLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SectionBlockLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SectionBlockLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SectionBlockLight& from) {
+    SectionBlockLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SectionBlockLight* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SectionBlockLight";
+  }
+  protected:
+  explicit SectionBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBlockLightFieldNumber = 2,
+    kYFieldNumber = 1,
+  };
+  // bytes block_light = 2;
+  void clear_block_light();
+  const std::string& block_light() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_block_light(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_block_light();
+  PROTOBUF_NODISCARD std::string* release_block_light();
+  void set_allocated_block_light(std::string* block_light);
+  private:
+  const std::string& _internal_block_light() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_block_light(const std::string& value);
+  std::string* _internal_mutable_block_light();
+  public:
+
+  // int32 y = 1;
+  void clear_y();
+  int32_t y() const;
+  void set_y(int32_t value);
+  private:
+  int32_t _internal_y() const;
+  void _internal_set_y(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SectionBlockLight)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr block_light_;
+    int32_t y_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ChunkBlockLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.ChunkBlockLight) */ {
+ public:
+  inline ChunkBlockLight() : ChunkBlockLight(nullptr) {}
+  ~ChunkBlockLight() override;
+  explicit PROTOBUF_CONSTEXPR ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  ChunkBlockLight(const ChunkBlockLight& from);
+  ChunkBlockLight(ChunkBlockLight&& from) noexcept
+    : ChunkBlockLight() {
+    *this = ::std::move(from);
+  }
+
+  inline ChunkBlockLight& operator=(const ChunkBlockLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChunkBlockLight& operator=(ChunkBlockLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChunkBlockLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChunkBlockLight* internal_default_instance() {
+    return reinterpret_cast<const ChunkBlockLight*>(
+               &_ChunkBlockLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(ChunkBlockLight& a, ChunkBlockLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChunkBlockLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChunkBlockLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  ChunkBlockLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChunkBlockLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ChunkBlockLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ChunkBlockLight& from) {
+    ChunkBlockLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ChunkBlockLight* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.ChunkBlockLight";
+  }
+  protected:
+  explicit ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSectionsFieldNumber = 2,
+    kPositionFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
+  int sections_size() const;
+  private:
+  int _internal_sections_size() const;
+  public:
+  void clear_sections();
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* mutable_sections(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >*
+      mutable_sections();
+  private:
+  const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& _internal_sections(int index) const;
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* _internal_add_sections();
+  public:
+  const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& sections(int index) const;
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* add_sections();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >&
+      sections() const;
+
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::ChunkPosition& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition* release_position();
+  ::minecpp::proto::common::v1::ChunkPosition* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::ChunkPosition* position);
+  private:
+  const ::minecpp::proto::common::v1::ChunkPosition& _internal_position() const;
+  ::minecpp::proto::common::v1::ChunkPosition* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::ChunkPosition* position);
+  ::minecpp::proto::common::v1::ChunkPosition* unsafe_arena_release_position();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight > sections_;
+    ::minecpp::proto::common::v1::ChunkPosition* position_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+};
+// -------------------------------------------------------------------
+
+class UpdateBlockLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdateBlockLight) */ {
+ public:
+  inline UpdateBlockLight() : UpdateBlockLight(nullptr) {}
+  ~UpdateBlockLight() override;
+  explicit PROTOBUF_CONSTEXPR UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UpdateBlockLight(const UpdateBlockLight& from);
+  UpdateBlockLight(UpdateBlockLight&& from) noexcept
+    : UpdateBlockLight() {
+    *this = ::std::move(from);
+  }
+
+  inline UpdateBlockLight& operator=(const UpdateBlockLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdateBlockLight& operator=(UpdateBlockLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UpdateBlockLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UpdateBlockLight* internal_default_instance() {
+    return reinterpret_cast<const UpdateBlockLight*>(
+               &_UpdateBlockLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  friend void swap(UpdateBlockLight& a, UpdateBlockLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UpdateBlockLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UpdateBlockLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UpdateBlockLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UpdateBlockLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UpdateBlockLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UpdateBlockLight& from) {
+    UpdateBlockLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdateBlockLight* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.UpdateBlockLight";
+  }
+  protected:
+  explicit UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBlockLightFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
+  int block_light_size() const;
+  private:
+  int _internal_block_light_size() const;
+  public:
+  void clear_block_light();
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* mutable_block_light(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >*
+      mutable_block_light();
+  private:
+  const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& _internal_block_light(int index) const;
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* _internal_add_block_light();
+  public:
+  const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& block_light(int index) const;
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* add_block_light();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >&
+      block_light() const;
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight > block_light_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+};
 // ===================================================================
 
 
@@ -7145,9 +7655,262 @@ inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::player::v1::S
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
 }
 
+// -------------------------------------------------------------------
+
+// SectionBlockLight
+
+// int32 y = 1;
+inline void SectionBlockLight::clear_y() {
+  _impl_.y_ = 0;
+}
+inline int32_t SectionBlockLight::_internal_y() const {
+  return _impl_.y_;
+}
+inline int32_t SectionBlockLight::y() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SectionBlockLight.y)
+  return _internal_y();
+}
+inline void SectionBlockLight::_internal_set_y(int32_t value) {
+  
+  _impl_.y_ = value;
+}
+inline void SectionBlockLight::set_y(int32_t value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SectionBlockLight.y)
+}
+
+// bytes block_light = 2;
+inline void SectionBlockLight::clear_block_light() {
+  _impl_.block_light_.ClearToEmpty();
+}
+inline const std::string& SectionBlockLight::block_light() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  return _internal_block_light();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SectionBlockLight::set_block_light(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.block_light_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+}
+inline std::string* SectionBlockLight::mutable_block_light() {
+  std::string* _s = _internal_mutable_block_light();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  return _s;
+}
+inline const std::string& SectionBlockLight::_internal_block_light() const {
+  return _impl_.block_light_.Get();
+}
+inline void SectionBlockLight::_internal_set_block_light(const std::string& value) {
+  
+  _impl_.block_light_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SectionBlockLight::_internal_mutable_block_light() {
+  
+  return _impl_.block_light_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SectionBlockLight::release_block_light() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  return _impl_.block_light_.Release();
+}
+inline void SectionBlockLight::set_allocated_block_light(std::string* block_light) {
+  if (block_light != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.block_light_.SetAllocated(block_light, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.block_light_.IsDefault()) {
+    _impl_.block_light_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+}
+
+// -------------------------------------------------------------------
+
+// ChunkBlockLight
+
+// .minecpp.proto.common.v1.ChunkPosition position = 1;
+inline bool ChunkBlockLight::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
+}
+inline bool ChunkBlockLight::has_position() const {
+  return _internal_has_position();
+}
+inline const ::minecpp::proto::common::v1::ChunkPosition& ChunkBlockLight::_internal_position() const {
+  const ::minecpp::proto::common::v1::ChunkPosition* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition&>(
+      ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::ChunkPosition& ChunkBlockLight::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+  return _internal_position();
+}
+inline void ChunkBlockLight::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::ChunkPosition* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+}
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::release_position() {
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
+}
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::mutable_position() {
+  ::minecpp::proto::common::v1::ChunkPosition* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+  return _msg;
+}
+inline void ChunkBlockLight::set_allocated_position(::minecpp::proto::common::v1::ChunkPosition* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+}
+
+// repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
+inline int ChunkBlockLight::_internal_sections_size() const {
+  return _impl_.sections_.size();
+}
+inline int ChunkBlockLight::sections_size() const {
+  return _internal_sections_size();
+}
+inline void ChunkBlockLight::clear_sections() {
+  _impl_.sections_.Clear();
+}
+inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight* ChunkBlockLight::mutable_sections(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _impl_.sections_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >*
+ChunkBlockLight::mutable_sections() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return &_impl_.sections_;
+}
+inline const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& ChunkBlockLight::_internal_sections(int index) const {
+  return _impl_.sections_.Get(index);
+}
+inline const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& ChunkBlockLight::sections(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _internal_sections(index);
+}
+inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight* ChunkBlockLight::_internal_add_sections() {
+  return _impl_.sections_.Add();
+}
+inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight* ChunkBlockLight::add_sections() {
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* _add = _internal_add_sections();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >&
+ChunkBlockLight::sections() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _impl_.sections_;
+}
+
+// -------------------------------------------------------------------
+
+// UpdateBlockLight
+
+// repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
+inline int UpdateBlockLight::_internal_block_light_size() const {
+  return _impl_.block_light_.size();
+}
+inline int UpdateBlockLight::block_light_size() const {
+  return _internal_block_light_size();
+}
+inline void UpdateBlockLight::clear_block_light() {
+  _impl_.block_light_.Clear();
+}
+inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* UpdateBlockLight::mutable_block_light(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _impl_.block_light_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >*
+UpdateBlockLight::mutable_block_light() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return &_impl_.block_light_;
+}
+inline const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& UpdateBlockLight::_internal_block_light(int index) const {
+  return _impl_.block_light_.Get(index);
+}
+inline const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& UpdateBlockLight::block_light(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _internal_block_light(index);
+}
+inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* UpdateBlockLight::_internal_add_block_light() {
+  return _impl_.block_light_.Add();
+}
+inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* UpdateBlockLight::add_block_light() {
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* _add = _internal_add_block_light();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >&
+UpdateBlockLight::block_light() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _impl_.block_light_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -38,11 +38,7 @@ bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId 
    state.set("facing", place_face);
 
    // Update the light value
-   // TODO: Replace with block params
-   world.set_light(LightType::Block, torch_pos, 15);
-   for (auto face : Face::Values) {
-      world.recalculate_light(LightType::Block, torch_pos.neighbour_at(face));
-   }
+   world.light_system().add_light_source(torch_pos, 15);
 
    // Set the final state id
    return world.set_block(torch_pos, state.block_state_id()).ok();

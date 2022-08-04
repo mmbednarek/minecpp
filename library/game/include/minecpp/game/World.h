@@ -7,6 +7,30 @@
 
 namespace minecpp::game {
 
+class ISection
+{
+ public:
+   virtual std::vector<game::LightSource> &light_sources() = 0;
+   virtual void reset_light(LightType light_type)          = 0;
+};
+
+class ISectionSlice
+{
+ public:
+   virtual mb::result<LightLevel> get_light(LightType light_type, const BlockPosition &pos) = 0;
+   virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
+                                  game::LightLevel level)                                   = 0;
+
+   virtual ISection &operator[](game::ChunkSectionPosition position) = 0;
+};
+
+class ILightSystem
+{
+ public:
+   virtual ~ILightSystem() noexcept                                                  = default;
+   virtual mb::emptyres add_light_source(game::BlockPosition position, int strength) = 0;
+};
+
 class World
 {
  public:
@@ -21,8 +45,10 @@ class World
    virtual mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) = 0;
    virtual mb::result<game::LightLevel> get_light(game::LightType light_type,
                                                   const game::BlockPosition &pos)                     = 0;
-   virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                  game::LightLevel level)                                             = 0;
+   virtual mb::emptyres set_light(LightType light_type, const BlockPosition &pos, LightLevel level)   = 0;
+   virtual mb::result<std::unique_ptr<ISectionSlice>> get_slice(game::SectionRange range)             = 0;
+   virtual mb::emptyres apply_slice(ISectionSlice &slice)                                             = 0;
+   virtual ILightSystem &light_system()                                                               = 0;
 };
 
 }// namespace minecpp::game
