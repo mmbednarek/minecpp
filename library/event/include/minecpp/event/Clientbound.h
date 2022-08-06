@@ -27,6 +27,7 @@ concept ClientboundVisitor = requires(T t)
    t.handle_accept_player(clientbound_v1::AcceptPlayer(), std::vector<game::PlayerId>());
    t.handle_deny_player(clientbound_v1::DenyPlayer(), std::vector<game::PlayerId>());
    t.handle_set_inventory_slot(clientbound_v1::SetInventorySlot(), std::vector<game::PlayerId>());
+   t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), std::vector<game::PlayerId>());
 };
 
 std::vector<game::PlayerId> read_recipients(const clientbound_v1::Event &event);
@@ -64,6 +65,7 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_CLIENTBOUND(AcceptPlayer, handle_accept_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(DenyPlayer, handle_deny_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetInventorySlot, handle_set_inventory_slot);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(UpdateBlockLight, handle_update_block_light);
 }
 
 }// namespace minecpp::event

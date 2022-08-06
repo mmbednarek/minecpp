@@ -88,7 +88,23 @@ Result<ast::Expression::Ptr> Parser::read_expression()
    }
 
    if (token->type == lexer::TokenType::String || token->type == lexer::TokenType::Identifier) {
-      return std::make_unique<ast::String>(token->value);
+      auto value = token->value;
+
+      auto colon = m_reader.next();
+      if (colon.has_value())  {
+         if (colon->type == lexer::TokenType::Colon) {
+            auto token =  m_reader.next();
+            if (not token.has_value()) {
+               return Error(0, 0, "unexpected end of stream");
+            }
+
+            value = fmt::format("{}:{}", value, token->value);
+         } else {
+            m_reader.seek_back();
+         }
+      }
+
+      return std::make_unique<ast::String>(value);
    }
 
    if (token->type == lexer::TokenType::Int) {

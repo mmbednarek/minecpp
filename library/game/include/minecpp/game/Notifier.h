@@ -10,6 +10,8 @@
 
 namespace minecpp::game {
 
+class ISectionSlice;
+
 namespace entity {
 struct Movement;
 struct Rotation;
@@ -35,6 +37,7 @@ class Notifier
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                             = 0;
    virtual void unload_chunk(PlayerId player, const game::ChunkPosition &chunk_position)                  = 0;
    virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, std::size_t count) = 0;
+   virtual void update_block_light(ISectionSlice& slice, SectionRange range) = 0;
 };
 
 }// namespace minecpp::game

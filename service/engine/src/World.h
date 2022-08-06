@@ -7,6 +7,7 @@
 #include <minecpp/controller/BlockManager.h>
 #include <minecpp/game/World.h>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
+#include <minecpp/world/LightSystem.h>
 
 namespace minecpp::service::engine {
 
@@ -23,6 +24,7 @@ class World : public minecpp::game::World
    EntityManager &m_entity_manager;
    controller::BlockManager &m_block_controller;
    uuid engine_id;
+   world::LightSystem m_light_system;
 
  public:
    World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager,
@@ -42,6 +44,9 @@ class World : public minecpp::game::World
                                           const game::BlockPosition &pos) override;
    mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
                           game::LightLevel level) override;
+   mb::result<std::unique_ptr<game::ISectionSlice>> get_slice(game::SectionRange range) override;
+   mb::emptyres apply_slice(game::ISectionSlice &slice) override;
+   game::ILightSystem &light_system() override;
 
  private:
    void notify_neighbours(game::BlockPosition position, game::BlockStateId state);

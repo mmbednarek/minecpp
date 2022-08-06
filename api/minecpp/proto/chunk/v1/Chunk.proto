@@ -1,6 +1,19 @@
 syntax = "proto3";
 package minecpp.proto.chunk.v1;
 
+import "minecpp/proto/common/v1/Common.proto";
+
+message Section {
+  int32 y = 1;
+  int32 bits = 2;
+  int32 ref_count = 3;
+  repeated uint32 palette = 4;
+  repeated uint64 data = 5;
+  bytes block_light = 6;
+  bytes sky_light = 7;
+  repeated common.v1.LightSource light_sources = 8;
+}
+
 message Chunk {
   int32 pos_x = 1;
   int32 pos_z = 2;
@@ -9,15 +22,14 @@ message Chunk {
   repeated int64 hm_world_surface = 5;
   repeated int64 hm_motion_blocking = 6;
   repeated Section sections = 7;
-
-  message Section {
-    int32 y = 1;
-    int32 bits = 2;
-    int32 ref_count = 3;
-    repeated int32 palette = 4;
-    repeated int64 data = 5;
-    bytes block_light = 6;
-    bytes sky_light = 7;
-  }
 }
 
+message SectionWithPosition {
+  common.v1.ChunkSectionPosition position = 1;
+  Section section = 2;
+}
+
+message SectionSlice {
+  common.v1.SectionRange range = 1;
+  repeated SectionWithPosition sections = 2;
+}

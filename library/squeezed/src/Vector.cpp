@@ -2,10 +2,12 @@
 
 namespace minecpp::squeezed {
 
-constexpr std::uint32_t bitsLimit(std::uint8_t bits)
+namespace {
+constexpr std::uint64_t max_value_encoded_with_bits(std::uint64_t bits)
 {
-   return 1u << bits;
+   return 1ull << bits;
 }
+}// namespace
 
 Vector::Vector(std::uint8_t bits, std::size_t size, std::vector<std::uint64_t> data) :
     m_data(std::move(data)),
@@ -70,7 +72,7 @@ std::int32_t Vector::operator[](std::size_t i) const
 
 void Vector::set(std::size_t i, std::int32_t value)
 {
-   while (static_cast<std::uint32_t>(value) >= bitsLimit(m_bits)) {
+   while (m_bits < 64 && static_cast<std::uint64_t>(value) >= max_value_encoded_with_bits(static_cast<mb::u64>(m_bits))) {
       inc_bits();
    }
 
@@ -92,6 +94,9 @@ Vector::Iterator Vector::begin()
 
 Vector::Iterator Vector::end()
 {
+   if (m_bits == 0)
+      return Iterator{.vec = *this, .pack = 0, .offset = 0};
+
    uint32_t parts = 64 / m_bits;
    return Iterator{.vec    = *this,
                    .pack   = m_size / parts,

@@ -13,6 +13,8 @@ service ChunkStorage {
   rpc GetBlock (common.v1.BlockPosition) returns (common.v1.BlockState);
   rpc GetLightLevel (GetLightLevelRequest) returns (common.v1.LightLevel);
   rpc SetLightLevel (SetLightLevelRequest) returns (EmptyResponse);
+  rpc GetSlice (common.v1.SectionRange) returns (chunk.v1.SectionSlice);
+  rpc ApplySlice (chunk.v1.SectionSlice) returns (EmptyResponse);
 }
 
 message LoadChunkRequest {

@@ -7,6 +7,8 @@
 
 namespace minecpp::service::chunk_storage {
 
+using mb::result;
+
 ChunkManager::ChunkManager(Regions regions) :
     m_regions(std::move(regions)),
     gen(*this, 43254124543534345)
@@ -33,7 +35,7 @@ world::Chunk &ChunkManager::get_incomplete_chunk(int x, int z)
    return *iter->second;
 }
 
-mb::result<world::Chunk &> ChunkManager::get_chunk(int x, int z)
+result<world::Chunk &> ChunkManager::get_chunk(int x, int z)
 {
    auto iter = m_chunks.find(hash_chunk_pos(x, z));
    if (iter != m_chunks.end() && iter->second->m_full) {
@@ -42,12 +44,12 @@ mb::result<world::Chunk &> ChunkManager::get_chunk(int x, int z)
    return load_chunk(x, z);
 }
 
-mb::result<world::Chunk &> ChunkManager::get_chunk(const game::ChunkPosition &pos)
+result<world::Chunk &> ChunkManager::get_chunk(const game::ChunkPosition &pos)
 {
    return get_chunk(pos.x, pos.z);
 }
 
-mb::result<world::Chunk &> ChunkManager::load_chunk(int x, int z)
+result<world::Chunk &> ChunkManager::load_chunk(int x, int z)
 {
    //   auto data = MB_TRY(m_regions.read_chunk(x, z));
    //   auto chunk_data = std::any_cast<std::vector<uint8_t>>(data);
@@ -62,7 +64,7 @@ mb::result<world::Chunk &> ChunkManager::load_chunk(int x, int z)
    return chunk;
 }
 
-mb::result<mb::empty> ChunkManager::save_chunk(int x, int z)
+result<mb::empty> ChunkManager::save_chunk(int x, int z)
 {
    auto chunk_it = m_chunks.find(hash_chunk_pos(x, z));
    if (chunk_it == m_chunks.end()) {
@@ -78,7 +80,7 @@ mb::result<mb::empty> ChunkManager::save_chunk(int x, int z)
    return mb::ok;
 }
 
-mb::result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t state)
+result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t state)
 {
    minecpp::game::BlockPosition pos(x, y, z);
    auto chunk_pos  = pos.chunk_position();
@@ -100,7 +102,7 @@ mb::result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t stat
    return mb::ok;
 }
 
-mb::result<uuid> ChunkManager::add_refs(uuid engine_id, game::PlayerId player_id,
+result<uuid> ChunkManager::add_refs(uuid engine_id, game::PlayerId player_id,
                                         std::vector<minecpp::game::ChunkPosition> coords)
 {
    uuid target_engine{};
@@ -113,7 +115,7 @@ mb::result<uuid> ChunkManager::add_refs(uuid engine_id, game::PlayerId player_id
    return target_engine;
 }
 
-mb::result<mb::empty> ChunkManager::free_refs(game::PlayerId player_id,
+result<mb::empty> ChunkManager::free_refs(game::PlayerId player_id,
                                               std::vector<minecpp::game::ChunkPosition> coords)
 {
    for (const auto &coord : coords) {
@@ -123,7 +125,7 @@ mb::result<mb::empty> ChunkManager::free_refs(game::PlayerId player_id,
    return mb::ok;
 }
 
-mb::result<int> ChunkManager::height_at(int x, int z)
+result<int> ChunkManager::height_at(int x, int z)
 {
    auto res = get_chunk(minecpp::game::BlockPosition(x, 0, z).chunk_position());
    if (!res.ok()) {
@@ -132,13 +134,13 @@ mb::result<int> ChunkManager::height_at(int x, int z)
    return res.get().height_at(x, z);
 }
 
-mb::result<mb::empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<world::Chunk> chunk)
+result<mb::empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<world::Chunk> chunk)
 {
    m_chunks[hash_chunk_pos(x, z)] = std::move(chunk);
    return mb::ok;
 }
 
-mb::result<world::ChunkState> ChunkManager::get_chunk_state(int x, int z)
+result<world::ChunkState> ChunkManager::get_chunk_state(int x, int z)
 {
    auto iter = m_chunks.find(hash_chunk_pos(x, z));
    if (iter == m_chunks.end()) {
@@ -150,6 +152,33 @@ mb::result<world::ChunkState> ChunkManager::get_chunk_state(int x, int z)
    }
 
    return world::ChunkState::TERRAIN;
+}
+
+result<world::SectionSlice> ChunkManager::get_slice(game::SectionRange range)
+{
+   world::SectionSlice result{range, {}};
+   for (auto section_position : range) {
+      auto chunk = get_chunk(section_position.chunk_position);
+      MB_VERIFY(chunk);
+
+      result[section_position] = chunk->m_sections[static_cast<mb::i8>(section_position.y)];
+   }
+
+   return result;
+}
+
+mb::emptyres ChunkManager::apply_slice(world::SectionSlice &slice)
+{
+   for (auto section_position : slice.range()) {
+      auto chunk = get_chunk(section_position.chunk_position);
+      MB_VERIFY(chunk);
+
+      auto section = dynamic_cast<world::Section *>(&slice[section_position]);
+      if (section == nullptr)
+         continue;
+
+      chunk->m_sections[static_cast<mb::i8>(section_position.y)] = *section;
+   }
 }
 
 }// namespace minecpp::service::chunk_storage

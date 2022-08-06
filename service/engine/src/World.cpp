@@ -1,5 +1,7 @@
 #include "World.h"
 #include <minecpp/util/Uuid.h>
+#include <minecpp/proto/chunk/v1/Chunk.pb.h>
+#include <minecpp/world/SectionSlice.h>
 #include <utility>
 
 using minecpp::game::Face;
@@ -13,7 +15,8 @@ World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, Play
     m_player_manager(player_manager),
     m_entity_manager(entity_manager),
     m_block_controller(block_controller),
-    engine_id(engine_id)
+    engine_id(engine_id),
+    m_light_system(*this, m_dispatcher)
 {
 }
 
@@ -223,6 +226,39 @@ mb::emptyres World::recalculate_light(game::LightType light_type, const game::Bl
    }
 
    return mb::ok;
+}
+
+mb::result<std::unique_ptr<game::ISectionSlice>> World::get_slice(game::SectionRange range)
+{
+   proto::chunk::v1::SectionSlice resp{};
+   ::grpc::ClientContext ctx;
+   auto status = service.GetSlice(&ctx, range.to_proto(), &resp);
+   if (not status.ok()) {
+      return mb::error(status.error_message());
+   }
+   return std::make_unique<world::SectionSlice>(world::SectionSlice::from_proto(resp));
+}
+
+mb::emptyres World::apply_slice(game::ISectionSlice &slice)
+{
+   auto *section_slice = dynamic_cast<world::SectionSlice *>(&slice);
+   if (section_slice == nullptr) {
+      return mb::error("invalid slice");
+   }
+
+   proto::service::chunk_storage::v1::EmptyResponse resp;
+   ::grpc::ClientContext ctx;
+   auto status = service.ApplySlice(&ctx, section_slice->to_proto(), &resp);
+   if (not status.ok()) {
+      return mb::error(status.error_message());
+   }
+
+   return mb::ok;
+}
+
+game::ILightSystem &World::light_system()
+{
+   return m_light_system;
 }
 
 }// namespace minecpp::service::engine

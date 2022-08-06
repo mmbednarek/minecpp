@@ -4,6 +4,7 @@
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <minecpp/service/engine/Api.h>
 #include <minecpp/util/Uuid.h>
+#include <minecpp/world/SectionSlice.h>
 
 namespace minecpp::service::engine {
 
@@ -165,6 +166,45 @@ void Dispatcher::set_inventory_slot(game::PlayerId player_id, game::ItemId item_
    set_slot.mutable_slot()->set_count(static_cast<uint32_t>(count));
    set_slot.mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(item_id));
    m_events.send_to(set_slot, player_id);
+}
+
+void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRange range)
+{
+   auto *section_slice = dynamic_cast<world::SectionSlice *>(&slice);
+   if (section_slice == nullptr)
+      return;
+
+   proto::event::clientbound::v1::UpdateBlockLight update_block_light;
+   std::map<mb::u64, int> id_mapping;
+
+   for (auto section : range) {
+      int id;
+      if (id_mapping.contains(section.chunk_position.hash())) {
+         id = id_mapping[section.chunk_position.hash()];
+      } else {
+         id                                        = update_block_light.block_light_size();
+         id_mapping[section.chunk_position.hash()] = id;
+
+         proto::event::clientbound::v1::ChunkBlockLight chunk_block_light;
+         *chunk_block_light.mutable_position() = section.chunk_position.to_proto();
+
+         update_block_light.mutable_block_light()->Add(std::move(chunk_block_light));
+      }
+
+      auto *chunk = update_block_light.mutable_block_light(id);
+      auto *chunk_section = dynamic_cast<world::Section *>(&section_slice->operator[](section));
+      if (chunk_section == nullptr)
+         continue;
+
+      proto::event::clientbound::v1::SectionBlockLight section_block_light;
+      section_block_light.set_y(section.y);
+      section_block_light.mutable_block_light()->resize(chunk_section->block_light.raw().size());
+      std::copy(chunk_section->block_light.raw().begin(), chunk_section->block_light.raw().end(), section_block_light.mutable_block_light()->begin());
+
+      chunk->mutable_sections()->Add(std::move(section_block_light));
+   }
+
+   m_events.send_to_all(update_block_light);
 }
 
 }// namespace minecpp::service::engine

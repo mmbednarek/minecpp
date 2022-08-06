@@ -42,6 +42,12 @@ class Service final : public chunk_storage_v1::ChunkStorage::Service
    SetLightLevel(::grpc::ServerContext *context,
                  const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest *request,
                  ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) override;
+   grpc::Status GetSlice(::grpc::ServerContext *context,
+                         const ::minecpp::proto::common::v1::SectionRange *request,
+                         ::minecpp::proto::chunk::v1::SectionSlice *response) override;
+   grpc::Status ApplySlice(::grpc::ServerContext *context,
+                           const ::minecpp::proto::chunk::v1::SectionSlice *request,
+                           ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response) override;
 };
 
 }// namespace minecpp::service::chunk_storage

@@ -6,7 +6,9 @@ target_sources(minecpp_world PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/BlockState.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Chunk.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Generator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/LightSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Section.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/SectionSlice.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Util.cpp
 
         # Header files
@@ -14,7 +16,9 @@ target_sources(minecpp_world PUBLIC
         ${MINECPP_WORLD_INCLUDE_DIR}/Chunk.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Chunks.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Generator.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/LightSystem.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Section.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/SectionSlice.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Util.h
 )
 

@@ -169,6 +169,48 @@ Writer UpdateLight::serialize() const
    return w;
 }
 
+Writer UpdateBlockLight::serialize() const
+{
+   Writer w;
+   w.write_byte(0x24);
+   w.write_varint(static_cast<mb::u32>(chunk_position.x));
+   w.write_varint(static_cast<mb::u32>(chunk_position.z));
+
+   uint32_t block_light_count = 0;
+   uint32_t blockUpdateMask = 0;
+   uint32_t blockResetMask  = 0;
+
+   for (auto const &pair : block_light) {
+      auto place = static_cast<uint8_t>(static_cast<char>(pair.first) + 1);
+      if (pair.second.empty()) {
+         blockResetMask |= 1u << place;
+      } else {
+         ++block_light_count;
+         blockUpdateMask |= 1u << place;
+      }
+   }
+
+   w.write_byte(1);// Trust edges
+   w.write_varint(0);
+   w.write_varint(1);
+   w.write_long(blockUpdateMask);
+   w.write_varint(0);
+   w.write_varint(1);
+   w.write_long(blockResetMask);
+
+   w.write_varint(0);
+   w.write_varint(block_light_count);
+
+   for (auto const &sec : block_light) {
+      if (not sec.second.empty()) {
+         w.write_varint(static_cast<mb::u32>(sec.second.size()));
+         w.write_bytes(sec.second.data(), sec.second.size());
+      }
+   }
+
+   return w;
+}
+
 Writer JoinGame::serialize() const
 {
    // 1.19.1 OK ?

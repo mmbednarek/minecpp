@@ -93,3 +93,18 @@ enum LightType {
 message LightLevel {
   uint32 level = 1;
 }
+
+message ChunkSectionPosition {
+  ChunkPosition chunk_position = 1;
+  int32 y = 2;
+}
+
+message SectionRange {
+  ChunkSectionPosition from = 1;
+  ChunkSectionPosition to = 2;
+}
+
+message LightSource {
+  common.v1.BlockPosition position = 1;
+  int32 strength = 2;
+}

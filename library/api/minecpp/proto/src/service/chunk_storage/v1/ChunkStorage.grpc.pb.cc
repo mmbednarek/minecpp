@@ -34,6 +34,8 @@ static const char* ChunkStorage_method_names[] = {
   "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/GetBlock",
   "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/GetLightLevel",
   "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/SetLightLevel",
+  "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/GetSlice",
+  "/minecpp.proto.service.chunk_storage.v1.ChunkStorage/ApplySlice",
 };
 
 std::unique_ptr< ChunkStorage::Stub> ChunkStorage::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -51,6 +53,8 @@ ChunkStorage::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chann
   , rpcmethod_GetBlock_(ChunkStorage_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetLightLevel_(ChunkStorage_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SetLightLevel_(ChunkStorage_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSlice_(ChunkStorage_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ApplySlice_(ChunkStorage_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ChunkStorage::Stub::LoadChunk(::grpc::ClientContext* context, const ::minecpp::proto::service::chunk_storage::v1::LoadChunkRequest& request, ::minecpp::proto::chunk::v1::Chunk* response) {
@@ -237,6 +241,52 @@ void ChunkStorage::Stub::async::SetLightLevel(::grpc::ClientContext* context, co
   return result;
 }
 
+::grpc::Status ChunkStorage::Stub::GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::minecpp::proto::chunk::v1::SectionSlice* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSlice_, context, request, response);
+}
+
+void ChunkStorage::Stub::async::GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSlice_, context, request, response, std::move(f));
+}
+
+void ChunkStorage::Stub::async::GetSlice(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSlice_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>* ChunkStorage::Stub::PrepareAsyncGetSliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::common::v1::SectionRange, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSlice_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::proto::chunk::v1::SectionSlice>* ChunkStorage::Stub::AsyncGetSliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::common::v1::SectionRange& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSliceRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ChunkStorage::Stub::ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ApplySlice_, context, request, response);
+}
+
+void ChunkStorage::Stub::async::ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ApplySlice_, context, request, response, std::move(f));
+}
+
+void ChunkStorage::Stub::async::ApplySlice(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ApplySlice_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* ChunkStorage::Stub::PrepareAsyncApplySliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::minecpp::proto::chunk::v1::SectionSlice, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ApplySlice_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::minecpp::proto::service::chunk_storage::v1::EmptyResponse>* ChunkStorage::Stub::AsyncApplySliceRaw(::grpc::ClientContext* context, const ::minecpp::proto::chunk::v1::SectionSlice& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncApplySliceRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 ChunkStorage::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ChunkStorage_method_names[0],
@@ -318,6 +368,26 @@ ChunkStorage::Service::Service() {
              ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* resp) {
                return service->SetLightLevel(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ChunkStorage_method_names[8],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ChunkStorage::Service, ::minecpp::proto::common::v1::SectionRange, ::minecpp::proto::chunk::v1::SectionSlice, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ChunkStorage::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::minecpp::proto::common::v1::SectionRange* req,
+             ::minecpp::proto::chunk::v1::SectionSlice* resp) {
+               return service->GetSlice(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ChunkStorage_method_names[9],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ChunkStorage::Service, ::minecpp::proto::chunk::v1::SectionSlice, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ChunkStorage::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::minecpp::proto::chunk::v1::SectionSlice* req,
+             ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* resp) {
+               return service->ApplySlice(ctx, req, resp);
+             }, this)));
 }
 
 ChunkStorage::Service::~Service() {
@@ -373,6 +443,20 @@ ChunkStorage::Service::~Service() {
 }
 
 ::grpc::Status ChunkStorage::Service::SetLightLevel(::grpc::ServerContext* context, const ::minecpp::proto::service::chunk_storage::v1::SetLightLevelRequest* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ChunkStorage::Service::GetSlice(::grpc::ServerContext* context, const ::minecpp::proto::common::v1::SectionRange* request, ::minecpp::proto::chunk::v1::SectionSlice* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ChunkStorage::Service::ApplySlice(::grpc::ServerContext* context, const ::minecpp::proto::chunk::v1::SectionSlice* request, ::minecpp::proto::service::chunk_storage::v1::EmptyResponse* response) {
   (void) context;
   (void) request;
   (void) response;

@@ -49,6 +49,7 @@ class Dispatcher : public minecpp::game::Notifier
 
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            std::size_t count) override;
+   void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
 };
 
 }// namespace minecpp::service::engine

@@ -27,9 +27,13 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    auto item_name     = item_name_obj->to_string();
    auto item_id       = repository::Item::the().find_id_by_tag(item_name);
    if (item_id.has_failed()) {
-      auto err = std::make_shared<RuntimeError>("give");
-      err->text("invalid item tag ").text(format::Color::Yellow, item_name);
-      return err;
+      // try to find the same item with a minecraft: prefix
+      item_id = repository::Item::the().find_id_by_tag(fmt::format("minecraft:{}", item_name));
+      if (item_id.has_failed()) {
+         auto err = std::make_shared<RuntimeError>("give");
+         err->text("invalid item tag ").text(format::Color::Yellow, item_name);
+         return err;
+      }
    }
 
    auto *player_id = cast<UUIDObject>(ctx.variable("player_id"));

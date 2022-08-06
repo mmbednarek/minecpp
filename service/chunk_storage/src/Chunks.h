@@ -11,6 +11,7 @@
 #include <minecpp/world/Chunk.h>
 #include <minecpp/world/Chunks.h>
 #include <minecpp/world/Generator.h>
+#include <minecpp/world/SectionSlice.h>
 #include <minecpp/world/terrain/Terrain.h>
 
 namespace minecpp::service::chunk_storage {
@@ -31,7 +32,7 @@ class ChunkManager : public world::Chunks
    mb::result<mb::empty> put_chunk(int x, int z, std::unique_ptr<world::Chunk> chunk) override;
    mb::result<world::ChunkState> get_chunk_state(int x, int z) override;
    mb::result<world::Chunk &> get_chunk(int x, int y);
-   mb::result<world::Chunk &> get_chunk(const minecpp::game::ChunkPosition &pos);
+   mb::result<world::Chunk &> get_chunk(const game::ChunkPosition &pos);
    mb::result<world::Chunk &> load_chunk(int x, int y);
    [[nodiscard]] mb::result<mb::empty> save_chunk(int x, int z);
    mb::result<mb::empty> set_block(int x, int y, int z, uint32_t state);
@@ -40,6 +41,8 @@ class ChunkManager : public world::Chunks
                              std::vector<minecpp::game::ChunkPosition> coords);
    mb::result<mb::empty> free_refs(game::PlayerId player_id,
                                    std::vector<minecpp::game::ChunkPosition> coords);
+   mb::result<world::SectionSlice> get_slice(game::SectionRange range);
+   mb::emptyres apply_slice(world::SectionSlice &slice);
 };
 
 }// namespace minecpp::service::chunk_storage

@@ -336,7 +336,7 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage
   ".common.v1.LightType\0228\n\010position\030\002 \001(\0132&"
   ".minecpp.proto.common.v1.BlockPosition\"\017"
   "\n\rEmptyResponse*(\n\017ReferenceStatus\022\006\n\002OK"
-  "\020\000\022\r\n\tMUST_MOVE\020\0012\336\007\n\014ChunkStorage\022d\n\tLo"
+  "\020\000\022\r\n\tMUST_MOVE\020\0012\242\t\n\014ChunkStorage\022d\n\tLo"
   "adChunk\0228.minecpp.proto.service.chunk_st"
   "orage.v1.LoadChunkRequest\032\035.minecpp.prot"
   "o.chunk.v1.Chunk\022z\n\010SetBlock\0227.minecpp.p"
@@ -361,7 +361,12 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage
   "SetLightLevel\022<.minecpp.proto.service.ch"
   "unk_storage.v1.SetLightLevelRequest\0325.mi"
   "necpp.proto.service.chunk_storage.v1.Emp"
-  "tyResponseb\006proto3"
+  "tyResponse\022W\n\010GetSlice\022%.minecpp.proto.c"
+  "ommon.v1.SectionRange\032$.minecpp.proto.ch"
+  "unk.v1.SectionSlice\022i\n\nApplySlice\022$.mine"
+  "cpp.proto.chunk.v1.SectionSlice\0325.minecp"
+  "p.proto.service.chunk_storage.v1.EmptyRe"
+  "sponseb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_deps[2] = {
   &::descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto,
@@ -369,7 +374,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fs
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto = {
-    false, false, 2138, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto,
+    false, false, 2334, descriptor_table_protodef_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto,
     "minecpp/proto/service/chunk_storage/v1/ChunkStorage.proto",
     &descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto_deps, 2, 11,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fchunk_5fstorage_2fv1_2fChunkStorage_2eproto::offsets,
