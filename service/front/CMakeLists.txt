@@ -23,6 +23,7 @@ target_link_libraries(minecpp_front
         minecpp_chat
         yaml-cpp
         Boost::system
+        grpc
         grpc++
         spdlog
         libmb

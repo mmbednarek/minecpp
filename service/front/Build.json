@@ -13,6 +13,7 @@
       "minecpp_chat",
       "yaml-cpp",
       "Boost::system",
+      "grpc",
       "grpc++",
       "spdlog",
       "libmb"

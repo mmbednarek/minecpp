@@ -113,7 +113,7 @@ class Side final : public Side_Base
    MB_ENUM_FIELD(Right)
 };
 
-[[nodiscard]] constexpr std::string to_string(Side side)
+[[nodiscard]] inline std::string to_string(Side side)
 {
    switch (side) {
    case Side::Left: return "left";
