@@ -43,6 +43,11 @@ class Vector
       });
    }
 
+   Vector(const Vector &vector)                = default;
+   Vector &operator=(const Vector &vector)     = default;
+   Vector(Vector &&vector) noexcept            = default;
+   Vector &operator=(Vector &&vector) noexcept = default;
+
    Vector();
    Vector(mb::u8 bits, mb::size size, std::vector<mb::u64> data);
    Vector(mb::u8 bits, mb::size size, std::vector<mb::i64> i_data);

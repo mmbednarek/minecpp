@@ -17,7 +17,7 @@ class SectionSlice : public game::ISectionSlice
    mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
                           game::LightLevel level) override;
 
-   game::ISection &operator[](game::ChunkSectionPosition position) override;
+   world::Section &operator[](game::ChunkSectionPosition position) override;
 
    [[nodiscard]] constexpr game::SectionRange range() const
    {

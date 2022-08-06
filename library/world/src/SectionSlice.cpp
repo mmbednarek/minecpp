@@ -48,7 +48,7 @@ mb::emptyres SectionSlice::set_light(game::LightType light_type, const game::Blo
    return mb::ok;
 }
 
-game::ISection &SectionSlice::operator[](game::ChunkSectionPosition position)
+world::Section &SectionSlice::operator[](game::ChunkSectionPosition position)
 {
    return m_sections[position.hash()];
 }

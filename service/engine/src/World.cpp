@@ -249,7 +249,7 @@ mb::emptyres World::apply_slice(game::ISectionSlice &slice)
    proto::service::chunk_storage::v1::EmptyResponse resp;
    ::grpc::ClientContext ctx;
    auto status = service.ApplySlice(&ctx, section_slice->to_proto(), &resp);
-   if (status.ok()) {
+   if (not status.ok()) {
       return mb::error(status.error_message());
    }
 

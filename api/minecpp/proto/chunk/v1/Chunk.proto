@@ -7,8 +7,8 @@ message Section {
   int32 y = 1;
   int32 bits = 2;
   int32 ref_count = 3;
-  repeated int32 palette = 4;
-  repeated int64 data = 5;
+  repeated uint32 palette = 4;
+  repeated uint64 data = 5;
   bytes block_light = 6;
   bytes sky_light = 7;
   repeated common.v1.LightSource light_sources = 8;

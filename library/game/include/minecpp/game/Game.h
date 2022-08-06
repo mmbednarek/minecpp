@@ -668,16 +668,34 @@ struct SectionRange
               .to{  to.chunk_position.x + amount,   to.y + amount,   to.chunk_position.z + amount},
       };
    }
+
+   [[nodiscard]] constexpr bool is_in_range(ChunkSectionPosition position) const {
+      if (position.chunk_position.x < from.chunk_position.x)
+         return false;
+      if (position.chunk_position.z < from.chunk_position.z)
+         return false;
+      if (position.y < from.y)
+         return false;
+
+      if (position.chunk_position.x > to.chunk_position.x)
+         return false;
+      if (position.chunk_position.z > to.chunk_position.z)
+         return false;
+      if (position.y > to.y)
+         return false;
+
+      return true;
+   }
 };
 
 struct LightSource
 {
    BlockPosition position{};
-   int strength{};
+   mb::u8 strength{};
 
    LightSource() = default;
 
-   LightSource(const BlockPosition &position, int strength) :
+   LightSource(const BlockPosition &position, mb::u8 strength) :
        position(position),
        strength(strength)
    {
@@ -687,7 +705,7 @@ struct LightSource
    {
       return {
               BlockPosition::from_proto(source.position()),
-              source.strength(),
+              static_cast<mb::u8>(source.strength()),
       };
    }
 

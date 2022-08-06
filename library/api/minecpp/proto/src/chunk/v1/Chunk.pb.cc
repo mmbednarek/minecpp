@@ -168,7 +168,7 @@ const char descriptor_table_protodef_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eprot
   "necpp.proto.chunk.v1\032$minecpp/proto/comm"
   "on/v1/Common.proto\"\271\001\n\007Section\022\t\n\001y\030\001 \001("
   "\005\022\014\n\004bits\030\002 \001(\005\022\021\n\tref_count\030\003 \001(\005\022\017\n\007pa"
-  "lette\030\004 \003(\005\022\014\n\004data\030\005 \003(\003\022\023\n\013block_light"
+  "lette\030\004 \003(\r\022\014\n\004data\030\005 \003(\004\022\023\n\013block_light"
   "\030\006 \001(\014\022\021\n\tsky_light\030\007 \001(\014\022;\n\rlight_sourc"
   "es\030\010 \003(\0132$.minecpp.proto.common.v1.Light"
   "Source\"\260\001\n\005Chunk\022\r\n\005pos_x\030\001 \001(\005\022\r\n\005pos_z"
@@ -357,10 +357,10 @@ const char* Section::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
         } else
           goto handle_unusual;
         continue;
-      // repeated int32 palette = 4;
+      // repeated uint32 palette = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_palette(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_palette(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<uint8_t>(tag) == 32) {
           _internal_add_palette(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
@@ -368,10 +368,10 @@ const char* Section::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
         } else
           goto handle_unusual;
         continue;
-      // repeated int64 data = 5;
+      // repeated uint64 data = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_data(), ptr, ctx);
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt64Parser(_internal_mutable_data(), ptr, ctx);
           CHK_(ptr);
         } else if (static_cast<uint8_t>(tag) == 40) {
           _internal_add_data(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
@@ -457,20 +457,20 @@ uint8_t* Section::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_ref_count(), target);
   }
 
-  // repeated int32 palette = 4;
+  // repeated uint32 palette = 4;
   {
     int byte_size = _impl_._palette_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
-      target = stream->WriteInt32Packed(
+      target = stream->WriteUInt32Packed(
           4, _internal_palette(), byte_size, target);
     }
   }
 
-  // repeated int64 data = 5;
+  // repeated uint64 data = 5;
   {
     int byte_size = _impl_._data_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
-      target = stream->WriteInt64Packed(
+      target = stream->WriteUInt64Packed(
           5, _internal_data(), byte_size, target);
     }
   }
@@ -511,10 +511,10 @@ size_t Section::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int32 palette = 4;
+  // repeated uint32 palette = 4;
   {
     size_t data_size = ::_pbi::WireFormatLite::
-      Int32Size(this->_impl_.palette_);
+      UInt32Size(this->_impl_.palette_);
     if (data_size > 0) {
       total_size += 1 +
         ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
@@ -525,10 +525,10 @@ size_t Section::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int64 data = 5;
+  // repeated uint64 data = 5;
   {
     size_t data_size = ::_pbi::WireFormatLite::
-      Int64Size(this->_impl_.data_);
+      UInt64Size(this->_impl_.data_);
     if (data_size > 0) {
       total_size += 1 +
         ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));

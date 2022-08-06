@@ -46,32 +46,33 @@ void LightSystem::regenerate_block_light(game::ISectionSlice &slice, game::Secti
       auto light = queue.front();
       queue.pop();
 
-      std::array<mb::result<game::LightLevel>, 6> neighbour_light_levels_results{
-              slice.get_light(LightType::Block, light.position.neighbour_at(Face::Bottom)),
-              slice.get_light(LightType::Block, light.position.neighbour_at(Face::Top)),
-              slice.get_light(LightType::Block, light.position.neighbour_at(Face::North)),
-              slice.get_light(LightType::Block, light.position.neighbour_at(Face::South)),
-              slice.get_light(LightType::Block, light.position.neighbour_at(Face::West)),
-              slice.get_light(LightType::Block, light.position.neighbour_at(Face::East)),
-      };
-
-      std::array<game::LightLevel, 6> neighbour_light_levels{};
-      auto res = mb::unpack(neighbour_light_levels_results.begin(), neighbour_light_levels_results.end(),
-                            neighbour_light_levels.begin());
-      if (res != nullptr) {
-         continue;
-      }
-
-      slice.set_light(LightType::Block, light.position, static_cast<game::LightLevel>(light.strength));
-
-      if (light.strength < 3)
+      if (not range.is_in_range(light.position.chunk_section_position()))
          continue;
 
-      for (auto face : game::Face::Values) {
-         if (light.strength <= neighbour_light_levels[static_cast<std::size_t>(face)])
+      auto source_block = slice.get_light(LightType::Block, light.position);
+      if (source_block.has_failed())
+         continue;
+
+      if (*source_block >= light.strength)
+         continue;
+
+      slice.set_light(LightType::Block, light.position, static_cast<std::uint8_t>(light.strength));
+
+      auto passed_value = light.strength - 1;
+
+      for (auto face : Face::Values) {
+         auto position = light.position.neighbour_at(face);
+         if (not range.is_in_range(position.chunk_section_position()))
             continue;
 
-         queue.emplace(light.position.neighbour_at(face), light.strength - 1);
+         auto neighbour_value = slice.get_light(LightType::Block, position);
+         if (neighbour_value.has_failed())
+            continue;
+
+         if (*neighbour_value >= passed_value)
+            continue;
+
+         queue.emplace(position, passed_value);
       }
    }
 }

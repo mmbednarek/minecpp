@@ -78,6 +78,18 @@ Section SectionBuilder::build()
    };
 }
 
+Section::Section(int refCount, std::vector<std::uint32_t> palette, squeezed::Vector data,
+                 squeezed::TinyVec<4> blockLight, squeezed::TinyVec<4> skyLight,
+                 std::vector<game::LightSource> mLightSources) :
+        ref_count(refCount),
+        palette(std::move(palette)),
+        data(std::move(data)),
+        block_light(std::move(blockLight)),
+        sky_light(std::move(skyLight)),
+        m_light_sources(std::move(mLightSources))
+{
+}
+
 void Section::reset_light(game::LightType light_type)
 {
    switch (light_type) {
@@ -91,18 +103,6 @@ std::vector<game::LightSource> &Section::light_sources()
    return m_light_sources;
 }
 
-Section::Section(int refCount, std::vector<std::uint32_t> palette, const squeezed::Vector &data,
-                 squeezed::TinyVec<4> blockLight, squeezed::TinyVec<4> skyLight,
-                 std::vector<game::LightSource> mLightSources) :
-    ref_count(refCount),
-    palette(std::move(palette)),
-    data(data),
-    block_light(std::move(blockLight)),
-    sky_light(std::move(skyLight)),
-    m_light_sources(std::move(mLightSources))
-{
-}
-
 Section Section::from_proto(const proto::chunk::v1::Section &section)
 {
    std::vector<mb::u32> palette{};
@@ -112,7 +112,7 @@ Section Section::from_proto(const proto::chunk::v1::Section &section)
    std::vector<mb::u64> data_longs{};
    data_longs.resize(static_cast<mb::u64>(section.data_size()));
    std::copy(section.data().begin(), section.data().end(), data_longs.begin());
-   squeezed::Vector data{static_cast<mb::u8>(section.data_size() * 64 / 4096), 4096, std::move(data_longs)};
+   squeezed::Vector data{static_cast<mb::u8>(section.bits()), 4096, std::move(data_longs)};
 
    std::vector<mb::u8> block_light_data{};
    block_light_data.resize(static_cast<mb::u64>(section.block_light().size()));
@@ -128,18 +128,23 @@ Section Section::from_proto(const proto::chunk::v1::Section &section)
    light_sources.resize(static_cast<mb::u64>(section.light_sources_size()));
    std::transform(section.light_sources().begin(), section.light_sources().end(), light_sources.begin(), game::LightSource::from_proto);
 
-   return {section.ref_count(), std::move(palette), data, std::move(block_light), std::move(sky_light), std::move(light_sources)};
+   return {section.ref_count(), std::move(palette), std::move(data), std::move(block_light), std::move(sky_light), std::move(light_sources)};
 }
 
 proto::chunk::v1::Section Section::to_proto()
 {
    proto::chunk::v1::Section result{};
 
+   result.set_ref_count(ref_count);
+
    result.mutable_palette()->Resize(static_cast<int>(palette.size()), 0);
    std::copy(palette.begin(), palette.end(), result.mutable_palette()->begin());
 
-   result.mutable_data()->Resize(static_cast<int>(data.size()), 0);
-   std::copy(data.begin(), data.end(), result.mutable_data()->begin());
+   result.set_bits(data.bits());
+   if (not data.raw().empty()) {
+      result.mutable_data()->Resize(static_cast<int>(data.raw().size()), 0);
+      std::copy(data.raw().begin(), data.raw().end(), result.mutable_data()->begin());
+   }
 
    result.mutable_block_light()->resize(block_light.raw().size());
    std::copy(block_light.raw().begin(), block_light.raw().end(), result.mutable_block_light()->begin());

@@ -22,7 +22,7 @@ struct Section final : public game::ISection
 
    Section() = default;
 
-   Section(int refCount, std::vector<std::uint32_t> palette, const squeezed::Vector &data,
+   Section(int refCount, std::vector<std::uint32_t> palette, squeezed::Vector data,
            squeezed::TinyVec<4> blockLight, squeezed::TinyVec<4> skyLight,
            std::vector<game::LightSource> mLightSources);
 
@@ -36,7 +36,7 @@ struct Section final : public game::ISection
 class SectionBuilder
 {
    std::map<int, int> palette;
-   std::array<int, 4096> content;
+   std::array<int, 4096> content{};
    int top_item = 0;
 
  public:
