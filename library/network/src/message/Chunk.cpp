@@ -85,6 +85,9 @@ void write_light_data(Writer &w, const Chunk &chunk)
 
    for (auto const &sec : chunk.sections()) {
       if (!sec.sky_light().empty()) {
+         if (sec.sky_light().size() != 2048) {
+            spdlog::error("shiitt");
+         }
          w.write_varint(sec.sky_light().size());
          w.write_bytes(sec.sky_light().data(), sec.sky_light().size());
       }
@@ -94,6 +97,9 @@ void write_light_data(Writer &w, const Chunk &chunk)
 
    for (auto const &sec : chunk.sections()) {
       if (!sec.block_light().empty()) {
+         if (sec.block_light().size() != 2048) {
+            spdlog::error("shiitt");
+         }
          w.write_varint(sec.block_light().size());
          w.write_bytes(sec.block_light().data(), sec.block_light().size());
       }
@@ -108,6 +114,10 @@ Writer get_chunk_data(const Chunk &chunk)
       auto section = world::Section::from_proto(sec);
 
       chunk_data_writer.write_big_endian<short>(static_cast<short>(sec.ref_count()));
+
+      if (section.data().indices().raw().empty()) {
+         section.data().set(4095, 0);
+      }
 
       if (section.data().indices().bits() <= 4) {
          section.data().indices().set_bits(5);

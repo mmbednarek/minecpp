@@ -39,44 +39,29 @@ Section SectionBuilder::build()
 {
    auto bits = 4;
 
-   int i     = 0;
+   int i = 0;
 
    auto data = container::PalettedVector<game::BlockStateId>(content.begin(), content.end());
 
-   minecpp::squeezed::TinyVec<4> sky_light(4096);
-   for (mb::size n = 0; n < 4096; ++n) {
-      sky_light.set(n, 0x0);
-   }
-
-   minecpp::squeezed::TinyVec<4> block_light(4096);
-   for (mb::size n = 0; n < 4096; ++n) {
-      block_light.set(n, 0x0);
-   }
-
-   Section section{
-           0,  std::move(data), std::move(sky_light), std::move(block_light), {}
-   };
+   Section section{0, std::move(data), {}};
    section.recalculate_reference_count();
 
    return section;
 }
 
 Section::Section(int refCount, container::PalettedVector<game::BlockStateId> data,
-                 squeezed::TinyVec<4> blockLight, squeezed::TinyVec<4> skyLight,
                  std::vector<game::LightSource> mLightSources) :
     m_reference_count(refCount),
-        m_data(std::move(data)),
-        block_light(std::move(blockLight)),
-        sky_light(std::move(skyLight)),
-        m_light_sources(std::move(mLightSources))
+    m_data(std::move(data)),
+    m_light_sources(std::move(mLightSources))
 {
 }
 
 void Section::reset_light(game::LightType light_type)
 {
    switch (light_type) {
-   case game::LightType::Block: block_light.reset(); break;
-   case game::LightType::Sky: sky_light.reset(); break;
+   case game::LightType::Block: m_block_light.reset(); break;
+   case game::LightType::Sky: m_sky_light.reset(); break;
    }
 }
 
@@ -87,16 +72,23 @@ std::vector<game::LightSource> &Section::light_sources()
 
 Section Section::from_proto(const proto::chunk::v1::Section &section)
 {
-   squeezed::TinyVec<4> block_light{{section.block_light().begin(), section.block_light().end()}};
-   squeezed::TinyVec<4> sky_light{{section.sky_light().begin(), section.sky_light().end()}};
+   auto palette = container::PalettedVector<game::BlockStateId>::from_raw(
+           static_cast<container::TightVector::bits_type>(section.bits()), 4096, section.data().begin(),
+           section.data().end(), section.palette().begin(), section.palette().end());
 
    std::vector<game::LightSource> light_sources{};
    light_sources.resize(static_cast<mb::u64>(section.light_sources_size()));
-   std::transform(section.light_sources().begin(), section.light_sources().end(), light_sources.begin(), game::LightSource::from_proto);
+   std::transform(section.light_sources().begin(), section.light_sources().end(), light_sources.begin(),
+                  game::LightSource::from_proto);
 
-   auto palette = container::PalettedVector<game::BlockStateId>::from_raw(static_cast<container::TightVector::bits_type>(section.bits()), 4096, section.data().begin(), section.data().end(), section.palette().begin(), section.palette().end());
+   Section result{section.ref_count(), std::move(palette), std::move(light_sources)};
 
-   return {section.ref_count(), std::move(palette), std::move(block_light), std::move(sky_light), std::move(light_sources)};
+   result.m_block_light = std::make_unique<LightContainer>(
+           LightContainer::from_raw(section.block_light().begin(), section.block_light().end()));
+   result.m_sky_light = std::make_unique<LightContainer>(
+           LightContainer::from_raw(section.sky_light().begin(), section.sky_light().end()));
+
+   return result;
 }
 
 proto::chunk::v1::Section Section::to_proto() const
@@ -114,21 +106,26 @@ proto::chunk::v1::Section Section::to_proto() const
       std::copy(m_data.indices().raw().begin(), m_data.indices().raw().end(), result.mutable_data()->begin());
    }
 
-   result.mutable_block_light()->resize(block_light.raw().size());
-   std::copy(block_light.raw().begin(), block_light.raw().end(), result.mutable_block_light()->begin());
+   result.mutable_block_light()->resize(LightContainer::raw_size);
+   if (m_block_light != nullptr) {
+      std::copy(m_block_light->raw().begin(), m_block_light->raw().end(), result.mutable_block_light()->begin());
+   }
 
-   result.mutable_sky_light()->resize(sky_light.raw().size());
-   std::copy(sky_light.raw().begin(), sky_light.raw().end(), result.mutable_sky_light()->begin());
+   result.mutable_sky_light()->resize(LightContainer::raw_size);
+   if (m_sky_light != nullptr) {
+      std::copy(m_sky_light->raw().begin(), m_sky_light->raw().end(), result.mutable_sky_light()->begin());
+   }
 
    result.mutable_light_sources()->Reserve(static_cast<int>(m_light_sources.size()));
-   std::transform(m_light_sources.begin(), m_light_sources.end(), google::protobuf::RepeatedFieldBackInserter(result.mutable_light_sources()), [](const game::LightSource &light) {
-      return light.to_proto();
-   });
+   std::transform(m_light_sources.begin(), m_light_sources.end(),
+                  google::protobuf::RepeatedFieldBackInserter(result.mutable_light_sources()),
+                  [](const game::LightSource &light) { return light.to_proto(); });
 
    return result;
 }
 
-void Section::recalculate_reference_count() {
+void Section::recalculate_reference_count()
+{
    m_reference_count = 0;
    for (game::BlockStateId state : m_data) {
       BlockState block_state{state};
@@ -142,6 +139,27 @@ void Section::recalculate_reference_count() {
          ++m_reference_count;
       }
    }
+}
+
+Section::Section(const Section &section) :
+    m_reference_count(section.reference_count()),
+    m_data(section.data()),
+    m_block_light(section.m_block_light == nullptr ? nullptr : std::make_unique<LightContainer>(*section.m_block_light)),
+    m_sky_light(section.m_sky_light == nullptr ? nullptr : std::make_unique<LightContainer>(*section.m_sky_light)),
+    m_light_sources(section.m_light_sources)
+{
+}
+
+Section &Section::operator=(const Section &section)
+{
+   m_reference_count = section.reference_count();
+   m_data            = section.data();
+   if (section.m_block_light != nullptr)
+      m_block_light     = std::make_unique<LightContainer>(*section.m_block_light);
+   if (section.m_sky_light != nullptr)
+      m_sky_light       = std::make_unique<LightContainer>(*section.m_sky_light);
+   m_light_sources   = section.m_light_sources;
+   return *this;
 }
 
 }// namespace minecpp::world

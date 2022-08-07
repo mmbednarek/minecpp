@@ -14,8 +14,8 @@ TEST(Section, ProtoTest)
    }
 
    Section section{};
-   section.block_light.fill(4096, 1);
-   section.sky_light.fill(4096, 2);
+   section.m_block_light.fill(4096, 1);
+   section.m_sky_light.fill(4096, 2);
    section.m_data = {ids.begin(), ids.end()};
 
    auto proto = section.to_proto();

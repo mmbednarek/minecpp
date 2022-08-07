@@ -15,9 +15,9 @@ using PlayerId     = util::uuid;
 using BlockId      = mb::i32;
 using EntityId     = mb::u32;
 using BlockStateId = mb::u32;
-using LightLevel   = mb::u8;
 using StateOffset  = mb::i32;
 using ItemId       = mb::i32;
+using LightValue   = mb::u8;
 
 constexpr ChunkHash g_chunk_max_z = 1875060;
 constexpr ChunkHash g_chunk_max_x = 1875060;
@@ -669,7 +669,8 @@ struct SectionRange
       };
    }
 
-   [[nodiscard]] constexpr bool is_in_range(ChunkSectionPosition position) const {
+   [[nodiscard]] constexpr bool is_in_range(ChunkSectionPosition position) const
+   {
       if (position.chunk_position.x < from.chunk_position.x)
          return false;
       if (position.chunk_position.z < from.chunk_position.z)

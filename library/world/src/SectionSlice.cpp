@@ -4,7 +4,7 @@
 
 namespace minecpp::world {
 
-mb::result<game::LightLevel> SectionSlice::get_light(game::LightType light_type,
+mb::result<game::LightValue> SectionSlice::get_light(game::LightType light_type,
                                                      const game::BlockPosition &pos)
 {
    auto chunk_section_pos = pos.chunk_section_position();
@@ -13,22 +13,11 @@ mb::result<game::LightLevel> SectionSlice::get_light(game::LightType light_type,
       return mb::error("no such section");
    }
 
-   switch (light_type) {
-   case game::LightType::Block:
-      if (sec->second.block_light.empty())
-         sec->second.block_light.fill(2048, 0);
-      return sec->second.block_light.at(pos.section_offset());
-   case game::LightType::Sky:
-      if (sec->second.sky_light.empty())
-         sec->second.sky_light.fill(2048, 0);
-      return sec->second.sky_light.at(pos.section_offset());
-   }
-
-   return mb::error("shouldn't be reachable");
+   return sec->second.get_light(light_type, pos);
 }
 
 mb::emptyres SectionSlice::set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                     game::LightLevel level)
+                                     game::LightValue value)
 {
    auto chunk_section_pos = pos.chunk_section_position();
    auto sec = m_sections.find(chunk_section_pos.hash());
@@ -36,15 +25,7 @@ mb::emptyres SectionSlice::set_light(game::LightType light_type, const game::Blo
       return mb::error("no such section");
    }
 
-   switch (light_type) {
-   case game::LightType::Block:
-      sec->second.block_light.set(pos.section_offset(), static_cast<mb::i8>(level));
-      break;
-   case game::LightType::Sky:
-      sec->second.sky_light.set(pos.section_offset(), static_cast<mb::i8>(level));
-      break;
-   }
-
+   sec->second.set_light(light_type, pos, value);
    return mb::ok;
 }
 

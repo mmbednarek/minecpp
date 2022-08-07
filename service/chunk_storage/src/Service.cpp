@@ -18,12 +18,6 @@ grpc::Status Service::LoadChunk(grpc::ServerContext *context,
                                 const chunk_storage_v1::LoadChunkRequest *request, chunk_v1::Chunk *response)
 {
    auto &chunk = MCPP_GRPC_TRY(chunks.get_chunk(request->x(), request->z()));
-   for (const auto &sec : chunk.m_sections) {
-      if (!sec.second.sky_light.empty() && sec.second.sky_light.size() != 4096) {
-         spdlog::info("invalid sky light size: {}", sec.second.sky_light.size());
-      }
-   }
-
    chunk.as_proto(response);
    return grpc::Status();
 }
@@ -107,7 +101,7 @@ Service::GetLightLevel(::grpc::ServerContext * /*context*/,
       return {grpc::StatusCode::INVALID_ARGUMENT, chunk.err()->msg()};
    }
 
-   mb::result<game::LightLevel> lightLevel{0};
+   mb::result<game::LightValue> lightLevel{0};
    switch (request->light_type()) {
    case proto::common::v1::Block: lightLevel = chunk->get_block_light(block_pos); break;
    case proto::common::v1::Sky: lightLevel = chunk->get_sky_light(block_pos); break;

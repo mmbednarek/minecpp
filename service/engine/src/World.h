@@ -40,10 +40,10 @@ class World : public minecpp::game::World
    mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state) override;
    mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos) override;
    mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) override;
-   mb::result<game::LightLevel> get_light(game::LightType light_type,
+   mb::result<game::LightValue> get_light(game::LightType light_type,
                                           const game::BlockPosition &pos) override;
    mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                          game::LightLevel level) override;
+                          game::LightValue level) override;
    mb::result<std::unique_ptr<game::ISectionSlice>> get_slice(game::SectionRange range) override;
    mb::emptyres apply_slice(game::ISectionSlice &slice) override;
    game::ILightSystem &light_system() override;

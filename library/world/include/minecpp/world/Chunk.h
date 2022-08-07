@@ -33,10 +33,10 @@ struct Chunk
    void create_empty_section(int8_t sec);
    void set_block(int x, int y, int z, game::BlockStateId state);
    game::BlockStateId get_block(int x, int y, int z);
-   mb::result<game::LightLevel> get_block_light(game::BlockPosition position);
-   mb::result<game::LightLevel> get_sky_light(game::BlockPosition position);
-   mb::emptyres set_block_light(game::BlockPosition position, game::LightLevel value);
-   mb::emptyres set_sky_light(game::BlockPosition position, game::LightLevel value);
+   mb::result<game::LightValue> get_block_light(game::BlockPosition position);
+   mb::result<game::LightValue> get_sky_light(game::BlockPosition position);
+   mb::emptyres set_block_light(game::BlockPosition position, game::LightValue value);
+   mb::emptyres set_sky_light(game::BlockPosition position, game::LightValue value);
    int height_at(int x, int z);
    void put_section(int8_t level, Section sec);
    std::array<short, 256> get_height_map();

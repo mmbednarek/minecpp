@@ -161,7 +161,7 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
    }
 }
 
-mb::result<game::LightLevel> World::get_light(game::LightType light_type, const game::BlockPosition &pos)
+mb::result<game::LightValue> World::get_light(game::LightType light_type, const game::BlockPosition &pos)
 {
    proto::service::chunk_storage::v1::GetLightLevelRequest req{};
    req.set_light_type(static_cast<proto::common::v1::LightType>(light_type));
@@ -179,7 +179,7 @@ mb::result<game::LightLevel> World::get_light(game::LightType light_type, const 
 }
 
 mb::emptyres World::set_light(game::LightType light_type, const game::BlockPosition &pos,
-                              game::LightLevel level)
+                              game::LightValue level)
 {
    proto::service::chunk_storage::v1::SetLightLevelRequest req{};
    req.set_light_type(static_cast<proto::common::v1::LightType>(light_type));
@@ -200,7 +200,7 @@ mb::emptyres World::recalculate_light(game::LightType light_type, const game::Bl
 {
    auto original_light_value = MB_TRY(get_light(light_type, pos));
 
-   std::array<game::LightLevel, 6> neighbour_light_levels{
+   std::array<game::LightValue, 6> neighbour_light_levels{
            MB_TRY(get_light(light_type, pos.neighbour_at(Face::Bottom))),
            MB_TRY(get_light(light_type, pos.neighbour_at(Face::Top))),
            MB_TRY(get_light(light_type, pos.neighbour_at(Face::North))),
@@ -216,7 +216,7 @@ mb::emptyres World::recalculate_light(game::LightType light_type, const game::Bl
       return mb::ok;
    }
 
-   set_light(light_type, pos, static_cast<game::LightLevel>(projected_light_level));
+   set_light(light_type, pos, static_cast<game::LightValue>(projected_light_level));
 
    for (auto face : game::Face::Values) {
       if ((projected_light_level - 1) <= neighbour_light_levels[static_cast<std::size_t>(face)])

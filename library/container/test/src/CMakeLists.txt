@@ -3,6 +3,7 @@
 target_sources(minecpp_container_test PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/PalettedVectorTest.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/TightArrayTest.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/TightVectorTest.cpp
 )
 

@@ -17,7 +17,7 @@ void ApiHandler::on_connected(BidiStream stream)
    stream.set_tag(tag);
    stream.read();
    m_event_manager.add_client(stream);
-   spdlog::info("Api.handler: front connection");
+   spdlog::info("front connection");
 }
 
 void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbound::v1::Event &event)
@@ -28,6 +28,8 @@ void ApiHandler::on_finish_read(BidiStream stream, const proto::event::serverbou
    } catch (std::runtime_error &err) {
       spdlog::error("visit error: {}", err.what());
    }
+
+   spdlog::info("on finish read");
 }
 
 void ApiHandler::on_finish_write(BidiStream stream)
@@ -41,6 +43,8 @@ void ApiHandler::on_finish_write(BidiStream stream)
       return;
    }
    stream.write(client->queue.pop());
+
+   spdlog::info("on finish write");
 }
 
 }// namespace minecpp::service::engine

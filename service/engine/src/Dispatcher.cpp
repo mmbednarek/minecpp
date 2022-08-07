@@ -26,7 +26,7 @@ void Dispatcher::load_terrain(game::PlayerId player_id, const game::ChunkPositio
    m_events.send_to(event, player_id);
 }
 
-void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid target_engine)
+void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid /*target_engine*/)
 {
    clientbound_v1::TransferPlayer event;
    event.set_engine_instance_id(0);// TODO: Set engine id
@@ -198,8 +198,9 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
 
       proto::event::clientbound::v1::SectionBlockLight section_block_light;
       section_block_light.set_y(section.y);
-      section_block_light.mutable_block_light()->resize(chunk_section->block_light.raw().size());
-      std::copy(chunk_section->block_light.raw().begin(), chunk_section->block_light.raw().end(), section_block_light.mutable_block_light()->begin());
+      section_block_light.mutable_block_light()->resize(world::LightContainer::raw_size);
+      if (chunk_section->m_block_light != nullptr)
+         std::copy(chunk_section->m_block_light->raw().begin(), chunk_section->m_block_light->raw().end(), section_block_light.mutable_block_light()->begin());
 
       chunk->mutable_sections()->Add(std::move(section_block_light));
    }

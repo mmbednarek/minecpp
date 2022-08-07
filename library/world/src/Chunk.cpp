@@ -109,63 +109,45 @@ game::BlockStateId Chunk::get_block(int x, int y, int z)
    //   return it_section->second.palette[palette_index];
 }
 
-mb::result<game::LightLevel> Chunk::get_block_light(game::BlockPosition position)
+mb::result<game::LightValue> Chunk::get_block_light(game::BlockPosition position)
 {
    auto section = section_from_y_level(position.y);
    if (section.has_failed()) {
       return std::move(section.err());
    }
 
-   if (section->block_light.empty()) {
-      return mb::error("this section has empty block light");
-   }
-
-   return static_cast<game::LightLevel>(section->block_light.at(position.offset_within_section()));
+   return section->get_light(game::LightType::Block, position);
 }
 
-mb::result<game::LightLevel> Chunk::get_sky_light(game::BlockPosition position)
+mb::result<game::LightValue> Chunk::get_sky_light(game::BlockPosition position)
 {
    auto section = section_from_y_level(position.y);
    if (section.has_failed()) {
       return std::move(section.err());
    }
 
-   if (section->sky_light.empty()) {
-      return mb::error("this section has empty sky light");
-   }
-
-   return static_cast<game::LightLevel>(section->sky_light.at(position.offset_within_section()));
+   return section->get_light(game::LightType::Sky, position);
 }
 
-mb::emptyres Chunk::set_block_light(game::BlockPosition position, game::LightLevel value)
+mb::emptyres Chunk::set_block_light(game::BlockPosition position, game::LightValue value)
 {
    auto section = section_from_y_level(position.y);
    if (section.has_failed()) {
       return std::move(section.err());
    }
 
-   if (section->block_light.empty()) {
-      section->block_light = minecpp::squeezed::TinyVec<4>(4096);
-   }
-
-   section->block_light.set(static_cast<mb::size>(position.offset_within_section()),
-                            static_cast<mb::i8>(value));
+   section->set_light(game::LightType::Block, position, value);
    return mb::ok;
 }
 
-mb::emptyres Chunk::set_sky_light(game::BlockPosition position, game::LightLevel value)
+mb::emptyres Chunk::set_sky_light(game::BlockPosition position, game::LightValue value)
 {
    auto section = section_from_y_level(position.y);
    if (section.has_failed()) {
       return std::move(section.err());
    }
 
-   if (section->sky_light.empty()) {
-      section->sky_light = minecpp::squeezed::TinyVec<4>(4096);
-   }
-
-   section->sky_light.set(static_cast<mb::size>(position.offset_within_section()),
-                          static_cast<mb::i8>(value));
+   section->set_light(game::LightType::Sky, position, value);
    return mb::ok;
 }
 
@@ -240,8 +222,10 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
            chunk.level.sections.begin(), chunk.level.sections.end(),
            std::inserter(out->m_sections, out->m_sections.begin()), [](const nbt_chunk_v1::Section &sec) {
               Section out_sec;
-              out_sec.sky_light   = minecpp::squeezed::TinyVec<4>(sec.sky_light);
-              out_sec.block_light = minecpp::squeezed::TinyVec<4>(sec.block_light);
+              out_sec.m_sky_light = std::make_unique<LightContainer>(
+                      LightContainer::from_raw(sec.sky_light.begin(), sec.sky_light.end()));
+              out_sec.m_block_light = std::make_unique<LightContainer>(
+                      LightContainer::from_raw(sec.block_light.begin(), sec.block_light.end()));
 
               std::vector<game::BlockStateId> palette;
               palette.resize(sec.palette.size());
@@ -266,7 +250,7 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
               //              if (!sec.block_states.empty()) {
               //                 out_sec.m_data.
               //              }
-              return std::make_pair(sec.y, out_sec);
+              return std::make_pair(sec.y, std::move(out_sec));
            });
    return out;
 }
@@ -287,31 +271,35 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
    result.level.biomes.resize(m_biomes.size());
    std::copy(m_biomes.begin(), m_biomes.end(), result.level.biomes.begin());
    result.level.sections.reserve(m_sections.size());
-   std::transform(m_sections.begin(), m_sections.end(), std::back_inserter(result.level.sections),
-                  [](const std::pair<const mb::i8, Section> &pair) {
-                     nbt_chunk_v1::Section sec;
-                     sec.y           = pair.first;
-                     sec.sky_light   = pair.second.sky_light.raw();
-                     sec.block_light = pair.second.block_light.raw();
-                     sec.palette.resize(pair.second.m_data.palette().size());
-                     std::transform(pair.second.m_data.palette().begin(), pair.second.m_data.palette().end(),
-                                    sec.palette.begin(), [](const game::BlockStateId state) {
-                                       nbt_chunk_v1::PaletteItem item;
-                                       auto [block_id, state_value] =
-                                               repository::StateManager::the().parse_block_id(state);
-                                       auto res = repository::Block::the().get_by_id(block_id);
-                                       if (!res.ok()) {
-                                          return item;
-                                       }
-                                       auto &block = res.unwrap();
-                                       item.name   = block.tag();
-                                       return item;
-                                    });
-                     sec.block_states.resize(pair.second.m_data.indices().raw().size());
-                     std::copy(pair.second.m_data.indices().raw().begin(),
-                               pair.second.m_data.indices().raw().end(), sec.block_states.begin());
-                     return sec;
-                  });
+   std::transform(
+           m_sections.begin(), m_sections.end(), std::back_inserter(result.level.sections),
+           [](const std::pair<const mb::i8, Section> &pair) {
+              nbt_chunk_v1::Section sec;
+              sec.y = pair.first;
+              if (pair.second.m_sky_light != nullptr)
+                 sec.sky_light = {pair.second.m_sky_light->raw().begin(), pair.second.m_sky_light->raw().end()};
+              if (pair.second.m_block_light != nullptr)
+                 sec.block_light = {pair.second.m_block_light->raw().begin(),
+                                    pair.second.m_block_light->raw().end()};
+              sec.palette.resize(pair.second.m_data.palette().size());
+              std::transform(pair.second.m_data.palette().begin(), pair.second.m_data.palette().end(),
+                             sec.palette.begin(), [](const game::BlockStateId state) {
+                                nbt_chunk_v1::PaletteItem item;
+                                auto [block_id, state_value] =
+                                        repository::StateManager::the().parse_block_id(state);
+                                auto res = repository::Block::the().get_by_id(block_id);
+                                if (!res.ok()) {
+                                   return item;
+                                }
+                                auto &block = res.unwrap();
+                                item.name   = block.tag();
+                                return item;
+                             });
+              sec.block_states.resize(pair.second.m_data.indices().raw().size());
+              std::copy(pair.second.m_data.indices().raw().begin(), pair.second.m_data.indices().raw().end(),
+                        sec.block_states.begin());
+              return sec;
+           });
    return result;
 }
 

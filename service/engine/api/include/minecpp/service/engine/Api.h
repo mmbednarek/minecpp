@@ -105,18 +105,22 @@ class ClientEventHandler
 
    void on_finish_write(const StreamWeakPtr &stream)
    {
+      spdlog::info("on finish write");
       m_stream.on_finish_write(stream);
    }
 
    void on_finish_read(const StreamWeakPtr &stream, const proto::event::clientbound::v1::Event &info)
    {
+      spdlog::info("on finish read");
       if (auto locked_stream = stream.lock(); locked_stream) {
          locked_stream->read();
       }
       event::visit_clientbound(info, m_visitor);
    }
 
-   void on_disconnect(const StreamWeakPtr &stream) {}
+   void on_disconnect(const StreamWeakPtr &stream) {
+      spdlog::info("on disconnect");
+   }
 
    Stream *stream()
    {

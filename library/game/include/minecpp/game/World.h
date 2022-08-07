@@ -17,9 +17,9 @@ class ISection
 class ISectionSlice
 {
  public:
-   virtual mb::result<LightLevel> get_light(LightType light_type, const BlockPosition &pos) = 0;
+   virtual mb::result<LightValue> get_light(LightType light_type, const BlockPosition &pos) = 0;
    virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                  game::LightLevel level)                                   = 0;
+                                  game::LightValue value)                                   = 0;
 
    virtual ISection &operator[](game::ChunkSectionPosition position) = 0;
 };
@@ -43,9 +43,9 @@ class World
    virtual mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state)  = 0;
    virtual mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos)                   = 0;
    virtual mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) = 0;
-   virtual mb::result<game::LightLevel> get_light(game::LightType light_type,
+   virtual mb::result<game::LightValue> get_light(game::LightType light_type,
                                                   const game::BlockPosition &pos)                     = 0;
-   virtual mb::emptyres set_light(LightType light_type, const BlockPosition &pos, LightLevel level)   = 0;
+   virtual mb::emptyres set_light(LightType light_type, const BlockPosition &pos, LightValue level)   = 0;
    virtual mb::result<std::unique_ptr<ISectionSlice>> get_slice(game::SectionRange range)             = 0;
    virtual mb::emptyres apply_slice(ISectionSlice &slice)                                             = 0;
    virtual ILightSystem &light_system()                                                               = 0;

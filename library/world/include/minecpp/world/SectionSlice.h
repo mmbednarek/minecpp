@@ -12,10 +12,10 @@ class SectionSlice : public game::ISectionSlice
  public:
    SectionSlice(const game::SectionRange &range, std::unordered_map<mb::u64, Section> sections);
 
-   mb::result<game::LightLevel> get_light(game::LightType light_type,
+   mb::result<game::LightValue> get_light(game::LightType light_type,
                                           const game::BlockPosition &pos) override;
    mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                          game::LightLevel level) override;
+                          game::LightValue value) override;
 
    world::Section &operator[](game::ChunkSectionPosition position) override;
 
