@@ -22,6 +22,35 @@ game::BlockStateId BlockState::block_state_id() const
           static_cast<game::BlockStateId>(m_state_offset);
 }
 
+bool BlockState::set_from_string(std::string_view name, std::string_view value)
+{
+   auto block = repository::Block::the().get_by_id(m_block_id);
+   if (block.has_failed())
+      return false;
+
+   std::vector<std::pair<int, int>> values;
+   values.reserve(block->state_count());
+
+   for (auto const &[state, state_index] : block->state_range(m_state_offset)) {
+      if (state.name() != name) {
+         values.emplace_back(static_cast<game::BlockStateId>(state.value_count()),
+                             static_cast<game::BlockStateId>(state_index));
+         continue;
+      }
+
+      values.emplace_back(static_cast<game::BlockStateId>(state.value_count()),
+                          static_cast<game::BlockStateId>(state.index_from_value(value)));
+   }
+
+   m_state_offset = 0;
+   std::for_each(values.crbegin(), values.crend(), [this](auto pair) {
+     m_state_offset *= pair.first;
+     m_state_offset += pair.second;
+   });
+
+   return true;
+}
+
 template<>
 [[nodiscard]] std::optional<bool> BlockState::get(std::string_view name) const
 {

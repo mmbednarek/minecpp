@@ -1,6 +1,8 @@
 #include <minecpp/nbt/Writer.h>
 #include <minecpp/network/message/Chunk.h>
 #include <minecpp/util/Packed.h>
+#include <minecpp/world/Section.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::network::message {
 
@@ -103,17 +105,25 @@ Writer get_chunk_data(const Chunk &chunk)
    Writer chunk_data_writer;
    int index = 0;
    for (const auto &sec : chunk.sections()) {
-      chunk_data_writer.write_big_endian<short>(sec.ref_count());
+      auto section = world::Section::from_proto(sec);
+
+      chunk_data_writer.write_big_endian<short>(static_cast<short>(sec.ref_count()));
+
+      if (section.data().indices().bits() <= 4) {
+         section.data().indices().set_bits(5);
+      }
 
       // write palette
-      chunk_data_writer.write_byte(static_cast<uint8_t>(sec.bits()));
-      chunk_data_writer.write_varint(static_cast<uint32_t>(sec.palette_size()));
-      for (auto item : sec.palette()) {
+      chunk_data_writer.write_byte(static_cast<uint8_t>(section.data().indices().bits()));
+      chunk_data_writer.write_varint(static_cast<uint32_t>(section.data().palette().size()));
+      for (auto item : section.data().palette()) {
          chunk_data_writer.write_varint(static_cast<uint32_t>(item));
       }
 
+
       // write data
-      chunk_data_writer.write_big_endian_array(sec.data().data(), static_cast<size_t>(sec.data_size()));
+      chunk_data_writer.write_big_endian_array(section.data().indices().raw().data(),
+                                               static_cast<size_t>(section.data().indices().raw().size()));
 
       // write biomes
       chunk_data_writer.write_byte(6);// ignore palette

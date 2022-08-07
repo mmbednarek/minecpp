@@ -21,6 +21,7 @@ target_link_libraries(minecpp_front
         minecpp_format
         minecpp_repository
         minecpp_chat
+        minecpp_world
         yaml-cpp
         Boost::system
         grpc

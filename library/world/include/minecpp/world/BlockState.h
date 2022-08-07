@@ -55,6 +55,8 @@ class BlockState
       return true;
    };
 
+    bool set_from_string(std::string_view name, std::string_view value);
+
    [[nodiscard]] constexpr game::BlockId block_id() const
    {
       return m_block_id;

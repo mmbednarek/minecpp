@@ -1,9 +1,10 @@
+#include "minecpp/world/BlockState.h"
 #include <minecpp/util/Packed.h>
 #include <minecpp/world/Section.h>
 #include <minecpp/world/Util.h>
 #include <numeric>
-#include <utility>
 #include <spdlog/spdlog.h>
+#include <utility>
 
 namespace minecpp::world {
 
@@ -19,17 +20,7 @@ void SectionBuilder::fill(std::function<int(short, short, short)> callback)
    for (short y = 0; y < 16; ++y) {
       for (short z = 0; z < 16; ++z) {
          for (short x = 0; x < 16; ++x) {
-            auto state = callback(x, y, z);
-
-            auto iter = palette.find(state);
-            if (iter != palette.end()) {
-               content[coord_to_offset(x, y, z)] = iter->second;
-               continue;
-            }
-
-            palette[state]                    = top_item;
-            content[coord_to_offset(x, y, z)] = top_item;
-            ++top_item;
+            content[coord_to_offset(x, y, z)] = static_cast<game::BlockStateId>(callback(x, y, z));
          }
       }
    }
@@ -47,16 +38,10 @@ int pow2(int v)
 Section SectionBuilder::build()
 {
    auto bits = 4;
-   while (pow2(bits) < top_item) ++bits;
 
    int i     = 0;
-   auto data = minecpp::util::generate_packed(bits, 4096, [this, &i]() { return content[i++]; });
 
-   std::vector<std::uint32_t> out_palette(static_cast<mb::size>(top_item));
-   std::for_each(palette.begin(), palette.end(),
-                 [&out_palette](auto &item) { out_palette[item.second] = item.first; });
-
-   int ref_count = calculate_ref_count(data, out_palette);
+   auto data = container::PalettedVector<game::BlockStateId>(content.begin(), content.end());
 
    minecpp::squeezed::TinyVec<4> sky_light(4096);
    for (mb::size n = 0; n < 4096; ++n) {
@@ -68,22 +53,19 @@ Section SectionBuilder::build()
       block_light.set(n, 0x0);
    }
 
-   return Section{
-           ref_count,
-           out_palette,
-           {static_cast<uint8_t>(bits), 4096, data},
-           {std::move(block_light)},
-           {std::move(sky_light)},
-           {}
+   Section section{
+           0,  std::move(data), std::move(sky_light), std::move(block_light), {}
    };
+   section.recalculate_reference_count();
+
+   return section;
 }
 
-Section::Section(int refCount, std::vector<std::uint32_t> palette, squeezed::Vector data,
+Section::Section(int refCount, container::PalettedVector<game::BlockStateId> data,
                  squeezed::TinyVec<4> blockLight, squeezed::TinyVec<4> skyLight,
                  std::vector<game::LightSource> mLightSources) :
-        ref_count(refCount),
-        palette(std::move(palette)),
-        data(std::move(data)),
+    m_reference_count(refCount),
+        m_data(std::move(data)),
         block_light(std::move(blockLight)),
         sky_light(std::move(skyLight)),
         m_light_sources(std::move(mLightSources))
@@ -105,45 +87,31 @@ std::vector<game::LightSource> &Section::light_sources()
 
 Section Section::from_proto(const proto::chunk::v1::Section &section)
 {
-   std::vector<mb::u32> palette{};
-   palette.resize(static_cast<mb::u64>(section.palette_size()));
-   std::copy(section.palette().begin(), section.palette().end(), palette.begin());
-
-   std::vector<mb::u64> data_longs{};
-   data_longs.resize(static_cast<mb::u64>(section.data_size()));
-   std::copy(section.data().begin(), section.data().end(), data_longs.begin());
-   squeezed::Vector data{static_cast<mb::u8>(section.bits()), 4096, std::move(data_longs)};
-
-   std::vector<mb::u8> block_light_data{};
-   block_light_data.resize(static_cast<mb::u64>(section.block_light().size()));
-   std::copy(section.block_light().begin(), section.block_light().end(), block_light_data.begin());
-   squeezed::TinyVec<4> block_light{std::move(block_light_data)};
-
-   std::vector<mb::u8> sky_light_data{};
-   sky_light_data.resize(static_cast<mb::u64>(section.sky_light().size()));
-   std::copy(section.sky_light().begin(), section.sky_light().end(), sky_light_data.begin());
-   squeezed::TinyVec<4> sky_light{std::move(sky_light_data)};
+   squeezed::TinyVec<4> block_light{{section.block_light().begin(), section.block_light().end()}};
+   squeezed::TinyVec<4> sky_light{{section.sky_light().begin(), section.sky_light().end()}};
 
    std::vector<game::LightSource> light_sources{};
    light_sources.resize(static_cast<mb::u64>(section.light_sources_size()));
    std::transform(section.light_sources().begin(), section.light_sources().end(), light_sources.begin(), game::LightSource::from_proto);
 
-   return {section.ref_count(), std::move(palette), std::move(data), std::move(block_light), std::move(sky_light), std::move(light_sources)};
+   auto palette = container::PalettedVector<game::BlockStateId>::from_raw(static_cast<container::TightVector::bits_type>(section.bits()), 4096, section.data().begin(), section.data().end(), section.palette().begin(), section.palette().end());
+
+   return {section.ref_count(), std::move(palette), std::move(block_light), std::move(sky_light), std::move(light_sources)};
 }
 
-proto::chunk::v1::Section Section::to_proto()
+proto::chunk::v1::Section Section::to_proto() const
 {
    proto::chunk::v1::Section result{};
 
-   result.set_ref_count(ref_count);
+   result.set_ref_count(m_reference_count);
 
-   result.mutable_palette()->Resize(static_cast<int>(palette.size()), 0);
-   std::copy(palette.begin(), palette.end(), result.mutable_palette()->begin());
+   result.mutable_palette()->Resize(static_cast<int>(m_data.palette().size()), 0);
+   std::copy(m_data.palette().begin(), m_data.palette().end(), result.mutable_palette()->begin());
 
-   result.set_bits(data.bits());
-   if (not data.raw().empty()) {
-      result.mutable_data()->Resize(static_cast<int>(data.raw().size()), 0);
-      std::copy(data.raw().begin(), data.raw().end(), result.mutable_data()->begin());
+   result.set_bits(m_data.indices().bits());
+   if (not m_data.indices().raw().empty()) {
+      result.mutable_data()->Resize(static_cast<int>(m_data.indices().raw().size()), 0);
+      std::copy(m_data.indices().raw().begin(), m_data.indices().raw().end(), result.mutable_data()->begin());
    }
 
    result.mutable_block_light()->resize(block_light.raw().size());
@@ -152,12 +120,28 @@ proto::chunk::v1::Section Section::to_proto()
    result.mutable_sky_light()->resize(sky_light.raw().size());
    std::copy(sky_light.raw().begin(), sky_light.raw().end(), result.mutable_sky_light()->begin());
 
-   result.mutable_light_sources()->Reserve(static_cast<int>(data.size()));
+   result.mutable_light_sources()->Reserve(static_cast<int>(m_light_sources.size()));
    std::transform(m_light_sources.begin(), m_light_sources.end(), google::protobuf::RepeatedFieldBackInserter(result.mutable_light_sources()), [](const game::LightSource &light) {
       return light.to_proto();
    });
 
    return result;
+}
+
+void Section::recalculate_reference_count() {
+   m_reference_count = 0;
+   for (game::BlockStateId state : m_data) {
+      BlockState block_state{state};
+
+      auto res = repository::Block::the().get_by_id(block_state.block_id());
+      if (!res.ok())
+         return;
+
+      auto &block = res.unwrap();
+      if (block.stats().material != &game::block::Material::Air) {
+         ++m_reference_count;
+      }
+   }
 }
 
 }// namespace minecpp::world

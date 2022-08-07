@@ -13,8 +13,11 @@ add_subdirectory("src")
 target_link_libraries(minecpp_world
         LINK_PUBLIC
         minecpp_api_proto
+        minecpp_container
         minecpp_game
         minecpp_random
         minecpp_repository
         minecpp_squeezed
 )
+
+add_subdirectory("test")

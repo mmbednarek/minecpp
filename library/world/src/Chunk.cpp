@@ -3,6 +3,7 @@
 #include <minecpp/nbt/Parser.h>
 #include <minecpp/util/Packed.h>
 #include <minecpp/util/Time.h>
+#include <minecpp/world/BlockState.h>
 #include <minecpp/world/Chunk.h>
 #include <minecpp/world/Util.h>
 #include <stdexcept>
@@ -44,14 +45,15 @@ void Chunk::as_proto(minecpp::proto::chunk::v1::Chunk *chunk)
 
    for (auto const &sec : m_sections) {
       auto *out_sec = chunk->add_sections();
+      *out_sec      = sec.second.to_proto();
       out_sec->set_y(sec.first);
-      out_sec->set_bits(sec.second.data.bits());
-      out_sec->set_ref_count(sec.second.ref_count);
-      *out_sec->mutable_palette()     = {sec.second.palette.begin(), sec.second.palette.end()};
-      *out_sec->mutable_data()        = {sec.second.data.raw().begin(), sec.second.data.raw().end()};
-      *out_sec->mutable_block_light() = {sec.second.block_light.raw().begin(),
-                                         sec.second.block_light.raw().end()};
-      *out_sec->mutable_sky_light() = {sec.second.sky_light.raw().begin(), sec.second.sky_light.raw().end()};
+      //         out_sec->set_bits(sec.second.m_data.indices().bits());
+      //         out_sec->set_ref_count(sec.second.m_reference_count);
+      //         *out_sec->mutable_palette()     = {sec.second.m_data.palette().begin(), sec.second.m_data.palette().end()};
+      //         *out_sec->mutable_data()        = {sec.second.m_data.indices().raw().begin(), sec.second.m_data.indices().raw().end()};
+      //         *out_sec->mutable_block_light() = {sec.second.block_light.raw().begin(),
+      //                                            sec.second.block_light.raw().end()};
+      //         *out_sec->mutable_sky_light() = {sec.second.sky_light.raw().begin(), sec.second.sky_light.raw().end()};
    }
 }
 
@@ -62,8 +64,7 @@ constexpr uint32_t coord_to_offset(int x, int y, int z)
 
 void Chunk::create_empty_section(int8_t sec)
 {
-   m_sections[sec]      = Section{};
-   m_sections[sec].data = {4, 4096, []() { return 0; }};
+   m_sections[sec] = Section{};
 }
 
 void Chunk::set_block(int x, int y, int z, game::BlockStateId state)
@@ -76,16 +77,17 @@ void Chunk::set_block(int x, int y, int z, game::BlockStateId state)
    }
 
    auto &section = iter->second;
-   auto index    = std::find(section.palette.begin(), section.palette.end(), state);
-   std::size_t value{};
-   if (index == section.palette.end()) {
-      value = section.palette.size();
-      section.palette.emplace_back(state);
-   } else {
-      value = std::distance(section.palette.begin(), index);
-   }
-
-   section.data.set(coord_to_offset(x, y, z), value);
+   section.m_data.set(coord_to_offset(x, y, z), state);
+   //   auto index    = std::find(section.palette.begin(), section.palette.end(), state);
+   //   std::size_t value{};
+   //   if (index == section.palette.end()) {
+   //      value = section.palette.size();
+   //      section.palette.emplace_back(state);
+   //   } else {
+   //      value = std::distance(section.palette.begin(), index);
+   //   }
+   //
+   //   section.data.set(coord_to_offset(x, y, z), value);
 
    set_block_light(game::BlockPosition{x, y, z}, 0);
    set_sky_light(game::BlockPosition{x, y, z}, 0);
@@ -99,11 +101,12 @@ game::BlockStateId Chunk::get_block(int x, int y, int z)
    if (it_section == m_sections.end())
       return 0;
 
-   auto palette_index = static_cast<std::size_t>(it_section->second.data.at(coord_to_offset(x, y, z)));
-   if (palette_index < 0 || palette_index >= it_section->second.palette.size())
-      return 0;
-
-   return it_section->second.palette[palette_index];
+   return it_section->second.m_data[coord_to_offset(x, y, z)];
+   //   auto palette_index = static_cast<std::size_t>(it_section->second.data.at(coord_to_offset(x, y, z)));
+   //   if (palette_index < 0 || palette_index >= it_section->second.palette.size())
+   //      return 0;
+   //
+   //   return it_section->second.palette[palette_index];
 }
 
 mb::result<game::LightLevel> Chunk::get_block_light(game::BlockPosition position)
@@ -239,21 +242,30 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
               Section out_sec;
               out_sec.sky_light   = minecpp::squeezed::TinyVec<4>(sec.sky_light);
               out_sec.block_light = minecpp::squeezed::TinyVec<4>(sec.block_light);
-              out_sec.palette.resize(sec.palette.size());
-              std::transform(sec.palette.begin(), sec.palette.end(), out_sec.palette.begin(),
-                             [](const nbt_chunk_v1::PaletteItem &item) {
-                                // TODO: Remove these unwraps :C
-                                auto block_id = repository::Block::the().find_id_by_tag(item.name).unwrap();
-                                return repository::encode_state(
-                                               static_cast<int>(block_id),
-                                               repository::make_compound_encoder(item.properties))
-                                        .unwrap();
+
+              std::vector<game::BlockStateId> palette;
+              palette.resize(sec.palette.size());
+              std::transform(sec.palette.begin(), sec.palette.end(), palette.begin(),
+                             [](const nbt::chunk::v1::PaletteItem &item) -> game::BlockStateId {
+                                auto block_id = repository::Block::the().find_id_by_tag(item.name);
+                                if (block_id.has_failed())
+                                   return BLOCK_ID(Air);
+
+                                BlockState state{*block_id, 0};
+                                for (const auto &property : item.properties) {
+                                   state.set_from_string(property.first, property.second.as<std::string>());
+                                }
+
+                                return state.block_state_id();
                              });
-              out_sec.ref_count = calculate_ref_count(sec.block_states, out_sec.palette);
-              if (!sec.block_states.empty()) {
-                 out_sec.data = minecpp::squeezed::Vector(sec.block_states.size() * 64 / 4096, 4096,
-                                                          sec.block_states);
-              }
+
+              out_sec.m_data = container::PalettedVector<game::BlockStateId>::from_raw(
+                      4096, sec.block_states.begin(), sec.block_states.end(), palette.begin(), palette.end());
+
+              out_sec.m_reference_count = calculate_ref_count(sec.block_states, out_sec.m_data.palette());
+              //              if (!sec.block_states.empty()) {
+              //                 out_sec.m_data.
+              //              }
               return std::make_pair(sec.y, out_sec);
            });
    return out;
@@ -281,8 +293,8 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
                      sec.y           = pair.first;
                      sec.sky_light   = pair.second.sky_light.raw();
                      sec.block_light = pair.second.block_light.raw();
-                     sec.palette.resize(pair.second.palette.size());
-                     std::transform(pair.second.palette.begin(), pair.second.palette.end(),
+                     sec.palette.resize(pair.second.m_data.palette().size());
+                     std::transform(pair.second.m_data.palette().begin(), pair.second.m_data.palette().end(),
                                     sec.palette.begin(), [](const game::BlockStateId state) {
                                        nbt_chunk_v1::PaletteItem item;
                                        auto [block_id, state_value] =
@@ -295,9 +307,9 @@ nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
                                        item.name   = block.tag();
                                        return item;
                                     });
-                     sec.block_states.resize(pair.second.data.raw().size());
-                     std::copy(pair.second.data.raw().begin(), pair.second.data.raw().end(),
-                               sec.block_states.begin());
+                     sec.block_states.resize(pair.second.m_data.indices().raw().size());
+                     std::copy(pair.second.m_data.indices().raw().begin(),
+                               pair.second.m_data.indices().raw().end(), sec.block_states.begin());
                      return sec;
                   });
    return result;

@@ -4,6 +4,7 @@
     "api/minecpp/proto",
     "chat",
     "controller",
+    "container",
     "command",
     "event",
     "format",

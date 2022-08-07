@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_container_test",
+  "dependencies": {
+    "private": [
+      "minecpp_container",
+      "gtest",
+      "gtest_main"
+    ]
+  }
+}

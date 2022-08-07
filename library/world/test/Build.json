@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_world_test",
+  "dependencies": {
+    "public": [
+      "minecpp_world",
+      "gtest",
+      "gtest_main"
+    ]
+  }
+}

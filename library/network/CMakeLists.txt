@@ -11,9 +11,10 @@ target_include_directories(minecpp_network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/in
 add_subdirectory("src")
 
 target_link_libraries(minecpp_network
+        LINK_PUBLIC
+        minecpp_world
         LINK_PRIVATE
         minecpp_nbt
         minecpp_game
-        minecpp_world
         Boost::system
 )

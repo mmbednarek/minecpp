@@ -7,6 +7,7 @@ targettype=$3
 targetname=$(jq -r '.name' < "$libdir/Build.json")
 header_only=$(jq -r '.header_only' < "$libdir/Build.json")
 api_library=$(jq -r '.api_library' < "$libdir/Build.json")
+test_executable=$(jq -r '.tests' < "$libdir/Build.json")
 
 if ! include_path=$(jq -r '.include_path' < "$libdir/Build.json"); then
   include_path="minecpp/$libname"
@@ -78,6 +79,11 @@ function generate_cmake_target() {
     echo ""
     echo "add_subdirectory(\"api\")"
   fi
+
+  if [[ $test_executable == "true" ]]; then
+    echo ""
+    echo "add_subdirectory(\"test\")"
+  fi
 }
 
 generate_cmake_target > "$libdir/CMakeLists.txt"
@@ -88,4 +94,8 @@ fi
 
 if [[ $api_library == "true" ]]; then
   ./cmake/configure-library.sh "$libname""_api" "$libdir/api" "library"
+fi
+
+if [[ $test_executable  == "true" ]]; then
+  ./cmake/configure-library.sh "$libname""_test" "$libdir/test" "executable"
 fi
