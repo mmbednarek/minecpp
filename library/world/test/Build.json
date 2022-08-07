@@ -3,6 +3,7 @@
   "dependencies": {
     "public": [
       "minecpp_world",
+      "minecpp_container",
       "gtest",
       "gtest_main"
     ]

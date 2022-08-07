@@ -191,7 +191,7 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
          update_block_light.mutable_block_light()->Add(std::move(chunk_block_light));
       }
 
-      auto *chunk = update_block_light.mutable_block_light(id);
+      auto *chunk         = update_block_light.mutable_block_light(id);
       auto *chunk_section = dynamic_cast<world::Section *>(&section_slice->operator[](section));
       if (chunk_section == nullptr)
          continue;
@@ -199,8 +199,11 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
       proto::event::clientbound::v1::SectionBlockLight section_block_light;
       section_block_light.set_y(section.y);
       section_block_light.mutable_block_light()->resize(world::LightContainer::raw_size);
-      if (chunk_section->m_block_light != nullptr)
-         std::copy(chunk_section->m_block_light->raw().begin(), chunk_section->m_block_light->raw().end(), section_block_light.mutable_block_light()->begin());
+
+      auto light = chunk_section->light_data(game::LightType::Block);
+      if (light != nullptr)
+         std::copy(light->raw().begin(), light->raw().end(),
+                   section_block_light.mutable_block_light()->begin());
 
       chunk->mutable_sections()->Add(std::move(section_block_light));
    }

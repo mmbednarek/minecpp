@@ -552,10 +552,31 @@ class Direction final : public Direction_Base
    return Direction::North;
 }
 
-enum class LightType
+enum class LightTypeValue
 {
    Block,
    Sky
+};
+
+using LightType_Base = mb::enum_wrapper<LightTypeValue, "block", "sky">;
+
+class LightType final : public LightType_Base
+{
+ public:
+   MB_ENUM_TRAITS(LightType);
+
+   MB_ENUM_FIELD(Block)
+   MB_ENUM_FIELD(Sky)
+
+   [[nodiscard]] static constexpr LightType from_proto(const proto::common::v1::LightType type)
+   {
+      return LightType{static_cast<LightTypeValue>(type)};
+   }
+
+   [[nodiscard]] constexpr proto::common::v1::LightType to_proto()
+   {
+      return static_cast<proto::common::v1::LightType>(index());
+   }
 };
 
 enum class HalfValue

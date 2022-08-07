@@ -31,12 +31,10 @@ struct Chunk
 
    void as_proto(minecpp::proto::chunk::v1::Chunk *chunk);
    void create_empty_section(int8_t sec);
-   void set_block(int x, int y, int z, game::BlockStateId state);
-   game::BlockStateId get_block(int x, int y, int z);
-   mb::result<game::LightValue> get_block_light(game::BlockPosition position);
-   mb::result<game::LightValue> get_sky_light(game::BlockPosition position);
-   mb::emptyres set_block_light(game::BlockPosition position, game::LightValue value);
-   mb::emptyres set_sky_light(game::BlockPosition position, game::LightValue value);
+   void set_block(game::BlockPosition position, game::BlockStateId state);
+   game::BlockStateId get_block(game::BlockPosition position);
+   mb::result<game::LightValue> get_light(game::LightType type, game::BlockPosition position);
+   mb::emptyres set_light(game::LightType type, game::BlockPosition position, game::LightValue value);
    int height_at(int x, int z);
    void put_section(int8_t level, Section sec);
    std::array<short, 256> get_height_map();
@@ -46,7 +44,7 @@ struct Chunk
    void free_ref(game::PlayerId player_id);
    [[nodiscard]] game::ChunkPosition pos() const;
 
-   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &section) noexcept;
    minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;
 
  private:

@@ -84,7 +84,7 @@ grpc::Status Service::GetBlock(::grpc::ServerContext *context,
    auto block_pos = game::BlockPosition::from_proto(*request);
    auto chunk_pos = block_pos.chunk_position();
    auto chunk     = MCPP_GRPC_TRY(chunks.get_chunk(chunk_pos));
-   response->set_block_state(chunk.get_block(block_pos.offset_x(), block_pos.y, block_pos.offset_z()));
+   response->set_block_state(chunk.get_block(block_pos));
    return {};
 }
 
@@ -101,13 +101,8 @@ Service::GetLightLevel(::grpc::ServerContext * /*context*/,
       return {grpc::StatusCode::INVALID_ARGUMENT, chunk.err()->msg()};
    }
 
-   mb::result<game::LightValue> lightLevel{0};
-   switch (request->light_type()) {
-   case proto::common::v1::Block: lightLevel = chunk->get_block_light(block_pos); break;
-   case proto::common::v1::Sky: lightLevel = chunk->get_sky_light(block_pos); break;
-   default: return {grpc::StatusCode::INVALID_ARGUMENT, ""};
-   }
-
+   mb::result<game::LightValue> lightLevel =
+           chunk->get_light(game::LightType::from_proto(request->light_type()), block_pos);
    if (lightLevel.has_failed()) {
       return {grpc::StatusCode::INVALID_ARGUMENT, lightLevel.err()->msg()};
    }
@@ -129,17 +124,8 @@ Service::SetLightLevel(::grpc::ServerContext * /*context*/,
       return {grpc::StatusCode::INVALID_ARGUMENT, chunk.err()->msg()};
    }
 
-   mb::emptyres result{mb::ok};
-   switch (request->light_type()) {
-   case proto::common::v1::Block:
-      result = chunk->set_block_light(block_pos, static_cast<mb::u8>(request->level().level()));
-      break;
-   case proto::common::v1::Sky:
-      result = chunk->set_sky_light(block_pos, static_cast<mb::u8>(request->level().level()));
-      break;
-   default: return {grpc::StatusCode::INVALID_ARGUMENT, ""};
-   }
-
+   auto result = chunk->set_light(game::LightType::from_proto(request->light_type()), block_pos,
+                                  static_cast<game::LightValue>(request->level().level()));
    if (result.has_failed()) {
       return {grpc::StatusCode::INVALID_ARGUMENT, result.err()->msg()};
    }
@@ -164,7 +150,7 @@ grpc::Status Service::ApplySlice(::grpc::ServerContext *context,
                                  ::minecpp::proto::service::chunk_storage::v1::EmptyResponse *response)
 {
    auto section_slice = world::SectionSlice::from_proto(*request);
-   auto res = chunks.apply_slice(section_slice);
+   auto res           = chunks.apply_slice(section_slice);
    if (res.has_failed()) {
       return {grpc::StatusCode::INVALID_ARGUMENT, res.err()->msg()};
    }

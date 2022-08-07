@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <minecpp/world/Section.h>
 
-using minecpp::container::PalettedVector;
 using minecpp::game::BlockStateId;
 using minecpp::world::Section;
 
@@ -14,9 +13,9 @@ TEST(Section, ProtoTest)
    }
 
    Section section{};
-   section.m_block_light.fill(4096, 1);
-   section.m_sky_light.fill(4096, 2);
-   section.m_data = {ids.begin(), ids.end()};
+   section.fill_light(minecpp::game::LightType::Block);
+   section.fill_light(minecpp::game::LightType::Sky);
+   section.data() = {ids.begin(), ids.end()};
 
    auto proto = section.to_proto();
 
@@ -31,6 +30,6 @@ TEST(Section, ProtoTest)
 
    ASSERT_EQ(decoded_section.data().size(), 4096);
    for (std::size_t i{0}; i < 4096; ++i) {
-      ASSERT_EQ(decoded_section.m_data[i], section.m_data[i]);
+      ASSERT_EQ(decoded_section.data()[i], section.data()[i]);
    }
 }

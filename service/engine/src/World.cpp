@@ -164,7 +164,7 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
 mb::result<game::LightValue> World::get_light(game::LightType light_type, const game::BlockPosition &pos)
 {
    proto::service::chunk_storage::v1::GetLightLevelRequest req{};
-   req.set_light_type(static_cast<proto::common::v1::LightType>(light_type));
+   req.set_light_type(light_type.to_proto());
    *req.mutable_position() = pos.to_proto();
 
    proto::common::v1::LightLevel level;
@@ -182,7 +182,7 @@ mb::emptyres World::set_light(game::LightType light_type, const game::BlockPosit
                               game::LightValue level)
 {
    proto::service::chunk_storage::v1::SetLightLevelRequest req{};
-   req.set_light_type(static_cast<proto::common::v1::LightType>(light_type));
+   req.set_light_type(light_type.to_proto());
    req.mutable_level()->set_level(static_cast<mb::u32>(level));
    *req.mutable_position() = pos.to_proto();
 

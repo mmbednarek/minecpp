@@ -92,7 +92,7 @@ result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t state)
       }
    }
 
-   m_chunks[hashed_pos]->set_block(pos.offset_x(), y, pos.offset_z(), state);
+   m_chunks[hashed_pos]->set_block(pos, state);
 
    if (auto res = save_chunk(chunk_pos.x, chunk_pos.z); !res.ok()) {
       spdlog::error("could not save chunk: {}", res.err()->msg());
@@ -103,7 +103,7 @@ result<mb::empty> ChunkManager::set_block(int x, int y, int z, uint32_t state)
 }
 
 result<uuid> ChunkManager::add_refs(uuid engine_id, game::PlayerId player_id,
-                                        std::vector<minecpp::game::ChunkPosition> coords)
+                                    std::vector<minecpp::game::ChunkPosition> coords)
 {
    uuid target_engine{};
    for (const auto &coord : coords) {
@@ -116,7 +116,7 @@ result<uuid> ChunkManager::add_refs(uuid engine_id, game::PlayerId player_id,
 }
 
 result<mb::empty> ChunkManager::free_refs(game::PlayerId player_id,
-                                              std::vector<minecpp::game::ChunkPosition> coords)
+                                          std::vector<minecpp::game::ChunkPosition> coords)
 {
    for (const auto &coord : coords) {
       auto chunk = MB_TRY(get_chunk(coord.x, coord.z));
