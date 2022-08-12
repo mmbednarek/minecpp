@@ -35,7 +35,7 @@ WORKDIR /root/grpc/third_party/protobuf
 RUN ./autogen.sh
 RUN ./configure --prefix=/usr --enable-shared
 RUN make -j$(nproc)
-RUN make check -j$(nproc)
+RUN make check -j$(nproc); exit 0
 RUN make install
 RUN ldconfig
 WORKDIR /root/grpc
