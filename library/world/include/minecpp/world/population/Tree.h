@@ -9,45 +9,82 @@
 
 namespace minecpp::world::population {
 
+struct LeaveBlob
+{
+   int x{}, y{}, z{}, r{};
+
+   LeaveBlob() = default;
+
+   explicit LeaveBlob(random::JavaRandom &random, int range, int min_size, int max_size) :
+       x(random.next_int(static_cast<uint32_t>(2 * range)) - range),
+       y(random.next_int(static_cast<uint32_t>(2 * range)) - range),
+       z(random.next_int(static_cast<uint32_t>(2 * range)) - range),
+       r(random.next_int(static_cast<uint32_t>(max_size - min_size)) + min_size)
+   {
+   }
+};
+
 class RandomTree final : public PopObject
 {
    random::JavaRandom m_java_random;
-   int x1, x2, x3;
-   int y1, y2, y3;
-   int z1, z2, z3;
-   int r1, r2, r3;
+   std::vector<LeaveBlob> m_leave_blobs;
 
-   int x_min, x_max;
-   int y_min, y_max;
-   int z_min, z_max;
+   int x_min{}, x_max{};
+   int y_min{}, y_max{};
+   int z_min{}, z_max{};
 
-   int m_width, m_length, m_height;
+   int m_width{}, m_length{}, m_height{};
 
  public:
    explicit RandomTree(unsigned seed) :
-       m_java_random(seed),
-       x1(m_java_random.next_int(6) - 3),
-       x2(m_java_random.next_int(6) - 3),
-       x3(m_java_random.next_int(6) - 3),
-       y1(m_java_random.next_int(6) - 1),
-       y2(m_java_random.next_int(6) - 1),
-       y3(m_java_random.next_int(6) - 1),
-       z1(m_java_random.next_int(6) - 3),
-       z2(m_java_random.next_int(6) - 3),
-       z3(m_java_random.next_int(6) - 3),
-       r1(m_java_random.next_int(3) + 3),
-       r2(m_java_random.next_int(3) + 3),
-       r3(m_java_random.next_int(3) + 3),
-       x_min(std::min(x1 - r1, std::min(x2 - r2, x3 - r3))),
-       x_max(std::max(x1 + r1, std::max(x2 + r2, x3 + r3))),
-       y_min(std::min(y1 - r1, std::min(y2 - r2, y3 - r3))),
-       y_max(std::max(y1 + r1, std::max(y2 + r2, y3 + r3))),
-       z_min(std::min(z1 - r1, std::min(z2 - r2, z3 - r3))),
-       z_max(std::max(z1 + r1, std::max(z2 + r2, z3 + r3))),
-       m_width(x_max - x_min),
-       m_length(z_max - z_min),
-       m_height(y_max - y_min)
+       m_java_random(seed)
    {
+      auto big_count = 1 + m_java_random.next_int(2);
+      auto small_count = 3 + m_java_random.next_int(5);
+
+      m_leave_blobs.resize(static_cast<std::size_t>(big_count + small_count));
+      std::generate(m_leave_blobs.begin(), m_leave_blobs.begin() + big_count,
+                    [this]() { return LeaveBlob{m_java_random, 2, 4, 6}; });
+      std::generate(m_leave_blobs.begin() + big_count, m_leave_blobs.end(),
+                    [this]() { return LeaveBlob{m_java_random, 3, 1, 4}; });
+
+      x_min = std::numeric_limits<int>::max();
+      y_min = std::numeric_limits<int>::max();
+      z_min = std::numeric_limits<int>::max();
+      x_max = std::numeric_limits<int>::min();
+      y_max = std::numeric_limits<int>::min();
+      z_max = std::numeric_limits<int>::min();
+
+      for (auto &blob : m_leave_blobs) {
+         if ((blob.x - blob.r) < x_min) {
+            x_min = (blob.x - blob.r);
+         }
+         if ((blob.y - blob.r) < y_min) {
+            y_min = (blob.y - blob.r);
+         }
+         if ((blob.z - blob.r) < z_min) {
+            z_min = (blob.z - blob.r);
+         }
+         if ((blob.x + blob.r) > x_max) {
+            x_max = (blob.x + blob.r);
+         }
+         if ((blob.y + blob.r) > y_max) {
+            y_max = (blob.y + blob.r);
+         }
+         if ((blob.z + blob.r) > z_max) {
+            z_max = (blob.z + blob.r);
+         }
+      }
+
+      ++x_max;
+      ++y_max;
+      ++z_max;
+
+      y_min -= 2;
+
+      m_width  = x_max - x_min;
+      m_length = z_max - z_min;
+      m_height = y_max - y_min;
    }
 
    [[nodiscard]] int width() const override
@@ -57,7 +94,7 @@ class RandomTree final : public PopObject
 
    [[nodiscard]] int height() const override
    {
-      return m_height + 2;
+      return m_height;
    }
 
    [[nodiscard]] int length() const override

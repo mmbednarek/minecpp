@@ -161,7 +161,7 @@ result<world::SectionSlice> ChunkManager::get_slice(game::SectionRange range)
       auto chunk = get_chunk(section_position.chunk_position);
       MB_VERIFY(chunk);
 
-      result[section_position] = chunk->m_sections[static_cast<mb::i8>(section_position.y)];
+      result[section_position] = chunk->m_sections.at(static_cast<mb::i8>(section_position.y));
    }
 
    return result;
@@ -177,7 +177,7 @@ mb::emptyres ChunkManager::apply_slice(world::SectionSlice &slice)
       if (section == nullptr)
          continue;
 
-      chunk->m_sections[static_cast<mb::i8>(section_position.y)] = *section;
+      chunk->m_sections.emplace(static_cast<mb::i8>(section_position.y), *section);
    }
 }
 

@@ -49,6 +49,19 @@ Section SectionBuilder::build()
    return section;
 }
 
+namespace {
+std::array<game::BlockStateId, 4096> c_empty_section_data{};
+}
+
+Section::Section(int y) :
+    m_reference_count{0},
+    m_y{y},
+    m_data{c_empty_section_data.begin(), c_empty_section_data.end()},
+    m_block_light(std::make_unique<LightContainer>()),
+    m_sky_light(std::make_unique<LightContainer>())
+{
+}
+
 Section::Section(int refCount, container::PalettedVector<game::BlockStateId> data,
                  std::vector<game::LightSource> mLightSources) :
     m_reference_count(refCount),
@@ -168,7 +181,7 @@ Section &Section::operator=(const Section &section)
 
 Section Section::from_nbt(const nbt::chunk::v1::Section &section)
 {
-   Section result;
+   Section result{section.y};
 
    result.m_y         = section.y;
    result.m_sky_light = std::make_unique<LightContainer>(
@@ -213,8 +226,8 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
       result.block_light = {m_block_light->raw().begin(), m_block_light->raw().end()};
 
    result.palette.resize(m_data.palette().size());
-   std::transform(m_data.palette().begin(), m_data.palette().end(),
-                  result.palette.begin(), [](const game::BlockStateId state) {
+   std::transform(m_data.palette().begin(), m_data.palette().end(), result.palette.begin(),
+                  [](const game::BlockStateId state) {
                      nbt::chunk::v1::PaletteItem item;
                      auto [block_id, state_value] = repository::StateManager::the().parse_block_id(state);
                      auto res                     = repository::Block::the().get_by_id(block_id);
@@ -228,10 +241,21 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
 
    result.block_states.resize(m_data.indices().raw().size());
 
-   std::copy(m_data.indices().raw().begin(), m_data.indices().raw().end(),
-             result.block_states.begin());
+   std::copy(m_data.indices().raw().begin(), m_data.indices().raw().end(), result.block_states.begin());
 
    return result;
+}
+
+void Section::set_block(game::BlockPosition position, game::BlockStateId id)
+{
+   auto source_block = get_block(position);
+   if (source_block == id)
+      return;
+
+   if (source_block == 0)
+      ++m_reference_count;
+
+   m_data.set(position.section_offset(), id);
 }
 
 }// namespace minecpp::world

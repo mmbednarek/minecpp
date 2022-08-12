@@ -31,7 +31,7 @@ mb::emptyres SectionSlice::set_light(game::LightType light_type, const game::Blo
 
 world::Section &SectionSlice::operator[](game::ChunkSectionPosition position)
 {
-   return m_sections[position.hash()];
+   return m_sections.at(position.hash());
 }
 
 SectionSlice::SectionSlice(const game::SectionRange &range,
@@ -45,7 +45,7 @@ SectionSlice SectionSlice::from_proto(const proto::chunk::v1::SectionSlice &slic
 {
    std::unordered_map<mb::u64, Section> sections{};
    for (auto &sec : slice.sections()) {
-      sections[game::ChunkSectionPosition::from_proto(sec.position()).hash()] = Section::from_proto(sec.section());
+      sections.emplace(game::ChunkSectionPosition::from_proto(sec.position()).hash(), Section::from_proto(sec.section()));
    }
    return {game::SectionRange::from_proto(slice.range()), std::move(sections)};
 }
@@ -57,7 +57,7 @@ proto::chunk::v1::SectionSlice SectionSlice::to_proto()
    for (auto pos : m_range) {
       proto::chunk::v1::SectionWithPosition section_with_position;
       *section_with_position.mutable_position() = pos.to_proto();
-      *section_with_position.mutable_section() = m_sections[pos.hash()].to_proto();
+      *section_with_position.mutable_section() = m_sections.at(pos.hash()).to_proto();
       result.mutable_sections()->Add(std::move(section_with_position));
    }
    return result;

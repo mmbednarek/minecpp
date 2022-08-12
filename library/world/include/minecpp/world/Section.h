@@ -20,7 +20,7 @@ using LightContainerUPtr = std::unique_ptr<LightContainer>;
 class Section final : public game::ISection
 {
  public:
-   Section() = default;
+   Section(int y);
 
    Section(int refCount, container::PalettedVector<game::BlockStateId> data,
            std::vector<game::LightSource> mLightSources);
@@ -77,10 +77,7 @@ class Section final : public game::ISection
       return m_data.at(position.section_offset());
    }
 
-   void set_block(game::BlockPosition position, game::BlockStateId id)
-   {
-      m_data.set(position.section_offset(), id);
-   }
+   void set_block(game::BlockPosition position, game::BlockStateId id);
 
    void fill_light(game::LightType type) {
       switch (type) {

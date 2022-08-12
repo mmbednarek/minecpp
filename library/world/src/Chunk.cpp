@@ -64,7 +64,7 @@ constexpr uint32_t coord_to_offset(int x, int y, int z)
 
 void Chunk::create_empty_section(int8_t sec)
 {
-   m_sections[sec] = Section{};
+   m_sections.emplace(sec, Section{sec});
 }
 
 void Chunk::set_block(game::BlockPosition position, game::BlockStateId state)
@@ -151,7 +151,7 @@ int Chunk::height_at(int x, int z)
 
 void Chunk::put_section(int8_t level, Section sec)
 {
-   m_sections[level] = std::move(sec);
+   m_sections.emplace(level, std::move(sec));
 }
 
 std::array<short, 256> Chunk::get_height_map()
