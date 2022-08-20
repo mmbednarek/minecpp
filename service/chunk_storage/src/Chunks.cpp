@@ -30,7 +30,7 @@ world::Chunk &ChunkManager::get_incomplete_chunk(int x, int z)
       return *iter->second;
    }
 
-   gen.generate_terrain(x, z);
+   gen.generate_terrain({x, z});
    iter = m_chunks.find(hash);
    return *iter->second;
 }
@@ -59,7 +59,7 @@ result<world::Chunk &> ChunkManager::load_chunk(int x, int z)
    //   auto nbt_chunk = minecpp::nbt::chunk::v1::Chunk::deserialize(chunk_stream);
    //   m_Chunks.hash_chunk_pos(x, z)] = MB_TRY(minecpp::game::Chunk::from_nbt(nbt_chunk));
 
-   gen.generate_chunk(x, z);
+   gen.generate_chunk({x, z});
    auto &chunk = *m_chunks.at(hash_chunk_pos(x, z));
    return chunk;
 }
@@ -134,15 +134,15 @@ result<int> ChunkManager::height_at(int x, int z)
    return res.get().height_at(x, z);
 }
 
-result<mb::empty> ChunkManager::put_chunk(int x, int z, std::unique_ptr<world::Chunk> chunk)
+mb::result<mb::empty> ChunkManager::put_chunk(game::ChunkPosition position, std::unique_ptr<world::Chunk> chunk)
 {
-   m_chunks[hash_chunk_pos(x, z)] = std::move(chunk);
+   m_chunks[hash_chunk_pos(position.x, position.z)] = std::move(chunk);
    return mb::ok;
 }
 
-result<world::ChunkState> ChunkManager::get_chunk_state(int x, int z)
+result<world::ChunkState> ChunkManager::get_chunk_state(game::ChunkPosition position)
 {
-   auto iter = m_chunks.find(hash_chunk_pos(x, z));
+   auto iter = m_chunks.find(hash_chunk_pos(position.x, position.z));
    if (iter == m_chunks.end()) {
       return world::ChunkState::ABSENT;
    }

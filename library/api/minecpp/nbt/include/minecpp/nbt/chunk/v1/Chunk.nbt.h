@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::chunk::v1 {
 
-class ArmorItem
-{
+class ArmorItem {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
    }
 
@@ -29,12 +27,10 @@ class ArmorItem
    static ArmorItem deserialize(std::istream &in);
 };
 
-class Attribute
-{
+class Attribute {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
          if (name == "Base") {
@@ -62,12 +58,10 @@ class Attribute
    static Attribute deserialize(std::istream &in);
 };
 
-class Memories
-{
+class Memories {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
    }
 
@@ -79,12 +73,10 @@ class Memories
    static Memories deserialize(std::istream &in);
 };
 
-class Brain
-{
+class Brain {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Memories>) {
          if (name == "memories") {
@@ -104,12 +96,10 @@ class Brain
    static Brain deserialize(std::istream &in);
 };
 
-class HandItem
-{
+class HandItem {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
    }
 
@@ -121,12 +111,10 @@ class HandItem
    static HandItem deserialize(std::istream &in);
 };
 
-class Entity
-{
+class Entity {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Brain>) {
          if (name == "Brain") {
@@ -319,12 +307,10 @@ class Entity
    static Entity deserialize(std::istream &in);
 };
 
-class Heightmaps
-{
+class Heightmaps {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::int64_t>>) {
          if (name == "MOTION_BLOCKING") {
@@ -369,12 +355,10 @@ class Heightmaps
    static Heightmaps deserialize(std::istream &in);
 };
 
-class PaletteItem
-{
+class PaletteItem {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, minecpp::nbt::CompoundContent>) {
          if (name == "Properties") {
@@ -402,12 +386,10 @@ class PaletteItem
    static PaletteItem deserialize(std::istream &in);
 };
 
-class Section
-{
+class Section {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "Y") {
@@ -456,12 +438,10 @@ class Section
    static Section deserialize(std::istream &in);
 };
 
-class Start
-{
+class Start {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "id") {
@@ -481,12 +461,10 @@ class Start
    static Start deserialize(std::istream &in);
 };
 
-class Structures
-{
+class Structures {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::map<std::string, Start>>) {
          if (name == "Starts") {
@@ -506,12 +484,10 @@ class Structures
    static Structures deserialize(std::istream &in);
 };
 
-class CarvingMasks
-{
+class CarvingMasks {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::uint8_t>>) {
          if (name == "AIR") {
@@ -536,12 +512,10 @@ class CarvingMasks
    static CarvingMasks deserialize(std::istream &in);
 };
 
-class Level
-{
+class Level {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, CarvingMasks>) {
          if (name == "CarvingMasks") {
@@ -656,12 +630,10 @@ class Level
    static Level deserialize(std::istream &in);
 };
 
-class Chunk
-{
+class Chunk {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Level>) {
          if (name == "Level") {
@@ -689,5 +661,5 @@ class Chunk
    static Chunk deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::chunk::v1
+}
 #endif//MINECPP_NBT_CHUNK_V1_CHUNK_H

@@ -29,8 +29,8 @@ class ChunkManager : public world::Chunks
    explicit ChunkManager(Regions regions);
 
    world::Chunk &get_incomplete_chunk(int x, int z) override;
-   mb::result<mb::empty> put_chunk(int x, int z, std::unique_ptr<world::Chunk> chunk) override;
-   mb::result<world::ChunkState> get_chunk_state(int x, int z) override;
+   mb::result<mb::empty> put_chunk(game::ChunkPosition position, std::unique_ptr<world::Chunk> chunk) override;
+   mb::result<world::ChunkState> get_chunk_state(game::ChunkPosition position) override;
    mb::result<world::Chunk &> get_chunk(int x, int y);
    mb::result<world::Chunk &> get_chunk(const game::ChunkPosition &pos);
    mb::result<world::Chunk &> load_chunk(int x, int y);

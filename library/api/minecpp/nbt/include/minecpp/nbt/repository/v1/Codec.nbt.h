@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::repository::v1 {
 
-class DimensionTypeDescription
-{
+class DimensionTypeDescription {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
          if (name == "coordinate_scale") {
@@ -137,12 +135,10 @@ class DimensionTypeDescription
    static DimensionTypeDescription deserialize(std::istream &in);
 };
 
-class DimensionTypeEntry
-{
+class DimensionTypeEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, DimensionTypeDescription>) {
          if (name == "element") {
@@ -178,12 +174,10 @@ class DimensionTypeEntry
    static DimensionTypeEntry deserialize(std::istream &in);
 };
 
-class DimensionTypes
-{
+class DimensionTypes {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "type") {
@@ -211,12 +205,10 @@ class DimensionTypes
    static DimensionTypes deserialize(std::istream &in);
 };
 
-class BiomeMusic
-{
+class BiomeMusic {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "max_delay") {
@@ -257,12 +249,10 @@ class BiomeMusic
    static BiomeMusic deserialize(std::istream &in);
 };
 
-class BiomeAdditionsSound
-{
+class BiomeAdditionsSound {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
          if (name == "tick_chance") {
@@ -290,12 +280,10 @@ class BiomeAdditionsSound
    static BiomeAdditionsSound deserialize(std::istream &in);
 };
 
-class BiomeMoodSound
-{
+class BiomeMoodSound {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
          if (name == "tick_delay") {
@@ -333,12 +321,10 @@ class BiomeMoodSound
    static BiomeMoodSound deserialize(std::istream &in);
 };
 
-class BiomeParticleOptions
-{
+class BiomeParticleOptions {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "type") {
@@ -358,12 +344,10 @@ class BiomeParticleOptions
    static BiomeParticleOptions deserialize(std::istream &in);
 };
 
-class BiomeParticle
-{
+class BiomeParticle {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, BiomeParticleOptions>) {
          if (name == "type") {
@@ -391,12 +375,10 @@ class BiomeParticle
    static BiomeParticle deserialize(std::istream &in);
 };
 
-class BiomeEffects
-{
+class BiomeEffects {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, BiomeAdditionsSound>) {
          if (name == "additions_sound") {
@@ -486,12 +468,10 @@ class BiomeEffects
    static BiomeEffects deserialize(std::istream &in);
 };
 
-class BiomeDescription
-{
+class BiomeDescription {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, BiomeEffects>) {
          if (name == "effects") {
@@ -552,12 +532,10 @@ class BiomeDescription
    static BiomeDescription deserialize(std::istream &in);
 };
 
-class BiomeEntry
-{
+class BiomeEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, BiomeDescription>) {
          if (name == "element") {
@@ -593,12 +571,10 @@ class BiomeEntry
    static BiomeEntry deserialize(std::istream &in);
 };
 
-class Biomes
-{
+class Biomes {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "type") {
@@ -626,12 +602,10 @@ class Biomes
    static Biomes deserialize(std::istream &in);
 };
 
-class ChatDecorationStyle
-{
+class ChatDecorationStyle {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (name == "italic") {
@@ -664,12 +638,10 @@ class ChatDecorationStyle
    static ChatDecorationStyle deserialize(std::istream &in);
 };
 
-class ChatDetails
-{
+class ChatDetails {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, ChatDecorationStyle>) {
          if (name == "style") {
@@ -705,12 +677,10 @@ class ChatDetails
    static ChatDetails deserialize(std::istream &in);
 };
 
-class ChatTypeDescription
-{
+class ChatTypeDescription {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, ChatDetails>) {
          if (name == "chat") {
@@ -735,12 +705,10 @@ class ChatTypeDescription
    static ChatTypeDescription deserialize(std::istream &in);
 };
 
-class ChatTypeEntry
-{
+class ChatTypeEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, ChatTypeDescription>) {
          if (name == "element") {
@@ -776,12 +744,10 @@ class ChatTypeEntry
    static ChatTypeEntry deserialize(std::istream &in);
 };
 
-class ChatTypes
-{
+class ChatTypes {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "type") {
@@ -809,12 +775,10 @@ class ChatTypes
    static ChatTypes deserialize(std::istream &in);
 };
 
-class Registry
-{
+class Registry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Biomes>) {
          if (name == "minecraft:worldgen/biome") {
@@ -850,5 +814,5 @@ class Registry
    static Registry deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::repository::v1
+}
 #endif//MINECPP_NBT_REPOSITORY_V1_CODEC_H

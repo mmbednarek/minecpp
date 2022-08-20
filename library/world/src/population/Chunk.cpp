@@ -92,7 +92,8 @@ void ChunkPlacements::populate_chunk(Chunk &chunk)
       for (int y = 0; y < obj.height(); ++y) {
          auto state = obj.block_at(placement.x, y, placement.z);
          if (state != 0) {
-            chunk.set_block(game::BlockPosition{placement.chunk_x, placement.height + y, placement.chunk_z}, state);
+            chunk.set_block(game::BlockPosition{placement.chunk_x, placement.height + y, placement.chunk_z},
+                            state);
          }
       }
    });

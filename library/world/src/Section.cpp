@@ -101,6 +101,8 @@ Section Section::from_proto(const proto::chunk::v1::Section &section)
    result.m_sky_light = std::make_unique<LightContainer>(
            LightContainer::from_raw(section.sky_light().begin(), section.sky_light().end()));
 
+   result.m_y = section.y();
+
    return result;
 }
 
@@ -109,6 +111,7 @@ proto::chunk::v1::Section Section::to_proto() const
    proto::chunk::v1::Section result{};
 
    result.set_ref_count(m_reference_count);
+   result.set_y(m_y);
 
    result.mutable_palette()->Resize(static_cast<int>(m_data.palette().size()), 0);
    std::copy(m_data.palette().begin(), m_data.palette().end(), result.mutable_palette()->begin());
