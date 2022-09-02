@@ -16,11 +16,12 @@ class TightArray
    using difference_type = ssize_t;
    using raw_value_type  = TRaw;
 
-   constexpr static auto raw_size       = CSize / (8 * sizeof(TRaw) / CBits);
-   constexpr static auto items_per_pack = 8u * sizeof(raw_value_type) / CBits;
+   constexpr static auto items_per_pack = 8ull * sizeof(raw_value_type) / CBits;
+   constexpr static auto raw_size =
+           CSize % items_per_pack == 0 ? (CSize / items_per_pack) : (CSize / items_per_pack) + 1;
    constexpr static auto pack_count =
            (CSize % items_per_pack == 0) ? (CSize / items_per_pack) : (1 + CSize / items_per_pack);
-   constexpr static auto bit_mask = (1u << CBits) - 1u;
+   constexpr static auto bit_mask = (1ull << CBits) - 1u;
 
    TightArray() = default;
 
@@ -77,7 +78,7 @@ class TightArray
 
       auto full_pack = m_data[pack];
       full_pack &= ~(bit_mask << offset);
-      full_pack |= (value & bit_mask) << offset;
+      full_pack |= (static_cast<std::uint64_t>(value) & bit_mask) << offset;
       m_data[pack] = full_pack;
    }
 

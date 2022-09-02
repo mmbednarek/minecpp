@@ -28,6 +28,9 @@ bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId 
    if (not verify_source_is_air(world, torch_pos))
       return false;
 
+   // Update the light value
+   world.light_system().add_light_source(torch_pos, 15);
+
    // If we're placing the torch on a floor we should place minecraft:torch
    if (place_face == Face::Top) {
       return world.set_block(torch_pos, BlockState(BLOCK_ID(Torch), 0).block_state_id()).ok();
@@ -36,9 +39,6 @@ bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId 
    // Create new wall torch state and set facing to the same we are placing it
    BlockState state(BLOCK_ID(WallTorch), 0);
    state.set("facing", place_face);
-
-   // Update the light value
-   world.light_system().add_light_source(torch_pos, 15);
 
    // Set the final state id
    return world.set_block(torch_pos, state.block_state_id()).ok();

@@ -18,4 +18,5 @@ message BoolState {
 
 message Block {
     repeated string state_tags = 1 [label = "StateTags"];
+    int32 is_solid = 2 [label = "IsSolid"];
 }

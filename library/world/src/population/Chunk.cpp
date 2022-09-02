@@ -92,7 +92,8 @@ void ChunkPlacements::populate_chunk(Chunk &chunk)
       for (int y = 0; y < obj.height(); ++y) {
          auto state = obj.block_at(placement.x, y, placement.z);
          if (state != 0) {
-            chunk.set_block(game::BlockPosition{placement.chunk_x, placement.height + y, placement.chunk_z}, state);
+            chunk.set_block(game::BlockPosition{placement.chunk_x, placement.height + y, placement.chunk_z},
+                            state);
          }
       }
    });
@@ -106,8 +107,8 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
 
       game::BlockPosition position{};
 
-      position.x = placement.chunk_x + (pos.x - chunk.m_pos_x) * 16;
-      position.z = placement.chunk_z + (pos.z - chunk.m_pos_z) * 16;
+      position.x = placement.chunk_x + (pos.x - chunk.pos().x) * 16;
+      position.z = placement.chunk_z + (pos.z - chunk.pos().z) * 16;
 
       if (position.x < 0 || position.x >= 16 || position.z < 0 || position.z >= 16)
          return;

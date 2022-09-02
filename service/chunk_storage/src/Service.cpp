@@ -84,7 +84,11 @@ grpc::Status Service::GetBlock(::grpc::ServerContext *context,
    auto block_pos = game::BlockPosition::from_proto(*request);
    auto chunk_pos = block_pos.chunk_position();
    auto chunk     = MCPP_GRPC_TRY(chunks.get_chunk(chunk_pos));
-   response->set_block_state(chunk.get_block(block_pos));
+   auto block_state = chunk.get_block(block_pos);
+   if (block_state.has_failed())
+      return {grpc::StatusCode::INTERNAL, "could not obtain block"};
+
+   response->set_block_state(*block_state);
    return {};
 }
 

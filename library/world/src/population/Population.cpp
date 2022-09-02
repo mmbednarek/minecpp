@@ -34,7 +34,7 @@ void Population::populate_chunk(game::ChunkPosition pos)
       get_chunk_placements(pos).populate_neighbour(chunk, pos);
    });
 
-   chunk.m_full = true;
+   chunk.set_full();
 }
 
 ChunkPlacements &Population::load_chunk_placements(Chunk &chunk)

@@ -25,6 +25,7 @@ class StateManager
 
    std::map<game::BlockStateId, game::BlockId> m_state_to_block_id;
    std::map<game::BlockId, game::BlockStateId> m_block_id_to_state;
+   std::vector<bool> m_is_solid;
    game::BlockStateId m_top_state;
 
  public:
@@ -44,10 +45,14 @@ class StateManager
       m_top_state += static_cast<game::BlockStateId>(state_count);
    }
 
+   void cache_block_stats();
+
    [[nodiscard]] game::BlockStateId block_base_state(game::BlockId block_id) const
    {
       return m_block_id_to_state.at(block_id);
    }
+
+   [[nodiscard]] bool is_solid(game::BlockStateId state_id) const;
 };
 
 }// namespace minecpp::repository

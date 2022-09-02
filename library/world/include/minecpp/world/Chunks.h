@@ -17,8 +17,8 @@ class Chunks
    virtual ~Chunks() noexcept = default;
 
    virtual Chunk &get_incomplete_chunk(int x, int z)                                   = 0;
-   virtual mb::result<mb::empty> put_chunk(int x, int z, std::unique_ptr<Chunk> chunk) = 0;
-   virtual mb::result<ChunkState> get_chunk_state(int x, int z)                        = 0;
+   virtual mb::result<mb::empty> put_chunk(game::ChunkPosition position, std::unique_ptr<Chunk> chunk) = 0;
+   virtual mb::result<ChunkState> get_chunk_state(game::ChunkPosition position)        = 0;
 };
 
 }// namespace minecpp::world

@@ -7,6 +7,18 @@
 
 namespace minecpp::game {
 
+class IBlockContainer
+{
+ public:
+   virtual ~IBlockContainer() = default;
+
+   virtual mb::result<LightValue> get_light(LightType light_type, const BlockPosition &pos) = 0;
+   virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
+                                  game::LightValue value)                                   = 0;
+   virtual mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state)  = 0;
+   virtual mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos)                   = 0;
+};
+
 class ISection
 {
  public:
@@ -14,13 +26,9 @@ class ISection
    virtual void reset_light(LightType light_type)          = 0;
 };
 
-class ISectionSlice
+class ISectionSlice : public IBlockContainer
 {
  public:
-   virtual mb::result<LightValue> get_light(LightType light_type, const BlockPosition &pos) = 0;
-   virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                  game::LightValue value)                                   = 0;
-
    virtual ISection &operator[](game::ChunkSectionPosition position) = 0;
 };
 
@@ -31,7 +39,7 @@ class ILightSystem
    virtual mb::emptyres add_light_source(game::BlockPosition position, int strength) = 0;
 };
 
-class World
+class World : public IBlockContainer
 {
  public:
    virtual Notifier &notifier()                                                                       = 0;
@@ -40,12 +48,7 @@ class World
    virtual mb::result<mb::empty> add_refs(PlayerId player, std::vector<game::ChunkPosition> refs)     = 0;
    virtual mb::result<mb::empty> free_refs(PlayerId player, std::vector<game::ChunkPosition> refs)    = 0;
    virtual mb::result<int> height_at(int x, int z)                                                    = 0;
-   virtual mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state)  = 0;
-   virtual mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos)                   = 0;
    virtual mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) = 0;
-   virtual mb::result<game::LightValue> get_light(game::LightType light_type,
-                                                  const game::BlockPosition &pos)                     = 0;
-   virtual mb::emptyres set_light(LightType light_type, const BlockPosition &pos, LightValue level)   = 0;
    virtual mb::result<std::unique_ptr<ISectionSlice>> get_slice(game::SectionRange range)             = 0;
    virtual mb::emptyres apply_slice(ISectionSlice &slice)                                             = 0;
    virtual ILightSystem &light_system()                                                               = 0;

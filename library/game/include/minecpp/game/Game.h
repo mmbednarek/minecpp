@@ -740,4 +740,22 @@ struct LightSource
    }
 };
 
+enum class HeightTypeValues {
+   MotionBlocking,
+   WorldSurface,
+   LightBlocking
+};
+
+using HeightType_Base = mb::enum_wrapper<HeightTypeValues, "MOTION_BLOCKING", "WORLD_SURFACE", "LIGHT_BLOCKING">;
+
+class HeightType final : public HeightType_Base
+{
+ public:
+   MB_ENUM_TRAITS(HeightType);
+
+   MB_ENUM_FIELD(MotionBlocking)
+   MB_ENUM_FIELD(WorldSurface)
+   MB_ENUM_FIELD(LightBlocking)
+};
+
 }// namespace minecpp::game

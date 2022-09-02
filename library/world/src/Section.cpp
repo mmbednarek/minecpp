@@ -72,6 +72,8 @@ Section::Section(int refCount, container::PalettedVector<game::BlockStateId> dat
 
 void Section::reset_light(game::LightType light_type)
 {
+   std::unique_lock lock{m_mutex};
+
    switch (light_type) {
    case game::LightType::Block: m_block_light.reset(); break;
    case game::LightType::Sky: m_sky_light.reset(); break;
@@ -80,6 +82,7 @@ void Section::reset_light(game::LightType light_type)
 
 std::vector<game::LightSource> &Section::light_sources()
 {
+   //  TODO: MUTEX!!!
    return m_light_sources;
 }
 
@@ -101,14 +104,19 @@ Section Section::from_proto(const proto::chunk::v1::Section &section)
    result.m_sky_light = std::make_unique<LightContainer>(
            LightContainer::from_raw(section.sky_light().begin(), section.sky_light().end()));
 
+   result.m_y = section.y();
+
    return result;
 }
 
 proto::chunk::v1::Section Section::to_proto() const
 {
+   std::shared_lock lock{m_mutex};
+
    proto::chunk::v1::Section result{};
 
    result.set_ref_count(m_reference_count);
+   result.set_y(m_y);
 
    result.mutable_palette()->Resize(static_cast<int>(m_data.palette().size()), 0);
    std::copy(m_data.palette().begin(), m_data.palette().end(), result.mutable_palette()->begin());
@@ -140,6 +148,8 @@ proto::chunk::v1::Section Section::to_proto() const
 
 void Section::recalculate_reference_count()
 {
+   std::unique_lock lock{m_mutex};
+
    m_reference_count = 0;
    for (game::BlockStateId state : m_data) {
       BlockState block_state{state};
@@ -169,6 +179,8 @@ Section::Section(const Section &section) :
 
 Section &Section::operator=(const Section &section)
 {
+   std::unique_lock lock{m_mutex};
+
    m_reference_count = section.reference_count();
    m_data            = section.data();
    if (section.m_block_light != nullptr)
@@ -215,6 +227,8 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
 
 [[nodiscard]] nbt::chunk::v1::Section Section::to_nbt() const
 {
+   std::shared_lock lock{m_mutex};
+
    nbt::chunk::v1::Section result;
 
    result.y = static_cast<mb::i8>(m_y);
@@ -248,7 +262,9 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
 
 void Section::set_block(game::BlockPosition position, game::BlockStateId id)
 {
-   auto source_block = get_block(position);
+   std::unique_lock lock{m_mutex};
+
+   auto source_block = get_block_internal(position);
    if (source_block == id)
       return;
 
@@ -256,6 +272,77 @@ void Section::set_block(game::BlockPosition position, game::BlockStateId id)
       ++m_reference_count;
 
    m_data.set(position.section_offset(), id);
+}
+
+const container::PalettedVector<game::BlockStateId> &Section::data() const
+{
+   std::shared_lock lock{m_mutex};
+   return m_data;
+}
+
+int Section::reference_count() const
+{
+   std::shared_lock lock{m_mutex};
+   return m_reference_count;
+}
+
+game::LightValue Section::get_light(game::LightType type, game::BlockPosition position) const
+{
+   std::shared_lock lock{m_mutex};
+   const auto *light = light_data_internal(type);
+   if (light == nullptr)
+      return 0;
+   return light->at(position.section_offset());
+}
+
+void Section::set_light(game::LightType type, game::BlockPosition position, game::LightValue value)
+{
+   std::unique_lock lock{m_mutex};
+   auto *light = light_data_internal(type);
+   if (light == nullptr) {
+      fill_light_internal(type);
+      light = light_data_internal(type);
+   }
+   light->set(position.section_offset(), value);
+}
+
+game::BlockStateId Section::get_block_internal(game::BlockPosition position) const
+{
+   return m_data.at(position.section_offset());
+}
+
+game::BlockStateId Section::get_block(game::BlockPosition position) const
+{
+   std::shared_lock lock{m_mutex};
+   return get_block_internal(position);
+}
+
+void Section::fill_light(game::LightType type) {
+   std::shared_lock lock{m_mutex};
+   fill_light_internal(type);
+}
+
+void Section::fill_light_internal(game::LightType type)
+{
+   switch (type) {
+   case game::LightType::Block: m_block_light = std::make_unique<LightContainer>(); break;
+   case game::LightType::Sky: m_sky_light = std::make_unique<LightContainer>(); break;
+   }
+}
+
+LightContainer *Section::light_data(game::LightType type) const
+{
+   std::shared_lock lock{m_mutex};
+   return light_data_internal(type);
+}
+
+LightContainer *Section::light_data_internal(game::LightType type) const
+{
+   switch (type) {
+   case game::LightType::Block: return m_block_light.get();
+   case game::LightType::Sky: return m_sky_light.get();
+   }
+   return nullptr;
 }
 
 }// namespace minecpp::world

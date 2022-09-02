@@ -4,22 +4,20 @@
 #include <map>
 #include <mb/int.h>
 #include <mb/result.h>
-#include <minecpp/nbt/block/v1/Block.nbt.h>
-#include <minecpp/nbt/item/v1/Item.nbt.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/nbt/Writer.h>
+#include <minecpp/nbt/block/v1/Block.nbt.h>
+#include <minecpp/nbt/item/v1/Item.nbt.h>
 #include <optional>
 #include <string>
 #include <vector>
 
 namespace minecpp::nbt::repository::v1 {
 
-class BlockEntry
-{
+class BlockEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::Block>) {
          if (name == "Block") {
@@ -47,12 +45,10 @@ class BlockEntry
    static BlockEntry deserialize(std::istream &in);
 };
 
-class ItemEntry
-{
+class ItemEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, item::v1::Item>) {
          if (name == "Item") {
@@ -80,12 +76,10 @@ class ItemEntry
    static ItemEntry deserialize(std::istream &in);
 };
 
-class EnumStateEntry
-{
+class EnumStateEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::EnumState>) {
          if (name == "State") {
@@ -113,12 +107,10 @@ class EnumStateEntry
    static EnumStateEntry deserialize(std::istream &in);
 };
 
-class IntStateEntry
-{
+class IntStateEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::IntState>) {
          if (name == "State") {
@@ -146,12 +138,10 @@ class IntStateEntry
    static IntStateEntry deserialize(std::istream &in);
 };
 
-class BoolStateEntry
-{
+class BoolStateEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::BoolState>) {
          if (name == "State") {
@@ -179,12 +169,10 @@ class BoolStateEntry
    static BoolStateEntry deserialize(std::istream &in);
 };
 
-class Repository
-{
+class Repository {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<BlockEntry>>) {
          if (name == "Blocks") {
@@ -236,5 +224,5 @@ class Repository
    static Repository deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::repository::v1
+}
 #endif//MINECPP_NBT_REPOSITORY_V1_REPOSITORY_H

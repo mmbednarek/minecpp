@@ -45,10 +45,14 @@ mb::emptyres load_repository_from_file(std::string_view filename)
       }
       state_manager.add_state(block_id, block_state_count);
 
-      blocks.register_resource(block.tag, game::block::Block(block.tag, block_states));
+      game::block::BlockStats stats{};
+      stats.solid = block.block.is_solid;
+
+      blocks.register_resource(block.tag, game::block::Block(block.tag, block_states, stats));
 
       ++block_id;
    }
+   state_manager.cache_block_stats();
 
    auto &items = Item::the();
    for (auto &nbt_item : repo.items) {

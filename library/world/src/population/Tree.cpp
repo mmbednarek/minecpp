@@ -15,6 +15,8 @@ int RandomTree::block_at(int x, int y, int z) const
    const static auto glass_id =
            repository::encode_block_by_tag("minecraft:glass");
 
+   // BLOCK_STATE_ID(Grass, {"snowy", "false"})
+
    if (x == (m_width / 2) && z == (m_length / 2) && y < 4 * m_height / 5) {
       return wood_id;
    }
@@ -26,7 +28,7 @@ int RandomTree::block_at(int x, int y, int z) const
    for (auto &blob: m_leave_blobs) {
       int dx = abs(blob.x - xx);
       int dz = abs(blob.y - zz);
-      int dy = abs(blob.z - yy);
+      int dy = 2 * abs(blob.z - yy);
 
       auto d = dx * dx + dy * dy + dz * dz;
 

@@ -13,9 +13,10 @@ class Generator
  public:
    explicit Generator(Chunks &provider, std::uint64_t seed);
 
-   void generate_chunk(int x, int z);
-   void generate_terrain(int x, int z);
-   void populate_chunk(int x, int z);
+   void generate_chunk(game::ChunkPosition position);
+   void generate_terrain(game::ChunkPosition position);
+   void generate_light(game::ChunkPosition position);
+   void populate_chunk(game::ChunkPosition position);
 };
 
 }// namespace minecpp::world
