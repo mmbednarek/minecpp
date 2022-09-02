@@ -38,7 +38,7 @@ world::Chunk &ChunkManager::get_incomplete_chunk(int x, int z)
 result<world::Chunk &> ChunkManager::get_chunk(int x, int z)
 {
    auto iter = m_chunks.find(hash_chunk_pos(x, z));
-   if (iter != m_chunks.end() && iter->second->m_full) {
+   if (iter != m_chunks.end() && iter->second->full()) {
       return *iter->second;
    }
    return load_chunk(x, z);
@@ -147,7 +147,7 @@ result<world::ChunkState> ChunkManager::get_chunk_state(game::ChunkPosition posi
       return world::ChunkState::ABSENT;
    }
 
-   if (iter->second->m_full) {
+   if (iter->second->full()) {
       return world::ChunkState::COMPLETE;
    }
 
@@ -161,7 +161,10 @@ result<world::SectionSlice> ChunkManager::get_slice(game::SectionRange range)
       auto chunk = get_chunk(section_position.chunk_position);
       MB_VERIFY(chunk);
 
-      result[section_position] = chunk->m_sections.at(static_cast<mb::i8>(section_position.y));
+      auto section = chunk->section(static_cast<mb::i8>(section_position.y));
+      if (section.has_failed())
+         continue;
+      result[section_position] = *section;
    }
 
    return result;
@@ -177,8 +180,10 @@ mb::emptyres ChunkManager::apply_slice(world::SectionSlice &slice)
       if (section == nullptr)
          continue;
 
-      chunk->m_sections.emplace(static_cast<mb::i8>(section_position.y), *section);
+      chunk->put_section(static_cast<mb::i8>(section_position.y), *section);
    }
+
+   return mb::ok;
 }
 
 }// namespace minecpp::service::chunk_storage

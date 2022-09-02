@@ -52,6 +52,7 @@ mb::emptyres load_repository_from_file(std::string_view filename)
 
       ++block_id;
    }
+   state_manager.cache_block_stats();
 
    auto &items = Item::the();
    for (auto &nbt_item : repo.items) {

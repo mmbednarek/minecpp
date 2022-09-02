@@ -56,7 +56,7 @@ void Chunk::create_empty_section(int8_t sec)
    m_sections.emplace(sec, Section{sec});
 }
 
-void Chunk::set_block(game::BlockPosition position, game::BlockStateId state)
+mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockStateId state)
 {
    auto sec  = static_cast<std::int8_t>(position.y / 16);
    auto iter = m_sections.find(sec);
@@ -72,8 +72,7 @@ void Chunk::set_block(game::BlockPosition position, game::BlockStateId state)
 
    BlockState blockState{state};
    auto block = repository::Block::the().get_by_id(blockState.block_id());
-   if (block.has_failed())
-      return;
+   MB_VERIFY(block)
 
    if (block->stats().solid) {
       section.set_light(game::LightType::Block, position, 0);
@@ -83,20 +82,22 @@ void Chunk::set_block(game::BlockPosition position, game::BlockStateId state)
          set_height(game::HeightType::LightBlocking, position, position.y);
       }
    }
+
+   return mb::ok;
 }
 
-game::BlockStateId Chunk::get_block(game::BlockPosition position)
+mb::result<game::BlockStateId> Chunk::get_block(const game::BlockPosition &position)
 {
    auto section_id = static_cast<int8_t>(position.y / 16);
 
    auto it_section = m_sections.find(section_id);
    if (it_section == m_sections.end())
-      return 0;
+      return mb::error("section is empty");
 
    return it_section->second.get_block(position);
 }
 
-mb::result<game::LightValue> Chunk::get_light(game::LightType type, game::BlockPosition position)
+mb::result<game::LightValue> Chunk::get_light(game::LightType type, const game::BlockPosition &position)
 {
    auto section = section_from_y_level(position.y);
    if (section.has_failed()) {
@@ -106,7 +107,7 @@ mb::result<game::LightValue> Chunk::get_light(game::LightType type, game::BlockP
    return section->get_light(type, position);
 }
 
-mb::emptyres Chunk::set_light(game::LightType type, game::BlockPosition position, game::LightValue value)
+mb::emptyres Chunk::set_light(game::LightType type, const game::BlockPosition &position, game::LightValue value)
 {
    auto section = section_from_y_level(position.y);
    if (section.has_failed()) {
@@ -153,6 +154,10 @@ int Chunk::height_at(int x, int z)
 
 void Chunk::put_section(int8_t level, Section sec)
 {
+   if (m_sections.contains(level))  {
+      m_sections.at(level) = std::move(sec);
+      return;
+   }
    m_sections.emplace(level, std::move(sec));
 }
 

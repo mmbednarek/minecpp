@@ -1,5 +1,8 @@
+#include <minecpp/world/BlockState.h>
 #include <minecpp/world/Generator.h>
+#include <minecpp/world/LightSystem.h>
 #include <minecpp/world/terrain/Terrain.h>
+#include <queue>
 
 namespace minecpp::world {
 
@@ -39,16 +42,17 @@ void Generator::populate_chunk(game::ChunkPosition position)
 
 void Generator::generate_light(game::ChunkPosition position)
 {
-   auto& chunk = m_chunks.get_incomplete_chunk(position.x, position.z);
+   auto &chunk = m_chunks.get_incomplete_chunk(position.x, position.z);
    for (int x = 0; x < 16; ++x) {
       for (int z = 0; z < 16; ++z) {
          auto height = chunk.height_at(game::HeightType::LightBlocking, {x, 0, z});
-
-         for (int y = height+1; y < 256; ++y) {
+         for (int y = height + 1; y < 256; ++y) {
             chunk.set_light(game::LightType::Sky, {x, y, z}, 15);
          }
       }
    }
+
+   LightSystem::recalculate_light_for_chunk(game::LightType::Sky, chunk);
 }
 
 }// namespace minecpp::world
