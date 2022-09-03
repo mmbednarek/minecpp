@@ -1,0 +1,10 @@
+syntax = "proto3";
+package minecpp.proto.test;
+
+message TestMessage {
+  string value = 1;
+}
+
+service TestService {
+  rpc StartStream(stream TestMessage) returns (stream TestMessage);
+}

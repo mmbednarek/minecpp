@@ -7,6 +7,7 @@ target_sources(minecpp_container PUBLIC
 
         # Header files
         ${MINECPP_CONTAINER_INCLUDE_DIR}/PalettedVector.h
+        ${MINECPP_CONTAINER_INCLUDE_DIR}/Queue.h
         ${MINECPP_CONTAINER_INCLUDE_DIR}/TightArray.h
         ${MINECPP_CONTAINER_INCLUDE_DIR}/TightVector.h
 )

@@ -9,5 +9,13 @@ target_include_directories(minecpp_grpc INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/in
 
 target_link_libraries(minecpp_grpc
         INTERFACE
+        minecpp_container
         minecpp_utils
+        gpr
+        grpc
+        grpc++
 )
+
+add_subdirectory("example/client")
+
+add_subdirectory("example/server")
