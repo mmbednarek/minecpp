@@ -14,14 +14,14 @@ namespace clientbound_v1 = proto::event::clientbound::v1;
 class EventHandler
 {
    Server &m_server;
-   engine::Stream *m_stream = nullptr;
+   engine::IStream *m_stream = nullptr;
    nbt::repository::v1::Registry &m_registry;
    std::unique_ptr<std::future<bool>> m_player_list{};
 
  public:
    explicit EventHandler(Server &server, nbt::repository::v1::Registry &registry);
 
-   constexpr void set_stream(engine::Stream *stream)
+   constexpr void set_stream(engine::IStream *stream)
    {
       m_stream = stream;
    }

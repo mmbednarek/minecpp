@@ -106,7 +106,7 @@ class InternalStream
 
    void on_finish_read(const read_type *msg)
    {
-      assert(m_read_handler && "read handler should not be empty on write");
+      assert(m_read_handler && "read handler should not be empty on send_to_player");
 
       // call the handler and read another message
       m_read_handler(*msg);
