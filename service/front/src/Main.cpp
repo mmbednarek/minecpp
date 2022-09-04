@@ -12,6 +12,7 @@
 #include <thread>
 
 using namespace minecpp::service::front;
+using minecpp::service::engine::Client;
 
 auto main() -> int
 {
@@ -35,20 +36,12 @@ auto main() -> int
               dynamic_cast<Protocol::Handler *>(&login_handler));
 
    EventHandler handler(svr, registry);
-   minecpp::service::engine::Client engine_client(conf.engine_hosts[0], handler);
+   Client engine_client(conf.engine_hosts, handler);
 
    spdlog::info("attempting to connect to engine");
 
-   minecpp::service::engine::Stream *stream{};
-   while (stream == nullptr) {
-      using namespace std::chrono_literals;
-      stream = engine_client.join();
-      spdlog::info("awaiting engine connection...");
-      std::this_thread::sleep_for(1s);
-   }
-
-   service.set_stream(stream);
-   handler.set_stream(stream);
+   service.set_stream(&engine_client);
+   handler.set_stream(&engine_client);
 
    spdlog::info("established connection, starting tick");
 

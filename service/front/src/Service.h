@@ -27,14 +27,14 @@ constexpr boost::uuids::uuid g_player_uuid_namespace{
 class Service
 {
    boost::random::mt19937 rand;
-   engine::Stream *m_stream{};
+   engine::IStream *m_stream{};
 
    ChunkService m_chunk_service;
 
  public:
    explicit Service(Config &conf, ChunkService chunk_service);
 
-   constexpr void set_stream(engine::Stream *stream)
+   constexpr void set_stream(engine::IStream *stream)
    {
       m_stream = stream;
    }

@@ -1,8 +1,8 @@
 #include "Dispatcher.h"
+#include "EventManager.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
-#include <minecpp/service/engine/Api.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/world/SectionSlice.h>
 
@@ -10,7 +10,7 @@ namespace minecpp::service::engine {
 
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
-Dispatcher::Dispatcher(EventManager<BidiStream> &events) :
+Dispatcher::Dispatcher(EventManager &events) :
     m_events(events)
 {
 }

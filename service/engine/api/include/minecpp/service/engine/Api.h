@@ -10,147 +10,90 @@
 #include <string_view>
 #include <thread>
 #include <utility>
+#include <condition_variable>
 
 namespace minecpp::service::engine {
 
-using ClientBidiStream =
-        grpc::client::Stream<proto::event::serverbound::v1::Event, proto::event::clientbound::v1::Event>;
+using ConnectionManager =
+        grpc::client::ConnectionManager<proto::service::engine::v1::EngineService::Stub,
+                proto::event::serverbound::v1::Event, proto::event::clientbound::v1::Event>;
 
-using StreamWeakPtr = std::weak_ptr<ClientBidiStream>;
+using ClientBidiStream = grpc::client::Stream<ConnectionManager>;
 
-using OutEvent = proto::event::serverbound::v1::Event;
-
-constexpr std::size_t g_steam_queue_size = 4 * 1024;
-
-class Stream
-{
-   StreamWeakPtr m_stream;
-   std::mutex m_mtx;
-   util::StaticQueue<OutEvent, g_steam_queue_size> m_out_queue;
-
+class IStream {
  public:
-   template<typename TEvent>
-   void send(const TEvent &event, game::PlayerId player_id)
+   virtual ~IStream() noexcept = default;
+
+   virtual void send(const ::google::protobuf::Message& message, game::PlayerId id) = 0;
+};
+
+template<typename TVisitor>
+class Stream : public IStream
+{
+ public:
+   explicit Stream(ClientBidiStream stream, TVisitor &visitor) :
+       m_stream{std::move(stream)},
+       m_visitor{visitor}
    {
+      m_stream.template bind_read_callback(this, &Stream::on_read);
+   }
+
+   void send(const google::protobuf::Message &message, game::PlayerId id) override {
       proto::event::serverbound::v1::Event proto_event;
-      proto_event.mutable_payload()->PackFrom(event);
-      *proto_event.mutable_player_id() = game::player::write_id_to_proto(player_id);
-      if (m_mtx.try_lock()) {
-         auto stream = m_stream.lock();
-         if (!stream) {
-            // client is not connected yet, or has disconnected, write to the queue
-            m_out_queue.push(std::move(proto_event));
-            return;
-         }
-
-         // good we're free to write
-         stream->write(proto_event);
-         return;
-      }
-      // we're currently writing, just push it onto the queue
-      m_out_queue.push(std::move(proto_event));
+      proto_event.mutable_payload()->PackFrom(message);
+      *proto_event.mutable_player_id() = game::player::write_id_to_proto(id);
+      m_stream.write(proto_event);
    }
 
-   void set_stream_reference(StreamWeakPtr ptr)
+   void on_read(const proto::event::clientbound::v1::Event &info)
    {
-      m_stream = std::move(ptr);
+      event::visit_clientbound(info, m_visitor);
    }
 
-   void on_finish_write(const StreamWeakPtr &weak_stream)
-   {
-      if (m_out_queue.empty()) {
-         // queue is empty, we can unlock the mutex, so next
-         // thread can write directly
-         m_mtx.unlock();
-         return;
-      }
-      // queue is not empty write another message
-      if (auto locked_stream = weak_stream.lock(); locked_stream) {
-         locked_stream->write(m_out_queue.pop());
-      }
-   }
-
-   [[nodiscard]] constexpr util::StaticQueue<OutEvent, g_steam_queue_size> &out_queue()
-   {
-      return m_out_queue;
-   }
+ private:
+   ClientBidiStream m_stream;
+   TVisitor &m_visitor;
 };
 
 template<typename TVisitor>
 requires event::ClientboundVisitor<TVisitor>
-
-class ClientEventHandler
+class Client : public IStream
 {
-   TVisitor &m_visitor;
-   Stream m_stream;
-
  public:
-   explicit ClientEventHandler(TVisitor &visitor) :
-       m_visitor(visitor)
+   explicit Client(const std::vector<std::string> &addresses, TVisitor &visitor) :
+       m_connection_manager(&proto::service::engine::v1::EngineService::Stub::AsyncJoin, addresses, this, &Client::on_connected, 8),
+       m_visitor{visitor}
    {
    }
 
-   void on_connected(const StreamWeakPtr &stream)
+   void on_connected(ClientBidiStream stream)
    {
-      try {
-         spdlog::info("calling on connected");
-         if (auto locked_stream = stream.lock(); locked_stream) {
-            locked_stream->read();
-            m_stream.set_stream_reference(stream);
-         }
-      } catch (std::runtime_error &err) {
-         spdlog::info("runtime error while receiving connection:  {}", err.what());
-      }
+      std::unique_lock lock{m_mutex};
+
+      m_streams.template emplace_back(std::move(stream), m_visitor);
+      m_condition.notify_one();
    };
 
-   void on_finish_write(const StreamWeakPtr &stream)
+   void send(const ::google::protobuf::Message& message, game::PlayerId id) override
    {
-      spdlog::info("on finish write");
-      m_stream.on_finish_write(stream);
-   }
-
-   void on_finish_read(const StreamWeakPtr &stream, const proto::event::clientbound::v1::Event &info)
-   {
-      spdlog::info("on finish read");
-      if (auto locked_stream = stream.lock(); locked_stream) {
-         locked_stream->read();
+      if (m_streams.empty()) {
+         std::unique_lock lock2{m_condition_mutex};
+         m_condition.wait(lock2);
       }
-      event::visit_clientbound(info, m_visitor);
+
+      std::unique_lock lock1{m_mutex};
+      m_streams[m_round].send(message, id);
+      m_round = (m_round + 1) % m_streams.size();
    }
 
-   void on_disconnect(const StreamWeakPtr &stream) {
-      spdlog::info("on disconnect");
-   }
-
-   Stream *stream()
-   {
-      return &m_stream;
-   }
-};
-
-template<typename TVisitor>
-using BidiConnection =
-        grpc::client::Connection<proto::service::engine::v1::EngineService::Stub,
-                                 proto::event::serverbound::v1::Event, proto::event::clientbound::v1::Event,
-                                 ClientEventHandler<TVisitor>>;
-
-template<typename TVisitor>
-class Client
-{
-   BidiConnection<TVisitor> m_connection;
-   ClientEventHandler<TVisitor> m_handler;
-
- public:
-   explicit Client(const std::string &address, TVisitor &visitor) :
-       m_connection(&proto::service::engine::v1::EngineService::Stub::AsyncJoin, address, m_handler, 8),
-       m_handler(visitor)
-   {
-   }
-
-   [[nodiscard]] Stream *join()
-   {
-      return m_handler.stream();
-   }
+ private:
+   ConnectionManager m_connection_manager;
+   TVisitor &m_visitor;
+   std::vector<Stream<TVisitor>> m_streams;
+   std::mutex m_mutex;
+   std::mutex m_condition_mutex;
+   std::condition_variable m_condition;
+   std::size_t m_round{0};
 };
 
 }// namespace minecpp::service::engine

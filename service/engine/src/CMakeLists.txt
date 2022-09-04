@@ -2,8 +2,9 @@
 
 target_sources(minecpp_engine PUBLIC
         # Source files
-        ${CMAKE_CURRENT_SOURCE_DIR}/Api.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Api.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/ApiHandler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ApiHandler.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/IConnection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Entities.cpp

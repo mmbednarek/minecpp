@@ -17,6 +17,7 @@
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine {
 

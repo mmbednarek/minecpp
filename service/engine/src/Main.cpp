@@ -1,7 +1,8 @@
-#include "Api.h"
+#include "ApiHandler.h"
 #include "Dispatcher.h"
 #include "Entities.h"
 #include "EventHandler.h"
+#include "EventManager.h"
 #include "Players.h"
 #include "World.h"
 #include <grpcpp/create_channel.h>
@@ -35,23 +36,16 @@ auto main() -> int
    auto chunk_storage =
            minecpp::proto::service::chunk_storage::v1::ChunkStorage::ChunkStorage::NewStub(channel);
 
-   EventManager<BidiStream> manager;
+   EventManager manager;
    Dispatcher dispatcher(manager);
    minecpp::controller::BlockManager block_manager;
    World world(boost::uuids::uuid(), *chunk_storage, dispatcher, players, entities, block_manager);
    EventHandler handler(dispatcher, players, entities, world, block_manager);
 
-   ApiHandler api_handler(handler, manager);
-   using BidiServer = minecpp::grpc::server::BidiServer<
-           minecpp::proto::service::engine::v1::EngineService::AsyncService,
-           minecpp::proto::event::clientbound::v1::Event, minecpp::proto::event::serverbound::v1::Event,
-           ApiHandler, std::string,
-           &minecpp::proto::service::engine::v1::EngineService::AsyncService::RequestJoin>;
-   BidiServer server(listen, api_handler, 16);
+   ApiHandler api_handler(handler, manager, listen);
+
    spdlog::info("starting grpc server on address {}", listen);
-   server.accept();
-   auto res = server.wait();
-   if (!res.ok()) {
+   if (auto res = api_handler.wait(); not res.ok()) {
       spdlog::error("server error: {}", res.err()->msg());
    }
 }

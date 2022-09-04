@@ -1,6 +1,5 @@
 #pragma once
-#include "Api.h"
-#include "EventManager.h"
+#include "ApiHandler.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/entity/Entity.h>
 #include <minecpp/game/Notifier.h>
@@ -13,14 +12,13 @@ class Player;
 
 namespace minecpp::service::engine {
 
+class EventManager;
 using boost::uuids::uuid;
 
 class Dispatcher : public minecpp::game::Notifier
 {
-   EventManager<BidiStream> &m_events;
-
  public:
-   explicit Dispatcher(EventManager<BidiStream> &events);
+   explicit Dispatcher(EventManager &events);
 
    void load_terrain(game::PlayerId player_id, const game::ChunkPosition &central_chunk,
                      std::vector<minecpp::game::ChunkPosition> coords) override;
@@ -50,6 +48,9 @@ class Dispatcher : public minecpp::game::Notifier
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            std::size_t count) override;
    void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
+
+ private:
+   EventManager &m_events;
 };
 
 }// namespace minecpp::service::engine

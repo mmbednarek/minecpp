@@ -1,9 +1,17 @@
 {
   "name": "minecpp_grpc",
   "header_only": true,
+  "examples": [
+    "client",
+    "server"
+  ],
   "dependencies": {
     "interface": [
-      "minecpp_utils"
+      "minecpp_container",
+      "minecpp_utils",
+      "gpr",
+      "grpc",
+      "grpc++"
     ]
   }
 }
