@@ -1,0 +1,11 @@
+version: '3'
+services:
+  fdb:
+    image: foundationdb/foundationdb:6.3.24
+    network_mode: host
+    ports:
+      - $FDB_PORT:$FDB_PORT/tcp
+    environment:
+      FDB_NETWORKING_MODE: host
+      FDB_COORDINATOR_PORT: $FDB_PORT
+      FDB_PORT: $FDB_PORT

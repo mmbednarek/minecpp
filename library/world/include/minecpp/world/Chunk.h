@@ -20,9 +20,12 @@ class Chunk : public game::IBlockContainer
 {
  public:
    Chunk();
-   Chunk(int x, int z, std::array<short, 256> &height_map);
+   Chunk(int x, int z, const std::array<short, 256> &height_map);
 
    void as_proto(minecpp::proto::chunk::v1::Chunk *chunk);
+   [[nodiscard]] minecpp::proto::chunk::v1::Chunk to_proto() const;
+   static Chunk from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
+
    void create_empty_section(int8_t sec);
    mb::emptyres set_block(const game::BlockPosition &position, game::BlockStateId state) override;
    mb::result<game::BlockStateId> get_block(const game::BlockPosition &position) override;

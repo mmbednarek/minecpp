@@ -263,9 +263,9 @@ class BidiServer
 
    ~BidiServer()
    {
+//      wait();
       m_server->Shutdown();
       m_queue->Shutdown();
-      wait();
    }
 
    auto accept()

@@ -4,7 +4,6 @@ target_sources(minecpp_engine PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/ApiHandler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ApiHandler.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/IConnection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Entities.cpp
@@ -13,6 +12,7 @@ target_sources(minecpp_engine PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/EventManager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/EventManager.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/IConnection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Players.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Players.h

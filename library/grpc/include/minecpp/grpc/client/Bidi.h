@@ -274,6 +274,7 @@ class ConnectionManager
    ~ConnectionManager()
    {
       m_queue.Shutdown();
+      m_ctx.TryCancel();
       wait();
    }
 

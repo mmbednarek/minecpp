@@ -1,0 +1,24 @@
+{
+  "name": "minecpp_storage",
+  "api_library": "true",
+  "examples": [
+    "api_test"
+  ],
+  "dependencies": {
+    "private": [
+      "minecpp_utils",
+      "minecpp_game",
+      "minecpp_grpc",
+      "minecpp_network",
+      "minecpp_region",
+      "minecpp_api_proto",
+      "minecpp_random",
+      "minecpp_repository",
+      "minecpp_world",
+      "Boost::system",
+      "spdlog",
+      "libmb",
+      "fdb_c"
+    ]
+  }
+}

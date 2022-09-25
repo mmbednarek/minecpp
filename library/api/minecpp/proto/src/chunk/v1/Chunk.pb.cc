@@ -55,8 +55,9 @@ PROTOBUF_CONSTEXPR Chunk::Chunk(
   , /*decltype(_impl_.hm_motion_blocking_)*/{}
   , /*decltype(_impl_._hm_motion_blocking_cached_byte_size_)*/{0}
   , /*decltype(_impl_.sections_)*/{}
-  , /*decltype(_impl_.pos_x_)*/0
-  , /*decltype(_impl_.pos_z_)*/0
+  , /*decltype(_impl_.engine_ids_)*/{}
+  , /*decltype(_impl_._engine_ids_cached_byte_size_)*/{0}
+  , /*decltype(_impl_.position_)*/nullptr
   , /*decltype(_impl_.full_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ChunkDefaultTypeInternal {
@@ -125,13 +126,13 @@ const uint32_t TableStruct_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto::offsets
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.pos_x_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.pos_z_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.position_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.full_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.biomes_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.hm_world_surface_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.hm_motion_blocking_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.sections_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::Chunk, _impl_.engine_ids_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::chunk::v1::SectionWithPosition, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -171,25 +172,26 @@ const char descriptor_table_protodef_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eprot
   "lette\030\004 \003(\r\022\014\n\004data\030\005 \003(\004\022\023\n\013block_light"
   "\030\006 \001(\014\022\021\n\tsky_light\030\007 \001(\014\022;\n\rlight_sourc"
   "es\030\010 \003(\0132$.minecpp.proto.common.v1.Light"
-  "Source\"\260\001\n\005Chunk\022\r\n\005pos_x\030\001 \001(\005\022\r\n\005pos_z"
-  "\030\002 \001(\005\022\014\n\004full\030\003 \001(\010\022\022\n\006biomes\030\004 \003(\005B\002\020\001"
-  "\022\030\n\020hm_world_surface\030\005 \003(\003\022\032\n\022hm_motion_"
-  "blocking\030\006 \003(\003\0221\n\010sections\030\007 \003(\0132\037.minec"
-  "pp.proto.chunk.v1.Section\"\210\001\n\023SectionWit"
-  "hPosition\022\?\n\010position\030\001 \001(\0132-.minecpp.pr"
-  "oto.common.v1.ChunkSectionPosition\0220\n\007se"
-  "ction\030\002 \001(\0132\037.minecpp.proto.chunk.v1.Sec"
-  "tion\"\203\001\n\014SectionSlice\0224\n\005range\030\001 \001(\0132%.m"
-  "inecpp.proto.common.v1.SectionRange\022=\n\010s"
-  "ections\030\002 \003(\0132+.minecpp.proto.chunk.v1.S"
-  "ectionWithPositionb\006proto3"
+  "Source\"\340\001\n\005Chunk\0228\n\010position\030\001 \001(\0132&.min"
+  "ecpp.proto.common.v1.ChunkPosition\022\014\n\004fu"
+  "ll\030\002 \001(\010\022\022\n\006biomes\030\003 \003(\005B\002\020\001\022\030\n\020hm_world"
+  "_surface\030\004 \003(\003\022\032\n\022hm_motion_blocking\030\005 \003"
+  "(\003\0221\n\010sections\030\006 \003(\0132\037.minecpp.proto.chu"
+  "nk.v1.Section\022\022\n\nengine_ids\030\007 \003(\003\"\210\001\n\023Se"
+  "ctionWithPosition\022\?\n\010position\030\001 \001(\0132-.mi"
+  "necpp.proto.common.v1.ChunkSectionPositi"
+  "on\0220\n\007section\030\002 \001(\0132\037.minecpp.proto.chun"
+  "k.v1.Section\"\203\001\n\014SectionSlice\0224\n\005range\030\001"
+  " \001(\0132%.minecpp.proto.common.v1.SectionRa"
+  "nge\022=\n\010sections\030\002 \003(\0132+.minecpp.proto.ch"
+  "unk.v1.SectionWithPositionb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto_deps[1] = {
   &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto = {
-    false, false, 746, descriptor_table_protodef_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto,
+    false, false, 794, descriptor_table_protodef_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto,
     "minecpp/proto/chunk/v1/Chunk.proto",
     &descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto_once, descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto_deps, 1, 4,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto::offsets,
@@ -659,8 +661,19 @@ void Section::InternalSwap(Section* other) {
 
 class Chunk::_Internal {
  public:
+  static const ::minecpp::proto::common::v1::ChunkPosition& position(const Chunk* msg);
 };
 
+const ::minecpp::proto::common::v1::ChunkPosition&
+Chunk::_Internal::position(const Chunk* msg) {
+  return *msg->_impl_.position_;
+}
+void Chunk::clear_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+}
 Chunk::Chunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -678,15 +691,17 @@ Chunk::Chunk(const Chunk& from)
     , decltype(_impl_.hm_motion_blocking_){from._impl_.hm_motion_blocking_}
     , /*decltype(_impl_._hm_motion_blocking_cached_byte_size_)*/{0}
     , decltype(_impl_.sections_){from._impl_.sections_}
-    , decltype(_impl_.pos_x_){}
-    , decltype(_impl_.pos_z_){}
+    , decltype(_impl_.engine_ids_){from._impl_.engine_ids_}
+    , /*decltype(_impl_._engine_ids_cached_byte_size_)*/{0}
+    , decltype(_impl_.position_){nullptr}
     , decltype(_impl_.full_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.pos_x_, &from._impl_.pos_x_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.full_) -
-    reinterpret_cast<char*>(&_impl_.pos_x_)) + sizeof(_impl_.full_));
+  if (from._internal_has_position()) {
+    _this->_impl_.position_ = new ::minecpp::proto::common::v1::ChunkPosition(*from._impl_.position_);
+  }
+  _this->_impl_.full_ = from._impl_.full_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.chunk.v1.Chunk)
 }
 
@@ -702,8 +717,9 @@ inline void Chunk::SharedCtor(
     , decltype(_impl_.hm_motion_blocking_){arena}
     , /*decltype(_impl_._hm_motion_blocking_cached_byte_size_)*/{0}
     , decltype(_impl_.sections_){arena}
-    , decltype(_impl_.pos_x_){0}
-    , decltype(_impl_.pos_z_){0}
+    , decltype(_impl_.engine_ids_){arena}
+    , /*decltype(_impl_._engine_ids_cached_byte_size_)*/{0}
+    , decltype(_impl_.position_){nullptr}
     , decltype(_impl_.full_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -724,6 +740,8 @@ inline void Chunk::SharedDtor() {
   _impl_.hm_world_surface_.~RepeatedField();
   _impl_.hm_motion_blocking_.~RepeatedField();
   _impl_.sections_.~RepeatedPtrField();
+  _impl_.engine_ids_.~RepeatedField();
+  if (this != internal_default_instance()) delete _impl_.position_;
 }
 
 void Chunk::SetCachedSize(int size) const {
@@ -740,9 +758,12 @@ void Chunk::Clear() {
   _impl_.hm_world_surface_.Clear();
   _impl_.hm_motion_blocking_.Clear();
   _impl_.sections_.Clear();
-  ::memset(&_impl_.pos_x_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.full_) -
-      reinterpret_cast<char*>(&_impl_.pos_x_)) + sizeof(_impl_.full_));
+  _impl_.engine_ids_.Clear();
+  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
+    delete _impl_.position_;
+  }
+  _impl_.position_ = nullptr;
+  _impl_.full_ = false;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -752,73 +773,76 @@ const char* Chunk::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int32 pos_x = 1;
+      // .minecpp.proto.common.v1.ChunkPosition position = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.pos_x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // int32 pos_z = 2;
+      // bool full = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.pos_z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // bool full = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           _impl_.full_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // repeated int32 biomes = 4 [packed = true];
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+      // repeated int32 biomes = 3 [packed = true];
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt32Parser(_internal_mutable_biomes(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<uint8_t>(tag) == 32) {
+        } else if (static_cast<uint8_t>(tag) == 24) {
           _internal_add_biomes(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // repeated int64 hm_world_surface = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+      // repeated int64 hm_world_surface = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_hm_world_surface(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<uint8_t>(tag) == 40) {
+        } else if (static_cast<uint8_t>(tag) == 32) {
           _internal_add_hm_world_surface(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // repeated int64 hm_motion_blocking = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
+      // repeated int64 hm_motion_blocking = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_hm_motion_blocking(), ptr, ctx);
           CHK_(ptr);
-        } else if (static_cast<uint8_t>(tag) == 48) {
+        } else if (static_cast<uint8_t>(tag) == 40) {
           _internal_add_hm_motion_blocking(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // repeated .minecpp.proto.chunk.v1.Section sections = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
+      // repeated .minecpp.proto.chunk.v1.Section sections = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
           ptr -= 1;
           do {
             ptr += 1;
             ptr = ctx->ParseMessage(_internal_add_sections(), ptr);
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated int64 engine_ids = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedInt64Parser(_internal_mutable_engine_ids(), ptr, ctx);
+          CHK_(ptr);
+        } else if (static_cast<uint8_t>(tag) == 56) {
+          _internal_add_engine_ids(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr));
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -851,57 +875,61 @@ uint8_t* Chunk::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int32 pos_x = 1;
-  if (this->_internal_pos_x() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_pos_x(), target);
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  if (this->_internal_has_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::position(this),
+        _Internal::position(this).GetCachedSize(), target, stream);
   }
 
-  // int32 pos_z = 2;
-  if (this->_internal_pos_z() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_pos_z(), target);
-  }
-
-  // bool full = 3;
+  // bool full = 2;
   if (this->_internal_full() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_full(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_full(), target);
   }
 
-  // repeated int32 biomes = 4 [packed = true];
+  // repeated int32 biomes = 3 [packed = true];
   {
     int byte_size = _impl_._biomes_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt32Packed(
-          4, _internal_biomes(), byte_size, target);
+          3, _internal_biomes(), byte_size, target);
     }
   }
 
-  // repeated int64 hm_world_surface = 5;
+  // repeated int64 hm_world_surface = 4;
   {
     int byte_size = _impl_._hm_world_surface_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt64Packed(
-          5, _internal_hm_world_surface(), byte_size, target);
+          4, _internal_hm_world_surface(), byte_size, target);
     }
   }
 
-  // repeated int64 hm_motion_blocking = 6;
+  // repeated int64 hm_motion_blocking = 5;
   {
     int byte_size = _impl_._hm_motion_blocking_cached_byte_size_.load(std::memory_order_relaxed);
     if (byte_size > 0) {
       target = stream->WriteInt64Packed(
-          6, _internal_hm_motion_blocking(), byte_size, target);
+          5, _internal_hm_motion_blocking(), byte_size, target);
     }
   }
 
-  // repeated .minecpp.proto.chunk.v1.Section sections = 7;
+  // repeated .minecpp.proto.chunk.v1.Section sections = 6;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_sections_size()); i < n; i++) {
     const auto& repfield = this->_internal_sections(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(7, repfield, repfield.GetCachedSize(), target, stream);
+        InternalWriteMessage(6, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // repeated int64 engine_ids = 7;
+  {
+    int byte_size = _impl_._engine_ids_cached_byte_size_.load(std::memory_order_relaxed);
+    if (byte_size > 0) {
+      target = stream->WriteInt64Packed(
+          7, _internal_engine_ids(), byte_size, target);
+    }
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -920,7 +948,7 @@ size_t Chunk::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated int32 biomes = 4 [packed = true];
+  // repeated int32 biomes = 3 [packed = true];
   {
     size_t data_size = ::_pbi::WireFormatLite::
       Int32Size(this->_impl_.biomes_);
@@ -934,7 +962,7 @@ size_t Chunk::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int64 hm_world_surface = 5;
+  // repeated int64 hm_world_surface = 4;
   {
     size_t data_size = ::_pbi::WireFormatLite::
       Int64Size(this->_impl_.hm_world_surface_);
@@ -948,7 +976,7 @@ size_t Chunk::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated int64 hm_motion_blocking = 6;
+  // repeated int64 hm_motion_blocking = 5;
   {
     size_t data_size = ::_pbi::WireFormatLite::
       Int64Size(this->_impl_.hm_motion_blocking_);
@@ -962,24 +990,35 @@ size_t Chunk::ByteSizeLong() const {
     total_size += data_size;
   }
 
-  // repeated .minecpp.proto.chunk.v1.Section sections = 7;
+  // repeated .minecpp.proto.chunk.v1.Section sections = 6;
   total_size += 1UL * this->_internal_sections_size();
   for (const auto& msg : this->_impl_.sections_) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
-  // int32 pos_x = 1;
-  if (this->_internal_pos_x() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_pos_x());
+  // repeated int64 engine_ids = 7;
+  {
+    size_t data_size = ::_pbi::WireFormatLite::
+      Int64Size(this->_impl_.engine_ids_);
+    if (data_size > 0) {
+      total_size += 1 +
+        ::_pbi::WireFormatLite::Int32Size(static_cast<int32_t>(data_size));
+    }
+    int cached_size = ::_pbi::ToCachedSize(data_size);
+    _impl_._engine_ids_cached_byte_size_.store(cached_size,
+                                    std::memory_order_relaxed);
+    total_size += data_size;
   }
 
-  // int32 pos_z = 2;
-  if (this->_internal_pos_z() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_pos_z());
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  if (this->_internal_has_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.position_);
   }
 
-  // bool full = 3;
+  // bool full = 2;
   if (this->_internal_full() != 0) {
     total_size += 1 + 1;
   }
@@ -1006,11 +1045,10 @@ void Chunk::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF
   _this->_impl_.hm_world_surface_.MergeFrom(from._impl_.hm_world_surface_);
   _this->_impl_.hm_motion_blocking_.MergeFrom(from._impl_.hm_motion_blocking_);
   _this->_impl_.sections_.MergeFrom(from._impl_.sections_);
-  if (from._internal_pos_x() != 0) {
-    _this->_internal_set_pos_x(from._internal_pos_x());
-  }
-  if (from._internal_pos_z() != 0) {
-    _this->_internal_set_pos_z(from._internal_pos_z());
+  _this->_impl_.engine_ids_.MergeFrom(from._impl_.engine_ids_);
+  if (from._internal_has_position()) {
+    _this->_internal_mutable_position()->::minecpp::proto::common::v1::ChunkPosition::MergeFrom(
+        from._internal_position());
   }
   if (from._internal_full() != 0) {
     _this->_internal_set_full(from._internal_full());
@@ -1036,12 +1074,13 @@ void Chunk::InternalSwap(Chunk* other) {
   _impl_.hm_world_surface_.InternalSwap(&other->_impl_.hm_world_surface_);
   _impl_.hm_motion_blocking_.InternalSwap(&other->_impl_.hm_motion_blocking_);
   _impl_.sections_.InternalSwap(&other->_impl_.sections_);
+  _impl_.engine_ids_.InternalSwap(&other->_impl_.engine_ids_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Chunk, _impl_.full_)
       + sizeof(Chunk::_impl_.full_)
-      - PROTOBUF_FIELD_OFFSET(Chunk, _impl_.pos_x_)>(
-          reinterpret_cast<char*>(&_impl_.pos_x_),
-          reinterpret_cast<char*>(&other->_impl_.pos_x_));
+      - PROTOBUF_FIELD_OFFSET(Chunk, _impl_.position_)>(
+          reinterpret_cast<char*>(&_impl_.position_),
+          reinterpret_cast<char*>(&other->_impl_.position_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Chunk::GetMetadata() const {
