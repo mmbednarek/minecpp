@@ -25,6 +25,7 @@ class Chunk : public game::IBlockContainer
    void as_proto(minecpp::proto::chunk::v1::Chunk *chunk);
    [[nodiscard]] minecpp::proto::chunk::v1::Chunk to_proto() const;
    static Chunk from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
+   void read_from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
 
    void create_empty_section(int8_t sec);
    mb::emptyres set_block(const game::BlockPosition &position, game::BlockStateId state) override;
@@ -71,7 +72,7 @@ class Chunk : public game::IBlockContainer
    void free_ref(game::PlayerId player_id);
    [[nodiscard]] game::ChunkPosition pos() const;
 
-   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &section) noexcept;
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
    minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;
 
  private:

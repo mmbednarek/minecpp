@@ -285,22 +285,25 @@ minecpp::proto::chunk::v1::Chunk Chunk::to_proto() const
 Chunk Chunk::from_proto(const minecpp::proto::chunk::v1::Chunk &proto_chunk)
 {
    Chunk chunk;
-   chunk.m_pos_x = proto_chunk.position().x();
-   chunk.m_pos_z = proto_chunk.position().z();
+   chunk.read_from_proto(proto_chunk);
+   return chunk;
+}
+
+void Chunk::read_from_proto(const proto::chunk::v1::Chunk &proto_chunk) {
+   m_pos_x = proto_chunk.position().x();
+   m_pos_z = proto_chunk.position().z();
 
    if (not proto_chunk.biomes().empty()) {
-      chunk.m_full = true;
-      std::copy(proto_chunk.biomes().begin(), proto_chunk.biomes().end(), chunk.m_biomes.begin());
+      m_full = true;
+      std::copy(proto_chunk.biomes().begin(), proto_chunk.biomes().end(), m_biomes.begin());
    }
 
-   chunk.m_motion_blocking_height = HeightContainer::from_raw(proto_chunk.hm_motion_blocking().begin(), proto_chunk.hm_motion_blocking().end());
-   chunk.m_world_surface_height = HeightContainer::from_raw(proto_chunk.hm_world_surface().begin(), proto_chunk.hm_world_surface().end());
+   m_motion_blocking_height = HeightContainer::from_raw(proto_chunk.hm_motion_blocking().begin(), proto_chunk.hm_motion_blocking().end());
+   m_world_surface_height = HeightContainer::from_raw(proto_chunk.hm_world_surface().begin(), proto_chunk.hm_world_surface().end());
 
    for (auto const &section : proto_chunk.sections()) {
-      chunk.put_section(static_cast<mb::i8>(section.y()), Section::from_proto(section));
+      this->put_section(static_cast<mb::i8>(section.y()), Section::from_proto(section));
    }
-
-   return chunk;
 }
 
 }// namespace minecpp::world

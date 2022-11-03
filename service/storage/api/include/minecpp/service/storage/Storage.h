@@ -1,3 +1,4 @@
+#pragma once
 #include <memory>
 #include <minecpp/game/Game.h>
 #include <minecpp/grpc/client/Bidi.h>
