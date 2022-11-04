@@ -13,7 +13,9 @@ namespace nbt_chunk_v1 = minecpp::nbt::chunk::v1;
 
 inline int expected_data_version = 2230;
 
-Chunk::Chunk() = default;
+Chunk::Chunk() {
+   std::fill(m_biomes.begin(), m_biomes.end(), 1);
+}
 
 Chunk::Chunk(int x, int z, const std::array<short, 256> &height_map) :
     m_pos_x(x),
@@ -65,7 +67,6 @@ mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockSt
    }
 
    auto &section = iter->second;
-
 
    section.set_block(position, state);
 
@@ -183,7 +184,7 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
    out->m_full                 = chunk.level.status == "full";
    out->m_pos_x                = chunk.level.x_pos;
    out->m_pos_z                = chunk.level.z_pos;
-   out->m_world_surface_height = HeightContainer::from_raw(chunk.level.heightmaps.motion_blocking.begin(),
+   out->m_motion_blocking_height = HeightContainer::from_raw(chunk.level.heightmaps.motion_blocking.begin(),
                                                            chunk.level.heightmaps.motion_blocking.end());
    out->m_world_surface_height = HeightContainer::from_raw(chunk.level.heightmaps.world_surface.begin(),
                                                            chunk.level.heightmaps.world_surface.end());
@@ -289,7 +290,8 @@ Chunk Chunk::from_proto(const minecpp::proto::chunk::v1::Chunk &proto_chunk)
    return chunk;
 }
 
-void Chunk::read_from_proto(const proto::chunk::v1::Chunk &proto_chunk) {
+void Chunk::read_from_proto(const proto::chunk::v1::Chunk &proto_chunk)
+{
    m_pos_x = proto_chunk.position().x();
    m_pos_z = proto_chunk.position().z();
 
@@ -298,11 +300,28 @@ void Chunk::read_from_proto(const proto::chunk::v1::Chunk &proto_chunk) {
       std::copy(proto_chunk.biomes().begin(), proto_chunk.biomes().end(), m_biomes.begin());
    }
 
-   m_motion_blocking_height = HeightContainer::from_raw(proto_chunk.hm_motion_blocking().begin(), proto_chunk.hm_motion_blocking().end());
-   m_world_surface_height = HeightContainer::from_raw(proto_chunk.hm_world_surface().begin(), proto_chunk.hm_world_surface().end());
+   m_motion_blocking_height = HeightContainer::from_raw(proto_chunk.hm_motion_blocking().begin(),
+                                                        proto_chunk.hm_motion_blocking().end());
+   m_world_surface_height   = HeightContainer::from_raw(proto_chunk.hm_world_surface().begin(),
+                                                        proto_chunk.hm_world_surface().end());
 
    for (auto const &section : proto_chunk.sections()) {
       this->put_section(static_cast<mb::i8>(section.y()), Section::from_proto(section));
+   }
+}
+
+std::size_t Chunk::section_count()
+{
+   return m_sections.size();
+}
+
+void Chunk::set_height_map(game::HeightType height_type, const std::array<short, 256> &height_map)
+{
+   auto &dest = height_by_type(height_type);
+   mb::size index{};
+   for (auto value : height_map) {
+      dest.set(index, value);
+      ++index;
    }
 }
 

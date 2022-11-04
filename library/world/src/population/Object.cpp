@@ -7,10 +7,9 @@ namespace minecpp::world::population {
 ObjectRepository ObjectRepository::g_instance;
 
 template<typename T, typename... TArgs>
-std::unique_ptr<SimpleObjectFactory> make_simple_object(int occurrence, TArgs &&...args)
+std::unique_ptr<StaticObjectFactory> make_simple_object(int occurrence, TArgs &&...args)
 {
-   return std::make_unique<SimpleObjectFactory>(occurrence,
-                                                std::make_unique<T>(std::forward<TArgs>(args)...));
+   return std::make_unique<StaticObjectFactory>(occurrence, std::make_unique<T>(std::forward<TArgs>(args)...));
 }
 
 void ObjectRepository::register_objects()

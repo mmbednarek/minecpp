@@ -12,11 +12,11 @@ class IBlockContainer
  public:
    virtual ~IBlockContainer() = default;
 
-   virtual mb::result<LightValue> get_light(LightType light_type, const BlockPosition &pos) = 0;
+   virtual mb::result<LightValue> get_light(LightType light_type, const BlockPosition &pos)          = 0;
    virtual mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                  game::LightValue value)                                   = 0;
-   virtual mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state)  = 0;
-   virtual mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos)                   = 0;
+                                  game::LightValue value)                                            = 0;
+   virtual mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state) = 0;
+   virtual mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos)                  = 0;
 };
 
 class ISection
@@ -52,6 +52,7 @@ class World : public IBlockContainer
    virtual mb::result<std::unique_ptr<ISectionSlice>> get_slice(game::SectionRange range)             = 0;
    virtual mb::emptyres apply_slice(ISectionSlice &slice)                                             = 0;
    virtual ILightSystem &light_system()                                                               = 0;
+   virtual mb::emptyres send_chunk_to_player(PlayerId player_id, const ChunkPosition &position)       = 0;
 };
 
 }// namespace minecpp::game

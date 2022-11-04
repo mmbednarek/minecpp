@@ -22,8 +22,8 @@ class Tracking
  public:
    explicit Tracking(const util::Vec3 &position, int radius);
 
-   mb::result<mb::empty> load_chunks(game::World &w, Player &p);
-   void on_movement(game::World &w, Player &p, util::Vec3 position);
+   mb::result<mb::empty> load_chunks(game::World &world, Player &player);
+   void on_movement(game::World &world, Player &player, util::Vec3 position);
 };
 
 }// namespace minecpp::game::player

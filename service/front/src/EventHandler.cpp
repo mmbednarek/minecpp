@@ -302,7 +302,10 @@ void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg,
 
       spdlog::error("could not join player {}.", msg.denial_reason());
       send_and_disconnect(conn, minecpp::network::message::Disconnect{
-                                        .reason = msg.denial_reason(),
+                                        .reason = format::Builder()
+                                                          .bold(format::Color::Red, "DISCONNECTED ")
+                                                          .text(msg.denial_reason())
+                                                          .to_string(),
                                 });
    }
 }
@@ -414,6 +417,25 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
 
          send(conn, update_block_light);
       }
+   }
+}
+
+void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
+                                     const std::vector<game::player::Id> &player_ids)
+{
+   spdlog::info("handling chunk data {} {}, section count {}", msg.chunk().position().x(), msg.chunk().position().z(), msg.chunk().sections().size());
+   network::message::ChunkData chunk_data{
+           .chunk = msg.chunk(),
+   };
+   for (auto player_id : player_ids) {
+      auto conn = m_server.connection_by_id(player_id);
+      if (not conn) {
+         spdlog::error("connection {} is null", game::player::format_player_id(player_id));
+         return;
+      }
+
+      spdlog::info("sending chunk {} {}", chunk_data.chunk.position().x(), chunk_data.chunk.position().z());
+      send(conn, chunk_data);
    }
 }
 

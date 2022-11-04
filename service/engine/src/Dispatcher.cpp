@@ -72,6 +72,15 @@ void Dispatcher::send_chat(chat::MessageType msg_type, const std::string &msg)
    m_events.send_to_all(chat);
 }
 
+void Dispatcher::send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
+                                  const std::string &msg)
+{
+   clientbound_v1::Chat chat;
+   chat.set_type(static_cast<google::protobuf::int32>(msg_type));
+   chat.set_message(msg);
+   m_events.send_to(chat, player_id);
+}
+
 void Dispatcher::entity_look(game::PlayerId player_id, mb::u32 entity_id,
                              const game::entity::Rotation &rotation)
 {
@@ -209,6 +218,12 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
    }
 
    m_events.send_to_all(update_block_light);
+}
+
+void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk) {
+   clientbound_v1::ChunkData chunk_data;
+   *chunk_data.mutable_chunk() = chunk->to_proto();
+   m_events.send_to(chunk_data, player_id);
 }
 
 }// namespace minecpp::service::engine

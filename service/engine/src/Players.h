@@ -21,17 +21,16 @@ class PlayerManager : public game::player::Provider
 
    std::vector<game::player::Player> m_players;
    std::map<encoded_uuid, PlayerIndex> m_id_map;
-   std::string m_players_path;
    EntityManager &m_entities;
    std::default_random_engine m_rand_engine;
+   game::BlockPosition m_spawn_position;
 
  public:
-   PlayerManager(std::string_view players_path, EntityManager &entities);
+   PlayerManager(EntityManager &entities, game::BlockPosition spawn_position);
 
    mb::result<mb::empty> join_player(minecpp::game::World &w, const std::string &name, game::PlayerId id);
    mb::result<nbt::player::v1::Player> load_player_data(minecpp::game::World &w, game::PlayerId id);
 
-   mb::result<minecpp::util::Vec3> get_spawn_position(minecpp::game::World &w);
    mb::result<minecpp::game::player::Player &> get_player(game::PlayerId id) override;
    mb::result<minecpp::game::entity::Entity &> get_entity(game::PlayerId id);
    void for_each_player(const std::function<void(minecpp::game::player::Player &)> &callback);

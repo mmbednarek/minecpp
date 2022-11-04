@@ -6,15 +6,15 @@
 #include <minecpp/game/World.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/util/Compression.h>
-#include <minecpp/util/Format.h>
 #include <minecpp/util/Uuid.h>
 #include <utility>
 
 namespace minecpp::service::engine {
 
-PlayerManager::PlayerManager(std::string_view players_path, EntityManager &entities) :
-    m_players_path(players_path),
-    m_entities(entities)
+PlayerManager::PlayerManager(EntityManager &entities,
+                             game::BlockPosition spawn_position) :
+    m_entities(entities),
+    m_spawn_position(std::move(spawn_position))
 {
 }
 
@@ -33,36 +33,20 @@ mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::stri
 mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::World &w,
                                                                              game::PlayerId id)
 {
-   // TODO: cache player data
-   std::ifstream f_player_data;
-   f_player_data.open(fmt::format("{}/{}.dat", m_players_path, boost::uuids::to_string(id)));
-   if (!f_player_data.is_open()) {
-      minecpp::nbt::player::v1::Player data;
-      auto pos  = MB_TRY(get_spawn_position(w));
-      data.uuid = game::player::write_id_to_nbt(id);
-      data.pos.resize(3);
-      data.pos[0]              = pos.x;
-      data.pos[1]              = pos.y;
-      data.pos[2]              = pos.z;
-      data.abilities.mayfly    = true;
-      data.abilities.flying    = true;
-      data.abilities.fly_speed = 0.08f;
-      return data;
-   }
+   minecpp::nbt::player::v1::Player data;
 
-   minecpp::util::GZipInputStream stream(f_player_data);
-   return minecpp::nbt::player::v1::Player::deserialize(stream);
-}
+   util::Vec3 pos{static_cast<double>(m_spawn_position.x),  static_cast<double>(m_spawn_position.y), static_cast<double>(m_spawn_position.z)};
 
-mb::result<minecpp::util::Vec3> PlayerManager::get_spawn_position(minecpp::game::World &w)
-{
-   //   std::uniform_int_distribution<int> dist(-200, 200);
-   //   auto x = dist(rand_engine);
-   //   auto z = dist(rand_engine);
-   auto x = 0;
-   auto z = 0;
-   auto y = MB_TRY(w.height_at(x, z)) + 2;
-   return util::Vec3(x, y, z);
+   data.uuid = game::player::write_id_to_nbt(id);
+   data.pos.resize(3);
+   data.pos[0]              = pos.x;
+   data.pos[1]              = pos.y;
+   data.pos[2]              = pos.z;
+   data.abilities.mayfly    = true;
+   data.abilities.flying    = true;
+   data.abilities.fly_speed = 0.08f;
+
+   return data;
 }
 
 mb::result<game::player::Player &> PlayerManager::get_player(game::PlayerId id)

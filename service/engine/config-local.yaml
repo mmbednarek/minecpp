@@ -1,0 +1,16 @@
+version: 1
+server:
+  bind_address: "0.0.0.0"
+  bind_port: 7800
+storage:
+  endpoints:
+    - "127.0.0.1:8080"
+resources:
+  data_file: "repository.bin"
+gameplay:
+  world_seed: 2300
+  max_players: 2000
+  spawn_point:
+    x: 29
+    y: 73
+    z: 38

@@ -25,7 +25,7 @@ static int dist_sq(game::ChunkPosition a, game::ChunkPosition b)
    return pow2(a.x - b.x) + pow2(a.z - b.z);
 }
 
-mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p)
+mb::result<mb::empty> Tracking::load_chunks(game::World &world, Player &player)
 {
    std::vector<game::ChunkPosition> chunks_to_load;// TODO: pre alloc
 
@@ -44,14 +44,19 @@ mb::result<mb::empty> Tracking::load_chunks(game::World &w, Player &p)
                 return dist_sq(m_chunk_pos, a) < dist_sq(m_chunk_pos, b);
              });
 
-   if (auto res = w.add_refs(p.id(), chunks_to_load); !res.ok()) {
+   if (auto res = world.add_refs(player.id(), chunks_to_load); !res.ok()) {
       return std::move(res.err());
    }
-   w.notifier().load_terrain(p.id(), m_chunk_pos, chunks_to_load);
+
+   for (const auto &chunk_pos : chunks_to_load) {
+      // TODO: Update central chunk
+      world.send_chunk_to_player(player.id(), chunk_pos);
+   }
+
    return mb::ok;
 }
 
-void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position)
+void Tracking::on_movement(game::World &world, Player &player, util::Vec3 position)
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    auto next_chunk_pos = game::ChunkPosition::from_position(position);
@@ -91,11 +96,11 @@ void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position)
    m_chunk_pos = next_chunk_pos;
 
    if (!chunks_to_free.empty()) {
-      if (auto res = w.free_refs(p.id(), chunks_to_free); !res.ok()) {
+      if (auto res = world.free_refs(player.id(), chunks_to_free); !res.ok()) {
          return;
       }
       for (const auto &pos : chunks_to_free) {
-         w.notifier().unload_chunk(p.id(), pos);
+         world.notifier().unload_chunk(player.id(), pos);
       }
    }
 
@@ -105,10 +110,14 @@ void Tracking::on_movement(game::World &w, Player &p, util::Vec3 position)
                 [next_chunk_pos](const game::ChunkPosition &a, const game::ChunkPosition &b) {
                    return dist_sq(next_chunk_pos, a) < dist_sq(next_chunk_pos, b);
                 });
-      if (auto res = w.add_refs(p.id(), chunks_to_load); !res.ok()) {
+      if (auto res = world.add_refs(player.id(), chunks_to_load); !res.ok()) {
          return;
       }
-      w.notifier().load_terrain(p.id(), next_chunk_pos, chunks_to_load);
+
+      for (const auto &chunk_pos : chunks_to_load) {
+         // TODO: Add chunk
+         world.send_chunk_to_player(player.id(), chunk_pos);
+      }
    }
 }
 

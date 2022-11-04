@@ -6,6 +6,7 @@ import "minecpp/proto/common/v1/Common.proto";
 import "minecpp/proto/player/v1/Id.proto";
 import "minecpp/proto/player/v1/Player.proto";
 import "minecpp/proto/entity/v1/Entity.proto";
+import "minecpp/proto/chunk/v1/Chunk.proto";
 
 message Event {
   google.protobuf.Any payload = 1;
@@ -144,4 +145,8 @@ message ChunkBlockLight {
 
 message UpdateBlockLight {
   repeated ChunkBlockLight block_light = 1;
+}
+
+message ChunkData {
+  chunk.v1.Chunk chunk = 1;
 }

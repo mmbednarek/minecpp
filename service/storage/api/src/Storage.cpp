@@ -14,10 +14,13 @@ void StorageClient::subscribe_chunk(game::ChunkPosition position)
    }
 }
 
-void StorageClient::push_chunk(const world::Chunk &chunk)
+void StorageClient::push_chunk(const world::Chunk *chunk)
 {
+   if (chunk == nullptr)
+      return;
+
    proto::service::storage::v1::Request request;
-   *request.mutable_chunk_data()->mutable_chunk_data() = chunk.to_proto();
+   *request.mutable_chunk_data()->mutable_chunk_data() = chunk->to_proto();
 
    await_connection();
 
@@ -59,6 +62,7 @@ void Stream::on_read(const Response &response)
 
    switch (response.message_case()) {
    case Response::kChunkData: m_handler->handle_chunk_data(response.chunk_data()); break;
+   case Response::kEmptyChunk: m_handler->handle_empty_chunk(response.empty_chunk()); break;
    default: break;
    }
 }

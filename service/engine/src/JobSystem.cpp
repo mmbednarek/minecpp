@@ -1,11 +1,14 @@
 #include "JobSystem.h"
+#include "minecpp/util/Threading.h"
 
+#include <fmt/format.h>
+#include <spdlog/spdlog.h>
 #include <utility>
 
 namespace minecpp::service::engine {
 
 TicketBuilder::TicketBuilder(JobSystem &job_system, std::unique_ptr<IJobCondition> condition) :
-        m_job_system(job_system)
+    m_job_system(job_system)
 {
    m_conditions.push_back(std::move(condition));
 }
@@ -33,21 +36,29 @@ void JobSystem::issue_ticket(Ticket ticket)
 
 void JobSystem::issue_job(std::unique_ptr<IJob> job)
 {
-   m_pending_jobs.push(std::move(job));
+   {
+      std::lock_guard lock{m_job_ready_mutex};
+      spdlog::info("pushing job");
+      m_pending_jobs.push(std::move(job));
+   }
    m_has_job_condition.notify_one();
 }
 
-void JobSystem::worker_routine()
+void JobSystem::worker_routine(int id)
 {
+   minecpp::util::label_thread("Job System worker {}");
+
    while (m_is_running) {
-      if (m_pending_jobs.is_empty()) {
-         std::unique_lock lock{m_job_ready_mutex};
-         m_has_job_condition.wait(lock);
-      }
+      std::unique_lock lock{m_job_ready_mutex};
+      spdlog::info("acquired lock");
+      m_has_job_condition.wait(lock, [this] { return not m_pending_jobs.is_empty(); });
 
       auto job = m_pending_jobs.pop();
-      job->run();
+      assert(job);
 
+      lock.unlock();
+
+      job->run();
       process_awaiting_tickets();
    }
 }
@@ -70,9 +81,8 @@ void JobSystem::process_awaiting_tickets()
 JobSystem::JobSystem(std::size_t thread_count)
 {
    m_threads.reserve(thread_count);
-   std::generate_n(std::back_inserter(m_threads), thread_count, [this] {
-      return std::thread(&JobSystem::worker_routine, this);
-   });
+   std::generate_n(std::back_inserter(m_threads), thread_count,
+                   [this, id = 0]() mutable { return std::thread(&JobSystem::worker_routine, this, id++); });
 }
 
 bool Ticket::is_completed() const
@@ -86,7 +96,8 @@ bool Ticket::is_completed() const
    return true;
 }
 
-void FunctorJob::run() {
+void FunctorJob::run()
+{
    m_callback();
 }
 

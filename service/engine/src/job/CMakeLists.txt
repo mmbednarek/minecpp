@@ -2,7 +2,9 @@
 
 target_sources(minecpp_engine PUBLIC
         # Source files
-        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkIsLoaded.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkIsPresent.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkIsComplete.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkIsComplete.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/GenerateChunk.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/GenerateChunk.h
 )
 

@@ -24,6 +24,8 @@ constexpr int compression_threshold = 256;
 void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
                                       minecpp::network::message::Reader &r)
 {
+   spdlog::info("login start");
+
    std::string user_name = r.read_string();
 
    auto response = service.login_player(user_name);

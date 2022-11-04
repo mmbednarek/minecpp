@@ -9,8 +9,8 @@
 #include <minecpp/game/player/Id.h>
 #include <minecpp/random/JavaRandom.h>
 #include <minecpp/world/Chunk.h>
-#include <minecpp/world/Chunks.h>
 #include <minecpp/world/Generator.h>
+#include <minecpp/world/IChunkSystem.h>
 #include <minecpp/world/LightSystem.h>
 #include <minecpp/world/SectionSlice.h>
 #include <minecpp/world/terrain/Terrain.h>
@@ -19,7 +19,7 @@ namespace minecpp::service::chunk_storage {
 
 using uuid = boost::uuids::uuid;
 
-class ChunkManager : public world::Chunks
+class ChunkManager : public world::IChunkSystem
 {
    std::map<int64_t, std::unique_ptr<world::Chunk>> m_chunks;
    Regions m_regions;

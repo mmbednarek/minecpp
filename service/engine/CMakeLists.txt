@@ -27,6 +27,7 @@ target_link_libraries(minecpp_engine
         minecpp_command
         minecpp_storage_api
         minecpp_lexer
+        yaml-cpp
         grpc++
         Boost::system
         spdlog

@@ -20,11 +20,7 @@ auto main() -> int
 
    auto registry = minecpp::repository::load_network_registry_from_file(conf.registry_path).unwrap({});
 
-   auto chunk_channel = grpc::CreateChannel(conf.chunk_storage_host, grpc::InsecureChannelCredentials());
-   std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub> chunk_service =
-           minecpp::proto::service::chunk_storage::v1::ChunkStorage::NewStub(chunk_channel);
-
-   Service service(conf, chunk_service);
+   Service service(conf);
 
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
@@ -45,7 +41,7 @@ auto main() -> int
 
    spdlog::info("established connection, starting tick");
 
-   TickManager ticks(svr, chunk_service);
+   TickManager ticks(svr);
    std::thread ticks_thread([&ticks]() { ticks.tick(); });
 
    spdlog::info("starting server on port {}", conf.port);

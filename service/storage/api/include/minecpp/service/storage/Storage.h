@@ -15,6 +15,7 @@ using proto::service::storage::v1::Response;
 using proto::service::storage::v1::StorageService;
 
 using proto::service::storage::v1::ResponseChunkData;
+using proto::service::storage::v1::ResponseEmptyChunk;
 
 using ConnectionManager = grpc::client::ConnectionManager<StorageService::Stub, Request, Response>;
 using RawStream         = grpc::client::Stream<ConnectionManager>;
@@ -26,6 +27,7 @@ class IResponseHandler
    virtual ~IResponseHandler() noexcept = default;
 
    virtual void handle_chunk_data(const ResponseChunkData &chunk) = 0;
+   virtual void handle_empty_chunk(const ResponseEmptyChunk &chunk) = 0;
 };
 
 class Stream
@@ -61,7 +63,7 @@ class StorageClient
    void on_connected(RawStream stream);
 
    void subscribe_chunk(game::ChunkPosition position);
-   void push_chunk(const world::Chunk &chunk);
+   void push_chunk(const world::Chunk *chunk);
 
    void await_connection();
    void wait();

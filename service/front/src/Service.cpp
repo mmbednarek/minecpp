@@ -17,8 +17,7 @@ namespace serverbound_v1 = proto::event::serverbound::v1;
 const char *internal_reason =
         R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
-Service::Service(Config &conf, ChunkService chunk_service) :
-    m_chunk_service(std::move(chunk_service))
+Service::Service(Config &conf)
 {
 }
 

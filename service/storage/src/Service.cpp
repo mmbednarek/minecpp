@@ -26,7 +26,9 @@ void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition po
 
    auto chunk = m_storage.read_chunk(position);
    if (not chunk.has_value()) {
-      spdlog::error("could not read chunk at: {} {}", position.x, position.z);
+      proto::service::storage::v1::Response response;
+      *response.mutable_empty_chunk()->mutable_position() = position.to_proto();
+      m_responder.send(connection_id, response);
       return;
    }
 
@@ -41,28 +43,29 @@ void Service::handle_request(ConnectionId connection_id, const proto::service::s
 
    switch (request.message_case()) {
    case Request::kChunkSubscription:
-      this->subscribe_chunk(connection_id, game::ChunkPosition::from_proto(request.chunk_subscription().position()));
+      this->subscribe_chunk(connection_id,
+                            game::ChunkPosition::from_proto(request.chunk_subscription().position()));
       break;
-   case Request::kChunkData:
-      this->push_chunk_data(connection_id, request.chunk_data().chunk_data());
-      break;
+   case Request::kChunkData: this->push_chunk_data(connection_id, request.chunk_data().chunk_data()); break;
    case Request::kSetClientId:
       this->set_client_id(connection_id, request.set_client_id().client_id().value());
       return;
-   default:
-      spdlog::warn("unhandled message case: {}", request.message_case());
-      break;
+   default: spdlog::warn("unhandled message case: {}", request.message_case()); break;
    }
 }
 
 void Service::push_chunk_data(ConnectionId /* connection_id */, const proto::chunk::v1::Chunk &chunk)
 {
-   m_storage.update_chunk(game::ChunkPosition::from_proto(chunk.position()), [&chunk](proto_chunk::Chunk &db_chunk) {
-      db_chunk = chunk;
-   });
+   spdlog::info("storing chunk data at {}, {}", chunk.position().x(), chunk.position().z());
+
+   if (not m_storage.update_chunk(game::ChunkPosition::from_proto(chunk.position()),
+                                  [&chunk](proto_chunk::Chunk &db_chunk) { db_chunk = chunk; })) {
+      spdlog::warn("failed to store chunk at {}, {}", chunk.position().x(), chunk.position().z());
+   }
 }
 
-void Service::set_client_id(ConnectionId connection, ClientId client_id) {
+void Service::set_client_id(ConnectionId connection, ClientId client_id)
+{
    m_connection_to_client_map[connection] = client_id;
 }
 

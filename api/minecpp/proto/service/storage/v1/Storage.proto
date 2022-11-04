@@ -40,6 +40,7 @@ message Response {
 };
 
 message ResponseEmptyChunk {
+  common.v1.ChunkPosition position = 1;
 };
 
 message ResponseChunkData {

@@ -8,10 +8,10 @@ class ChunkSystem;
 
 namespace minecpp::service::engine::job {
 
-class ChunkIsPresent : public IJobCondition
+class ChunkIsComplete : public IJobCondition
 {
  public:
-   ChunkIsPresent(ChunkSystem &chunk_system, const game::ChunkPosition &chunk_position);
+   ChunkIsComplete(ChunkSystem &chunk_system, const game::ChunkPosition &chunk_position);
 
    [[nodiscard]] JobConditionStatus status() const override;
    void resolve(JobSystem &job_system) override;

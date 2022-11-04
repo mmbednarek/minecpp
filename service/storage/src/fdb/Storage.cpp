@@ -98,9 +98,6 @@ bool Storage::update_chunk(game::ChunkPosition position, const std::function<voi
    auto future      = transaction.get(key);
    auto value       = future.get_value();
 
-   if (value.data == nullptr)
-      return false;
-
    proto_chunk::Chunk chunk;
    if (not chunk.ParseFromArray(value.data, static_cast<int>(value.size)))
       return false;

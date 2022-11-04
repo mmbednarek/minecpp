@@ -115,7 +115,7 @@ class RandomTreeFactory : public ObjectFactory
    std::unordered_map<unsigned, RandomTree> m_trees;
 
  public:
-   PopObject &create(unsigned int seed) override;
+   std::unique_ptr<PopObject> create(unsigned int seed) override;
    int occurrence() const override;
 };
 

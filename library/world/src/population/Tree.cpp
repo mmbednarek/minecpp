@@ -56,19 +56,9 @@ int RandomTree::block_at(int x, int y, int z) const
    return air_id;
 }
 
-PopObject &RandomTreeFactory::create(unsigned int seed)
+std::unique_ptr<PopObject> RandomTreeFactory::create(unsigned int seed)
 {
-   auto it = m_trees.find(seed);
-   if (it != m_trees.end()) {
-      return it->second;
-   }
-
-   if (m_trees.size() > 20) {
-      m_trees.erase(m_trees.begin());
-   }
-
-   m_trees.insert({seed, RandomTree(seed)});
-   return m_trees.at(seed);
+   return std::make_unique<RandomTree>(seed);
 }
 
 int RandomTreeFactory::occurrence() const

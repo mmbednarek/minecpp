@@ -29,7 +29,7 @@ class ChunkPlacements
  private:
    Placement get_placement(int x, int z);
    void prepare_chunk(Chunk &chunk);
-   void put_object(Chunk &chunk, int id, int x, int y, int z);
+   void put_object(Chunk &chunk, int id, game::BlockPosition position);
 };
 
 }// namespace minecpp::world::population

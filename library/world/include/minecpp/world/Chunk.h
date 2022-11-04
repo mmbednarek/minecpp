@@ -26,6 +26,7 @@ class Chunk : public game::IBlockContainer
    [[nodiscard]] minecpp::proto::chunk::v1::Chunk to_proto() const;
    static Chunk from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
    void read_from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
+   void set_height_map(game::HeightType height_type, const std::array<short, 256> &height_map);
 
    void create_empty_section(int8_t sec);
    mb::emptyres set_block(const game::BlockPosition &position, game::BlockStateId state) override;
@@ -38,6 +39,7 @@ class Chunk : public game::IBlockContainer
    std::array<short, 256> get_height_map();
    [[nodiscard]] int height_at(game::HeightType type, game::BlockPosition position) const;
    void set_height(game::HeightType type, game::BlockPosition position, int value);
+   [[nodiscard]] std::size_t section_count();
 
    static int maximum_y()
    {
