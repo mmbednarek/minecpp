@@ -49,4 +49,8 @@ RUN cmake -DgRPC_INSTALL=ON \
         ../..
 RUN make -j $(nproc)
 RUN make install
+
+RUN curl -L -o fdb.deb https://github.com/apple/foundationdb/releases/download/7.1.23/foundationdb-clients_7.1.23-1_amd64.deb
+RUN dpkg -i fdb.deb
+
 RUN ldconfig

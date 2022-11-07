@@ -177,8 +177,8 @@ Writer UpdateBlockLight::serialize() const
    w.write_varint(static_cast<mb::u32>(chunk_position.z));
 
    uint32_t block_light_count = 0;
-   uint32_t blockUpdateMask = 0;
-   uint32_t blockResetMask  = 0;
+   uint32_t blockUpdateMask   = 0;
+   uint32_t blockResetMask    = 0;
 
    for (auto const &pair : block_light) {
       auto place = static_cast<uint8_t>(static_cast<char>(pair.first) + 1);

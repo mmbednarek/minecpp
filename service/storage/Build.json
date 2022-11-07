@@ -1,0 +1,20 @@
+{
+  "name": "minecpp_storage",
+  "api_library": "true",
+  "examples": [
+    "api_test",
+    "fdb_request"
+  ],
+  "dependencies": {
+    "private": [
+      "minecpp_utils",
+      "minecpp_game",
+      "minecpp_grpc",
+      "minecpp_api_proto",
+      "Boost::system",
+      "spdlog",
+      "libmb",
+      "fdb_c"
+    ]
+  }
+}

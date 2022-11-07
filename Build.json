@@ -21,10 +21,10 @@
     "world"
   ],
   "services": [
-    "chunk_storage",
     "discovery",
     "engine",
-    "front"
+    "front",
+    "storage"
   ],
   "tools": [
     "chunk_extractor",

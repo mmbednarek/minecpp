@@ -9,8 +9,8 @@ using minecpp::proto::event::clientbound::v1::Event;
 namespace minecpp::service::engine {
 
 Connection::Connection(EventHandler &event_handler, BidiStream stream) :
-   m_event_handler{event_handler},
-   m_stream{std::move(stream)}
+    m_event_handler{event_handler},
+    m_stream{std::move(stream)}
 {
    m_stream.bind_read_callback(this, &Connection::on_read);
 }
@@ -27,13 +27,13 @@ void Connection::on_read(const proto::event::serverbound::v1::Event &event)
 void Connection::send_to_player(const google::protobuf::Message &message, game::PlayerId player_id)
 {
    Event proto_event;
-   *proto_event.mutable_single_player()->mutable_player_id() =
-           game::player::write_id_to_proto(player_id);
+   *proto_event.mutable_single_player()->mutable_player_id() = game::player::write_id_to_proto(player_id);
    proto_event.mutable_payload()->PackFrom(message);
    m_stream.write(proto_event);
 }
 
-void Connection::send_to_all(const google::protobuf::Message &message) {
+void Connection::send_to_all(const google::protobuf::Message &message)
+{
    Event proto_event;
    *proto_event.mutable_all_players() = proto::event::clientbound::v1::RecipientAllPlayers();
    proto_event.mutable_payload()->PackFrom(message);

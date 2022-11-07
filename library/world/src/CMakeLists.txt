@@ -14,8 +14,8 @@ target_sources(minecpp_world PUBLIC
         # Header files
         ${MINECPP_WORLD_INCLUDE_DIR}/BlockState.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Chunk.h
-        ${MINECPP_WORLD_INCLUDE_DIR}/Chunks.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Generator.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/IChunkSystem.h
         ${MINECPP_WORLD_INCLUDE_DIR}/LightSystem.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Section.h
         ${MINECPP_WORLD_INCLUDE_DIR}/SectionSlice.h

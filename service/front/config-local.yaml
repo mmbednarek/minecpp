@@ -1,6 +1,10 @@
-engine_hosts:
-  - "127.0.0.1:7800"
-front_port: 4500
-recipes: research/recipes.dat
-tags: research/tags.dat
-chunk_storage_host: 127.0.0.1:7600
+server:
+  bind_address: "0.0.0.0"
+  bind_port: 7101
+engine:
+  endpoints:
+    - "127.0.0.1:7800"
+  strategy: round_robin
+debug_logger: true
+resources:
+  registry: "registry.bin"

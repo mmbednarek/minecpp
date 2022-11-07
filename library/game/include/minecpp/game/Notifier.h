@@ -30,6 +30,8 @@ class Notifier
    virtual void spawn_player(PlayerId player, mb::u32 entity_id, minecpp::util::Vec3 position,
                              const entity::Rotation &rotation)                                            = 0;
    virtual void send_chat(chat::MessageType msg_type, const std::string &msg)                             = 0;
+   virtual void send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
+                                 const std::string &msg)                                                  = 0;
    virtual void entity_look(PlayerId player, mb::u32 entity_id, const entity::Rotation &rotation)         = 0;
    virtual void remove_player(PlayerId player, mb::u32 entity_id)                                         = 0;
    virtual void update_block(game::BlockPosition block, game::BlockStateId state)                         = 0;
@@ -37,7 +39,8 @@ class Notifier
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                             = 0;
    virtual void unload_chunk(PlayerId player, const game::ChunkPosition &chunk_position)                  = 0;
    virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, std::size_t count) = 0;
-   virtual void update_block_light(ISectionSlice& slice, SectionRange range) = 0;
+   virtual void update_block_light(ISectionSlice &slice, SectionRange range)                              = 0;
+   virtual void update_chunk_position(PlayerId player_id, const game::ChunkPosition &chunk_position)      = 0;
 };
 
 }// namespace minecpp::game

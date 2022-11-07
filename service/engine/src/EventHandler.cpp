@@ -136,6 +136,8 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id)
 {
+   //  Is chunk where player stands even loaded?
+
    spdlog::info("player accept request from {}", event.name());
    auto join_result = m_player_manager.join_player(m_world, event.name(), player_id);
    if (!join_result.ok()) {
@@ -158,6 +160,32 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(),
                              game::entity::Rotation(entity.get_yaw(), entity.get_pitch()));
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
+
+   m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
+                                 format::Builder()
+                                         .bold(format::Color::Green, "Welcome ")
+                                         .bold(format::Color::Green, player.name())
+                                         .bold(format::Color::Green, "!")
+                                         .to_string());
+   m_dispatcher.send_direct_chat(
+           player.id(), chat::MessageType::PlayerMessage,
+           format::Builder()
+                   .text(format::Color::Gray, "------------------------------------------------")
+                   .to_string());
+   m_dispatcher.send_direct_chat(
+           player.id(), chat::MessageType::PlayerMessage,
+           format::Builder().text("This server implementation is under development").to_string());
+   m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
+                                 format::Builder()
+                                         .text("To obtain a block please type ")
+                                         .text(format::Color::Yellow, "/give ")
+                                         .text(format::Color::Gold, "<block name>")
+                                         .to_string());
+   m_dispatcher.send_direct_chat(
+           player.id(), chat::MessageType::PlayerMessage,
+           format::Builder()
+                   .text(format::Color::Gray, "------------------------------------------------")
+                   .to_string());
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,

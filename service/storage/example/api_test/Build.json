@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_storage_example_api_test",
+  "dependencies": {
+    "private": [
+      "minecpp_utils",
+      "minecpp_game",
+      "minecpp_grpc",
+      "minecpp_storage_api",
+      "minecpp_world"
+    ]
+  }
+}

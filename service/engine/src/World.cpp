@@ -1,6 +1,8 @@
 #include "World.h"
+#include "ChunkSystem.h"
+#include "job/ChunkIsComplete.h"
+#include "JobSystem.h"
 #include <minecpp/util/Uuid.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <minecpp/world/SectionSlice.h>
 #include <utility>
 
@@ -8,14 +10,34 @@ using minecpp::game::Face;
 
 namespace minecpp::service::engine {
 
-World::World(uuid engine_id, ChunkService &service, Dispatcher &dispatcher, PlayerManager &player_manager,
-             EntityManager &entity_manager, controller::BlockManager &block_controller) :
-    service(service),
+template<typename TFunction>
+void when_chunk_is_complete(ChunkSystem &chunk_system, JobSystem &job_system,
+                            const game::ChunkPosition &position, TFunction &&function)
+{
+   if (chunk_system.chunk_state_at(position) == world::ChunkState::COMPLETE) {
+      function(chunk_system.chunk_at(position));
+   } else {
+      job_system.when<job::ChunkIsComplete>(chunk_system, position).run([&chunk_system, position, function] {
+         auto *chunk = chunk_system.chunk_at(position);
+         assert(chunk);
+         function(chunk);
+      });
+   }
+}
+
+#define ACCESS_CHUNK_AT(position, ...) \
+   when_chunk_is_complete(m_chunk_system, m_job_system, position, __VA_ARGS__)
+
+World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
+             PlayerManager &player_manager, EntityManager &entity_manager,
+             controller::BlockManager &block_controller) :
+    m_chunk_system(chunk_system),
+    m_job_system(job_system),
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
     m_entity_manager(entity_manager),
     m_block_controller(block_controller),
-    engine_id(engine_id),
+    m_engine_id(engine_id),
     m_light_system(*this, m_dispatcher)
 {
 }
@@ -27,82 +49,41 @@ minecpp::game::Notifier &World::notifier()
 
 mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
-   using proto::service::chunk_storage::v1::ReferenceStatus;
+   for (auto const &position : refs) {
+      ACCESS_CHUNK_AT(position,
+                      [this, player_id](world::Chunk *chunk) { chunk->add_ref(m_engine_id, player_id); });
 
-   ::grpc::ClientContext ctx;
-   proto::service::chunk_storage::v1::AddReferencesRequest req;
-   proto::service::chunk_storage::v1::AddReferencesResponse result;
-
-   req.set_player_id(minecpp::util::uuid_to_string(player_id));
-   req.set_engine_id(minecpp::util::uuid_to_string(engine_id));
-   for (auto const &c : refs) {
-      auto new_coord = req.add_coords();
-      new_coord->set_x(c.x);
-      new_coord->set_z(c.z);
+      // TODO: Send reference to storage
    }
-   auto status = service.AddReferences(&ctx, req, &result);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
-   }
-
-   if (result.status() == ReferenceStatus::MUST_MOVE) {
-      m_dispatcher.transfer_player(player_id, MB_TRY(minecpp::util::make_uuid(result.target_engine_id())));
-   }
-
    return mb::ok;
 }
 
 mb::result<mb::empty> World::free_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
-   ::grpc::ClientContext ctx;
-   proto::service::chunk_storage::v1::RemoveReferencesRequest req;
-   proto::service::chunk_storage::v1::EmptyResponse res;
+   for (auto const &position : refs) {
+      ACCESS_CHUNK_AT(position, [player_id](world::Chunk *chunk) { chunk->free_ref(player_id); });
 
-   req.set_player_id(player_id.data, player_id.size());
-   for (auto const &c : refs) {
-      auto new_coord = req.add_coords();
-      new_coord->set_x(c.x);
-      new_coord->set_z(c.z);
+      // TODO: Send reference removal to storage
    }
-
-   auto status = service.RemoveReference(&ctx, req, &res);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
-   }
-
    return mb::ok;
 }
 
 mb::result<int> World::height_at(int x, int z)
 {
-   ::grpc::ClientContext ctx;
-   proto::service::chunk_storage::v1::HeightAtRequest req;
-   proto::service::chunk_storage::v1::HeightAtResponse res;
-   req.set_x(x);
-   req.set_z(z);
-   auto status = service.HeightAt(&ctx, req, &res);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
+   auto *chunk = m_chunk_system.chunk_at({x, z});
+   if (chunk == nullptr) {
+      return mb::error("chunk is not loaded");
    }
-   return res.height();
+   return chunk->height_at(game::HeightType::WorldSurface, {x, 0, z});
 }
 
 mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
 {
-   ::grpc::ClientContext ctx;
-   proto::service::chunk_storage::v1::SetBlockRequest req;
-   req.set_x(pos.x);
-   req.set_y(pos.y);
-   req.set_z(pos.z);
-   req.set_state(static_cast<int>(state));
-   proto::service::chunk_storage::v1::EmptyResponse res;
-   auto status = service.SetBlock(&ctx, req, &res);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
-   }
-
+   ACCESS_CHUNK_AT(pos.chunk_position(), [this, pos, state](world::Chunk *chunk) {
+      chunk->set_block(pos, state);
+      m_chunk_system.save_chunk_at(pos.chunk_position());
+   });
    m_dispatcher.update_block(pos, state);
-
    return mb::ok;
 }
 
@@ -118,17 +99,11 @@ mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::Blo
 
 mb::result<game::BlockStateId> World::get_block(const game::BlockPosition &pos)
 {
-   ::grpc::ClientContext ctx;
-
-   auto proto_pos = pos.to_proto();
-
-   proto::common::v1::BlockState state;
-   auto status = service.GetBlock(&ctx, proto_pos, &state);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
+   auto *chunk = m_chunk_system.chunk_at(pos.chunk_position());
+   if (chunk == nullptr) {
+      return mb::error("chunk is not loaded");
    }
-
-   return game::block_state_from_proto(state);
+   return chunk->get_block(pos);
 }
 
 game::player::Provider &World::players()
@@ -163,102 +138,47 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
 
 mb::result<game::LightValue> World::get_light(game::LightType light_type, const game::BlockPosition &pos)
 {
-   proto::service::chunk_storage::v1::GetLightLevelRequest req{};
-   req.set_light_type(light_type.to_proto());
-   *req.mutable_position() = pos.to_proto();
-
-   proto::common::v1::LightLevel level;
-
-   ::grpc::ClientContext ctx;
-   auto status = service.GetLightLevel(&ctx, req, &level);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
+   auto *chunk = m_chunk_system.chunk_at(pos.chunk_position());
+   if (chunk == nullptr) {
+      return mb::error("chunk is not loaded");
    }
-
-   return level.level();
+   return chunk->get_light(light_type, pos);
 }
 
 mb::emptyres World::set_light(game::LightType light_type, const game::BlockPosition &pos,
                               game::LightValue level)
 {
-   proto::service::chunk_storage::v1::SetLightLevelRequest req{};
-   req.set_light_type(light_type.to_proto());
-   req.mutable_level()->set_level(static_cast<mb::u32>(level));
-   *req.mutable_position() = pos.to_proto();
-
-   proto::service::chunk_storage::v1::EmptyResponse resp{};
-   ::grpc::ClientContext ctx;
-   auto status = service.SetLightLevel(&ctx, req, &resp);
-   if (!status.ok()) {
-      return mb::error(status.error_message());
-   }
-
-   return mb::ok;
-}
-
-mb::emptyres World::recalculate_light(game::LightType light_type, const game::BlockPosition &pos)
-{
-   auto original_light_value = MB_TRY(get_light(light_type, pos));
-
-   std::array<game::LightValue, 6> neighbour_light_levels{
-           MB_TRY(get_light(light_type, pos.neighbour_at(Face::Bottom))),
-           MB_TRY(get_light(light_type, pos.neighbour_at(Face::Top))),
-           MB_TRY(get_light(light_type, pos.neighbour_at(Face::North))),
-           MB_TRY(get_light(light_type, pos.neighbour_at(Face::South))),
-           MB_TRY(get_light(light_type, pos.neighbour_at(Face::West))),
-           MB_TRY(get_light(light_type, pos.neighbour_at(Face::East))),
-   };
-
-   auto max_neighbour = std::max_element(neighbour_light_levels.begin(), neighbour_light_levels.end());
-   auto projected_light_level = *max_neighbour - 1;
-
-   if (projected_light_level <= original_light_value) {
-      return mb::ok;
-   }
-
-   set_light(light_type, pos, static_cast<game::LightValue>(projected_light_level));
-
-   for (auto face : game::Face::Values) {
-      if ((projected_light_level - 1) <= neighbour_light_levels[static_cast<std::size_t>(face)])
-         continue;
-
-      recalculate_light(light_type, pos.neighbour_at(face));
-   }
-
+   ACCESS_CHUNK_AT(pos.chunk_position(), [light_type, pos, level](world::Chunk *chunk) {
+      chunk->set_light(light_type, pos, level);
+   });
    return mb::ok;
 }
 
 mb::result<std::unique_ptr<game::ISectionSlice>> World::get_slice(game::SectionRange range)
 {
-   proto::chunk::v1::SectionSlice resp{};
-   ::grpc::ClientContext ctx;
-   auto status = service.GetSlice(&ctx, range.to_proto(), &resp);
-   if (not status.ok()) {
-      return mb::error(status.error_message());
-   }
-   return std::make_unique<world::SectionSlice>(world::SectionSlice::from_proto(resp));
+   return mb::error("not implemented");
 }
 
 mb::emptyres World::apply_slice(game::ISectionSlice &slice)
 {
-   auto *section_slice = dynamic_cast<world::SectionSlice *>(&slice);
-   if (section_slice == nullptr) {
-      return mb::error("invalid slice");
-   }
-
-   proto::service::chunk_storage::v1::EmptyResponse resp;
-   ::grpc::ClientContext ctx;
-   auto status = service.ApplySlice(&ctx, section_slice->to_proto(), &resp);
-   if (not status.ok()) {
-      return mb::error(status.error_message());
-   }
-
-   return mb::ok;
+   return mb::error("not implemented");
 }
 
 game::ILightSystem &World::light_system()
 {
    return m_light_system;
+}
+
+mb::emptyres World::recalculate_light(game::LightType light_type, const game::BlockPosition &pos)
+{
+   return mb::error("not implemented");
+}
+
+mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position)
+{
+   ACCESS_CHUNK_AT(position,
+                   [this, player_id](world::Chunk *chunk) { m_dispatcher.send_chunk(player_id, chunk); });
+   return mb::ok;
 }
 
 }// namespace minecpp::service::engine

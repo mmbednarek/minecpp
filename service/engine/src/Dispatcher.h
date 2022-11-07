@@ -1,5 +1,6 @@
 #pragma once
 #include "ApiHandler.h"
+#include "minecpp/world/Chunk.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/entity/Entity.h>
 #include <minecpp/game/Notifier.h>
@@ -35,6 +36,8 @@ class Dispatcher : public minecpp::game::Notifier
                      const game::entity::Rotation &rotation) override;
    void remove_player(game::PlayerId player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
+   void send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
+                         const std::string &msg) override;
    void acknowledge_block_change(game::PlayerId player_id, int sequence_id) override;
    void animate_hand(game::PlayerId player_id, mb::u32 entity_id, mb::u32 hand) override;
    void unload_chunk(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
@@ -48,6 +51,9 @@ class Dispatcher : public minecpp::game::Notifier
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            std::size_t count) override;
    void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
+
+   void send_chunk(game::PlayerId player_id, world::Chunk *chunk);
+   void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
 
  private:
    EventManager &m_events;

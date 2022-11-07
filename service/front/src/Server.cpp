@@ -7,9 +7,9 @@
 
 namespace minecpp::service::front {
 
-Server::Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play, Protocol::Handler *status,
+Server::Server(boost::asio::io_context &ctx, mb::u16 port, Protocol::Handler *play, Protocol::Handler *status,
                Protocol::Handler *login) :
-    acceptor(ctx, tcp::endpoint(tcp::v4(), port)),
+    m_acceptor(ctx, tcp::endpoint(tcp::v4(), port)),
     m_handlers{play, status, login}
 {
    accept_conn();
@@ -17,9 +17,9 @@ Server::Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play
 
 void Server::accept_conn()
 {
-   auto conn =
-           std::make_shared<Connection>((boost::asio::io_context &) acceptor.get_executor().context(), this);
-   acceptor.async_accept(conn->m_socket, [this, conn](const boost::system::error_code &err) {
+   auto conn = std::make_shared<Connection>((boost::asio::io_context &) m_acceptor.get_executor().context(),
+                                            this);
+   m_acceptor.async_accept(conn->m_socket, [this, conn](const boost::system::error_code &err) {
       if (err) {
          spdlog::error("error accepting connection: {}", err.message());
          accept_conn();
@@ -97,17 +97,17 @@ Protocol::Handler &Server::get_handler(const Protocol::State state)
 
 void Server::index_connection(boost::uuids::uuid index, std::size_t id)
 {
-   conn_ids[index] = id;
+   m_conn_ids[index] = id;
 }
 
 bool Server::has_connection(game::PlayerId player_id)
 {
-   return conn_ids.contains(player_id);
+   return m_conn_ids.contains(player_id);
 }
 
 std::shared_ptr<Connection> Server::connection_by_id(game::PlayerId player_id)
 {
-   return m_connections.at(conn_ids.at(player_id));
+   return m_connections.at(m_conn_ids.at(player_id));
 }
 
 }// namespace minecpp::service::front

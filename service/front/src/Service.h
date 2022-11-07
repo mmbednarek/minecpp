@@ -14,8 +14,6 @@
 
 namespace minecpp::service::front {
 
-typedef std::shared_ptr<minecpp::proto::service::chunk_storage::v1::ChunkStorage::Stub> ChunkService;
-
 class Server;
 using boost::uuids::uuid;
 
@@ -29,10 +27,8 @@ class Service
    boost::random::mt19937 rand;
    engine::IStream *m_stream{};
 
-   ChunkService m_chunk_service;
-
  public:
-   explicit Service(Config &conf, ChunkService chunk_service);
+   explicit Service(Config &conf);
 
    constexpr void set_stream(engine::IStream *stream)
    {

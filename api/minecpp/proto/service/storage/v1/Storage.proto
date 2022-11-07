@@ -1,0 +1,52 @@
+syntax = "proto3";
+package minecpp.proto.service.storage.v1;
+
+import "minecpp/proto/common/v1/Common.proto";
+import "minecpp/proto/chunk/v1/Chunk.proto";
+
+service StorageService {
+  rpc Join(stream Request) returns (stream Response);
+}
+
+message ClientId {
+  uint64 value = 1;
+}
+
+message Request {
+  oneof message {
+    RequestChunkSubscription chunk_subscription = 1;
+    RequestChunkData chunk_data = 2;
+    RequestSetClientId set_client_id = 3;
+  }
+};
+
+message RequestChunkSubscription {
+  common.v1.ChunkPosition position = 1;
+};
+
+message RequestChunkData {
+  chunk.v1.Chunk chunk_data = 1;
+};
+
+message RequestSetClientId {
+  ClientId client_id = 1;
+};
+
+message Response {
+  oneof message {
+    ResponseChunkData chunk_data = 1;
+    ResponseEmptyChunk empty_chunk = 2;
+  }
+};
+
+message ResponseEmptyChunk {
+  common.v1.ChunkPosition position = 1;
+};
+
+message ResponseChunkData {
+  chunk.v1.Chunk chunk_data = 1;
+};
+
+message ChunkSubscription {
+  repeated ClientId client_ids = 1;
+};

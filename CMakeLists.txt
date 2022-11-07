@@ -18,6 +18,8 @@ find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(GTest REQUIRED)
 
+find_library(FDB_LIBRARY NAMES fdb_c)
+
 include(FetchContent)
 
 if(${USE_LOCAL_GPRC})
@@ -35,6 +37,10 @@ endif()
 
 if(${SPDLOG_FMT_EXTERNAL})
   add_definitions(-DSPDLOG_FMT_EXTERNAL=1)
+endif()
+
+if(${FDB_API_VERSION})
+  add_definitions(-DFDB_API_VERSION=${FDB_API_VERSION})
 endif()
 
 FetchContent_Declare(

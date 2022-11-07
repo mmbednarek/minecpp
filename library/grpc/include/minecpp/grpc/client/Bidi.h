@@ -1,6 +1,7 @@
 #ifndef MINECPP_GRPC_CLIENT_BIDI_H
 #define MINECPP_GRPC_CLIENT_BIDI_H
 #include <algorithm>
+#include <fmt/core.h>
 #include <functional>
 #include <future>
 #include <grpcpp/grpcpp.h>
@@ -8,6 +9,7 @@
 #include <minecpp/container/Queue.h>
 #include <minecpp/grpc/Bidi.h>
 #include <minecpp/util/Pool.h>
+#include <minecpp/util/Threading.h>
 
 namespace minecpp::grpc::client {
 
@@ -149,7 +151,7 @@ class Stream
    {
    }
 
-   Stream(Stream&& other) noexcept :
+   Stream(Stream &&other) noexcept :
        m_stream{std::move(other.m_stream)},
        m_event_pool{other.m_event_pool},
        m_read_pool{other.m_read_pool}
@@ -214,19 +216,23 @@ class ConnectionManager
       for (const auto &address : addresses) {
          auto channel = ::grpc::CreateChannel(address, ::grpc::InsecureChannelCredentials());
          auto stub    = std::make_unique<TStub>(channel);
-         auto stream  = std::make_shared<InternalStream<ConnectionManager>>(std::move(channel), std::move(stub));
+         auto stream =
+                 std::make_shared<InternalStream<ConnectionManager>>(std::move(channel), std::move(stub));
 
          auto *event = m_event_pool.template construct(EventType::Accept, stream);
          stream->template start(start, &m_ctx, &m_queue, event);
       }
 
       m_workers.resize(worker_count);
-      std::generate(m_workers.begin(), m_workers.end(),
-                    [this]() { return std::async(&ConnectionManager::worker_routine, this); });
+      std::generate(m_workers.begin(), m_workers.end(), [this, id = 0]() mutable {
+         return std::async(&ConnectionManager::worker_routine, this, id++);
+      });
    }
 
-   mb::result<mb::empty> worker_routine()
+   mb::result<mb::empty> worker_routine(int id)
    {
+      minecpp::util::label_thread("Stream API worker");
+
       for (;;) {
          auto event_res = get_next();
          if (event_res.has_failed()) {
@@ -274,6 +280,7 @@ class ConnectionManager
    ~ConnectionManager()
    {
       m_queue.Shutdown();
+      m_ctx.TryCancel();
       wait();
    }
 

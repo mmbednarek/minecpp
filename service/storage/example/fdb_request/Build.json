@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_storage_fdb_request",
+  "dependencies": {
+    "private": [
+      "fdb_c",
+      "spdlog",
+      "fmt"
+    ]
+  }
+}

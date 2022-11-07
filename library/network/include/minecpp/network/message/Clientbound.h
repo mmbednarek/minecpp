@@ -147,7 +147,7 @@ struct KeepAlive
 // 0x21
 struct ChunkData
 {
-   minecpp::proto::chunk::v1::Chunk &chunk;
+   const minecpp::proto::chunk::v1::Chunk &chunk;
 
    [[nodiscard]] Writer serialize() const;
 };
@@ -168,7 +168,8 @@ struct UpdateLight
    [[nodiscard]] Writer serialize() const;
 };
 
-struct UpdateBlockLight {
+struct UpdateBlockLight
+{
    game::ChunkPosition chunk_position;
    std::map<int, std::vector<char>> block_light;
 

@@ -29,6 +29,7 @@ target_sources(minecpp_utils PUBLIC
         ${MINECPP_UTIL_INCLUDE_DIR}/Scriptw.h
         ${MINECPP_UTIL_INCLUDE_DIR}/StaticQueue.h
         ${MINECPP_UTIL_INCLUDE_DIR}/String.h
+        ${MINECPP_UTIL_INCLUDE_DIR}/Threading.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Time.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Util.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Uuid.h

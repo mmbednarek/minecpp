@@ -1,0 +1,15 @@
+server:
+  bind_address: "0.0.0.0"
+  bind_port: 7000
+storage:
+  endpoints:
+    - "storage:7000"
+resources:
+  data_file: "/config/repository.bin"
+gameplay:
+  world_seed: 2300
+  max_players: 2000
+  spawn_point:
+    x: 20
+    y: 67
+    z: 45

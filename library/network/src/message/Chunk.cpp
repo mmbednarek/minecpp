@@ -14,8 +14,8 @@ void write_light_data(Writer &w, const Chunk &chunk);
 void write_chunk(Writer &w, const Chunk &chunk)
 {
    // chunk position
-   w.write_big_endian(chunk.pos_x());
-   w.write_big_endian(chunk.pos_z());
+   w.write_big_endian(chunk.position().x());
+   w.write_big_endian(chunk.position().z());
 
    // write height maps
    nbt::Writer height_maps(w.raw_stream());
@@ -40,8 +40,8 @@ void write_chunk(Writer &w, const Chunk &chunk)
 
 void write_light(Writer &w, const Chunk &chunk)
 {
-   w.write_varint(chunk.pos_x());
-   w.write_varint(chunk.pos_z());
+   w.write_varint(chunk.position().x());
+   w.write_varint(chunk.position().z());
    write_light_data(w, chunk);
 }
 

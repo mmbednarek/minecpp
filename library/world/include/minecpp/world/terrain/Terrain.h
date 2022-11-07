@@ -34,7 +34,7 @@ class Terrain
  public:
    Terrain(uint64_t seed, int x, int z);
 
-   std::unique_ptr<Chunk> generate();
+   void write_terrain_to_chunk(Chunk *chunk);
 
  private:
    [[nodiscard]] constexpr short height_at(int x, int z);

@@ -91,9 +91,9 @@ Result<ast::Expression::Ptr> Parser::read_expression()
       auto value = token->value;
 
       auto colon = m_reader.next();
-      if (colon.has_value())  {
+      if (colon.has_value()) {
          if (colon->type == lexer::TokenType::Colon) {
-            auto token =  m_reader.next();
+            auto token = m_reader.next();
             if (not token.has_value()) {
                return Error(0, 0, "unexpected end of stream");
             }

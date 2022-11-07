@@ -30,7 +30,7 @@ TEST(TightVector, EncodingRegular)
    }
 
    ASSERT_TRUE(std::all_of(data.begin(), data.end(),
-               [at = encoded.begin()](int value) mutable { return value == *(at++); }));
+                           [at = encoded.begin()](int value) mutable { return value == *(at++); }));
 }
 
 TEST(TightVector, EncodingNonRegular)

@@ -21,10 +21,10 @@ using LightContainerUPtr = std::unique_ptr<LightContainer>;
 class Section final : public game::ISection
 {
  public:
-   Section(int y);
+   explicit Section(int y);
 
-   Section(int refCount, container::PalettedVector<game::BlockStateId> data,
-           std::vector<game::LightSource> mLightSources);
+   Section(int ref_count, container::PalettedVector<game::BlockStateId> data,
+           std::vector<game::LightSource> light_sources);
 
    Section(const Section &section);
    Section &operator=(const Section &section);
@@ -52,7 +52,7 @@ class Section final : public game::ISection
 
    [[nodiscard]] game::LightValue get_light(game::LightType type, game::BlockPosition position) const;
 
-   [[nodiscard]] void set_light(game::LightType type, game::BlockPosition position, game::LightValue value);
+   void set_light(game::LightType type, game::BlockPosition position, game::LightValue value);
 
    [[nodiscard]] game::BlockStateId get_block(game::BlockPosition position) const;
 
@@ -79,12 +79,12 @@ class Section final : public game::ISection
 
 class SectionBuilder
 {
-   std::array<game::BlockStateId, 4096> content{};
+   std::array<game::BlockStateId, 4096> m_content{};
 
  public:
    SectionBuilder();
 
-   void fill(std::function<int(short, short, short)> callback);
+   void fill(const std::function<int(short, short, short)> &callback);
    Section build();
 };
 

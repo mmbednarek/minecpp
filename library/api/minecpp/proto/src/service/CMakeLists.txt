@@ -5,4 +5,5 @@ add_subdirectory("chunk_storage")
 add_subdirectory("discovery")
 add_subdirectory("engine")
 add_subdirectory("health")
+add_subdirectory("storage")
 

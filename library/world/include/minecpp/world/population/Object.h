@@ -30,25 +30,62 @@ class ObjectFactory
  public:
    virtual ~ObjectFactory() noexcept = default;
 
-   virtual PopObject &create(unsigned seed)     = 0;
-   [[nodiscard]] virtual int occurrence() const = 0;
+   virtual std::unique_ptr<PopObject> create(unsigned seed) = 0;
+   [[nodiscard]] virtual int occurrence() const             = 0;
 };
 
-class SimpleObjectFactory final : public ObjectFactory
+class StaticObjectWrapper final : public PopObject
+{
+ public:
+   explicit StaticObjectWrapper(PopObject *object) :
+       m_object(object)
+   {
+   }
+
+   [[nodiscard]] int width() const override
+   {
+      return m_object->width();
+   }
+
+   [[nodiscard]] int height() const override
+   {
+      return m_object->height();
+   }
+
+   [[nodiscard]] int length() const override
+   {
+      return m_object->length();
+   }
+
+   [[nodiscard]] Pos center() const override
+   {
+      return m_object->center();
+   }
+
+   [[nodiscard]] int block_at(int x, int y, int z) const override
+   {
+      return m_object->block_at(x, y, z);
+   }
+
+ private:
+   PopObject *m_object{};
+};
+
+class StaticObjectFactory final : public ObjectFactory
 {
    std::unique_ptr<PopObject> m_object;
    int m_occurrence{};
 
  public:
-   explicit SimpleObjectFactory(int occurrence, std::unique_ptr<PopObject> object) :
+   StaticObjectFactory(int occurrence, std::unique_ptr<PopObject> object) :
        m_object(std::move(object)),
        m_occurrence(occurrence)
    {
    }
 
-   PopObject &create(unsigned int seed) override
+   std::unique_ptr<PopObject> create(unsigned int seed) override
    {
-      return *m_object;
+      return std::make_unique<StaticObjectWrapper>(m_object.get());
    }
 
    [[nodiscard]] int occurrence() const override
@@ -58,13 +95,13 @@ class SimpleObjectFactory final : public ObjectFactory
 };
 
 template<int w, int l, int h>
-class ShapedObject : public PopObject
+class ShapedObject final : public PopObject
 {
-   std::array<int, w * l * h> shape;
+   std::array<int, w * l * h> m_shape;
 
  public:
-   ShapedObject(std::array<int, w * l * h> shape) :
-       shape(std::move(shape))
+   explicit ShapedObject(std::array<int, w * l * h> shape) :
+       m_shape(std::move(shape))
    {
    }
 
@@ -93,7 +130,7 @@ class ShapedObject : public PopObject
       assert(x >= 0 && x < w);
       assert(z >= 0 && z < l);
       assert(y >= 0 && y < h);
-      return shape[x + z * w + y * w * l];
+      return m_shape[x + z * w + y * w * l];
    }
 };
 
@@ -113,7 +150,7 @@ class ObjectRepository
 
    mb::size find_object_id(int value);
 
-   [[nodiscard]] PopObject &get_object(mb::size id, unsigned seed) const
+   [[nodiscard]] std::unique_ptr<PopObject> get_object(mb::size id, unsigned seed) const
    {
       return m_objects[id]->create(seed);
    }

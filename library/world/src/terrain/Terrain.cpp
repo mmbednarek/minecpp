@@ -121,15 +121,17 @@ Section Terrain::generate_section(int sec)
    return builder.build();
 }
 
-std::unique_ptr<Chunk> Terrain::generate()
+void Terrain::write_terrain_to_chunk(Chunk *chunk)
 {
-   auto result = std::make_unique<Chunk>(x, z, height_map);
+   chunk->set_height_map(game::HeightType::WorldSurface, height_map);
+   chunk->set_height_map(game::HeightType::MotionBlocking, height_map);
+   chunk->set_height_map(game::HeightType::LightBlocking, height_map);
+
    for (int i = 0; i < 16; ++i) {
       if (section_empty(i))
          break;
-      result->put_section(i, generate_section(i));
+      chunk->put_section(static_cast<mb::i8>(i), generate_section(i));
    }
-   return result;
 }
 
 constexpr short Terrain::height_at(const int x, const int z)

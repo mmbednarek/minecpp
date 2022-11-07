@@ -10,10 +10,8 @@ int RandomTree::block_at(int x, int y, int z) const
            repository::encode_block_by_tag("minecraft:oak_wood", std::make_pair("axis", "y"));
    const static auto leaves_id =
            repository::encode_block_by_tag("minecraft:oak_leaves", std::make_pair("waterlogged", "false"));
-   const static auto stone_id =
-           repository::encode_block_by_tag("minecraft:stone");
-   const static auto glass_id =
-           repository::encode_block_by_tag("minecraft:glass");
+   const static auto stone_id = repository::encode_block_by_tag("minecraft:stone");
+   const static auto glass_id = repository::encode_block_by_tag("minecraft:glass");
 
    // BLOCK_STATE_ID(Grass, {"snowy", "false"})
 
@@ -25,7 +23,7 @@ int RandomTree::block_at(int x, int y, int z) const
    auto yy = y + y_min;
    auto zz = z + z_min;
 
-   for (auto &blob: m_leave_blobs) {
+   for (auto &blob : m_leave_blobs) {
       int dx = abs(blob.x - xx);
       int dz = abs(blob.y - zz);
       int dy = 2 * abs(blob.z - yy);
@@ -43,7 +41,7 @@ int RandomTree::block_at(int x, int y, int z) const
             return air_id;
          }
          if (diff < 0.5) {
-            auto prop2 = static_cast<int>((diff) * 40);
+            auto prop2 = static_cast<int>((diff) *40);
             if (prop2 == 0 || (rand() % prop2 == 0)) {
                return wood_id;
             }
@@ -56,19 +54,9 @@ int RandomTree::block_at(int x, int y, int z) const
    return air_id;
 }
 
-PopObject &RandomTreeFactory::create(unsigned int seed)
+std::unique_ptr<PopObject> RandomTreeFactory::create(unsigned int seed)
 {
-   auto it = m_trees.find(seed);
-   if (it != m_trees.end()) {
-      return it->second;
-   }
-
-   if (m_trees.size() > 20) {
-      m_trees.erase(m_trees.begin());
-   }
-
-   m_trees.insert({seed, RandomTree(seed)});
-   return m_trees.at(seed);
+   return std::make_unique<RandomTree>(seed);
 }
 
 int RandomTreeFactory::occurrence() const
