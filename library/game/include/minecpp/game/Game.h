@@ -740,13 +740,15 @@ struct LightSource
    }
 };
 
-enum class HeightTypeValues {
+enum class HeightTypeValues
+{
    MotionBlocking,
    WorldSurface,
    LightBlocking
 };
 
-using HeightType_Base = mb::enum_wrapper<HeightTypeValues, "MOTION_BLOCKING", "WORLD_SURFACE", "LIGHT_BLOCKING">;
+using HeightType_Base =
+        mb::enum_wrapper<HeightTypeValues, "MOTION_BLOCKING", "WORLD_SURFACE", "LIGHT_BLOCKING">;
 
 class HeightType final : public HeightType_Base
 {

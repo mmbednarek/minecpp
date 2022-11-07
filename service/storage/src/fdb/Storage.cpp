@@ -68,7 +68,7 @@ bool Storage::write_chunk(const proto_chunk::Chunk &chunk)
    transaction->set(key, {data.data(), data.size()});
 
    const auto commit_future = transaction->commit();
-   auto err = commit_future.await();
+   auto err                 = commit_future.await();
    if (not err.ok()) {
       spdlog::error("failed to commit transaction: {}", err.to_string());
       return false;
@@ -173,7 +173,7 @@ bool Storage::add_chunk_subscription(game::ChunkPosition position, const proto_s
    }
 
    auto future = transaction->get(key);
-   auto value = future.get_value();
+   auto value  = future.get_value();
    if (not value.ok()) {
       spdlog::error("fdb: failed to get value. {}", value.err().to_string());
       return false;

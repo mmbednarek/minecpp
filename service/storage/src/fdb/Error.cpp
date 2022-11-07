@@ -3,7 +3,7 @@
 namespace minecpp::service::storage::fdb {
 
 Error::Error(fdb_error_t error_code) :
-        m_error_code(error_code)
+    m_error_code(error_code)
 {
 }
 
@@ -17,4 +17,4 @@ std::string Error::to_string() const
    return fdb_get_error(m_error_code);
 }
 
-}
+}// namespace minecpp::service::storage::fdb

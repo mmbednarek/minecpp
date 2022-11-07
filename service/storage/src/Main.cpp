@@ -11,7 +11,7 @@ using minecpp::service::storage::Service;
 
 int main()
 {
-   auto listen = mb::getenv("LISTEN").unwrap("0.0.0.0:8080");
+   auto listen           = mb::getenv("LISTEN").unwrap("0.0.0.0:8080");
    auto clusterfile_path = mb::getenv("CLUSTERFILE_PATH").unwrap("clusterfile");
 
    auto storage = fdb::Storage::create(clusterfile_path);

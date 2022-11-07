@@ -113,7 +113,7 @@ void TightVector::push_back(TightVector::value_type value)
 
 void TightVector::resize(TightVector::size_type new_size)
 {
-   if(m_size >= new_size)
+   if (m_size >= new_size)
       return;
 
    uint32_t parts  = 64 / m_bits;

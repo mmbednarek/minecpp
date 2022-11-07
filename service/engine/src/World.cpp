@@ -12,7 +12,7 @@ namespace minecpp::service::engine {
 
 template<typename TFunction>
 void when_chunk_is_complete(ChunkSystem &chunk_system, JobSystem &job_system,
-                           const game::ChunkPosition &position, TFunction &&function)
+                            const game::ChunkPosition &position, TFunction &&function)
 {
    if (chunk_system.chunk_state_at(position) == world::ChunkState::COMPLETE) {
       function(chunk_system.chunk_at(position));

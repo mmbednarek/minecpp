@@ -1,7 +1,7 @@
 #pragma once
 #include <mutex>
-#include <queue>
 #include <optional>
+#include <queue>
 
 namespace minecpp::container {
 

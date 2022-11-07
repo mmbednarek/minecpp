@@ -220,10 +220,18 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
    m_events.send_to_all(update_block_light);
 }
 
-void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk) {
+void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk)
+{
    clientbound_v1::ChunkData chunk_data;
    *chunk_data.mutable_chunk() = chunk->to_proto();
    m_events.send_to(chunk_data, player_id);
+}
+
+void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position)
+{
+   clientbound_v1::SetCenterChunk center_chunk;
+   *center_chunk.mutable_position() = chunk_position.to_proto();
+   m_events.send_to(center_chunk, player_id);
 }
 
 }// namespace minecpp::service::engine

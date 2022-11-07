@@ -84,7 +84,7 @@ class SectionBuilder
  public:
    SectionBuilder();
 
-   void fill(const std::function<int(short, short, short)>& callback);
+   void fill(const std::function<int(short, short, short)> &callback);
    Section build();
 };
 

@@ -1,24 +1,15 @@
 #include "Config.h"
-#include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <mb/core.h>
 #include <yaml-cpp/yaml.h>
 
-Config get_config()
+Config get_config(const std::string &file_name)
 {
+   YAML::Node config = YAML::LoadFile(file_name);
+
    Config response;
-   response.front_id =
-           mb::getenv("FRONT_ID").unwrap(boost::uuids::to_string(boost::uuids::random_generator()()));
-   response.port          = std::stoi(mb::getenv("PORT").unwrap("25565"));
-   response.registry_path = mb::getenv("REGISTRY_FILE").unwrap("registry.bin");
-
-   auto cfg_filename = mb::getenv("CONFIG_FILE").unwrap("config-local.yaml");
-
-   YAML::Node config           = YAML::LoadFile(cfg_filename);
-   response.engine_hosts       = config["engine_hosts"].as<std::vector<std::string>>();
-   response.recipe_path        = config["recipes"].as<std::string>("recipes.dat");
-   response.tags_path          = config["tags"].as<std::string>("tags.dat");
-   response.chunk_storage_host = config["chunk_storage_host"].as<std::string>("127.0.0.1:7600");
-
+   response.server_bind_address = config["server"]["bind_address"].as<std::string>("0.0.0.0");
+   response.server_bind_port    = config["server"]["bind_port"].as<int>(25565);
+   response.resources_registry  = config["resources"]["registry"].as<std::string>("registry.bin");
+   response.engine_endpoints    = config["engine"]["endpoints"].as<std::vector<std::string>>();
+   response.debug_logger        = config["debug_logger"].as<bool>(false);
    return response;
 }

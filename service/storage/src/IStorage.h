@@ -6,7 +6,7 @@
 
 namespace minecpp::service::storage {
 
-namespace proto_chunk = proto::chunk::v1;
+namespace proto_chunk   = proto::chunk::v1;
 namespace proto_storage = proto::service::storage::v1;
 
 class IStorage
@@ -19,7 +19,8 @@ class IStorage
    virtual bool update_chunk(game::ChunkPosition position,
                              const std::function<void(proto_chunk::Chunk &chunk)> &callback) = 0;
 
-   virtual bool add_chunk_subscription(game::ChunkPosition position, const proto_storage::ClientId &client_id) = 0;
+   virtual bool add_chunk_subscription(game::ChunkPosition position,
+                                       const proto_storage::ClientId &client_id) = 0;
 };
 
 }// namespace minecpp::service::storage

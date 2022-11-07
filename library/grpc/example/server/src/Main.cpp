@@ -14,7 +14,8 @@ MINECPP_DECLARE_BIDI_SERVER(Server, TestService::AsyncService, StartStream, Test
 
 using ServerStream = Stream<Server>;
 
-class Connection {
+class Connection
+{
  public:
    explicit Connection(ServerStream stream) :
        m_stream{std::move(stream)}
@@ -58,7 +59,8 @@ class Manager
       m_connections.emplace_back(std::move(stream));
    };
 
-   void wait() {
+   void wait()
+   {
       m_server.accept();
       m_server.wait();
    }

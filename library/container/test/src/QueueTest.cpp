@@ -3,7 +3,8 @@
 #include <iostream>
 #include <minecpp/container/Queue.h>
 
-TEST(Queue, NoRace_int) {
+TEST(Queue, NoRace_int)
+{
    using minecpp::container::Queue;
 
    Queue<int> queue;
@@ -16,7 +17,7 @@ TEST(Queue, NoRace_int) {
 
    auto consumer = [](Queue<int> *queue) -> int {
       int sum = 0;
-      for(;;) {
+      for (;;) {
          using namespace std::chrono_literals;
 
          auto consumed = queue->try_pop();
@@ -42,31 +43,32 @@ TEST(Queue, NoRace_int) {
    EXPECT_LE(abs(res2 - res1), 1000);
 }
 
-TEST(Queue, NoRace_unique_ptr) {
+TEST(Queue, NoRace_unique_ptr)
+{
    using minecpp::container::Queue;
 
    Queue<std::unique_ptr<int>> queue;
 
    auto producer = [](Queue<std::unique_ptr<int>> *queue) {
-     for (int i = 1; i <= 1000; ++i) {
-        queue->push(std::make_unique<int>(i));
-     }
+      for (int i = 1; i <= 1000; ++i) {
+         queue->push(std::make_unique<int>(i));
+      }
    };
 
    auto consumer = [](Queue<std::unique_ptr<int>> *queue) -> int {
-     int sum = 0;
-     for(;;) {
-        using namespace std::chrono_literals;
+      int sum = 0;
+      for (;;) {
+         using namespace std::chrono_literals;
 
-        auto consumed = queue->try_pop();
-        if (not consumed.has_value())
-           break;
+         auto consumed = queue->try_pop();
+         if (not consumed.has_value())
+            break;
 
-        sum += **consumed;
-        std::this_thread::sleep_for(5ms);
-     }
+         sum += **consumed;
+         std::this_thread::sleep_for(5ms);
+      }
 
-     return sum;
+      return sum;
    };
 
    auto fut_res1 = std::async(std::launch::async, consumer, &queue);

@@ -1,5 +1,5 @@
-#include "../ChunkSystem.h"
 #include "ChunkIsComplete.h"
+#include "../ChunkSystem.h"
 
 namespace minecpp::service::engine::job {
 

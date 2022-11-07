@@ -26,7 +26,7 @@ class IResponseHandler
  public:
    virtual ~IResponseHandler() noexcept = default;
 
-   virtual void handle_chunk_data(const ResponseChunkData &chunk) = 0;
+   virtual void handle_chunk_data(const ResponseChunkData &chunk)   = 0;
    virtual void handle_empty_chunk(const ResponseEmptyChunk &chunk) = 0;
 };
 
@@ -87,7 +87,7 @@ template<typename TFunctor>
 void StorageClient::access_available_connection(TFunctor functor)
 {
    std::unique_lock lock{m_mutex};
-   m_condition.wait(lock, [this] {return not m_streams.empty(); });
+   m_condition.wait(lock, [this] { return not m_streams.empty(); });
    functor(m_streams.front().get());
 }
 

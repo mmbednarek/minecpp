@@ -25,7 +25,7 @@ class SectionSlice : public game::ISectionSlice
       return m_range;
    }
 
-   [[nodiscard]] static SectionSlice from_proto(const proto::chunk::v1::SectionSlice& slice);
+   [[nodiscard]] static SectionSlice from_proto(const proto::chunk::v1::SectionSlice &slice);
    [[nodiscard]] proto::chunk::v1::SectionSlice to_proto();
 
  private:

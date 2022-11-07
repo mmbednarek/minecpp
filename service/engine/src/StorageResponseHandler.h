@@ -15,4 +15,4 @@ class StorageResponseHandler : public storage::IResponseHandler
    std::vector<storage::IResponseHandler *> m_handlers;
 };
 
-}
+}// namespace minecpp::service::engine

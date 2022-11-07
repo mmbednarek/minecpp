@@ -1,5 +1,5 @@
-#include <minecpp/repository/State.h>
 #include <minecpp/repository/Block.h>
+#include <minecpp/repository/State.h>
 #include <vector>
 
 namespace minecpp::repository {
@@ -30,7 +30,7 @@ void StateManager::cache_block_stats()
 
 bool StateManager::is_solid(game::BlockStateId state_id) const
 {
-   if  (state_id >= m_is_solid.size())
+   if (state_id >= m_is_solid.size())
       return false;
    return m_is_solid.at(state_id);
 }

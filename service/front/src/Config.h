@@ -6,13 +6,11 @@
 
 struct Config
 {
-   std::vector<std::string> engine_hosts;
-   uint16_t port;
-   std::string recipe_path;
-   std::string tags_path;
-   std::string chunk_storage_host;
-   std::string front_id;
-   std::string registry_path;
+   std::string server_bind_address;
+   int server_bind_port;
+   std::vector<std::string> engine_endpoints;
+   std::string resources_registry;
+   bool debug_logger;
 };
 
-Config get_config();
+Config get_config(const std::string &file_name);

@@ -1,7 +1,7 @@
 #pragma once
 #include "../JobSystem.h"
-#include <minecpp/world/Generator.h>
 #include <minecpp/game/Game.h>
+#include <minecpp/world/Generator.h>
 
 namespace minecpp::service::engine::job {
 

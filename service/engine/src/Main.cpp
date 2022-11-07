@@ -41,7 +41,7 @@ struct Configuration
       this->gameplay_spawn_point_x = yaml_cfg["gameplay"]["spawn_point"]["x"].as<int>(0);
       this->gameplay_spawn_point_y = yaml_cfg["gameplay"]["spawn_point"]["y"].as<int>(80);
       this->gameplay_spawn_point_z = yaml_cfg["gameplay"]["spawn_point"]["z"].as<int>(0);
-      this->debug_logger = yaml_cfg["debug_logger"].as<bool>(false);
+      this->debug_logger           = yaml_cfg["debug_logger"].as<bool>(false);
    }
 };
 
@@ -88,8 +88,7 @@ auto main() -> int
    ApiHandler api_handler(handler, manager,
                           fmt::format("{}:{}", config.server_bind_address, config.server_bind_port));
 
-   spdlog::info("starting gRPC server on address {}:{}", config.server_bind_address,
-                config.server_bind_port);
+   spdlog::info("starting gRPC server on address {}:{}", config.server_bind_address, config.server_bind_port);
    if (auto res = api_handler.wait(); not res.ok()) {
       spdlog::error("server error: {}", res.err()->msg());
    }

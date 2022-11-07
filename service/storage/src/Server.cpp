@@ -16,7 +16,8 @@ void Connection::send(const storage_v1::Response &response)
    m_stream.write(response);
 }
 
-void Connection::on_read(const storage_v1::Request &request) {
+void Connection::on_read(const storage_v1::Request &request)
+{
    if (m_handler == nullptr) {
       spdlog::error("connection: handler is null");
       return;
@@ -34,7 +35,8 @@ void Server::on_connection(Stream stream)
 {
    spdlog::info("received connection");
    std::unique_lock lock{m_mutex};
-   m_connections.emplace(m_top_connection_id, std::make_unique<Connection>(m_top_connection_id, std::move(stream), m_handler));
+   m_connections.emplace(m_top_connection_id,
+                         std::make_unique<Connection>(m_top_connection_id, std::move(stream), m_handler));
    ++m_top_connection_id;
 }
 
@@ -54,7 +56,8 @@ void Server::wait()
    m_server.wait();
 }
 
-void Server::set_handler(IHandler *handler) {
+void Server::set_handler(IHandler *handler)
+{
    m_handler = handler;
 }
 

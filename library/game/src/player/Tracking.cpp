@@ -48,11 +48,11 @@ mb::result<mb::empty> Tracking::load_chunks(game::World &world, Player &player)
       return std::move(res.err());
    }
 
+   world.notifier().update_chunk_position(player.id(), m_chunk_pos);
+
    for (const auto &chunk_pos : chunks_to_load) {
-      // TODO: Update central chunk
       world.send_chunk_to_player(player.id(), chunk_pos);
    }
-
    return mb::ok;
 }
 
@@ -92,8 +92,11 @@ void Tracking::on_movement(game::World &world, Player &player, util::Vec3 positi
       }
    }
 
-   spdlog::info("settings player chunk position to {} {}", next_chunk_pos.x, next_chunk_pos.z);
+   spdlog::debug("settings player chunk position to {} {}", next_chunk_pos.x, next_chunk_pos.z);
+
    m_chunk_pos = next_chunk_pos;
+
+   world.notifier().update_chunk_position(player.id(), m_chunk_pos);
 
    if (!chunks_to_free.empty()) {
       if (auto res = world.free_refs(player.id(), chunks_to_free); !res.ok()) {

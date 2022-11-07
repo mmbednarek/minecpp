@@ -50,35 +50,56 @@ cmake --build . -j $(nproc)
 
 ## Configuration
 
-The configuration is done by environmental variables or a yaml file. (in case of the front service)
-
-### Front service
-
-Front service reads `CONFIG_FILE` environmental variable (the default value is `config.yml`)
-that specifies a yaml configuration file. Example configuration:
-
-```yaml
-engine_hosts:
-  - "127.0.0.1:7000"
-recipes: /config/research/recipes.dat
-tags: /config/research/tags.dat
-chunk_storage_host: 127.0.0.1:7000
-```
-
-Recipes and tags are not used anymore, although the service will fail without them. These files are provided within
-the research directory. The listen port is provided through `PORT` environmental variable. (the default value is `25565`)
+The configuration is done by environmental variables and yaml files.
 
 ### Engine
 
-The engine reads the following environmental variables.
+Engine is a main service that actually processes game logic, generates terrain, etc.
+It doesn't actually implement Minecraft protocol. Game needs to connect to front service.
+Configuration file can be provided with `CONFIG_FILE` environmental variable.
+Example configuration for the engine.
 
-+ **LISTEN** (default value `0.0.0.0:7600`) - The listen host.
-+ **CHUNK_STORAGE_ADDRESS** (default value `127.0.0.1:7000`) - Address of the chunk storage service.
-+ **REPOSITORY_FILENAME** (default value `repository.bin`) - A file with all the game resources. (Available at `repository.bin`)
+```yaml
+server:
+  bind_address: "0.0.0.0"
+  bind_port: 7070
+debug_logger: true
+storage:
+  endpoints:
+    - "127.0.0.1:8080"
+resources:
+  data_file: "repository.bin"
+gameplay:
+  world_seed: 263443
+  max_players: 20
+  spawn_point:
+    x: 29
+    y: 73
+    z: 38
+```
 
-### Chunk Storage
+### Front
 
-The chunk storage reads the following environmental variables.
+Front is designed load balance the traffic between engine instances.
+Front service reads `CONFIG_FILE` environmental variable (the default value is `config.yaml`)
+that specifies a yaml configuration file. Example configuration:
 
-+ **LISTEN** (default value `0.0.0.0:7600`) - The listen host.
-+ **REPOSITORY_FILENAME** (default value `repository.bin`) - A file with all the game resources. (Available at `repository.bin`)
+```yaml
+server:
+  bind_address: "0.0.0.0"
+  bind_port: 7080
+engine:
+  endpoints:
+    - "engine:7000"
+  strategy: round_robin
+resources:
+  registry: "registry.bin"
+```
+
+### Storage
+
+Storage service is responsible for offloading the task of writing data to the database for the engine.
+It also synchronises state between engine instances. It reads the following environmental variables.
+
++ **LISTEN** (default value `0.0.0.0:8080`) - The listen host.
++ **CLUSTERFILE_PATH** (default value `clusterfile`) - Path to FoundationDB cluster file.

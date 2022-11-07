@@ -13,7 +13,8 @@ namespace nbt_chunk_v1 = minecpp::nbt::chunk::v1;
 
 inline int expected_data_version = 2230;
 
-Chunk::Chunk() {
+Chunk::Chunk()
+{
    std::fill(m_biomes.begin(), m_biomes.end(), 1);
 }
 
@@ -180,14 +181,14 @@ game::ChunkPosition Chunk::pos() const
 
 mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) noexcept
 {
-   auto out                    = std::make_unique<Chunk>();
-   out->m_full                 = chunk.level.status == "full";
-   out->m_pos_x                = chunk.level.x_pos;
-   out->m_pos_z                = chunk.level.z_pos;
+   auto out                      = std::make_unique<Chunk>();
+   out->m_full                   = chunk.level.status == "full";
+   out->m_pos_x                  = chunk.level.x_pos;
+   out->m_pos_z                  = chunk.level.z_pos;
    out->m_motion_blocking_height = HeightContainer::from_raw(chunk.level.heightmaps.motion_blocking.begin(),
-                                                           chunk.level.heightmaps.motion_blocking.end());
-   out->m_world_surface_height = HeightContainer::from_raw(chunk.level.heightmaps.world_surface.begin(),
-                                                           chunk.level.heightmaps.world_surface.end());
+                                                             chunk.level.heightmaps.motion_blocking.end());
+   out->m_world_surface_height   = HeightContainer::from_raw(chunk.level.heightmaps.world_surface.begin(),
+                                                             chunk.level.heightmaps.world_surface.end());
    std::fill_n(out->m_biomes.begin(), 1024, 1);
    std::transform(chunk.level.sections.begin(), chunk.level.sections.end(),
                   std::inserter(out->m_sections, out->m_sections.begin()),

@@ -72,7 +72,8 @@ std::int32_t Vector::operator[](std::size_t i) const
 
 void Vector::set(std::size_t i, std::int32_t value)
 {
-   while (m_bits < 64 && static_cast<std::uint64_t>(value) >= max_value_encoded_with_bits(static_cast<mb::u64>(m_bits))) {
+   while (m_bits < 64 &&
+          static_cast<std::uint64_t>(value) >= max_value_encoded_with_bits(static_cast<mb::u64>(m_bits))) {
       inc_bits();
    }
 

@@ -263,7 +263,7 @@ class BidiServer
 
    ~BidiServer()
    {
-//      wait();
+      //      wait();
       m_server->Shutdown();
       m_queue->Shutdown();
    }

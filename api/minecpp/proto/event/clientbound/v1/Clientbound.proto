@@ -150,3 +150,7 @@ message UpdateBlockLight {
 message ChunkData {
   chunk.v1.Chunk chunk = 1;
 }
+
+message SetCenterChunk {
+  common.v1.ChunkPosition position = 1;
+}

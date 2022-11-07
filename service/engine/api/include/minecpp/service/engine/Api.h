@@ -58,7 +58,8 @@ class Stream : public IStream
 };
 
 template<typename TVisitor>
-   requires event::ClientboundVisitor<TVisitor>
+requires event::ClientboundVisitor<TVisitor>
+
 class Client : public IStream
 {
  public:

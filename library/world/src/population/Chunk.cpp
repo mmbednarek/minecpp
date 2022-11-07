@@ -104,7 +104,7 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
 {
    for (auto &[_, placement] : m_placements) {
       auto obj = ObjectRepository::the().get_object(static_cast<mb::size>(placement.object_id),
-                                                     placement.object_seed);
+                                                    placement.object_seed);
 
       game::BlockPosition position{};
 

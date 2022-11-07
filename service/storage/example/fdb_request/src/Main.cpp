@@ -33,7 +33,8 @@ int main()
 
    const char *key = "chunk_subscription.1875062";
 
-   FDBFuture *future = fdb_transaction_get(transaction, reinterpret_cast<const uint8_t *>(key), static_cast<int>(strlen(key)), false);
+   FDBFuture *future = fdb_transaction_get(transaction, reinterpret_cast<const uint8_t *>(key),
+                                           static_cast<int>(strlen(key)), false);
    assert_no_error(fdb_future_block_until_ready(future));
    assert_no_error(fdb_future_get_error(future));
 

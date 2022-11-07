@@ -47,8 +47,9 @@ void LightSystem::regenerate_block_light(game::ISectionSlice &slice, game::Secti
    update_light_internal(game::LightType::Block, slice, range, queue);
 }
 
-
-void LightSystem::regenerate_sky_light(game::ISectionSlice& slice, game::SectionRange range, game::BlockPosition position, int strength) {
+void LightSystem::regenerate_sky_light(game::ISectionSlice &slice, game::SectionRange range,
+                                       game::BlockPosition position, int strength)
+{
    std::queue<game::LightSource> queue;
    queue.emplace(position, strength);
    update_light_internal(game::LightType::Sky, slice, range, queue);
@@ -133,7 +134,7 @@ mb::emptyres LightSystem::add_light_source(game::BlockPosition position, int str
            .light_sources()
            .emplace_back(position, strength);
 
-  regenerate_block_light(*slice->get(), range);
+   regenerate_block_light(*slice->get(), range);
    m_notifier.update_block_light(*slice->get(), range);
    auto res = m_world.apply_slice(*slice->get());
    if (res.has_failed()) {

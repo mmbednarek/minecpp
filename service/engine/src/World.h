@@ -21,8 +21,9 @@ class World : public minecpp::game::World
 {
 
  public:
-   World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher, PlayerManager &player_manager,
-         EntityManager &entity_manager, controller::BlockManager &block_controller);
+   World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
+         PlayerManager &player_manager, EntityManager &entity_manager,
+         controller::BlockManager &block_controller);
 
    game::player::Provider &players() override;
    EntityManager &entities() override;

@@ -44,8 +44,8 @@ bool BlockState::set_from_string(std::string_view name, std::string_view value)
 
    m_state_offset = 0;
    std::for_each(values.crbegin(), values.crend(), [this](auto pair) {
-     m_state_offset *= pair.first;
-     m_state_offset += pair.second;
+      m_state_offset *= pair.first;
+      m_state_offset += pair.second;
    });
 
    return true;

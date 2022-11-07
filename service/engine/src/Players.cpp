@@ -11,8 +11,7 @@
 
 namespace minecpp::service::engine {
 
-PlayerManager::PlayerManager(EntityManager &entities,
-                             game::BlockPosition spawn_position) :
+PlayerManager::PlayerManager(EntityManager &entities, game::BlockPosition spawn_position) :
     m_entities(entities),
     m_spawn_position(std::move(spawn_position))
 {
@@ -35,7 +34,8 @@ mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(gam
 {
    minecpp::nbt::player::v1::Player data;
 
-   util::Vec3 pos{static_cast<double>(m_spawn_position.x),  static_cast<double>(m_spawn_position.y), static_cast<double>(m_spawn_position.z)};
+   util::Vec3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
+                  static_cast<double>(m_spawn_position.z)};
 
    data.uuid = game::player::write_id_to_nbt(id);
    data.pos.resize(3);

@@ -39,6 +39,10 @@ if(${SPDLOG_FMT_EXTERNAL})
   add_definitions(-DSPDLOG_FMT_EXTERNAL=1)
 endif()
 
+if(${FDB_API_VERSION})
+  add_definitions(-DFDB_API_VERSION=${FDB_API_VERSION})
+endif()
+
 FetchContent_Declare(
   yaml
   GIT_REPOSITORY https://github.com/jbeder/yaml-cpp

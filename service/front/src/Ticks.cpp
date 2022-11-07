@@ -13,7 +13,7 @@ TickManager::TickManager(Server &server) :
 {
 }
 
-constexpr int keep_alive_count          = 800;
+constexpr int keep_alive_count = 800;
 
 [[noreturn]] void TickManager::tick()
 {

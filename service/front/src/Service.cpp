@@ -17,9 +17,7 @@ namespace serverbound_v1 = proto::event::serverbound::v1;
 const char *internal_reason =
         R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
 
-Service::Service(Config &conf)
-{
-}
+Service::Service(Config &conf) {}
 
 Service::LoginResponse Service::login_player(std::string &user_name)
 {

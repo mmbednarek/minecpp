@@ -437,4 +437,23 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
    }
 }
 
+void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk &msg,
+                                           const std::vector<game::player::Id> &player_ids)
+{
+   network::message::UpdateChunkPosition chunk_position{
+           .x = msg.position().x(),
+           .z = msg.position().z(),
+   };
+
+   for (auto player_id : player_ids) {
+      auto conn = m_server.connection_by_id(player_id);
+      if (not conn) {
+         spdlog::error("connection {} is null", game::player::format_player_id(player_id));
+         return;
+      }
+
+      send(conn, chunk_position);
+   }
+}
+
 }// namespace minecpp::service::front

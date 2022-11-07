@@ -1,11 +1,10 @@
-version: 1
 server:
   bind_address: "0.0.0.0"
   bind_port: 7800
 debug_logger: true
 storage:
   endpoints:
-    - "127.0.0.1:7000"
+    - "127.0.0.1:8080"
 resources:
   data_file: "repository.bin"
 gameplay:

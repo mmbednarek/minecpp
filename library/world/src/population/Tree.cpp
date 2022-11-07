@@ -10,10 +10,8 @@ int RandomTree::block_at(int x, int y, int z) const
            repository::encode_block_by_tag("minecraft:oak_wood", std::make_pair("axis", "y"));
    const static auto leaves_id =
            repository::encode_block_by_tag("minecraft:oak_leaves", std::make_pair("waterlogged", "false"));
-   const static auto stone_id =
-           repository::encode_block_by_tag("minecraft:stone");
-   const static auto glass_id =
-           repository::encode_block_by_tag("minecraft:glass");
+   const static auto stone_id = repository::encode_block_by_tag("minecraft:stone");
+   const static auto glass_id = repository::encode_block_by_tag("minecraft:glass");
 
    // BLOCK_STATE_ID(Grass, {"snowy", "false"})
 
@@ -25,7 +23,7 @@ int RandomTree::block_at(int x, int y, int z) const
    auto yy = y + y_min;
    auto zz = z + z_min;
 
-   for (auto &blob: m_leave_blobs) {
+   for (auto &blob : m_leave_blobs) {
       int dx = abs(blob.x - xx);
       int dz = abs(blob.y - zz);
       int dy = 2 * abs(blob.z - yy);
@@ -43,7 +41,7 @@ int RandomTree::block_at(int x, int y, int z) const
             return air_id;
          }
          if (diff < 0.5) {
-            auto prop2 = static_cast<int>((diff) * 40);
+            auto prop2 = static_cast<int>((diff) *40);
             if (prop2 == 0 || (rand() % prop2 == 0)) {
                return wood_id;
             }

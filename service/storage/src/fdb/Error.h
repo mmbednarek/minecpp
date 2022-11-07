@@ -17,7 +17,7 @@ class Error
    fdb_error_t m_error_code;
 };
 
-template <typename TValue>
+template<typename TValue>
 using Result = mb::result<TValue, Error>;
 
 }// namespace minecpp::service::storage::fdb

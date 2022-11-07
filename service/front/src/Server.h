@@ -21,7 +21,7 @@ class Server
    using ConstConnectionIter = std::vector<ConnectionPtr>::const_iterator;
 
  public:
-   explicit Server(boost::asio::io_context &ctx, short port, Protocol::Handler *play,
+   explicit Server(boost::asio::io_context &ctx, mb::u16 port, Protocol::Handler *play,
                    Protocol::Handler *status, Protocol::Handler *login);
 
    void accept_conn();
@@ -61,9 +61,9 @@ class Server
    void index_connection(boost::uuids::uuid index, std::size_t id);
 
  private:
-   std::map<boost::uuids::uuid, std::size_t> conn_ids;
+   std::map<boost::uuids::uuid, std::size_t> m_conn_ids;
    std::vector<ConnectionPtr> m_connections;
-   tcp::acceptor acceptor;
+   tcp::acceptor m_acceptor;
    Protocol::Handler *m_handlers[3];
 };
 

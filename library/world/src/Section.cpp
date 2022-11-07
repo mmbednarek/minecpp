@@ -15,7 +15,7 @@ constexpr uint32_t coord_to_offset(int x, int y, int z)
    return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15);
 }
 
-void SectionBuilder::fill(const std::function<int(short, short, short)>& callback)
+void SectionBuilder::fill(const std::function<int(short, short, short)> &callback)
 {
    for (short y = 0; y < 16; ++y) {
       for (short z = 0; z < 16; ++z) {
@@ -304,7 +304,8 @@ game::BlockStateId Section::get_block(game::BlockPosition position) const
    return get_block_internal(position);
 }
 
-void Section::fill_light(game::LightType type) {
+void Section::fill_light(game::LightType type)
+{
    std::shared_lock lock{m_mutex};
    fill_light_internal(type);
 }

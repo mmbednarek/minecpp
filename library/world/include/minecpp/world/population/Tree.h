@@ -39,14 +39,16 @@ class RandomTree final : public PopObject
    explicit RandomTree(unsigned seed) :
        m_java_random(seed)
    {
-      auto big_count = 1 + m_java_random.next_int(2);
+      auto big_count   = 1 + m_java_random.next_int(2);
       auto small_count = 3 + m_java_random.next_int(5);
 
       m_leave_blobs.resize(static_cast<std::size_t>(big_count + small_count));
-      std::generate(m_leave_blobs.begin(), m_leave_blobs.begin() + big_count,
-                    [this]() { return LeaveBlob{m_java_random, 2, 4, 6}; });
-      std::generate(m_leave_blobs.begin() + big_count, m_leave_blobs.end(),
-                    [this]() { return LeaveBlob{m_java_random, 3, 1, 4}; });
+      std::generate(m_leave_blobs.begin(), m_leave_blobs.begin() + big_count, [this]() {
+         return LeaveBlob{m_java_random, 2, 4, 6};
+      });
+      std::generate(m_leave_blobs.begin() + big_count, m_leave_blobs.end(), [this]() {
+         return LeaveBlob{m_java_random, 3, 1, 4};
+      });
 
       x_min = std::numeric_limits<int>::max();
       y_min = std::numeric_limits<int>::max();
