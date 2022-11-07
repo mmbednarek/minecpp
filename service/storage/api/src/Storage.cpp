@@ -7,11 +7,7 @@ void StorageClient::subscribe_chunk(game::ChunkPosition position)
    proto::service::storage::v1::Request request;
    *request.mutable_chunk_subscription()->mutable_position() = position.to_proto();
 
-   await_connection();
-   {
-      std::shared_lock lock{m_streams_mutex};
-      m_streams.front()->send(request);
-   }
+   access_available_connection([&request](Stream *stream) { stream->send(request); });
 }
 
 void StorageClient::push_chunk(const world::Chunk *chunk)
@@ -22,12 +18,7 @@ void StorageClient::push_chunk(const world::Chunk *chunk)
    proto::service::storage::v1::Request request;
    *request.mutable_chunk_data()->mutable_chunk_data() = chunk->to_proto();
 
-   await_connection();
-
-   {
-      std::shared_lock lock{m_streams_mutex};
-      m_streams.front()->send(request);
-   }
+   access_available_connection([&request](Stream *stream) { stream->send(request); });
 }
 
 void StorageClient::on_connected(RawStream stream)
@@ -38,9 +29,11 @@ void StorageClient::on_connected(RawStream stream)
    stream.write(request);
 
    // Add stream to stream list
-   std::unique_lock lock{m_streams_mutex};
-   m_streams.push_back(std::make_unique<Stream>(m_handler, std::move(stream)));
-   m_connection_cond.notify_one();
+   {
+      std::lock_guard lock{m_mutex};
+      m_streams.push_back(std::make_unique<Stream>(m_handler, std::move(stream)));
+   }
+   m_condition.notify_one();
 }
 
 Stream::Stream(IResponseHandler *handler, RawStream stream) :
@@ -82,15 +75,8 @@ void StorageClient::wait()
 
 void StorageClient::await_connection()
 {
-   {
-      std::shared_lock lock{m_streams_mutex};
-      if (not m_streams.empty())
-         // There's already a connection available
-         return;
-   }
-
-   std::unique_lock lock{m_cond_mutex};
-   m_connection_cond.wait(lock);
+   std::unique_lock lock{m_mutex};
+   m_condition.wait(lock, [this] { return not m_streams.empty(); });
 }
 
 }// namespace minecpp::service::storage

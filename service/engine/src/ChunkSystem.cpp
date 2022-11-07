@@ -36,6 +36,7 @@ void ChunkSystem::subscribe_chunk(const game::ChunkPosition &position)
 
 void ChunkSystem::handle_chunk_data(const storage::ResponseChunkData &chunk)
 {
+   spdlog::debug("chunk system: handling chunk data");
    auto *new_chunk = m_chunk_pool.construct();
    new_chunk->read_from_proto(chunk.chunk_data());
    m_chunks.emplace(game::ChunkPosition::from_proto(chunk.chunk_data().position()).hash(),
@@ -46,9 +47,9 @@ void ChunkSystem::handle_chunk_data(const storage::ResponseChunkData &chunk)
 
 void ChunkSystem::handle_empty_chunk(const storage::ResponseEmptyChunk &chunk)
 {
+   spdlog::debug("chunk system: handling empty chunk");
    auto position = game::ChunkPosition::from_proto(chunk.position());
-
-   m_job_system.issue_job(std::make_unique<job::GenerateChunk>(m_generator, position));
+   m_job_system.create_job<job::GenerateChunk>(m_generator, position);
 }
 
 world::Chunk *ChunkSystem::create_empty_chunk_at(const game::ChunkPosition &position)

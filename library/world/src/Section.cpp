@@ -15,33 +15,20 @@ constexpr uint32_t coord_to_offset(int x, int y, int z)
    return (y & 15) * 16 * 16 + (z & 15) * 16 + (x & 15);
 }
 
-void SectionBuilder::fill(std::function<int(short, short, short)> callback)
+void SectionBuilder::fill(const std::function<int(short, short, short)>& callback)
 {
    for (short y = 0; y < 16; ++y) {
       for (short z = 0; z < 16; ++z) {
          for (short x = 0; x < 16; ++x) {
-            content[coord_to_offset(x, y, z)] = static_cast<game::BlockStateId>(callback(x, y, z));
+            m_content[coord_to_offset(x, y, z)] = static_cast<game::BlockStateId>(callback(x, y, z));
          }
       }
    }
 }
 
-int pow2(int v)
-{
-   int result = 1;
-   for (int i = 0; i < v; i++) {
-      result += 2;
-   }
-   return result;
-}
-
 Section SectionBuilder::build()
 {
-   auto bits = 4;
-
-   int i = 0;
-
-   auto data = container::PalettedVector<game::BlockStateId>(content.begin(), content.end());
+   auto data = container::PalettedVector<game::BlockStateId>(m_content.begin(), m_content.end());
 
    Section section{0, std::move(data), {}};
    section.recalculate_reference_count();
@@ -62,11 +49,11 @@ Section::Section(int y) :
 {
 }
 
-Section::Section(int refCount, container::PalettedVector<game::BlockStateId> data,
-                 std::vector<game::LightSource> mLightSources) :
-    m_reference_count(refCount),
+Section::Section(int ref_count, container::PalettedVector<game::BlockStateId> data,
+                 std::vector<game::LightSource> m_light_sources) :
+    m_reference_count(ref_count),
     m_data(std::move(data)),
-    m_light_sources(std::move(mLightSources))
+    m_light_sources(std::move(m_light_sources))
 {
 }
 

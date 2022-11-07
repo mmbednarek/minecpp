@@ -6,7 +6,6 @@
 #include "Server.h"
 #include "Ticks.h"
 #include <atomic>
-#include <grpcpp/grpcpp.h>
 #include <minecpp/repository/Repository.h>
 #include <spdlog/spdlog.h>
 #include <thread>
@@ -34,17 +33,15 @@ auto main() -> int
    EventHandler handler(svr, registry);
    Client engine_client(conf.engine_hosts, handler);
 
-   spdlog::info("attempting to connect to engine");
-
    service.set_stream(&engine_client);
    handler.set_stream(&engine_client);
 
-   spdlog::info("established connection, starting tick");
+   spdlog::info("established connection to all engine hosts");
 
    TickManager ticks(svr);
    std::thread ticks_thread([&ticks]() { ticks.tick(); });
 
-   spdlog::info("starting server on port {}", conf.port);
+   spdlog::info("starting TCP server on address 0.0.0.0:{}", conf.port);
 
    try {
       ctx.run();

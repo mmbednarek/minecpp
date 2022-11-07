@@ -3,6 +3,8 @@
 target_sources(minecpp_storage PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Buffer.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Error.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Error.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Fdb.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Future.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Future.h

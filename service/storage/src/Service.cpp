@@ -11,8 +11,6 @@ Service::Service(IResponder &responder, IStorage &storage) :
 
 void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition position)
 {
-   spdlog::info("handling subscribe chunk {} {}", position.x, position.z);
-
    auto client_id = this->get_client_id(connection_id);
    if (not client_id.has_value()) {
       spdlog::error("client tries to subscribe to a chunk without provided client id");
@@ -26,6 +24,7 @@ void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition po
 
    auto chunk = m_storage.read_chunk(position);
    if (not chunk.has_value()) {
+      spdlog::info("no chunk found at {} {}", position.x, position.z);
       proto::service::storage::v1::Response response;
       *response.mutable_empty_chunk()->mutable_position() = position.to_proto();
       m_responder.send(connection_id, response);

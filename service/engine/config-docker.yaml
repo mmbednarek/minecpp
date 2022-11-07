@@ -1,17 +1,16 @@
 version: 1
 server:
   bind_address: "0.0.0.0"
-  bind_port: 7800
-debug_logger: true
+  bind_port: 7000
 storage:
   endpoints:
-    - "127.0.0.1:7000"
+    - "storage:7000"
 resources:
-  data_file: "repository.bin"
+  data_file: "/config/repository.bin"
 gameplay:
   world_seed: 2300
   max_players: 2000
   spawn_point:
-    x: 29
-    y: 73
-    z: 38
+    x: 20
+    y: 67
+    z: 45

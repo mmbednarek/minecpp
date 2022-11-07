@@ -69,16 +69,26 @@ class StorageClient
    void wait();
 
  private:
+   template<typename TFunctor>
+   void access_available_connection(TFunctor functor);
+
    ClientId m_client_id{};
 
    std::vector<std::unique_ptr<Stream>> m_streams;
    IResponseHandler *m_handler{};
 
-   std::shared_mutex m_streams_mutex;
-   std::mutex m_cond_mutex;
-   std::condition_variable m_connection_cond;
+   std::mutex m_mutex;
+   std::condition_variable m_condition;
 
    ConnectionManager m_manager;
 };
+
+template<typename TFunctor>
+void StorageClient::access_available_connection(TFunctor functor)
+{
+   std::unique_lock lock{m_mutex};
+   m_condition.wait(lock, [this] {return not m_streams.empty(); });
+   functor(m_streams.front().get());
+}
 
 }// namespace minecpp::service::storage

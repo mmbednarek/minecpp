@@ -32,6 +32,7 @@ Server::Server(const std::string &bind_address) :
 
 void Server::on_connection(Stream stream)
 {
+   spdlog::info("received connection");
    std::unique_lock lock{m_mutex};
    m_connections.emplace(m_top_connection_id, std::make_unique<Connection>(m_top_connection_id, std::move(stream), m_handler));
    ++m_top_connection_id;

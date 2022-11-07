@@ -423,7 +423,6 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
 void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
                                      const std::vector<game::player::Id> &player_ids)
 {
-   spdlog::info("handling chunk data {} {}, section count {}", msg.chunk().position().x(), msg.chunk().position().z(), msg.chunk().sections().size());
    network::message::ChunkData chunk_data{
            .chunk = msg.chunk(),
    };
@@ -434,7 +433,6 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
          return;
       }
 
-      spdlog::info("sending chunk {} {}", chunk_data.chunk.position().x(), chunk_data.chunk.position().z());
       send(conn, chunk_data);
    }
 }

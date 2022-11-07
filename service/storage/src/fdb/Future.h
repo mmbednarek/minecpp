@@ -1,5 +1,6 @@
 #pragma once
 #include "Buffer.h"
+#include "Error.h"
 #include "Fdb.h"
 #include <string_view>
 
@@ -17,9 +18,9 @@ class Future
    Future(Future &&) noexcept;
    Future &operator=(Future &&) noexcept;
 
-   [[nodiscard]] bool await() const;
+   [[nodiscard]] Error await() const;
 
-   Buffer get_value();
+   Result<Buffer> get_value();
 
  private:
    FDBFuture *m_future;

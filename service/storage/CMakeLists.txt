@@ -15,12 +15,7 @@ target_link_libraries(minecpp_storage
         minecpp_utils
         minecpp_game
         minecpp_grpc
-        minecpp_network
-        minecpp_region
         minecpp_api_proto
-        minecpp_random
-        minecpp_repository
-        minecpp_world
         Boost::system
         spdlog
         libmb
@@ -30,3 +25,5 @@ target_link_libraries(minecpp_storage
 add_subdirectory("api")
 
 add_subdirectory("example/api_test")
+
+add_subdirectory("example/fdb_request")

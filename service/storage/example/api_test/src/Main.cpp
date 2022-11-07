@@ -1,4 +1,3 @@
-#include <minecpp/game/Game.h>
 #include <minecpp/world/Chunk.h>
 #include <minecpp/service/storage/Storage.h>
 #include <spdlog/spdlog.h>
@@ -15,18 +14,20 @@ class Handler : public IResponseHandler {
       spdlog::info("obtained chunk data {}, {}", chunk.pos().x, chunk.pos().z);
       spdlog::info("block at 1 2 3: {}", *chunk.get_block({1, 2, 3}));
    }
+
+   void handle_empty_chunk(const minecpp::service::storage::ResponseEmptyChunk &chunk) override {}
 };
 
 int main()
 {
    Handler handler;
 
-   StorageClient client{0, &handler, {"127.0.0.1:8080"}};
+   StorageClient client{0, &handler, {"127.0.0.1:7000"}};
 
-   Chunk chunk{1, 2, {}};
-   chunk.set_block({1, 2, 3}, 2137);
+//   Chunk chunk{1, 2, {}};
+//   chunk.set_block({1, 2, 3}, 2137);
 
-   client.push_chunk(chunk);
+//   client.push_chunk(chunk);
    client.subscribe_chunk({1, 2});
 
    client.wait();

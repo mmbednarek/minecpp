@@ -21,7 +21,6 @@
     "world"
   ],
   "services": [
-    "chunk_storage",
     "discovery",
     "engine",
     "front",

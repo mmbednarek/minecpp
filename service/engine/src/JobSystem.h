@@ -83,6 +83,9 @@ class JobSystem
    void issue_job(std::unique_ptr<IJob> job);
    void worker_routine(int id);
 
+   template<typename TJob, typename... TArgs>
+   void create_job(TArgs &&...args);
+
    template<typename TCondition, typename... TArgs>
    TicketBuilder when(TArgs &&...args);
 
@@ -101,6 +104,12 @@ class JobSystem
 
    std::vector<std::thread> m_threads;
 };
+
+template<typename TJob, typename... TArgs>
+void JobSystem::create_job(TArgs &&...args)
+{
+   issue_job(std::make_unique<TJob>(std::forward<TArgs>(args)...));
+}
 
 template<typename TCondition, typename... TArgs>
 TicketBuilder &TicketBuilder::when(TArgs &&...args)

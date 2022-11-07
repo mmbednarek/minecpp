@@ -1,15 +1,42 @@
+version: '3'
+
+networks:
+  minecpp:
+    driver: bridge
+
 services:
-  chunk_storage:
-    image: minecpp/chunk-storage:latest
+  fdb:
+    image: foundationdb/foundationdb:7.1.23
+    environment:
+      FDB_NETWORKING_MODE: container
+      FDB_COORDINATOR_PORT: 4500
+      FDB_COORDINATOR: fdb
+      FDB_PORT: 4500
+    networks:
+      - minecpp
+  storage:
+    image: minecpp/storage:latest
+    volumes:
+      - '.:/config'
     environment:
       LISTEN: 0.0.0.0:7000
+      CLUSTERFILE_PATH: "/config/clusterfile-docker"
+    command: bash -c "/config/docker/init_database.sh && /usr/bin/minecpp_storage"
+    depends_on:
+      - fdb
+    networks:
+      - minecpp
   engine:
     image: minecpp/engine:latest
+    volumes:
+      - '.:/config'
     environment:
-      CHUNK_STORAGE_ADDRESS: chunk_storage:7000
-      LISTEN: 0.0.0.0:7000
+      CONFIG_FILE: /config/service/engine/config-docker.yaml
+    command: bash -c "sleep 3 && /usr/bin/minecpp_engine"
     depends_on:
-      - chunk_storage
+      - storage
+    networks:
+      - minecpp
   front:
     image: minecpp/front:latest
     volumes:
@@ -17,8 +44,10 @@ services:
     environment:
       CONFIG_FILE: /config/service/front/config-docker.yaml
       PORT: 25565
+    command: bash -c "sleep 4 && /usr/bin/minecpp_front"
     ports:
       - "25565:25565"
     depends_on:
       - engine
-      - chunk_storage
+    networks:
+      - minecpp

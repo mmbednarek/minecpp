@@ -9,4 +9,5 @@ WORKDIR /root/minecpp/build-docker
 RUN cmake --build . -j $(nproc) --target minecpp_engine
 RUN cp /root/minecpp/build-docker/bin/minecpp_engine /usr/bin/minecpp_engine
 RUN rm -rf /root/minecpp
-ENTRYPOINT ["/usr/bin/minecpp_engine"]
+
+# No entypoint because we need to wait for storage connection first

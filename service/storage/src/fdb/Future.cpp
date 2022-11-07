@@ -27,30 +27,31 @@ Future::~Future()
    }
 }
 
-Buffer Future::get_value()
+Result<Buffer> Future::get_value()
 {
-   if (not await())
-      return {};
+   auto err = await();
+   if (not err.ok())
+      return err;
 
    fdb_bool_t present{};
    const uint8_t *data{};
    int size{};
 
-   if (fdb_future_get_value(m_future, &present, &data, &size) != 0) {
-      return {};
+   err = Error(fdb_future_get_value(m_future, &present, &data, &size));
+   if (not err.ok()) {
+      return err;
    }
 
-   if(not present)
-   {
-      return {};
+   if (not present) {
+      return Buffer{nullptr, 0};
    }
 
-   return {reinterpret_cast<const char *>(data), static_cast<std::size_t>(size)};
+   return Buffer{reinterpret_cast<const char *>(data), static_cast<std::size_t>(size)};
 }
 
-bool Future::await() const
+Error Future::await() const
 {
-   return fdb_future_block_until_ready(m_future) == 0;
+   return Error(fdb_future_block_until_ready(m_future));
 }
 
 }// namespace minecpp::service::storage::fdb
