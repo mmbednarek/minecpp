@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_crypto_test",
+  "dependencies": {
+    "public": [
+    ],
+    "private": [
+      "gtest",
+      "gtest_main",
+      "minecpp_crypto"
+    ]
+  }
+}
