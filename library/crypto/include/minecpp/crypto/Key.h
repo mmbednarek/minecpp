@@ -1,4 +1,5 @@
 #pragma once
+#include "Error.h"
 #include <mb/result.h>
 #include <memory>
 #include <minecpp/container/BasicBuffer.h>
@@ -8,17 +9,6 @@
 #include <vector>
 
 namespace minecpp::crypto {
-
-enum class ErrorType {
-   InvalidArgument,
-   EncryptionInitError,
-   EncryptionError,
-   DecryptionInitError,
-   DecryptionError,
-};
-
-template<typename TValue>
-using Result = mb::result<TValue, ErrorType>;
 
 class PrivateKey
 {
@@ -31,6 +21,7 @@ class PrivateKey
    Result<container::Buffer> encrypt_message(const container::Buffer &buff);
 
    std::size_t write_public_key(std::ostream &stream);
+   Result<container::Buffer> public_key();
 
  private:
    EVP_PKEY *m_rsa_key{};

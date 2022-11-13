@@ -1,11 +1,15 @@
 #pragma once
 #include <boost/endian/conversion.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <minecpp/container/BasicBuffer.h>
+#include <minecpp/crypto/AESKey.h>
 #include <sstream>
 #include <tuple>
 #include <vector>
 
 namespace minecpp::network::message {
+
+int len_varint(int value);
 
 class Writer
 {
@@ -17,7 +21,6 @@ class Writer
    void write_long(uint64_t value);
    void write_varint(uint32_t value);
    void write_varlong(uint64_t value);
-   int len_varint(int value) const;
    void write_string(std::string_view s);
    void write_uuid_str(boost::uuids::uuid id);
    void write_uuid(boost::uuids::uuid id);
@@ -26,7 +29,8 @@ class Writer
    void write_bytes(const char *data, std::size_t size);
    void write_from(Writer &other);
 
-   std::tuple<uint8_t *, size_t> buff(std::size_t comp_thres = 0);
+   std::tuple<uint8_t *, size_t> buff(std::size_t comp_thres);
+
    template<typename T>
    void write_big_endian(T value);
    template<typename I>

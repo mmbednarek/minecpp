@@ -13,7 +13,9 @@ add_subdirectory("src")
 target_link_libraries(minecpp_network
         LINK_PUBLIC
         minecpp_world
+        minecpp_crypto
         LINK_PRIVATE
+        minecpp_container
         minecpp_nbt
         minecpp_game
         Boost::system

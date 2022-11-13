@@ -1,6 +1,7 @@
 #pragma once
 #include <boost/endian/conversion.hpp>
 #include <iostream>
+#include <minecpp/container/BasicBuffer.h>
 #include <minecpp/game/item/Item.h>
 #include <minecpp/game/item/Recipe.h>
 #include <minecpp/nbt/Tag.h>
@@ -15,6 +16,8 @@ class Reader
    uint8_t read_byte();
    int read_varint();
    std::string read_string();
+   void read_bytes(std::uint8_t *data, std::size_t size);
+   container::Buffer read_buffer();
    float read_float();
    double read_double();
    nbt::CompoundContent read_nbt_tag();
@@ -34,7 +37,7 @@ class Reader
    T read_big_endian()
    {
       T result;
-      s.read((char *) &result, sizeof(T));
+      m_stream.read((char *) &result, sizeof(T));
       result = boost::endian::big_to_native(result);
       return result;
    }
@@ -44,7 +47,7 @@ class Reader
    short read_short();
 
  private:
-   std::istream &s;
+   std::istream &m_stream;
 };
 
 }// namespace minecpp::network::message

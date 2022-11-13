@@ -106,4 +106,22 @@ std::size_t PrivateKey::write_public_key(std::ostream &stream)
    return total_bytes_read;
 }
 
+Result<container::Buffer> PrivateKey::public_key()
+{
+   BIO *sink = BIO_new(BIO_s_mem());
+   if (sink == nullptr) {
+      return ErrorType::InvalidArgument;
+   }
+   if (not i2d_PUBKEY_bio(sink, m_rsa_key)) {
+      BIO_free(sink);
+      return ErrorType::InvalidArgument;
+   }
+
+   container::Buffer output(1024);
+   auto read_count = BIO_read(sink, output.data(), 1024);
+   output.truncate(static_cast<std::size_t>(read_count));
+   BIO_free(sink);
+   return output;
+}
+
 }// namespace minecpp::crypto

@@ -38,7 +38,7 @@ void Writer::write_varlong(uint64_t value)
    }
 }
 
-int Writer::len_varint(int value) const
+int len_varint(int value)
 {
    int result = 1;
    while (value & (~0x7Fu)) {

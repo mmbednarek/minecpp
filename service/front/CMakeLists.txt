@@ -12,6 +12,7 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_front
         LINK_PRIVATE
+        minecpp_crypto
         minecpp_utils
         minecpp_engine_api
         minecpp_grpc

@@ -2,9 +2,11 @@
   "name": "minecpp_network",
   "dependencies": {
     "public": [
-      "minecpp_world"
+      "minecpp_world",
+      "minecpp_crypto"
     ],
     "private": [
+      "minecpp_container",
       "minecpp_nbt",
       "minecpp_game",
       "Boost::system"

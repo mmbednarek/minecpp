@@ -1,6 +1,9 @@
 #pragma once
 #include <cstdint>
+#include <istream>
 #include <memory>
+#include <ostream>
+#include <utility>
 
 namespace minecpp::container {
 
@@ -24,6 +27,9 @@ class BasicBuffer
    void truncate(std::size_t new_size);
    void zero_memory();
    std::string to_string();
+   void de_own();
+   void fill_from(std::istream &stream);
+   void write_to(std::ostream &stream);
 
    static BasicBuffer from_string(std::string_view view);
 
@@ -117,8 +123,8 @@ BasicBuffer<TByte, TAllocator> &BasicBuffer<TByte, TAllocator>::operator=(const 
 template<typename TByte, typename TAllocator>
 BasicBuffer<TByte, TAllocator>::BasicBuffer(BasicBuffer &&other) noexcept :
     m_allocator(other.m_allocator),
-    m_size(std::exchange(other.m_size, 0)),
-    m_allocated_size(std::exchange(other.m_allocated_size, 0)),
+    m_size(std::exchange(other.m_size, 0ull)),
+    m_allocated_size(std::exchange(other.m_allocated_size, 0ull)),
     m_data(std::exchange(other.m_data, nullptr)),
     m_owning(std::exchange(other.m_owning, false))
 {
@@ -159,6 +165,24 @@ BasicBuffer<TByte, TAllocator> BasicBuffer<TByte, TAllocator>::from_string(const
    BasicBuffer<TByte, TAllocator> buff{view.size()};
    std::copy(view.begin(), view.end(), buff.m_data);
    return buff;
+}
+
+template<typename TByte, typename TAllocator>
+void BasicBuffer<TByte, TAllocator>::de_own()
+{
+   m_owning = false;
+}
+
+template<typename TByte, typename TAllocator>
+void BasicBuffer<TByte, TAllocator>::fill_from(std::istream &stream)
+{
+   stream.read(reinterpret_cast<char *>(m_data), static_cast<std::streamsize>(m_size));
+}
+
+template<typename TByte, typename TAllocator>
+void BasicBuffer<TByte, TAllocator>::write_to(std::ostream &stream)
+{
+   stream.write(reinterpret_cast<char *>(m_data), static_cast<std::streamsize>(m_size));
 }
 
 using Buffer = BasicBuffer<std::uint8_t>;

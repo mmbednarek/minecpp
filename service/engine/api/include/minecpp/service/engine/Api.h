@@ -58,17 +58,23 @@ class Stream : public IStream
 };
 
 template<typename TVisitor>
-requires event::ClientboundVisitor<TVisitor>
+   requires event::ClientboundVisitor<TVisitor>
 
 class Client : public IStream
 {
  public:
    explicit Client(const std::vector<std::string> &addresses, TVisitor &visitor) :
-       m_connection_manager(&proto::service::engine::v1::EngineService::Stub::AsyncJoin, addresses, this,
-                            &Client::on_connected, 8),
-       m_visitor{visitor}
+       m_visitor{visitor},
+       m_connection_manager(std::make_unique<ConnectionManager>(
+               &proto::service::engine::v1::EngineService::Stub::AsyncJoin, addresses, this,
+               &Client::on_connected, 8))
    {
    }
+
+   Client(const Client &)                = delete;
+   Client &operator=(const Client &)     = delete;
+   Client(Client &&) noexcept            = delete;
+   Client &operator=(Client &&) noexcept = delete;
 
    void on_connected(ClientBidiStream stream)
    {
@@ -89,12 +95,12 @@ class Client : public IStream
    }
 
  private:
-   ConnectionManager m_connection_manager;
-   TVisitor &m_visitor;
    std::vector<Stream<TVisitor>> m_streams;
    std::mutex m_mutex;
    std::condition_variable m_condition;
    std::size_t m_round{0};
+   TVisitor &m_visitor;
+   std::unique_ptr<ConnectionManager> m_connection_manager;
 };
 
 }// namespace minecpp::service::engine

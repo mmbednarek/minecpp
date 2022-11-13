@@ -3,6 +3,7 @@
 #include "../Service.h"
 #include <fmt/core.h>
 #include <minecpp/chat/Chat.h>
+#include <minecpp/network/message/Clientbound.h>
 #include <minecpp/network/message/Serverbound.h>
 #include <spdlog/spdlog.h>
 

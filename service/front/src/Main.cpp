@@ -28,9 +28,11 @@ auto main() -> int
 
    Service service(conf);
 
+   minecpp::crypto::PrivateKey private_key(1024);
+
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
-   Protocol::LoginHandler login_handler(service, play_handler);
+   Protocol::LoginHandler login_handler(service, play_handler, private_key);
 
    boost::asio::io_context ctx;
    Server svr(ctx, static_cast<mb::u16>(conf.server_bind_port),

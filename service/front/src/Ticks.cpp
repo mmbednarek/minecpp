@@ -29,7 +29,6 @@ constexpr int keep_alive_count = 800;
       }
 
       auto duration = util::now_milis() / start_time;
-      spdlog::debug("frame duration: {}", duration);
       if (duration < 5) {
          std::this_thread::sleep_for(10ms);
       }
@@ -41,6 +40,11 @@ void TickManager::keep_alive()
    server.for_each_connection([](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
+
+      if (conn->state() != Protocol::State::Play)  {
+         return;
+      }
+
       send(conn, minecpp::network::message::KeepAlive{
                          .time = minecpp::util::now_milis(),
                  });

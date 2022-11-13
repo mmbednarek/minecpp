@@ -2,6 +2,7 @@
 
 target_sources(minecpp_crypto_test PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/AesTest.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/RsaTest.cpp
 )
 
