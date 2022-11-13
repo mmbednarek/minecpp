@@ -28,10 +28,11 @@ class BasicBuffer
    void zero_memory();
    std::string to_string();
    void de_own();
-   void fill_from(std::istream &stream);
+   void read_from(std::istream &stream);
    void write_to(std::ostream &stream);
 
    static BasicBuffer from_string(std::string_view view);
+   static BasicBuffer from_istream(std::istream &stream);
 
  private:
    TAllocator m_allocator;
@@ -174,7 +175,7 @@ void BasicBuffer<TByte, TAllocator>::de_own()
 }
 
 template<typename TByte, typename TAllocator>
-void BasicBuffer<TByte, TAllocator>::fill_from(std::istream &stream)
+void BasicBuffer<TByte, TAllocator>::read_from(std::istream &stream)
 {
    stream.read(reinterpret_cast<char *>(m_data), static_cast<std::streamsize>(m_size));
 }
@@ -183,6 +184,17 @@ template<typename TByte, typename TAllocator>
 void BasicBuffer<TByte, TAllocator>::write_to(std::ostream &stream)
 {
    stream.write(reinterpret_cast<char *>(m_data), static_cast<std::streamsize>(m_size));
+}
+
+template<typename TByte, typename TAllocator>
+BasicBuffer<TByte, TAllocator> BasicBuffer<TByte, TAllocator>::from_istream(std::istream &stream)
+{
+   stream.seekg(0, std::ios::end);
+   auto size = stream.tellg();
+   BasicBuffer<TByte, TAllocator> buffer(static_cast<std::size_t>(size));
+   stream.seekg(0, std::ios::beg);
+   buffer.read_from(stream);
+   return buffer;
 }
 
 using Buffer = BasicBuffer<std::uint8_t>;

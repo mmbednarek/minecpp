@@ -1,6 +1,5 @@
 #pragma once
 #include "Error.h"
-#include "mb/result.h"
 #include <iostream>
 #include <minecpp/container/BasicBuffer.h>
 #include <openssl/evp.h>
@@ -13,14 +12,17 @@ class AESKey
    AESKey(container::Buffer key, container::Buffer iv);
    ~AESKey();
 
-   AESKey(const AESKey &) = delete;
+   AESKey(const AESKey &)            = delete;
    AESKey &operator=(const AESKey &) = delete;
 
    AESKey(AESKey &&) noexcept;
    AESKey &operator=(AESKey &&) noexcept;
 
-   Result<container::Buffer> decrypt_message(const container::Buffer &buff);
-   Result<container::Buffer> encrypt_message(const container::Buffer &buff);
+   EmptyResult initialise();
+   EmptyResult finalize();
+
+   EmptyResult encrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count);
+   EmptyResult decrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count);
 
  private:
    container::Buffer m_key;

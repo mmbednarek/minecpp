@@ -11,19 +11,7 @@ AESKey::AESKey(container::Buffer key, container::Buffer iv) :
 {
 }
 
-AESKey::~AESKey()
-{
-   if (m_encrypt_ctx != nullptr) {
-      EVP_CIPHER_CTX_free(m_encrypt_ctx);
-      m_encrypt_ctx = nullptr;
-   }
-   if (m_decrypt_ctx != nullptr) {
-      EVP_CIPHER_CTX_free(m_decrypt_ctx);
-      m_decrypt_ctx = nullptr;
-   }
-}
-
-Result<container::Buffer> AESKey::encrypt_message(const container::Buffer &buff)
+Result<mb::empty> AESKey::initialise()
 {
    if (not EVP_EncryptInit(m_encrypt_ctx, EVP_aes_128_cfb8(), m_key.data(), m_iv.data())) {
       return ErrorType::InvalidArgument;
@@ -36,24 +24,6 @@ Result<container::Buffer> AESKey::encrypt_message(const container::Buffer &buff)
       return ErrorType::InvalidArgument;
    }
 
-   auto data_size = static_cast<int>(2 * buff.size());
-   container::Buffer message(static_cast<std::size_t>(data_size));
-   if (not EVP_EncryptUpdate(m_encrypt_ctx, message.data(), &data_size, buff.data(),
-                             static_cast<int>(buff.size()))) {
-      return ErrorType::InvalidArgument;
-   }
-
-   int out_size = data_size;
-   if (not EVP_EncryptFinal(m_encrypt_ctx, message.data() + data_size, &out_size)) {
-      return ErrorType::InvalidArgument;
-   }
-
-   message.truncate(static_cast<std::size_t>(data_size + out_size));
-   return message;
-}
-
-Result<container::Buffer> AESKey::decrypt_message(const container::Buffer &buff)
-{
    if (not EVP_DecryptInit(m_decrypt_ctx, EVP_aes_128_cfb8(), m_key.data(), m_iv.data())) {
       return ErrorType::InvalidArgument;
    }
@@ -65,20 +35,19 @@ Result<container::Buffer> AESKey::decrypt_message(const container::Buffer &buff)
       return ErrorType::InvalidArgument;
    }
 
-   auto data_size = static_cast<int>(2 * buff.size());
-   container::Buffer message(static_cast<std::size_t>(data_size));
-   if (not EVP_DecryptUpdate(m_decrypt_ctx, message.data(), &data_size, buff.data(),
-                             static_cast<int>(buff.size()))) {
-      return ErrorType::InvalidArgument;
-   }
+   return mb::ok;
+}
 
-   auto finalize_size = data_size;
-   if (not EVP_DecryptFinal(m_decrypt_ctx, message.data() + data_size, &finalize_size)) {
-      return ErrorType::InvalidArgument;
+AESKey::~AESKey()
+{
+   if (m_encrypt_ctx != nullptr) {
+      EVP_CIPHER_CTX_free(m_encrypt_ctx);
+      m_encrypt_ctx = nullptr;
    }
-   message.truncate(static_cast<std::size_t>(data_size + finalize_size));
-
-   return message;
+   if (m_decrypt_ctx != nullptr) {
+      EVP_CIPHER_CTX_free(m_decrypt_ctx);
+      m_decrypt_ctx = nullptr;
+   }
 }
 
 AESKey::AESKey(AESKey &&other) noexcept :
@@ -92,6 +61,57 @@ AESKey &AESKey::operator=(AESKey &&other) noexcept
    m_encrypt_ctx = std::exchange(other.m_encrypt_ctx, nullptr);
    m_decrypt_ctx = std::exchange(other.m_decrypt_ctx, nullptr);
    return *this;
+}
+
+EmptyResult AESKey::encrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count)
+{
+   char in_data[count];
+   in_stream.read(in_data, static_cast<int>(count));
+
+   int data_size = static_cast<int>(count);
+   unsigned char out_data[data_size];
+
+   if (not EVP_EncryptUpdate(m_encrypt_ctx, out_data, &data_size, reinterpret_cast<std::uint8_t *>(in_data),
+                             static_cast<int>(count))) {
+      return ErrorType::EncryptionError;
+   }
+
+   out_stream.write(reinterpret_cast<const char *>(out_data), data_size);
+   return mb::ok;
+}
+
+EmptyResult AESKey::decrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count)
+{
+   char in_data[count];
+   in_stream.read(in_data, static_cast<int>(count));
+
+   unsigned char out_data[count];
+   int data_size = static_cast<int>(count);
+
+   if (not EVP_DecryptUpdate(m_decrypt_ctx, out_data, &data_size, reinterpret_cast<std::uint8_t *>(in_data),
+                             static_cast<int>(count))) {
+      return ErrorType::DecryptionError;
+   }
+
+   out_stream.write(reinterpret_cast<const char *>(out_data), data_size);
+   return mb::ok;
+}
+
+Result<mb::empty> AESKey::finalize()
+{
+   char data[128];
+   int data_size = 128;
+
+   if (not EVP_DecryptFinal(m_decrypt_ctx, reinterpret_cast<std::uint8_t *>(data), &data_size)) {
+      return ErrorType::InvalidArgument;
+   }
+
+   data_size = 128;
+   if (not EVP_EncryptFinal(m_encrypt_ctx, reinterpret_cast<std::uint8_t *>(data), &data_size)) {
+      return ErrorType::InvalidArgument;
+   }
+
+   return mb::ok;
 }
 
 

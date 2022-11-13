@@ -15,4 +15,6 @@ enum class ErrorType
 template<typename TValue>
 using Result = mb::result<TValue, ErrorType>;
 
+using EmptyResult = Result<mb::empty>;
+
 }// namespace minecpp::crypto
