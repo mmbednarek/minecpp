@@ -10,6 +10,7 @@
 #include <memory>
 #include <minecpp/network/message/Io.h>
 #include <minecpp/network/message/Message.h>
+#include <minecpp/crypto/AESKey.h>
 #include <minecpp/util/StaticQueue.h>
 #include <queue>
 #include <spdlog/spdlog.h>
@@ -34,13 +35,16 @@ class Connection
 
    void set_non_blocking();
 
-   void async_write_then_read(const Ptr &conn, uint8_t *buff, size_t size, Protocol::Handler &h);
-   void async_write(const Ptr &conn, uint8_t *buff, size_t size);
-   void async_write_then_disconnect(const Ptr &conn, uint8_t *buff, size_t size);
+   void async_write_then_read(const Ptr &conn, container::Buffer buffer, Protocol::Handler &h);
+   void async_write(const Ptr &conn, container::Buffer buffer);
+   void async_write_then_disconnect(const Ptr &conn, container::Buffer buffer);
 
    void send(const Ptr &conn, minecpp::network::message::Writer &w);
    void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, Protocol::Handler &h);
    void send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w);
+
+   void set_encryption(container::Buffer key);
+   [[nodiscard]] crypto::AESKey *encryption_key() const;
 
    Server *get_server();
 
@@ -65,6 +69,8 @@ class Connection
    mb::u8 *alloc_byte();
    void free_byte(mb::u8 *byte);
 
+   std::string user_name;
+
  private:
    ConnectionId m_id = -1;
    tcp::socket m_socket;
@@ -77,6 +83,8 @@ class Connection
    mb::size m_compression_threshold = 0;
    boost::object_pool<mb::u8> m_byte_pool;
    minecpp::util::StaticQueue<minecpp::game::ChunkPosition, 200> m_chunk_queue{};
+
+   std::unique_ptr<crypto::AESKey> m_encryption_key{};
 };
 
 void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,

@@ -7,6 +7,47 @@
 
 namespace minecpp::container {
 
+class StreamBuffer : public std::streambuf
+{
+ public:
+   template<typename TBuffer>
+   explicit StreamBuffer(const TBuffer &buffer)
+   {
+      this->setg(reinterpret_cast<char *>(buffer.data()), reinterpret_cast<char *>(buffer.data()),
+                 reinterpret_cast<char *>(buffer.data() + buffer.size()));
+   }
+};
+
+template<typename TBuffer>
+class InputStreamBuffer : public virtual StreamBuffer,
+                          public std::istream
+{
+ public:
+   explicit InputStreamBuffer(const TBuffer &buffer) :
+       StreamBuffer(buffer),
+       std::istream(static_cast<std::streambuf *>(this)),
+       m_buffer(buffer.data(), buffer.size())
+   {
+   }
+
+   InputStreamBuffer(const InputStreamBuffer &other) :
+       StreamBuffer(other.m_buffer),
+       std::istream(static_cast<std::streambuf *>(this)),
+       m_buffer(other.m_buffer.data(), other.m_buffer.size())
+   {
+   }
+
+   InputStreamBuffer &operator=(const InputStreamBuffer &other)
+   {
+      m_buffer = {other.m_buffer.data(), other.m_buffer.size()};
+      this->setg(reinterpret_cast<char *>(m_buffer.data()), reinterpret_cast<char *>(m_buffer.data()),
+                 reinterpret_cast<char *>(m_buffer.data() + m_buffer.size()));
+   }
+
+ private:
+   TBuffer m_buffer;
+};
+
 template<typename TByte, typename TAllocator = std::allocator<std::uint8_t>>
 class BasicBuffer
 {
@@ -30,6 +71,8 @@ class BasicBuffer
    void de_own();
    void read_from(std::istream &stream);
    void write_to(std::ostream &stream);
+
+   [[nodiscard]] InputStreamBuffer<BasicBuffer<TByte, TAllocator>> make_stream() const;
 
    static BasicBuffer from_string(std::string_view view);
    static BasicBuffer from_istream(std::istream &stream);
@@ -195,6 +238,13 @@ BasicBuffer<TByte, TAllocator> BasicBuffer<TByte, TAllocator>::from_istream(std:
    stream.seekg(0, std::ios::beg);
    buffer.read_from(stream);
    return buffer;
+}
+
+template<typename TByte, typename TAllocator>
+InputStreamBuffer<BasicBuffer<TByte, TAllocator>> BasicBuffer<TByte, TAllocator>::make_stream() const
+{
+   InputStreamBuffer<BasicBuffer<TByte, TAllocator>> stream(*this);
+   return std::move(stream);
 }
 
 using Buffer = BasicBuffer<std::uint8_t>;

@@ -5,6 +5,8 @@ engine:
   endpoints:
     - "127.0.0.1:7800"
   strategy: round_robin
+encryption:
+  enabled: true
 debug_logger: true
 resources:
   registry: "registry.bin"

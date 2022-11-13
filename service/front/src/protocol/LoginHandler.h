@@ -10,7 +10,7 @@ namespace minecpp::service::front::Protocol {
 class LoginHandler : public Handler
 {
  public:
-   explicit LoginHandler(Service &service, PlayHandler &play_handler, crypto::PrivateKey &private_key);
+   explicit LoginHandler(Service &service, PlayHandler &play_handler, crypto::PrivateKey *private_key);
 
    void handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r) override;
    void handle_login_start(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r);
@@ -22,9 +22,10 @@ class LoginHandler : public Handler
    void reject(const std::shared_ptr<Connection> &conn, std::string_view message);
 
  private:
-   crypto::PrivateKey &m_private_key;
+   crypto::PrivateKey *m_private_key;
    Service &service;
    PlayHandler &play_handler;
+   void accept_connection(const std::shared_ptr<Connection> &conn);
 };
 
 }// namespace minecpp::service::front::Protocol

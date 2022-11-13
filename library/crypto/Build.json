@@ -3,11 +3,11 @@
   "tests": true,
   "dependencies": {
     "public": [
-      "ssl",
-      "crypto",
       "minecpp_container"
     ],
     "private": [
+      "ssl",
+      "crypto"
     ]
   }
 }

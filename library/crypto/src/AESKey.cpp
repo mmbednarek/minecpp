@@ -114,5 +114,23 @@ Result<mb::empty> AESKey::finalize()
    return mb::ok;
 }
 
+EmptyResult AESKey::encrypt_update_buffer(const container::Buffer &in_buffer, container::Buffer &out_buffer)
+{
+   int data_size = static_cast<int>(out_buffer.size());
+   if (not EVP_EncryptUpdate(m_encrypt_ctx, out_buffer.data(), &data_size, in_buffer.data(), static_cast<int>(in_buffer.size()))) {
+      return ErrorType::EncryptionError;
+   }
+   return mb::ok;
+}
+
+EmptyResult AESKey::decrypt_update_buffer(const container::Buffer &in_buffer, container::Buffer &out_buffer)
+{
+   int data_size = static_cast<int>(out_buffer.size());
+   if (not EVP_DecryptUpdate(m_decrypt_ctx, out_buffer.data(), &data_size, in_buffer.data(), static_cast<int>(in_buffer.size()))) {
+      return ErrorType::DecryptionError;
+   }
+   return mb::ok;
+}
+
 
 }// namespace minecpp::crypto

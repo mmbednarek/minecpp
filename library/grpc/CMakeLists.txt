@@ -14,6 +14,7 @@ target_link_libraries(minecpp_grpc
         gpr
         grpc
         grpc++
+        ssl
 )
 
 add_subdirectory("example/client")

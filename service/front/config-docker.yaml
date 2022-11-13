@@ -5,5 +5,8 @@ engine:
   endpoints:
     - "engine:7000"
   strategy: round_robin
+encryption:
+  enabled: true
+  private_key: "/var/minecpp_key.pem"
 resources:
   registry: "/config/registry.bin"

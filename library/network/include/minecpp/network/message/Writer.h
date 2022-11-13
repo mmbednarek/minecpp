@@ -2,7 +2,6 @@
 #include <boost/endian/conversion.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <minecpp/container/BasicBuffer.h>
-#include <minecpp/crypto/AESKey.h>
 #include <sstream>
 #include <tuple>
 #include <vector>

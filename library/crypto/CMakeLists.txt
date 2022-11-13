@@ -12,10 +12,10 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_crypto
         LINK_PUBLIC
-        ssl
-        crypto
         minecpp_container
         LINK_PRIVATE
+        ssl
+        crypto
 )
 
 add_subdirectory("test")

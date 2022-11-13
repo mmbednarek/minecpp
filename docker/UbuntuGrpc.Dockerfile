@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 # Install dependecies
-RUN apt-get -y update && apt-get upgrade -y
+RUN apt-get -y update --fix-missing && apt-get upgrade -y
 RUN apt-get -y install \
      build-essential \
      ninja-build \
@@ -25,10 +25,18 @@ RUN apt-get -y install \
 
 WORKDIR /root
 
-# Build gRPC (version 1.46.3)
+RUN git clone -b openssl-3.0.7 git://git.openssl.org/openssl.git
+
+WORKDIR /root/openssl
+RUN ./Configure --prefix=/usr
+RUN make -j$(nproc)
+RUN make install
+
+WORKDIR /root
+
+# Build gRPC (version 1.50.1)
 # used only for protoc and grpc C++ protoc extension
-# the gRPC as a library is specified a dependency in the CMake file.
-RUN git clone -b v1.46.3 https://github.com/grpc/grpc
+RUN git clone -b v1.50.1 https://github.com/grpc/grpc
 WORKDIR /root/grpc
 RUN git submodule update --init --recursive
 WORKDIR /root/grpc/third_party/protobuf

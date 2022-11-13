@@ -16,32 +16,38 @@ using minecpp::service::engine::Client;
 
 auto main() -> int
 {
-   auto cfg_filename = mb::getenv("CONFIG_FILE").unwrap("config.yaml");
+   auto config_filename = mb::getenv("CONFIG_FILE").unwrap("config.yaml");
+   auto config          = get_config(config_filename);
 
-   auto conf = get_config(cfg_filename);
-
-   if (conf.debug_logger) {
+   if (config.debug_logger) {
       spdlog::set_level(spdlog::level::debug);
    }
 
-   auto registry = minecpp::repository::load_network_registry_from_file(conf.resources_registry).unwrap({});
+   auto registry = minecpp::repository::load_network_registry_from_file(config.resources_registry).unwrap({});
 
-   Service service(conf);
+   Service service(config);
 
-   minecpp::crypto::PrivateKey private_key(1024);
+   std::unique_ptr<minecpp::crypto::PrivateKey> private_key;
+   if (config.encryption_enabled) {
+      if (config.encryption_private_key.empty()) {
+         private_key = std::make_unique<minecpp::crypto::PrivateKey>(1024);
+      } else  {
+         private_key = std::make_unique<minecpp::crypto::PrivateKey>(config.encryption_private_key, config.encryption_pass_phrase);
+      }
+   }
 
    Protocol::StatusHandler status_handler;
    Protocol::PlayHandler play_handler(service);
-   Protocol::LoginHandler login_handler(service, play_handler, private_key);
+   Protocol::LoginHandler login_handler(service, play_handler, private_key.get());
 
    boost::asio::io_context ctx;
-   Server svr(ctx, static_cast<mb::u16>(conf.server_bind_port),
+   Server svr(ctx, static_cast<mb::u16>(config.server_bind_port),
               dynamic_cast<Protocol::Handler *>(&play_handler),
               dynamic_cast<Protocol::Handler *>(&status_handler),
               dynamic_cast<Protocol::Handler *>(&login_handler));
 
    EventHandler handler(svr, registry);
-   Client engine_client(conf.engine_endpoints, handler);
+   Client engine_client(config.engine_endpoints, handler);
 
    service.set_stream(&engine_client);
    handler.set_stream(&engine_client);
@@ -51,7 +57,7 @@ auto main() -> int
    TickManager ticks(svr);
    std::thread ticks_thread([&ticks]() { ticks.tick(); });
 
-   spdlog::info("starting TCP server on address {}:{}", conf.server_bind_address, conf.server_bind_port);
+   spdlog::info("starting TCP server on address {}:{}", config.server_bind_address, config.server_bind_port);
 
    try {
       ctx.run();

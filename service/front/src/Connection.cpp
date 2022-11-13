@@ -43,66 +43,84 @@ void Connection::set_state(Protocol::State s)
    m_state = s;
 }
 
-void Connection::async_write_then_read(const Ptr &conn, uint8_t *buff, size_t size, Protocol::Handler &h)
+void Connection::async_write_then_read(const Ptr &conn, container::Buffer buffer, Protocol::Handler &h)
 {
-   boost::asio::async_write(m_socket, boost::asio::buffer(buff, size),
-                            [conn, buff, &h](const boost::system::error_code &err, size_t size) {
-                               delete[] buff;
+   boost::asio::async_write(
+           m_socket, boost::asio::buffer(buffer.data(), buffer.size()),
+           [conn, &h, buffer = std::move(buffer)](const boost::system::error_code &err, size_t size) {
+              if (err) {
+                 spdlog::error("error reading data from client: {}", err.message());
+                 conn->get_server()->drop_connection(conn->m_id);
+                 return;
+              }
 
-                               if (err) {
-                                  spdlog::debug("error reading data from client: {}", err.message());
-                                  conn->get_server()->drop_connection(conn->m_id);
-                                  return;
-                               }
-
-                               async_read_packet(conn, h);
-                            });
+              async_read_packet(conn, h);
+           });
 }
 
-void Connection::async_write(const Ptr &conn, uint8_t *buff, size_t size)
+void Connection::async_write(const Ptr &conn, container::Buffer buffer)
 {
-   auto start = minecpp::util::now_milis();
-   boost::asio::async_write(m_socket, boost::asio::buffer(buff, size),
-                            [conn, start, buff](const boost::system::error_code &err, size_t size) {
-                               delete[] buff;
-
-                               if (err) {
-                                  spdlog::debug("error reading data from client: {}", err.message());
-                                  conn->get_server()->drop_connection(conn->m_id);
-                                  return;
-                               }
-                            });
+   boost::asio::async_write(
+           m_socket, boost::asio::buffer(buffer.data(), buffer.size()),
+           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t size) {
+              if (err) {
+                 spdlog::error("error reading data from client: {}", err.message());
+                 conn->get_server()->drop_connection(conn->m_id);
+                 return;
+              }
+           });
 }
 
-void Connection::async_write_then_disconnect(const Ptr &conn, uint8_t *buff, size_t size)
+void Connection::async_write_then_disconnect(const Ptr &conn, container::Buffer buffer)
 {
-   boost::asio::async_write(m_socket, boost::asio::buffer(buff, size),
-                            [conn, buff](const boost::system::error_code &err, size_t size) {
-                               delete[] buff;
-                               if (err) {
-                                  spdlog::debug("error reading data from client: {}", err.message());
-                               }
+   boost::asio::async_write(
+           m_socket, boost::asio::buffer(buffer.data(), buffer.size()),
+           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t size) {
+              if (err) {
+                 spdlog::debug("error reading data from client: {}", err.message());
+              }
 
-                               conn->get_server()->drop_connection(conn->m_id);
-                            });
+              conn->get_server()->drop_connection(conn->m_id);
+           });
 }
 
 void Connection::send(const Ptr &conn, minecpp::network::message::Writer &w)
 {
    auto [bf, bf_size] = w.buff(m_compression_threshold);
-   async_write(conn, bf, bf_size);
+
+   if (m_encryption_key != nullptr) {
+      container::Buffer buffer(bf_size);
+      m_encryption_key->encrypt_update_buffer({bf, bf_size}, buffer);
+      async_write(conn, std::move(buffer));
+   } else {
+      async_write(conn, {bf, bf_size});
+   }
 }
 
 void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, Protocol::Handler &h)
 {
-   auto bf = w.buff(m_compression_threshold);
-   async_write_then_read(conn, std::get<0>(bf), std::get<1>(bf), h);
+   auto [bf, bf_size] = w.buff(m_compression_threshold);
+
+   if (m_encryption_key != nullptr) {
+      container::Buffer buffer(bf_size);
+      m_encryption_key->encrypt_update_buffer({bf, bf_size}, buffer);
+      async_write_then_read(conn, std::move(buffer), h);
+   } else {
+      async_write_then_read(conn, {bf, bf_size}, h);
+   }
 }
 
 void Connection::send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w)
 {
-   auto bf = w.buff(m_compression_threshold);
-   async_write_then_disconnect(conn, std::get<0>(bf), std::get<1>(bf));
+   auto [bf, bf_size] = w.buff(m_compression_threshold);
+
+   if (m_encryption_key != nullptr) {
+      container::Buffer buffer(bf_size);
+      m_encryption_key->encrypt_update_buffer({bf, bf_size}, buffer);
+      async_write_then_disconnect(conn, std::move(buffer));
+   } else {
+      async_write_then_disconnect(conn, {bf, bf_size});
+   }
 }
 
 void Connection::set_compression_threshold(std::size_t threshold)
@@ -181,46 +199,74 @@ void Connection::free_byte(mb::u8 *byte)
    m_byte_pool.destroy(byte);
 }
 
+void Connection::set_encryption(container::Buffer key)
+{
+   container::Buffer iv(key);
+   m_encryption_key = std::make_unique<crypto::AESKey>(std::move(key), std::move(iv));
+   if (m_encryption_key->initialise().has_failed()) {
+      spdlog::error("failed to initialise encryption key");
+   }
+}
+
+crypto::AESKey *Connection::encryption_key() const
+{
+   return m_encryption_key.get();
+}
+
+void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, const container::Buffer &buffer);
+
 void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler)
 {
    async_read_varint(conn, 0u, 0u, [conn, &handler](mb::u32 packet_size) {
       if (packet_size == 0)
          return;
 
-      auto packet_buff = new boost::asio::streambuf(packet_size);
-      boost::asio::async_read(
-              conn->socket(), *packet_buff,
-              [conn, &handler, packet_buff](const boost::system::error_code &err, size_t size) {
-                 if (err) {
-                    delete packet_buff;
-                    spdlog::debug("error reading data from client: {}", err.message());
-                    conn->get_server()->drop_connection(conn->id());
-                    return;
-                 }
-                 std::istream s(packet_buff);
+      auto buffer = container::Buffer(packet_size);
+      boost::asio::async_read(conn->socket(), boost::asio::buffer(buffer.data(), buffer.size()),
+                              [conn, &handler, buffer = std::move(buffer)](
+                                      const boost::system::error_code &err, size_t size) {
+                                 if (err) {
+                                    spdlog::debug("error reading data from client: {}", err.message());
+                                    conn->get_server()->drop_connection(conn->id());
+                                    return;
+                                 }
 
-                 if (conn->compression_threshold() > 0) {
-                    // compressed
-                    minecpp::network::message::Reader r(s);
-                    auto decompressed_size = r.read_varint();
-                    if (decompressed_size == 0) {
-                       // threshold not reached
-                       handler.handle(conn, r);
-                    } else {
-                       minecpp::util::ZlibInputStream decompress(s);
-                       minecpp::network::message::Reader decompress_reader(decompress);
-                       handler.handle(conn, decompress_reader);
-                    }
-                 } else {
-                    // not compressed
-                    minecpp::network::message::Reader r(s);
-                    handler.handle(conn, r);
-                 }
-
-                 delete packet_buff;
-              });
+                                 if (conn->encryption_key() != nullptr) {
+                                    container::Buffer decrypted_buffer(size);
+                                    conn->encryption_key()->decrypt_update_buffer(buffer, decrypted_buffer);
+                                    handle_message(conn, handler, decrypted_buffer);
+                                 } else  {
+                                    handle_message(conn, handler, buffer);
+                                 }
+                              });
    });
 }
+
+void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, const container::Buffer &buffer)
+{
+   auto stream = buffer.make_stream();
+
+   if (conn->compression_threshold() > 0) {
+      // compressed
+      network::message::Reader r(stream);
+      auto decompressed_size = r.read_varint();
+      if (decompressed_size == 0) {
+         // threshold not reached
+         handler.handle(conn, r);
+      } else {
+         util::ZlibInputStream decompress(stream);
+         network::message::Reader decompress_reader(decompress);
+         handler.handle(conn, decompress_reader);
+      }
+   } else {
+      // not compressed
+      network::message::Reader r(stream);
+      handler.handle(conn, r);
+   }
+}
+
+void handle_varint_byte(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
+                        const std::function<void(mb::u32)> &callback, mb::u8 b);
 
 void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
                        const std::function<void(mb::u32)> &callback)
@@ -235,16 +281,30 @@ void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shif
                  conn->get_server()->drop_connection(conn->id());
                  return;
               }
+
               mb::u8 b = *bp;
               conn->free_byte(bp);
 
-              if (b & 0x80u) {
-                 async_read_varint(conn, result | ((b & 0x7Fu) << shift), shift + 7u, callback);
-                 return;
+              if (conn->encryption_key() != nullptr) {
+                 mb::u8 decrypted_byte;
+                 container::Buffer buffer{&decrypted_byte, 1};
+                 conn->encryption_key()->decrypt_update_buffer({&b, 1}, buffer);
+                 handle_varint_byte(conn, result, shift, callback, decrypted_byte);
+              } else {
+                 handle_varint_byte(conn, result, shift, callback, b);
               }
-
-              callback(result | (b << shift));
            });
+}
+
+void handle_varint_byte(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
+                        const std::function<void(mb::u32)> &callback, mb::u8 b)
+{
+   if (b & 0x80u) {
+      async_read_varint(conn, result | ((b & 0x7Fu) << shift), shift + 7u, callback);
+      return;
+   }
+
+   callback(result | (b << shift));
 }
 
 }// namespace minecpp::service::front

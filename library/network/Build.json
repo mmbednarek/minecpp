@@ -2,8 +2,7 @@
   "name": "minecpp_network",
   "dependencies": {
     "public": [
-      "minecpp_world",
-      "minecpp_crypto"
+      "minecpp_world"
     ],
     "private": [
       "minecpp_container",
