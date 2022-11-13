@@ -3,34 +3,25 @@ FROM ubuntu:22.04
 # Install dependecies
 RUN apt-get -y update --fix-missing && apt-get upgrade -y
 RUN apt-get -y install \
-     build-essential \
-     ninja-build \
-     cmake \
-     git \
-     pkg-config \
-     autoconf \
-     libtool \
-     libfmt-dev \
-     libspdlog-dev \
-     libgtest-dev \
-     libboost-dev \
-     libboost-iostreams-dev \
-     libboost-system-dev \
-     libboost-program-options-dev \
-     libabsl-dev \
-     libfl-dev \
-     libbenchmark-dev \
-     unzip \
-     curl
-
-WORKDIR /root
-
-RUN git clone -b openssl-3.0.7 git://git.openssl.org/openssl.git
-
-WORKDIR /root/openssl
-RUN ./Configure --prefix=/usr
-RUN make -j$(nproc)
-RUN make install
+  build-essential \
+  ninja-build \
+  cmake \
+  git \
+  pkg-config \
+  autoconf \
+  libtool \
+  libfmt-dev \
+  libspdlog-dev \
+  libgtest-dev \
+  libboost-dev \
+  libboost-iostreams-dev \
+  libboost-system-dev \
+  libboost-program-options-dev \
+  libssl-dev \
+  libfl-dev \
+  libbenchmark-dev \
+  unzip \
+  curl
 
 WORKDIR /root
 
@@ -50,11 +41,17 @@ WORKDIR /root/grpc
 RUN mkdir -p cmake/build
 WORKDIR /root/grpc/cmake/build
 RUN cmake -DgRPC_INSTALL=ON \
-          -DgRPC_BUILD_TESTS=OFF \
-          -DCMAKE_INSTALL_PREFIX=/usr \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DBUILD_SHARED_LIBS=ON \
-        ../..
+  -DgRPC_BUILD_TESTS=OFF \
+  -DCMAKE_CXX_STANDARD=17 \
+  -DCMAKE_SKIP_INSTALL_RPATH=ON \
+  -DgRPC_BUILD_CODEGEN=ON \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DgRPC_BACKWARDS_COMPATIBILITY_MODE=OFF \
+  -DgRPC_SSL_PROVIDER='package' \
+  -DBUILD_SHARED_LIBS=ON \
+  -DgRPC_BUILD_GRPC_CPP_PLUGIN=ON \
+  ../..
 RUN make -j $(nproc)
 RUN make install
 
