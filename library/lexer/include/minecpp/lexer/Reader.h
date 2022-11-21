@@ -20,7 +20,7 @@ class TokenReader
    {
    }
 
-   [[nodiscard]] constexpr std::optional<const value_type> next()
+   [[nodiscard]] std::optional<const value_type> next()
    {
       if (m_at == m_end) {
          return std::nullopt;

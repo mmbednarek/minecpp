@@ -6,6 +6,7 @@ target_sources(minecpp_container PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/TightVector.cpp
 
         # Header files
+        ${MINECPP_CONTAINER_INCLUDE_DIR}/BasicBuffer.h
         ${MINECPP_CONTAINER_INCLUDE_DIR}/PalettedVector.h
         ${MINECPP_CONTAINER_INCLUDE_DIR}/Queue.h
         ${MINECPP_CONTAINER_INCLUDE_DIR}/TightArray.h

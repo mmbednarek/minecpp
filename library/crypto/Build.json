@@ -1,0 +1,13 @@
+{
+  "name": "minecpp_crypto",
+  "tests": true,
+  "dependencies": {
+    "public": [
+      "minecpp_container"
+    ],
+    "private": [
+      "ssl",
+      "crypto"
+    ]
+  }
+}

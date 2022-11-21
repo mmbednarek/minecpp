@@ -10,6 +10,9 @@ struct Config
    int server_bind_port;
    std::vector<std::string> engine_endpoints;
    std::string resources_registry;
+   bool encryption_enabled;
+   std::string encryption_private_key;
+   std::string encryption_pass_phrase;
    bool debug_logger;
 };
 

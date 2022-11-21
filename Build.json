@@ -3,6 +3,7 @@
     "api/minecpp/nbt",
     "api/minecpp/proto",
     "chat",
+    "crypto",
     "controller",
     "container",
     "command",

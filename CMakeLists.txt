@@ -17,6 +17,7 @@ find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(GTest REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 find_library(FDB_LIBRARY NAMES fdb_c)
 

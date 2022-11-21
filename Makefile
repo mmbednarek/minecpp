@@ -1,7 +1,7 @@
 .PHONY: docker-build-base docker-chunk-storage docker-engine docker-front docker docker-run
 
 .docker-grpc: docker/UbuntuGrpc.Dockerfile
-	docker build . --network=host -t minecpp/grpc:latest -f ./docker/UbuntuGrpc.Dockerfile
+	docker build . --network=host --no-cache -t minecpp/grpc:latest -f ./docker/UbuntuGrpc.Dockerfile
 	echo "remove this file if you want to rebuild the gRPC docker image" > .docker-grpc
 
 docker-build-base: .docker-grpc docker/BuildBase.Dockerfile

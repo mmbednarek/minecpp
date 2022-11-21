@@ -2,6 +2,7 @@
   "name": "minecpp_front",
   "dependencies": {
     "private": [
+      "minecpp_crypto",
       "minecpp_utils",
       "minecpp_engine_api",
       "minecpp_grpc",

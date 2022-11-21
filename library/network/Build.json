@@ -5,6 +5,7 @@
       "minecpp_world"
     ],
     "private": [
+      "minecpp_container",
       "minecpp_nbt",
       "minecpp_game",
       "Boost::system"

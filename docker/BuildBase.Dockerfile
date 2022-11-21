@@ -34,4 +34,5 @@ RUN cmake --build . -j $(nproc) -t minecpp_game  \
       -t minecpp_command  \
       -t minecpp_storage_api  \
       -t minecpp_lexer  \
+      -t minecpp_crypto \
       -t yaml-cpp

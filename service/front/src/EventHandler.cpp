@@ -1,6 +1,7 @@
 #include "EventHandler.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <minecpp/game/player/Player.h>
+#include <minecpp/network/message/Clientbound.h>
 #include <minecpp/repository/Repository.h>
 #include <minecpp/util/Time.h>
 #include <minecpp/util/Uuid.h>
@@ -155,10 +156,6 @@ void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
                          .x = msg.central_chunk().x(),
                          .z = msg.central_chunk().z(),
                  });
-
-      for (const auto &coord : msg.coords()) {
-         conn->push_chunk(coord.x(), coord.z());
-      }
    }
 }
 

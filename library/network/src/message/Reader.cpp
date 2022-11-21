@@ -6,14 +6,14 @@
 namespace minecpp::network::message {
 
 Reader::Reader(std::istream &s) :
-    s(s)
+    m_stream(s)
 {
 }
 
 uint8_t Reader::read_byte()
 {
    uint8_t result;
-   s.read((char *) &result, sizeof(uint8_t));
+   m_stream.read((char *) &result, sizeof(uint8_t));
    return result;
 }
 
@@ -39,7 +39,7 @@ std::string Reader::read_string()
 {
    int size = read_varint();
    char buff[size];
-   s.read(buff, size);
+   m_stream.read(buff, size);
    return {buff, static_cast<std::size_t>(size)};
 }
 
@@ -47,7 +47,7 @@ float Reader::read_float()
 {
    static_assert(sizeof(uint32_t) == sizeof(float));
    uint32_t value;
-   s.read((char *) &value, sizeof(uint32_t));
+   m_stream.read((char *) &value, sizeof(uint32_t));
    value = boost::endian::big_to_native(value);
    return *reinterpret_cast<float *>(&value);
 }
@@ -56,14 +56,14 @@ double Reader::read_double()
 {
    static_assert(sizeof(uint64_t) == sizeof(double));
    uint64_t value;
-   s.read((char *) &value, sizeof(uint64_t));
+   m_stream.read((char *) &value, sizeof(uint64_t));
    value = boost::endian::big_to_native(value);
    return *reinterpret_cast<double *>(&value);
 }
 
 nbt::CompoundContent Reader::read_nbt_tag()
 {
-   nbt::Parser p(s);
+   nbt::Parser p(m_stream);
    return p.read_tag().content.as<nbt::CompoundContent>();
 }
 
@@ -188,7 +188,7 @@ std::string Reader::get_hex_data()
 {
    std::string result;
    unsigned char c;
-   while (s.read((char *) &c, 1)) {
+   while (m_stream.read((char *) &c, 1)) {
       auto most  = c / 16;
       auto least = c % 16;
 
@@ -211,7 +211,7 @@ std::string Reader::get_hex_data()
 uint64_t Reader::read_long()
 {
    uint64_t value;
-   s.read((char *) &value, sizeof(uint64_t));
+   m_stream.read((char *) &value, sizeof(uint64_t));
    value = boost::endian::big_to_native(value);
    return value;
 }
@@ -219,9 +219,22 @@ uint64_t Reader::read_long()
 short Reader::read_short()
 {
    short value;
-   s.read((char *) &value, sizeof(short));
+   m_stream.read((char *) &value, sizeof(short));
    value = boost::endian::big_to_native(value);
    return value;
+}
+
+void Reader::read_bytes(std::uint8_t *data, std::size_t size)
+{
+   m_stream.read(reinterpret_cast<char *>(data), static_cast<long>(size));
+}
+
+container::Buffer Reader::read_buffer()
+{
+   auto buffer_size = read_varint();
+   container::Buffer buffer(static_cast<std::size_t>(buffer_size));
+   read_bytes(buffer.data(), buffer.size());
+   return buffer;
 }
 
 }// namespace minecpp::network::message
