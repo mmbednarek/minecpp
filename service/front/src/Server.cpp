@@ -39,6 +39,8 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
    }
 
    async_read_varint(conn, 0u, 0u, [this, conn](mb::u32 packet_size) {
+     spdlog::debug("reading package, size {}", packet_size);
+
       if (packet_size == 0)
          return;
 
@@ -50,6 +52,7 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
                                     spdlog::debug("error reading data from client: {}", err.message());
                                     return;
                                  }
+                                spdlog::debug("received {} bytes", size);
 
                                  std::istream s(buff);
                                  minecpp::network::message::Reader r(s);
@@ -63,6 +66,8 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
                                  auto port             = r.read_big_endian<uint16_t>();
                                  auto request_state    = static_cast<Protocol::State>(r.read_varint());
                                  delete buff;
+
+                                spdlog::debug("proto ver: {}, host: {}, port: {}, req: {}", protocol_version,  host, port, static_cast<int>(request_state));
 
                                  if (request_state != Protocol::Login && request_state != Protocol::Status) {
                                     delete buff;

@@ -1,11 +1,12 @@
 FROM ubuntu:22.04
 
 # Install dependecies
-RUN apt-get -y update --fix-missing && apt-get upgrade -y
+RUN apt-get -y update && apt-get upgrade -y
 RUN apt-get -y install \
   build-essential \
   ninja-build \
   cmake \
+  clang \
   git \
   pkg-config \
   autoconf \
@@ -24,6 +25,9 @@ RUN apt-get -y install \
   curl
 
 WORKDIR /root
+
+ENV CC="/usr/bin/clang"
+ENV CXX="/usr/bin/clang++"
 
 # Build gRPC (version 1.50.1)
 # used only for protoc and grpc C++ protoc extension
