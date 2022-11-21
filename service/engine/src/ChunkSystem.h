@@ -28,7 +28,7 @@ class ChunkSystem : public world::IChunkSystem,
                     public storage::IResponseHandler
 {
  public:
-   ChunkSystem(JobSystem &job_system, storage::StorageClient &storage_client);
+   ChunkSystem(JobSystem &job_system, storage::StorageClient &storage_client, mb::u64 world_seed);
 
    SubscriptionState subscription_state(const game::ChunkPosition &position);
    void subscribe_chunk(const game::ChunkPosition &position);

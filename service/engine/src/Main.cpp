@@ -71,7 +71,7 @@ auto main() -> int
    StorageResponseHandler storage_handler{};
    minecpp::service::storage::StorageClient storage_client(0, &storage_handler, config.storage_endpoints);
 
-   ChunkSystem chunk_system(job_system, storage_client);
+   ChunkSystem chunk_system(job_system, storage_client, config.gameplay_world_seed);
    storage_handler.add_handler(&chunk_system);
 
    EntityManager entities;

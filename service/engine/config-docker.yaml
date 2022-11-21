@@ -10,6 +10,6 @@ gameplay:
   world_seed: 2300
   max_players: 2000
   spawn_point:
-    x: 20
-    y: 67
-    z: 45
+    x: 100
+    y: 72
+    z: 50

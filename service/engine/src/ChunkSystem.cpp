@@ -5,10 +5,10 @@
 
 namespace minecpp::service::engine {
 
-ChunkSystem::ChunkSystem(JobSystem &job_system, storage::StorageClient &storage_client) :
+ChunkSystem::ChunkSystem(JobSystem &job_system, storage::StorageClient &storage_client, mb::u64 world_seed) :
     m_job_system(job_system),
     m_storage_client(storage_client),
-    m_generator(*this, 12300)
+    m_generator(*this, world_seed)
 {
 }
 
