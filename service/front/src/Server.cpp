@@ -34,52 +34,50 @@ void Server::accept_conn()
 void Server::handshake(const std::shared_ptr<Connection> &conn)
 {
    while (!conn->socket().non_blocking()) {
-      spdlog::info("blocking socket setting to nonblocking");
+      spdlog::debug("blocking socket setting to nonblocking");
       conn->socket().non_blocking(true);
    }
 
    async_read_varint(conn, 0u, 0u, [this, conn](mb::u32 packet_size) {
-     spdlog::debug("reading package, size {}", packet_size);
-
       if (packet_size == 0)
          return;
 
       auto buff = new boost::asio::streambuf(packet_size);
-      boost::asio::async_read(conn->socket(), *buff,
-                              [this, conn, buff](const boost::system::error_code &err, size_t size) {
-                                 if (err) {
-                                    delete buff;
-                                    spdlog::debug("error reading data from client: {}", err.message());
-                                    return;
-                                 }
-                                spdlog::debug("received {} bytes", size);
+      boost::asio::async_read(
+              conn->socket(), *buff,
+              [this, conn, buff](const boost::system::error_code &err, size_t /* size */) {
+                 if (err) {
+                    delete buff;
+                    spdlog::warn("error reading data from client: {}", err.message());
+                    return;
+                 }
+                 std::istream s(buff);
+                 minecpp::network::message::Reader r(s);
+                 if (r.read_byte() != 0) {
+                    delete buff;
+                    return;
+                 }
 
-                                 std::istream s(buff);
-                                 minecpp::network::message::Reader r(s);
-                                 if (r.read_byte() != 0) {
-                                    delete buff;
-                                    return;
-                                 }
+                 auto protocol_version = r.read_varint();
+                 auto host             = r.read_string();
+                 auto port             = r.read_big_endian<uint16_t>();
+                 auto request_state    = static_cast<Protocol::State>(r.read_varint());
+                 delete buff;
 
-                                 auto protocol_version = r.read_varint();
-                                 auto host             = r.read_string();
-                                 auto port             = r.read_big_endian<uint16_t>();
-                                 auto request_state    = static_cast<Protocol::State>(r.read_varint());
-                                 delete buff;
+                 spdlog::debug("client information: proto_version={}, host={}, port={}, requested_handler={}",
+                               protocol_version, host, port, static_cast<int>(request_state));
 
-                                spdlog::debug("proto ver: {}, host: {}, port: {}, req: {}", protocol_version,  host, port, static_cast<int>(request_state));
+                 if (request_state != Protocol::Login && request_state != Protocol::Status) {
+                    delete buff;
+                    return;
+                 }
 
-                                 if (request_state != Protocol::Login && request_state != Protocol::Status) {
-                                    delete buff;
-                                    return;
-                                 }
+                 conn->set_state(request_state);
+                 conn->m_id = m_connections.size();
+                 m_connections.emplace_back(conn);
 
-                                 conn->set_state(request_state);
-                                 conn->m_id = m_connections.size();
-                                 m_connections.emplace_back(conn);
-
-                                 async_read_packet(conn, *m_handlers[request_state]);
-                              });
+                 async_read_packet(conn, *m_handlers[request_state]);
+              });
    });
 }
 

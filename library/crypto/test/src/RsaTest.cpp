@@ -4,7 +4,8 @@
 using minecpp::container::Buffer;
 using minecpp::crypto::PrivateKey;
 
-TEST(MinecppCrypto, RSA_GeneratedKey) {
+TEST(MinecppCrypto, RSA_GeneratedKey)
+{
    std::string message("hello world");
    auto input_buffer = minecpp::container::Buffer::from_string(message);
 
@@ -21,7 +22,8 @@ TEST(MinecppCrypto, RSA_GeneratedKey) {
    ASSERT_EQ(message, original_message);
 }
 
-TEST(MinecppCrypto, RSA_KeyLoadedFromFile) {
+TEST(MinecppCrypto, RSA_KeyLoadedFromFile)
+{
    std::string message("hello world");
    auto input_buffer = minecpp::container::Buffer::from_string(message);
 

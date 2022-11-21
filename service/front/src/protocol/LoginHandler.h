@@ -2,8 +2,8 @@
 #include "../Service.h"
 #include "Handler.h"
 #include "PlayHandler.h"
-#include <minecpp/network/message/Io.h>
 #include <minecpp/crypto/Key.h>
+#include <minecpp/network/message/Io.h>
 
 namespace minecpp::service::front::Protocol {
 
@@ -14,7 +14,8 @@ class LoginHandler : public Handler
 
    void handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r) override;
    void handle_login_start(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r);
-   void handle_encryption_response(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r);
+   void handle_encryption_response(const std::shared_ptr<Connection> &conn,
+                                   minecpp::network::message::Reader &r);
    void handle_disconnect(Connection &conn) override;
 
    bool write_encryption_request(std::shared_ptr<Connection> conn);

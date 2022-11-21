@@ -10,9 +10,6 @@
 namespace minecpp::service::front {
 
 void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, const container::Buffer &buffer);
-void async_read_payload(const Connection::Ptr &conn, Protocol::Handler &handler, container::Buffer buffer);
-void handle_varint_byte(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
-                        const std::function<void(mb::u32)> &callback, mb::u8 b);
 
 Connection::Connection(boost::asio::io_context &ctx, Server *server) :
     m_socket(ctx),
@@ -220,16 +217,11 @@ crypto::AESKey *Connection::encryption_key() const
 
 void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler)
 {
-   spdlog::debug("attempting to read package");
    async_read_varint(conn, 0u, 0u, [conn, &handler](mb::u32 packet_size) {
-      spdlog::debug("reading package, size is {}", packet_size);
-
       if (packet_size == 0) {
-         spdlog::error("received empty packet");
          return;
       }
 
-      //      async_read_payload(conn, handler, container::Buffer(packet_size));
       container::Buffer buffer(packet_size);
       auto read_count = boost::asio::read(conn->socket(), boost::asio::buffer(buffer.data(), buffer.size()));
 
@@ -237,8 +229,6 @@ void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler)
          spdlog::error("could not read packet correctly");
          return;
       }
-
-//     spdlog::info("correct package size: package data: {}", buffer.to_string());
 
       if (conn->encryption_key() != nullptr) {
          container::Buffer decrypted_buffer(packet_size);
@@ -248,37 +238,6 @@ void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler)
          handle_message(conn, handler, buffer);
       }
    });
-}
-
-void async_read_payload(const Connection::Ptr &conn, Protocol::Handler &handler, container::Buffer buffer)
-{
-   spdlog::debug("buffer size {}", buffer.size());
-   conn->socket().async_read_some(
-           boost::asio::buffer(buffer.data(), buffer.size()),
-           //   boost::asio::async_read(conn->socket(), boost::asio::buffer(buffer.data(), buffer.size())),
-           [conn, &handler, buffer = std::move(buffer)](const boost::system::error_code &err,
-                                                        size_t size) mutable {
-              if (err) {
-                 spdlog::debug("error reading data from client: {}", err.message());
-                 conn->get_server()->drop_connection(conn->id());
-                 return;
-              }
-
-              if (size == 0) {
-                 spdlog::debug("received 0 bytes trying again, buf");
-                 // read again
-                 //                                 async_read_payload(conn, handler, std::move(buffer));
-                 return;
-              }
-
-              if (conn->encryption_key() != nullptr) {
-                 container::Buffer decrypted_buffer(size);
-                 conn->encryption_key()->decrypt_update_buffer(buffer, decrypted_buffer);
-                 handle_message(conn, handler, decrypted_buffer);
-              } else {
-                 handle_message(conn, handler, buffer);
-              }
-           });
 }
 
 void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, const container::Buffer &buffer)
@@ -308,80 +267,49 @@ void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shif
                        const std::function<void(mb::u32)> &callback)
 {
    auto bp = conn->alloc_byte();
-   boost::asio::async_read(
-           conn->socket(), boost::asio::buffer(bp, 1),
-           [conn, callback, bp](const boost::system::error_code &err, size_t size) {
-              if (err) {
-                 conn->free_byte(bp);
-                 spdlog::debug("error reading data from client: {}", err.message());
-                 conn->get_server()->drop_connection(conn->id());
-                 return;
-              }
+   boost::asio::async_read(conn->socket(), boost::asio::buffer(bp, 1),
+                           [conn, callback, bp](const boost::system::error_code &err, size_t size) {
+                              if (err) {
+                                 conn->free_byte(bp);
+                                 spdlog::warn("error reading data from client: {}", err.message());
+                                 conn->get_server()->drop_connection(conn->id());
+                                 return;
+                              }
 
-              if (size != 1) {
-                 spdlog::error("could not read varint byte correctly");
-                 return;
-              }
+                              if (size != 1) {
+                                 spdlog::error("could not read varint byte correctly");
+                                 return;
+                              }
 
-              mb::u32 result{};
-              mb::u32 shift{};
-              mb::u8 b{};
+                              mb::u32 result{};
+                              mb::u32 shift{};
+                              mb::u8 b{};
 
-              for (;;) {
-                 b = *bp;
+                              for (;;) {
+                                 b = *bp;
 
-                 if (conn->encryption_key() != nullptr) {
-                    mb::u8 decrypted_byte;
-                    container::Buffer buffer{&decrypted_byte, 1};
-                    conn->encryption_key()->decrypt_update_buffer({&b, 1}, buffer);
-                    b = decrypted_byte;
-                 }
+                                 if (conn->encryption_key() != nullptr) {
+                                    mb::u8 decrypted_byte;
+                                    container::Buffer buffer{&decrypted_byte, 1};
+                                    conn->encryption_key()->decrypt_update_buffer({&b, 1}, buffer);
+                                    b = decrypted_byte;
+                                 }
 
-                 if (b & 0x80u) {
-                    result |= (b & 0x7Fu) << shift;
-                    shift += 7u;
-                    if (boost::asio::read(conn->socket(), boost::asio::buffer(bp, 1)) != 1) {
-                       spdlog::error("could not read varint byte correctly");
-                       return;
-                    }
-                    continue;
-                 }
+                                 if (b & 0x80u) {
+                                    result |= (b & 0x7Fu) << shift;
+                                    shift += 7u;
+                                    if (boost::asio::read(conn->socket(), boost::asio::buffer(bp, 1)) != 1) {
+                                       spdlog::error("could not read varint byte correctly");
+                                       return;
+                                    }
+                                    continue;
+                                 }
 
-                 callback(result | (static_cast<mb::u32>(b) << shift));
-                 break;
-              }
-
-              //              spdlog::debug("varint byte: {}", b);
-              //              if (b == 1) {
-              //                 *bp       = 100;
-              //                 auto read = boost::asio::read(conn->socket(), boost::asio::buffer(bp, 1));
-              //                 spdlog::debug("I read {} byte: {}", read, *bp);
-              //                 exit(0);
-              //              }
-              //
-              //              if (conn->encryption_key() != nullptr) {
-              //                 mb::u8 decrypted_byte;
-              //                 container::Buffer buffer{&decrypted_byte, 1};
-              //                 conn->encryption_key()->decrypt_update_buffer({&b, 1}, buffer);
-              //                 handle_varint_byte(conn, result, shift, callback, decrypted_byte);
-              //              } else {
-              //                 spdlog::debug("skipping encryption");
-              //                 handle_varint_byte(conn, result, shift, callback, b);
-              //              }
-              //
-              conn->free_byte(bp);
-           });
-}
-
-void handle_varint_byte(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
-                        const std::function<void(mb::u32)> &callback, mb::u8 b)
-{
-   if (b & 0x80u) {
-      async_read_varint(conn, result | ((b & 0x7Fu) << shift), shift + 7u, callback);
-      return;
-   }
-
-   callback(result | (b << shift));
+                                 callback(result | (static_cast<mb::u32>(b) << shift));
+                                 break;
+                              }
+                              conn->free_byte(bp);
+                           });
 }
 
 }// namespace minecpp::service::front

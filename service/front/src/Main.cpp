@@ -31,8 +31,9 @@ auto main() -> int
    if (config.encryption_enabled) {
       if (config.encryption_private_key.empty()) {
          private_key = std::make_unique<minecpp::crypto::PrivateKey>(1024);
-      } else  {
-         private_key = std::make_unique<minecpp::crypto::PrivateKey>(config.encryption_private_key, config.encryption_pass_phrase);
+      } else {
+         private_key = std::make_unique<minecpp::crypto::PrivateKey>(config.encryption_private_key,
+                                                                     config.encryption_pass_phrase);
       }
    }
 

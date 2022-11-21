@@ -224,7 +224,8 @@ short Reader::read_short()
    return value;
 }
 
-void Reader::read_bytes(std::uint8_t *data, std::size_t size) {
+void Reader::read_bytes(std::uint8_t *data, std::size_t size)
+{
    m_stream.read(reinterpret_cast<char *>(data), static_cast<long>(size));
 }
 

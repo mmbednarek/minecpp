@@ -8,9 +8,9 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <memory>
+#include <minecpp/crypto/AESKey.h>
 #include <minecpp/network/message/Io.h>
 #include <minecpp/network/message/Message.h>
-#include <minecpp/crypto/AESKey.h>
 #include <minecpp/util/StaticQueue.h>
 #include <queue>
 #include <spdlog/spdlog.h>

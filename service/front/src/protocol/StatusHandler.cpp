@@ -27,7 +27,8 @@ void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn)
    w.write_byte(0);
 
    format::Builder builder;
-   builder.bold(Color::Blue, "Mine ").bold(Color::Gold, "C++\n")
+   builder.bold(Color::Blue, "Mine ")
+           .bold(Color::Gold, "C++\n")
            .text(Color::Red, "Minecraft server written in C++\n");
 
    std::stringstream ss;

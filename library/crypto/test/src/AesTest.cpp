@@ -9,7 +9,7 @@ TEST(MinecppCrypto, AES_ProvidedKey)
    auto key = Buffer::from_string("AAAAAAAAAAAAAAAAA");
    key.truncate(16);
 
-   auto iv  = Buffer::from_string("BBBBBBBBBBBBBBBBB");
+   auto iv = Buffer::from_string("BBBBBBBBBBBBBBBBB");
    key.truncate(16);
 
    minecpp::crypto::AESKey aes(key, iv);
@@ -43,7 +43,7 @@ TEST(MinecppCrypto, AES_DecryptByByte)
    auto key = Buffer::from_string("AAAAAAAAAAAAAAAAA");
    key.truncate(16);
 
-   auto iv  = Buffer::from_string("BBBBBBBBBBBBBBBBB");
+   auto iv = Buffer::from_string("BBBBBBBBBBBBBBBBB");
    key.truncate(16);
 
    minecpp::crypto::AESKey aes(key, iv);

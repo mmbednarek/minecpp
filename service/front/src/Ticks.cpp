@@ -41,7 +41,7 @@ void TickManager::keep_alive()
       if (!conn)
          return;
 
-      if (conn->state() != Protocol::State::Play)  {
+      if (conn->state() != Protocol::State::Play) {
          return;
       }
 
