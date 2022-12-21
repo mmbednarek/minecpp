@@ -1,4 +1,4 @@
-.PHONY: docker-build-base docker-chunk-storage docker-engine docker-front docker docker-run
+.PHONY: docker-build-base docker-chunk-storage docker-engine docker-front docker docker-run clang-format proto nbt
 
 .docker-grpc: docker/UbuntuGrpc.Dockerfile
 	docker build . --network=host --no-cache -t minecpp/grpc:latest -f ./docker/UbuntuGrpc.Dockerfile
@@ -20,3 +20,15 @@ docker: docker-storage docker-engine docker-front
 
 docker-run: docker
 	docker-compose up
+
+clang-format:
+	./meta/run-clang-format.sh
+
+proto:
+	./meta/generate-proto.sh
+
+nbt:
+	./meta/generate-proto.sh
+
+cmake-files:
+	./meta/cmake-generate.sh

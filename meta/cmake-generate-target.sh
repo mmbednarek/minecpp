@@ -102,17 +102,17 @@ function generate_cmake_target() {
 generate_cmake_target > "$libdir/CMakeLists.txt"
 
 if [[ $header_only != "true" ]]; then
-  ./cmake/generate-src.sh "$libname" "$libdir" "$targetname" "" $include_path > "$libdir/src/CMakeLists.txt" "$targettype"
+  ./meta/cmake-generate-source.sh "$libname" "$libdir" "$targetname" "" $include_path > "$libdir/src/CMakeLists.txt" "$targettype"
 fi
 
 if [[ $api_library == "true" ]]; then
-  ./cmake/configure-library.sh "$libname""_api" "$libdir/api" "library"
+  ./meta/cmake-generate-target.sh "$libname""_api" "$libdir/api" "library"
 fi
 
 if [[ $test_executable  == "true" ]]; then
-  ./cmake/configure-library.sh "$libname""_test" "$libdir/test" "executable"
+  ./meta/cmake-generate-target.sh "$libname""_test" "$libdir/test" "executable"
 fi
 
 for example in $examples; do
-  ./cmake/configure-library.sh "$libname""_example_""$example" "$libdir/example/$example" "executable"
+  ./meta/cmake-generate-target.sh "$libname""_example_""$example" "$libdir/example/$example" "executable"
 done

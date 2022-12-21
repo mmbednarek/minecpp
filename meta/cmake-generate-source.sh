@@ -53,7 +53,7 @@ if (( ${#sublibs} > 0 )); then
   echo ""
 
   for subsublib in $sublibs; do
-      ./cmake/generate-src.sh "$libname" "$libdir" "$targetname" "${sublib}/$(basename $subsublib)" $include_path > "$libdir/src${sublib}/$(basename $subsublib)/CMakeLists.txt" "$targettype"
+      ./meta/cmake-generate-source.sh "$libname" "$libdir" "$targetname" "${sublib}/$(basename $subsublib)" $include_path > "$libdir/src${sublib}/$(basename $subsublib)/CMakeLists.txt" "$targettype"
   done
 
 fi
