@@ -1,7 +1,7 @@
 # MineCPP (Fiber)
 
 Fiber is a scalable server backend for Minecraft Java Edition written in C++.
-The currently supported version of Minecraft is **1.19.2**.
+The currently supported version of Minecraft is **1.19.3**.
 The main goal of the server is to be horizontally scalable. The server requires
 a decided init balancer called "front" as well as a separate chunk database. (called chunk storage)
 The server is an early stage of development.
