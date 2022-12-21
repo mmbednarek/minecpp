@@ -261,15 +261,26 @@ void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event,
 void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event,
                                               game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto res     = player.load_chunks(m_world);
-   if (!res.ok()) {
-      spdlog::error("error loading chunks: {}", res.err()->msg());
+   spdlog::info("loading initial chunks!");
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::error("could not obtain player info: {}", player.err()->msg());
+      return;
    }
 
-   auto &entity = MB_ESCAPE(m_entity_manager.get_entity(player.entity_id()));
+   auto res = player->load_chunks(m_world);
+   if (!res.ok()) {
+      spdlog::error("error loading chunks: {}", res.err()->msg());
+      return;
+   }
 
-   send_inventory_data(player);
+   auto entity = m_entity_manager.get_entity(player->entity_id());
+   if (entity.has_failed()) {
+      spdlog::error("player entity could not be obtained: {}", entity.err()->msg());
+      return;
+   }
+
+   send_inventory_data(*player);
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
    m_dispatcher.entity_list(player_id, m_entity_manager.entities());
 }
