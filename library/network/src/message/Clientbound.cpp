@@ -6,7 +6,7 @@ namespace minecpp::network::message {
 
 Writer SpawnObject::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
    w.write_byte(0x00);
    w.write_varint(entity_id);
@@ -27,7 +27,7 @@ Writer SpawnObject::serialize() const
 
 Writer SpawnExperienceOrb::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
    w.write_byte(0x01);
    w.write_varint(entity_id);
@@ -40,7 +40,7 @@ Writer SpawnExperienceOrb::serialize() const
 
 Writer SpawnPlayer::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
    w.write_byte(0x02);
    w.write_varint(entity_id);
@@ -55,7 +55,7 @@ Writer SpawnPlayer::serialize() const
 
 Writer AcknowledgeBlockChanges::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
 
    Writer w;
    w.write_byte(0x05);
@@ -65,7 +65,7 @@ Writer AcknowledgeBlockChanges::serialize() const
 
 Writer AnimateHand::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
    w.write_byte(0x03);
    w.write_varint(static_cast<mb::u32>(entity_id));
@@ -75,7 +75,7 @@ Writer AnimateHand::serialize() const
 
 Writer BlockChange::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
    w.write_byte(0x09);
    w.write_big_endian(block_position);
@@ -85,7 +85,7 @@ Writer BlockChange::serialize() const
 
 Writer Difficulty::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
    w.write_byte(0x0b);
    w.write_byte(difficulty);
@@ -95,9 +95,9 @@ Writer Difficulty::serialize() const
 
 Writer SystemChat::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3
    Writer w;
-   w.write_byte(0x62);
+   w.write_byte(0x60);
    w.write_string(message);
    w.write_byte(static_cast<mb::u8>(type));
    return w;
@@ -105,9 +105,9 @@ Writer SystemChat::serialize() const
 
 Writer ServerBrand::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x16);
+   w.write_byte(0x15);
    w.write_string("minecraft:brand");
    w.write_string(brand);
    return w;
@@ -115,18 +115,18 @@ Writer ServerBrand::serialize() const
 
 Writer Disconnect::serialize() const
 {
-   // 1.19.1 ok
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x19);
+   w.write_byte(0x17);
    w.write_string(reason);
    return w;
 }
 
 Writer EntityStatus::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x1a);
+   w.write_byte(0x19);
    w.write_big_endian(entity_id);
    w.write_byte(opcode);
    return w;
@@ -134,9 +134,9 @@ Writer EntityStatus::serialize() const
 
 Writer UnloadChunk::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x1c);
+   w.write_byte(0x1b);
    w.write_big_endian(chunk_x);
    w.write_big_endian(chunk_z);
    return w;
@@ -144,27 +144,27 @@ Writer UnloadChunk::serialize() const
 
 Writer KeepAlive::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x20);
+   w.write_byte(0x1f);
    w.write_big_endian(time);
    return w;
 }
 
 Writer ChunkData::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok ?
    Writer w;
-   w.write_byte(0x21);
+   w.write_byte(0x20);
    write_chunk(w, chunk);
    return w;
 }
 
 Writer UpdateLight::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok ?
    Writer w;
-   w.write_byte(0x24);
+   w.write_byte(0x23);
    write_light(w, chunk);
    return w;
 }
@@ -172,7 +172,7 @@ Writer UpdateLight::serialize() const
 Writer UpdateBlockLight::serialize() const
 {
    Writer w;
-   w.write_byte(0x24);
+   w.write_byte(0x23);
    w.write_varint(static_cast<mb::u32>(chunk_position.x));
    w.write_varint(static_cast<mb::u32>(chunk_position.z));
 
@@ -213,9 +213,9 @@ Writer UpdateBlockLight::serialize() const
 
 Writer JoinGame::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
-   w.write_byte(0x25);
+   w.write_byte(0x24);
    w.write_big_endian(player_id);
    w.write_byte(is_hardcore);
    w.write_byte(game_mode);
@@ -239,6 +239,7 @@ Writer JoinGame::serialize() const
    w.write_byte(is_flat);
    w.write_byte(has_last_death_location);
    if (has_last_death_location) {
+      w.write_string(world_name);
       w.write_long(last_death_position);
    }
    return w;
@@ -246,9 +247,9 @@ Writer JoinGame::serialize() const
 
 Writer EntityRelativeMove::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x28);
+   w.write_byte(0x27);
    w.write_varint(static_cast<mb::u32>(entity_id));
    w.write_big_endian<short>(x);
    w.write_big_endian<short>(y);
@@ -259,9 +260,9 @@ Writer EntityRelativeMove::serialize() const
 
 Writer EntityMove::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x29);
+   w.write_byte(0x28);
    w.write_varint(static_cast<mb::u32>(entity_id));
    w.write_big_endian<short>(x);
    w.write_big_endian<short>(y);
@@ -274,7 +275,7 @@ Writer EntityMove::serialize() const
 
 Writer EntityLook::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
    w.write_byte(0x2a);
    w.write_varint(static_cast<mb::u32>(entity_id));
@@ -286,9 +287,9 @@ Writer EntityLook::serialize() const
 
 Writer PlayerAbilities::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x31);
+   w.write_byte(0x30);
    w.write_byte(flags);
    w.write_float(fly_speed);
    w.write_float(field_of_view);
@@ -297,10 +298,10 @@ Writer PlayerAbilities::serialize() const
 
 Writer AddPlayer::serialize() const
 {
-   // 1.19 ok
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x37);
-   w.write_byte(0x00);
+   w.write_byte(0x36);
+   w.write_byte(0x01);
    w.write_varint(1);
    w.write_uuid(id);
    w.write_string(name);
@@ -312,20 +313,20 @@ Writer AddPlayer::serialize() const
       w.write_byte(0x00);// TODO: Add signature
    }
 
-   w.write_byte(game_mode);
-   w.write_varint(ping);
-   w.write_byte(0x00);// TODO: Support name aliases
-   w.write_byte(0x00);// TODO: Add player private key
+//   w.write_byte(game_mode);
+//   w.write_varint(ping);
+//   w.write_byte(0x00);// TODO: Support name aliases
+//   w.write_byte(0x00);// TODO: Add player private key
 
    return w;
 }
 
 Writer RemovePlayer::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x37);
-   w.write_byte(0x04);
+   w.write_byte(0x36);
+   w.write_byte(0x10);
    w.write_varint(1);
    w.write_uuid(id);
    return w;
@@ -333,9 +334,9 @@ Writer RemovePlayer::serialize() const
 
 Writer PlayerPositionLook::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x39);
+   w.write_byte(0x38);
    w.write_double(x);
    w.write_double(y);
    w.write_double(z);
@@ -349,9 +350,9 @@ Writer PlayerPositionLook::serialize() const
 
 Writer RecipeBook::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x3a);
+   w.write_byte(0x39);
    w.write_byte(static_cast<uint8_t>(state));
    w.write_byte(gui_open);
    w.write_byte(filtering_craftable);
@@ -369,9 +370,9 @@ Writer RecipeBook::serialize() const
 
 Writer DestroyEntity::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x3b);
+   w.write_byte(0x3a);
    w.write_varint(1);
    w.write_varint(entity_id);
    return w;
@@ -379,9 +380,9 @@ Writer DestroyEntity::serialize() const
 
 Writer EntityHeadLook::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x3f);
+   w.write_byte(0x3e);
    w.write_varint(static_cast<mb::u32>(entity_id));
    w.write_byte(static_cast<mb::u8>(yaw * 256.0f / 360.0f));
    return w;
@@ -389,9 +390,9 @@ Writer EntityHeadLook::serialize() const
 
 Writer MultiBlockChange::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 OK
    Writer w;
-   w.write_byte(0x40);
+   w.write_byte(0x3f);
    w.write_big_endian(chunk_position);
    w.write_byte(distrust_edges);
    w.write_varint(static_cast<mb::u32>(block_changes.size()));
@@ -403,9 +404,9 @@ Writer MultiBlockChange::serialize() const
 
 Writer HeldItem::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x4a);
+   w.write_byte(0x49);
    w.write_byte(item);
    return w;
 }
@@ -419,9 +420,9 @@ Writer Raw::serialize() const
 
 Writer UpdateChunkPosition::serialize() const
 {
-   // 1.19.1 ok ?
+   // 1.19.3 ok
    Writer w;
-   w.write_byte(0x4b);
+   w.write_byte(0x4a);
    w.write_varint(static_cast<mb::u32>(x));
    w.write_varint(static_cast<mb::u32>(z));
    return w;
@@ -429,9 +430,9 @@ Writer UpdateChunkPosition::serialize() const
 
 Writer SetSlot::serialize() const
 {
-   // 1.19.1 OK ?
+   // 1.19.3 OK
    Writer w;
-   w.write_byte(0x13);
+   w.write_byte(0x12);
    w.write_byte(window_id);
    w.write_varint(static_cast<mb::u32>(state_id));
    w.write_short(slot);
