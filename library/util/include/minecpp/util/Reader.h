@@ -15,15 +15,15 @@ class Reader
    [[nodiscard]] T read_static(T def_value) const
    {
       T t = def_value;
-      stream.read((char *) &t, sizeof(T));
+      m_stream.read((char *) &t, sizeof(T));
       return t;
    }
 
    template<typename T>
-   [[nodiscard]] T read_bswap() const
+   [[nodiscard]] T read_big_endian() const
    {
       T v;
-      stream.read((char *) &v, sizeof(T));
+      m_stream.read((char *) &v, sizeof(T));
       v = boost::endian::big_to_native(v);
       return v;
    }
@@ -31,10 +31,10 @@ class Reader
    template<typename T>
    [[nodiscard]] std::vector<T> read_int_list() const
    {
-      auto size = read_bswap<int>();
-      std::vector<T> result(size);
-      for (int i = 0; i < size; i++) {
-         result[i] = read_bswap<T>();
+      auto size = static_cast<std::size_t>(read_big_endian<int>());
+      std::vector<T> result(static_cast<std::size_t>(size));
+      for (std::size_t i{0}; i < size; ++i) {
+         result[i] = read_big_endian<T>();
       }
       return result;
    }
@@ -47,6 +47,6 @@ class Reader
    std::istream &get_stream();
 
  private:
-   std::istream &stream;
+   std::istream &m_stream;
 };
 }// namespace minecpp::util

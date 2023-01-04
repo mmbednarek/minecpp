@@ -11,11 +11,11 @@ NamedTag Parser::read_tag()
 {
    auto tag_id = read_tag_id();
    if (tag_id == TagId::End) {
-      return NamedTag("", TagId::End, std::any());
+      return {"", TagId::End, std::any()};
    }
    auto name    = read_content_string();
    auto content = read_content(tag_id);
-   return NamedTag(name, tag_id, content);
+   return {name, tag_id, content};
 }
 
 TagId Parser::read_tag_id()
@@ -62,17 +62,17 @@ int8_t Parser::read_content_byte()
 
 int16_t Parser::read_content_short()
 {
-   return reader.read_bswap<short>();
+   return reader.read_big_endian<short>();
 }
 
 int32_t Parser::read_content_int()
 {
-   return reader.read_bswap<int>();
+   return reader.read_big_endian<int>();
 }
 
 int64_t Parser::read_content_long()
 {
-   return reader.read_bswap<uint64_t>();
+   return static_cast<int64_t>(reader.read_big_endian<uint64_t>());
 }
 
 float Parser::read_content_float()
@@ -97,8 +97,8 @@ std::string Parser::read_content_string()
 
 ListContent Parser::read_content_list()
 {
-   auto tag_id      = read_tag_id();
-   std::size_t size = read_content_int();
+   auto tag_id = read_tag_id();
+   auto size   = static_cast<std::size_t>(read_content_int());
    return ListContent{.tag_id = tag_id, .elements = read_content_n(tag_id, size)};
 }
 
