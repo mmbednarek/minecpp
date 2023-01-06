@@ -37,29 +37,31 @@ class Reader : private minecpp::util::Reader
       if (read_static(TagId::End) != TagId::Float) {
          throw std::runtime_error("invalid tag reading float list");
       }
-      auto size = read_bswap<int>();
-      std::vector<float> result(size);
+      auto size = read_big_endian<int>();
+      std::vector<float> result(static_cast<std::size_t>(size));
       std::generate(result.begin(), result.end(), [this]() { return read_float32(); });
       return result;
    }
 
-   void read_packed_ints(auto &result, uint16_t bits, size_t num_packets);
+   void read_packed_ints(auto &result, int bits, int num_packets);
 
    template<typename TFunction>
-   void read_compound(TFunction for_elem)
-   {
-      for (;;) {
-         auto header = peek_tag();
-         if (header.id == nbt::TagId::End)
-            return;
-         for_elem(*this, header.id, header.name);
-      }
-   }
+   void read_compound(TFunction for_elem);
 
-   mb::emptyres
-   try_read_compound(std::function<mb::emptyres(Reader &r, TagId type, std::string key)> for_value);
-   void read_list(std::function<void(Reader &)> for_elem);
-   void foreach_long(std::function<void(long long value)> for_elem);
+   template<typename TCallback>
+   mb::emptyres try_read_compound(TCallback for_value);
+
+   template<typename TCallback>
+   void read_list(TCallback for_elem);
+
+   template<typename TCallback>
+   void foreach_long(TCallback for_elem)
+   {
+      auto size = read_big_endian<int>();
+         for (int i = 0; i < size; i++) {
+            for_elem(read_big_endian<long long>());
+         }
+      }
 
    bool find_bool_str(std::string name, bool def);
    void find_compound(std::string name);
@@ -80,12 +82,12 @@ class Reader : private minecpp::util::Reader
    template<std::size_t s>
    std::array<uint64_t, s> read_long_array()
    {
-      std::size_t size = read_bswap<int>();
+      auto size = static_cast<std::size_t>(read_big_endian<int>());
       assert(size == s);
 
       std::array<uint64_t, s> result;
       for (std::size_t i = 0; i < size; ++i) {
-         result[i] = read_bswap<uint64_t>();
+         result[i] = read_big_endian<uint64_t>();
       }
       return result;
    }
@@ -97,17 +99,17 @@ class Reader : private minecpp::util::Reader
 
    int16_t read_short()
    {
-      return read_bswap<short>();
+      return read_big_endian<short>();
    }
 
    int32_t read_int()
    {
-      return read_bswap<int>();
+      return read_big_endian<int>();
    }
 
    int64_t read_long()
    {
-      return read_bswap<long long>();
+      return read_big_endian<long long>();
    }
 
    float read_float32()
@@ -152,27 +154,28 @@ class Reader : private minecpp::util::Reader
    void must_seek_tag(std::string &name);
 };
 
-void Reader::read_packed_ints(auto &result, uint16_t bits, size_t num_packets)
+void Reader::read_packed_ints(auto &result, int bits, int num_packets)
 {
-   uint8_t parts = bits / std::gcd(0x40, bits);
-   auto cycles   = num_packets / parts;
+   int parts{bits / std::gcd(0x40, bits)};
+   int cycles{num_packets / parts};
 
    size_t i = 0;
-   for (uint32_t cycle = 0u; cycle < cycles; ++cycle) {
-      uint16_t trail     = 0u;
-      uint8_t trail_size = 0u;
-      for (uint8_t part = 0u; part < parts; ++part) {
-         auto values       = (0x40 + trail_size) / bits;
-         auto packet       = static_cast<uint64_t>(read_long());
-         uint16_t beg_bits = bits - trail_size;
-         result[i++]       = trail | ((packet & ((1u << beg_bits) - 1u)) << trail_size);
+   for (int cycle{0}; cycle < cycles; ++cycle) {
+      std::uint64_t trail{0u};
+      int trail_size{0};
+      for (int part{0}; part < parts; ++part) {
+         int values{(64 + trail_size) / bits};
+
+         auto packet = static_cast<std::uint64_t>(read_long());
+         int beg_bits{bits - trail_size};
+         result[i++] = trail | ((packet & ((1u << beg_bits) - 1u)) << trail_size);
          packet >>= beg_bits;
          for (int n = 1u; n < values; ++n) {
             result[i++] = packet & ((1u << bits) - 1u);
             packet >>= bits;
          }
          trail      = packet;
-         trail_size = (0x40 + trail_size) % bits;
+         trail_size = (64 + trail_size) % bits;
       }
    }
 }
@@ -190,23 +193,23 @@ void Reader::must_seek_tag(std::string &name)
 template<size_t s>
 std::array<uint8_t, s> Reader::read_array()
 {
-   auto size = read_bswap<int>();
+   auto size = read_big_endian<int>();
    assert(size == s);
 
    std::array<uint8_t, s> result;
-   get_stream().read((char *) result.data(), s);
+   get_stream().read((char *) result.data(), size);
    return result;
 }
 
 template<size_t s>
 std::array<int, s> Reader::read_int_array()
 {
-   std::size_t size = read_bswap<int>();
+   int size{read_big_endian<int>()};
    assert(size == s);
 
    std::array<int, s> result;
-   for (size_t i = 0; i < size; ++i) {
-      result[i] = read_bswap<int>();
+   for (int i{0}; i < size; ++i) {
+      result[i] = read_big_endian<int>();
    }
    return result;
 }
@@ -217,26 +220,64 @@ bool Reader::seek_tag(std::string &name)
    for (;;) {
       auto type = read_static(TagId::End);
       if (type == TagId::End) {
-         get_stream().seekg(-sizeof(TagId), std::ios_base::cur);
+         get_stream().seekg(-static_cast<int>(sizeof(TagId)), std::ios_base::cur);
          return false;
       }
 
-      auto name_size = read_bswap<short>();
+      auto name_size = read_big_endian<short>();
       if (type != t || name_size != static_cast<short>(name.size())) {
          get_stream().seekg(name_size, std::ios_base::cur);
          skip_payload(type);
          continue;
       }
 
-      char tag_name[name_size];
-      get_stream().read(tag_name, name_size);
+      assert(name_size > 0);
 
-      if (memcmp(tag_name, name.data(), name_size) != 0) {
+      std::string tag_name;
+      tag_name.resize(static_cast<std::size_t>(name_size));
+      get_stream().read(tag_name.data(), name_size);
+
+      if (name != tag_name) {
          skip_payload(type);
          continue;
       }
 
       return true;
+   }
+}
+
+template<typename TCallback>
+mb::emptyres Reader::try_read_compound(TCallback for_value)
+{
+   for (;;) {
+      auto header = peek_tag();
+      if (header.id == nbt::TagId::End)
+         return mb::ok;
+      MB_TRY(for_value(*this, header.id, header.name));
+   }
+}
+
+template<typename TCallback>
+void Reader::read_list(TCallback for_elem)
+{
+   auto tagid = read_static(TagId::End);
+   auto size  = read_big_endian<int>();
+   if (tagid == TagId::End)
+      return;
+
+   for (int i = 0; i < size; i++) {
+      for_elem(*this);
+   }
+}
+
+template<typename TFunction>
+void Reader::read_compound(TFunction for_elem)
+{
+   for (;;) {
+      auto header = peek_tag();
+      if (header.id == nbt::TagId::End)
+         return;
+      for_elem(*this, header.id, header.name);
    }
 }
 

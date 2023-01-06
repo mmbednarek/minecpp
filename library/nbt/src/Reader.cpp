@@ -22,12 +22,14 @@ void Reader::leave_compound()
       auto type = read_static(TagId::End);
       if (type == TagId::End)
          return;
-      auto name_size = read_bswap<short>();
+      auto name_size = read_big_endian<short>();
       get_stream().ignore(name_size);
       skip_payload(type);
    }
 }
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "misc-no-recursion"
 void Reader::skip_payload(TagId tagid)
 {
    int size;
@@ -42,7 +44,7 @@ void Reader::skip_payload(TagId tagid)
    case TagId::Double: get_stream().ignore(sizeof(double)); return;
    case TagId::List:
       elm_tagid = read_static(TagId::End);
-      size      = read_bswap<int>();
+      size      = read_big_endian<int>();
       for (int i = 0; i < size; i++) {
          skip_payload(elm_tagid);
       }
@@ -53,30 +55,31 @@ void Reader::skip_payload(TagId tagid)
          if (elm_tagid == TagId::End) {
             return;
          }
-         size = read_bswap<short>();
+         size = read_big_endian<short>();
          get_stream().ignore(size);
          skip_payload(elm_tagid);
       }
    case TagId::String:
-      size = read_bswap<short>();
+      size = read_big_endian<short>();
       get_stream().ignore(size);
       return;
    case TagId::ByteArray:
-      size = read_bswap<int>();
-      get_stream().ignore(size * sizeof(uint8_t));
+      size = read_big_endian<int>();
+      get_stream().ignore(size * static_cast<int>(sizeof(std::uint8_t)));
       return;
    case TagId::IntArray:
-      size = read_bswap<int>();
-      get_stream().ignore(size * sizeof(int));
+      size = read_big_endian<int>();
+      get_stream().ignore(size * static_cast<int>(sizeof(int)));
       return;
    case TagId::LongArray:
-      size = read_bswap<int>();
-      get_stream().ignore(size * sizeof(long long));
+      size = read_big_endian<int>();
+      get_stream().ignore(size * static_cast<int>(sizeof(long long)));
       return;
    case TagId::End: return;
    default: throw std::runtime_error("invalid tag");
    }
 }
+#pragma clang diagnostic pop
 
 void Reader::iter_compound(std::string name, const IterCallback &callback)
 {
@@ -110,39 +113,9 @@ TagHeader Reader::peek_tag()
 void Reader::check_signature()
 {
    auto type      = read_static(TagId::End);
-   auto name_size = read_bswap<short>();
+   auto name_size = read_big_endian<short>();
    if (type != TagId::Compound || name_size != 0) {
       throw std::runtime_error("stream does not contain correct nbt data");
-   }
-}
-
-mb::emptyres Reader::try_read_compound(std::function<mb::emptyres(Reader &, TagId, std::string)> for_value)
-{
-   for (;;) {
-      auto header = peek_tag();
-      if (header.id == nbt::TagId::End)
-         return mb::ok;
-      MB_TRY(for_value(*this, header.id, header.name));
-   }
-}
-
-void Reader::read_list(std::function<void(Reader &)> for_elem)
-{
-   auto tagid = read_static(TagId::End);
-   auto size  = read_bswap<int>();
-   if (tagid == TagId::End)
-      return;
-
-   for (int i = 0; i < size; i++) {
-      for_elem(*this);
-   }
-}
-
-void Reader::foreach_long(std::function<void(long long value)> for_elem)
-{
-   auto size = read_bswap<int>();
-   for (int i = 0; i < size; i++) {
-      for_elem(read_bswap<long long>());
    }
 }
 
@@ -154,23 +127,23 @@ std::istream &Reader::raw_stream()
 minecpp::util::Vec3 Reader::read_vec3()
 {
    auto tagid = read_static(TagId::End);
-   auto size  = read_bswap<int>();
+   auto size  = read_big_endian<int>();
    if (tagid == TagId::End)
-      return minecpp::util::Vec3();
+      return {};
 
    if (size != 3) {
       for (int i = 0; i < size; ++i) {
          skip_payload(TagId::Double);
       }
-      return minecpp::util::Vec3();
+      return {};
    }
 
-   return minecpp::util::Vec3(read_float64(), read_float64(), read_float64());
+   return {read_float64(), read_float64(), read_float64()};
 }
 
 ListHeader Reader::peek_list()
 {
-   return ListHeader{read_static(nbt::TagId::End), static_cast<std::size_t>(read_bswap<int>())};
+   return ListHeader{read_static(nbt::TagId::End), static_cast<std::size_t>(read_big_endian<int>())};
 }
 
 CompoundContent Reader::read_compound_content()
