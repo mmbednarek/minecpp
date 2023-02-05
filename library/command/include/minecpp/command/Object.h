@@ -4,6 +4,7 @@
 #include <fmt/core.h>
 #include <memory>
 #include <minecpp/format/Format.h>
+#include <minecpp/game/Game.h>
 #include <minecpp/util/Uuid.h>
 #include <string>
 #include <utility>
@@ -20,7 +21,8 @@ enum class ObjectType
    List,
    UUID,
    FormattedString,
-   RuntimeError
+   RuntimeError,
+   BlockPosition
 };
 
 class Object
@@ -185,6 +187,28 @@ struct RuntimeError : public FormattedString
          node.format(builder);
       }
       return builder.to_string();
+   }
+};
+
+struct BlockPositionObject final : public Object
+{
+   constexpr static ObjectType object_type = ObjectType::BlockPosition;
+
+   game::BlockPosition value;
+
+   explicit BlockPositionObject(game::BlockPosition position) :
+       value(position)
+   {
+   }
+
+   ObjectType type() override
+   {
+      return object_type;
+   }
+
+   std::string to_string() override
+   {
+      return fmt::format("({}, {}, {})", value.x, value.y, value.z);
    }
 };
 

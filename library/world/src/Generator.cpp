@@ -65,7 +65,7 @@ void Generator::generate_light(game::ChunkPosition position)
       }
    }
 
-   LightSystem::recalculate_light_for_chunk(game::LightType::Sky, *chunk);
+//    m_light_system.recalculate_light_for_chunk(game::LightType::Sky, chunk->pos(), Chunk::minimum_y(), Chunk::maximum_y(), *chunk);
 }
 
 }// namespace minecpp::world

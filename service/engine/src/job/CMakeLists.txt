@@ -2,6 +2,8 @@
 
 target_sources(minecpp_engine PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChangeBlock.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChangeBlock.h
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkIsComplete.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkIsComplete.h
         ${CMAKE_CURRENT_SOURCE_DIR}/GenerateChunk.cpp

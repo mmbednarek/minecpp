@@ -384,7 +384,7 @@ void put_deserialize_list_logic_static(const Semantics::StaticDeserializer &dese
    if (depth == target_depth) {
       col << raw("std::vector<{}> ls(list_info{}.size)", Semantics::variant_to_type(deserializer.variant),
                  depth);
-      col << call("std::write_terrain_to_chunk", call("ls.begin"), call("ls.end"),
+      col << call("std::generate", call("ls.begin"), call("ls.end"),
                   lambda(
                           {},
                           [&deserializer](statement::collector &col) {
@@ -419,7 +419,7 @@ void put_deserialize_list_logic_static(const Semantics::StaticDeserializer &dese
          for (mb::size i = depth + 2; i <= target_depth; ++i) {
             gen_lambda.add_capture(raw("&list_info{}", i));
          }
-         col << call("std::write_terrain_to_chunk", raw("it + 1"), call("ls.end"), gen_lambda);
+         col << call("std::generate", raw("it + 1"), call("ls.end"), gen_lambda);
       });
    }
 
@@ -440,7 +440,7 @@ void put_deserialize_list_logic_compound(const Semantics::CompoundDeserializer::
 
    if (depth == target_depth) {
       col << raw("std::vector<{}> ls(list_info{}.size)", elem.typeName, depth);
-      col << call("std::write_terrain_to_chunk", call("ls.begin"), call("ls.end"),
+      col << call("std::generate", call("ls.begin"), call("ls.end"),
                   lambda(
                           {},
                           [&elem](statement::collector &col) {
@@ -474,7 +474,7 @@ void put_deserialize_list_logic_compound(const Semantics::CompoundDeserializer::
                  for (mb::size i = depth + 2; i <= target_depth; ++i) {
                     gen_lambda.add_capture(raw("&list_info{}", i));
                  }
-                 col << call("std::write_terrain_to_chunk", raw("it + 1"), call("ls.end"), gen_lambda);
+                 col << call("std::generate", raw("it + 1"), call("ls.end"), gen_lambda);
               });
    }
 

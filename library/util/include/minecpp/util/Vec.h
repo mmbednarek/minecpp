@@ -19,7 +19,7 @@ struct Vec2
 
    constexpr Vec2 operator/(const Vec2 &other) const
    {
-      return Vec2(x / other.x, z / other.z);
+      return {x / other.x, z / other.z};
    }
 
    Vec2 operator+(Vec2 other) const;

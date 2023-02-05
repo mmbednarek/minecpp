@@ -67,6 +67,10 @@ class BlockState
       return m_state_offset;
    }
 
+   [[nodiscard]] bool does_block_movement() const;
+   [[nodiscard]] game::FaceMask solid_faces() const;
+   [[nodiscard]] game::LightValue luminance() const;
+
    [[nodiscard]] game::BlockStateId block_state_id() const;
 
  private:
@@ -81,3 +85,6 @@ template<>
 bool BlockState::set<bool>(std::string_view name, bool value);
 
 }// namespace minecpp::world
+
+#define DEFAULT_BLOCK_STATE(Block) \
+   ::minecpp::world::BlockState(BLOCK_ID(Block), 0).block_state_id()

@@ -7,6 +7,7 @@
 #include <minecpp/command/core/Echo.h>
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
+#include <minecpp/command/core/ReloadChunk.h>
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
 #include <minecpp/controller/block/Stairs.h>
@@ -34,6 +35,7 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
 {
    m_command_manager.register_command<command::core::Echo>("echo");
    m_command_manager.register_command<command::core::Give>("give", m_player_manager);
+   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk", m_world);
 
    m_command_manager.register_command<command::core::Format>("black", format::Color::Black, false);
    m_command_manager.register_command<command::core::Format>("black-bold", format::Color::Black, true);
@@ -366,9 +368,19 @@ void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem 
 void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto entity = m_entity_manager.get_entity(player.entity_id());
+   if (entity.has_failed())  {
+      format::Builder builder;
+      builder.bold(format::Color::Red, "[entity-system] ").text("could not obtain entity");
+      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
+      return;
+   }
 
    m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
    m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
+
+   auto player_pos = game::BlockPosition::from_vec3(entity->get_pos());
+   m_command_context.set_variable("here", std::make_shared<command::BlockPositionObject>(player_pos));
 
    auto res = m_command_manager.evaluate(m_command_context, event.command());
    if (res.has_value()) {

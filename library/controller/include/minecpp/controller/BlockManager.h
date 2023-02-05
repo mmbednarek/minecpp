@@ -1,16 +1,16 @@
 #pragma once
 #include "block/Default.h"
-#include "BlockController.hpp"
 #include <map>
 #include <memory>
 #include <minecpp/game/Game.h>
+#include <minecpp/game/IBlockController.hpp>
 #include <minecpp/game/World.h>
 
 namespace minecpp::controller {
 
-class BlockManager : public BlockController
+class BlockManager : public game::IBlockController
 {
-   std::map<game::BlockId, std::unique_ptr<BlockController>> m_controllers;
+   std::map<game::BlockId, std::unique_ptr<IBlockController>> m_controllers;
    block::Default m_default_controller;
 
  public:
@@ -27,7 +27,7 @@ class BlockManager : public BlockController
                          game::BlockPosition position, game::Face face,
                          util::Vec3 crosshair_position) override;
 
-   BlockController &controller(game::BlockId block_id);
+   IBlockController &controller(game::BlockId block_id);
 
    template<typename TController, typename... TArgs>
    void register_controller(game::BlockId block_id, TArgs &&...args)

@@ -21,48 +21,51 @@ mb::emptyres load_repository_from_file(std::string_view filename)
    auto repo = minecpp::nbt::repository::v1::Repository::deserialize(in_file);
 
    auto &states = BlockState::the();
-   for (auto &bool_state : repo.bool_states) {
-      states.register_resource(bool_state.tag, game::State(bool_state.state.name));
+   for (auto &bool_state : repo.bool_properties) {
+      states.register_resource(bool_state.tag, game::State(bool_state.property.name));
    }
-   for (auto &int_state : repo.int_states) {
-      states.register_resource(int_state.tag, game::State(int_state.state.name, int_state.state.min_value,
-                                                          int_state.state.max_value));
+   for (auto &int_state : repo.int_properties) {
+      states.register_resource(int_state.tag, game::State(int_state.property.name, int_state.property.min_value,
+                                                          int_state.property.max_value));
    }
-   for (auto &enum_state : repo.enum_states) {
-      states.register_resource(enum_state.tag, game::State(enum_state.state.name, enum_state.state.values));
+   for (auto &enum_state : repo.enum_properties) {
+      states.register_resource(enum_state.tag, game::State(enum_state.property.name, enum_state.property.values));
    }
 
    auto &blocks        = Block::the();
    auto &state_manager = StateManager::the();
-   int block_id        = 0;
-   for (auto &block : repo.blocks) {
+   for (auto &entry : repo.blocks) {
       std::vector<game::State> block_states;
       int block_state_count = 1;
-      for (const auto &tag : block.block.state_tags) {
-         auto state = MB_TRY(states.find_by_tag(tag));
-         block_states.push_back(state);
-         block_state_count *= state.value_count();
+      for (const auto &tag : entry.block.property_tags) {
+         auto state = states.find_by_tag(tag);
+         if (state.has_failed())
+            return std::move(state.err());
+
+         block_states.push_back(*state);
+         block_state_count *= state->value_count();
       }
-      state_manager.add_state(block_id, block_state_count);
+      state_manager.add_state(entry.id, block_state_count);
 
       game::block::BlockStats stats{};
-      stats.solid = block.block.is_solid;
-
-      blocks.register_resource(block.tag, game::block::Block(block.tag, block_states, stats));
-
-      ++block_id;
+      blocks.register_resource(entry.tag, game::block::Block(entry.tag, block_states, stats));
    }
-   state_manager.cache_block_stats();
+
+   state_manager.allocate_info_storage();
+
+   for  (const auto &entry: repo.block_states)  {
+      state_manager.put_state_info(static_cast<game::BlockStateId>(entry.id), game::BlockStateInfo::from_nbt(entry.state));
+   }
 
    auto &items = Item::the();
-   for (auto &nbt_item : repo.items) {
+   for (auto &entry : repo.items) {
       game::item::Item item(game::item::Item::Details{
-              .tag                     = nbt_item.tag,
-              .max_stack_size          = nbt_item.item.max_item_stack,
-              .is_block                = static_cast<bool>(nbt_item.item.is_block),
-              .corresponding_block_tag = nbt_item.item.corresponding_block_tag,
+              .tag                     = entry.tag,
+              .max_stack_size          = entry.item.max_item_stack,
+              .is_block                = static_cast<bool>(entry.item.is_block),
+              .corresponding_block_tag = entry.item.corresponding_block_tag,
       });
-      items.register_resource(nbt_item.tag, item);
+      items.register_resource(entry.tag, item);
    }
 
    return mb::ok;
@@ -88,7 +91,7 @@ std::function<int(const game::State &)> make_compound_encoder(const nbt::Compoun
 int encode_block_by_tag(std::string_view tag)
 {
    auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
-   return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
+   return static_cast<int>(repository::StateManager::the().block_base_state(static_cast<int>(block_id)));
 }
 
 std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateOffset block_state,
@@ -152,6 +155,7 @@ void BlockIds::init()
 {
    m_initialised = false;
    REGISTER_BLOCK_ID(Air, "minecraft:air");
+   REGISTER_BLOCK_ID(Stone, "minecraft:stone");
    REGISTER_BLOCK_ID(Water, "minecraft:water");
    REGISTER_BLOCK_ID(Torch, "minecraft:torch");
    REGISTER_BLOCK_ID(WallTorch, "minecraft:wall_torch");

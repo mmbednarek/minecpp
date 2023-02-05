@@ -6,10 +6,6 @@ namespace minecpp::world {
 
 class Generator
 {
-   std::uint64_t m_seed;
-   IChunkSystem &m_chunk_system;
-   population::Population m_population;
-
  public:
    explicit Generator(IChunkSystem &provider, std::uint64_t seed);
 
@@ -17,6 +13,12 @@ class Generator
    void generate_terrain(game::ChunkPosition position);
    void generate_light(game::ChunkPosition position);
    void populate_chunk(game::ChunkPosition position);
+
+ private:
+   std::uint64_t m_seed;
+   IChunkSystem &m_chunk_system;
+   population::Population m_population;
+//   game::ILightSystem &m_light_system;
 };
 
 }// namespace minecpp::world

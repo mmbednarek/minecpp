@@ -13,6 +13,7 @@ add_subdirectory("src")
 target_link_libraries(minecpp_api_proto
         LINK_PUBLIC
         grpc++
+        gpr
         protobuf
         absl::base
         absl::synchronization

@@ -1,6 +1,8 @@
 #pragma once
 #include <mb/enum.h>
 #include <mb/int.h>
+#include <minecpp/nbt/block/v1/BlockState.nbt.h>
+#include <minecpp/nbt/common/v1/Common.nbt.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/util/Vec.h>
@@ -50,6 +52,60 @@ enum class PlayerDiggingState : int
    SwapHeldItems   = 6,
 };
 
+enum class FaceMask : mb::u8
+{
+   None   = 0,
+   Bottom = 1u << 0,
+   Top    = 1u << 1,
+   North  = 1u << 2,
+   South  = 1u << 3,
+   West   = 1u << 4,
+   East   = 1u << 5,
+   All    = 0x40u - 1u,
+};
+
+// TODO: Introduce common mask traits
+
+inline FaceMask operator|(FaceMask lhs, FaceMask rhs)
+{
+   return static_cast<FaceMask>(static_cast<std::underlying_type_t<FaceMask>>(lhs) |
+                                static_cast<std::underlying_type_t<FaceMask>>(rhs));
+}
+
+inline FaceMask operator~(FaceMask source)
+{
+   return static_cast<FaceMask>((~static_cast<std::underlying_type_t<FaceMask>>(source)) & static_cast<std::underlying_type_t<FaceMask>>(FaceMask::All));
+}
+
+inline FaceMask &operator|=(FaceMask &lhs, FaceMask rhs)
+{
+   lhs = lhs | rhs;
+   return lhs;
+}
+
+inline FaceMask operator-(FaceMask lhs, FaceMask rhs)
+{
+   return static_cast<FaceMask>(static_cast<std::underlying_type_t<FaceMask>>(lhs) & static_cast<std::underlying_type_t<FaceMask>>(~rhs));
+}
+
+inline bool operator&(FaceMask lhs, FaceMask rhs)
+{
+   return (static_cast<std::underlying_type_t<FaceMask>>(lhs) &
+           static_cast<std::underlying_type_t<FaceMask>>(rhs)) != 0u;
+}
+
+inline FaceMask face_mask_from_nbt(const nbt::common::v1::FaceMask &nbt_mask)
+{
+   FaceMask result{};
+   result |= nbt_mask.down ? FaceMask::Bottom : FaceMask::None;
+   result |= nbt_mask.up ? FaceMask::Top : FaceMask::None;
+   result |= nbt_mask.north ? FaceMask::North : FaceMask::None;
+   result |= nbt_mask.south ? FaceMask::South : FaceMask::None;
+   result |= nbt_mask.west ? FaceMask::West : FaceMask::None;
+   result |= nbt_mask.east ? FaceMask::East : FaceMask::None;
+   return result;
+}
+
 enum class FaceValue
 {
    Bottom = 0,
@@ -86,7 +142,7 @@ class Face final : public Face_Base
 
    [[nodiscard]] constexpr Face opposite_face()
    {
-      switch (index()) {
+      switch (value()) {
       case Face::Bottom: return Face::Top;
       case Face::Top: return Face::Bottom;
       case Face::North: return Face::South;
@@ -96,7 +152,25 @@ class Face final : public Face_Base
       }
       assert(false && "SHOULD NOT BE REACHED");
    }
+
+   [[nodiscard]] constexpr FaceMask to_mask()
+   {
+      switch (value()) {
+      case Face::Bottom: return FaceMask::Bottom;
+      case Face::Top: return FaceMask::Top;
+      case Face::North: return FaceMask::North;
+      case Face::South: return FaceMask::South;
+      case Face::West: return FaceMask::West;
+      case Face::East: return FaceMask::East;
+      }
+      assert(false && "SHOULD NOT BE REACHED");
+   }
 };
+
+inline bool operator&(FaceMask lhs, Face rhs)
+{
+   return lhs & rhs.to_mask();
+}
 
 enum class SideValue
 {
@@ -252,6 +326,30 @@ struct BlockPosition
    [[nodiscard]] constexpr util::Vec3 to_vec3() const
    {
       return {static_cast<double>(x), static_cast<double>(y), static_cast<double>(z)};
+   }
+
+   static BlockPosition from_vec3(const util::Vec3 &position)
+   {
+      return {
+              static_cast<int>(position.x),
+              static_cast<int>(position.y),
+              static_cast<int>(position.z),
+      };
+   }
+
+   bool operator==(const BlockPosition &other) const
+   {
+      return this->x == other.x && this->y == other.y && this->z == other.z;
+   }
+
+   bool operator!=(const BlockPosition &other) const
+   {
+      return this->x != other.x || this->y != other.y || this->z != other.z;
+   }
+
+   BlockPosition operator-(const BlockPosition &other) const
+   {
+      return {x - other.x, y - other.y, z - other.z};
    }
 };
 
@@ -452,14 +550,14 @@ class Direction final : public Direction_Base
    [[nodiscard]] constexpr Direction turn(Side side) const
    {
       if (side == Side::Left) {
-         switch (index()) {
+         switch (value()) {
          case Direction::North: return Direction::West;
          case Direction::South: return Direction::East;
          case Direction::West: return Direction::South;
          case Direction::East: return Direction::North;
          }
       } else {
-         switch (index()) {
+         switch (value()) {
          case Direction::North: return Direction::East;
          case Direction::South: return Direction::West;
          case Direction::West: return Direction::North;
@@ -472,13 +570,27 @@ class Direction final : public Direction_Base
 
    [[nodiscard]] constexpr Face to_face()
    {
-      switch (index()) {
+      switch (value()) {
       case Direction::North: return Face::North;
       case Direction::South: return Face::South;
       case Direction::West: return Face::West;
       case Direction::East: return Face::East;
       }
       assert(false && "not reachable");
+   }
+
+   [[nodiscard]] static constexpr Direction from_vec2(const util::Vec2 &vec)
+   {
+      bool x_dominant = std::abs(vec.x) > std::abs(vec.z);
+      if (x_dominant) {
+         if (vec.x > 0.0)
+            return Direction::East;
+         return Direction::West;
+      }
+
+      if (vec.z > 0.0)
+         return Direction::South;
+      return Direction::North;
    }
 };
 
@@ -758,6 +870,112 @@ class HeightType final : public HeightType_Base
    MB_ENUM_FIELD(MotionBlocking)
    MB_ENUM_FIELD(WorldSurface)
    MB_ENUM_FIELD(LightBlocking)
+};
+
+struct BlockRange
+{
+   BlockPosition min;
+   BlockPosition max;
+
+   struct Iterator
+   {
+      const BlockRange &range;
+      BlockPosition at;
+
+      Iterator &operator++()
+      {
+         if (at.x >= range.max.x) {
+            if (at.y >= range.max.y) {
+               ++at.z;
+               at.y = range.min.y;
+               at.x = range.min.x;
+               return *this;
+            }
+
+            ++at.y;
+            at.x = range.min.x;
+            return *this;
+         }
+
+         ++at.x;
+         return *this;
+      }
+
+      BlockPosition operator*() const
+      {
+         return at;
+      }
+
+      bool operator==(const Iterator &other) const
+      {
+         return at == other.at;
+      }
+
+      bool operator!=(const Iterator &other) const
+      {
+         return at != other.at;
+      }
+   };
+
+   [[nodiscard]] constexpr int width() const
+   {
+      return 1 + max.x - min.x;
+   }
+
+   [[nodiscard]] constexpr int height() const
+   {
+      return 1 + max.y - min.y;
+   }
+
+   [[nodiscard]] constexpr int depth() const
+   {
+      return 1 + max.z - min.z;
+   }
+
+   [[nodiscard]] constexpr Iterator begin() const
+   {
+      return Iterator{*this, this->min};
+   }
+
+   [[nodiscard]] constexpr Iterator end() const
+   {
+      return Iterator{
+              *this,
+              {this->min.x, this->min.y, this->max.z + 1}
+      };
+   }
+
+   [[nodiscard]] constexpr std::int64_t block_count() const
+   {
+      return static_cast<std::int64_t>(width()) * height() * depth();
+   }
+
+   [[nodiscard]] constexpr bool contains(BlockPosition position) const
+   {
+      if (position.x < min.x || position.x > max.x) {
+         return false;
+      }
+      if (position.y < min.y || position.y > max.y) {
+         return false;
+      }
+      if (position.z < min.z || position.z > max.z) {
+         return false;
+      }
+      return true;
+   }
+};
+
+struct BlockStateInfo
+{
+   LightValue luminance{};
+   bool blocks_movement{};
+   FaceMask solid_faces{};
+
+   static BlockStateInfo from_nbt(const nbt::block::v1::BlockState &state)
+   {
+      return {static_cast<LightValue>(state.luminance), state.blocks_movement != 0,
+              face_mask_from_nbt(state.solid_faces)};
+   }
 };
 
 }// namespace minecpp::game

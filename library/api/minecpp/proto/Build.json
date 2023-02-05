@@ -4,6 +4,7 @@
   "dependencies": {
     "public": [
       "grpc++",
+      "gpr",
       "protobuf",
       "absl::base",
       "absl::synchronization"

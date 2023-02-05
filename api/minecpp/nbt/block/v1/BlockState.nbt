@@ -1,0 +1,10 @@
+syntax = "nbt";
+package minecpp.nbt.block.v1;
+
+import "minecpp/nbt/common/v1/Common.nbt";
+
+message BlockState {
+    int8 blocks_movement = 1 [label = "BlocksMovement"];
+    int32 luminance = 2 [label = "Luminance"];
+    common.v1.FaceMask solid_faces = 3 [label = "SolidFaces"];
+}

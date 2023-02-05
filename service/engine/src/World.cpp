@@ -1,5 +1,6 @@
 #include "World.h"
 #include "ChunkSystem.h"
+#include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
 #include <minecpp/util/Uuid.h>
@@ -38,7 +39,7 @@ World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, D
     m_entity_manager(entity_manager),
     m_block_controller(block_controller),
     m_engine_id(engine_id),
-    m_light_system(*this, m_dispatcher)
+    m_light_system(*this)
 {
 }
 
@@ -79,10 +80,8 @@ mb::result<int> World::height_at(int x, int z)
 
 mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
 {
-   ACCESS_CHUNK_AT(pos.chunk_position(), [this, pos, state](world::Chunk *chunk) {
-      chunk->set_block(pos, state);
-      m_chunk_system.save_chunk_at(pos.chunk_position());
-   });
+   m_job_system.when<job::ChunkIsComplete>(m_chunk_system, pos.chunk_position())
+           .run_job<job::ChangeBlock>(m_light_system, m_chunk_system, pos, state);
    m_dispatcher.update_block(pos, state);
    return mb::ok;
 }

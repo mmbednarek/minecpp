@@ -66,6 +66,7 @@ class Repository
 struct BlockIds
 {
    game::BlockId Air;
+   game::BlockId Stone;
    game::BlockId Water;
    game::BlockId Torch;
    game::BlockId WallTorch;

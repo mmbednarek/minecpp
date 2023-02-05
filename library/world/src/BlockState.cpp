@@ -51,6 +51,21 @@ bool BlockState::set_from_string(std::string_view name, std::string_view value)
    return true;
 }
 
+bool BlockState::does_block_movement() const
+{
+   return repository::StateManager::the().get_info(this->block_state_id()).blocks_movement;
+}
+
+game::FaceMask BlockState::solid_faces() const
+{
+   return repository::StateManager::the().get_info(this->block_state_id()).solid_faces;
+}
+
+game::LightValue BlockState::luminance() const
+{
+   return repository::StateManager::the().get_info(this->block_state_id()).luminance;
+}
+
 template<>
 [[nodiscard]] std::optional<bool> BlockState::get(std::string_view name) const
 {

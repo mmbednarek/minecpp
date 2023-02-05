@@ -25,4 +25,5 @@ target_sources(minecpp_world PUBLIC
 # Subdirectories
 add_subdirectory("population")
 add_subdirectory("terrain")
+add_subdirectory("testing")
 
