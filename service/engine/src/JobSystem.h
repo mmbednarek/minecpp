@@ -137,8 +137,7 @@ TicketBuilder JobSystem::when(TArgs &&...args)
 template<typename TJob, typename... TArgs>
 void TicketBuilder::run_job(TArgs &&...args)
 {
-   m_job_system.issue_ticket(
-           {std::make_unique<TJob>(std::forward<TArgs>(args)...), std::move(m_conditions)});
+   m_job_system.issue_ticket({std::make_unique<TJob>(std::forward<TArgs>(args)...), std::move(m_conditions)});
 }
 
 }// namespace minecpp::service::engine

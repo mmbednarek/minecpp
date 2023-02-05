@@ -8,7 +8,8 @@
 
 namespace minecpp::world {
 
-enum class LightSpreadNodeType {
+enum class LightSpreadNodeType
+{
    Source,
    Lighten,
    Darken
@@ -32,7 +33,8 @@ class LightSystem final : public game::ILightSystem
 
 
  private:
-   game::LightValue get_propagated_value(game::BlockPosition source, game::Face direction, game::LightValue source_value);
+   game::LightValue get_propagated_value(game::BlockPosition source, game::Face direction,
+                                         game::LightValue source_value);
    void propagate_value(game::LightType light_type, game::BlockPosition source, game::LightValue source_value,
                         LightSpreadNodeType type, std::queue<LightSpreadNode> &queue);
 

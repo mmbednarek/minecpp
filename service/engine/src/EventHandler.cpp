@@ -368,8 +368,8 @@ void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem 
 void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity = m_entity_manager.get_entity(player.entity_id());
-   if (entity.has_failed())  {
+   auto entity  = m_entity_manager.get_entity(player.entity_id());
+   if (entity.has_failed()) {
       format::Builder builder;
       builder.bold(format::Color::Red, "[entity-system] ").text("could not obtain entity");
       m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());

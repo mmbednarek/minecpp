@@ -86,5 +86,4 @@ bool BlockState::set<bool>(std::string_view name, bool value);
 
 }// namespace minecpp::world
 
-#define DEFAULT_BLOCK_STATE(Block) \
-   ::minecpp::world::BlockState(BLOCK_ID(Block), 0).block_state_id()
+#define DEFAULT_BLOCK_STATE(Block) ::minecpp::world::BlockState(BLOCK_ID(Block), 0).block_state_id()

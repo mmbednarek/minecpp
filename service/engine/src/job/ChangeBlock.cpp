@@ -6,23 +6,24 @@ namespace minecpp::service::engine::job {
 
 ChangeBlock::ChangeBlock(game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
                          const game::BlockPosition &position, game::BlockStateId target_state_id) :
-        m_light_system(light_system),
-        m_chunk_system(chunk_system),
-        m_position(position),
-        m_target_state_id(target_state_id)
+    m_light_system(light_system),
+    m_chunk_system(chunk_system),
+    m_position(position),
+    m_target_state_id(target_state_id)
 {
 }
 
-void ChangeBlock::run() {
+void ChangeBlock::run()
+{
 
    auto chunk = m_chunk_system.chunk_at(m_position.chunk_position());
-   assert(chunk); // job-system guarantees the chunk is present.
+   assert(chunk);// job-system guarantees the chunk is present.
 
    auto source_state_id = chunk->get_block(m_position);
    assert(source_state_id.ok());
 
    if (*source_state_id == m_target_state_id)
-      return; // no changes
+      return;// no changes
 
    world::BlockState source_state{*source_state_id};
    world::BlockState target_state{m_target_state_id};

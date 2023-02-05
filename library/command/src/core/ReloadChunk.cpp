@@ -2,11 +2,10 @@
 #include <minecpp/command/RuntimeContext.h>
 #include <minecpp/game/World.h>
 
-namespace minecpp::command::core
-{
+namespace minecpp::command::core {
 
 ReloadChunk::ReloadChunk(game::World &world) :
-        m_world(world)
+    m_world(world)
 {
 }
 
@@ -20,14 +19,14 @@ ObjectType ReloadChunk::return_type(RuntimeContext &ctx) const
    return command_return_type;
 }
 
-std::shared_ptr<RuntimeError> make_error(std::string_view message) {
+std::shared_ptr<RuntimeError> make_error(std::string_view message)
+{
    auto err = std::make_shared<RuntimeError>("reload-chunk");
    err->text("player id not specified");
    return err;
 }
 
-Object::Ptr
-ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
+Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
 {
    auto *player_id = cast<UUIDObject>(ctx.variable("player_id"));
    if (player_id == nullptr) {
@@ -49,4 +48,4 @@ ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
    return info;
 }
 
-}
+}// namespace minecpp::command::core

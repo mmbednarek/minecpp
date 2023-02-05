@@ -60,7 +60,8 @@ mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::Bl
       return mb::ok;
 
    std::queue<LightSpreadNode> queue;
-   queue.push(LightSpreadNode{position, static_cast<game::LightValue>(max_light_value - 1), LightSpreadNodeType::Lighten});
+   queue.push(LightSpreadNode{position, static_cast<game::LightValue>(max_light_value - 1),
+                              LightSpreadNodeType::Lighten});
 
    spdlog::debug("light-system: calculating light initial value is {}", max_light_value - 1);
    this->flood_light(light_type, queue);
@@ -130,7 +131,7 @@ mb::emptyres LightSystem::flood_light(game::LightType light_type, std::queue<Lig
 game::LightValue LightSystem::get_propagated_value(game::BlockPosition source, game::Face direction,
                                                    game::LightValue source_value)
 {
-   auto destination     = source.neighbour_at(direction);
+   auto destination        = source.neighbour_at(direction);
    auto dst_block_state_id = m_container.get_block(destination);
    if (dst_block_state_id.has_failed()) {
       spdlog::debug("light-system: cannot get destination block");
@@ -177,8 +178,8 @@ void LightSystem::propagate_value(game::LightType light_type, game::BlockPositio
       if (target_value < 1)
          continue;
 
-//      spdlog::debug("light-system: spreading value {} to {}: original={}, darken={}", target_value,
-//                    face.to_string(), *original_value, type);
+      //      spdlog::debug("light-system: spreading value {} to {}: original={}, darken={}", target_value,
+      //                    face.to_string(), *original_value, type);
 
       if (type == LightSpreadNodeType::Darken) {
          if (target_value != *original_value) {

@@ -313,10 +313,10 @@ Writer AddPlayer::serialize() const
       w.write_byte(0x00);// TODO: Add signature
    }
 
-//   w.write_byte(game_mode);
-//   w.write_varint(ping);
-//   w.write_byte(0x00);// TODO: Support name aliases
-//   w.write_byte(0x00);// TODO: Add player private key
+   //   w.write_byte(game_mode);
+   //   w.write_varint(ping);
+   //   w.write_byte(0x00);// TODO: Support name aliases
+   //   w.write_byte(0x00);// TODO: Add player private key
 
    return w;
 }

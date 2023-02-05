@@ -74,7 +74,8 @@ inline FaceMask operator|(FaceMask lhs, FaceMask rhs)
 
 inline FaceMask operator~(FaceMask source)
 {
-   return static_cast<FaceMask>((~static_cast<std::underlying_type_t<FaceMask>>(source)) & static_cast<std::underlying_type_t<FaceMask>>(FaceMask::All));
+   return static_cast<FaceMask>((~static_cast<std::underlying_type_t<FaceMask>>(source)) &
+                                static_cast<std::underlying_type_t<FaceMask>>(FaceMask::All));
 }
 
 inline FaceMask &operator|=(FaceMask &lhs, FaceMask rhs)
@@ -85,7 +86,8 @@ inline FaceMask &operator|=(FaceMask &lhs, FaceMask rhs)
 
 inline FaceMask operator-(FaceMask lhs, FaceMask rhs)
 {
-   return static_cast<FaceMask>(static_cast<std::underlying_type_t<FaceMask>>(lhs) & static_cast<std::underlying_type_t<FaceMask>>(~rhs));
+   return static_cast<FaceMask>(static_cast<std::underlying_type_t<FaceMask>>(lhs) &
+                                static_cast<std::underlying_type_t<FaceMask>>(~rhs));
 }
 
 inline bool operator&(FaceMask lhs, FaceMask rhs)

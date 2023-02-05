@@ -7,7 +7,8 @@
 
 namespace minecpp::service::engine::job {
 
-class ChangeBlock :  public IJob {
+class ChangeBlock : public IJob
+{
  public:
    ChangeBlock(game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
                const game::BlockPosition &position, game::BlockStateId target_state_id);
@@ -22,4 +23,4 @@ class ChangeBlock :  public IJob {
    game::BlockStateId m_target_state_id{};
 };
 
-}
+}// namespace minecpp::service::engine::job

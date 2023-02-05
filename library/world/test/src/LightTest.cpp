@@ -100,9 +100,9 @@ TEST_F(WorldLightTest, LightTest_Box)
 TEST_F(WorldLightTest, LightTest_BoxWithAHole)
 {
    BlockContainer container({
-                                    {-15, -15, -15},
-                                    { 15,  15,  15}
-                            });
+           {-15, -15, -15},
+           { 15,  15,  15}
+   });
    BlockRange box_range{
            {-2, -2, -2},
            { 2,  2,  2}
@@ -122,5 +122,5 @@ TEST_F(WorldLightTest, LightTest_BoxWithAHole)
    light_system.add_light_source({0, 0, 0}, 15);
    ASSERT_EQ(container.light_changes(), expected_changes);
    light_system.reset_light(minecpp::game::LightType::Block, {0, 0, 0});
-   ASSERT_EQ(container.light_changes(), 2*expected_changes);
+   ASSERT_EQ(container.light_changes(), 2 * expected_changes);
 }

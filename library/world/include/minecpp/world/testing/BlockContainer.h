@@ -7,7 +7,8 @@ namespace minecpp::world::testing {
 
 class BlockContainer : public game::IBlockContainer
 {
-   struct Block {
+   struct Block
+   {
       game::BlockStateId state;
       std::array<game::LightValue, 2> light_values;
    };
@@ -25,12 +26,13 @@ class BlockContainer : public game::IBlockContainer
    mb::emptyres fill(game::BlockRange range, game::BlockStateId state);
    mb::emptyres put_box(game::BlockRange range, game::BlockStateId state);
 
-   [[nodiscard]] int light_changes() const {
+   [[nodiscard]] int light_changes() const
+   {
       return m_light_changes;
    }
 
  private:
-   [[nodiscard]] Block& access_block_at(game::BlockPosition position);
+   [[nodiscard]] Block &access_block_at(game::BlockPosition position);
 
    game::BlockRange m_range;
    std::vector<Block> m_blocks;

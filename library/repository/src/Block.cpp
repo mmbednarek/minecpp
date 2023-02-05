@@ -25,11 +25,13 @@ mb::emptyres load_repository_from_file(std::string_view filename)
       states.register_resource(bool_state.tag, game::State(bool_state.property.name));
    }
    for (auto &int_state : repo.int_properties) {
-      states.register_resource(int_state.tag, game::State(int_state.property.name, int_state.property.min_value,
-                                                          int_state.property.max_value));
+      states.register_resource(int_state.tag,
+                               game::State(int_state.property.name, int_state.property.min_value,
+                                           int_state.property.max_value));
    }
    for (auto &enum_state : repo.enum_properties) {
-      states.register_resource(enum_state.tag, game::State(enum_state.property.name, enum_state.property.values));
+      states.register_resource(enum_state.tag,
+                               game::State(enum_state.property.name, enum_state.property.values));
    }
 
    auto &blocks        = Block::the();
@@ -53,8 +55,9 @@ mb::emptyres load_repository_from_file(std::string_view filename)
 
    state_manager.allocate_info_storage();
 
-   for  (const auto &entry: repo.block_states)  {
-      state_manager.put_state_info(static_cast<game::BlockStateId>(entry.id), game::BlockStateInfo::from_nbt(entry.state));
+   for (const auto &entry : repo.block_states) {
+      state_manager.put_state_info(static_cast<game::BlockStateId>(entry.id),
+                                   game::BlockStateInfo::from_nbt(entry.state));
    }
 
    auto &items = Item::the();

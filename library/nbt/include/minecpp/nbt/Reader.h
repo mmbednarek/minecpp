@@ -58,10 +58,10 @@ class Reader : private minecpp::util::Reader
    void foreach_long(TCallback for_elem)
    {
       auto size = read_big_endian<int>();
-         for (int i = 0; i < size; i++) {
-            for_elem(read_big_endian<long long>());
-         }
+      for (int i = 0; i < size; i++) {
+         for_elem(read_big_endian<long long>());
       }
+   }
 
    bool find_bool_str(std::string name, bool def);
    void find_compound(std::string name);

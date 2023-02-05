@@ -18,7 +18,7 @@ class Generator
    std::uint64_t m_seed;
    IChunkSystem &m_chunk_system;
    population::Population m_population;
-//   game::ILightSystem &m_light_system;
+   //   game::ILightSystem &m_light_system;
 };
 
 }// namespace minecpp::world
