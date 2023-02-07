@@ -31,4 +31,11 @@ void EventManager::add_client(std::unique_ptr<IConnection> stream)
    ++m_top_connection_id;
 }
 
+void EventManager::send_to_all_excluding(const EventManager::Message &message, game::PlayerId player_id)
+{
+   for (auto &q : m_queues) {
+      q.second->send_to_all_excluding(message, player_id);
+   }
+}
+
 }// namespace minecpp::service::engine

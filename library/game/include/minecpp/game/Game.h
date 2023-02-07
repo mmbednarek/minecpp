@@ -4,6 +4,7 @@
 #include <minecpp/nbt/block/v1/BlockState.nbt.h>
 #include <minecpp/nbt/common/v1/Common.nbt.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/proto/entity/v1/Entity.pb.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/util/Vec.h>
 #include <optional>
@@ -978,6 +979,53 @@ struct BlockStateInfo
       return {static_cast<LightValue>(state.luminance), state.blocks_movement != 0,
               face_mask_from_nbt(state.solid_faces)};
    }
+};
+
+enum class EquipmentSlotValue
+{
+   MainHand,
+   OffHand,
+   Boots,
+   Leggings,
+   Chestplate,
+   Helmet
+};
+
+using EquipmentSlot_Base = mb::enum_wrapper<EquipmentSlotValue, "MAIN_HAND", "OFF_HAND", "BOOTS", "LEGGINGS",
+                                            "CHESTPLATE", "HELMET">;
+
+class EquipmentSlot final : public EquipmentSlot_Base
+{
+ public:
+   MB_ENUM_TRAITS(EquipmentSlot);
+
+   MB_ENUM_FIELD(MainHand)
+   MB_ENUM_FIELD(OffHand)
+   MB_ENUM_FIELD(Boots)
+   MB_ENUM_FIELD(Leggings)
+   MB_ENUM_FIELD(Chestplate)
+   MB_ENUM_FIELD(Helmet)
+
+   [[nodiscard]] proto::entity::v1::EquipmentSlot to_proto() const
+   {
+      using proto::entity::v1::EquipmentSlot;
+
+      switch (this->value()) {
+      case EquipmentSlotValue::MainHand: return EquipmentSlot::MAIN_HAND;
+      case EquipmentSlotValue::OffHand: return EquipmentSlot::OFF_HAND;
+      case EquipmentSlotValue::Boots: return EquipmentSlot::BOOTS;
+      case EquipmentSlotValue::Leggings: return EquipmentSlot::LEGGINGS;
+      case EquipmentSlotValue::Chestplate: return EquipmentSlot::CHESTPLATE;
+      case EquipmentSlotValue::Helmet: return EquipmentSlot::HELMET;
+      }
+
+      assert(false);
+   }
+};
+
+struct ItemSlot {
+   ItemId item_id;
+   int count;
 };
 
 }// namespace minecpp::game

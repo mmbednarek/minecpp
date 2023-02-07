@@ -31,6 +31,9 @@ concept ClientboundVisitor =
            t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), std::vector<game::PlayerId>());
            t.handle_chunk_data(clientbound_v1::ChunkData(), std::vector<game::PlayerId>());
            t.handle_set_center_chunk(clientbound_v1::SetCenterChunk(), std::vector<game::PlayerId>());
+           t.handle_player_position_rotation(clientbound_v1::PlayerPositionRotation(), std::vector<game::PlayerId>());
+           t.handle_set_spawn_position(clientbound_v1::SetSpawnPosition(), std::vector<game::PlayerId>());
+           t.handle_set_entity_equipment(clientbound_v1::SetEntityEquipment(), std::vector<game::PlayerId>());
         };
 
 std::vector<game::PlayerId> read_recipients(const clientbound_v1::Event &event);
@@ -71,6 +74,9 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_CLIENTBOUND(UpdateBlockLight, handle_update_block_light);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(ChunkData, handle_chunk_data);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetCenterChunk, handle_set_center_chunk);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(PlayerPositionRotation, handle_player_position_rotation);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(SetSpawnPosition, handle_set_spawn_position);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(SetEntityEquipment, handle_set_entity_equipment);
 }
 
 }// namespace minecpp::event

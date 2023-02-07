@@ -41,6 +41,11 @@ class Notifier
    virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, std::size_t count) = 0;
    virtual void update_block_light(ISectionSlice &slice, SectionRange range)                              = 0;
    virtual void update_chunk_position(PlayerId player_id, const game::ChunkPosition &chunk_position)      = 0;
+   virtual void synchronise_player_position_and_rotation(PlayerId player_id, minecpp::util::Vec3 position,
+                                                         float yaw, float pitch)                          = 0;
+   virtual void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle)   = 0;
+   virtual void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id,
+                                     game::EquipmentSlot slot, game::ItemSlot item)                       = 0;
 };
 
 }// namespace minecpp::game

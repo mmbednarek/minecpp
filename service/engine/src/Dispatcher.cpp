@@ -234,4 +234,34 @@ void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::Chu
    m_events.send_to(center_chunk, player_id);
 }
 
+void Dispatcher::synchronise_player_position_and_rotation(game::PlayerId player_id,
+                                                          minecpp::util::Vec3 position, float yaw,
+                                                          float pitch)
+{
+   clientbound_v1::PlayerPositionRotation player_pos_rot;
+   *player_pos_rot.mutable_position() = game::entity::write_entity_position(position);
+   player_pos_rot.mutable_rotation()->set_yaw(yaw);
+   player_pos_rot.mutable_rotation()->set_pitch(pitch);
+   m_events.send_to(player_pos_rot, player_id);
+}
+
+void Dispatcher::set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle)
+{
+   clientbound_v1::SetSpawnPosition set_spawn;
+   set_spawn.set_position(position.as_long());
+   set_spawn.set_angle(angle);
+   m_events.send_to(set_spawn, player_id);
+}
+
+void Dispatcher::set_player_equipment(game::PlayerId player_id, game::EntityId entity_id,
+                                      game::EquipmentSlot slot, game::ItemSlot item)
+{
+   clientbound_v1::SetEntityEquipment equipment;
+   equipment.set_entity_id(entity_id);
+   equipment.set_equipment_slot(slot.to_proto());
+   equipment.mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(item.item_id));
+   equipment.mutable_item()->set_count(static_cast<uint32_t>(item.count));
+   m_events.send_to_all(equipment);
+}
+
 }// namespace minecpp::service::engine

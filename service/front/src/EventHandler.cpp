@@ -266,15 +266,15 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                    .furnace_filtering_craftable = msg.player().recipe_book().furnace_filtering_craftable(),
            });
 
-      send(conn, PlayerPositionLook{
-                         .x     = msg.player().position().x(),
-                         .y     = msg.player().position().y(),
-                         .z     = msg.player().position().z(),
-                         .yaw   = msg.player().rotation().yaw(),
-                         .pitch = msg.player().rotation().pitch(),
-                         .flags = 0,
-                         .tp_id = 0,
-                 });
+      //      send(conn, PlayerPositionLook{
+      //                         .x     = msg.player().position().x(),
+      //                         .y     = msg.player().position().y(),
+      //                         .z     = msg.player().position().z(),
+      //                         .yaw   = msg.player().rotation().yaw(),
+      //                         .pitch = msg.player().rotation().pitch(),
+      //                         .flags = 0,
+      //                         .tp_id = 0,
+      //                 });
 
       if (m_stream == nullptr) {
          spdlog::error("Player stream is null!");
@@ -455,6 +455,63 @@ void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk 
 
       send(conn, chunk_position);
    }
+}
+
+void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerPositionRotation &msg,
+                                                   const std::vector<game::player::Id> &player_ids)
+{
+   network::message::PlayerPositionLook player_pos_look{
+           .x     = msg.position().x(),
+           .y     = msg.position().y(),
+           .z     = msg.position().z(),
+           .yaw   = msg.rotation().yaw(),
+           .pitch = msg.rotation().pitch(),
+           .flags = 0,
+           .tp_id = 0,
+   };
+
+   for (auto player_id : player_ids) {
+      auto conn = m_server.connection_by_id(player_id);
+      if (not conn) {
+         spdlog::error("connection {} is null", game::player::format_player_id(player_id));
+         return;
+      }
+
+      send(conn, player_pos_look);
+   }
+}
+
+void EventHandler::handle_set_spawn_position(const clientbound_v1::SetSpawnPosition &msg,
+                                             const std::vector<game::player::Id> &player_ids)
+{
+   network::message::SetDefaultSpawnPosition set_spawn{
+           .position = msg.position(),
+           .angle = msg.angle(),
+   };
+
+   for (auto player_id : player_ids) {
+      auto conn = m_server.connection_by_id(player_id);
+      if (not conn) {
+         spdlog::error("connection {} is null", game::player::format_player_id(player_id));
+         return;
+      }
+
+      send(conn, set_spawn);
+   }
+}
+
+void EventHandler::handle_set_entity_equipment(const clientbound_v1::SetEntityEquipment &msg,
+                                               const std::vector<game::player::Id> &player_ids)
+{
+   network::message::SetEquipment set_equipment{
+           .entity_id = msg.entity_id(),
+           .slot = static_cast<std::uint8_t>(msg.equipment_slot()),
+           .present = msg.has_item() && msg.item().count() > 0,
+           .item_id = msg.item().item_id().id(),
+           .count = static_cast<int>(msg.item().count()),
+   };
+
+   send_message(set_equipment, player_ids);
 }
 
 }// namespace minecpp::service::front

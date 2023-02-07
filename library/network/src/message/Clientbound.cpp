@@ -277,7 +277,7 @@ Writer EntityLook::serialize() const
 {
    // 1.19.3 OK
    Writer w;
-   w.write_byte(0x2a);
+   w.write_byte(0x29);
    w.write_varint(static_cast<mb::u32>(entity_id));
    w.write_byte(static_cast<mb::u8>(yaw * 256.0f / 360.0f));
    w.write_byte(static_cast<mb::u8>(pitch * 256.0f / 360.0f));
@@ -325,8 +325,7 @@ Writer RemovePlayer::serialize() const
 {
    // 1.19.3 ok
    Writer w;
-   w.write_byte(0x36);
-   w.write_byte(0x10);
+   w.write_byte(0x35);
    w.write_varint(1);
    w.write_uuid(id);
    return w;
@@ -428,6 +427,16 @@ Writer UpdateChunkPosition::serialize() const
    return w;
 }
 
+Writer SetDefaultSpawnPosition::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x4c);
+   w.write_long(position);
+   w.write_float(angle);
+   return w;
+}
+
 Writer SetSlot::serialize() const
 {
    // 1.19.3 OK
@@ -446,4 +455,21 @@ Writer SetSlot::serialize() const
    }
    return w;
 }
+
+Writer SetEquipment::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x51);
+   w.write_varint(entity_id);
+   w.write_byte(slot);
+   w.write_byte(present);
+   if (present) {
+      w.write_varint(item_id);
+      w.write_byte(static_cast<std::uint8_t>(count));
+      w.write_byte(0);
+   }
+   return w;
+}
+
 }// namespace minecpp::network::message

@@ -28,7 +28,8 @@ class LightSystem final : public game::ILightSystem
    explicit LightSystem(game::IBlockContainer &container);
 
    mb::emptyres add_light_source(game::BlockPosition position, game::LightValue value) override;
-   mb::emptyres recalculate_light(game::LightType light_type, game::BlockPosition position) override;
+   mb::emptyres recalculate_light(game::LightType light_type, game::BlockPosition position,
+                                  game::FaceMask solid_faces) override;
    mb::emptyres reset_light(game::LightType light_type, game::BlockPosition position) override;
 
 

@@ -89,7 +89,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 }  // namespace proto
 }  // namespace minecpp
 static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto[4];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto = nullptr;
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto[1];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto = nullptr;
 
 const uint32_t TableStruct_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -155,14 +155,16 @@ const char descriptor_table_protodef_minecpp_2fproto_2fentity_2fv1_2fEntity_2epr
   "yerId\022\021\n\tentity_id\030\002 \001(\r\0223\n\010position\030\003 \001"
   "(\0132!.minecpp.proto.entity.v1.Position\0223\n"
   "\010rotation\030\004 \001(\0132!.minecpp.proto.entity.v"
-  "1.Rotationb\006proto3"
+  "1.Rotation*a\n\rEquipmentSlot\022\r\n\tMAIN_HAND"
+  "\020\000\022\014\n\010OFF_HAND\020\001\022\t\n\005BOOTS\020\002\022\014\n\010LEGGINGS\020"
+  "\003\022\016\n\nCHESTPLATE\020\004\022\n\n\006HELMET\020\005b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto_deps[1] = {
   &::descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fId_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto = {
-    false, false, 418, descriptor_table_protodef_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto,
+    false, false, 517, descriptor_table_protodef_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto,
     "minecpp/proto/entity/v1/Entity.proto",
     &descriptor_table_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto_once, descriptor_table_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto_deps, 1, 4,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto::offsets,
@@ -179,6 +181,24 @@ namespace minecpp {
 namespace proto {
 namespace entity {
 namespace v1 {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EquipmentSlot_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto);
+  return file_level_enum_descriptors_minecpp_2fproto_2fentity_2fv1_2fEntity_2eproto[0];
+}
+bool EquipmentSlot_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 

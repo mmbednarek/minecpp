@@ -35,7 +35,8 @@ void ChangeBlock::run()
     of the target block is lower than the source block we should first reset the previous
     luminance and then apply new one (but that's just for the block light).
     */
-   if ((target_state.solid_faces() - source_state.solid_faces()) != game::FaceMask::None) {
+   auto reset_light = (target_state.solid_faces() - source_state.solid_faces()) != game::FaceMask::None;
+   if (reset_light) {
       m_light_system.reset_light(game::LightType::Block, m_position);
       m_light_system.reset_light(game::LightType::Sky, m_position);
    } else if (target_state.luminance() < source_state.luminance()) {
@@ -52,15 +53,16 @@ void ChangeBlock::run()
     TODO: Handle edge case.
     */
    auto new_opaque_faces = (source_state.solid_faces() - target_state.solid_faces()) != game::FaceMask::None;
+   auto recalculate_light = new_opaque_faces or (reset_light and target_state.solid_faces() != game::FaceMask::All);
 
    if (target_state.luminance() > source_state.luminance()) {
       m_light_system.add_light_source(m_position, target_state.luminance());
-   } else if (new_opaque_faces) {
-      m_light_system.recalculate_light(game::LightType::Block, m_position);
+   } else if (recalculate_light) {
+      m_light_system.recalculate_light(game::LightType::Block, m_position, target_state.solid_faces());
    }
 
-   if (new_opaque_faces) {
-      m_light_system.recalculate_light(game::LightType::Sky, m_position);
+   if (recalculate_light) {
+      m_light_system.recalculate_light(game::LightType::Sky, m_position, target_state.solid_faces());
    }
 
    m_chunk_system.save_chunk_at(m_position.chunk_position());

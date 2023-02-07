@@ -42,10 +42,15 @@ mb::emptyres LightSystem::add_light_source(game::BlockPosition position, game::L
    return mb::ok;
 }
 
-mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::BlockPosition position)
+mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::BlockPosition position,
+                                            game::FaceMask solid_faces)
 {
    game::LightValue max_light_value{0};
-   for (auto face : game::Face::Values) {
+   for (auto face_value : game::Face::Values) {
+      game::Face face{face_value};
+      if (solid_faces & face)
+         continue; // don't accept light where the face is solid
+
       auto neighbour_pos = position.neighbour_at(face);
 
       auto light_value = m_container.get_light(light_type, neighbour_pos);

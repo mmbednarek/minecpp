@@ -61,6 +61,13 @@ message EntityLook {
 }
 
 message PlayerPositionRotation {
+  entity.v1.Position position = 1;
+  entity.v1.Rotation rotation = 2;
+}
+
+message SetSpawnPosition {
+  uint64 position = 1;
+  float angle = 2;
 }
 
 message Chat {
@@ -153,4 +160,10 @@ message ChunkData {
 
 message SetCenterChunk {
   common.v1.ChunkPosition position = 1;
+}
+
+message SetEntityEquipment {
+  uint32 entity_id = 1;
+  entity.v1.EquipmentSlot equipment_slot = 2;
+  player.v1.Slot item = 3;
 }

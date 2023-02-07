@@ -54,6 +54,11 @@ class Dispatcher : public minecpp::game::Notifier
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
+   void synchronise_player_position_and_rotation(game::PlayerId player_id, minecpp::util::Vec3 position,
+                                                 float yaw, float pitch) override;
+   void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle) override;
+   void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id, game::EquipmentSlot slot,
+                             game::ItemSlot item) override;
 
  private:
    EventManager &m_events;

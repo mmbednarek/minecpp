@@ -40,6 +40,14 @@ void Connection::send_to_all(const google::protobuf::Message &message)
    m_stream.write(proto_event);
 }
 
+void Connection::send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id)
+{
+   Event proto_event;
+   *proto_event.mutable_excluding()->mutable_player_id()  = game::player::write_id_to_proto(player_id);
+   proto_event.mutable_payload()->PackFrom(message);
+   m_stream.write(proto_event);
+}
+
 ApiHandler::ApiHandler(EventHandler &event_handler, EventManager &event_manager, const std::string &address) :
     m_event_handler{event_handler},
     m_event_manager{event_manager},

@@ -6,12 +6,6 @@
 
 namespace minecpp::game::player {
 
-struct ItemSlot
-{
-   game::ItemId item_id{};
-   std::size_t count{};
-};
-
 class Inventory
 {
    std::array<ItemSlot, 9 * 4> m_slots{};
@@ -26,7 +20,7 @@ class Inventory
    Inventory &operator=(Inventory &&other) noexcept;
 
    [[nodiscard]] bool add_item(game::ItemId item, std::size_t count);
-   [[maybe_unused]] [[nodiscard]] std::size_t take_item(game::ItemId item, std::size_t count);
+   [[maybe_unused]] [[nodiscard]] std::size_t take_item(game::ItemId item, int count);
    [[nodiscard]] bool take_from_slot(game::SlotId id, std::size_t count);
    [[nodiscard]] bool take_from_active_slot(std::size_t count);
    [[nodiscard]] ItemSlot item_at(game::SlotId id) const;

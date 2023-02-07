@@ -19,6 +19,7 @@ class EventManager
 
    void send_to(const Message &message, game::PlayerId player_id);
    void send_to_all(const Message &message);
+   void send_to_all_excluding(const Message &message, game::PlayerId player_id);
 
    [[nodiscard]] IConnection *client(ConnectionId id);
    void add_client(std::unique_ptr<IConnection> stream);
