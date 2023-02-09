@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::block::v1 {
 
-class EnumState
-{
+class EnumProperty {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
@@ -38,19 +36,17 @@ class EnumState
  public:
    std::string name{};
    std::vector<std::string> values{};
-   EnumState() = default;
+   EnumProperty() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name) const;
-   static EnumState deserialize_no_header(minecpp::nbt::Reader &r);
-   static EnumState deserialize(std::istream &in);
+   static EnumProperty deserialize_no_header(minecpp::nbt::Reader &r);
+   static EnumProperty deserialize(std::istream &in);
 };
 
-class IntState
-{
+class IntProperty {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "MinValue") {
@@ -76,19 +72,17 @@ class IntState
    std::string name{};
    std::int32_t min_value{};
    std::int32_t max_value{};
-   IntState() = default;
+   IntProperty() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name) const;
-   static IntState deserialize_no_header(minecpp::nbt::Reader &r);
-   static IntState deserialize(std::istream &in);
+   static IntProperty deserialize_no_header(minecpp::nbt::Reader &r);
+   static IntProperty deserialize(std::istream &in);
 };
 
-class BoolState
-{
+class BoolProperty {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (name == "Name") {
@@ -101,30 +95,21 @@ class BoolState
 
  public:
    std::string name{};
-   BoolState() = default;
+   BoolProperty() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name) const;
-   static BoolState deserialize_no_header(minecpp::nbt::Reader &r);
-   static BoolState deserialize(std::istream &in);
+   static BoolProperty deserialize_no_header(minecpp::nbt::Reader &r);
+   static BoolProperty deserialize(std::istream &in);
 };
 
-class Block
-{
+class Block {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
-      if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "IsSolid") {
-            this->is_solid = std::forward<T>(value);
-            return;
-         }
-         return;
-      }
       if constexpr (std::is_same_v<TDc, std::vector<std::string>>) {
-         if (name == "StateTags") {
-            this->state_tags = std::forward<T>(value);
+         if (name == "PropertyTags") {
+            this->property_tags = std::forward<T>(value);
             return;
          }
          return;
@@ -132,8 +117,7 @@ class Block
    }
 
  public:
-   std::vector<std::string> state_tags{};
-   std::int32_t is_solid{};
+   std::vector<std::string> property_tags{};
    Block() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name) const;
@@ -141,5 +125,5 @@ class Block
    static Block deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::block::v1
+}
 #endif//MINECPP_NBT_BLOCK_V1_BLOCK_H

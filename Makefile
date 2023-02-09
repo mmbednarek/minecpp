@@ -28,7 +28,7 @@ proto:
 	./meta/generate-proto.sh
 
 nbt:
-	./meta/generate-proto.sh
+	./meta/generate-nbt.sh
 
 cmake-files:
 	./meta/cmake-generate.sh

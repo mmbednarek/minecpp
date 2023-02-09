@@ -67,11 +67,17 @@ class EventHandler
                           const std::vector<game::player::Id> &player_ids);
    void handle_set_center_chunk(const clientbound_v1::SetCenterChunk &msg,
                                 const std::vector<game::player::Id> &player_ids);
+   void handle_player_position_rotation(const clientbound_v1::PlayerPositionRotation &msg,
+                                        const std::vector<game::player::Id> &player_ids);
+   void handle_set_spawn_position(const clientbound_v1::SetSpawnPosition &msg,
+                                  const std::vector<game::player::Id> &player_ids);
+   void handle_set_entity_equipment(const clientbound_v1::SetEntityEquipment &msg,
+                                    const std::vector<game::player::Id> &player_ids);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)
    {
-      for (auto &conn : m_server) {
+      for (auto &[_, conn] : m_server) {
          if (conn.get() == nullptr)
             continue;
          send(conn, msg);
@@ -87,7 +93,7 @@ class EventHandler
       }
 
       for (const auto &id : player_ids) {
-         auto conn = m_server.connection_by_id(id);
+         auto conn = m_server.connection_by_player_id(id);
          send(conn, msg);
       }
    }
@@ -95,7 +101,7 @@ class EventHandler
    template<typename T>
    void send_message_excluding(const T &msg, game::PlayerId excluded)
    {
-      for (auto &conn : m_server) {
+      for (auto &[_, conn] : m_server) {
          if (conn.get() == nullptr)
             continue;
          if (conn->uuid() == excluded)

@@ -25,7 +25,6 @@ struct BlockStats
    bool blocks_movement  = true;
    bool no_drop          = false;
    bool ticks_randomly   = false;
-   bool solid            = false;
    bool variable_opacity = false;
 };
 

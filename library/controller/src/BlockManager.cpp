@@ -30,7 +30,7 @@ bool BlockManager::on_player_action(game::World &world, game::PlayerId player_id
                                                 crosshair_position);
 }
 
-BlockController &BlockManager::controller(game::BlockId block_id)
+game::IBlockController &BlockManager::controller(game::BlockId block_id)
 {
    auto controller = m_controllers.find(block_id);
    if (controller == m_controllers.end()) {

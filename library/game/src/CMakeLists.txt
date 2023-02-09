@@ -10,6 +10,7 @@ target_sources(minecpp_game PUBLIC
         ${MINECPP_GAME_INCLUDE_DIR}/EntityManager.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h
         ${MINECPP_GAME_INCLUDE_DIR}/Hand.h
+        ${MINECPP_GAME_INCLUDE_DIR}/IBlockController.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Mode.h
         ${MINECPP_GAME_INCLUDE_DIR}/Notifier.h
         ${MINECPP_GAME_INCLUDE_DIR}/Rules.h

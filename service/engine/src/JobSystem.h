@@ -69,6 +69,9 @@ class TicketBuilder
    template<typename TFunctor>
    void run(TFunctor &&callback);
 
+   template<typename TJob, typename... TArgs>
+   void run_job(TArgs &&...args);
+
  private:
    JobSystem &m_job_system;
    std::vector<std::unique_ptr<IJobCondition>> m_conditions;
@@ -130,4 +133,11 @@ TicketBuilder JobSystem::when(TArgs &&...args)
 {
    return TicketBuilder(*this, std::make_unique<TCondition>(std::forward<TArgs>(args)...));
 }
+
+template<typename TJob, typename... TArgs>
+void TicketBuilder::run_job(TArgs &&...args)
+{
+   m_job_system.issue_ticket({std::make_unique<TJob>(std::forward<TArgs>(args)...), std::move(m_conditions)});
+}
+
 }// namespace minecpp::service::engine

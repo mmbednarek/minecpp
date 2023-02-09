@@ -71,14 +71,12 @@ mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockSt
 
    section.set_block(position, state);
 
-   BlockState blockState{state};
-   auto block = repository::Block::the().get_by_id(blockState.block_id());
+   BlockState block_state{state};
+   auto block = repository::Block::the().get_by_id(block_state.block_id());
    MB_VERIFY(block)
 
-   if (block->stats().solid) {
-      section.set_light(game::LightType::Block, position, 0);
-      section.set_light(game::LightType::Sky, position, 0);
-
+   if (block_state.solid_faces() & game::FaceMask::Top ||
+       block_state.solid_faces() & game::FaceMask::Bottom || block_state.opacity() > 0) {
       if (height_at(game::HeightType::LightBlocking, position) < position.y) {
          set_height(game::HeightType::LightBlocking, position, position.y);
       }

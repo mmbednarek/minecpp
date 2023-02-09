@@ -1,8 +1,8 @@
 #pragma once
+#include <map>
 #include <mb/result.h>
 #include <minecpp/game/entity/Entity.h>
 #include <minecpp/game/EntityManager.hpp>
-#include <vector>
 
 namespace minecpp::service::engine {
 
@@ -10,16 +10,21 @@ using minecpp::game::entity::Entity;
 
 class EntityManager : public game::EntityManager
 {
-   std::vector<Entity> m_entities;
-
  public:
+   using Storage  = std::map<game::EntityId, Entity>;
+   using Iterator = Storage::iterator;
+
    game::EntityId spawn(Entity e) override;
    mb::result<Entity &> get_entity(game::EntityId id) override;
+   mb::emptyres remove_entity(game::EntityId id) override;
+   mb::size total_count();
 
-   [[nodiscard]] constexpr const std::vector<Entity> &entities() const
-   {
-      return m_entities;
-   }
+   [[nodiscard]] Iterator begin();
+   [[nodiscard]] Iterator end();
+
+ private:
+   Storage m_entities;
+   game::EntityId m_top_entity_id;
 };
 
 }// namespace minecpp::service::engine

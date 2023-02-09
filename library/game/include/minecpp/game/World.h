@@ -35,8 +35,11 @@ class ISectionSlice : public IBlockContainer
 class ILightSystem
 {
  public:
-   virtual ~ILightSystem() noexcept                                                  = default;
-   virtual mb::emptyres add_light_source(game::BlockPosition position, int strength) = 0;
+   virtual ~ILightSystem() noexcept                                                            = default;
+   virtual mb::emptyres add_light_source(game::BlockPosition position, game::LightValue value) = 0;
+   virtual mb::emptyres recalculate_light(game::LightType light_type, game::BlockPosition position,
+                                          game::FaceMask solid_faces)                          = 0;
+   virtual mb::emptyres reset_light(game::LightType light_type, game::BlockPosition position)  = 0;
 };
 
 class World : public IBlockContainer

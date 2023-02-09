@@ -8,29 +8,34 @@ namespace minecpp::event {
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
 template<typename T>
-concept ClientboundVisitor = requires(T t)
-{
-   t.handle_add_player(clientbound_v1::AddPlayer(), std::vector<game::PlayerId>());
-   t.handle_spawn_player(clientbound_v1::SpawnPlayer(), std::vector<game::PlayerId>());
-   t.handle_entity_move(clientbound_v1::EntityMove(), std::vector<game::PlayerId>());
-   t.handle_entity_look(clientbound_v1::EntityLook(), std::vector<game::PlayerId>());
-   t.handle_remove_player(clientbound_v1::RemovePlayer(), std::vector<game::PlayerId>());
-   t.handle_update_block(clientbound_v1::UpdateBlock(), std::vector<game::PlayerId>());
-   t.handle_chat(clientbound_v1::Chat(), std::vector<game::PlayerId>());
-   t.handle_animate_hand(clientbound_v1::AnimateHand(), std::vector<game::PlayerId>());
-   t.handle_acknowledge_block_change(clientbound_v1::AcknowledgeBlockChange(), std::vector<game::PlayerId>());
-   t.handle_load_terrain(clientbound_v1::LoadTerrain(), std::vector<game::PlayerId>());
-   t.handle_transfer_player(clientbound_v1::TransferPlayer(), std::vector<game::PlayerId>());
-   t.handle_unload_chunk(clientbound_v1::UnloadChunk(), std::vector<game::PlayerId>());
-   t.handle_player_list(clientbound_v1::PlayerList(), std::vector<game::PlayerId>());
-   t.handle_entity_list(clientbound_v1::EntityList(), std::vector<game::PlayerId>());
-   t.handle_accept_player(clientbound_v1::AcceptPlayer(), std::vector<game::PlayerId>());
-   t.handle_deny_player(clientbound_v1::DenyPlayer(), std::vector<game::PlayerId>());
-   t.handle_set_inventory_slot(clientbound_v1::SetInventorySlot(), std::vector<game::PlayerId>());
-   t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), std::vector<game::PlayerId>());
-   t.handle_chunk_data(clientbound_v1::ChunkData(), std::vector<game::PlayerId>());
-   t.handle_set_center_chunk(clientbound_v1::SetCenterChunk(), std::vector<game::PlayerId>());
-};
+concept ClientboundVisitor =
+        requires(T t) {
+           t.handle_add_player(clientbound_v1::AddPlayer(), std::vector<game::PlayerId>());
+           t.handle_spawn_player(clientbound_v1::SpawnPlayer(), std::vector<game::PlayerId>());
+           t.handle_entity_move(clientbound_v1::EntityMove(), std::vector<game::PlayerId>());
+           t.handle_entity_look(clientbound_v1::EntityLook(), std::vector<game::PlayerId>());
+           t.handle_remove_player(clientbound_v1::RemovePlayer(), std::vector<game::PlayerId>());
+           t.handle_update_block(clientbound_v1::UpdateBlock(), std::vector<game::PlayerId>());
+           t.handle_chat(clientbound_v1::Chat(), std::vector<game::PlayerId>());
+           t.handle_animate_hand(clientbound_v1::AnimateHand(), std::vector<game::PlayerId>());
+           t.handle_acknowledge_block_change(clientbound_v1::AcknowledgeBlockChange(),
+                                             std::vector<game::PlayerId>());
+           t.handle_load_terrain(clientbound_v1::LoadTerrain(), std::vector<game::PlayerId>());
+           t.handle_transfer_player(clientbound_v1::TransferPlayer(), std::vector<game::PlayerId>());
+           t.handle_unload_chunk(clientbound_v1::UnloadChunk(), std::vector<game::PlayerId>());
+           t.handle_player_list(clientbound_v1::PlayerList(), std::vector<game::PlayerId>());
+           t.handle_entity_list(clientbound_v1::EntityList(), std::vector<game::PlayerId>());
+           t.handle_accept_player(clientbound_v1::AcceptPlayer(), std::vector<game::PlayerId>());
+           t.handle_deny_player(clientbound_v1::DenyPlayer(), std::vector<game::PlayerId>());
+           t.handle_set_inventory_slot(clientbound_v1::SetInventorySlot(), std::vector<game::PlayerId>());
+           t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), std::vector<game::PlayerId>());
+           t.handle_chunk_data(clientbound_v1::ChunkData(), std::vector<game::PlayerId>());
+           t.handle_set_center_chunk(clientbound_v1::SetCenterChunk(), std::vector<game::PlayerId>());
+           t.handle_player_position_rotation(clientbound_v1::PlayerPositionRotation(),
+                                             std::vector<game::PlayerId>());
+           t.handle_set_spawn_position(clientbound_v1::SetSpawnPosition(), std::vector<game::PlayerId>());
+           t.handle_set_entity_equipment(clientbound_v1::SetEntityEquipment(), std::vector<game::PlayerId>());
+        };
 
 std::vector<game::PlayerId> read_recipients(const clientbound_v1::Event &event);
 
@@ -43,7 +48,7 @@ std::vector<game::PlayerId> read_recipients(const clientbound_v1::Event &event);
    }
 
 template<typename T>
-requires ClientboundVisitor<T>
+   requires ClientboundVisitor<T>
 
 void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
 {
@@ -70,6 +75,9 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_CLIENTBOUND(UpdateBlockLight, handle_update_block_light);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(ChunkData, handle_chunk_data);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetCenterChunk, handle_set_center_chunk);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(PlayerPositionRotation, handle_player_position_rotation);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(SetSpawnPosition, handle_set_spawn_position);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(SetEntityEquipment, handle_set_entity_equipment);
 }
 
 }// namespace minecpp::event

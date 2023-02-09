@@ -14,6 +14,7 @@ class Player;
 namespace minecpp::service::engine {
 
 class EventManager;
+class EntityManager;
 using boost::uuids::uuid;
 
 class Dispatcher : public minecpp::game::Notifier
@@ -43,7 +44,7 @@ class Dispatcher : public minecpp::game::Notifier
    void unload_chunk(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
 
    void player_list(game::PlayerId player_id, const std::vector<game::player::Status> &status_list);
-   void entity_list(game::PlayerId player_id, const std::vector<game::entity::Entity> &entity_list);
+   void entity_list(game::PlayerId player_id, EntityManager &entity_list);
 
    void accept_player(const game::player::Player &player_id, const game::entity::Entity &entity);
    void deny_player(const game::PlayerId &player_id, const std::string &reason);
@@ -54,6 +55,11 @@ class Dispatcher : public minecpp::game::Notifier
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
+   void synchronise_player_position_and_rotation(game::PlayerId player_id, minecpp::util::Vec3 position,
+                                                 float yaw, float pitch) override;
+   void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle) override;
+   void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id, game::EquipmentSlot slot,
+                             game::ItemSlot item) override;
 
  private:
    EventManager &m_events;

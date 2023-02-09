@@ -1,4 +1,5 @@
 #include "Dispatcher.h"
+#include "Entities.h"
 #include "EventManager.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/player/Player.h>
@@ -156,14 +157,14 @@ void Dispatcher::player_list(game::PlayerId player_id, const std::vector<game::p
    m_events.send_to(player_list, player_id);
 }
 
-void Dispatcher::entity_list(game::PlayerId player_id, const std::vector<game::entity::Entity> &entity_list)
+void Dispatcher::entity_list(game::PlayerId player_id, EntityManager &entity_manager)
 {
    clientbound_v1::EntityList list;
-   list.mutable_list()->Reserve(static_cast<int>(entity_list.size()));
-   for (const auto &entity : entity_list) {
+   list.mutable_list()->Reserve(static_cast<int>(entity_manager.total_count()));
+   for (const auto &[_, entity] : entity_manager) {
       *list.add_list() = entity.to_proto();
    }
-   spdlog::info("sending {} entities to the player", entity_list.size());
+   spdlog::info("sending {} entities to the player", entity_manager.total_count());
    m_events.send_to(list, player_id);
 }
 
@@ -232,6 +233,36 @@ void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::Chu
    clientbound_v1::SetCenterChunk center_chunk;
    *center_chunk.mutable_position() = chunk_position.to_proto();
    m_events.send_to(center_chunk, player_id);
+}
+
+void Dispatcher::synchronise_player_position_and_rotation(game::PlayerId player_id,
+                                                          minecpp::util::Vec3 position, float yaw,
+                                                          float pitch)
+{
+   clientbound_v1::PlayerPositionRotation player_pos_rot;
+   *player_pos_rot.mutable_position() = game::entity::write_entity_position(position);
+   player_pos_rot.mutable_rotation()->set_yaw(yaw);
+   player_pos_rot.mutable_rotation()->set_pitch(pitch);
+   m_events.send_to(player_pos_rot, player_id);
+}
+
+void Dispatcher::set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle)
+{
+   clientbound_v1::SetSpawnPosition set_spawn;
+   set_spawn.set_position(position.as_long());
+   set_spawn.set_angle(angle);
+   m_events.send_to(set_spawn, player_id);
+}
+
+void Dispatcher::set_player_equipment(game::PlayerId player_id, game::EntityId entity_id,
+                                      game::EquipmentSlot slot, game::ItemSlot item)
+{
+   clientbound_v1::SetEntityEquipment equipment;
+   equipment.set_entity_id(entity_id);
+   equipment.set_equipment_slot(slot.to_proto());
+   equipment.mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(item.item_id));
+   equipment.mutable_item()->set_count(static_cast<uint32_t>(item.count));
+   m_events.send_to_all(equipment);
 }
 
 }// namespace minecpp::service::engine

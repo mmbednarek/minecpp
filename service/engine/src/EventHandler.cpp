@@ -7,6 +7,7 @@
 #include <minecpp/command/core/Echo.h>
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
+#include <minecpp/command/core/ReloadChunk.h>
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
 #include <minecpp/controller/block/Stairs.h>
@@ -34,6 +35,7 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
 {
    m_command_manager.register_command<command::core::Echo>("echo");
    m_command_manager.register_command<command::core::Give>("give", m_player_manager);
+   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk", m_world);
 
    m_command_manager.register_command<command::core::Format>("black", format::Color::Black, false);
    m_command_manager.register_command<command::core::Format>("black-bold", format::Color::Black, true);
@@ -225,8 +227,12 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
 void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   spdlog::info("removing player {}", player.name());
+
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player.name()));
    m_dispatcher.remove_player(player_id, player.entity_id());
+
+   m_entity_manager.remove_entity(player.entity_id());
    m_player_manager.remove_player(player_id);
 }
 
@@ -282,7 +288,11 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
    send_inventory_data(*player);
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player_id, m_entity_manager.entities());
+   m_dispatcher.entity_list(player_id, m_entity_manager);
+
+   m_dispatcher.synchronise_player_position_and_rotation(player_id, entity->get_pos(), entity->get_yaw(),
+                                                         entity->get_pitch());
+   m_dispatcher.set_spawn_position(player_id, game::BlockPosition(), entity->get_pitch());
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
@@ -344,9 +354,9 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_slot(static_cast<game::SlotId>(event.slot_id()),
-                               game::player::ItemSlot{
+                               game::ItemSlot{
                                        .item_id = static_cast<game::ItemId>(event.item_id().id()),
-                                       .count   = static_cast<size_t>(event.item_count()),
+                                       .count   = event.item_count(),
                                });
 
    spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
@@ -361,14 +371,27 @@ void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem 
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));
+
+   auto item = player.inventory().active_item();
+   m_dispatcher.set_player_equipment(player_id, player.entity_id(), game::EquipmentSlot::MainHand, item);
 }
 
 void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto entity  = m_entity_manager.get_entity(player.entity_id());
+   if (entity.has_failed()) {
+      format::Builder builder;
+      builder.bold(format::Color::Red, "[entity-system] ").text("could not obtain entity");
+      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
+      return;
+   }
 
    m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
    m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
+
+   auto player_pos = game::BlockPosition::from_vec3(entity->get_pos());
+   m_command_context.set_variable("here", std::make_shared<command::BlockPositionObject>(player_pos));
 
    auto res = m_command_manager.evaluate(m_command_context, event.command());
    if (res.has_value()) {

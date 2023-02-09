@@ -1,22 +1,21 @@
 syntax = "nbt";
 package minecpp.nbt.block.v1;
 
-message EnumState {
+message EnumProperty {
     string name = 1 [label = "Name"];
     repeated string values = 2 [label = "Label"];
 }
 
-message IntState {
+message IntProperty {
     string name = 1 [label = "Name"];
     int32 min_value = 2 [label = "MinValue"];
     int32 max_value = 3 [label = "MaxValue"];
 }
 
-message BoolState {
+message BoolProperty {
     string name = 1 [label = "Name"];
 }
 
 message Block {
-    repeated string state_tags = 1 [label = "StateTags"];
-    int32 is_solid = 2 [label = "IsSolid"];
+    repeated string property_tags = 1 [label = "PropertyTags"];
 }

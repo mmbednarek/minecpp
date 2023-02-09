@@ -27,6 +27,7 @@ class Connection : public IConnection
 
    void send_to_player(const google::protobuf::Message &message, game::PlayerId player_id) override;
    void send_to_all(const google::protobuf::Message &message) override;
+   void send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id) override;
 
  private:
    EventHandler &m_event_handler;

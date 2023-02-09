@@ -1,4 +1,5 @@
 #include <minecpp/repository/State.h>
+#include <minecpp/world/BlockState.h>
 #include <minecpp/world/LightSystem.h>
 #include <queue>
 #include <spdlog/spdlog.h>
@@ -8,96 +9,9 @@ namespace minecpp::world {
 using game::Face;
 using game::LightType;
 
-LightSystem::LightSystem(game::World &world, game::Notifier &notifier) :
-    m_world(world),
-    m_notifier(notifier)
+LightSystem::LightSystem(game::IBlockContainer &container) :
+    m_container{container}
 {
-}
-
-mb::emptyres LightSystem::regenerate_from_position(game::BlockPosition position, int strength)
-{
-   auto range = find_sections_affected_by_light_source(position, strength);
-   auto area  = range.grow(1);
-   auto slice = m_world.get_slice(area);
-   if (slice.has_failed()) {
-      return std::move(slice.err());
-   }
-
-   regenerate_block_light(*slice->get(), range);
-   regenerate_sky_light(*slice->get(), range, position, strength);
-   m_notifier.update_block_light(*slice->get(), range);
-   m_world.apply_slice(*slice->get());
-   return mb::ok;
-}
-
-void LightSystem::regenerate_block_light(game::ISectionSlice &slice, game::SectionRange range)
-{
-   std::queue<game::LightSource> queue;
-
-   for (auto section_position : range) {
-      auto &section = slice[section_position];
-
-      for (const auto &light_source : section.light_sources()) {
-         queue.emplace(light_source);
-      }
-
-      section.reset_light(LightType::Block);
-   }
-
-   update_light_internal(game::LightType::Block, slice, range, queue);
-}
-
-void LightSystem::regenerate_sky_light(game::ISectionSlice &slice, game::SectionRange range,
-                                       game::BlockPosition position, int strength)
-{
-   std::queue<game::LightSource> queue;
-   queue.emplace(position, strength);
-   update_light_internal(game::LightType::Sky, slice, range, queue);
-}
-
-void LightSystem::update_light_internal(game::LightType type, game::IBlockContainer &container,
-                                        const game::SectionRange &range, std::queue<game::LightSource> &queue)
-{
-   while (not queue.empty()) {
-      auto light = queue.front();
-      queue.pop();
-
-      if (not range.is_in_range(light.position.chunk_section_position()))
-         continue;
-
-      auto source_block = container.get_light(type, light.position);
-      if (source_block.has_failed())
-         continue;
-
-      if (*source_block >= light.strength)
-         continue;
-
-      container.set_light(type, light.position, static_cast<mb::u8>(light.strength));
-
-      auto passed_value = light.strength - 1;
-
-      for (auto face : Face::Values) {
-         auto position = light.position.neighbour_at(face);
-         if (not range.is_in_range(position.chunk_section_position()))
-            continue;
-
-         auto block_state_id = container.get_block(position);
-         if (block_state_id.has_failed())
-            continue;
-
-         if (repository::StateManager::the().is_solid((*block_state_id)))
-            continue;
-
-         auto neighbour_value = container.get_light(type, position);
-         if (neighbour_value.has_failed())
-            continue;
-
-         if (*neighbour_value >= passed_value)
-            continue;
-
-         queue.emplace(position, passed_value);
-      }
-   }
 }
 
 game::SectionRange
@@ -117,81 +31,177 @@ LightSystem::find_sections_affected_by_light_source(game::BlockPosition light_so
    return {min_pos.chunk_section_position(), max_pos.chunk_section_position()};
 }
 
-mb::emptyres LightSystem::add_light_source(game::BlockPosition position, int strength)
+mb::emptyres LightSystem::add_light_source(game::BlockPosition position, game::LightValue value)
 {
-   auto range = find_sections_affected_by_light_source(position, strength);
-   auto area  = range.grow(1);
-   auto slice = m_world.get_slice(area);
-   if (slice.has_failed()) {
-      return std::move(slice.err());
+   std::queue<LightSpreadNode> queue;
+   queue.push(LightSpreadNode{position, value, LightSpreadNodeType::Source});
+
+   spdlog::debug("light-system: calculating light initial value is {}", value);
+   this->flood_light(game::LightType::Block, queue);
+
+   return mb::ok;
+}
+
+mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::BlockPosition position,
+                                            game::FaceMask solid_faces)
+{
+   game::LightValue max_light_value{0};
+   for (auto face_value : game::Face::Values) {
+      game::Face face{face_value};
+      if (solid_faces & face)
+         continue;// don't accept light where the face is solid
+
+      auto neighbour_pos = position.neighbour_at(face);
+
+      auto light_value = m_container.get_light(light_type, neighbour_pos);
+      if (light_value.has_failed())
+         continue;
+
+      if (*light_value > max_light_value)
+         max_light_value = *light_value;
    }
 
-   spdlog::info("adding a light source");
+   if (max_light_value == 0)
+      return mb::ok;
 
-   slice->get()
-           ->
-           operator[](position.chunk_section_position())
-           .light_sources()
-           .emplace_back(position, strength);
+   std::queue<LightSpreadNode> queue;
+   queue.push(LightSpreadNode{position, static_cast<game::LightValue>(max_light_value - 1),
+                              LightSpreadNodeType::Lighten});
 
-   regenerate_block_light(*slice->get(), range);
-   m_notifier.update_block_light(*slice->get(), range);
-   auto res = m_world.apply_slice(*slice->get());
-   if (res.has_failed()) {
-      spdlog::error("applying slice failed: {}", res.err()->msg());
+   spdlog::debug("light-system: calculating light initial value is {}", max_light_value - 1);
+   this->flood_light(light_type, queue);
+
+   return mb::ok;
+}
+
+mb::emptyres LightSystem::reset_light(game::LightType light_type, game::BlockPosition position)
+{
+   auto light_value = m_container.get_light(light_type, position);
+   if (light_value.has_failed())
+      return std::move(light_value.err());
+
+   if (*light_value == 0)
+      return mb::ok;
+
+   spdlog::debug("light-system: resetting light from value {}", *light_value);
+
+   std::queue<LightSpreadNode> queue;
+   queue.push(LightSpreadNode{position, *light_value, LightSpreadNodeType::Darken});
+   this->flood_light(light_type, queue);
+
+   return mb::ok;
+}
+
+mb::emptyres LightSystem::flood_light(game::LightType light_type, std::queue<LightSpreadNode> &queue)
+{
+   /*
+    There are 2 modes of flooding the light:
+
+      1. Lighten - A light source is forwarded by decreasing
+                   the light value by one through opaque blocks.
+
+      2. Darken  - When a light is obstructed by a non-opaque block,
+                   the areas need to darken. We pass the original light
+                   value just like in lighten, if the actual light value matches
+                   the passed one we can darken it. If it doesn't, we re-propagate
+                   that light value that doesn't match, because it comes from
+                   a different light source.
+    */
+
+   while (not queue.empty()) {
+      auto node = queue.front();
+      queue.pop();
+
+      auto source_value = m_container.get_light(light_type, node.position);
+      if (source_value.has_failed())
+         continue;
+
+      if (node.type == LightSpreadNodeType::Darken) {
+         if (node.value != *source_value)
+            continue;
+         m_container.set_light(light_type, node.position, 0);
+      } else if (node.value > *source_value) {
+         m_container.set_light(light_type, node.position, node.value);
+      } else {
+         continue;
+      }
+
+      spdlog::debug("light-system: queue-size = {}, strength = {}", queue.size(), node.value);
+      this->propagate_value(light_type, node.position, node.value, node.type, queue);
    }
 
    return mb::ok;
 }
 
-mb::emptyres LightSystem::recalculate_light_for_chunk(game::LightType type, Chunk &chunk)
+game::LightValue LightSystem::get_propagated_value(game::BlockPosition source, game::Face direction,
+                                                   game::LightValue source_value)
 {
-   auto &stateManager = repository::StateManager::the();
-
-   std::queue<game::LightSource> sources;
-   for (int y{chunk.minimum_y()}; y < chunk.maximum_y(); ++y) {
-      for (int x{0}; x < game::g_chunk_width; ++x) {
-         for (int z{0}; z < game::g_chunk_depth; ++z) {
-            game::BlockPosition pos{x, y, z};
-            if (stateManager.is_solid(chunk.get_block(pos).unwrap(0))) {
-               continue;
-            }
-
-            auto target = chunk.get_light(type, pos);
-            if (target.has_failed())
-               continue;
-
-            auto max_value = 0;
-
-            for (auto face : game::Face::Values) {
-               auto neighbour = pos.neighbour_at(face);
-
-               if (stateManager.is_solid(chunk.get_block(neighbour).unwrap(0)))
-                  continue;
-
-               auto neighbour_value = chunk.get_light(type, neighbour);
-               if (neighbour_value.has_failed())
-                  continue;
-
-               if (max_value < *neighbour_value)
-                  max_value = *neighbour_value;
-            }
-
-            if ((max_value - 1) > *target) {
-               sources.emplace(chunk.pos().block_at(pos.x, pos.y, pos.z), max_value - 1);
-            }
-         }
-      }
+   auto destination        = source.neighbour_at(direction);
+   auto dst_block_state_id = m_container.get_block(destination);
+   if (dst_block_state_id.has_failed()) {
+      spdlog::debug("light-system: cannot get destination block");
+      return 0;
    }
 
-   update_light_internal(type, chunk,
-                         {
-                                 {chunk.pos(),  0},
-                                 {chunk.pos(), 15}
-   },
-                         sources);
+   BlockState dst_block_state(*dst_block_state_id);
+   if (dst_block_state.solid_faces() & direction.opposite_face()) {
+      spdlog::debug("light-system: the face is solid");
+      return 0;
+   }
 
-   return mb::ok;
+   return static_cast<game::LightValue>(std::max(0, source_value - 1));
+}
+
+void LightSystem::propagate_value(game::LightType light_type, game::BlockPosition source,
+                                  game::LightValue source_value, LightSpreadNodeType type,
+                                  std::queue<LightSpreadNode> &queue)
+{
+   auto source_block_state_id = m_container.get_block(source);
+   if (source_block_state_id.has_failed())
+      return;
+
+   // source light should be spread through solid faces.
+   auto solid_faces = game::FaceMask::None;
+   if (type != LightSpreadNodeType::Source) {
+      BlockState source_block_state(*source_block_state_id);
+      solid_faces = source_block_state.solid_faces();
+   }
+
+   for (auto face_value : game::Face::Values) {
+      game::Face face{face_value};
+
+      // Skip solid faces
+      if (solid_faces & face)
+         continue;
+
+      auto neighbour      = source.neighbour_at(face);
+      auto original_value = m_container.get_light(light_type, neighbour);
+      if (original_value.has_failed())
+         continue;
+
+      auto target_value = this->get_propagated_value(source, face, source_value);
+      if (target_value < 1)
+         continue;
+
+      //      spdlog::debug("light-system: spreading value {} to {}: original={}, darken={}", target_value,
+      //                    face.to_string(), *original_value, type);
+
+      if (type == LightSpreadNodeType::Darken) {
+         if (target_value != *original_value) {
+            // re-propagate the original value
+            queue.push(LightSpreadNode{neighbour, *original_value, LightSpreadNodeType::Lighten});
+            continue;
+         }
+
+         queue.push(LightSpreadNode{neighbour, target_value, LightSpreadNodeType::Darken});
+         continue;
+      }
+
+      // Lighten
+      if (target_value > *original_value) {
+         queue.push(LightSpreadNode{neighbour, target_value, LightSpreadNodeType::Lighten});
+      }
+   }
 }
 
 }// namespace minecpp::world

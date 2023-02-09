@@ -64,7 +64,7 @@ bool Inventory::add_item(game::ItemId item, std::size_t count)
    return true;
 }
 
-[[maybe_unused]] std::size_t Inventory::take_item(game::ItemId item, std::size_t count)
+[[maybe_unused]] std::size_t Inventory::take_item(game::ItemId item, int count)
 {
    auto it           = m_slots.begin();
    auto left_to_take = count;
@@ -99,7 +99,7 @@ ItemSlot Inventory::item_at(game::SlotId id) const
 void Inventory::set_slot(game::SlotId id, const ItemSlot &slot)
 {
    m_slots[slot_id_to_index(id)] = slot;
-   m_notifier.set_inventory_slot(m_player_id, slot.item_id, id, slot.count);
+   m_notifier.set_inventory_slot(m_player_id, slot.item_id, id, static_cast<std::size_t>(slot.count));
 }
 
 void Inventory::set_hot_bar_slot(std::size_t slot)

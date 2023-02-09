@@ -2,6 +2,7 @@
 
 target_sources(minecpp_world_test PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/LightTest.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SectionTest.cpp
 )
 

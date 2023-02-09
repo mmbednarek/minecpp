@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::common::v1 {
 
-class ChunkPosition
-{
+class ChunkPosition {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "x") {
@@ -42,12 +40,10 @@ class ChunkPosition
    static ChunkPosition deserialize(std::istream &in);
 };
 
-class BlockPosition
-{
+class BlockPosition {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value)
-   {
+   void __xx_put(const std::string &name, T &&value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (name == "x") {
@@ -77,5 +73,53 @@ class BlockPosition
    static BlockPosition deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::common::v1
+class FaceMask {
+
+   template<typename T>
+   void __xx_put(const std::string &name, T &&value) {
+      using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int8_t>) {
+         if (name == "down") {
+            this->down = std::forward<T>(value);
+            return;
+         }
+         if (name == "east") {
+            this->east = std::forward<T>(value);
+            return;
+         }
+         if (name == "north") {
+            this->north = std::forward<T>(value);
+            return;
+         }
+         if (name == "south") {
+            this->south = std::forward<T>(value);
+            return;
+         }
+         if (name == "up") {
+            this->up = std::forward<T>(value);
+            return;
+         }
+         if (name == "west") {
+            this->west = std::forward<T>(value);
+            return;
+         }
+         return;
+      }
+   }
+
+ public:
+   std::int8_t down{};
+   std::int8_t east{};
+   std::int8_t north{};
+   std::int8_t south{};
+   std::int8_t up{};
+   std::int8_t west{};
+   FaceMask() = default;
+   void serialize_no_header(minecpp::nbt::Writer &w) const;
+   void serialize(std::ostream &out, std::string_view name) const;
+   static FaceMask deserialize_no_header(minecpp::nbt::Reader &r);
+   static FaceMask deserialize(std::istream &in);
+};
+
+}
 #endif//MINECPP_NBT_COMMON_V1_COMMON_H

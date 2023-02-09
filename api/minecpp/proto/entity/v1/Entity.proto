@@ -26,3 +26,12 @@ message Entity {
   Position position = 3;
   Rotation rotation = 4;
 }
+
+enum EquipmentSlot {
+  MAIN_HAND = 0;
+  OFF_HAND = 1;
+  BOOTS = 2;
+  LEGGINGS = 3;
+  CHESTPLATE = 4;
+  HELMET = 5;
+}

@@ -1,11 +1,11 @@
 #ifndef MINECPP_DEFAULTCONTROLLER_H
 #define MINECPP_DEFAULTCONTROLLER_H
-#include <minecpp/controller/BlockController.hpp>
+#include <minecpp/game/IBlockController.hpp>
 #include <optional>
 
 namespace minecpp::controller::block {
 
-class Default : public BlockController
+class Default : public game::IBlockController
 {
  public:
    bool on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,

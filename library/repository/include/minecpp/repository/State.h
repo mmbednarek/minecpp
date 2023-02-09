@@ -21,38 +21,24 @@ void parse_state(TInIter inBeg, TInIter inEnd, TOutIter outBeg, int encoded)
 
 class StateManager
 {
-   static StateManager g_instance;
-
    std::map<game::BlockStateId, game::BlockId> m_state_to_block_id;
    std::map<game::BlockId, game::BlockStateId> m_block_id_to_state;
-   std::vector<bool> m_is_solid;
+   std::vector<game::BlockStateInfo> m_info;
    game::BlockStateId m_top_state;
 
  public:
    std::tuple<game::BlockId, game::StateOffset> parse_block_id(game::BlockStateId block_id);
 
-   [[nodiscard]] static constexpr StateManager &the()
-   {
-      return g_instance;
-   }
+   [[nodiscard]] static StateManager &the();
 
    GETTER(top_state)
 
-   void add_state(int block_id, int state_count)
-   {
-      m_state_to_block_id[m_top_state] = block_id;
-      m_block_id_to_state[block_id]    = m_top_state;
-      m_top_state += static_cast<game::BlockStateId>(state_count);
-   }
+   void add_state(int block_id, int state_count);
+   void allocate_info_storage();
+   void put_state_info(game::BlockStateId id, game::BlockStateInfo info);
 
-   void cache_block_stats();
-
-   [[nodiscard]] game::BlockStateId block_base_state(game::BlockId block_id) const
-   {
-      return m_block_id_to_state.at(block_id);
-   }
-
-   [[nodiscard]] bool is_solid(game::BlockStateId state_id) const;
+   [[nodiscard]] game::BlockStateId block_base_state(game::BlockId block_id) const;
+   [[nodiscard]] const game::BlockStateInfo &get_info(game::BlockStateId state_id) const;
 };
 
 }// namespace minecpp::repository

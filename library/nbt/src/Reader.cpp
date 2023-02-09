@@ -30,6 +30,7 @@ void Reader::leave_compound()
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"
+
 void Reader::skip_payload(TagId tagid)
 {
    int size;
@@ -79,6 +80,7 @@ void Reader::skip_payload(TagId tagid)
    default: throw std::runtime_error("invalid tag");
    }
 }
+
 #pragma clang diagnostic pop
 
 void Reader::iter_compound(std::string name, const IterCallback &callback)

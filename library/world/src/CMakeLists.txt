@@ -9,6 +9,7 @@ target_sources(minecpp_world PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/LightSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Section.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/SectionSlice.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/TemporaryWorld.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Util.cpp
 
         # Header files
@@ -19,10 +20,12 @@ target_sources(minecpp_world PUBLIC
         ${MINECPP_WORLD_INCLUDE_DIR}/LightSystem.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Section.h
         ${MINECPP_WORLD_INCLUDE_DIR}/SectionSlice.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/TemporaryWorld.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Util.h
 )
 
 # Subdirectories
 add_subdirectory("population")
 add_subdirectory("terrain")
+add_subdirectory("testing")
 

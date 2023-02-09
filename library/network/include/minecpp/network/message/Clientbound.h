@@ -333,6 +333,26 @@ struct UpdateChunkPosition
    [[nodiscard]] Writer serialize() const;
 };
 
+// 0x4c
+struct SetDefaultSpawnPosition
+{
+   std::uint64_t position{};
+   float angle;
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct SetEquipment
+{
+   std::uint32_t entity_id{};
+   std::uint8_t slot{};
+   bool present{};
+   std::uint32_t item_id{};
+   int count{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
 struct Raw
 {
    size_t size;

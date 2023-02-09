@@ -12,7 +12,7 @@ TEST(Section, ProtoTest)
       ids[i] = i % 22;
    }
 
-   Section section{};
+   Section section{1};
    section.fill_light(minecpp::game::LightType::Block);
    section.fill_light(minecpp::game::LightType::Sky);
    section.data() = {ids.begin(), ids.end()};
