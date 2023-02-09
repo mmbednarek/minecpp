@@ -49,7 +49,7 @@ mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::Bl
    for (auto face_value : game::Face::Values) {
       game::Face face{face_value};
       if (solid_faces & face)
-         continue; // don't accept light where the face is solid
+         continue;// don't accept light where the face is solid
 
       auto neighbour_pos = position.neighbour_at(face);
 

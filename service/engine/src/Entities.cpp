@@ -22,7 +22,7 @@ mb::result<Entity &> EntityManager::get_entity(game::EntityId id)
 mb::emptyres EntityManager::remove_entity(game::EntityId id)
 {
    auto it = m_entities.find(id);
-   if (it == m_entities.end())  {
+   if (it == m_entities.end()) {
       return mb::error("invalid entity id");
    }
    m_entities.erase(it);

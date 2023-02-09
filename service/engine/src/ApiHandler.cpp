@@ -43,7 +43,7 @@ void Connection::send_to_all(const google::protobuf::Message &message)
 void Connection::send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id)
 {
    Event proto_event;
-   *proto_event.mutable_excluding()->mutable_player_id()  = game::player::write_id_to_proto(player_id);
+   *proto_event.mutable_excluding()->mutable_player_id() = game::player::write_id_to_proto(player_id);
    proto_event.mutable_payload()->PackFrom(message);
    m_stream.write(proto_event);
 }

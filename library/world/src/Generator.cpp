@@ -68,7 +68,7 @@ void Generator::generate_light(game::ChunkPosition position)
       }
    }
 
-//   return;
+   //   return;
 
    for (int x = 0; x < 16; ++x) {
       for (int z = 0; z < 16; ++z) {
@@ -83,7 +83,7 @@ void Generator::generate_light(game::ChunkPosition position)
          for (auto dir_value : game::Direction::Values) {
             game::Direction dir{dir_value};
             auto nei_position = block_pos.neighbour_at(dir.to_face());
-            auto height = m_temporary_world.height_at(game::HeightType::LightBlocking, nei_position);
+            auto height       = m_temporary_world.height_at(game::HeightType::LightBlocking, nei_position);
             if (height.has_failed())
                continue;
 

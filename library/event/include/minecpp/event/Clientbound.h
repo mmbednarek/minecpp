@@ -31,7 +31,8 @@ concept ClientboundVisitor =
            t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), std::vector<game::PlayerId>());
            t.handle_chunk_data(clientbound_v1::ChunkData(), std::vector<game::PlayerId>());
            t.handle_set_center_chunk(clientbound_v1::SetCenterChunk(), std::vector<game::PlayerId>());
-           t.handle_player_position_rotation(clientbound_v1::PlayerPositionRotation(), std::vector<game::PlayerId>());
+           t.handle_player_position_rotation(clientbound_v1::PlayerPositionRotation(),
+                                             std::vector<game::PlayerId>());
            t.handle_set_spawn_position(clientbound_v1::SetSpawnPosition(), std::vector<game::PlayerId>());
            t.handle_set_entity_equipment(clientbound_v1::SetEntityEquipment(), std::vector<game::PlayerId>());
         };

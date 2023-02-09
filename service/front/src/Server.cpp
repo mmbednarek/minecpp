@@ -86,19 +86,19 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
 void Server::drop_connection(ConnectionId id)
 {
    auto connection_it = m_connections.find(id);
-   if (connection_it == m_connections.end())  {
+   if (connection_it == m_connections.end()) {
       spdlog::error("no such connection id: {}", id);
       return;
    }
 
    this->get_handler(connection_it->second->state()).handle_disconnect(*connection_it->second);
 
-   auto uuid = connection_it->second->uuid();
+   auto uuid             = connection_it->second->uuid();
    auto player_id_map_it = m_player_id_to_connection_id_map.find(uuid);
-   if (player_id_map_it != m_player_id_to_connection_id_map.end())  {
+   if (player_id_map_it != m_player_id_to_connection_id_map.end()) {
       m_player_id_to_connection_id_map.erase(player_id_map_it);
    } else {
-     spdlog::error("no such player id: {}", boost::uuids::to_string(uuid));
+      spdlog::error("no such player id: {}", boost::uuids::to_string(uuid));
    }
 
    m_connections.erase(connection_it);

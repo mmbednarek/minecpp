@@ -53,7 +53,8 @@ void ChangeBlock::run()
     TODO: Handle edge case.
     */
    auto new_opaque_faces = (source_state.solid_faces() - target_state.solid_faces()) != game::FaceMask::None;
-   auto recalculate_light = new_opaque_faces or (reset_light and target_state.solid_faces() != game::FaceMask::All);
+   auto recalculate_light =
+           new_opaque_faces or (reset_light and target_state.solid_faces() != game::FaceMask::All);
 
    if (target_state.luminance() > source_state.luminance()) {
       m_light_system.add_light_source(m_position, target_state.luminance());

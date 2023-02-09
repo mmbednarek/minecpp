@@ -75,7 +75,8 @@ mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockSt
    auto block = repository::Block::the().get_by_id(block_state.block_id());
    MB_VERIFY(block)
 
-   if (block_state.solid_faces() & game::FaceMask::Top || block_state.solid_faces() & game::FaceMask::Bottom || block_state.opacity() > 0) {
+   if (block_state.solid_faces() & game::FaceMask::Top ||
+       block_state.solid_faces() & game::FaceMask::Bottom || block_state.opacity() > 0) {
       if (height_at(game::HeightType::LightBlocking, position) < position.y) {
          set_height(game::HeightType::LightBlocking, position, position.y);
       }

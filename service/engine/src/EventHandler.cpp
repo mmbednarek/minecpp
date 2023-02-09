@@ -290,7 +290,8 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
    m_dispatcher.entity_list(player_id, m_entity_manager);
 
-   m_dispatcher.synchronise_player_position_and_rotation(player_id, entity->get_pos(), entity->get_yaw(), entity->get_pitch());
+   m_dispatcher.synchronise_player_position_and_rotation(player_id, entity->get_pos(), entity->get_yaw(),
+                                                         entity->get_pitch());
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(), entity->get_pitch());
 }
 

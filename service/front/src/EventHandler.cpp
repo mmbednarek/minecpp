@@ -487,7 +487,7 @@ void EventHandler::handle_set_spawn_position(const clientbound_v1::SetSpawnPosit
 {
    network::message::SetDefaultSpawnPosition set_spawn{
            .position = msg.position(),
-           .angle = msg.angle(),
+           .angle    = msg.angle(),
    };
 
    for (auto player_id : player_ids) {
@@ -506,10 +506,10 @@ void EventHandler::handle_set_entity_equipment(const clientbound_v1::SetEntityEq
 {
    network::message::SetEquipment set_equipment{
            .entity_id = msg.entity_id(),
-           .slot = static_cast<std::uint8_t>(msg.equipment_slot()),
-           .present = msg.has_item() && msg.item().count() > 0,
-           .item_id = msg.item().item_id().id(),
-           .count = static_cast<int>(msg.item().count()),
+           .slot      = static_cast<std::uint8_t>(msg.equipment_slot()),
+           .present   = msg.has_item() && msg.item().count() > 0,
+           .item_id   = msg.item().item_id().id(),
+           .count     = static_cast<int>(msg.item().count()),
    };
 
    send_message(set_equipment, player_ids);
