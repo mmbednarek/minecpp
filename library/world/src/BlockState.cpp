@@ -66,6 +66,11 @@ game::LightValue BlockState::luminance() const
    return repository::StateManager::the().get_info(this->block_state_id()).luminance;
 }
 
+game::LightValue BlockState::opacity() const
+{
+   return repository::StateManager::the().get_info(this->block_state_id()).opacity;
+}
+
 template<>
 [[nodiscard]] std::optional<bool> BlockState::get(std::string_view name) const
 {

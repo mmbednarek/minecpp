@@ -1,4 +1,6 @@
 #pragma once
+#include "LightSystem.h"
+#include "TemporaryWorld.h"
 #include <minecpp/world/IChunkSystem.h>
 #include <minecpp/world/population/Population.h>
 
@@ -17,6 +19,8 @@ class Generator
  private:
    std::uint64_t m_seed;
    IChunkSystem &m_chunk_system;
+   TemporaryWorld m_temporary_world;
+   LightSystem m_light_system;
    population::Population m_population;
    //   game::ILightSystem &m_light_system;
 };

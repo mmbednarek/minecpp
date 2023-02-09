@@ -30,6 +30,10 @@ class BlockState {
             this->luminance = std::forward<T>(value);
             return;
          }
+         if (name == "Opacity") {
+            this->opacity = std::forward<T>(value);
+            return;
+         }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
@@ -44,6 +48,7 @@ class BlockState {
  public:
    std::int8_t blocks_movement{};
    std::int32_t luminance{};
+   std::int32_t opacity{};
    common::v1::FaceMask solid_faces{};
    BlockState() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;

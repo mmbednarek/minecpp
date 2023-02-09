@@ -971,13 +971,14 @@ struct BlockRange
 struct BlockStateInfo
 {
    LightValue luminance{};
+   LightValue opacity{};
    bool blocks_movement{};
    FaceMask solid_faces{};
 
    static BlockStateInfo from_nbt(const nbt::block::v1::BlockState &state)
    {
-      return {static_cast<LightValue>(state.luminance), state.blocks_movement != 0,
-              face_mask_from_nbt(state.solid_faces)};
+      return {static_cast<LightValue>(state.luminance), static_cast<LightValue>(state.opacity),
+              state.blocks_movement != 0, face_mask_from_nbt(state.solid_faces)};
    }
 };
 
@@ -1023,7 +1024,8 @@ class EquipmentSlot final : public EquipmentSlot_Base
    }
 };
 
-struct ItemSlot {
+struct ItemSlot
+{
    ItemId item_id;
    int count;
 };

@@ -7,6 +7,8 @@ void BlockState::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_byte_content(blocks_movement);
    w.write_header(minecpp::nbt::TagId::Int, "Luminance");
    w.write_int_content(luminance);
+   w.write_header(minecpp::nbt::TagId::Int, "Opacity");
+   w.write_int_content(opacity);
    w.write_header(minecpp::nbt::TagId::Compound, "SolidFaces");
    solid_faces.serialize_no_header(w);
    w.end_compound();

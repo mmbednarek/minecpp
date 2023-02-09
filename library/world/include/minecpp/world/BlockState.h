@@ -70,6 +70,7 @@ class BlockState
    [[nodiscard]] bool does_block_movement() const;
    [[nodiscard]] game::FaceMask solid_faces() const;
    [[nodiscard]] game::LightValue luminance() const;
+   [[nodiscard]] game::LightValue opacity() const;
 
    [[nodiscard]] game::BlockStateId block_state_id() const;
 
