@@ -227,8 +227,12 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
 void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   spdlog::info("removing player {}", player.name());
+
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player.name()));
    m_dispatcher.remove_player(player_id, player.entity_id());
+
+   m_entity_manager.remove_entity(player.entity_id());
    m_player_manager.remove_player(player_id);
 }
 
@@ -284,7 +288,7 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
    send_inventory_data(*player);
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player_id, m_entity_manager.entities());
+   m_dispatcher.entity_list(player_id, m_entity_manager);
 
    m_dispatcher.synchronise_player_position_and_rotation(player_id, entity->get_pos(), entity->get_yaw(), entity->get_pitch());
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(), entity->get_pitch());

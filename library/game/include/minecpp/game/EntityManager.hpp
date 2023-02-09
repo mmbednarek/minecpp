@@ -12,6 +12,7 @@ class EntityManager
 
    virtual EntityId spawn(entity::Entity entity)                              = 0;
    [[nodiscard]] virtual mb::result<entity::Entity &> get_entity(EntityId id) = 0;
+   [[nodiscard]] virtual mb::emptyres remove_entity(game::EntityId id) = 0;
 };
 
 }// namespace minecpp::game

@@ -77,7 +77,7 @@ class EventHandler
    template<typename T>
    void send_message_to_all_players(const T &msg)
    {
-      for (auto &conn : m_server) {
+      for (auto &[_, conn] : m_server) {
          if (conn.get() == nullptr)
             continue;
          send(conn, msg);
@@ -93,7 +93,7 @@ class EventHandler
       }
 
       for (const auto &id : player_ids) {
-         auto conn = m_server.connection_by_id(id);
+         auto conn = m_server.connection_by_player_id(id);
          send(conn, msg);
       }
    }
@@ -101,7 +101,7 @@ class EventHandler
    template<typename T>
    void send_message_excluding(const T &msg, game::PlayerId excluded)
    {
-      for (auto &conn : m_server) {
+      for (auto &[_, conn] : m_server) {
          if (conn.get() == nullptr)
             continue;
          if (conn->uuid() == excluded)

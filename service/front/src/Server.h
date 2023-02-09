@@ -17,8 +17,9 @@ using boost::asio::ip::tcp;
 class Server
 {
    using ConnectionPtr       = std::shared_ptr<Connection>;
-   using ConnectionIter      = std::vector<ConnectionPtr>::iterator;
-   using ConstConnectionIter = std::vector<ConnectionPtr>::const_iterator;
+   using ConnectionStorage   = std::map<ConnectionId, ConnectionPtr>;
+   using ConnectionIter      = ConnectionStorage::iterator;
+   using ConstConnectionIter = ConnectionStorage::const_iterator;
 
  public:
    explicit Server(boost::asio::io_context &ctx, mb::u16 port, Protocol::Handler *play,
@@ -50,21 +51,28 @@ class Server
       return m_connections.cend();
    }
 
-   void for_each_connection(std::function<void(const std::shared_ptr<Connection> &)>);
+   template<typename TCallback>
+   void for_each_connection(TCallback &&f)
+   {
+      for (auto &[_, conn] : m_connections) {
+         f(conn);
+      }
+   }
 
    bool has_connection(game::PlayerId player_id);
 
-   std::shared_ptr<Connection> connection_by_id(game::PlayerId player_id);
+   std::shared_ptr<Connection> connection_by_player_id(game::PlayerId player_id);
 
    Protocol::Handler &get_handler(Protocol::State state);
 
-   void index_connection(boost::uuids::uuid index, std::size_t id);
+   void index_connection(game::PlayerId index, ConnectionId id);
 
  private:
-   std::map<boost::uuids::uuid, std::size_t> m_conn_ids;
-   std::vector<ConnectionPtr> m_connections;
+   std::map<game::PlayerId, ConnectionId> m_player_id_to_connection_id_map;
+   std::map<ConnectionId, ConnectionPtr> m_connections;
    tcp::acceptor m_acceptor;
    Protocol::Handler *m_handlers[3];
+   ConnectionId m_top_connection{};
 };
 
 }// namespace minecpp::service::front

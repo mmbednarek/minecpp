@@ -20,10 +20,6 @@ Connection::Connection(boost::asio::io_context &ctx, Server *server) :
 
 Connection::~Connection()
 {
-   if (m_server && state() != Protocol::State::Handshake) {
-      m_server->get_handler(m_state).handle_disconnect(*this);
-   }
-
    if (!m_socket.is_open())
       return;
 

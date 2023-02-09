@@ -94,6 +94,7 @@ void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg,
 void EventHandler::handle_remove_player(const clientbound_v1::RemovePlayer &msg,
                                         const std::vector<game::PlayerId> &player_ids)
 {
+   spdlog::info("removing player");
    network::message::RemovePlayer remove_player{
            .id = game::player::read_id_from_proto(msg.player_id()),
    };
@@ -143,7 +144,7 @@ void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
          return;
       }
 
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (!conn) {
          spdlog::error("connection {} is null", boost::uuids::to_string(player_id));
          return;
@@ -210,8 +211,8 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
          return;
       }
 
-      auto conn = m_server.connection_by_id(player_id);
-      if (!conn) {
+      auto conn = m_server.connection_by_player_id(player_id);
+      if (conn == nullptr) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
       }
@@ -295,7 +296,7 @@ void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg,
          return;
       }
 
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (!conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
@@ -320,7 +321,7 @@ void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg,
          return;
       }
 
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (!conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
@@ -346,7 +347,7 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
          return;
       }
 
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (!conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
@@ -381,7 +382,7 @@ void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventoryS
 
    const auto player_id = player_ids.front();
 
-   auto conn = m_server.connection_by_id(player_id);
+   auto conn = m_server.connection_by_player_id(player_id);
    if (!conn) {
       spdlog::error("connection {} is null", game::player::format_player_id(player_id));
       return;
@@ -410,7 +411,7 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
       }
 
       for (auto player_id : player_ids) {
-         auto conn = m_server.connection_by_id(player_id);
+         auto conn = m_server.connection_by_player_id(player_id);
          if (not conn) {
             spdlog::error("connection {} is null", game::player::format_player_id(player_id));
             return;
@@ -428,7 +429,7 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
            .chunk = msg.chunk(),
    };
    for (auto player_id : player_ids) {
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
@@ -447,7 +448,7 @@ void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk 
    };
 
    for (auto player_id : player_ids) {
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
@@ -471,7 +472,7 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
    };
 
    for (auto player_id : player_ids) {
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;
@@ -490,7 +491,7 @@ void EventHandler::handle_set_spawn_position(const clientbound_v1::SetSpawnPosit
    };
 
    for (auto player_id : player_ids) {
-      auto conn = m_server.connection_by_id(player_id);
+      auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
          return;

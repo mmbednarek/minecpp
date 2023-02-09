@@ -1,5 +1,6 @@
 #include "Dispatcher.h"
 #include "EventManager.h"
+#include "Entities.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
@@ -156,14 +157,14 @@ void Dispatcher::player_list(game::PlayerId player_id, const std::vector<game::p
    m_events.send_to(player_list, player_id);
 }
 
-void Dispatcher::entity_list(game::PlayerId player_id, const std::vector<game::entity::Entity> &entity_list)
-{
+
+void Dispatcher::entity_list(game::PlayerId player_id, EntityManager &entity_manager) {
    clientbound_v1::EntityList list;
-   list.mutable_list()->Reserve(static_cast<int>(entity_list.size()));
-   for (const auto &entity : entity_list) {
+   list.mutable_list()->Reserve(static_cast<int>(entity_manager.total_count()));
+   for (const auto &[_, entity] : entity_manager) {
       *list.add_list() = entity.to_proto();
    }
-   spdlog::info("sending {} entities to the player", entity_list.size());
+   spdlog::info("sending {} entities to the player", entity_manager.total_count());
    m_events.send_to(list, player_id);
 }
 
