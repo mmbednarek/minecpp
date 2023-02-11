@@ -12,5 +12,6 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_random
         LINK_PRIVATE
+        minecpp_math
         minecpp_utils
 )

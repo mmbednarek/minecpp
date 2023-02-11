@@ -17,7 +17,7 @@ class Door : public Default
 
    bool on_player_action(game::World &world, game::PlayerId player_id, game::BlockStateId block_state_id,
                          game::BlockPosition position, game::Face face,
-                         util::Vec3 crosshair_position) override;
+                         math::Vector3 crosshair_position) override;
 };
 
 }// namespace minecpp::controller::block

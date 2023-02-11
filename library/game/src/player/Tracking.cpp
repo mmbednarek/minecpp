@@ -2,12 +2,11 @@
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Tracking.h>
 #include <minecpp/game/World.h>
-#include <minecpp/util/Vec.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::game::player {
 
-Tracking::Tracking(const util::Vec3 &position, int radius) :
+Tracking::Tracking(const math::Vector3 &position, int radius) :
     m_chunk_pos(game::ChunkPosition::from_position(position)),
     m_radius_sq(radius * radius),
     m_radius(radius)
@@ -56,7 +55,7 @@ mb::result<mb::empty> Tracking::load_chunks(game::World &world, Player &player)
    return mb::ok;
 }
 
-void Tracking::on_movement(game::World &world, Player &player, util::Vec3 position)
+void Tracking::on_movement(game::World &world, Player &player, math::Vector3 position)
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    auto next_chunk_pos = game::ChunkPosition::from_position(position);

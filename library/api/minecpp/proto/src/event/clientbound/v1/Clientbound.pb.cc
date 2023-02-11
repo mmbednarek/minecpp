@@ -842,71 +842,71 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_
   "AddPlayer\0224\n\tplayer_id\030\001 \001(\0132!.minecpp.p"
   "roto.player.v1.PlayerId\022\014\n\004name\030\002 \001(\t\0224\n"
   "\tgame_mode\030\003 \001(\0162!.minecpp.proto.common."
-  "v1.GameMode\022\014\n\004ping\030\004 \001(\r\"\300\001\n\013SpawnPlaye"
+  "v1.GameMode\022\014\n\004ping\030\004 \001(\r\"\277\001\n\013SpawnPlaye"
   "r\0224\n\tplayer_id\030\001 \001(\0132!.minecpp.proto.pla"
-  "yer.v1.PlayerId\022\021\n\tentity_id\030\002 \001(\r\0223\n\010po"
-  "sition\030\003 \001(\0132!.minecpp.proto.entity.v1.P"
-  "osition\0223\n\010rotation\030\004 \001(\0132!.minecpp.prot"
-  "o.entity.v1.Rotation\"\277\001\n\nEntityMove\0224\n\tp"
-  "layer_id\030\001 \001(\0132!.minecpp.proto.player.v1"
-  ".PlayerId\022\021\n\tentity_id\030\002 \001(\r\0223\n\010movement"
-  "\030\003 \001(\0132!.minecpp.proto.entity.v1.Movemen"
-  "t\0223\n\010rotation\030\004 \001(\0132!.minecpp.proto.enti"
-  "ty.v1.Rotation\"\212\001\n\nEntityLook\0224\n\tplayer_"
-  "id\030\001 \001(\0132!.minecpp.proto.player.v1.Playe"
-  "rId\022\021\n\tentity_id\030\002 \001(\r\0223\n\010rotation\030\003 \001(\013"
-  "2!.minecpp.proto.entity.v1.Rotation\"\202\001\n\026"
-  "PlayerPositionRotation\0223\n\010position\030\001 \001(\013"
-  "2!.minecpp.proto.entity.v1.Position\0223\n\010r"
-  "otation\030\002 \001(\0132!.minecpp.proto.entity.v1."
-  "Rotation\"3\n\020SetSpawnPosition\022\020\n\010position"
-  "\030\001 \001(\004\022\r\n\005angle\030\002 \001(\002\"%\n\004Chat\022\017\n\007message"
-  "\030\001 \001(\t\022\014\n\004type\030\002 \001(\005\"W\n\014RemovePlayer\0224\n\t"
-  "player_id\030\001 \001(\0132!.minecpp.proto.player.v"
-  "1.PlayerId\022\021\n\tentity_id\030\002 \001(\r\"4\n\013UpdateB"
-  "lock\022\026\n\016block_position\030\001 \001(\004\022\r\n\005state\030\002 "
-  "\001(\r\"_\n\rAnimateEntity\022\021\n\tentity_id\030\001 \001(\r\022"
-  ";\n\tanimation\030\002 \001(\0162(.minecpp.proto.commo"
-  "n.v1.EntityAnimation\"-\n\026AcknowledgeBlock"
-  "Change\022\023\n\013sequence_id\030\001 \001(\005\"\204\001\n\013LoadTerr"
-  "ain\022=\n\rcentral_chunk\030\001 \001(\0132&.minecpp.pro"
-  "to.common.v1.ChunkPosition\0226\n\006coords\030\002 \003"
-  "(\0132&.minecpp.proto.common.v1.ChunkPositi"
-  "on\",\n\016TransferPlayer\022\032\n\022engine_instance_"
-  "id\030\002 \001(\004\"\312\001\n\025UpdatePlayerAbilities\0224\n\tpl"
+  "yer.v1.PlayerId\022\021\n\tentity_id\030\002 \001(\r\0222\n\010po"
+  "sition\030\003 \001(\0132 .minecpp.proto.common.v1.V"
+  "ector3\0223\n\010rotation\030\004 \001(\0132!.minecpp.proto"
+  ".common.v1.Rotation\"\277\001\n\nEntityMove\0224\n\tpl"
   "ayer_id\030\001 \001(\0132!.minecpp.proto.player.v1."
-  "PlayerId\022\024\n\014invulnerable\030\002 \001(\010\022\021\n\tis_fly"
-  "ing\030\003 \001(\010\022\024\n\014allow_flying\030\004 \001(\010\022\025\n\rcreat"
-  "ive_mode\030\005 \001(\010\022\022\n\nwalk_speed\030\007 \001(\002\022\021\n\tfl"
-  "y_speed\030\010 \001(\002\"\203\001\n\013UnloadChunk\0224\n\tplayer_"
-  "id\030\001 \001(\0132!.minecpp.proto.player.v1.Playe"
-  "rId\022>\n\016chunk_position\030\002 \001(\0132&.minecpp.pr"
-  "oto.common.v1.ChunkPosition\";\n\nPlayerLis"
-  "t\022-\n\004list\030\001 \003(\0132\037.minecpp.proto.player.v"
-  "1.Status\";\n\nEntityList\022-\n\004list\030\001 \003(\0132\037.m"
-  "inecpp.proto.entity.v1.Entity\"t\n\014AcceptP"
-  "layer\0223\n\010gameplay\030\001 \001(\0132!.minecpp.proto."
-  "common.v1.Gameplay\022/\n\006player\030\002 \001(\0132\037.min"
-  "ecpp.proto.player.v1.Player\"#\n\nDenyPlaye"
-  "r\022\025\n\rdenial_reason\030\001 \001(\t\"\?\n\020SetInventory"
-  "Slot\022+\n\004slot\030\001 \001(\0132\035.minecpp.proto.playe"
-  "r.v1.Slot\"3\n\021SectionBlockLight\022\t\n\001y\030\001 \001("
-  "\005\022\023\n\013block_light\030\002 \001(\014\"\224\001\n\017ChunkBlockLig"
-  "ht\0228\n\010position\030\001 \001(\0132&.minecpp.proto.com"
-  "mon.v1.ChunkPosition\022G\n\010sections\030\002 \003(\01325"
-  ".minecpp.proto.event.clientbound.v1.Sect"
-  "ionBlockLight\"\\\n\020UpdateBlockLight\022H\n\013blo"
-  "ck_light\030\001 \003(\01323.minecpp.proto.event.cli"
-  "entbound.v1.ChunkBlockLight\"9\n\tChunkData"
-  "\022,\n\005chunk\030\001 \001(\0132\035.minecpp.proto.chunk.v1"
-  ".Chunk\"J\n\016SetCenterChunk\0228\n\010position\030\001 \001"
-  "(\0132&.minecpp.proto.common.v1.ChunkPositi"
-  "on\"\224\001\n\022SetEntityEquipment\022\021\n\tentity_id\030\001"
-  " \001(\r\022>\n\016equipment_slot\030\002 \001(\0162&.minecpp.p"
-  "roto.entity.v1.EquipmentSlot\022+\n\004item\030\003 \001"
-  "(\0132\035.minecpp.proto.player.v1.Slot\"B\n\tSet"
-  "Health\022\016\n\006health\030\001 \001(\002\022\014\n\004food\030\002 \001(\005\022\027\n\017"
-  "food_saturation\030\003 \001(\002b\006proto3"
+  "PlayerId\022\021\n\tentity_id\030\002 \001(\r\0223\n\010movement\030"
+  "\003 \001(\0132!.minecpp.proto.entity.v1.Movement"
+  "\0223\n\010rotation\030\004 \001(\0132!.minecpp.proto.commo"
+  "n.v1.Rotation\"\212\001\n\nEntityLook\0224\n\tplayer_i"
+  "d\030\001 \001(\0132!.minecpp.proto.player.v1.Player"
+  "Id\022\021\n\tentity_id\030\002 \001(\r\0223\n\010rotation\030\003 \001(\0132"
+  "!.minecpp.proto.common.v1.Rotation\"\201\001\n\026P"
+  "layerPositionRotation\0222\n\010position\030\001 \001(\0132"
+  " .minecpp.proto.common.v1.Vector3\0223\n\010rot"
+  "ation\030\002 \001(\0132!.minecpp.proto.common.v1.Ro"
+  "tation\"3\n\020SetSpawnPosition\022\020\n\010position\030\001"
+  " \001(\004\022\r\n\005angle\030\002 \001(\002\"%\n\004Chat\022\017\n\007message\030\001"
+  " \001(\t\022\014\n\004type\030\002 \001(\005\"W\n\014RemovePlayer\0224\n\tpl"
+  "ayer_id\030\001 \001(\0132!.minecpp.proto.player.v1."
+  "PlayerId\022\021\n\tentity_id\030\002 \001(\r\"4\n\013UpdateBlo"
+  "ck\022\026\n\016block_position\030\001 \001(\004\022\r\n\005state\030\002 \001("
+  "\r\"_\n\rAnimateEntity\022\021\n\tentity_id\030\001 \001(\r\022;\n"
+  "\tanimation\030\002 \001(\0162(.minecpp.proto.common."
+  "v1.EntityAnimation\"-\n\026AcknowledgeBlockCh"
+  "ange\022\023\n\013sequence_id\030\001 \001(\005\"\204\001\n\013LoadTerrai"
+  "n\022=\n\rcentral_chunk\030\001 \001(\0132&.minecpp.proto"
+  ".common.v1.ChunkPosition\0226\n\006coords\030\002 \003(\013"
+  "2&.minecpp.proto.common.v1.ChunkPosition"
+  "\",\n\016TransferPlayer\022\032\n\022engine_instance_id"
+  "\030\002 \001(\004\"\312\001\n\025UpdatePlayerAbilities\0224\n\tplay"
+  "er_id\030\001 \001(\0132!.minecpp.proto.player.v1.Pl"
+  "ayerId\022\024\n\014invulnerable\030\002 \001(\010\022\021\n\tis_flyin"
+  "g\030\003 \001(\010\022\024\n\014allow_flying\030\004 \001(\010\022\025\n\rcreativ"
+  "e_mode\030\005 \001(\010\022\022\n\nwalk_speed\030\007 \001(\002\022\021\n\tfly_"
+  "speed\030\010 \001(\002\"\203\001\n\013UnloadChunk\0224\n\tplayer_id"
+  "\030\001 \001(\0132!.minecpp.proto.player.v1.PlayerI"
+  "d\022>\n\016chunk_position\030\002 \001(\0132&.minecpp.prot"
+  "o.common.v1.ChunkPosition\";\n\nPlayerList\022"
+  "-\n\004list\030\001 \003(\0132\037.minecpp.proto.player.v1."
+  "Status\";\n\nEntityList\022-\n\004list\030\001 \003(\0132\037.min"
+  "ecpp.proto.entity.v1.Entity\"t\n\014AcceptPla"
+  "yer\0223\n\010gameplay\030\001 \001(\0132!.minecpp.proto.co"
+  "mmon.v1.Gameplay\022/\n\006player\030\002 \001(\0132\037.minec"
+  "pp.proto.player.v1.Player\"#\n\nDenyPlayer\022"
+  "\025\n\rdenial_reason\030\001 \001(\t\"\?\n\020SetInventorySl"
+  "ot\022+\n\004slot\030\001 \001(\0132\035.minecpp.proto.player."
+  "v1.Slot\"3\n\021SectionBlockLight\022\t\n\001y\030\001 \001(\005\022"
+  "\023\n\013block_light\030\002 \001(\014\"\224\001\n\017ChunkBlockLight"
+  "\0228\n\010position\030\001 \001(\0132&.minecpp.proto.commo"
+  "n.v1.ChunkPosition\022G\n\010sections\030\002 \003(\01325.m"
+  "inecpp.proto.event.clientbound.v1.Sectio"
+  "nBlockLight\"\\\n\020UpdateBlockLight\022H\n\013block"
+  "_light\030\001 \003(\01323.minecpp.proto.event.clien"
+  "tbound.v1.ChunkBlockLight\"9\n\tChunkData\022,"
+  "\n\005chunk\030\001 \001(\0132\035.minecpp.proto.chunk.v1.C"
+  "hunk\"J\n\016SetCenterChunk\0228\n\010position\030\001 \001(\013"
+  "2&.minecpp.proto.common.v1.ChunkPosition"
+  "\"\224\001\n\022SetEntityEquipment\022\021\n\tentity_id\030\001 \001"
+  "(\r\022>\n\016equipment_slot\030\002 \001(\0162&.minecpp.pro"
+  "to.entity.v1.EquipmentSlot\022+\n\004item\030\003 \001(\013"
+  "2\035.minecpp.proto.player.v1.Slot\"B\n\tSetHe"
+  "alth\022\016\n\006health\030\001 \001(\002\022\014\n\004food\030\002 \001(\005\022\027\n\017fo"
+  "od_saturation\030\003 \001(\002b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps[6] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -918,7 +918,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = {
-    false, false, 3669, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
+    false, false, 3667, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
     "minecpp/proto/event/clientbound/v1/Clientbound.proto",
     &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps, 6, 32,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto::offsets,
@@ -2350,19 +2350,19 @@ void AddPlayer::InternalSwap(AddPlayer* other) {
 class SpawnPlayer::_Internal {
  public:
   static const ::minecpp::proto::player::v1::PlayerId& player_id(const SpawnPlayer* msg);
-  static const ::minecpp::proto::entity::v1::Position& position(const SpawnPlayer* msg);
-  static const ::minecpp::proto::entity::v1::Rotation& rotation(const SpawnPlayer* msg);
+  static const ::minecpp::proto::common::v1::Vector3& position(const SpawnPlayer* msg);
+  static const ::minecpp::proto::common::v1::Rotation& rotation(const SpawnPlayer* msg);
 };
 
 const ::minecpp::proto::player::v1::PlayerId&
 SpawnPlayer::_Internal::player_id(const SpawnPlayer* msg) {
   return *msg->_impl_.player_id_;
 }
-const ::minecpp::proto::entity::v1::Position&
+const ::minecpp::proto::common::v1::Vector3&
 SpawnPlayer::_Internal::position(const SpawnPlayer* msg) {
   return *msg->_impl_.position_;
 }
-const ::minecpp::proto::entity::v1::Rotation&
+const ::minecpp::proto::common::v1::Rotation&
 SpawnPlayer::_Internal::rotation(const SpawnPlayer* msg) {
   return *msg->_impl_.rotation_;
 }
@@ -2405,10 +2405,10 @@ SpawnPlayer::SpawnPlayer(const SpawnPlayer& from)
     _this->_impl_.player_id_ = new ::minecpp::proto::player::v1::PlayerId(*from._impl_.player_id_);
   }
   if (from._internal_has_position()) {
-    _this->_impl_.position_ = new ::minecpp::proto::entity::v1::Position(*from._impl_.position_);
+    _this->_impl_.position_ = new ::minecpp::proto::common::v1::Vector3(*from._impl_.position_);
   }
   if (from._internal_has_rotation()) {
-    _this->_impl_.rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from._impl_.rotation_);
+    _this->_impl_.rotation_ = new ::minecpp::proto::common::v1::Rotation(*from._impl_.rotation_);
   }
   _this->_impl_.entity_id_ = from._impl_.entity_id_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.SpawnPlayer)
@@ -2491,7 +2491,7 @@ const char* SpawnPlayer::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.entity.v1.Position position = 3;
+      // .minecpp.proto.common.v1.Vector3 position = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
@@ -2499,7 +2499,7 @@ const char* SpawnPlayer::_InternalParse(const char* ptr, ::_pbi::ParseContext* c
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.entity.v1.Rotation rotation = 4;
+      // .minecpp.proto.common.v1.Rotation rotation = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
@@ -2549,14 +2549,14 @@ uint8_t* SpawnPlayer::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_entity_id(), target);
   }
 
-  // .minecpp.proto.entity.v1.Position position = 3;
+  // .minecpp.proto.common.v1.Vector3 position = 3;
   if (this->_internal_has_position()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(3, _Internal::position(this),
         _Internal::position(this).GetCachedSize(), target, stream);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 4;
   if (this->_internal_has_rotation()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(4, _Internal::rotation(this),
@@ -2586,14 +2586,14 @@ size_t SpawnPlayer::ByteSizeLong() const {
         *_impl_.player_id_);
   }
 
-  // .minecpp.proto.entity.v1.Position position = 3;
+  // .minecpp.proto.common.v1.Vector3 position = 3;
   if (this->_internal_has_position()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.position_);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 4;
   if (this->_internal_has_rotation()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -2628,11 +2628,11 @@ void SpawnPlayer::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PR
         from._internal_player_id());
   }
   if (from._internal_has_position()) {
-    _this->_internal_mutable_position()->::minecpp::proto::entity::v1::Position::MergeFrom(
+    _this->_internal_mutable_position()->::minecpp::proto::common::v1::Vector3::MergeFrom(
         from._internal_position());
   }
   if (from._internal_has_rotation()) {
-    _this->_internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(
+    _this->_internal_mutable_rotation()->::minecpp::proto::common::v1::Rotation::MergeFrom(
         from._internal_rotation());
   }
   if (from._internal_entity_id() != 0) {
@@ -2675,7 +2675,7 @@ class EntityMove::_Internal {
  public:
   static const ::minecpp::proto::player::v1::PlayerId& player_id(const EntityMove* msg);
   static const ::minecpp::proto::entity::v1::Movement& movement(const EntityMove* msg);
-  static const ::minecpp::proto::entity::v1::Rotation& rotation(const EntityMove* msg);
+  static const ::minecpp::proto::common::v1::Rotation& rotation(const EntityMove* msg);
 };
 
 const ::minecpp::proto::player::v1::PlayerId&
@@ -2686,7 +2686,7 @@ const ::minecpp::proto::entity::v1::Movement&
 EntityMove::_Internal::movement(const EntityMove* msg) {
   return *msg->_impl_.movement_;
 }
-const ::minecpp::proto::entity::v1::Rotation&
+const ::minecpp::proto::common::v1::Rotation&
 EntityMove::_Internal::rotation(const EntityMove* msg) {
   return *msg->_impl_.rotation_;
 }
@@ -2732,7 +2732,7 @@ EntityMove::EntityMove(const EntityMove& from)
     _this->_impl_.movement_ = new ::minecpp::proto::entity::v1::Movement(*from._impl_.movement_);
   }
   if (from._internal_has_rotation()) {
-    _this->_impl_.rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from._impl_.rotation_);
+    _this->_impl_.rotation_ = new ::minecpp::proto::common::v1::Rotation(*from._impl_.rotation_);
   }
   _this->_impl_.entity_id_ = from._impl_.entity_id_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.EntityMove)
@@ -2823,7 +2823,7 @@ const char* EntityMove::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.entity.v1.Rotation rotation = 4;
+      // .minecpp.proto.common.v1.Rotation rotation = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
@@ -2880,7 +2880,7 @@ uint8_t* EntityMove::_InternalSerialize(
         _Internal::movement(this).GetCachedSize(), target, stream);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 4;
   if (this->_internal_has_rotation()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(4, _Internal::rotation(this),
@@ -2917,7 +2917,7 @@ size_t EntityMove::ByteSizeLong() const {
         *_impl_.movement_);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 4;
   if (this->_internal_has_rotation()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -2956,7 +2956,7 @@ void EntityMove::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
         from._internal_movement());
   }
   if (from._internal_has_rotation()) {
-    _this->_internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(
+    _this->_internal_mutable_rotation()->::minecpp::proto::common::v1::Rotation::MergeFrom(
         from._internal_rotation());
   }
   if (from._internal_entity_id() != 0) {
@@ -2998,14 +2998,14 @@ void EntityMove::InternalSwap(EntityMove* other) {
 class EntityLook::_Internal {
  public:
   static const ::minecpp::proto::player::v1::PlayerId& player_id(const EntityLook* msg);
-  static const ::minecpp::proto::entity::v1::Rotation& rotation(const EntityLook* msg);
+  static const ::minecpp::proto::common::v1::Rotation& rotation(const EntityLook* msg);
 };
 
 const ::minecpp::proto::player::v1::PlayerId&
 EntityLook::_Internal::player_id(const EntityLook* msg) {
   return *msg->_impl_.player_id_;
 }
-const ::minecpp::proto::entity::v1::Rotation&
+const ::minecpp::proto::common::v1::Rotation&
 EntityLook::_Internal::rotation(const EntityLook* msg) {
   return *msg->_impl_.rotation_;
 }
@@ -3041,7 +3041,7 @@ EntityLook::EntityLook(const EntityLook& from)
     _this->_impl_.player_id_ = new ::minecpp::proto::player::v1::PlayerId(*from._impl_.player_id_);
   }
   if (from._internal_has_rotation()) {
-    _this->_impl_.rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from._impl_.rotation_);
+    _this->_impl_.rotation_ = new ::minecpp::proto::common::v1::Rotation(*from._impl_.rotation_);
   }
   _this->_impl_.entity_id_ = from._impl_.entity_id_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.EntityLook)
@@ -3118,7 +3118,7 @@ const char* EntityLook::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.entity.v1.Rotation rotation = 3;
+      // .minecpp.proto.common.v1.Rotation rotation = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
@@ -3168,7 +3168,7 @@ uint8_t* EntityLook::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_entity_id(), target);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 3;
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
   if (this->_internal_has_rotation()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(3, _Internal::rotation(this),
@@ -3198,7 +3198,7 @@ size_t EntityLook::ByteSizeLong() const {
         *_impl_.player_id_);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 3;
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
   if (this->_internal_has_rotation()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -3233,7 +3233,7 @@ void EntityLook::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
         from._internal_player_id());
   }
   if (from._internal_has_rotation()) {
-    _this->_internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(
+    _this->_internal_mutable_rotation()->::minecpp::proto::common::v1::Rotation::MergeFrom(
         from._internal_rotation());
   }
   if (from._internal_entity_id() != 0) {
@@ -3274,15 +3274,15 @@ void EntityLook::InternalSwap(EntityLook* other) {
 
 class PlayerPositionRotation::_Internal {
  public:
-  static const ::minecpp::proto::entity::v1::Position& position(const PlayerPositionRotation* msg);
-  static const ::minecpp::proto::entity::v1::Rotation& rotation(const PlayerPositionRotation* msg);
+  static const ::minecpp::proto::common::v1::Vector3& position(const PlayerPositionRotation* msg);
+  static const ::minecpp::proto::common::v1::Rotation& rotation(const PlayerPositionRotation* msg);
 };
 
-const ::minecpp::proto::entity::v1::Position&
+const ::minecpp::proto::common::v1::Vector3&
 PlayerPositionRotation::_Internal::position(const PlayerPositionRotation* msg) {
   return *msg->_impl_.position_;
 }
-const ::minecpp::proto::entity::v1::Rotation&
+const ::minecpp::proto::common::v1::Rotation&
 PlayerPositionRotation::_Internal::rotation(const PlayerPositionRotation* msg) {
   return *msg->_impl_.rotation_;
 }
@@ -3314,10 +3314,10 @@ PlayerPositionRotation::PlayerPositionRotation(const PlayerPositionRotation& fro
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_position()) {
-    _this->_impl_.position_ = new ::minecpp::proto::entity::v1::Position(*from._impl_.position_);
+    _this->_impl_.position_ = new ::minecpp::proto::common::v1::Vector3(*from._impl_.position_);
   }
   if (from._internal_has_rotation()) {
-    _this->_impl_.rotation_ = new ::minecpp::proto::entity::v1::Rotation(*from._impl_.rotation_);
+    _this->_impl_.rotation_ = new ::minecpp::proto::common::v1::Rotation(*from._impl_.rotation_);
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.PlayerPositionRotation)
 }
@@ -3375,7 +3375,7 @@ const char* PlayerPositionRotation::_InternalParse(const char* ptr, ::_pbi::Pars
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .minecpp.proto.entity.v1.Position position = 1;
+      // .minecpp.proto.common.v1.Vector3 position = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
@@ -3383,7 +3383,7 @@ const char* PlayerPositionRotation::_InternalParse(const char* ptr, ::_pbi::Pars
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.entity.v1.Rotation rotation = 2;
+      // .minecpp.proto.common.v1.Rotation rotation = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
@@ -3420,14 +3420,14 @@ uint8_t* PlayerPositionRotation::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .minecpp.proto.entity.v1.Position position = 1;
+  // .minecpp.proto.common.v1.Vector3 position = 1;
   if (this->_internal_has_position()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::position(this),
         _Internal::position(this).GetCachedSize(), target, stream);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 2;
+  // .minecpp.proto.common.v1.Rotation rotation = 2;
   if (this->_internal_has_rotation()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(2, _Internal::rotation(this),
@@ -3450,14 +3450,14 @@ size_t PlayerPositionRotation::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .minecpp.proto.entity.v1.Position position = 1;
+  // .minecpp.proto.common.v1.Vector3 position = 1;
   if (this->_internal_has_position()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.position_);
   }
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 2;
+  // .minecpp.proto.common.v1.Rotation rotation = 2;
   if (this->_internal_has_rotation()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -3483,11 +3483,11 @@ void PlayerPositionRotation::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg,
   (void) cached_has_bits;
 
   if (from._internal_has_position()) {
-    _this->_internal_mutable_position()->::minecpp::proto::entity::v1::Position::MergeFrom(
+    _this->_internal_mutable_position()->::minecpp::proto::common::v1::Vector3::MergeFrom(
         from._internal_position());
   }
   if (from._internal_has_rotation()) {
-    _this->_internal_mutable_rotation()->::minecpp::proto::entity::v1::Rotation::MergeFrom(
+    _this->_internal_mutable_rotation()->::minecpp::proto::common::v1::Rotation::MergeFrom(
         from._internal_rotation());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);

@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 #include <functional>
+#include <numeric>
 
 namespace minecpp::math {
 
@@ -71,6 +72,21 @@ class BaseVector
       return std::equal(m_storage, m_storage + Count, other.m_storage, std::not_equal_to<ValueType>{}); \
    }
 
+#define MCC_MATH_DECLARE_TRANSFORM_FUNC                                         \
+   template<typename TCallback>                                                 \
+   [[nodiscard]] SelfType transform(TCallback callback) const                   \
+   {                                                                            \
+      SelfType result;                                                          \
+      std::transform(m_storage, m_storage + Count, result.m_storage, callback); \
+      return result;                                                            \
+   }
+
+#define MCC_MATH_DECLARE_ACCUMULATE_METHOD                               \
+   [[nodiscard]] ValueType sum() const                                   \
+   {                                                                     \
+      return std::accumulate(m_storage, m_storage + Count, ValueType{}); \
+   }
+
 #define MCC_MATH_DEFINE_VECTOR_TRAITS(count)                               \
    using ValueType             = TValue;                                   \
    using SelfType              = BaseVector<ValueType, count>;             \
@@ -94,4 +110,6 @@ class BaseVector
    MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(/=)                              \
    MCC_MATH_DECLARE_EQUAL_OP                                               \
    MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(floor, ::std::floor)            \
-   MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(ceil, ::std::ceil)
+   MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(ceil, ::std::ceil)              \
+   MCC_MATH_DECLARE_ACCUMULATE_METHOD                                      \
+   MCC_MATH_DECLARE_TRANSFORM_FUNC

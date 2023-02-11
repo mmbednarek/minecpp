@@ -55,12 +55,12 @@ void Dispatcher::add_player(game::PlayerId player_id, const std::string &name, m
 }
 
 void Dispatcher::spawn_player(game::PlayerId player_id, game::EntityId entity_id,
-                              minecpp::util::Vec3 position, const game::entity::Rotation &rotation)
+                              math::Vector3 position, const game::entity::Rotation &rotation)
 {
    clientbound_v1::SpawnPlayer spawn_player;
    *spawn_player.mutable_player_id() = game::player::write_id_to_proto(player_id);
    spawn_player.set_entity_id(entity_id);
-   *spawn_player.mutable_position() = game::entity::write_entity_position(position);
+   *spawn_player.mutable_position() = position.to_proto();
    *spawn_player.mutable_rotation() = rotation.to_proto();
    m_events.send_to_all(spawn_player);
 }
@@ -244,11 +244,11 @@ void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::Chu
 }
 
 void Dispatcher::synchronise_player_position_and_rotation(game::PlayerId player_id,
-                                                          minecpp::util::Vec3 position, float yaw,
+                                                          math::Vector3 position, float yaw,
                                                           float pitch)
 {
    clientbound_v1::PlayerPositionRotation player_pos_rot;
-   *player_pos_rot.mutable_position() = game::entity::write_entity_position(position);
+   *player_pos_rot.mutable_position() = position.to_proto();
    player_pos_rot.mutable_rotation()->set_yaw(yaw);
    player_pos_rot.mutable_rotation()->set_pitch(pitch);
    m_events.send_to(player_pos_rot, player_id);
@@ -262,7 +262,7 @@ void Dispatcher::set_spawn_position(game::PlayerId player_id, game::BlockPositio
    m_events.send_to(set_spawn, player_id);
 }
 
-void Dispatcher::set_player_equipment(game::PlayerId player_id, game::EntityId entity_id,
+void Dispatcher::set_player_equipment(game::PlayerId /*player_id*/, game::EntityId entity_id,
                                       game::EquipmentSlot slot, game::ItemSlot item)
 {
    clientbound_v1::SetEntityEquipment equipment;

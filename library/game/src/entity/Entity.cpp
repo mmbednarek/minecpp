@@ -23,7 +23,7 @@ Entity::Entity(uuid uid, const Type &type) :
 {
 }
 
-Vec3 Entity::get_pos() const
+math::Vector3 Entity::get_pos() const
 {
    return pos;
 }
@@ -38,7 +38,7 @@ float Entity::get_pitch() const
    return pitch;
 }
 
-void Entity::set_pos(Notifier &n, Vec3 pos)
+void Entity::set_pos(Notifier &n, math::Vector3 pos)
 {
    this->pos     = pos;
    auto movement = process_movement();
@@ -65,13 +65,15 @@ uint32_t Entity::get_id()
 
 Movement Entity::process_movement()
 {
-   Vec3 tracked_pos = Vec3(tracking.x, tracking.y, tracking.z) / 4096.0;
-   Vec3 diff        = pos - tracked_pos;
+   math::Vector3 tracked_pos = math::Vector3{static_cast<double>(tracking.x), static_cast<double>(tracking.y),
+                                             static_cast<double>(tracking.z)} /
+                               4096.0;
+   math::Vector3 diff = pos - tracked_pos;
 
    auto movement = Movement{
-           .x = static_cast<short>(diff.x * 4096),
-           .y = static_cast<short>(diff.y * 4096),
-           .z = static_cast<short>(diff.z * 4096),
+           .x = static_cast<short>(diff.x() * 4096),
+           .y = static_cast<short>(diff.y() * 4096),
+           .z = static_cast<short>(diff.z() * 4096),
    };
 
    tracking.x += static_cast<int64_t>(movement.x);
@@ -83,9 +85,9 @@ Movement Entity::process_movement()
 
 void Entity::sync_tracking()
 {
-   tracking.x = pos.x * 4096.0;
-   tracking.y = pos.y * 4096.0;
-   tracking.z = pos.z * 4096.0;
+   tracking.x = static_cast<mb::i64>(pos.x() * 4096.0);
+   tracking.y = static_cast<mb::i64>(pos.y() * 4096.0);
+   tracking.z = static_cast<mb::i64>(pos.z() * 4096.0);
 }
 
 void Attributes::set_attribute(AttributeName name, double value)
@@ -113,8 +115,12 @@ Entity Entity::from_player_nbt(const nbt::player::v1::Player &player)
    entity.hurt_by_timestamp = player.hurt_by_timestamp;
    entity.invulnerable      = player.invulnerable;
    entity.on_ground         = player.on_ground;
-   entity.motion            = Vec3::from_nbt(player.motion);
-   entity.pos               = Vec3::from_nbt(player.pos);
+   if (player.motion.size() == 3) {
+      entity.motion = math::Vector3{player.motion[0], player.motion[1], player.motion[2]};
+   }
+   if (player.pos.size() == 3) {
+      entity.pos = math::Vector3{player.pos[0], player.pos[1], player.pos[2]};
+   }
    if (player.rotation.size() == 2) {
       entity.yaw   = player.rotation[0];
       entity.pitch = player.rotation[1];

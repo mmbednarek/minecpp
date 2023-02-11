@@ -126,23 +126,6 @@ std::istream &Reader::raw_stream()
    return get_stream();
 }
 
-minecpp::util::Vec3 Reader::read_vec3()
-{
-   auto tagid = read_static(TagId::End);
-   auto size  = read_big_endian<int>();
-   if (tagid == TagId::End)
-      return {};
-
-   if (size != 3) {
-      for (int i = 0; i < size; ++i) {
-         skip_payload(TagId::Double);
-      }
-      return {};
-   }
-
-   return {read_float64(), read_float64(), read_float64()};
-}
-
 ListHeader Reader::peek_list()
 {
    return ListHeader{read_static(nbt::TagId::End), static_cast<std::size_t>(read_big_endian<int>())};

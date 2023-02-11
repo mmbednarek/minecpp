@@ -2,6 +2,7 @@
   "name": "minecpp_random",
   "dependencies": {
     "private": [
+      "minecpp_math",
       "minecpp_utils"
     ]
   }

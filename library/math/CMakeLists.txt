@@ -8,6 +8,8 @@ add_library(minecpp_math INTERFACE)
 target_include_directories(minecpp_math INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 target_link_libraries(minecpp_math
+        INTERFACE
+        minecpp_api_proto
 )
 
 add_subdirectory("test")

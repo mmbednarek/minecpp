@@ -1387,41 +1387,41 @@ class SpawnPlayer final :
       ::minecpp::proto::player::v1::PlayerId* player_id);
   ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
 
-  // .minecpp.proto.entity.v1.Position position = 3;
+  // .minecpp.proto.common.v1.Vector3 position = 3;
   bool has_position() const;
   private:
   bool _internal_has_position() const;
   public:
   void clear_position();
-  const ::minecpp::proto::entity::v1::Position& position() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Position* release_position();
-  ::minecpp::proto::entity::v1::Position* mutable_position();
-  void set_allocated_position(::minecpp::proto::entity::v1::Position* position);
+  const ::minecpp::proto::common::v1::Vector3& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3* release_position();
+  ::minecpp::proto::common::v1::Vector3* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::Vector3* position);
   private:
-  const ::minecpp::proto::entity::v1::Position& _internal_position() const;
-  ::minecpp::proto::entity::v1::Position* _internal_mutable_position();
+  const ::minecpp::proto::common::v1::Vector3& _internal_position() const;
+  ::minecpp::proto::common::v1::Vector3* _internal_mutable_position();
   public:
   void unsafe_arena_set_allocated_position(
-      ::minecpp::proto::entity::v1::Position* position);
-  ::minecpp::proto::entity::v1::Position* unsafe_arena_release_position();
+      ::minecpp::proto::common::v1::Vector3* position);
+  ::minecpp::proto::common::v1::Vector3* unsafe_arena_release_position();
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 4;
   bool has_rotation() const;
   private:
   bool _internal_has_rotation() const;
   public:
   void clear_rotation();
-  const ::minecpp::proto::entity::v1::Rotation& rotation() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Rotation* release_rotation();
-  ::minecpp::proto::entity::v1::Rotation* mutable_rotation();
-  void set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation);
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
   private:
-  const ::minecpp::proto::entity::v1::Rotation& _internal_rotation() const;
-  ::minecpp::proto::entity::v1::Rotation* _internal_mutable_rotation();
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
   public:
   void unsafe_arena_set_allocated_rotation(
-      ::minecpp::proto::entity::v1::Rotation* rotation);
-  ::minecpp::proto::entity::v1::Rotation* unsafe_arena_release_rotation();
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
 
   // uint32 entity_id = 2;
   void clear_entity_id();
@@ -1441,8 +1441,8 @@ class SpawnPlayer final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::minecpp::proto::player::v1::PlayerId* player_id_;
-    ::minecpp::proto::entity::v1::Position* position_;
-    ::minecpp::proto::entity::v1::Rotation* rotation_;
+    ::minecpp::proto::common::v1::Vector3* position_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
     uint32_t entity_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1613,23 +1613,23 @@ class EntityMove final :
       ::minecpp::proto::entity::v1::Movement* movement);
   ::minecpp::proto::entity::v1::Movement* unsafe_arena_release_movement();
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 4;
   bool has_rotation() const;
   private:
   bool _internal_has_rotation() const;
   public:
   void clear_rotation();
-  const ::minecpp::proto::entity::v1::Rotation& rotation() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Rotation* release_rotation();
-  ::minecpp::proto::entity::v1::Rotation* mutable_rotation();
-  void set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation);
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
   private:
-  const ::minecpp::proto::entity::v1::Rotation& _internal_rotation() const;
-  ::minecpp::proto::entity::v1::Rotation* _internal_mutable_rotation();
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
   public:
   void unsafe_arena_set_allocated_rotation(
-      ::minecpp::proto::entity::v1::Rotation* rotation);
-  ::minecpp::proto::entity::v1::Rotation* unsafe_arena_release_rotation();
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
 
   // uint32 entity_id = 2;
   void clear_entity_id();
@@ -1650,7 +1650,7 @@ class EntityMove final :
   struct Impl_ {
     ::minecpp::proto::player::v1::PlayerId* player_id_;
     ::minecpp::proto::entity::v1::Movement* movement_;
-    ::minecpp::proto::entity::v1::Rotation* rotation_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
     uint32_t entity_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1802,23 +1802,23 @@ class EntityLook final :
       ::minecpp::proto::player::v1::PlayerId* player_id);
   ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 3;
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
   bool has_rotation() const;
   private:
   bool _internal_has_rotation() const;
   public:
   void clear_rotation();
-  const ::minecpp::proto::entity::v1::Rotation& rotation() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Rotation* release_rotation();
-  ::minecpp::proto::entity::v1::Rotation* mutable_rotation();
-  void set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation);
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
   private:
-  const ::minecpp::proto::entity::v1::Rotation& _internal_rotation() const;
-  ::minecpp::proto::entity::v1::Rotation* _internal_mutable_rotation();
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
   public:
   void unsafe_arena_set_allocated_rotation(
-      ::minecpp::proto::entity::v1::Rotation* rotation);
-  ::minecpp::proto::entity::v1::Rotation* unsafe_arena_release_rotation();
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
 
   // uint32 entity_id = 2;
   void clear_entity_id();
@@ -1838,7 +1838,7 @@ class EntityLook final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::minecpp::proto::player::v1::PlayerId* player_id_;
-    ::minecpp::proto::entity::v1::Rotation* rotation_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
     uint32_t entity_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1971,41 +1971,41 @@ class PlayerPositionRotation final :
     kPositionFieldNumber = 1,
     kRotationFieldNumber = 2,
   };
-  // .minecpp.proto.entity.v1.Position position = 1;
+  // .minecpp.proto.common.v1.Vector3 position = 1;
   bool has_position() const;
   private:
   bool _internal_has_position() const;
   public:
   void clear_position();
-  const ::minecpp::proto::entity::v1::Position& position() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Position* release_position();
-  ::minecpp::proto::entity::v1::Position* mutable_position();
-  void set_allocated_position(::minecpp::proto::entity::v1::Position* position);
+  const ::minecpp::proto::common::v1::Vector3& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3* release_position();
+  ::minecpp::proto::common::v1::Vector3* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::Vector3* position);
   private:
-  const ::minecpp::proto::entity::v1::Position& _internal_position() const;
-  ::minecpp::proto::entity::v1::Position* _internal_mutable_position();
+  const ::minecpp::proto::common::v1::Vector3& _internal_position() const;
+  ::minecpp::proto::common::v1::Vector3* _internal_mutable_position();
   public:
   void unsafe_arena_set_allocated_position(
-      ::minecpp::proto::entity::v1::Position* position);
-  ::minecpp::proto::entity::v1::Position* unsafe_arena_release_position();
+      ::minecpp::proto::common::v1::Vector3* position);
+  ::minecpp::proto::common::v1::Vector3* unsafe_arena_release_position();
 
-  // .minecpp.proto.entity.v1.Rotation rotation = 2;
+  // .minecpp.proto.common.v1.Rotation rotation = 2;
   bool has_rotation() const;
   private:
   bool _internal_has_rotation() const;
   public:
   void clear_rotation();
-  const ::minecpp::proto::entity::v1::Rotation& rotation() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Rotation* release_rotation();
-  ::minecpp::proto::entity::v1::Rotation* mutable_rotation();
-  void set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation);
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
   private:
-  const ::minecpp::proto::entity::v1::Rotation& _internal_rotation() const;
-  ::minecpp::proto::entity::v1::Rotation* _internal_mutable_rotation();
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
   public:
   void unsafe_arena_set_allocated_rotation(
-      ::minecpp::proto::entity::v1::Rotation* rotation);
-  ::minecpp::proto::entity::v1::Rotation* unsafe_arena_release_rotation();
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
 
   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.PlayerPositionRotation)
  private:
@@ -2015,8 +2015,8 @@ class PlayerPositionRotation final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::minecpp::proto::entity::v1::Position* position_;
-    ::minecpp::proto::entity::v1::Rotation* rotation_;
+    ::minecpp::proto::common::v1::Vector3* position_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -6578,24 +6578,24 @@ inline void SpawnPlayer::set_entity_id(uint32_t value) {
   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity_id)
 }
 
-// .minecpp.proto.entity.v1.Position position = 3;
+// .minecpp.proto.common.v1.Vector3 position = 3;
 inline bool SpawnPlayer::_internal_has_position() const {
   return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
 inline bool SpawnPlayer::has_position() const {
   return _internal_has_position();
 }
-inline const ::minecpp::proto::entity::v1::Position& SpawnPlayer::_internal_position() const {
-  const ::minecpp::proto::entity::v1::Position* p = _impl_.position_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Position&>(
-      ::minecpp::proto::entity::v1::_Position_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3& SpawnPlayer::_internal_position() const {
+  const ::minecpp::proto::common::v1::Vector3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3&>(
+      ::minecpp::proto::common::v1::_Vector3_default_instance_);
 }
-inline const ::minecpp::proto::entity::v1::Position& SpawnPlayer::position() const {
+inline const ::minecpp::proto::common::v1::Vector3& SpawnPlayer::position() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnPlayer.position)
   return _internal_position();
 }
 inline void SpawnPlayer::unsafe_arena_set_allocated_position(
-    ::minecpp::proto::entity::v1::Position* position) {
+    ::minecpp::proto::common::v1::Vector3* position) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
   }
@@ -6607,9 +6607,9 @@ inline void SpawnPlayer::unsafe_arena_set_allocated_position(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.position)
 }
-inline ::minecpp::proto::entity::v1::Position* SpawnPlayer::release_position() {
+inline ::minecpp::proto::common::v1::Vector3* SpawnPlayer::release_position() {
   
-  ::minecpp::proto::entity::v1::Position* temp = _impl_.position_;
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
   _impl_.position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -6622,27 +6622,27 @@ inline ::minecpp::proto::entity::v1::Position* SpawnPlayer::release_position() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Position* SpawnPlayer::unsafe_arena_release_position() {
+inline ::minecpp::proto::common::v1::Vector3* SpawnPlayer::unsafe_arena_release_position() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnPlayer.position)
   
-  ::minecpp::proto::entity::v1::Position* temp = _impl_.position_;
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
   _impl_.position_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Position* SpawnPlayer::_internal_mutable_position() {
+inline ::minecpp::proto::common::v1::Vector3* SpawnPlayer::_internal_mutable_position() {
   
   if (_impl_.position_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Position>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
     _impl_.position_ = p;
   }
   return _impl_.position_;
 }
-inline ::minecpp::proto::entity::v1::Position* SpawnPlayer::mutable_position() {
-  ::minecpp::proto::entity::v1::Position* _msg = _internal_mutable_position();
+inline ::minecpp::proto::common::v1::Vector3* SpawnPlayer::mutable_position() {
+  ::minecpp::proto::common::v1::Vector3* _msg = _internal_mutable_position();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnPlayer.position)
   return _msg;
 }
-inline void SpawnPlayer::set_allocated_position(::minecpp::proto::entity::v1::Position* position) {
+inline void SpawnPlayer::set_allocated_position(::minecpp::proto::common::v1::Vector3* position) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
@@ -6663,24 +6663,24 @@ inline void SpawnPlayer::set_allocated_position(::minecpp::proto::entity::v1::Po
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.position)
 }
 
-// .minecpp.proto.entity.v1.Rotation rotation = 4;
+// .minecpp.proto.common.v1.Rotation rotation = 4;
 inline bool SpawnPlayer::_internal_has_rotation() const {
   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
 inline bool SpawnPlayer::has_rotation() const {
   return _internal_has_rotation();
 }
-inline const ::minecpp::proto::entity::v1::Rotation& SpawnPlayer::_internal_rotation() const {
-  const ::minecpp::proto::entity::v1::Rotation* p = _impl_.rotation_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Rotation&>(
-      ::minecpp::proto::entity::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& SpawnPlayer::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-inline const ::minecpp::proto::entity::v1::Rotation& SpawnPlayer::rotation() const {
+inline const ::minecpp::proto::common::v1::Rotation& SpawnPlayer::rotation() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnPlayer.rotation)
   return _internal_rotation();
 }
 inline void SpawnPlayer::unsafe_arena_set_allocated_rotation(
-    ::minecpp::proto::entity::v1::Rotation* rotation) {
+    ::minecpp::proto::common::v1::Rotation* rotation) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
   }
@@ -6692,9 +6692,9 @@ inline void SpawnPlayer::unsafe_arena_set_allocated_rotation(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.rotation)
 }
-inline ::minecpp::proto::entity::v1::Rotation* SpawnPlayer::release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* SpawnPlayer::release_rotation() {
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -6707,27 +6707,27 @@ inline ::minecpp::proto::entity::v1::Rotation* SpawnPlayer::release_rotation() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* SpawnPlayer::unsafe_arena_release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* SpawnPlayer::unsafe_arena_release_rotation() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnPlayer.rotation)
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* SpawnPlayer::_internal_mutable_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* SpawnPlayer::_internal_mutable_rotation() {
   
   if (_impl_.rotation_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Rotation>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
     _impl_.rotation_ = p;
   }
   return _impl_.rotation_;
 }
-inline ::minecpp::proto::entity::v1::Rotation* SpawnPlayer::mutable_rotation() {
-  ::minecpp::proto::entity::v1::Rotation* _msg = _internal_mutable_rotation();
+inline ::minecpp::proto::common::v1::Rotation* SpawnPlayer::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnPlayer.rotation)
   return _msg;
 }
-inline void SpawnPlayer::set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation) {
+inline void SpawnPlayer::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
@@ -6942,24 +6942,24 @@ inline void EntityMove::set_allocated_movement(::minecpp::proto::entity::v1::Mov
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.movement)
 }
 
-// .minecpp.proto.entity.v1.Rotation rotation = 4;
+// .minecpp.proto.common.v1.Rotation rotation = 4;
 inline bool EntityMove::_internal_has_rotation() const {
   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
 inline bool EntityMove::has_rotation() const {
   return _internal_has_rotation();
 }
-inline const ::minecpp::proto::entity::v1::Rotation& EntityMove::_internal_rotation() const {
-  const ::minecpp::proto::entity::v1::Rotation* p = _impl_.rotation_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Rotation&>(
-      ::minecpp::proto::entity::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& EntityMove::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-inline const ::minecpp::proto::entity::v1::Rotation& EntityMove::rotation() const {
+inline const ::minecpp::proto::common::v1::Rotation& EntityMove::rotation() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
   return _internal_rotation();
 }
 inline void EntityMove::unsafe_arena_set_allocated_rotation(
-    ::minecpp::proto::entity::v1::Rotation* rotation) {
+    ::minecpp::proto::common::v1::Rotation* rotation) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
   }
@@ -6971,9 +6971,9 @@ inline void EntityMove::unsafe_arena_set_allocated_rotation(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityMove::release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::release_rotation() {
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -6986,27 +6986,27 @@ inline ::minecpp::proto::entity::v1::Rotation* EntityMove::release_rotation() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityMove::unsafe_arena_release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::unsafe_arena_release_rotation() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityMove::_internal_mutable_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::_internal_mutable_rotation() {
   
   if (_impl_.rotation_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Rotation>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
     _impl_.rotation_ = p;
   }
   return _impl_.rotation_;
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityMove::mutable_rotation() {
-  ::minecpp::proto::entity::v1::Rotation* _msg = _internal_mutable_rotation();
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
   return _msg;
 }
-inline void EntityMove::set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation) {
+inline void EntityMove::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
@@ -7136,24 +7136,24 @@ inline void EntityLook::set_entity_id(uint32_t value) {
   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityLook.entity_id)
 }
 
-// .minecpp.proto.entity.v1.Rotation rotation = 3;
+// .minecpp.proto.common.v1.Rotation rotation = 3;
 inline bool EntityLook::_internal_has_rotation() const {
   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
 inline bool EntityLook::has_rotation() const {
   return _internal_has_rotation();
 }
-inline const ::minecpp::proto::entity::v1::Rotation& EntityLook::_internal_rotation() const {
-  const ::minecpp::proto::entity::v1::Rotation* p = _impl_.rotation_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Rotation&>(
-      ::minecpp::proto::entity::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& EntityLook::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-inline const ::minecpp::proto::entity::v1::Rotation& EntityLook::rotation() const {
+inline const ::minecpp::proto::common::v1::Rotation& EntityLook::rotation() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
   return _internal_rotation();
 }
 inline void EntityLook::unsafe_arena_set_allocated_rotation(
-    ::minecpp::proto::entity::v1::Rotation* rotation) {
+    ::minecpp::proto::common::v1::Rotation* rotation) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
   }
@@ -7165,9 +7165,9 @@ inline void EntityLook::unsafe_arena_set_allocated_rotation(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityLook::release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::release_rotation() {
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -7180,27 +7180,27 @@ inline ::minecpp::proto::entity::v1::Rotation* EntityLook::release_rotation() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityLook::unsafe_arena_release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::unsafe_arena_release_rotation() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityLook::_internal_mutable_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::_internal_mutable_rotation() {
   
   if (_impl_.rotation_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Rotation>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
     _impl_.rotation_ = p;
   }
   return _impl_.rotation_;
 }
-inline ::minecpp::proto::entity::v1::Rotation* EntityLook::mutable_rotation() {
-  ::minecpp::proto::entity::v1::Rotation* _msg = _internal_mutable_rotation();
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
   return _msg;
 }
-inline void EntityLook::set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation) {
+inline void EntityLook::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
@@ -7225,24 +7225,24 @@ inline void EntityLook::set_allocated_rotation(::minecpp::proto::entity::v1::Rot
 
 // PlayerPositionRotation
 
-// .minecpp.proto.entity.v1.Position position = 1;
+// .minecpp.proto.common.v1.Vector3 position = 1;
 inline bool PlayerPositionRotation::_internal_has_position() const {
   return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
 inline bool PlayerPositionRotation::has_position() const {
   return _internal_has_position();
 }
-inline const ::minecpp::proto::entity::v1::Position& PlayerPositionRotation::_internal_position() const {
-  const ::minecpp::proto::entity::v1::Position* p = _impl_.position_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Position&>(
-      ::minecpp::proto::entity::v1::_Position_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3& PlayerPositionRotation::_internal_position() const {
+  const ::minecpp::proto::common::v1::Vector3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3&>(
+      ::minecpp::proto::common::v1::_Vector3_default_instance_);
 }
-inline const ::minecpp::proto::entity::v1::Position& PlayerPositionRotation::position() const {
+inline const ::minecpp::proto::common::v1::Vector3& PlayerPositionRotation::position() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
   return _internal_position();
 }
 inline void PlayerPositionRotation::unsafe_arena_set_allocated_position(
-    ::minecpp::proto::entity::v1::Position* position) {
+    ::minecpp::proto::common::v1::Vector3* position) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
   }
@@ -7254,9 +7254,9 @@ inline void PlayerPositionRotation::unsafe_arena_set_allocated_position(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
 }
-inline ::minecpp::proto::entity::v1::Position* PlayerPositionRotation::release_position() {
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::release_position() {
   
-  ::minecpp::proto::entity::v1::Position* temp = _impl_.position_;
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
   _impl_.position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -7269,27 +7269,27 @@ inline ::minecpp::proto::entity::v1::Position* PlayerPositionRotation::release_p
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Position* PlayerPositionRotation::unsafe_arena_release_position() {
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::unsafe_arena_release_position() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
   
-  ::minecpp::proto::entity::v1::Position* temp = _impl_.position_;
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
   _impl_.position_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Position* PlayerPositionRotation::_internal_mutable_position() {
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::_internal_mutable_position() {
   
   if (_impl_.position_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Position>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
     _impl_.position_ = p;
   }
   return _impl_.position_;
 }
-inline ::minecpp::proto::entity::v1::Position* PlayerPositionRotation::mutable_position() {
-  ::minecpp::proto::entity::v1::Position* _msg = _internal_mutable_position();
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::mutable_position() {
+  ::minecpp::proto::common::v1::Vector3* _msg = _internal_mutable_position();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
   return _msg;
 }
-inline void PlayerPositionRotation::set_allocated_position(::minecpp::proto::entity::v1::Position* position) {
+inline void PlayerPositionRotation::set_allocated_position(::minecpp::proto::common::v1::Vector3* position) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
@@ -7310,24 +7310,24 @@ inline void PlayerPositionRotation::set_allocated_position(::minecpp::proto::ent
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
 }
 
-// .minecpp.proto.entity.v1.Rotation rotation = 2;
+// .minecpp.proto.common.v1.Rotation rotation = 2;
 inline bool PlayerPositionRotation::_internal_has_rotation() const {
   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
 inline bool PlayerPositionRotation::has_rotation() const {
   return _internal_has_rotation();
 }
-inline const ::minecpp::proto::entity::v1::Rotation& PlayerPositionRotation::_internal_rotation() const {
-  const ::minecpp::proto::entity::v1::Rotation* p = _impl_.rotation_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Rotation&>(
-      ::minecpp::proto::entity::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& PlayerPositionRotation::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-inline const ::minecpp::proto::entity::v1::Rotation& PlayerPositionRotation::rotation() const {
+inline const ::minecpp::proto::common::v1::Rotation& PlayerPositionRotation::rotation() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
   return _internal_rotation();
 }
 inline void PlayerPositionRotation::unsafe_arena_set_allocated_rotation(
-    ::minecpp::proto::entity::v1::Rotation* rotation) {
+    ::minecpp::proto::common::v1::Rotation* rotation) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
   }
@@ -7339,9 +7339,9 @@ inline void PlayerPositionRotation::unsafe_arena_set_allocated_rotation(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
 }
-inline ::minecpp::proto::entity::v1::Rotation* PlayerPositionRotation::release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::release_rotation() {
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -7354,27 +7354,27 @@ inline ::minecpp::proto::entity::v1::Rotation* PlayerPositionRotation::release_r
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* PlayerPositionRotation::unsafe_arena_release_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::unsafe_arena_release_rotation() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
   
-  ::minecpp::proto::entity::v1::Rotation* temp = _impl_.rotation_;
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
   _impl_.rotation_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::entity::v1::Rotation* PlayerPositionRotation::_internal_mutable_rotation() {
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::_internal_mutable_rotation() {
   
   if (_impl_.rotation_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Rotation>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
     _impl_.rotation_ = p;
   }
   return _impl_.rotation_;
 }
-inline ::minecpp::proto::entity::v1::Rotation* PlayerPositionRotation::mutable_rotation() {
-  ::minecpp::proto::entity::v1::Rotation* _msg = _internal_mutable_rotation();
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
   return _msg;
 }
-inline void PlayerPositionRotation::set_allocated_rotation(::minecpp::proto::entity::v1::Rotation* rotation) {
+inline void PlayerPositionRotation::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);

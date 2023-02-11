@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseVector.h"
+#include <minecpp/proto/common/v1/Common.pb.h>
 
 namespace minecpp::math {
 
@@ -17,6 +18,20 @@ class BaseVector<TValue, 3>
    BaseVector<TValue, 2> flat() const
    {
       return {x(), z()};
+   }
+
+   [[nodiscard]] static SelfType from_proto(const proto::common::v1::Vector3 &proto_vec)
+   {
+      return {proto_vec.x(), proto_vec.y(), proto_vec.z()};
+   }
+
+   [[nodiscard]] proto::common::v1::Vector3 to_proto() const
+   {
+      proto::common::v1::Vector3 result;
+      result.set_x(this->x());
+      result.set_y(this->y());
+      result.set_z(this->z());
+      return result;
    }
 };
 

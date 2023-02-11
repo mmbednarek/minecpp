@@ -5,6 +5,7 @@
       "minecpp_api_proto",
       "minecpp_api_nbt",
       "minecpp_chat",
+      "minecpp_math",
       "minecpp_utils"
     ],
     "private": [

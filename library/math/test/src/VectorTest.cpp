@@ -90,6 +90,7 @@ TEST(MathTest, Math_Vector3)
    Vector3 vec1{3, 4, 5};
    EXPECT_EQ(vec1.x(), 3);
    EXPECT_EQ(vec1.y(), 4);
+   EXPECT_EQ(vec1.sum(), 3 + 4 + 5);
 
    Vector3 vec2{-1, 2, 1};
    EXPECT_EQ(vec2.x(), -1);

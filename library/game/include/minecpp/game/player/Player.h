@@ -4,7 +4,7 @@
 #include "Tracking.h"
 #include <minecpp/game/Mode.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
-#include <minecpp/util/Vec.h>
+#include <minecpp/math/Vector3.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -85,7 +85,7 @@ class Player
    Inventory m_inventory;
 
  public:
-   Player(Id id, std::string_view name, const util::Vec3 &pos, game::Notifier &notifier);
+   Player(Id id, std::string_view name, const math::Vector3 &pos, game::Notifier &notifier);
 
    [[nodiscard]] constexpr Id id() const
    {
@@ -147,7 +147,7 @@ class Player
       };
    }
 
-   void on_movement(game::World &w, util::Vec3 pos);
+   void on_movement(game::World &w, math::Vector3 pos);
    mb::result<mb::empty> load_chunks(game::World &w);
 
    static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name,

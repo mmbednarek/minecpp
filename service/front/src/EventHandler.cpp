@@ -378,7 +378,7 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
 void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
                                              const event::RecipientList &recipient_list)
 {
-   assert(recipient_list.size() == 1);
+   assert(recipient_list.list.size() == 1);
 
    const auto player_id = recipient_list.list.front();
 

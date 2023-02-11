@@ -2,7 +2,6 @@
 #include "Entities.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/core.h>
-#include <fstream>
 #include <minecpp/game/World.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/util/Compression.h>
@@ -35,14 +34,14 @@ mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(gam
 {
    minecpp::nbt::player::v1::Player data;
 
-   util::Vec3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
-                  static_cast<double>(m_spawn_position.z)};
+   math::Vector3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
+                     static_cast<double>(m_spawn_position.z)};
 
    data.uuid = game::player::write_id_to_nbt(id);
    data.pos.resize(3);
-   data.pos[0]              = pos.x;
-   data.pos[1]              = pos.y;
-   data.pos[2]              = pos.z;
+   data.pos[0]              = pos.x();
+   data.pos[1]              = pos.y();
+   data.pos[2]              = pos.z();
    data.abilities.mayfly    = true;
    data.abilities.flying    = true;
    data.abilities.fly_speed = 0.08f;

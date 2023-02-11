@@ -43,26 +43,26 @@ message AddPlayer {
 message SpawnPlayer {
   player.v1.PlayerId player_id = 1;
   uint32 entity_id = 2;
-  entity.v1.Position position = 3;
-  entity.v1.Rotation rotation = 4;
+  common.v1.Vector3 position = 3;
+  common.v1.Rotation rotation = 4;
 }
 
 message EntityMove {
   player.v1.PlayerId player_id = 1;
   uint32 entity_id = 2;
   entity.v1.Movement movement = 3;
-  entity.v1.Rotation rotation = 4;
+  common.v1.Rotation rotation = 4;
 }
 
 message EntityLook {
   player.v1.PlayerId player_id = 1;
   uint32 entity_id = 2;
-  entity.v1.Rotation rotation = 3;
+  common.v1.Rotation rotation = 3;
 }
 
 message PlayerPositionRotation {
-  entity.v1.Position position = 1;
-  entity.v1.Rotation rotation = 2;
+  common.v1.Vector3 position = 1;
+  common.v1.Rotation rotation = 2;
 }
 
 message SetSpawnPosition {

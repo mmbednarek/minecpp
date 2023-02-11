@@ -79,7 +79,7 @@ std::optional<BlockStateId> Door::on_neighbour_change(World & /*world*/, BlockSt
 }
 
 bool Door::on_player_action(World &world, PlayerId /*player_id*/, BlockStateId block_state_id,
-                            BlockPosition position, Face /*face*/, util::Vec3 /*crosshair_position*/)
+                            BlockPosition position, Face /*face*/, math::Vector3 /*crosshair_position*/)
 {
    BlockState state{block_state_id};
    auto open = state.get<bool>("open");

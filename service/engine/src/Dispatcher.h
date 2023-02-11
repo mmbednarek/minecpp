@@ -33,7 +33,7 @@ class Dispatcher : public minecpp::game::Notifier
                     const game::entity::Rotation &rotation) override;
 
    void add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping) override;
-   void spawn_player(game::PlayerId player_id, mb::u32 entity_id, minecpp::util::Vec3 position,
+   void spawn_player(game::PlayerId player_id, mb::u32 entity_id, math::Vector3 position,
                      const game::entity::Rotation &rotation) override;
    void remove_player(game::PlayerId player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
@@ -57,7 +57,7 @@ class Dispatcher : public minecpp::game::Notifier
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
-   void synchronise_player_position_and_rotation(game::PlayerId player_id, minecpp::util::Vec3 position,
+   void synchronise_player_position_and_rotation(game::PlayerId player_id, math::Vector3 position,
                                                  float yaw, float pitch) override;
    void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle) override;
    void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id, game::EquipmentSlot slot,
