@@ -63,7 +63,7 @@ Writer AcknowledgeBlockChanges::serialize() const
    return w;
 }
 
-Writer AnimateHand::serialize() const
+Writer AnimateEntity::serialize() const
 {
    // 1.19.3 OK
    Writer w;
@@ -177,26 +177,26 @@ Writer UpdateBlockLight::serialize() const
    w.write_varint(static_cast<mb::u32>(chunk_position.z));
 
    uint32_t block_light_count = 0;
-   uint32_t blockUpdateMask   = 0;
-   uint32_t blockResetMask    = 0;
+   uint32_t block_update_mask = 0;
+   uint32_t block_reset_mask  = 0;
 
    for (auto const &pair : block_light) {
       auto place = static_cast<uint8_t>(static_cast<char>(pair.first) + 1);
       if (pair.second.empty()) {
-         blockResetMask |= 1u << place;
+         block_reset_mask |= 1u << place;
       } else {
          ++block_light_count;
-         blockUpdateMask |= 1u << place;
+         block_update_mask |= 1u << place;
       }
    }
 
    w.write_byte(1);// Trust edges
    w.write_varint(0);
    w.write_varint(1);
-   w.write_long(blockUpdateMask);
+   w.write_long(block_update_mask);
    w.write_varint(0);
    w.write_varint(1);
-   w.write_long(blockResetMask);
+   w.write_long(block_reset_mask);
 
    w.write_varint(0);
    w.write_varint(block_light_count);
@@ -469,6 +469,17 @@ Writer SetEquipment::serialize() const
       w.write_byte(static_cast<std::uint8_t>(count));
       w.write_byte(0);
    }
+   return w;
+}
+
+Writer SetHealth::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x53);
+   w.write_float(health);
+   w.write_varint(static_cast<mb::u32>(food));
+   w.write_float(food_saturation);
    return w;
 }
 

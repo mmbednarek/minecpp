@@ -72,3 +72,11 @@ message ChangeHeldItem {
 message IssueCommand  {
   string command = 1;
 }
+
+message Interact  {
+  uint32 entity_id = 1;
+  common.v1.InteractionType interaction_type = 2;
+  common.v1.Vector3f position = 3;
+  common.v1.HandType hand_type = 4;
+  bool is_sneaking = 5;
+}

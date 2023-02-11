@@ -23,6 +23,7 @@ mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::stri
    auto entity_id   = m_entities.spawn(Entity::from_player_nbt(player_data));
    auto player      = game::player::Player::from_nbt(player_data, name, w.notifier());
    player.set_entity_id(entity_id);
+   m_player_entity_map[entity_id] = id;
 
    m_id_map[minecpp::util::write_uuid(id)] = m_players.size();
    m_players.emplace_back(std::move(player));
@@ -103,6 +104,13 @@ std::vector<game::player::Status> PlayerManager::player_status_list() const
                      };
                   });
    return status_list;
+}
+
+std::optional<game::PlayerId> PlayerManager::get_player_id_by_entity_id(game::EntityId id)
+{
+   if (not m_player_entity_map.contains(id))
+      return std::nullopt;
+   return m_player_entity_map.at(id);
 }
 
 }// namespace minecpp::service::engine

@@ -35,7 +35,9 @@ class Notifier
    virtual void entity_look(PlayerId player, mb::u32 entity_id, const entity::Rotation &rotation)         = 0;
    virtual void remove_player(PlayerId player, mb::u32 entity_id)                                         = 0;
    virtual void update_block(game::BlockPosition block, game::BlockStateId state)                         = 0;
-   virtual void animate_hand(PlayerId player, mb::u32 entity_id, mb::u32 hand)                            = 0;
+   virtual void animate_entity(game::EntityId entity_id, game::EntityAnimation animation)                 = 0;
+   virtual void animate_player_entity(game::PlayerId player_id, game::EntityId entity_id,
+                                      game::EntityAnimation animation)                                    = 0;
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                             = 0;
    virtual void unload_chunk(PlayerId player, const game::ChunkPosition &chunk_position)                  = 0;
    virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, std::size_t count) = 0;
@@ -46,6 +48,8 @@ class Notifier
    virtual void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle)   = 0;
    virtual void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id,
                                      game::EquipmentSlot slot, game::ItemSlot item)                       = 0;
+   virtual void set_health_and_food(game::PlayerId player_id, float health, int food,
+                                    float food_saturation)                                                = 0;
 };
 
 }// namespace minecpp::game

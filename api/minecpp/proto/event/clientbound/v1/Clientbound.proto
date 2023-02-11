@@ -85,10 +85,9 @@ message UpdateBlock {
   uint32 state = 2;
 }
 
-message AnimateHand {
-  player.v1.PlayerId player_id = 1;
-  uint32 entity_id = 2;
-  uint32 hand = 3;
+message AnimateEntity {
+  uint32 entity_id = 1;
+  common.v1.EntityAnimation animation = 2;
 }
 
 message AcknowledgeBlockChange {
@@ -166,4 +165,10 @@ message SetEntityEquipment {
   uint32 entity_id = 1;
   entity.v1.EquipmentSlot equipment_slot = 2;
   player.v1.Slot item = 3;
+}
+
+message SetHealth {
+  float health = 1;
+  int32 food = 2;
+  float food_saturation = 3;
 }

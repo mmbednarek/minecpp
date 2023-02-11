@@ -49,6 +49,7 @@ struct Vec3
    Vec3 operator*(double value) const;
    Vec3 operator/(double value) const;
    Vec3 operator-(Vec3 value) const;
+   Vec3 operator+(Vec3 value) const;
 
    constexpr Vec3 operator/(const Vec3 &other) const
    {

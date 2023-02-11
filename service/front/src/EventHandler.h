@@ -26,53 +26,47 @@ class EventHandler
       m_stream = stream;
    }
 
-   void handle_add_player(const clientbound_v1::AddPlayer &msg,
-                          const std::vector<game::player::Id> &player_ids);
+   void handle_add_player(const clientbound_v1::AddPlayer &msg, const event::RecipientList &recipient_list);
    void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
-                            const std::vector<game::player::Id> &player_ids);
-   void handle_entity_move(const clientbound_v1::EntityMove &pos,
-                           const std::vector<game::player::Id> &player_ids);
-   void handle_entity_look(const clientbound_v1::EntityLook &pos,
-                           const std::vector<game::player::Id> &player_ids);
-   void handle_chat(const clientbound_v1::Chat &chat_msg, const std::vector<game::player::Id> &player_ids);
+                            const event::RecipientList &recipient_list);
+   void handle_entity_move(const clientbound_v1::EntityMove &pos, const event::RecipientList &recipient_list);
+   void handle_entity_look(const clientbound_v1::EntityLook &pos, const event::RecipientList &recipient_list);
+   void handle_chat(const clientbound_v1::Chat &chat_msg, const event::RecipientList &recipient_list);
    void handle_remove_player(const clientbound_v1::RemovePlayer &msg,
-                             const std::vector<game::player::Id> &player_ids);
+                             const event::RecipientList &recipient_list);
    void handle_update_block(const clientbound_v1::UpdateBlock &msg,
-                            const std::vector<game::player::Id> &player_ids);
-   void handle_animate_hand(const clientbound_v1::AnimateHand &msg,
-                            const std::vector<game::player::Id> &player_ids);
+                            const event::RecipientList &recipient_list);
+   void handle_animate_entity(const clientbound_v1::AnimateEntity &msg,
+                              const event::RecipientList &recipient_list);
    void handle_acknowledge_block_change(const clientbound_v1::AcknowledgeBlockChange &msg,
-                                        const std::vector<game::player::Id> &player_ids);
+                                        const event::RecipientList &recipient_list);
    void handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
-                            const std::vector<game::player::Id> &player_ids);
+                            const event::RecipientList &recipient_list);
    void handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
-                               const std::vector<game::player::Id> &player_ids);
+                               const event::RecipientList &recipient_list);
    void handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg,
-                                       const std::vector<game::player::Id> &player_ids);
+                                       const event::RecipientList &recipient_list);
    void handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
-                            const std::vector<game::player::Id> &player_ids);
+                            const event::RecipientList &recipient_list);
    void handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
-                             const std::vector<game::player::Id> &player_ids);
-   void handle_deny_player(const clientbound_v1::DenyPlayer &msg,
-                           const std::vector<game::player::Id> &player_ids);
-   void handle_player_list(const clientbound_v1::PlayerList &msg,
-                           const std::vector<game::player::Id> &player_ids);
-   void handle_entity_list(const clientbound_v1::EntityList &msg,
-                           const std::vector<game::player::Id> &player_ids);
+                             const event::RecipientList &recipient_list);
+   void handle_deny_player(const clientbound_v1::DenyPlayer &msg, const event::RecipientList &recipient_list);
+   void handle_player_list(const clientbound_v1::PlayerList &msg, const event::RecipientList &recipient_list);
+   void handle_entity_list(const clientbound_v1::EntityList &msg, const event::RecipientList &recipient_list);
    void handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
-                                  const std::vector<game::player::Id> &player_ids);
+                                  const event::RecipientList &recipient_list);
    void handle_update_block_light(const clientbound_v1::UpdateBlockLight &msg,
-                                  const std::vector<game::player::Id> &player_ids);
-   void handle_chunk_data(const clientbound_v1::ChunkData &msg,
-                          const std::vector<game::player::Id> &player_ids);
+                                  const event::RecipientList &recipient_list);
+   void handle_chunk_data(const clientbound_v1::ChunkData &msg, const event::RecipientList &recipient_list);
    void handle_set_center_chunk(const clientbound_v1::SetCenterChunk &msg,
-                                const std::vector<game::player::Id> &player_ids);
+                                const event::RecipientList &recipient_list);
    void handle_player_position_rotation(const clientbound_v1::PlayerPositionRotation &msg,
-                                        const std::vector<game::player::Id> &player_ids);
+                                        const event::RecipientList &recipient_list);
    void handle_set_spawn_position(const clientbound_v1::SetSpawnPosition &msg,
-                                  const std::vector<game::player::Id> &player_ids);
+                                  const event::RecipientList &recipient_list);
    void handle_set_entity_equipment(const clientbound_v1::SetEntityEquipment &msg,
-                                    const std::vector<game::player::Id> &player_ids);
+                                    const event::RecipientList &recipient_list);
+   void handle_set_health(const clientbound_v1::SetHealth &msg, const event::RecipientList &recipient_list);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)
@@ -85,15 +79,15 @@ class EventHandler
    }
 
    template<typename T>
-   void send_message(const T &msg, const std::vector<game::player::Id> &player_ids)
+   void send_message_to_players(const T &msg, std::span<game::PlayerId> players)
    {
-      if (player_ids.empty()) {
-         send_message_to_all_players(msg);
-         return;
-      }
+      for (auto player_id : players) {
+         auto conn = m_server.connection_by_player_id(player_id);
+         if (not conn) {
+            spdlog::error("connection {} is null", game::player::format_player_id(player_id));
+            continue;
+         }
 
-      for (const auto &id : player_ids) {
-         auto conn = m_server.connection_by_player_id(id);
          send(conn, msg);
       }
    }
@@ -107,6 +101,16 @@ class EventHandler
          if (conn->uuid() == excluded)
             continue;
          send(conn, msg);
+      }
+   }
+
+   template<typename T>
+   void send_message(const T &msg, const event::RecipientList &recipient_list)
+   {
+      switch (recipient_list.type) {
+      case event::RecipientType::All: send_message_to_all_players(msg); break;
+      case event::RecipientType::Some: send_message_to_players(msg, recipient_list.list); break;
+      case event::RecipientType::Excluding: send_message_excluding(msg, recipient_list.list.front()); break;
       }
    }
 };

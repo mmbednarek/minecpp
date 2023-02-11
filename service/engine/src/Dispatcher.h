@@ -40,7 +40,9 @@ class Dispatcher : public minecpp::game::Notifier
    void send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
                          const std::string &msg) override;
    void acknowledge_block_change(game::PlayerId player_id, int sequence_id) override;
-   void animate_hand(game::PlayerId player_id, mb::u32 entity_id, mb::u32 hand) override;
+   void animate_entity(game::EntityId entity_id, game::EntityAnimation animation) override;
+   void animate_player_entity(game::PlayerId player_id, game::EntityId entity_id,
+                              game::EntityAnimation animation) override;
    void unload_chunk(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
 
    void player_list(game::PlayerId player_id, const std::vector<game::player::Status> &status_list);
@@ -60,6 +62,7 @@ class Dispatcher : public minecpp::game::Notifier
    void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle) override;
    void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id, game::EquipmentSlot slot,
                              game::ItemSlot item) override;
+   void set_health_and_food(game::PlayerId player_id, float health, int food, float food_saturation) override;
 
  private:
    EventManager &m_events;

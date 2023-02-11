@@ -100,7 +100,8 @@ Entity Entity::from_player_nbt(const nbt::player::v1::Player &player)
       entity.attributes.set_attribute(entity::to_attribute_name(at.name), at.base);
    }
 
-   entity.health            = player.health;
+   //   entity.health            = player.health;
+   entity.health            = 20.0f;
    entity.absorption_amount = player.absorption_amount;
    entity.fall_distance     = player.fall_distance;
    entity.air               = player.air;
@@ -121,6 +122,22 @@ Entity Entity::from_player_nbt(const nbt::player::v1::Player &player)
    entity.sync_tracking();
 
    return entity;
+}
+
+void Entity::damage(float value)
+{
+   if (health - value <= 0) {
+      health = 0;
+      // dieee
+      return;
+   }
+
+   health -= value;
+}
+
+float Entity::get_health() const
+{
+   return health;
 }
 
 }// namespace minecpp::game::entity

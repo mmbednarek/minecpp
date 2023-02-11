@@ -59,7 +59,7 @@ class Entity
    Attributes attributes;
    Tracking tracking{};
 
-   float health            = 10.0f;
+   float health            = 20.0f;
    float absorption_amount = 0.0f;
    float fall_distance     = 0;
 
@@ -90,6 +90,8 @@ class Entity
    void set_rot(float yaw, float pitch);
    void set_id(uint32_t id);
    uint32_t get_id();
+   void damage(float value);
+   [[nodiscard]] float get_health() const;
 
    Movement process_movement();
    void sync_tracking();

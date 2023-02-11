@@ -108,3 +108,23 @@ message LightSource {
   common.v1.BlockPosition position = 1;
   int32 strength = 2;
 }
+
+enum InteractionType {
+  Interact = 0;
+  Attack = 1;
+  InteractAt = 2;
+}
+
+enum HandType {
+  MainHand = 0;
+  OffHand = 1;
+}
+
+enum EntityAnimation {
+  SwingMainArm = 0;
+  TakeDamage = 1;
+  LeaveBed = 2;
+  SwingOffHand = 3;
+  CriticalEffect = 4;
+  MagicCriticalEffect = 5;
+}
