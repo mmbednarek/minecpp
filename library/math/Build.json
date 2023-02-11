@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_math",
+  "header_only": true,
+  "tests": true,
+  "dependencies": {
+    "interface": [
+      "minecpp_api_proto"
+    ]
+  }
+}

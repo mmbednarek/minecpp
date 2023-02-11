@@ -15,6 +15,7 @@ target_link_libraries(minecpp_world
         minecpp_api_proto
         minecpp_container
         minecpp_game
+        minecpp_math
         minecpp_random
         minecpp_repository
         minecpp_squeezed

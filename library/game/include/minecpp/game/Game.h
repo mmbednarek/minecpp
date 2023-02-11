@@ -6,7 +6,8 @@
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 #include <minecpp/util/Uuid.h>
-#include <minecpp/util/Vec.h>
+#include <minecpp/math/Vector2.h>
+#include <minecpp/math/Vector3.h>
 #include <optional>
 #include <string_view>
 
@@ -326,17 +327,17 @@ struct BlockPosition
       return {x, y, z};
    }
 
-   [[nodiscard]] constexpr util::Vec3 to_vec3() const
+   [[nodiscard]] constexpr math::Vector3 to_vec3() const
    {
       return {static_cast<double>(x), static_cast<double>(y), static_cast<double>(z)};
    }
 
-   static BlockPosition from_vec3(const util::Vec3 &position)
+   static BlockPosition from_vec3(const math::Vector3 &position)
    {
       return {
-              static_cast<int>(position.x),
-              static_cast<int>(position.y),
-              static_cast<int>(position.z),
+              static_cast<int>(position.x()),
+              static_cast<int>(position.y()),
+              static_cast<int>(position.z()),
       };
    }
 
@@ -380,9 +381,9 @@ struct ChunkPosition
    {
    }
 
-   constexpr explicit ChunkPosition(const util::Vec2 &v) :
-       x(static_cast<int>(v.x)),
-       z(static_cast<int>(v.z))
+   constexpr explicit ChunkPosition(const math::Vector2 &v) :
+       x(static_cast<int>(v.x())),
+       z(static_cast<int>(v.y()))
    {
    }
 
@@ -410,9 +411,9 @@ struct ChunkPosition
       return block_x >= left && block_x < right && block_z >= bottom && block_z < top;
    }
 
-   static inline ChunkPosition from_position(const util::Vec3 &v)
+   static inline ChunkPosition from_position(const math::Vector3 &v)
    {
-      return ChunkPosition((v.flat() / util::Vec2(g_chunk_width, g_chunk_depth)).truncate());
+      return ChunkPosition((v.flat() / math::Vector2{g_chunk_width, g_chunk_depth}).floor());
    }
 
    [[nodiscard]] static inline ChunkPosition from_proto(const proto::common::v1::ChunkPosition &pos)
@@ -582,16 +583,16 @@ class Direction final : public Direction_Base
       assert(false && "not reachable");
    }
 
-   [[nodiscard]] static constexpr Direction from_vec2(const util::Vec2 &vec)
+   [[nodiscard]] static constexpr Direction from_vec2(const math::Vector2 &vec)
    {
-      bool x_dominant = std::abs(vec.x) > std::abs(vec.z);
+      bool x_dominant = std::abs(vec.x()) > std::abs(vec.y());
       if (x_dominant) {
-         if (vec.x > 0.0)
+         if (vec.x() > 0.0)
             return Direction::East;
          return Direction::West;
       }
 
-      if (vec.z > 0.0)
+      if (vec.y() > 0.0)
          return Direction::South;
       return Direction::North;
    }
@@ -651,20 +652,6 @@ class Direction final : public Direction_Base
    }
 
    return std::nullopt;
-}
-
-[[nodiscard]] constexpr Direction direction_from_vec2(const util::Vec2 &vec)
-{
-   bool x_dominant = std::abs(vec.x) > std::abs(vec.z);
-   if (x_dominant) {
-      if (vec.x > 0.0)
-         return Direction::East;
-      return Direction::West;
-   }
-
-   if (vec.z > 0.0)
-      return Direction::South;
-   return Direction::North;
 }
 
 enum class LightTypeValue

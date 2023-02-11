@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_math_test",
+  "dependencies": {
+    "public": [
+      "minecpp_math",
+      "gtest",
+      "gtest_main"
+    ]
+  }
+}

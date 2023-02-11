@@ -38,7 +38,7 @@ concept ClientboundVisitor =
         };
 
 template<typename TEvent, typename TVisitor, typename TCallback>
-RecipientList visit_event_type(const clientbound_v1::Event &event, TVisitor *visitor, TCallback callback)
+void visit_event_type(const clientbound_v1::Event &event, TVisitor *visitor, TCallback callback)
 {
    TEvent target_event;
    event.payload().UnpackTo(&target_event);
@@ -75,9 +75,6 @@ RecipientList visit_event_type(const clientbound_v1::Event &event, TVisitor *vis
    }
    default: break;
    }
-
-   assert(false);
-   return {};
 }
 
 #define MINECPP_EVENT_HANDLE_CLIENTBOUND(event_type, handler_method)                              \

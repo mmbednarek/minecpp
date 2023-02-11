@@ -1,7 +1,7 @@
 #pragma once
 #include <mb/result.h>
 #include <minecpp/game/Game.h>
-#include <minecpp/util/Vec.h>
+#include <minecpp/math/Vector3.h>
 #include <mutex>
 
 namespace minecpp::game {
@@ -20,10 +20,10 @@ class Tracking
    int m_radius{};
 
  public:
-   explicit Tracking(const util::Vec3 &position, int radius);
+   explicit Tracking(const math::Vector3 &position, int radius);
 
    mb::result<mb::empty> load_chunks(game::World &world, Player &player);
-   void on_movement(game::World &world, Player &player, util::Vec3 position);
+   void on_movement(game::World &world, Player &player, math::Vector3 position);
 };
 
 }// namespace minecpp::game::player

@@ -1,18 +1,8 @@
 syntax = "proto3";
 package minecpp.proto.entity.v1;
 
+import "minecpp/proto/common/v1/Common.proto";
 import "minecpp/proto/player/v1/Id.proto";
-
-message Position {
-  double x = 1;
-  double y = 2;
-  double z = 3;
-}
-
-message Rotation {
-  float yaw = 1;
-  float pitch = 2;
-}
 
 message Movement {
   int32 x = 1;
@@ -23,8 +13,8 @@ message Movement {
 message Entity {
   player.v1.PlayerId id = 1;
   uint32 entity_id = 2;
-  Position position = 3;
-  Rotation rotation = 4;
+  common.v1.Vector3 position = 3;
+  common.v1.Rotation rotation = 4;
 }
 
 enum EquipmentSlot {

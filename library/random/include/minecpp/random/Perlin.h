@@ -1,6 +1,6 @@
 #pragma once
+#include <minecpp/math/Vector2.h>
 #include <minecpp/random/Random.h>
-#include <minecpp/util/Vec.h>
 
 namespace minecpp::random {
 
@@ -12,9 +12,9 @@ class Perlin
  public:
    explicit Perlin(Random &rand);
 
-   [[nodiscard]] double dot_grad(int x, int z, minecpp::util::Vec2 pos);
-   [[nodiscard]] double at(minecpp::util::Vec2 pos);
-   [[nodiscard]] minecpp::util::Vec2 grad(int x, int z);
+   [[nodiscard]] double dot_grad(int x, int z, minecpp::math::Vector2 pos);
+   [[nodiscard]] double at(minecpp::math::Vector2 pos);
+   [[nodiscard]] minecpp::math::Vector2 grad(int x, int z);
 };
 
 class DisplacedPerlin
@@ -25,13 +25,13 @@ class DisplacedPerlin
 
    double scale;
    double amp;
-   minecpp::util::Vec2 move_dis_x;
-   minecpp::util::Vec2 move_dis_z;
+   minecpp::math::Vector2 move_dis_x;
+   minecpp::math::Vector2 move_dis_z;
 
  public:
    explicit DisplacedPerlin(Random &rand, double scale, double amp);
 
-   [[nodiscard]] double at(minecpp::util::Vec2 pos);
+   [[nodiscard]] double at(minecpp::math::Vector2 pos);
 };
 
 }// namespace minecpp::random

@@ -5,7 +5,7 @@
 
 namespace minecpp::game::player {
 
-Player::Player(Id id, std::string_view name, const util::Vec3 &pos, game::Notifier &notifier) :
+Player::Player(Id id, std::string_view name, const math::Vector3 &pos, game::Notifier &notifier) :
     m_id(id),
     m_name(name),
     m_tracking(std::make_unique<Tracking>(pos, 16)),
@@ -13,7 +13,7 @@ Player::Player(Id id, std::string_view name, const util::Vec3 &pos, game::Notifi
 {
 }
 
-void Player::on_movement(game::World &w, util::Vec3 pos)
+void Player::on_movement(game::World &w, math::Vector3 pos)
 {
    m_tracking->on_movement(w, *this, pos);
 }
@@ -52,7 +52,7 @@ minecpp::proto::player::v1::Abilities Abilities::to_proto() const
 Player Player::from_nbt(const nbt::player::v1::Player &player, const std::string &name,
                         game::Notifier &notifier)
 {
-   Player result(read_id_from_nbt(player.uuid), name, util::Vec3::from_nbt(player.pos), notifier);
+   Player result(read_id_from_nbt(player.uuid), name, math::Vector3{player.pos[0], player.pos[1], player.pos[2]}, notifier);
    result.m_xp_total                = player.xp_total;
    result.m_xp_points               = player.xp_p;
    result.m_xp_seed                 = player.xp_seed;
@@ -78,9 +78,9 @@ proto::player::v1::Player Player::to_proto(const game::entity::Entity &entity) c
    result.set_name(m_name);
    result.set_game_mode(game::write_mode_to_proto(m_game_mode));
    auto pos = entity.get_pos();
-   result.mutable_position()->set_x(pos.x);
-   result.mutable_position()->set_y(pos.y);
-   result.mutable_position()->set_z(pos.z);
+   result.mutable_position()->set_x(pos.x());
+   result.mutable_position()->set_y(pos.y());
+   result.mutable_position()->set_z(pos.z());
    result.mutable_rotation()->set_yaw(entity.get_yaw());
    result.mutable_rotation()->set_pitch(entity.get_pitch());
    *result.mutable_abilities() = m_abilities.to_proto();

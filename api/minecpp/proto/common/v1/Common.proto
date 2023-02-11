@@ -29,6 +29,17 @@ message Gameplay {
   Difficulty difficulty = 10;
 }
 
+message Vector3 {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Rotation {
+  float yaw = 1;
+  float pitch = 2;
+}
+
 message Vector3f {
   float x = 1;
   float y = 2;

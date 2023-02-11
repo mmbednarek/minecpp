@@ -7,7 +7,6 @@
 #include <minecpp/util/Concepts.h>
 #include <minecpp/util/Format.h>
 #include <minecpp/util/Reader.h>
-#include <minecpp/util/Vec.h>
 #include <numeric>
 #include <string>
 
@@ -71,7 +70,6 @@ class Reader : private minecpp::util::Reader
    TagHeader peek_tag();
    ListHeader peek_list();
    void check_signature();
-   minecpp::util::Vec3 read_vec3();
 
    template<std::size_t s>
    std::array<uint8_t, s> read_array();

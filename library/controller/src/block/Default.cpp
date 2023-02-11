@@ -38,7 +38,7 @@ std::optional<game::BlockStateId> Default::on_neighbour_change(game::World &, ga
 
 bool Default::on_player_action(game::World &world, game::PlayerId player_id,
                                game::BlockStateId block_state_id, game::BlockPosition position,
-                               game::Face face, util::Vec3 crosshair_position)
+                               game::Face face, math::Vector3 crosshair_position)
 {
    return false;
 }

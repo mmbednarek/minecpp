@@ -194,7 +194,7 @@ void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPos
                                               game::PlayerId player_id)
 {
    auto &entity         = MB_ESCAPE(m_player_manager.get_entity(player_id));
-   auto player_position = game::entity::read_entity_position(event.position());
+   auto player_position = math::Vector3::from_proto(event.position());
    entity.set_pos(m_dispatcher, player_position);
    MB_ESCAPE(m_player_manager.get_player(player_id)).on_movement(m_world, player_position);
 }

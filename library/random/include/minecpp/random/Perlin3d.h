@@ -1,6 +1,6 @@
 #pragma once
 #include "Random.h"
-#include <minecpp/util/Vec.h>
+#include <minecpp/math/Vector3.h>
 
 namespace minecpp::random {
 
@@ -12,9 +12,9 @@ class Perlin3d
  public:
    explicit Perlin3d(Random &rand);
 
-   [[nodiscard]] double dot_grad(int x, int y, int z, minecpp::util::Vec3 pos);
-   [[nodiscard]] double at(minecpp::util::Vec3 pos);
-   [[nodiscard]] minecpp::util::Vec3 grad(int x, int y, int z);
+   [[nodiscard]] double dot_grad(int x, int y, int z, minecpp::math::Vector3 pos);
+   [[nodiscard]] double at(minecpp::math::Vector3 pos);
+   [[nodiscard]] minecpp::math::Vector3 grad(int x, int y, int z);
 };
 
 }// namespace minecpp::random

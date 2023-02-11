@@ -23,7 +23,7 @@ std::optional<game::BlockStateId> BlockManager::on_neighbour_change(game::World 
 
 bool BlockManager::on_player_action(game::World &world, game::PlayerId player_id,
                                     game::BlockStateId block_state_id, game::BlockPosition position,
-                                    game::Face face, util::Vec3 crosshair_position)
+                                    game::Face face, math::Vector3 crosshair_position)
 {
    auto [block_id, block_state] = repository::StateManager::the().parse_block_id(block_state_id);
    return controller(block_id).on_player_action(world, player_id, block_state_id, position, face,

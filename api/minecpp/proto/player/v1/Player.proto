@@ -2,7 +2,6 @@ syntax = "proto3";
 package minecpp.proto.player.v1;
 
 import "minecpp/proto/common/v1/Common.proto";
-import "minecpp/proto/entity/v1/Entity.proto";
 import "minecpp/proto/player/v1/Id.proto";
 
 message Status {
@@ -15,8 +14,8 @@ message Status {
 message Player {
   string name = 1;
   uint32 entity_id = 2;
-  entity.v1.Position position = 3;
-  entity.v1.Rotation rotation = 4;
+  common.v1.Vector3 position = 3;
+  common.v1.Rotation rotation = 4;
   Abilities abilities = 5;
   RecipeBook recipe_book = 6;
   common.v1.GameMode game_mode = 7;

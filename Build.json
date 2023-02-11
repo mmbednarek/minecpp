@@ -12,6 +12,7 @@
     "game",
     "grpc",
     "lexer",
+    "math",
     "nbt",
     "network",
     "random",
