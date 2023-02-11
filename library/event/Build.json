@@ -1,7 +1,8 @@
 {
   "name": "minecpp_event",
+  "header_only": true,
   "dependencies": {
-    "public": [
+    "interface": [
       "minecpp_game"
     ]
   }
