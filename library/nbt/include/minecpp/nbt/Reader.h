@@ -7,7 +7,6 @@
 #include <minecpp/util/Concepts.h>
 #include <minecpp/util/Format.h>
 #include <minecpp/util/Reader.h>
-#include <minecpp/util/Vec.h>
 #include <numeric>
 #include <string>
 

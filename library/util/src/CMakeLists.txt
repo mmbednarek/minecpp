@@ -14,7 +14,6 @@ target_sources(minecpp_utils PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/String.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Time.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Uuid.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Vec.cpp
 
         # Header files
         ${MINECPP_UTIL_INCLUDE_DIR}/Compression.h
@@ -33,6 +32,5 @@ target_sources(minecpp_utils PUBLIC
         ${MINECPP_UTIL_INCLUDE_DIR}/Time.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Util.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Uuid.h
-        ${MINECPP_UTIL_INCLUDE_DIR}/Vec.h
 )
 
