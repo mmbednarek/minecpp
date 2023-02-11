@@ -20,6 +20,8 @@ struct LightSpreadNode
    game::BlockPosition position;
    game::LightValue value{};
    LightSpreadNodeType type{};
+
+   LightSpreadNode(const game::BlockPosition &position, unsigned char value, LightSpreadNodeType type);
 };
 
 class LightSystem final : public game::ILightSystem
@@ -40,9 +42,6 @@ class LightSystem final : public game::ILightSystem
                         LightSpreadNodeType type, std::queue<LightSpreadNode> &queue);
 
    mb::emptyres flood_light(game::LightType light_type, std::queue<LightSpreadNode> &queue);
-
-   static game::SectionRange find_sections_affected_by_light_source(game::BlockPosition light_source_position,
-                                                                    int strength);
 
    game::IBlockContainer &m_container;
 };

@@ -7,6 +7,7 @@ target_sources(minecpp_event PUBLIC
 
         # Header files
         ${MINECPP_EVENT_INCLUDE_DIR}/Clientbound.h
+        ${MINECPP_EVENT_INCLUDE_DIR}/Recipient.h
         ${MINECPP_EVENT_INCLUDE_DIR}/Serverbound.h
 )
 

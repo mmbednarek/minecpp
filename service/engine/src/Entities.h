@@ -24,7 +24,7 @@ class EntityManager : public game::EntityManager
 
  private:
    Storage m_entities;
-   game::EntityId m_top_entity_id;
+   game::EntityId m_top_entity_id{};
 };
 
 }// namespace minecpp::service::engine

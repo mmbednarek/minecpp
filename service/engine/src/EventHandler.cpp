@@ -261,7 +261,9 @@ void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, g
 void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   m_dispatcher.animate_hand(player_id, player.entity_id(), event.hand());
+   m_dispatcher.animate_player_entity(player_id, player.entity_id(),
+                                      event.hand() == 0 ? game::EntityAnimation::SwingMainArm
+                                                        : game::EntityAnimation::SwingOffHand);
 }
 
 void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event,
@@ -389,6 +391,7 @@ void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &even
 
    m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
    m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
+   m_command_context.set_variable("entity_id", std::make_shared<command::IntObject>(player.entity_id()));
 
    auto player_pos = game::BlockPosition::from_vec3(entity->get_pos());
    m_command_context.set_variable("here", std::make_shared<command::BlockPositionObject>(player_pos));
@@ -399,6 +402,33 @@ void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &even
       builder.bold(format::Color::Red, "COMMAND FAILED ").text(res->message);
       m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
    }
+}
+
+void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::PlayerId player_id)
+{
+   spdlog::info("player {} is attacking entity {}", boost::uuids::to_string(player_id), event.entity_id());
+
+   auto source_entity = m_player_manager.get_entity(player_id);
+   if (source_entity.has_failed()) {
+      spdlog::error("no player with id {}", boost::uuids::to_string(player_id));
+      return;
+   }
+
+   auto entity = m_entity_manager.get_entity(event.entity_id());
+   if (entity.has_failed()) {
+      spdlog::error("no entity with id {}", event.entity_id());
+      return;
+   }
+
+   auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
+   if (target_player_id.has_value()) {
+      spdlog::info("setting players health to {}", entity->get_health());
+      m_dispatcher.set_health_and_food(*target_player_id, entity->get_health(), 20, 5.0f);
+   }
+
+   m_dispatcher.animate_entity(event.entity_id(), game::EntityAnimation::TakeDamage);
+
+   //   m_dispatcher.set_health_and_food();
 }
 
 }// namespace minecpp::service::engine

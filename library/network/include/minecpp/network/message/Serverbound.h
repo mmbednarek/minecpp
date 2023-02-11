@@ -78,6 +78,17 @@ struct PluginMessage
 
 void deserialize(Reader &r, PluginMessage &msg);
 
+struct Interact
+{
+   int entity_id{};
+   int type{};
+   float x{}, y{}, z{};
+   int hand{};
+   bool is_sneaking;
+};
+
+void deserialize(Reader &r, Interact &msg);
+
 // 0x0f
 struct KeepAliveClient
 {

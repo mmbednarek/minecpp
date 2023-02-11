@@ -93,6 +93,18 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    m_stream->send(player_rotation, player_id);
 }
 
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::Interact msg)
+{
+   serverbound_v1::Interact interact;
+   interact.set_entity_id(static_cast<mb::u32>(msg.entity_id));
+   interact.mutable_position()->set_x(msg.x);
+   interact.mutable_position()->set_y(msg.y);
+   interact.mutable_position()->set_z(msg.z);
+   interact.set_hand_type(static_cast<proto::common::v1::HandType>(msg.hand));
+   interact.set_is_sneaking(msg.is_sneaking);
+   m_stream->send(interact, player_id);
+}
+
 void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ChatMessage msg)
 {
    serverbound_v1::ChatMessage chat_message;

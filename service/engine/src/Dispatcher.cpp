@@ -108,13 +108,21 @@ void Dispatcher::update_block(minecpp::game::BlockPosition block, game::BlockSta
    m_events.send_to_all(update_block);
 }
 
-void Dispatcher::animate_hand(game::PlayerId player_id, mb::u32 entity_id, mb::u32 hand)
+void Dispatcher::animate_entity(game::EntityId entity_id, game::EntityAnimation animation)
 {
-   clientbound_v1::AnimateHand animate;
-   *animate.mutable_player_id() = game::player::write_id_to_proto(player_id);
+   clientbound_v1::AnimateEntity animate;
    animate.set_entity_id(entity_id);
-   animate.set_hand(hand);
+   animate.set_animation(animation.to_proto());
    m_events.send_to_all(animate);
+}
+
+void Dispatcher::animate_player_entity(game::PlayerId player_id, game::EntityId entity_id,
+                                       game::EntityAnimation animation)
+{
+   clientbound_v1::AnimateEntity animate;
+   animate.set_entity_id(entity_id);
+   animate.set_animation(animation.to_proto());
+   m_events.send_to_all_excluding(animate, player_id);
 }
 
 void Dispatcher::acknowledge_block_change(game::PlayerId player_id, int sequence_id)
@@ -263,6 +271,15 @@ void Dispatcher::set_player_equipment(game::PlayerId player_id, game::EntityId e
    equipment.mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(item.item_id));
    equipment.mutable_item()->set_count(static_cast<uint32_t>(item.count));
    m_events.send_to_all(equipment);
+}
+
+void Dispatcher::set_health_and_food(game::PlayerId player_id, float health, int food, float food_saturation)
+{
+   clientbound_v1::SetHealth equipment;
+   equipment.set_health(health);
+   equipment.set_food(food);
+   equipment.set_food_saturation(food_saturation);
+   m_events.send_to(equipment, player_id);
 }
 
 }// namespace minecpp::service::engine

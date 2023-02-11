@@ -1030,4 +1030,35 @@ struct ItemSlot
    int count;
 };
 
+enum EntityAnimationValue
+{
+   SwingMainArm,
+   TakeDamage,
+   LeaveBed,
+   SwingOffHand,
+   CriticalEffect,
+   MagicCriticalEffect,
+};
+
+using EntityAnimation_Base = mb::enum_wrapper<EntityAnimationValue, "SwingMainArm", "TakeDamage", "LeaveBed",
+                                              "SwingOffHand", "CriticalEffect", "MagicCriticalEffect">;
+
+class EntityAnimation : public EntityAnimation_Base
+{
+ public:
+   MB_ENUM_TRAITS(EntityAnimation)
+
+   MB_ENUM_FIELD(SwingMainArm)
+   MB_ENUM_FIELD(TakeDamage)
+   MB_ENUM_FIELD(LeaveBed)
+   MB_ENUM_FIELD(SwingOffHand)
+   MB_ENUM_FIELD(CriticalEffect)
+   MB_ENUM_FIELD(MagicCriticalEffect)
+
+   proto::common::v1::EntityAnimation to_proto()
+   {
+      return static_cast<proto::common::v1::EntityAnimation>(index());
+   }
+};
+
 }// namespace minecpp::game

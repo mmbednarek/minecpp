@@ -75,6 +75,9 @@ extern ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
 class Event;
 struct EventDefaultTypeInternal;
 extern EventDefaultTypeInternal _Event_default_instance_;
+class Interact;
+struct InteractDefaultTypeInternal;
+extern InteractDefaultTypeInternal _Interact_default_instance_;
 class IssueCommand;
 struct IssueCommandDefaultTypeInternal;
 extern IssueCommandDefaultTypeInternal _IssueCommand_default_instance_;
@@ -109,6 +112,7 @@ template<> ::minecpp::proto::event::serverbound::v1::ChangeHeldItem* Arena::Crea
 template<> ::minecpp::proto::event::serverbound::v1::ChangeInventoryItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChangeInventoryItem>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::ChatMessage* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChatMessage>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Event>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::Interact* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Interact>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::IssueCommand* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::IssueCommand>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::LoadInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadInitialChunks>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::PlayerDigging* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PlayerDigging>(Arena*);
@@ -2365,6 +2369,207 @@ class IssueCommand final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Interact final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.Interact) */ {
+ public:
+  inline Interact() : Interact(nullptr) {}
+  ~Interact() override;
+  explicit PROTOBUF_CONSTEXPR Interact(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Interact(const Interact& from);
+  Interact(Interact&& from) noexcept
+    : Interact() {
+    *this = ::std::move(from);
+  }
+
+  inline Interact& operator=(const Interact& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Interact& operator=(Interact&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Interact& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Interact* internal_default_instance() {
+    return reinterpret_cast<const Interact*>(
+               &_Interact_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(Interact& a, Interact& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Interact* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Interact* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  Interact* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Interact>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Interact& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Interact& from) {
+    Interact::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Interact* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.Interact";
+  }
+  protected:
+  explicit Interact(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 3,
+    kEntityIdFieldNumber = 1,
+    kInteractionTypeFieldNumber = 2,
+    kHandTypeFieldNumber = 4,
+    kIsSneakingFieldNumber = 5,
+  };
+  // .minecpp.proto.common.v1.Vector3f position = 3;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::Vector3f& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3f* release_position();
+  ::minecpp::proto::common::v1::Vector3f* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::Vector3f* position);
+  private:
+  const ::minecpp::proto::common::v1::Vector3f& _internal_position() const;
+  ::minecpp::proto::common::v1::Vector3f* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::Vector3f* position);
+  ::minecpp::proto::common::v1::Vector3f* unsafe_arena_release_position();
+
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // .minecpp.proto.common.v1.InteractionType interaction_type = 2;
+  void clear_interaction_type();
+  ::minecpp::proto::common::v1::InteractionType interaction_type() const;
+  void set_interaction_type(::minecpp::proto::common::v1::InteractionType value);
+  private:
+  ::minecpp::proto::common::v1::InteractionType _internal_interaction_type() const;
+  void _internal_set_interaction_type(::minecpp::proto::common::v1::InteractionType value);
+  public:
+
+  // .minecpp.proto.common.v1.HandType hand_type = 4;
+  void clear_hand_type();
+  ::minecpp::proto::common::v1::HandType hand_type() const;
+  void set_hand_type(::minecpp::proto::common::v1::HandType value);
+  private:
+  ::minecpp::proto::common::v1::HandType _internal_hand_type() const;
+  void _internal_set_hand_type(::minecpp::proto::common::v1::HandType value);
+  public:
+
+  // bool is_sneaking = 5;
+  void clear_is_sneaking();
+  bool is_sneaking() const;
+  void set_is_sneaking(bool value);
+  private:
+  bool _internal_is_sneaking() const;
+  void _internal_set_is_sneaking(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.Interact)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::Vector3f* position_;
+    uint32_t entity_id_;
+    int interaction_type_;
+    int hand_type_;
+    bool is_sneaking_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
+};
 // ===================================================================
 
 
@@ -3538,9 +3743,180 @@ inline void IssueCommand::set_allocated_command(std::string* command) {
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.IssueCommand.command)
 }
 
+// -------------------------------------------------------------------
+
+// Interact
+
+// uint32 entity_id = 1;
+inline void Interact::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
+}
+inline uint32_t Interact::_internal_entity_id() const {
+  return _impl_.entity_id_;
+}
+inline uint32_t Interact::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.Interact.entity_id)
+  return _internal_entity_id();
+}
+inline void Interact::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
+}
+inline void Interact::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.Interact.entity_id)
+}
+
+// .minecpp.proto.common.v1.InteractionType interaction_type = 2;
+inline void Interact::clear_interaction_type() {
+  _impl_.interaction_type_ = 0;
+}
+inline ::minecpp::proto::common::v1::InteractionType Interact::_internal_interaction_type() const {
+  return static_cast< ::minecpp::proto::common::v1::InteractionType >(_impl_.interaction_type_);
+}
+inline ::minecpp::proto::common::v1::InteractionType Interact::interaction_type() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.Interact.interaction_type)
+  return _internal_interaction_type();
+}
+inline void Interact::_internal_set_interaction_type(::minecpp::proto::common::v1::InteractionType value) {
+  
+  _impl_.interaction_type_ = value;
+}
+inline void Interact::set_interaction_type(::minecpp::proto::common::v1::InteractionType value) {
+  _internal_set_interaction_type(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.Interact.interaction_type)
+}
+
+// .minecpp.proto.common.v1.Vector3f position = 3;
+inline bool Interact::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
+}
+inline bool Interact::has_position() const {
+  return _internal_has_position();
+}
+inline const ::minecpp::proto::common::v1::Vector3f& Interact::_internal_position() const {
+  const ::minecpp::proto::common::v1::Vector3f* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3f&>(
+      ::minecpp::proto::common::v1::_Vector3f_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::Vector3f& Interact::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.Interact.position)
+  return _internal_position();
+}
+inline void Interact::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::Vector3f* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.serverbound.v1.Interact.position)
+}
+inline ::minecpp::proto::common::v1::Vector3f* Interact::release_position() {
+  
+  ::minecpp::proto::common::v1::Vector3f* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::Vector3f* Interact::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.v1.Interact.position)
+  
+  ::minecpp::proto::common::v1::Vector3f* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::Vector3f* Interact::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3f>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
+}
+inline ::minecpp::proto::common::v1::Vector3f* Interact::mutable_position() {
+  ::minecpp::proto::common::v1::Vector3f* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.v1.Interact.position)
+  return _msg;
+}
+inline void Interact::set_allocated_position(::minecpp::proto::common::v1::Vector3f* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.Interact.position)
+}
+
+// .minecpp.proto.common.v1.HandType hand_type = 4;
+inline void Interact::clear_hand_type() {
+  _impl_.hand_type_ = 0;
+}
+inline ::minecpp::proto::common::v1::HandType Interact::_internal_hand_type() const {
+  return static_cast< ::minecpp::proto::common::v1::HandType >(_impl_.hand_type_);
+}
+inline ::minecpp::proto::common::v1::HandType Interact::hand_type() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.Interact.hand_type)
+  return _internal_hand_type();
+}
+inline void Interact::_internal_set_hand_type(::minecpp::proto::common::v1::HandType value) {
+  
+  _impl_.hand_type_ = value;
+}
+inline void Interact::set_hand_type(::minecpp::proto::common::v1::HandType value) {
+  _internal_set_hand_type(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.Interact.hand_type)
+}
+
+// bool is_sneaking = 5;
+inline void Interact::clear_is_sneaking() {
+  _impl_.is_sneaking_ = false;
+}
+inline bool Interact::_internal_is_sneaking() const {
+  return _impl_.is_sneaking_;
+}
+inline bool Interact::is_sneaking() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.Interact.is_sneaking)
+  return _internal_is_sneaking();
+}
+inline void Interact::_internal_set_is_sneaking(bool value) {
+  
+  _impl_.is_sneaking_ = value;
+}
+inline void Interact::set_is_sneaking(bool value) {
+  _internal_set_is_sneaking(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.Interact.is_sneaking)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

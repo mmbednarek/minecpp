@@ -53,6 +53,7 @@ class Service
                    const minecpp::network::message::ChatCommand &msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ChatMessage msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClientSettings msg);
+   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::Interact msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerPosition msg);
    void on_message(uuid engine_id, game::PlayerId player_id,
                    minecpp::network::message::PlayerPositionRotation msg);

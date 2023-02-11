@@ -49,7 +49,7 @@ struct SpawnPlayer
 };
 
 // 0x05
-struct AnimateHand
+struct AnimateEntity
 {
    int entity_id;
    uint8_t type;
@@ -349,6 +349,15 @@ struct SetEquipment
    bool present{};
    std::uint32_t item_id{};
    int count{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct SetHealth
+{
+   float health{};
+   int food{};
+   float food_saturation{};
 
    [[nodiscard]] Writer serialize() const;
 };

@@ -48,6 +48,7 @@ class EventHandler
                                      game::PlayerId player_id);
    void handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, game::PlayerId player_id);
    void handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id);
+   void handle_interact(const serverbound_v1::Interact &event, game::PlayerId player_id);
 
  private:
    void send_inventory_data(const game::player::Player &player);

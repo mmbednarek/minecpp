@@ -145,4 +145,17 @@ void deserialize(Reader &r, PluginMessage &msg)
    msg.data    = r.read_string();
 }
 
+void deserialize(Reader &r, Interact &msg)
+{
+   msg.entity_id = r.read_varint();
+   msg.type      = r.read_varint();
+   if (msg.type == 2) {
+      msg.x    = r.read_float();
+      msg.y    = r.read_float();
+      msg.z    = r.read_float();
+      msg.hand = r.read_varint();
+   }
+   msg.is_sneaking = r.read_byte();
+}
+
 }// namespace minecpp::network::message

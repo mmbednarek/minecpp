@@ -16,7 +16,7 @@ EventHandler::EventHandler(Server &server, nbt::repository::v1::Registry &regist
 }
 
 void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg,
-                                     const std::vector<game::PlayerId> &player_ids)
+                                     const event::RecipientList &recipient_list)
 {
    auto add_player = minecpp::network::message::AddPlayer{
            .id        = game::player::read_id_from_proto(msg.player_id()),
@@ -24,11 +24,11 @@ void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg,
            .game_mode = static_cast<mb::u8>(msg.game_mode()),
            .ping      = static_cast<mb::u32>(msg.ping()),
    };
-   send_message(add_player, player_ids);
+   send_message(add_player, recipient_list);
 }
 
 void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
-                                       const std::vector<game::PlayerId> &player_ids)
+                                       const event::RecipientList &recipient_list)
 {
    auto player_id = game::player::read_id_from_proto(pos.player_id());
 
@@ -46,7 +46,7 @@ void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
 }
 
 void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
-                                      const std::vector<game::PlayerId> &player_ids)
+                                      const event::RecipientList &recipient_list)
 {
    minecpp::network::message::EntityMove entity_move{
            .entity_id = static_cast<int>(pos.entity_id()),
@@ -63,7 +63,7 @@ void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
 }
 
 void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
-                                      const std::vector<game::PlayerId> &player_ids)
+                                      const event::RecipientList &recipient_list)
 {
    minecpp::network::message::EntityLook entity_look{
            .entity_id = static_cast<int>(pos.entity_id()),
@@ -82,17 +82,17 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
 }
 
 void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg,
-                               const std::vector<game::PlayerId> &player_ids)
+                               const event::RecipientList &recipient_list)
 {
    minecpp::network::message::SystemChat chat{
            .message = chat_msg.message(),
            .type    = static_cast<chat::MessageType>(chat_msg.type()),
    };
-   send_message(chat, player_ids);
+   send_message(chat, recipient_list);
 }
 
 void EventHandler::handle_remove_player(const clientbound_v1::RemovePlayer &msg,
-                                        const std::vector<game::PlayerId> &player_ids)
+                                        const event::RecipientList &recipient_list)
 {
    spdlog::info("removing player");
    network::message::RemovePlayer remove_player{
@@ -101,44 +101,44 @@ void EventHandler::handle_remove_player(const clientbound_v1::RemovePlayer &msg,
    network::message::DestroyEntity destroy_entity{
            .entity_id = static_cast<uint32_t>(msg.entity_id()),
    };
-   send_message(remove_player, player_ids);
-   send_message(destroy_entity, player_ids);
+   send_message(remove_player, recipient_list);
+   send_message(destroy_entity, recipient_list);
 }
 
 void EventHandler::handle_update_block(const clientbound_v1::UpdateBlock &msg,
-                                       const std::vector<game::PlayerId> &player_ids)
+                                       const event::RecipientList &recipient_list)
 {
    minecpp::network::message::BlockChange change{
            .block_position = static_cast<mb::u64>(msg.block_position()),
            .block_id       = msg.state(),
    };
-   send_message(change, player_ids);
+   send_message(change, recipient_list);
 }
 
-void EventHandler::handle_animate_hand(const clientbound_v1::AnimateHand &msg,
-                                       const std::vector<game::PlayerId> &player_ids)
+void EventHandler::handle_animate_entity(const clientbound_v1::AnimateEntity &msg,
+                                         const event::RecipientList &recipient_list)
 {
-   minecpp::network::message::AnimateHand animate{
+   minecpp::network::message::AnimateEntity animate{
            .entity_id = static_cast<int>(msg.entity_id()),
-           .type      = static_cast<uint8_t>(msg.hand()),
+           .type      = static_cast<uint8_t>(msg.animation()),
    };
-   auto player_id = game::player::read_id_from_proto(msg.player_id());
-   send_message_excluding(animate, player_id);
+
+   send_message(animate, recipient_list);
 }
 
 void EventHandler::handle_acknowledge_block_change(const clientbound_v1::AcknowledgeBlockChange &msg,
-                                                   const std::vector<game::PlayerId> &player_ids)
+                                                   const event::RecipientList &recipient_list)
 {
    minecpp::network::message::AcknowledgeBlockChanges acknowledge{
            .sequence_id = msg.sequence_id(),
    };
-   send_message(acknowledge, player_ids);
+   send_message(acknowledge, recipient_list);
 }
 
 void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
-                                       const std::vector<game::PlayerId> &player_ids)
+                                       const event::RecipientList &recipient_list)
 {
-   for (auto &player_id : player_ids) {
+   for (auto &player_id : recipient_list.list) {
       if (!m_server.has_connection(player_id)) {
          spdlog::error("connection {} not found", boost::uuids::to_string(player_id));
          return;
@@ -164,13 +164,13 @@ const char *player_transfer_message =
         R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";
 
 void EventHandler::handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
-                                          const std::vector<game::PlayerId> &player_ids)
+                                          const event::RecipientList &recipient_list)
 {
    // TODO: Implement this
 }
 
 void EventHandler::handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg,
-                                                  const std::vector<game::PlayerId> &player_ids)
+                                                  const event::RecipientList &recipient_list)
 {
    using minecpp::network::message::PlayerAbilityFlag;
    uint8_t flags = 0;
@@ -185,25 +185,25 @@ void EventHandler::handle_update_player_abilities(const clientbound_v1::UpdatePl
            .field_of_view = msg.walk_speed(),
    };
 
-   send_message(player_abilities, player_ids);
+   send_message(player_abilities, recipient_list);
 }
 
 void EventHandler::handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
-                                       const std::vector<game::PlayerId> &player_ids)
+                                       const event::RecipientList &recipient_list)
 {
    minecpp::network::message::UnloadChunk unload_chunk{
            .chunk_x = msg.chunk_position().x(),
            .chunk_z = msg.chunk_position().z(),
    };
-   send_message(unload_chunk, player_ids);
+   send_message(unload_chunk, recipient_list);
 }
 
 void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
-                                        const std::vector<game::PlayerId> &player_ids)
+                                        const event::RecipientList &recipient_list)
 {
    using namespace minecpp::network::message;
 
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       spdlog::info("got player accepted");
 
       if (!m_server.has_connection(player_id)) {
@@ -288,9 +288,9 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
 }
 
 void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg,
-                                      const std::vector<game::PlayerId> &player_ids)
+                                      const event::RecipientList &recipient_list)
 {
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       if (!m_server.has_connection(player_id)) {
          spdlog::error("connection {} not found", game::player::format_player_id(player_id));
          return;
@@ -313,9 +313,9 @@ void EventHandler::handle_deny_player(const clientbound_v1::DenyPlayer &msg,
 }
 
 void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg,
-                                      const std::vector<game::PlayerId> &player_ids)
+                                      const event::RecipientList &recipient_list)
 {
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       if (!m_server.has_connection(player_id)) {
          spdlog::error("connection {} not found", game::player::format_player_id(player_id));
          return;
@@ -339,9 +339,9 @@ void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg,
 }
 
 void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
-                                      const std::vector<game::PlayerId> &player_ids)
+                                      const event::RecipientList &recipient_list)
 {
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       if (!m_server.has_connection(player_id)) {
          spdlog::error("connection {} not found", game::player::format_player_id(player_id));
          return;
@@ -376,11 +376,11 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
 }
 
 void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventorySlot &msg,
-                                             const std::vector<game::PlayerId> &player_ids)
+                                             const event::RecipientList &recipient_list)
 {
-   assert(player_ids.size() == 1);
+   assert(recipient_list.size() == 1);
 
-   const auto player_id = player_ids.front();
+   const auto player_id = recipient_list.list.front();
 
    auto conn = m_server.connection_by_player_id(player_id);
    if (!conn) {
@@ -398,7 +398,7 @@ void EventHandler::handle_set_inventory_slot(const clientbound_v1::SetInventoryS
 }
 
 void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLight &msg,
-                                             const std::vector<game::player::Id> &player_ids)
+                                             const event::RecipientList &recipient_list)
 {
    for (auto &chunk : msg.block_light()) {
       network::message::UpdateBlockLight update_block_light{};
@@ -410,7 +410,7 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
          update_block_light.block_light[section.y()] = std::move(data);
       }
 
-      for (auto player_id : player_ids) {
+      for (auto player_id : recipient_list.list) {
          auto conn = m_server.connection_by_player_id(player_id);
          if (not conn) {
             spdlog::error("connection {} is null", game::player::format_player_id(player_id));
@@ -423,12 +423,12 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
 }
 
 void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
-                                     const std::vector<game::player::Id> &player_ids)
+                                     const event::RecipientList &recipient_list)
 {
    network::message::ChunkData chunk_data{
            .chunk = msg.chunk(),
    };
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
@@ -440,14 +440,14 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
 }
 
 void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk &msg,
-                                           const std::vector<game::player::Id> &player_ids)
+                                           const event::RecipientList &recipient_list)
 {
    network::message::UpdateChunkPosition chunk_position{
            .x = msg.position().x(),
            .z = msg.position().z(),
    };
 
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
@@ -459,7 +459,7 @@ void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk 
 }
 
 void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerPositionRotation &msg,
-                                                   const std::vector<game::player::Id> &player_ids)
+                                                   const event::RecipientList &recipient_list)
 {
    network::message::PlayerPositionLook player_pos_look{
            .x     = msg.position().x(),
@@ -471,7 +471,7 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
            .tp_id = 0,
    };
 
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
@@ -483,14 +483,14 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
 }
 
 void EventHandler::handle_set_spawn_position(const clientbound_v1::SetSpawnPosition &msg,
-                                             const std::vector<game::player::Id> &player_ids)
+                                             const event::RecipientList &recipient_list)
 {
    network::message::SetDefaultSpawnPosition set_spawn{
            .position = msg.position(),
            .angle    = msg.angle(),
    };
 
-   for (auto player_id : player_ids) {
+   for (auto player_id : recipient_list.list) {
       auto conn = m_server.connection_by_player_id(player_id);
       if (not conn) {
          spdlog::error("connection {} is null", game::player::format_player_id(player_id));
@@ -502,7 +502,7 @@ void EventHandler::handle_set_spawn_position(const clientbound_v1::SetSpawnPosit
 }
 
 void EventHandler::handle_set_entity_equipment(const clientbound_v1::SetEntityEquipment &msg,
-                                               const std::vector<game::player::Id> &player_ids)
+                                               const event::RecipientList &recipient_list)
 {
    network::message::SetEquipment set_equipment{
            .entity_id = msg.entity_id(),
@@ -512,7 +512,18 @@ void EventHandler::handle_set_entity_equipment(const clientbound_v1::SetEntityEq
            .count     = static_cast<int>(msg.item().count()),
    };
 
-   send_message(set_equipment, player_ids);
+   send_message(set_equipment, recipient_list);
+}
+
+void EventHandler::handle_set_health(const clientbound_v1::SetHealth &msg,
+                                     const event::RecipientList &recipient_list)
+{
+   network::message::SetHealth set_health{
+           .health          = msg.health(),
+           .food            = msg.food(),
+           .food_saturation = msg.food_saturation(),
+   };
+   send_message(set_health, recipient_list);
 }
 
 }// namespace minecpp::service::front

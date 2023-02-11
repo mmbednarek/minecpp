@@ -291,6 +291,86 @@ inline bool LightType_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<LightType>(
     LightType_descriptor(), name, value);
 }
+enum InteractionType : int {
+  Interact = 0,
+  Attack = 1,
+  InteractAt = 2,
+  InteractionType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  InteractionType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool InteractionType_IsValid(int value);
+constexpr InteractionType InteractionType_MIN = Interact;
+constexpr InteractionType InteractionType_MAX = InteractAt;
+constexpr int InteractionType_ARRAYSIZE = InteractionType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* InteractionType_descriptor();
+template<typename T>
+inline const std::string& InteractionType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, InteractionType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function InteractionType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    InteractionType_descriptor(), enum_t_value);
+}
+inline bool InteractionType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, InteractionType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<InteractionType>(
+    InteractionType_descriptor(), name, value);
+}
+enum HandType : int {
+  MainHand = 0,
+  OffHand = 1,
+  HandType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  HandType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool HandType_IsValid(int value);
+constexpr HandType HandType_MIN = MainHand;
+constexpr HandType HandType_MAX = OffHand;
+constexpr int HandType_ARRAYSIZE = HandType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* HandType_descriptor();
+template<typename T>
+inline const std::string& HandType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, HandType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function HandType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    HandType_descriptor(), enum_t_value);
+}
+inline bool HandType_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, HandType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<HandType>(
+    HandType_descriptor(), name, value);
+}
+enum EntityAnimation : int {
+  SwingMainArm = 0,
+  TakeDamage = 1,
+  LeaveBed = 2,
+  SwingOffHand = 3,
+  CriticalEffect = 4,
+  MagicCriticalEffect = 5,
+  EntityAnimation_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  EntityAnimation_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool EntityAnimation_IsValid(int value);
+constexpr EntityAnimation EntityAnimation_MIN = SwingMainArm;
+constexpr EntityAnimation EntityAnimation_MAX = MagicCriticalEffect;
+constexpr int EntityAnimation_ARRAYSIZE = EntityAnimation_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EntityAnimation_descriptor();
+template<typename T>
+inline const std::string& EntityAnimation_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, EntityAnimation>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function EntityAnimation_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    EntityAnimation_descriptor(), enum_t_value);
+}
+inline bool EntityAnimation_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, EntityAnimation* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<EntityAnimation>(
+    EntityAnimation_descriptor(), name, value);
+}
 // ===================================================================
 
 class ChunkPosition final :
@@ -2926,6 +3006,21 @@ template <> struct is_proto_enum< ::minecpp::proto::common::v1::LightType> : ::s
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::proto::common::v1::LightType>() {
   return ::minecpp::proto::common::v1::LightType_descriptor();
+}
+template <> struct is_proto_enum< ::minecpp::proto::common::v1::InteractionType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::proto::common::v1::InteractionType>() {
+  return ::minecpp::proto::common::v1::InteractionType_descriptor();
+}
+template <> struct is_proto_enum< ::minecpp::proto::common::v1::HandType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::proto::common::v1::HandType>() {
+  return ::minecpp::proto::common::v1::HandType_descriptor();
+}
+template <> struct is_proto_enum< ::minecpp::proto::common::v1::EntityAnimation> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::minecpp::proto::common::v1::EntityAnimation>() {
+  return ::minecpp::proto::common::v1::EntityAnimation_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

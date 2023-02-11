@@ -176,7 +176,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 }  // namespace proto
 }  // namespace minecpp
 static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[10];
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[7];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[10];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto = nullptr;
 
 const uint32_t TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -331,12 +331,17 @@ const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2epr
   "\020\003\022\014\n\010DropItem\020\004\022\022\n\016ReleaseUseItem\020\005\022\021\n\r"
   "SwapHeldItems\020\006*E\n\004Face\022\n\n\006Bottom\020\000\022\007\n\003T"
   "op\020\001\022\t\n\005North\020\002\022\t\n\005South\020\003\022\010\n\004West\020\004\022\010\n\004"
-  "East\020\005*\037\n\tLightType\022\t\n\005Block\020\000\022\007\n\003Sky\020\001b"
-  "\006proto3"
+  "East\020\005*\037\n\tLightType\022\t\n\005Block\020\000\022\007\n\003Sky\020\001*"
+  ";\n\017InteractionType\022\014\n\010Interact\020\000\022\n\n\006Atta"
+  "ck\020\001\022\016\n\nInteractAt\020\002*%\n\010HandType\022\014\n\010Main"
+  "Hand\020\000\022\013\n\007OffHand\020\001*\200\001\n\017EntityAnimation\022"
+  "\020\n\014SwingMainArm\020\000\022\016\n\nTakeDamage\020\001\022\014\n\010Lea"
+  "veBed\020\002\022\020\n\014SwingOffHand\020\003\022\022\n\016CriticalEff"
+  "ect\020\004\022\027\n\023MagicCriticalEffect\020\005b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto = {
-    false, false, 1487, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
+    false, false, 1718, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
     "minecpp/proto/common/v1/Common.proto",
     &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto_once, nullptr, 0, 10,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto::offsets,
@@ -461,6 +466,53 @@ bool LightType_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* InteractionType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto);
+  return file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[7];
+}
+bool InteractionType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* HandType_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto);
+  return file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[8];
+}
+bool HandType_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* EntityAnimation_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto);
+  return file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto[9];
+}
+bool EntityAnimation_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
       return true;
     default:
       return false;

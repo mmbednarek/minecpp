@@ -45,6 +45,11 @@ Vec3 Vec3::operator-(Vec3 v) const
    return {x - v.x, y - v.y, z - v.z};
 }
 
+Vec3 Vec3::operator+(Vec3 v) const
+{
+   return {x + v.x, y + v.y, z + v.z};
+}
+
 Vec2 Vec3::flat() const
 {
    return {x, z};

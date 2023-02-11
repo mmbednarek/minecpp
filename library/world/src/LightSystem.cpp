@@ -14,27 +14,10 @@ LightSystem::LightSystem(game::IBlockContainer &container) :
 {
 }
 
-game::SectionRange
-LightSystem::find_sections_affected_by_light_source(game::BlockPosition light_source_position, int strength)
-{
-   game::BlockPosition min_pos{
-           light_source_position.x - strength,
-           light_source_position.y - strength,
-           light_source_position.z - strength,
-   };
-   game::BlockPosition max_pos{
-           light_source_position.x + strength,
-           light_source_position.y + strength,
-           light_source_position.z + strength,
-   };
-
-   return {min_pos.chunk_section_position(), max_pos.chunk_section_position()};
-}
-
 mb::emptyres LightSystem::add_light_source(game::BlockPosition position, game::LightValue value)
 {
    std::queue<LightSpreadNode> queue;
-   queue.push(LightSpreadNode{position, value, LightSpreadNodeType::Source});
+   queue.emplace(position, value, LightSpreadNodeType::Source);
 
    spdlog::debug("light-system: calculating light initial value is {}", value);
    this->flood_light(game::LightType::Block, queue);
@@ -65,8 +48,7 @@ mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::Bl
       return mb::ok;
 
    std::queue<LightSpreadNode> queue;
-   queue.push(LightSpreadNode{position, static_cast<game::LightValue>(max_light_value - 1),
-                              LightSpreadNodeType::Lighten});
+   queue.emplace(position, static_cast<game::LightValue>(max_light_value - 1), LightSpreadNodeType::Lighten);
 
    spdlog::debug("light-system: calculating light initial value is {}", max_light_value - 1);
    this->flood_light(light_type, queue);
@@ -86,7 +68,7 @@ mb::emptyres LightSystem::reset_light(game::LightType light_type, game::BlockPos
    spdlog::debug("light-system: resetting light from value {}", *light_value);
 
    std::queue<LightSpreadNode> queue;
-   queue.push(LightSpreadNode{position, *light_value, LightSpreadNodeType::Darken});
+   queue.emplace(position, *light_value, LightSpreadNodeType::Darken);
    this->flood_light(light_type, queue);
 
    return mb::ok;
@@ -183,25 +165,29 @@ void LightSystem::propagate_value(game::LightType light_type, game::BlockPositio
       if (target_value < 1)
          continue;
 
-      //      spdlog::debug("light-system: spreading value {} to {}: original={}, darken={}", target_value,
-      //                    face.to_string(), *original_value, type);
-
       if (type == LightSpreadNodeType::Darken) {
          if (target_value != *original_value) {
             // re-propagate the original value
-            queue.push(LightSpreadNode{neighbour, *original_value, LightSpreadNodeType::Lighten});
+            queue.emplace(neighbour, *original_value, LightSpreadNodeType::Lighten);
             continue;
          }
 
-         queue.push(LightSpreadNode{neighbour, target_value, LightSpreadNodeType::Darken});
+         queue.emplace(neighbour, target_value, LightSpreadNodeType::Darken);
          continue;
       }
 
       // Lighten
       if (target_value > *original_value) {
-         queue.push(LightSpreadNode{neighbour, target_value, LightSpreadNodeType::Lighten});
+         queue.emplace(neighbour, target_value, LightSpreadNodeType::Lighten);
       }
    }
 }
 
+LightSpreadNode::LightSpreadNode(const game::BlockPosition &position, unsigned char value,
+                                 LightSpreadNodeType type) :
+    position(position),
+    value(value),
+    type(type)
+{
+}
 }// namespace minecpp::world
