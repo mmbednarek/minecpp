@@ -95,7 +95,7 @@ void Attributes::set_attribute(AttributeName name, double value)
    attributes[name] = value;
 }
 
-Entity Entity::from_player_nbt(const nbt::player::v1::Player &player)
+Entity Entity::from_player_nbt(const nbt::player::v1::Location &player)
 {
    Entity entity(player::read_id_from_nbt(player.uuid), g_player_type);
    for (const auto &at : player.attributes) {
@@ -146,4 +146,6 @@ float Entity::get_health() const
    return health;
 }
 
-}// namespace minecpp::game::entity
+}
+
+// namespace minecpp::game::entity

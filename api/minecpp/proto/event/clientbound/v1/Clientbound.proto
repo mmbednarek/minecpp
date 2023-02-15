@@ -3,6 +3,7 @@ package minecpp.proto.event.clientbound.v1;
 
 import "google/protobuf/any.proto";
 import "minecpp/proto/common/v1/Common.proto";
+import "minecpp/proto/common/v1/Vector.proto";
 import "minecpp/proto/player/v1/Id.proto";
 import "minecpp/proto/player/v1/Player.proto";
 import "minecpp/proto/entity/v1/Entity.proto";

@@ -244,7 +244,8 @@ class RecipeBook {
    static RecipeBook deserialize(std::istream &in);
 };
 
-class Player {
+class Location
+{
 
    template<typename T>
    void __xx_put(const std::string &name, T &&value) {
@@ -501,11 +502,11 @@ class Player {
    std::int32_t player_game_type{};
    RecipeBook recipe_book{};
    std::int8_t seen_credits{};
-   Player() = default;
+   Location() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out, std::string_view name) const;
-   static Player deserialize_no_header(minecpp::nbt::Reader &r);
-   static Player deserialize(std::istream &in);
+   static Location deserialize_no_header(minecpp::nbt::Reader &r);
+   static Location deserialize(std::istream &in);
 };
 
 }

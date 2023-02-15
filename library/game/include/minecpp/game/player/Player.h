@@ -16,7 +16,7 @@ class Entity;
 }// namespace minecpp::game
 
 namespace minecpp::nbt::player::v1 {
-class Player;
+class Location;
 }
 
 namespace minecpp::game::player {
@@ -150,7 +150,7 @@ class Player
    void on_movement(game::World &w, math::Vector3 pos);
    mb::result<mb::empty> load_chunks(game::World &w);
 
-   static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name,
+   static Player from_nbt(const nbt::player::v1::Location &player, const std::string &name,
                           game::Notifier &notifier);
 
    [[nodiscard]] proto::player::v1::Player to_proto(const game::entity::Entity &entity) const;

@@ -79,12 +79,6 @@ extern RotationDefaultTypeInternal _Rotation_default_instance_;
 class SectionRange;
 struct SectionRangeDefaultTypeInternal;
 extern SectionRangeDefaultTypeInternal _SectionRange_default_instance_;
-class Vector3;
-struct Vector3DefaultTypeInternal;
-extern Vector3DefaultTypeInternal _Vector3_default_instance_;
-class Vector3f;
-struct Vector3fDefaultTypeInternal;
-extern Vector3fDefaultTypeInternal _Vector3f_default_instance_;
 }  // namespace v1
 }  // namespace common
 }  // namespace proto
@@ -100,8 +94,6 @@ template<> ::minecpp::proto::common::v1::LightLevel* Arena::CreateMaybeMessage<:
 template<> ::minecpp::proto::common::v1::LightSource* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::LightSource>(Arena*);
 template<> ::minecpp::proto::common::v1::Rotation* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(Arena*);
 template<> ::minecpp::proto::common::v1::SectionRange* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::SectionRange>(Arena*);
-template<> ::minecpp::proto::common::v1::Vector3* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(Arena*);
-template<> ::minecpp::proto::common::v1::Vector3f* Arena::CreateMaybeMessage<::minecpp::proto::common::v1::Vector3f>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace proto {
@@ -1105,176 +1097,6 @@ class Gameplay final :
 };
 // -------------------------------------------------------------------
 
-class Vector3 final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.common.v1.Vector3) */ {
- public:
-  inline Vector3() : Vector3(nullptr) {}
-  ~Vector3() override;
-  explicit PROTOBUF_CONSTEXPR Vector3(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  Vector3(const Vector3& from);
-  Vector3(Vector3&& from) noexcept
-    : Vector3() {
-    *this = ::std::move(from);
-  }
-
-  inline Vector3& operator=(const Vector3& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline Vector3& operator=(Vector3&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const Vector3& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const Vector3* internal_default_instance() {
-    return reinterpret_cast<const Vector3*>(
-               &_Vector3_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
-
-  friend void swap(Vector3& a, Vector3& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(Vector3* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(Vector3* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  Vector3* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Vector3>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Vector3& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Vector3& from) {
-    Vector3::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(Vector3* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.common.v1.Vector3";
-  }
-  protected:
-  explicit Vector3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kXFieldNumber = 1,
-    kYFieldNumber = 2,
-    kZFieldNumber = 3,
-  };
-  // double x = 1;
-  void clear_x();
-  double x() const;
-  void set_x(double value);
-  private:
-  double _internal_x() const;
-  void _internal_set_x(double value);
-  public:
-
-  // double y = 2;
-  void clear_y();
-  double y() const;
-  void set_y(double value);
-  private:
-  double _internal_y() const;
-  void _internal_set_y(double value);
-  public:
-
-  // double z = 3;
-  void clear_z();
-  double z() const;
-  void set_z(double value);
-  private:
-  double _internal_z() const;
-  void _internal_set_z(double value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.common.v1.Vector3)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    double x_;
-    double y_;
-    double z_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto;
-};
-// -------------------------------------------------------------------
-
 class Rotation final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.common.v1.Rotation) */ {
  public:
@@ -1323,7 +1145,7 @@ class Rotation final :
                &_Rotation_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    4;
 
   friend void swap(Rotation& a, Rotation& b) {
     a.Swap(&b);
@@ -1434,176 +1256,6 @@ class Rotation final :
 };
 // -------------------------------------------------------------------
 
-class Vector3f final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.common.v1.Vector3f) */ {
- public:
-  inline Vector3f() : Vector3f(nullptr) {}
-  ~Vector3f() override;
-  explicit PROTOBUF_CONSTEXPR Vector3f(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  Vector3f(const Vector3f& from);
-  Vector3f(Vector3f&& from) noexcept
-    : Vector3f() {
-    *this = ::std::move(from);
-  }
-
-  inline Vector3f& operator=(const Vector3f& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline Vector3f& operator=(Vector3f&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const Vector3f& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const Vector3f* internal_default_instance() {
-    return reinterpret_cast<const Vector3f*>(
-               &_Vector3f_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    6;
-
-  friend void swap(Vector3f& a, Vector3f& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(Vector3f* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(Vector3f* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  Vector3f* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Vector3f>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Vector3f& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Vector3f& from) {
-    Vector3f::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(Vector3f* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.common.v1.Vector3f";
-  }
-  protected:
-  explicit Vector3f(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kXFieldNumber = 1,
-    kYFieldNumber = 2,
-    kZFieldNumber = 3,
-  };
-  // float x = 1;
-  void clear_x();
-  float x() const;
-  void set_x(float value);
-  private:
-  float _internal_x() const;
-  void _internal_set_x(float value);
-  public:
-
-  // float y = 2;
-  void clear_y();
-  float y() const;
-  void set_y(float value);
-  private:
-  float _internal_y() const;
-  void _internal_set_y(float value);
-  public:
-
-  // float z = 3;
-  void clear_z();
-  float z() const;
-  void set_z(float value);
-  private:
-  float _internal_z() const;
-  void _internal_set_z(float value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.common.v1.Vector3f)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    float x_;
-    float y_;
-    float z_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto;
-};
-// -------------------------------------------------------------------
-
 class ItemId final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.common.v1.ItemId) */ {
  public:
@@ -1652,7 +1304,7 @@ class ItemId final :
                &_ItemId_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    5;
 
   friend void swap(ItemId& a, ItemId& b) {
     a.Swap(&b);
@@ -1800,7 +1452,7 @@ class LightLevel final :
                &_LightLevel_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    6;
 
   friend void swap(LightLevel& a, LightLevel& b) {
     a.Swap(&b);
@@ -1948,7 +1600,7 @@ class ChunkSectionPosition final :
                &_ChunkSectionPosition_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    7;
 
   friend void swap(ChunkSectionPosition& a, ChunkSectionPosition& b) {
     a.Swap(&b);
@@ -2116,7 +1768,7 @@ class SectionRange final :
                &_SectionRange_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    8;
 
   friend void swap(SectionRange& a, SectionRange& b) {
     a.Swap(&b);
@@ -2293,7 +1945,7 @@ class LightSource final :
                &_LightSource_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    9;
 
   friend void swap(LightSource& a, LightSource& b) {
     a.Swap(&b);
@@ -2756,70 +2408,6 @@ inline void Gameplay::set_difficulty(::minecpp::proto::common::v1::Difficulty va
 
 // -------------------------------------------------------------------
 
-// Vector3
-
-// double x = 1;
-inline void Vector3::clear_x() {
-  _impl_.x_ = 0;
-}
-inline double Vector3::_internal_x() const {
-  return _impl_.x_;
-}
-inline double Vector3::x() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3.x)
-  return _internal_x();
-}
-inline void Vector3::_internal_set_x(double value) {
-  
-  _impl_.x_ = value;
-}
-inline void Vector3::set_x(double value) {
-  _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3.x)
-}
-
-// double y = 2;
-inline void Vector3::clear_y() {
-  _impl_.y_ = 0;
-}
-inline double Vector3::_internal_y() const {
-  return _impl_.y_;
-}
-inline double Vector3::y() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3.y)
-  return _internal_y();
-}
-inline void Vector3::_internal_set_y(double value) {
-  
-  _impl_.y_ = value;
-}
-inline void Vector3::set_y(double value) {
-  _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3.y)
-}
-
-// double z = 3;
-inline void Vector3::clear_z() {
-  _impl_.z_ = 0;
-}
-inline double Vector3::_internal_z() const {
-  return _impl_.z_;
-}
-inline double Vector3::z() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3.z)
-  return _internal_z();
-}
-inline void Vector3::_internal_set_z(double value) {
-  
-  _impl_.z_ = value;
-}
-inline void Vector3::set_z(double value) {
-  _internal_set_z(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3.z)
-}
-
-// -------------------------------------------------------------------
-
 // Rotation
 
 // float yaw = 1;
@@ -2860,70 +2448,6 @@ inline void Rotation::_internal_set_pitch(float value) {
 inline void Rotation::set_pitch(float value) {
   _internal_set_pitch(value);
   // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Rotation.pitch)
-}
-
-// -------------------------------------------------------------------
-
-// Vector3f
-
-// float x = 1;
-inline void Vector3f::clear_x() {
-  _impl_.x_ = 0;
-}
-inline float Vector3f::_internal_x() const {
-  return _impl_.x_;
-}
-inline float Vector3f::x() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3f.x)
-  return _internal_x();
-}
-inline void Vector3f::_internal_set_x(float value) {
-  
-  _impl_.x_ = value;
-}
-inline void Vector3f::set_x(float value) {
-  _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3f.x)
-}
-
-// float y = 2;
-inline void Vector3f::clear_y() {
-  _impl_.y_ = 0;
-}
-inline float Vector3f::_internal_y() const {
-  return _impl_.y_;
-}
-inline float Vector3f::y() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3f.y)
-  return _internal_y();
-}
-inline void Vector3f::_internal_set_y(float value) {
-  
-  _impl_.y_ = value;
-}
-inline void Vector3f::set_y(float value) {
-  _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3f.y)
-}
-
-// float z = 3;
-inline void Vector3f::clear_z() {
-  _impl_.z_ = 0;
-}
-inline float Vector3f::_internal_z() const {
-  return _impl_.z_;
-}
-inline float Vector3f::z() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.common.v1.Vector3f.z)
-  return _internal_z();
-}
-inline void Vector3f::_internal_set_z(float value) {
-  
-  _impl_.z_ = value;
-}
-inline void Vector3f::set_z(float value) {
-  _internal_set_z(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.common.v1.Vector3f.z)
 }
 
 // -------------------------------------------------------------------
@@ -3389,10 +2913,6 @@ inline void LightSource::set_strength(int32_t value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

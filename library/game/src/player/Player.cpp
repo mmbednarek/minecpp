@@ -49,10 +49,11 @@ minecpp::proto::player::v1::Abilities Abilities::to_proto() const
    return result;
 }
 
-Player Player::from_nbt(const nbt::player::v1::Player &player, const std::string &name,
+Player Player::from_nbt(const nbt::player::v1::Location &player, const std::string &name,
                         game::Notifier &notifier)
 {
-   Player result(read_id_from_nbt(player.uuid), name, math::Vector3{player.pos[0], player.pos[1], player.pos[2]}, notifier);
+   Player result(read_id_from_nbt(player.uuid), name,
+                 math::Vector3{player.pos[0], player.pos[1], player.pos[2]}, notifier);
    result.m_xp_total                = player.xp_total;
    result.m_xp_points               = player.xp_p;
    result.m_xp_seed                 = player.xp_seed;
@@ -88,3 +89,5 @@ proto::player::v1::Player Player::to_proto(const game::entity::Entity &entity) c
 }
 
 }// namespace minecpp::game::player
+
+// namespace minecpp::game::player

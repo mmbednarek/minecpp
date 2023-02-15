@@ -193,39 +193,41 @@ static const ::_pb::Message* const file_default_instances[] = {
 const char descriptor_table_protodef_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n$minecpp/proto/player/v1/Player.proto\022\027"
   "minecpp.proto.player.v1\032$minecpp/proto/c"
-  "ommon/v1/Common.proto\032 minecpp/proto/pla"
-  "yer/v1/Id.proto\"\211\001\n\006Status\022-\n\002id\030\001 \001(\0132!"
-  ".minecpp.proto.player.v1.PlayerId\022\014\n\004nam"
-  "e\030\002 \001(\t\022\014\n\004ping\030\003 \001(\005\0224\n\tgame_mode\030\004 \001(\016"
-  "2!.minecpp.proto.common.v1.GameMode\"\271\002\n\006"
-  "Player\022\014\n\004name\030\001 \001(\t\022\021\n\tentity_id\030\002 \001(\r\022"
-  "2\n\010position\030\003 \001(\0132 .minecpp.proto.common"
-  ".v1.Vector3\0223\n\010rotation\030\004 \001(\0132!.minecpp."
-  "proto.common.v1.Rotation\0225\n\tabilities\030\005 "
-  "\001(\0132\".minecpp.proto.player.v1.Abilities\022"
-  "8\n\013recipe_book\030\006 \001(\0132#.minecpp.proto.pla"
-  "yer.v1.RecipeBook\0224\n\tgame_mode\030\007 \001(\0162!.m"
-  "inecpp.proto.common.v1.GameMode\"\223\001\n\tAbil"
-  "ities\022\022\n\nwalk_speed\030\001 \001(\002\022\021\n\tfly_speed\030\002"
-  " \001(\002\022\016\n\006flying\030\003 \001(\010\022\025\n\rinstant_build\030\004 "
-  "\001(\010\022\024\n\014invulnerable\030\005 \001(\010\022\021\n\tmay_build\030\006"
-  " \001(\010\022\017\n\007may_fly\030\007 \001(\010\"z\n\nRecipeBook\022\020\n\010g"
-  "ui_open\030\001 \001(\010\022\033\n\023filtering_craftable\030\002 \001"
-  "(\010\022\030\n\020furnace_gui_open\030\003 \001(\010\022#\n\033furnace_"
-  "filtering_craftable\030\004 \001(\010\"X\n\004Slot\022\017\n\007slo"
-  "t_id\030\001 \001(\r\0220\n\007item_id\030\002 \001(\0132\037.minecpp.pr"
-  "oto.common.v1.ItemId\022\r\n\005count\030\003 \001(\rb\006pro"
-  "to3"
+  "ommon/v1/Common.proto\032$minecpp/proto/com"
+  "mon/v1/Vector.proto\032 minecpp/proto/playe"
+  "r/v1/Id.proto\"\211\001\n\006Status\022-\n\002id\030\001 \001(\0132!.m"
+  "inecpp.proto.player.v1.PlayerId\022\014\n\004name\030"
+  "\002 \001(\t\022\014\n\004ping\030\003 \001(\005\0224\n\tgame_mode\030\004 \001(\0162!"
+  ".minecpp.proto.common.v1.GameMode\"\271\002\n\006Pl"
+  "ayer\022\014\n\004name\030\001 \001(\t\022\021\n\tentity_id\030\002 \001(\r\0222\n"
+  "\010position\030\003 \001(\0132 .minecpp.proto.common.v"
+  "1.Vector3\0223\n\010rotation\030\004 \001(\0132!.minecpp.pr"
+  "oto.common.v1.Rotation\0225\n\tabilities\030\005 \001("
+  "\0132\".minecpp.proto.player.v1.Abilities\0228\n"
+  "\013recipe_book\030\006 \001(\0132#.minecpp.proto.playe"
+  "r.v1.RecipeBook\0224\n\tgame_mode\030\007 \001(\0162!.min"
+  "ecpp.proto.common.v1.GameMode\"\223\001\n\tAbilit"
+  "ies\022\022\n\nwalk_speed\030\001 \001(\002\022\021\n\tfly_speed\030\002 \001"
+  "(\002\022\016\n\006flying\030\003 \001(\010\022\025\n\rinstant_build\030\004 \001("
+  "\010\022\024\n\014invulnerable\030\005 \001(\010\022\021\n\tmay_build\030\006 \001"
+  "(\010\022\017\n\007may_fly\030\007 \001(\010\"z\n\nRecipeBook\022\020\n\010gui"
+  "_open\030\001 \001(\010\022\033\n\023filtering_craftable\030\002 \001(\010"
+  "\022\030\n\020furnace_gui_open\030\003 \001(\010\022#\n\033furnace_fi"
+  "ltering_craftable\030\004 \001(\010\"X\n\004Slot\022\017\n\007slot_"
+  "id\030\001 \001(\r\0220\n\007item_id\030\002 \001(\0132\037.minecpp.prot"
+  "o.common.v1.ItemId\022\r\n\005count\030\003 \001(\rb\006proto"
+  "3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_deps[2] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_deps[3] = {
   &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
+  &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto,
   &::descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fId_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto = {
-    false, false, 963, descriptor_table_protodef_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto,
+    false, false, 1001, descriptor_table_protodef_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto,
     "minecpp/proto/player/v1/Player.proto",
-    &descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_once, descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_deps, 2, 5,
+    &descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_once, descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto_deps, 3, 5,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fplayer_2fv1_2fPlayer_2eproto,

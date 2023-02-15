@@ -2,6 +2,7 @@ syntax = "proto3";
 package minecpp.proto.entity.v1;
 
 import "minecpp/proto/common/v1/Common.proto";
+import "minecpp/proto/common/v1/Vector.proto";
 import "minecpp/proto/player/v1/Id.proto";
 
 message Movement {
@@ -11,8 +12,8 @@ message Movement {
 }
 
 message Entity {
-  player.v1.PlayerId id = 1;
-  uint32 entity_id = 2;
+  uint32 entity_id = 1;
+  player.v1.PlayerId player_id = 2;
   common.v1.Vector3 position = 3;
   common.v1.Rotation rotation = 4;
 }

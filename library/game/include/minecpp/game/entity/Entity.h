@@ -7,7 +7,7 @@
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 
 namespace minecpp::nbt::player::v1 {
-class Player;
+class Location;
 }
 
 namespace minecpp::game::entity {
@@ -105,11 +105,11 @@ class Entity
       entity.mutable_position()->set_x(pos.x());
       entity.mutable_position()->set_y(pos.y());
       entity.mutable_position()->set_z(pos.z());
-      *entity.mutable_id() = game::player::write_id_to_proto(uid);
+      *entity.mutable_player_id() = game::player::write_id_to_proto(uid);
       return entity;
    }
 
-   static Entity from_player_nbt(const nbt::player::v1::Player &player);
+   static Entity from_player_nbt(const nbt::player::v1::Location &player);
 };
 
 struct Rotation

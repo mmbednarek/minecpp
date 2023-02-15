@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseVector.h"
-#include <cmath>
+#include "ProtoTypes.h"
 
 namespace minecpp::math {
 
@@ -13,6 +13,19 @@ class BaseVector<TValue, 2>
 
    MCC_MATH_DEFINE_INDEX_GETTER_SETTER(x, 0)
    MCC_MATH_DEFINE_INDEX_GETTER_SETTER(y, 1)
+
+   [[nodiscard]] static SelfType from_proto(const ProtoType &proto_vec)
+   {
+      return {proto_vec.x(), proto_vec.y()};
+   }
+
+   [[nodiscard]] ProtoType to_proto() const
+   {
+      ProtoType result;
+      result.set_x(this->x());
+      result.set_y(this->y());
+      return result;
+   }
 };
 
 using Vector2  = BaseVector<double, 2>;

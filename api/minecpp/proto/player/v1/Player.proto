@@ -2,6 +2,7 @@ syntax = "proto3";
 package minecpp.proto.player.v1;
 
 import "minecpp/proto/common/v1/Common.proto";
+import "minecpp/proto/common/v1/Vector.proto";
 import "minecpp/proto/player/v1/Id.proto";
 
 message Status {
