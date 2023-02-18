@@ -2,7 +2,6 @@
 #include "ApiHandler.h"
 #include "minecpp/world/Chunk.h"
 #include <minecpp/chat/Chat.h>
-#include <minecpp/game/entity/Entity.h>
 #include <minecpp/game/Notifier.h>
 #include <minecpp/game/player/Id.h>
 #include <minecpp/game/player/Player.h>

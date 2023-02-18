@@ -1,6 +1,5 @@
 #include "EventHandler.h"
 #include "Dispatcher.h"
-#include "Entities.h"
 #include "Players.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/command/Command.h>

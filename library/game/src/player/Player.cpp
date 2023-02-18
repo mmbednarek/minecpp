@@ -1,4 +1,3 @@
-#include <minecpp/game/entity/Entity.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Tracking.h>
 #include <minecpp/nbt/player/v1/Player.nbt.h>

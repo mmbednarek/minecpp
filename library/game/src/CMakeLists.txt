@@ -23,7 +23,6 @@ target_sources(minecpp_game PUBLIC
 
 # Subdirectories
 add_subdirectory("block")
-add_subdirectory("entity")
 add_subdirectory("item")
 add_subdirectory("player")
 
