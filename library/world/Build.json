@@ -9,8 +9,7 @@
       "minecpp_game",
       "minecpp_math",
       "minecpp_random",
-      "minecpp_repository",
-      "minecpp_squeezed"
+      "minecpp_repository"
     ]
   }
 }

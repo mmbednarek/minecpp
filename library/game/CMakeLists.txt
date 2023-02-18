@@ -20,7 +20,6 @@ target_link_libraries(minecpp_game
         minecpp_utils
         LINK_PRIVATE
         minecpp_nbt
-        minecpp_squeezed
         minecpp_random
         spdlog
         ${Protobuf_LIBRARIES}

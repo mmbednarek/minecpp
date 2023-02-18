@@ -13,7 +13,7 @@ class Handler : public IResponseHandler
    void handle_chunk_data(const ResponseChunkData &proto_chunk) override
    {
       auto chunk = Chunk::from_proto(proto_chunk.chunk_data());
-      spdlog::info("obtained chunk data {}, {}", chunk.pos().x, chunk.pos().z);
+      spdlog::info("obtained chunk data {}, {}", chunk.pos().x(), chunk.pos().z());
       spdlog::info("block at 1 2 3: {}", *chunk.get_block({1, 2, 3}));
    }
 

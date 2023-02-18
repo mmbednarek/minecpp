@@ -28,20 +28,25 @@ std::shared_ptr<RuntimeError> make_error(std::string_view message)
 
 Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &input) const
 {
+   auto *world = ctx.world();
+   if (world == nullptr) {
+      return make_error("world is empty");
+   }
+
    auto *entity_id_obj = cast<IntObject>(ctx.variable("entity_id"));
    if (entity_id_obj == nullptr) {
       return make_error("entity id is not specified");
    }
    auto entity_id = static_cast<game::EntityId>(entity_id_obj->value);
-   auto entity    = ctx.world().entity_system().entity(entity_id);
+   auto entity    = world->entity_system().entity(entity_id);
 
    auto *player_id = cast<UUIDObject>(ctx.variable("player_id"));
    if (player_id == nullptr) {
       return make_error("could not obtain player_id");
    }
 
-   entity.component<minecpp::entity::component::Inventory>().synchronize_inventory(ctx.world().notifier());
-   entity.component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(ctx.world(), player_id->value);
+   entity.component<minecpp::entity::component::Inventory>().synchronize_inventory(ctx.world()->notifier());
+   entity.component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world, player_id->value);
 
    auto info = std::make_shared<FormattedString>();
    info->bold(format::Color::Green, "INFO ");

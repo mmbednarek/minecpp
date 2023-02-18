@@ -18,10 +18,10 @@ class RuntimeContext
    const CommandManager &m_manager;
    InputStream &m_input;
    OutputStream &m_output;
-   game::World &m_world;
+   game::World *m_world{};
 
  public:
-   RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output, game::World &world);
+   RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output, game::World *world);
 
    std::shared_ptr<Object> variable(const std::string &name);
    void set_variable(const std::string &name, std::shared_ptr<Object> object);
@@ -41,7 +41,7 @@ class RuntimeContext
       return m_output;
    }
 
-   [[nodiscard]] constexpr game::World &world()
+   [[nodiscard]] constexpr game::World *world()
    {
       return m_world;
    }

@@ -33,6 +33,13 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
       }
    }
 
+   auto *world = ctx.world();
+   if (world == nullptr) {
+      auto err = std::make_shared<RuntimeError>("give");
+      err->text("world is empty");
+      return err;
+   }
+
    auto *entity_id_obj = cast<IntObject>(ctx.variable("entity_id"));
    if (entity_id_obj == nullptr) {
       auto err = std::make_shared<RuntimeError>("give");
@@ -40,7 +47,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
       return err;
    }
    auto entity_id = static_cast<game::EntityId>(entity_id_obj->value);
-   auto entity    = ctx.world().entity_system().entity(entity_id);
+   auto entity    = world->entity_system().entity(entity_id);
 
    if (not entity.has_component<entity::component::Inventory>()) {
       auto err = std::make_shared<RuntimeError>("give");
@@ -50,7 +57,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    }
 
    auto &inventory = entity.component<entity::component::Inventory>();
-   if (not inventory.add_item(ctx.world().notifier(), static_cast<game::ItemId>(item_id.get()), 64)) {
+   if (not inventory.add_item(world->notifier(), static_cast<game::ItemId>(item_id.get()), 64)) {
       auto err = std::make_shared<RuntimeError>("give");
       err->text("player inventory is full");
       return err;

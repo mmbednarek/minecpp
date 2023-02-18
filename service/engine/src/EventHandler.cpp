@@ -36,7 +36,7 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
     m_entity_system(entity_system),
     m_world(world),
     m_command_std_stream(m_dispatcher),
-    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream, m_world),
+    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream, &m_world),
     m_block_manager(block_manager)
 {
    m_command_manager.register_command<command::core::Echo>("echo");
@@ -347,7 +347,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
       return;
    }
 
-   auto entity = m_entity_system.entity(player->entity_id());
+   auto entity     = m_entity_system.entity(player->entity_id());
    auto &inventory = entity.component<entity::component::Inventory>();
 
    auto item_slot = inventory.active_item();
@@ -393,8 +393,8 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
 void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event,
                                            game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity = m_entity_system.entity(player.entity_id());
+   auto &player    = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto entity     = m_entity_system.entity(player.entity_id());
    auto &inventory = entity.component<entity::component::Inventory>();
 
    inventory.set_active_item(m_dispatcher, event.slot());

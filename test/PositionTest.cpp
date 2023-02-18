@@ -26,5 +26,5 @@ TEST(Block, Position)
 
    minecpp::game::BlockPosition border(-16, 0, 0);
    EXPECT_EQ(border.offset(), 0);
-   EXPECT_EQ(border.chunk_position().x, -1);
+   EXPECT_EQ(border.chunk_position().x(), -1);
 }

@@ -19,7 +19,6 @@ target_link_libraries(minecpp_world
         minecpp_math
         minecpp_random
         minecpp_repository
-        minecpp_squeezed
 )
 
 add_subdirectory("test")

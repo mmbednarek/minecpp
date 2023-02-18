@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+#include <minecpp/math/Vector2.h>
+#include <minecpp/math/Vector3.h>
 #include <minecpp/random/JavaRandom.h>
 #include <minecpp/random/Perlin.h>
 #include <minecpp/random/Perlin3d.h>
@@ -68,7 +70,7 @@ TEST(Rand, Perlin)
 
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {
-         auto value = perlin.at(minecpp::util::Vec2(z, x)) * 4 + 1;
+         auto value = perlin.at(minecpp::math::Vector2{z, x}) * 4 + 1;
          ++count;
          avg += value;
          if (value < min) {
@@ -96,7 +98,7 @@ TEST(Rand, Perlin3d)
 
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {
-         auto value = perlin.at(minecpp::util::Vec3(x, 0.2, z)) * 4 + 1;
+         auto value = perlin.at(minecpp::math::Vector3{x, 0.2, z}) * 4 + 1;
          std::cerr << level_to_char(value);
       }
       std::cerr << '\n';
@@ -109,7 +111,7 @@ TEST(Rand, DisplacedPerlin)
    minecpp::random::DisplacedPerlin perlin(rand, 2.0, 1.0);
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {
-         auto value = perlin.at(minecpp::util::Vec2(x, z) / 16.0) + 1;
+         auto value = perlin.at(minecpp::math::Vector2{x, z} / 16.0) + 1;
          std::cerr << level_to_char(value);
       }
       std::cerr << '\n';

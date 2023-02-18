@@ -11,7 +11,6 @@
     ],
     "private": [
       "minecpp_nbt",
-      "minecpp_squeezed",
       "minecpp_random",
       "spdlog",
       "${Protobuf_LIBRARIES}",

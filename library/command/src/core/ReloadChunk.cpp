@@ -36,7 +36,13 @@ Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
       return make_error("could not obtain player position");
    }
 
-   auto res = ctx.world().send_chunk_to_player(player_id->value, player_position->value.chunk_position());
+   auto *world = ctx.world();
+   if (world == nullptr) {
+      return make_error("world is empty");
+   }
+
+
+   auto res = world->send_chunk_to_player(player_id->value, player_position->value.chunk_position());
    if (res.has_failed()) {
       return make_error("could not send chunk to the player");
    }

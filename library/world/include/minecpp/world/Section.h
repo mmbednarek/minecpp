@@ -8,8 +8,6 @@
 #include <minecpp/game/World.h>
 #include <minecpp/nbt/chunk/v1/Chunk.nbt.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
-#include <minecpp/squeezed/Tiny.h>
-#include <minecpp/squeezed/Vector.h>
 #include <shared_mutex>
 #include <vector>
 

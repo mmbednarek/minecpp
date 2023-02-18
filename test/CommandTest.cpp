@@ -48,7 +48,7 @@ TEST(CommandTest, BasicTest)
    minecpp::command::CommandManager manager;
    manager.register_command<EchoCommand>("echo");
 
-   minecpp::command::RuntimeContext ctx(manager, minecpp::command::g_null_stream, out);
+   minecpp::command::RuntimeContext ctx(manager, minecpp::command::g_null_stream, out, nullptr);
 
    manager.evaluate(ctx, "Echo.hello world");
 }
