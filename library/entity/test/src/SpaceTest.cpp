@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <minecpp/entity/component/Location.h>
-#include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/EntitySystem.h>
-#include <minecpp/game/player/Id.h>
 
 using minecpp::entity::EntitySystem;
 

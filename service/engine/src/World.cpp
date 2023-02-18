@@ -3,6 +3,7 @@
 #include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
+#include <minecpp/entity/EntitySystem.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/world/SectionSlice.h>
 #include <utility>
@@ -30,13 +31,13 @@ void when_chunk_is_complete(ChunkSystem &chunk_system, JobSystem &job_system,
    when_chunk_is_complete(m_chunk_system, m_job_system, position, __VA_ARGS__)
 
 World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
-             PlayerManager &player_manager, EntityManager &entity_manager,
+             PlayerManager &player_manager, entity::EntitySystem &entity_system,
              controller::BlockManager &block_controller) :
     m_chunk_system(chunk_system),
     m_job_system(job_system),
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
-    m_entity_manager(entity_manager),
+    m_entity_system(entity_system),
     m_block_controller(block_controller),
     m_engine_id(engine_id),
     m_light_system(*this)
@@ -110,9 +111,9 @@ game::player::Provider &World::players()
    return m_player_manager;
 }
 
-EntityManager &World::entities()
+game::IEntitySystem &World::entity_system()
 {
-   return m_entity_manager;
+   return m_entity_system;
 }
 
 void World::notify_neighbours(game::BlockPosition position, game::BlockStateId state)

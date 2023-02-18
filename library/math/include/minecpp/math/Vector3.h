@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseVector.h"
 #include "ProtoTypes.h"
+#include <fmt/format.h>
 
 namespace minecpp::math {
 
@@ -37,6 +38,26 @@ class BaseVector<TValue, 3>
 
 using Vector3  = BaseVector<double, 3>;
 using Vector3f = BaseVector<float, 3>;
+using Vector3s = BaseVector<short, 3>;
 using Vector3i = BaseVector<int, 3>;
+using Vector3l = BaseVector<std::int64_t, 3>;
 
 }// namespace minecpp::math
+
+template<>
+struct fmt::formatter<minecpp::math::Vector3>
+{
+   using Self = minecpp::math::Vector3;
+
+   template <typename ParseContext>
+   constexpr auto parse(ParseContext& ctx)
+   {
+      return ctx.begin();
+   }
+
+   template <typename FormatContext>
+   auto format(const Self& s, FormatContext& ctx)
+   {
+      return format_to(ctx.out(), "{}, {}, {}", s.x(), s.y(), s.z());
+   }
+};

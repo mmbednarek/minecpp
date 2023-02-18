@@ -52,19 +52,19 @@ namespace minecpp {
 namespace proto {
 namespace entity {
 namespace v1 {
+class Abilities;
+struct AbilitiesDefaultTypeInternal;
+extern AbilitiesDefaultTypeInternal _Abilities_default_instance_;
 class Entity;
 struct EntityDefaultTypeInternal;
 extern EntityDefaultTypeInternal _Entity_default_instance_;
-class Movement;
-struct MovementDefaultTypeInternal;
-extern MovementDefaultTypeInternal _Movement_default_instance_;
 }  // namespace v1
 }  // namespace entity
 }  // namespace proto
 }  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
+template<> ::minecpp::proto::entity::v1::Abilities* Arena::CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(Arena*);
 template<> ::minecpp::proto::entity::v1::Entity* Arena::CreateMaybeMessage<::minecpp::proto::entity::v1::Entity>(Arena*);
-template<> ::minecpp::proto::entity::v1::Movement* Arena::CreateMaybeMessage<::minecpp::proto::entity::v1::Movement>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace proto {
@@ -102,24 +102,24 @@ inline bool EquipmentSlot_Parse(
 }
 // ===================================================================
 
-class Movement final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.entity.v1.Movement) */ {
+class Abilities final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.entity.v1.Abilities) */ {
  public:
-  inline Movement() : Movement(nullptr) {}
-  ~Movement() override;
-  explicit PROTOBUF_CONSTEXPR Movement(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline Abilities() : Abilities(nullptr) {}
+  ~Abilities() override;
+  explicit PROTOBUF_CONSTEXPR Abilities(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  Movement(const Movement& from);
-  Movement(Movement&& from) noexcept
-    : Movement() {
+  Abilities(const Abilities& from);
+  Abilities(Abilities&& from) noexcept
+    : Abilities() {
     *this = ::std::move(from);
   }
 
-  inline Movement& operator=(const Movement& from) {
+  inline Abilities& operator=(const Abilities& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Movement& operator=(Movement&& from) noexcept {
+  inline Abilities& operator=(Abilities&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -142,20 +142,20 @@ class Movement final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const Movement& default_instance() {
+  static const Abilities& default_instance() {
     return *internal_default_instance();
   }
-  static inline const Movement* internal_default_instance() {
-    return reinterpret_cast<const Movement*>(
-               &_Movement_default_instance_);
+  static inline const Abilities* internal_default_instance() {
+    return reinterpret_cast<const Abilities*>(
+               &_Abilities_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     0;
 
-  friend void swap(Movement& a, Movement& b) {
+  friend void swap(Abilities& a, Abilities& b) {
     a.Swap(&b);
   }
-  inline void Swap(Movement* other) {
+  inline void Swap(Abilities* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -168,7 +168,7 @@ class Movement final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Movement* other) {
+  void UnsafeArenaSwap(Abilities* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -176,14 +176,14 @@ class Movement final :
 
   // implements Message ----------------------------------------------
 
-  Movement* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Movement>(arena);
+  Abilities* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Abilities>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Movement& from);
+  void CopyFrom(const Abilities& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Movement& from) {
-    Movement::MergeImpl(*this, from);
+  void MergeFrom( const Abilities& from) {
+    Abilities::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -201,15 +201,15 @@ class Movement final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Movement* other);
+  void InternalSwap(Abilities* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.entity.v1.Movement";
+    return "minecpp.proto.entity.v1.Abilities";
   }
   protected:
-  explicit Movement(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit Abilities(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -223,38 +223,78 @@ class Movement final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kXFieldNumber = 1,
-    kYFieldNumber = 2,
-    kZFieldNumber = 3,
+    kWalkSpeedFieldNumber = 1,
+    kFlySpeedFieldNumber = 2,
+    kFlyingFieldNumber = 3,
+    kInstantBuildFieldNumber = 4,
+    kInvulnerableFieldNumber = 5,
+    kMayBuildFieldNumber = 6,
+    kMayFlyFieldNumber = 7,
   };
-  // int32 x = 1;
-  void clear_x();
-  int32_t x() const;
-  void set_x(int32_t value);
+  // float walk_speed = 1;
+  void clear_walk_speed();
+  float walk_speed() const;
+  void set_walk_speed(float value);
   private:
-  int32_t _internal_x() const;
-  void _internal_set_x(int32_t value);
+  float _internal_walk_speed() const;
+  void _internal_set_walk_speed(float value);
   public:
 
-  // int32 y = 2;
-  void clear_y();
-  int32_t y() const;
-  void set_y(int32_t value);
+  // float fly_speed = 2;
+  void clear_fly_speed();
+  float fly_speed() const;
+  void set_fly_speed(float value);
   private:
-  int32_t _internal_y() const;
-  void _internal_set_y(int32_t value);
+  float _internal_fly_speed() const;
+  void _internal_set_fly_speed(float value);
   public:
 
-  // int32 z = 3;
-  void clear_z();
-  int32_t z() const;
-  void set_z(int32_t value);
+  // bool flying = 3;
+  void clear_flying();
+  bool flying() const;
+  void set_flying(bool value);
   private:
-  int32_t _internal_z() const;
-  void _internal_set_z(int32_t value);
+  bool _internal_flying() const;
+  void _internal_set_flying(bool value);
   public:
 
-  // @@protoc_insertion_point(class_scope:minecpp.proto.entity.v1.Movement)
+  // bool instant_build = 4;
+  void clear_instant_build();
+  bool instant_build() const;
+  void set_instant_build(bool value);
+  private:
+  bool _internal_instant_build() const;
+  void _internal_set_instant_build(bool value);
+  public:
+
+  // bool invulnerable = 5;
+  void clear_invulnerable();
+  bool invulnerable() const;
+  void set_invulnerable(bool value);
+  private:
+  bool _internal_invulnerable() const;
+  void _internal_set_invulnerable(bool value);
+  public:
+
+  // bool may_build = 6;
+  void clear_may_build();
+  bool may_build() const;
+  void set_may_build(bool value);
+  private:
+  bool _internal_may_build() const;
+  void _internal_set_may_build(bool value);
+  public:
+
+  // bool may_fly = 7;
+  void clear_may_fly();
+  bool may_fly() const;
+  void set_may_fly(bool value);
+  private:
+  bool _internal_may_fly() const;
+  void _internal_set_may_fly(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.entity.v1.Abilities)
  private:
   class _Internal;
 
@@ -262,9 +302,13 @@ class Movement final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int32_t x_;
-    int32_t y_;
-    int32_t z_;
+    float walk_speed_;
+    float fly_speed_;
+    bool flying_;
+    bool instant_build_;
+    bool invulnerable_;
+    bool may_build_;
+    bool may_fly_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -393,12 +437,28 @@ class Entity final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kPlayerIdFieldNumber = 2,
-    kPositionFieldNumber = 3,
-    kRotationFieldNumber = 4,
+    kNameFieldNumber = 2,
+    kPlayerIdFieldNumber = 3,
+    kPositionFieldNumber = 4,
+    kRotationFieldNumber = 5,
+    kAbilitiesFieldNumber = 6,
     kEntityIdFieldNumber = 1,
   };
-  // .minecpp.proto.player.v1.PlayerId player_id = 2;
+  // string name = 2;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // .minecpp.proto.player.v1.PlayerId player_id = 3;
   bool has_player_id() const;
   private:
   bool _internal_has_player_id() const;
@@ -416,7 +476,7 @@ class Entity final :
       ::minecpp::proto::player::v1::PlayerId* player_id);
   ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
 
-  // .minecpp.proto.common.v1.Vector3 position = 3;
+  // .minecpp.proto.common.v1.Vector3 position = 4;
   bool has_position() const;
   private:
   bool _internal_has_position() const;
@@ -434,7 +494,7 @@ class Entity final :
       ::minecpp::proto::common::v1::Vector3* position);
   ::minecpp::proto::common::v1::Vector3* unsafe_arena_release_position();
 
-  // .minecpp.proto.common.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 5;
   bool has_rotation() const;
   private:
   bool _internal_has_rotation() const;
@@ -451,6 +511,24 @@ class Entity final :
   void unsafe_arena_set_allocated_rotation(
       ::minecpp::proto::common::v1::Rotation* rotation);
   ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
+
+  // .minecpp.proto.entity.v1.Abilities abilities = 6;
+  bool has_abilities() const;
+  private:
+  bool _internal_has_abilities() const;
+  public:
+  void clear_abilities();
+  const ::minecpp::proto::entity::v1::Abilities& abilities() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Abilities* release_abilities();
+  ::minecpp::proto::entity::v1::Abilities* mutable_abilities();
+  void set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities);
+  private:
+  const ::minecpp::proto::entity::v1::Abilities& _internal_abilities() const;
+  ::minecpp::proto::entity::v1::Abilities* _internal_mutable_abilities();
+  public:
+  void unsafe_arena_set_allocated_abilities(
+      ::minecpp::proto::entity::v1::Abilities* abilities);
+  ::minecpp::proto::entity::v1::Abilities* unsafe_arena_release_abilities();
 
   // uint32 entity_id = 1;
   void clear_entity_id();
@@ -469,9 +547,11 @@ class Entity final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::minecpp::proto::player::v1::PlayerId* player_id_;
     ::minecpp::proto::common::v1::Vector3* position_;
     ::minecpp::proto::common::v1::Rotation* rotation_;
+    ::minecpp::proto::entity::v1::Abilities* abilities_;
     uint32_t entity_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -487,66 +567,146 @@ class Entity final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// Movement
+// Abilities
 
-// int32 x = 1;
-inline void Movement::clear_x() {
-  _impl_.x_ = 0;
+// float walk_speed = 1;
+inline void Abilities::clear_walk_speed() {
+  _impl_.walk_speed_ = 0;
 }
-inline int32_t Movement::_internal_x() const {
-  return _impl_.x_;
+inline float Abilities::_internal_walk_speed() const {
+  return _impl_.walk_speed_;
 }
-inline int32_t Movement::x() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Movement.x)
-  return _internal_x();
+inline float Abilities::walk_speed() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.walk_speed)
+  return _internal_walk_speed();
 }
-inline void Movement::_internal_set_x(int32_t value) {
+inline void Abilities::_internal_set_walk_speed(float value) {
   
-  _impl_.x_ = value;
+  _impl_.walk_speed_ = value;
 }
-inline void Movement::set_x(int32_t value) {
-  _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Movement.x)
-}
-
-// int32 y = 2;
-inline void Movement::clear_y() {
-  _impl_.y_ = 0;
-}
-inline int32_t Movement::_internal_y() const {
-  return _impl_.y_;
-}
-inline int32_t Movement::y() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Movement.y)
-  return _internal_y();
-}
-inline void Movement::_internal_set_y(int32_t value) {
-  
-  _impl_.y_ = value;
-}
-inline void Movement::set_y(int32_t value) {
-  _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Movement.y)
+inline void Abilities::set_walk_speed(float value) {
+  _internal_set_walk_speed(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.walk_speed)
 }
 
-// int32 z = 3;
-inline void Movement::clear_z() {
-  _impl_.z_ = 0;
+// float fly_speed = 2;
+inline void Abilities::clear_fly_speed() {
+  _impl_.fly_speed_ = 0;
 }
-inline int32_t Movement::_internal_z() const {
-  return _impl_.z_;
+inline float Abilities::_internal_fly_speed() const {
+  return _impl_.fly_speed_;
 }
-inline int32_t Movement::z() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Movement.z)
-  return _internal_z();
+inline float Abilities::fly_speed() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.fly_speed)
+  return _internal_fly_speed();
 }
-inline void Movement::_internal_set_z(int32_t value) {
+inline void Abilities::_internal_set_fly_speed(float value) {
   
-  _impl_.z_ = value;
+  _impl_.fly_speed_ = value;
 }
-inline void Movement::set_z(int32_t value) {
-  _internal_set_z(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Movement.z)
+inline void Abilities::set_fly_speed(float value) {
+  _internal_set_fly_speed(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.fly_speed)
+}
+
+// bool flying = 3;
+inline void Abilities::clear_flying() {
+  _impl_.flying_ = false;
+}
+inline bool Abilities::_internal_flying() const {
+  return _impl_.flying_;
+}
+inline bool Abilities::flying() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.flying)
+  return _internal_flying();
+}
+inline void Abilities::_internal_set_flying(bool value) {
+  
+  _impl_.flying_ = value;
+}
+inline void Abilities::set_flying(bool value) {
+  _internal_set_flying(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.flying)
+}
+
+// bool instant_build = 4;
+inline void Abilities::clear_instant_build() {
+  _impl_.instant_build_ = false;
+}
+inline bool Abilities::_internal_instant_build() const {
+  return _impl_.instant_build_;
+}
+inline bool Abilities::instant_build() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.instant_build)
+  return _internal_instant_build();
+}
+inline void Abilities::_internal_set_instant_build(bool value) {
+  
+  _impl_.instant_build_ = value;
+}
+inline void Abilities::set_instant_build(bool value) {
+  _internal_set_instant_build(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.instant_build)
+}
+
+// bool invulnerable = 5;
+inline void Abilities::clear_invulnerable() {
+  _impl_.invulnerable_ = false;
+}
+inline bool Abilities::_internal_invulnerable() const {
+  return _impl_.invulnerable_;
+}
+inline bool Abilities::invulnerable() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.invulnerable)
+  return _internal_invulnerable();
+}
+inline void Abilities::_internal_set_invulnerable(bool value) {
+  
+  _impl_.invulnerable_ = value;
+}
+inline void Abilities::set_invulnerable(bool value) {
+  _internal_set_invulnerable(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.invulnerable)
+}
+
+// bool may_build = 6;
+inline void Abilities::clear_may_build() {
+  _impl_.may_build_ = false;
+}
+inline bool Abilities::_internal_may_build() const {
+  return _impl_.may_build_;
+}
+inline bool Abilities::may_build() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.may_build)
+  return _internal_may_build();
+}
+inline void Abilities::_internal_set_may_build(bool value) {
+  
+  _impl_.may_build_ = value;
+}
+inline void Abilities::set_may_build(bool value) {
+  _internal_set_may_build(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.may_build)
+}
+
+// bool may_fly = 7;
+inline void Abilities::clear_may_fly() {
+  _impl_.may_fly_ = false;
+}
+inline bool Abilities::_internal_may_fly() const {
+  return _impl_.may_fly_;
+}
+inline bool Abilities::may_fly() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Abilities.may_fly)
+  return _internal_may_fly();
+}
+inline void Abilities::_internal_set_may_fly(bool value) {
+  
+  _impl_.may_fly_ = value;
+}
+inline void Abilities::set_may_fly(bool value) {
+  _internal_set_may_fly(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Abilities.may_fly)
 }
 
 // -------------------------------------------------------------------
@@ -573,7 +733,57 @@ inline void Entity::set_entity_id(uint32_t value) {
   // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Entity.entity_id)
 }
 
-// .minecpp.proto.player.v1.PlayerId player_id = 2;
+// string name = 2;
+inline void Entity::clear_name() {
+  _impl_.name_.ClearToEmpty();
+}
+inline const std::string& Entity::name() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Entity.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Entity::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.entity.v1.Entity.name)
+}
+inline std::string* Entity::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.entity.v1.Entity.name)
+  return _s;
+}
+inline const std::string& Entity::_internal_name() const {
+  return _impl_.name_.Get();
+}
+inline void Entity::_internal_set_name(const std::string& value) {
+  
+  _impl_.name_.Set(value, GetArenaForAllocation());
+}
+inline std::string* Entity::_internal_mutable_name() {
+  
+  return _impl_.name_.Mutable(GetArenaForAllocation());
+}
+inline std::string* Entity::release_name() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.entity.v1.Entity.name)
+  return _impl_.name_.Release();
+}
+inline void Entity::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.entity.v1.Entity.name)
+}
+
+// .minecpp.proto.player.v1.PlayerId player_id = 3;
 inline bool Entity::_internal_has_player_id() const {
   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
@@ -658,7 +868,7 @@ inline void Entity::set_allocated_player_id(::minecpp::proto::player::v1::Player
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.entity.v1.Entity.player_id)
 }
 
-// .minecpp.proto.common.v1.Vector3 position = 3;
+// .minecpp.proto.common.v1.Vector3 position = 4;
 inline bool Entity::_internal_has_position() const {
   return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
@@ -743,7 +953,7 @@ inline void Entity::set_allocated_position(::minecpp::proto::common::v1::Vector3
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.entity.v1.Entity.position)
 }
 
-// .minecpp.proto.common.v1.Rotation rotation = 4;
+// .minecpp.proto.common.v1.Rotation rotation = 5;
 inline bool Entity::_internal_has_rotation() const {
   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
@@ -826,6 +1036,96 @@ inline void Entity::set_allocated_rotation(::minecpp::proto::common::v1::Rotatio
   }
   _impl_.rotation_ = rotation;
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.entity.v1.Entity.rotation)
+}
+
+// .minecpp.proto.entity.v1.Abilities abilities = 6;
+inline bool Entity::_internal_has_abilities() const {
+  return this != internal_default_instance() && _impl_.abilities_ != nullptr;
+}
+inline bool Entity::has_abilities() const {
+  return _internal_has_abilities();
+}
+inline void Entity::clear_abilities() {
+  if (GetArenaForAllocation() == nullptr && _impl_.abilities_ != nullptr) {
+    delete _impl_.abilities_;
+  }
+  _impl_.abilities_ = nullptr;
+}
+inline const ::minecpp::proto::entity::v1::Abilities& Entity::_internal_abilities() const {
+  const ::minecpp::proto::entity::v1::Abilities* p = _impl_.abilities_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Abilities&>(
+      ::minecpp::proto::entity::v1::_Abilities_default_instance_);
+}
+inline const ::minecpp::proto::entity::v1::Abilities& Entity::abilities() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.entity.v1.Entity.abilities)
+  return _internal_abilities();
+}
+inline void Entity::unsafe_arena_set_allocated_abilities(
+    ::minecpp::proto::entity::v1::Abilities* abilities) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  _impl_.abilities_ = abilities;
+  if (abilities) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.entity.v1.Entity.abilities)
+}
+inline ::minecpp::proto::entity::v1::Abilities* Entity::release_abilities() {
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::entity::v1::Abilities* Entity::unsafe_arena_release_abilities() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.entity.v1.Entity.abilities)
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::entity::v1::Abilities* Entity::_internal_mutable_abilities() {
+  
+  if (_impl_.abilities_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(GetArenaForAllocation());
+    _impl_.abilities_ = p;
+  }
+  return _impl_.abilities_;
+}
+inline ::minecpp::proto::entity::v1::Abilities* Entity::mutable_abilities() {
+  ::minecpp::proto::entity::v1::Abilities* _msg = _internal_mutable_abilities();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.entity.v1.Entity.abilities)
+  return _msg;
+}
+inline void Entity::set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.abilities_;
+  }
+  if (abilities) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(abilities);
+    if (message_arena != submessage_arena) {
+      abilities = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, abilities, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.abilities_ = abilities;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.entity.v1.Entity.abilities)
 }
 
 #ifdef __GNUC__

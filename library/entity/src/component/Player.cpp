@@ -5,6 +5,7 @@ namespace minecpp::entity::component {
 
 void Player::serialize_to_proto(proto::entity::v1::Entity *entity) const
 {
+   entity->set_name(this->name);
    *entity->mutable_player_id() = game::player::write_id_to_proto(this->id);
 }
 

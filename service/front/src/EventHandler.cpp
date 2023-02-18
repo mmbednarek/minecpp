@@ -1,5 +1,6 @@
 #include "EventHandler.h"
 #include <boost/uuid/uuid_io.hpp>
+#include <minecpp/entity/Abilities.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/network/message/Clientbound.h>
 #include <minecpp/repository/Repository.h>
@@ -241,7 +242,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                          .locked     = false,
                  });
 
-      auto abilities = minecpp::game::player::Abilities::from_proto(msg.player().abilities());
+      auto abilities = minecpp::entity::Abilities::from_proto(msg.abilities());
 
       send(conn, PlayerAbilities{
                          .flags         = static_cast<mb::u8>(abilities.flags()),
@@ -266,16 +267,6 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                    .furnace_gui_open            = msg.player().recipe_book().furnace_gui_open(),
                    .furnace_filtering_craftable = msg.player().recipe_book().furnace_filtering_craftable(),
            });
-
-      //      send(conn, PlayerPositionLook{
-      //                         .x     = msg.player().position().x(),
-      //                         .y     = msg.player().position().y(),
-      //                         .z     = msg.player().position().z(),
-      //                         .yaw   = msg.player().rotation().yaw(),
-      //                         .pitch = msg.player().rotation().pitch(),
-      //                         .flags = 0,
-      //                         .tp_id = 0,
-      //                 });
 
       if (m_stream == nullptr) {
          spdlog::error("Player stream is null!");
@@ -354,7 +345,7 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
       }
 
       for (auto const &entity : msg.list()) {
-         auto id = game::player::read_id_from_proto(entity.id());
+         auto id = game::player::read_id_from_proto(entity.player_id());
          spdlog::info("sending player data {}", to_string(id));
 
          if (id == player_id) {

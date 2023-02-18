@@ -82,6 +82,16 @@ class BaseVector
       return result;                                                            \
    }
 
+#define MCC_MATH_DECLARE_CAST_FUNC                                              \
+   template<typename TDst>                                                      \
+   [[nodiscard]] BaseVector<TDst, Count> cast() const                           \
+   {                                                                            \
+      BaseVector<TDst, Count> result;                                           \
+      std::transform(m_storage, m_storage + Count, result.m_storage,            \
+                     [](ValueType value) { return static_cast<TDst>(value); }); \
+      return result;                                                            \
+   }
+
 #define MCC_MATH_DECLARE_ACCUMULATE_METHOD                               \
    [[nodiscard]] ValueType sum() const                                   \
    {                                                                     \
@@ -121,4 +131,5 @@ class BaseVector
    MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(ceil, ::std::ceil)               \
    MCC_MATH_DECLARE_ACCUMULATE_METHOD                                       \
    MCC_MATH_DECLARE_TRANSFORM_FUNC                                          \
+   MCC_MATH_DECLARE_CAST_FUNC                                               \
    MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR

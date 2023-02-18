@@ -14,6 +14,7 @@ target_link_libraries(minecpp_world
         LINK_PUBLIC
         minecpp_api_proto
         minecpp_container
+        minecpp_entity
         minecpp_game
         minecpp_math
         minecpp_random

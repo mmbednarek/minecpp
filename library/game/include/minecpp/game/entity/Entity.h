@@ -39,15 +39,6 @@ struct Tracking
 struct Movement
 {
    short x, y, z;
-
-   [[nodiscard]] inline proto::entity::v1::Movement to_proto() const
-   {
-      proto::entity::v1::Movement result;
-      result.set_x(x);
-      result.set_y(y);
-      result.set_z(z);
-      return result;
-   }
 };
 
 class Entity

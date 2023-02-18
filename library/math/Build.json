@@ -4,7 +4,8 @@
   "tests": true,
   "dependencies": {
     "interface": [
-      "minecpp_api_proto"
+      "minecpp_api_proto",
+      "fmt"
     ]
   }
 }

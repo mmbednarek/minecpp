@@ -1,14 +1,18 @@
 #pragma once
+#include "Game.h"
 #include <entt/entt.hpp>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 
-namespace minecpp::entity {
+namespace minecpp::game {
+
+class Entity;
 
 template<typename T>
-concept ProtoSerializable = requires(const T &t, proto::entity::v1::Entity *proto_entity) { t.serialize_to_proto(proto_entity); };
+concept ProtoSerializable =
+        requires(const T &t, proto::entity::v1::Entity *proto_entity) { t.serialize_to_proto(proto_entity); };
 
 template<typename T>
-concept HasOnAttached = requires(const T &t) { t.on_attached(); };
+concept IsAttachable = requires(T &t, Entity &entity) { t.on_attached(entity); };
 
 template<typename TComponent>
 void register_component()
@@ -21,4 +25,4 @@ void register_component()
    }
 }
 
-}// namespace minecpp::entity
+}// namespace minecpp::game

@@ -36,7 +36,6 @@ void ChunkSystem::subscribe_chunk(const game::ChunkPosition &position)
 
 void ChunkSystem::handle_chunk_data(const storage::ResponseChunkData &chunk)
 {
-   spdlog::debug("chunk system: handling chunk data");
    auto *new_chunk = m_chunk_pool.construct();
    new_chunk->read_from_proto(chunk.chunk_data());
    m_chunks.emplace(game::ChunkPosition::from_proto(chunk.chunk_data().position()).hash(),

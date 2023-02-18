@@ -1,6 +1,6 @@
 #pragma once
-#include "EntityManager.hpp"
 #include "Game.h"
+#include "IEntitySystem.hpp"
 #include "Notifier.h"
 #include <mb/result.h>
 #include <minecpp/game/player/Provider.hpp>
@@ -46,7 +46,7 @@ class World : public IBlockContainer
 {
  public:
    virtual Notifier &notifier()                                                                       = 0;
-   virtual EntityManager &entities()                                                                  = 0;
+   virtual IEntitySystem &entity_system()                                                             = 0;
    virtual player::Provider &players()                                                                = 0;
    virtual mb::result<mb::empty> add_refs(PlayerId player, std::vector<game::ChunkPosition> refs)     = 0;
    virtual mb::result<mb::empty> free_refs(PlayerId player, std::vector<game::ChunkPosition> refs)    = 0;

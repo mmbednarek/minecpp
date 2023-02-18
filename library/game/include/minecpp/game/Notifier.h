@@ -2,6 +2,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <minecpp/chat/Chat.h>
+#include <minecpp/game/Entity.h>
 #include <minecpp/game/Game.h>
 #include <minecpp/game/item/Item.h>
 #include <minecpp/math/Vector3.h>
@@ -12,11 +13,6 @@ namespace minecpp::game {
 
 class ISectionSlice;
 
-namespace entity {
-struct Movement;
-struct Rotation;
-}// namespace entity
-
 using boost::uuids::uuid;
 
 class Notifier
@@ -24,16 +20,18 @@ class Notifier
  public:
    virtual void load_terrain(PlayerId player, const ChunkPosition &central_chunk,
                              std::vector<game::ChunkPosition> coords)                                     = 0;
-   virtual void entity_move(PlayerId player_id, EntityId entity_id, const entity::Movement &movement,
-                            const entity::Rotation &rotation)                                             = 0;
+   virtual void player_move(PlayerId player_id, EntityId entity_id, const math::Vector3s &movement,
+                            const Rotation &rotation)                                                     = 0;
+   virtual void entity_move(EntityId entity_id, const math::Vector3s &movement, const Rotation &rotation)       = 0;
+   virtual void player_look(PlayerId player, EntityId entity_id, const Rotation &rotation)                 = 0;
+   virtual void entity_look(EntityId entity_id, const Rotation &rotation)                                  = 0;
    virtual void add_player(PlayerId player, const std::string &name, mb::u32 ping)                        = 0;
-   virtual void spawn_player(PlayerId player, mb::u32 entity_id, math::Vector3 position,
-                             const entity::Rotation &rotation)                                            = 0;
+   virtual void spawn_player(PlayerId player, EntityId entity_id, math::Vector3 position,
+                             const Rotation &rotation)                                                    = 0;
    virtual void send_chat(chat::MessageType msg_type, const std::string &msg)                             = 0;
    virtual void send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
                                  const std::string &msg)                                                  = 0;
-   virtual void entity_look(PlayerId player, mb::u32 entity_id, const entity::Rotation &rotation)         = 0;
-   virtual void remove_player(PlayerId player, mb::u32 entity_id)                                         = 0;
+   virtual void remove_player(PlayerId player, EntityId entity_id)                                         = 0;
    virtual void update_block(game::BlockPosition block, game::BlockStateId state)                         = 0;
    virtual void animate_entity(game::EntityId entity_id, game::EntityAnimation animation)                 = 0;
    virtual void animate_player_entity(game::PlayerId player_id, game::EntityId entity_id,

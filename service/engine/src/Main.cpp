@@ -1,7 +1,6 @@
 #include "ApiHandler.h"
 #include "ChunkSystem.h"
 #include "Dispatcher.h"
-#include "Entities.h"
 #include "EventHandler.h"
 #include "EventManager.h"
 #include "JobSystem.h"
@@ -10,6 +9,7 @@
 #include "StorageResponseHandler.h"
 #include "World.h"
 #include <mb/core.h>
+#include <minecpp/entity/EntitySystem.h>
 #include <minecpp/repository/Repository.h>
 #include <minecpp/service/storage/Storage.h>
 #include <spdlog/spdlog.h>
@@ -74,16 +74,16 @@ auto main() -> int
    ChunkSystem chunk_system(job_system, storage_client, config.gameplay_world_seed);
    storage_handler.add_handler(&chunk_system);
 
-   EntityManager entities;
-   PlayerManager players(entities, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
+   minecpp::entity::EntitySystem entity_system;
+   PlayerManager players(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
                                     config.gameplay_spawn_point_z});
 
    EventManager manager;
-   Dispatcher dispatcher(manager);
+   Dispatcher dispatcher(manager, entity_system);
    minecpp::controller::BlockManager block_manager;
 
-   World world(boost::uuids::uuid(), chunk_system, job_system, dispatcher, players, entities, block_manager);
-   EventHandler handler(dispatcher, players, entities, world, block_manager);
+   World world(boost::uuids::uuid(), chunk_system, job_system, dispatcher, players, entity_system, block_manager);
+   EventHandler handler(dispatcher, players, entity_system, world, block_manager);
 
    ApiHandler api_handler(handler, manager,
                           fmt::format("{}:{}", config.server_bind_address, config.server_bind_port));

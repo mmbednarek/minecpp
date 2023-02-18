@@ -33,3 +33,9 @@ message Vector3i {
   int32 y = 2;
   int32 z = 3;
 }
+
+message Vector3l {
+  int64 x = 1;
+  int64 y = 2;
+  int64 z = 3;
+}

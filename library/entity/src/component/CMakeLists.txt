@@ -3,12 +3,18 @@
 set(MINECPP_ENTITY_COMPONENT_INCLUDE_DIR ${MINECPP_ENTITY_DIR}/include/minecpp/entity/component)
 target_sources(minecpp_entity PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Location.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Player.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/StreamingComponent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Test.cpp
 
         # Header files
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Abilities.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Health.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Location.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Player.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/StreamingComponent.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Test.h
 )
 

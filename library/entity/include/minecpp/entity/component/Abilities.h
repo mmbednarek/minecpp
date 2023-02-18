@@ -1,13 +1,12 @@
 #pragma once
-#include <minecpp/game/Game.h>
-#include <string>
+#include "../Abilities.h"
+#include <minecpp/proto/entity/v1/Entity.pb.h>
 
 namespace minecpp::entity::component {
 
-struct Player
+struct Abilities
 {
-   game::PlayerId id{};
-   std::string name;
+   entity::Abilities abilities;
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
 };

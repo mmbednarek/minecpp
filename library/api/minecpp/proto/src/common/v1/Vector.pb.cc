@@ -111,11 +111,26 @@ struct Vector3iDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Vector3iDefaultTypeInternal _Vector3i_default_instance_;
+PROTOBUF_CONSTEXPR Vector3l::Vector3l(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.x_)*/int64_t{0}
+  , /*decltype(_impl_.y_)*/int64_t{0}
+  , /*decltype(_impl_.z_)*/int64_t{0}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct Vector3lDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Vector3lDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~Vector3lDefaultTypeInternal() {}
+  union {
+    Vector3l _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Vector3lDefaultTypeInternal _Vector3l_default_instance_;
 }  // namespace v1
 }  // namespace common
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto[6];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto[7];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto = nullptr;
 
@@ -171,6 +186,15 @@ const uint32_t TableStruct_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3i, _impl_.x_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3i, _impl_.y_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3i, _impl_.z_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3l, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3l, _impl_.x_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3l, _impl_.y_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::common::v1::Vector3l, _impl_.z_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::common::v1::Vector2)},
@@ -179,6 +203,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 24, -1, -1, sizeof(::minecpp::proto::common::v1::Vector3)},
   { 33, -1, -1, sizeof(::minecpp::proto::common::v1::Vector3f)},
   { 42, -1, -1, sizeof(::minecpp::proto::common::v1::Vector3i)},
+  { 51, -1, -1, sizeof(::minecpp::proto::common::v1::Vector3l)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -188,6 +213,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::common::v1::_Vector3_default_instance_._instance,
   &::minecpp::proto::common::v1::_Vector3f_default_instance_._instance,
   &::minecpp::proto::common::v1::_Vector3i_default_instance_._instance,
+  &::minecpp::proto::common::v1::_Vector3l_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -198,13 +224,14 @@ const char descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fVector_2epr
   " \001(\005\"*\n\007Vector3\022\t\n\001x\030\001 \001(\001\022\t\n\001y\030\002 \001(\001\022\t\n"
   "\001z\030\003 \001(\001\"+\n\010Vector3f\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001"
   "(\002\022\t\n\001z\030\003 \001(\002\"+\n\010Vector3i\022\t\n\001x\030\001 \001(\005\022\t\n\001"
-  "y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005b\006proto3"
+  "y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\"+\n\010Vector3l\022\t\n\001x\030\001 \001("
+  "\003\022\t\n\001y\030\002 \001(\003\022\t\n\001z\030\003 \001(\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto = {
-    false, false, 306, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto,
+    false, false, 351, descriptor_table_protodef_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto,
     "minecpp/proto/common/v1/Vector.proto",
-    &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto_once, nullptr, 0, 6,
+    &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto_once, nullptr, 0, 7,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto,
@@ -1678,6 +1705,241 @@ void Vector3i::InternalSwap(Vector3i* other) {
       file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto[5]);
 }
 
+// ===================================================================
+
+class Vector3l::_Internal {
+ public:
+};
+
+Vector3l::Vector3l(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.common.v1.Vector3l)
+}
+Vector3l::Vector3l(const Vector3l& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Vector3l* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){}
+    , decltype(_impl_.y_){}
+    , decltype(_impl_.z_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&_impl_.x_, &from._impl_.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.z_) -
+    reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.common.v1.Vector3l)
+}
+
+inline void Vector3l::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.x_){int64_t{0}}
+    , decltype(_impl_.y_){int64_t{0}}
+    , decltype(_impl_.z_){int64_t{0}}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+Vector3l::~Vector3l() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.common.v1.Vector3l)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Vector3l::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void Vector3l::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Vector3l::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.common.v1.Vector3l)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&_impl_.x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.z_) -
+      reinterpret_cast<char*>(&_impl_.x_)) + sizeof(_impl_.z_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Vector3l::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int64 x = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 y = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 z = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Vector3l::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.common.v1.Vector3l)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int64 x = 1;
+  if (this->_internal_x() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_x(), target);
+  }
+
+  // int64 y = 2;
+  if (this->_internal_y() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(2, this->_internal_y(), target);
+  }
+
+  // int64 z = 3;
+  if (this->_internal_z() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(3, this->_internal_z(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.common.v1.Vector3l)
+  return target;
+}
+
+size_t Vector3l::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.common.v1.Vector3l)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int64 x = 1;
+  if (this->_internal_x() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_x());
+  }
+
+  // int64 y = 2;
+  if (this->_internal_y() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_y());
+  }
+
+  // int64 z = 3;
+  if (this->_internal_z() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_z());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Vector3l::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Vector3l::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Vector3l::GetClassData() const { return &_class_data_; }
+
+
+void Vector3l::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Vector3l*>(&to_msg);
+  auto& from = static_cast<const Vector3l&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.common.v1.Vector3l)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_x() != 0) {
+    _this->_internal_set_x(from._internal_x());
+  }
+  if (from._internal_y() != 0) {
+    _this->_internal_set_y(from._internal_y());
+  }
+  if (from._internal_z() != 0) {
+    _this->_internal_set_z(from._internal_z());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Vector3l::CopyFrom(const Vector3l& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.common.v1.Vector3l)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Vector3l::IsInitialized() const {
+  return true;
+}
+
+void Vector3l::InternalSwap(Vector3l* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Vector3l, _impl_.z_)
+      + sizeof(Vector3l::_impl_.z_)
+      - PROTOBUF_FIELD_OFFSET(Vector3l, _impl_.x_)>(
+          reinterpret_cast<char*>(&_impl_.x_),
+          reinterpret_cast<char*>(&other->_impl_.x_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Vector3l::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto_getter, &descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto[6]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace v1
 }  // namespace common
@@ -1707,6 +1969,10 @@ Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::Vector3f >(Arena* arena
 template<> PROTOBUF_NOINLINE ::minecpp::proto::common::v1::Vector3i*
 Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::Vector3i >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::common::v1::Vector3i >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::common::v1::Vector3l*
+Arena::CreateMaybeMessage< ::minecpp::proto::common::v1::Vector3l >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::common::v1::Vector3l >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

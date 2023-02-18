@@ -7,6 +7,7 @@
     ],
     "private": [
       "minecpp_game",
+      "minecpp_entity",
       "minecpp_utils"
     ]
   }

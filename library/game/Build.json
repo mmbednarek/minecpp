@@ -2,6 +2,7 @@
   "name": "minecpp_game",
   "dependencies": {
     "public": [
+      "EnTT",
       "minecpp_api_proto",
       "minecpp_api_nbt",
       "minecpp_chat",

@@ -41,10 +41,10 @@ float Entity::get_pitch() const
 void Entity::set_pos(Notifier &n, math::Vector3 pos)
 {
    this->pos     = pos;
-   auto movement = process_movement();
-   if (movement.x != 0 || movement.y != 0 || movement.z != 0) {
-      n.entity_move(uid, id, movement, {yaw, pitch});
-   }
+//   auto movement = process_movement();
+//   if (movement.x != 0 || movement.y != 0 || movement.z != 0) {
+//      n.player_move(uid, id, movement, {yaw, pitch});
+//   }
 }
 
 void Entity::set_rot(float yaw, float pitch)

@@ -38,9 +38,21 @@ struct ProtoVector<float, 3>
 };
 
 template<>
+struct ProtoVector<short, 3>
+{
+   using Type = proto::common::v1::Vector3i; // Proto doesn't support i16
+};
+
+template<>
 struct ProtoVector<int, 3>
 {
    using Type = proto::common::v1::Vector3i;
+};
+
+template<>
+struct ProtoVector<std::int64_t, 3>
+{
+   using Type = proto::common::v1::Vector3l;
 };
 
 }// namespace minecpp::math

@@ -1,17 +1,11 @@
-#include <minecpp/entity/component/Location.h>
-#include <minecpp/entity/Entity.h>
+#include <minecpp/game/Entity.h>
 
-namespace minecpp::entity {
+namespace minecpp::game {
 
 Entity::Entity(entt::registry &registry, game::EntityId id) :
     m_entity(static_cast<entt::entity>(id)),
     m_registry(registry)
 {
-}
-
-math::Vector3 Entity::position() const
-{
-   return m_registry.get<component::Location>(m_entity).position;
 }
 
 void Entity::serialize_to_proto(proto::entity::v1::Entity *entity) const {
@@ -33,4 +27,21 @@ game::EntityId Entity::id() const
    return static_cast<game::EntityId>(m_entity);
 }
 
+Movement Movement::from_vector3(const math::Vector3 &position)
+{
+    return {(position * 4096.0).cast<short>()};
+}
+
+math::Vector3 Movement::to_vector3() const
+{
+   return this->movement.cast<double>() / 4096.0;
+}
+
+proto::common::v1::Rotation Rotation::to_proto() const
+{
+   proto::common::v1::Rotation result;
+   result.set_yaw(yaw);
+   result.set_pitch(pitch);
+   return result;
+}
 }// namespace minecpp::entity

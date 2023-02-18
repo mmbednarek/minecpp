@@ -23,26 +23,6 @@ namespace minecpp::game::player {
 
 using boost::uuids::uuid;
 
-struct Abilities
-{
-   float fly_speed    = 0.05f;
-   bool flying        = false;
-   bool instant_build = true;
-   bool invulnerable  = false;
-   bool may_build     = true;
-   bool may_fly       = true;
-   float walk_speed   = 0.1f;
-
-   static Abilities from_proto(const minecpp::proto::player::v1::Abilities &abilities);
-
-   [[nodiscard]] minecpp::proto::player::v1::Abilities to_proto() const;
-
-   [[nodiscard]] constexpr mb::u32 flags() const
-   {
-      return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
-   }
-};
-
 struct Status
 {
    Id id;
@@ -81,7 +61,6 @@ class Player
    float m_food_saturation_level = 5.0f;
    int m_food_tick_timer         = 0;
 
-   Abilities m_abilities;
    Inventory m_inventory;
 
  public:
@@ -100,11 +79,6 @@ class Player
    [[nodiscard]] constexpr game::Mode game_mode() const
    {
       return m_game_mode;
-   }
-
-   [[nodiscard]] constexpr const Abilities &abilities() const
-   {
-      return m_abilities;
    }
 
    [[nodiscard]] constexpr const Inventory &inventory() const
@@ -153,7 +127,7 @@ class Player
    static Player from_nbt(const nbt::player::v1::Location &player, const std::string &name,
                           game::Notifier &notifier);
 
-   [[nodiscard]] proto::player::v1::Player to_proto(const game::entity::Entity &entity) const;
+   [[nodiscard]] proto::player::v1::Player to_proto() const;
 };
 
 }// namespace minecpp::game::player

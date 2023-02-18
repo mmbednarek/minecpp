@@ -16,5 +16,6 @@ target_link_libraries(minecpp_controller
         minecpp_repository
         LINK_PRIVATE
         minecpp_game
+        minecpp_entity
         minecpp_utils
 )

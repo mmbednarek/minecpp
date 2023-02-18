@@ -3,14 +3,13 @@
 set(MINECPP_ENTITY_INCLUDE_DIR ${MINECPP_ENTITY_DIR}/include/minecpp/entity)
 target_sources(minecpp_entity PUBLIC
         # Source files
-        ${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/EntitySpace.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/EntitySpace.h
         ${CMAKE_CURRENT_SOURCE_DIR}/EntitySystem.cpp
 
         # Header files
-        ${MINECPP_ENTITY_INCLUDE_DIR}/Concepts.h
-        ${MINECPP_ENTITY_INCLUDE_DIR}/Entity.h
+        ${MINECPP_ENTITY_INCLUDE_DIR}/Abilities.h
         ${MINECPP_ENTITY_INCLUDE_DIR}/EntitySystem.h
         ${MINECPP_ENTITY_INCLUDE_DIR}/IEntitySpace.h
 )
