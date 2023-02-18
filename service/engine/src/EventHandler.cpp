@@ -15,6 +15,7 @@
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Location.h>
+#include <minecpp/entity/component/StreamingComponent.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/World.h>
@@ -212,9 +213,6 @@ void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPos
    auto entity          = m_entity_system.entity(player->entity_id());
    auto player_position = math::Vector3::from_proto(event.position());
    entity.component<entity::component::Location>().set_position(m_world, entity, player_position);
-   //   m_dispatcher.entity_move();
-   //   .set_pos(m_dispatcher, player_position);
-   MB_ESCAPE(m_player_manager.get_player(player_id)).on_movement(m_world, player_position);
 }
 
 void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event,
@@ -300,13 +298,13 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
       return;
    }
 
-   auto res = player->load_chunks(m_world);
-   if (!res.ok()) {
-      spdlog::error("error loading chunks: {}", res.err()->msg());
+   auto entity = m_entity_system.entity(player->entity_id());
+
+   auto result = entity.component<entity::component::StreamingComponent>().send_all_visible_chunks(m_world, player_id);
+   if (result.has_failed()) {
+      spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
    }
-
-   auto entity = m_entity_system.entity(player->entity_id());
 
    send_inventory_data(*player);
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
@@ -316,6 +314,7 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
            player_id, entity.component<entity::component::Location>().position(),
            entity.component<entity::component::Rotation>().yaw(),
            entity.component<entity::component::Rotation>().pitch());
+
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(),
                                    entity.component<entity::component::Rotation>().pitch());
 }

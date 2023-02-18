@@ -4,6 +4,7 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/Test.h>
+#include <minecpp/entity/component/StreamingComponent.h>
 #include <minecpp/entity/factory/Player.h>
 
 namespace minecpp::entity::factory {
@@ -24,6 +25,7 @@ game::Entity Player::create_entity(EntitySystem &entity_system)
    player_entity.add_component<component::Health>(20.0f);
    player_entity.add_component<component::Food>(20, 5.0f);
    player_entity.add_component<component::Abilities>(Abilities{});
+   player_entity.add_component<component::StreamingComponent>(static_cast<int>(entity_system.view_distance()));
 
    return player_entity;
 }

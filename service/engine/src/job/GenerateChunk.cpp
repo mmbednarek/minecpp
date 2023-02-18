@@ -11,7 +11,7 @@ GenerateChunk::GenerateChunk(world::Generator &generator, const game::ChunkPosit
 
 void GenerateChunk::run()
 {
-   spdlog::debug("generating chunk at {}, {}", m_position.x, m_position.z);
+   spdlog::debug("generating chunk at {}, {}", m_position.x(), m_position.z());
    m_generator.generate_chunk(m_position);
 }
 

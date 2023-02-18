@@ -11,7 +11,7 @@ Service::Service(IResponder &responder, IStorage &storage) :
 
 void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition position)
 {
-   spdlog::info("handling chunk sub {} {}", position.x, position.z);
+   spdlog::info("handling chunk sub {} {}", position.x(), position.z());
 
    auto client_id = this->get_client_id(connection_id);
    if (not client_id.has_value()) {
@@ -26,7 +26,7 @@ void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition po
 
    auto chunk = m_storage.read_chunk(position);
    if (not chunk.has_value()) {
-      spdlog::info("no chunk found at {} {}", position.x, position.z);
+      spdlog::info("no chunk found at {} {}", position.x(), position.z());
       proto::service::storage::v1::Response response;
       *response.mutable_empty_chunk()->mutable_position() = position.to_proto();
       m_responder.send(connection_id, response);
@@ -36,7 +36,7 @@ void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition po
    proto::service::storage::v1::Response response;
    *response.mutable_chunk_data()->mutable_chunk_data() = *chunk;
    m_responder.send(connection_id, response);
-   spdlog::info("sending chunk {} {} to client", position.x, position.z);
+   spdlog::info("sending chunk {} {} to client", position.x(), position.z());
 }
 
 void Service::handle_request(ConnectionId connection_id, const proto::service::storage::v1::Request &request)

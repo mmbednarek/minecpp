@@ -57,4 +57,9 @@ std::vector<game::EntityId> EntitySystem::list_entities_in_view_distance(math::V
    return this->list_entities_in({position.x() - m_view_distance, m_min_y, position.z() - m_view_distance}, {position.x() + m_view_distance, m_max_y, position.z() + m_view_distance});
 }
 
+double EntitySystem::view_distance() const
+{
+   return m_view_distance;
+}
+
 }// namespace minecpp::entity

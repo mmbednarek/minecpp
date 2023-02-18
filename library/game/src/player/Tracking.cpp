@@ -21,7 +21,7 @@ static constexpr auto pow2(T value)
 
 static int dist_sq(game::ChunkPosition a, game::ChunkPosition b)
 {
-   return pow2(a.x - b.x) + pow2(a.z - b.z);
+   return pow2(a.x() - b.x()) + pow2(a.z() - b.z());
 }
 
 mb::result<mb::empty> Tracking::load_chunks(game::World &world, Player &player)
@@ -59,7 +59,7 @@ void Tracking::on_movement(game::World &world, Player &player, math::Vector3 pos
 {
    std::lock_guard<std::mutex> lock(m_mutex);
    auto next_chunk_pos = game::ChunkPosition::from_position(position);
-   if (next_chunk_pos.x == m_chunk_pos.x && next_chunk_pos.z == m_chunk_pos.z) {
+   if (next_chunk_pos.x() == m_chunk_pos.x() && next_chunk_pos.z() == m_chunk_pos.z()) {
       return;
    }
 
@@ -91,7 +91,7 @@ void Tracking::on_movement(game::World &world, Player &player, math::Vector3 pos
       }
    }
 
-   spdlog::debug("settings player chunk position to {} {}", next_chunk_pos.x, next_chunk_pos.z);
+   spdlog::debug("settings player chunk position to {} {}", next_chunk_pos.x(), next_chunk_pos.z());
 
    m_chunk_pos = next_chunk_pos;
 

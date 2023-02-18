@@ -53,7 +53,7 @@ void ChunkSystem::handle_empty_chunk(const storage::ResponseEmptyChunk &chunk)
 
 world::Chunk *ChunkSystem::create_empty_chunk_at(const game::ChunkPosition &position)
 {
-   auto *new_chunk = m_chunk_pool.construct(position.x, position.z, std::array<short, 256>{});
+   auto *new_chunk = m_chunk_pool.construct(position.x(), position.z(), std::array<short, 256>{});
    m_chunks.emplace(position.hash(),
                     ChunkMeta{SubscriptionState::Subscribed, world::ChunkState::EMPTY, new_chunk});
    return new_chunk;

@@ -10,7 +10,7 @@ class Test
    Test() = default;
 
    void on_attached(game::Entity &entity);
-   void on_position_change(game::EntityId entity_id, const math::Vector3 &old_position,
+   void on_position_change(game::World &world, game::Entity entity, const math::Vector3 &old_position,
                            const math::Vector3 &new_position);
 
  private:

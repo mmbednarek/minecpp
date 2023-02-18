@@ -21,6 +21,7 @@ class EntitySystem final : public game::IEntitySystem
    void destroy_entity(game::EntityId id) override;
    std::vector<game::EntityId> list_entities_in_view_distance(math::Vector3 position) override;
    IEntitySpace &space();
+   [[nodiscard]] double view_distance() const;
 
  private:
    entt::registry m_registry;

@@ -28,7 +28,7 @@ math::Vector3 Location::extent() const
 void Location::set_position(game::World &world, game::Entity &entity, const math::Vector3 &position)
 {
    if (this->on_position_change) {
-      this->on_position_change(m_entity_id, m_position, position);
+      this->on_position_change(world, entity, m_position, position);
    }
 
    m_position = position;
@@ -46,11 +46,6 @@ void Location::set_position(game::World &world, game::Entity &entity, const math
    } else {
       world.notifier().entity_move(entity.id(), movement.cast<short>(), rotation.rotation());
    }
-}
-
-void Location::on_attached(game::Entity &entity)
-{
-   m_entity_id = entity.id();
 }
 
 Rotation::Rotation(float yaw, float pitch) :

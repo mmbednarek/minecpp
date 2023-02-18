@@ -20,11 +20,9 @@ struct TrackedPosition
 class Location
 {
  public:
-   entt::delegate<void(game::EntityId, const math::Vector3 &, const math::Vector3 &)> on_position_change;
+   entt::delegate<void(game::World &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)> on_position_change;
 
    Location(const math::Vector3 &position, const math::Vector3 &extent);
-
-   void on_attached(game::Entity &entity);
 
    [[nodiscard]] math::Vector3 position() const;
    [[nodiscard]] math::Vector3 extent() const;
@@ -34,7 +32,6 @@ class Location
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
 
  private:
-   game::EntityId m_entity_id{};
    math::Vector3 m_position{};
    math::Vector3 m_extent{};
    TrackedPosition m_tracked_position{};

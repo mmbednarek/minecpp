@@ -239,14 +239,14 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
 
    for (auto section : range) {
       int id;
-      if (id_mapping.contains(section.chunk_position.hash())) {
-         id = id_mapping[section.chunk_position.hash()];
+      if (id_mapping.contains(section.chunk_position().hash())) {
+         id = id_mapping[section.chunk_position().hash()];
       } else {
          id                                        = update_block_light.block_light_size();
-         id_mapping[section.chunk_position.hash()] = id;
+         id_mapping[section.chunk_position().hash()] = id;
 
          proto::event::clientbound::v1::ChunkBlockLight chunk_block_light;
-         *chunk_block_light.mutable_position() = section.chunk_position.to_proto();
+         *chunk_block_light.mutable_position() = section.chunk_position().to_proto();
 
          update_block_light.mutable_block_light()->Add(std::move(chunk_block_light));
       }
@@ -257,7 +257,7 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
          continue;
 
       proto::event::clientbound::v1::SectionBlockLight section_block_light;
-      section_block_light.set_y(section.y);
+      section_block_light.set_y(section.y());
       section_block_light.mutable_block_light()->resize(world::LightContainer::raw_size);
 
       auto light = chunk_section->light_data(game::LightType::Block);
