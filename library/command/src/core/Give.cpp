@@ -1,14 +1,11 @@
 #include <minecpp/command/core/Give.h>
 #include <minecpp/command/RuntimeContext.h>
+#include <minecpp/entity/component/Inventory.h>
+#include <minecpp/game/IEntitySystem.hpp>
 #include <minecpp/game/player/Provider.hpp>
 #include <minecpp/repository/Item.h>
 
 namespace minecpp::command::core {
-
-Give::Give(game::player::Provider &provider) :
-    m_provider(provider)
-{
-}
 
 bool Give::is_flag(std::string_view name) const
 {
@@ -36,22 +33,24 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
       }
    }
 
-   auto *player_id = cast<UUIDObject>(ctx.variable("player_id"));
-   if (player_id == nullptr) {
+   auto *entity_id_obj = cast<IntObject>(ctx.variable("entity_id"));
+   if (entity_id_obj == nullptr) {
       auto err = std::make_shared<RuntimeError>("give");
-      err->text("player id not specified");
+      err->text("entity id not specified");
+      return err;
+   }
+   auto entity_id = static_cast<game::EntityId>(entity_id_obj->value);
+   auto entity    = ctx.world().entity_system().entity(entity_id);
+
+   if (not entity.has_component<entity::component::Inventory>()) {
+      auto err = std::make_shared<RuntimeError>("give");
+      err->text("entity ")
+              .text(format::Color::Yellow, std::to_string(entity_id_obj->value)).text(" doesn't have inventory");
       return err;
    }
 
-   auto player = m_provider.get_player(player_id->value);
-   if (player.has_failed()) {
-      auto err = std::make_shared<RuntimeError>("give");
-      err->text("could not get player with id ")
-              .text(format::Color::Yellow, boost::uuids::to_string(player_id->value));
-      return err;
-   }
-
-   if (!player->inventory().add_item(static_cast<game::ItemId>(item_id.get()), 64)) {
+   auto &inventory = entity.component<entity::component::Inventory>();
+   if (not inventory.add_item(ctx.world().notifier(), static_cast<game::ItemId>(item_id.get()), 64)) {
       auto err = std::make_shared<RuntimeError>("give");
       err->text("player inventory is full");
       return err;
@@ -61,8 +60,8 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    info->bold(format::Color::Green, "INFO ");
    info->text(format::Color::White, "giving ");
    info->text(format::Color::Yellow, item_name);
-   info->text(format::Color::White, " to player ");
-   info->text(format::Color::Yellow, player->name());
+   info->text(format::Color::White, " to entity ");
+   info->text(format::Color::Yellow, std::to_string(entity_id));
    return info;
 }
 

@@ -13,6 +13,11 @@ class World;
 
 namespace minecpp::entity {
 class EntitySystem;
+
+namespace component {
+class Inventory;
+}
+
 }
 
 namespace minecpp::service::engine {
@@ -46,8 +51,6 @@ class EventHandler
    void handle_interact(const serverbound_v1::Interact &event, game::PlayerId player_id);
 
  private:
-   void send_inventory_data(const game::player::Player &player);
-
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;
    entity::EntitySystem &m_entity_system;

@@ -38,7 +38,7 @@ class Notifier
                                       game::EntityAnimation animation)                                    = 0;
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                             = 0;
    virtual void unload_chunk(PlayerId player, const game::ChunkPosition &chunk_position)                  = 0;
-   virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, std::size_t count) = 0;
+   virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, int count) = 0;
    virtual void update_block_light(ISectionSlice &slice, SectionRange range)                              = 0;
    virtual void update_chunk_position(PlayerId player_id, const game::ChunkPosition &chunk_position)      = 0;
    virtual void synchronise_player_position_and_rotation(PlayerId player_id, math::Vector3 position,

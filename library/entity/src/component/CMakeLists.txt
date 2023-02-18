@@ -4,6 +4,7 @@ set(MINECPP_ENTITY_COMPONENT_INCLUDE_DIR ${MINECPP_ENTITY_DIR}/include/minecpp/e
 target_sources(minecpp_entity PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Inventory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Location.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Player.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/StreamingComponent.cpp
@@ -12,6 +13,7 @@ target_sources(minecpp_entity PUBLIC
         # Header files
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Abilities.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Health.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Inventory.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Location.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Player.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/StreamingComponent.h

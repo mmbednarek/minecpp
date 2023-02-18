@@ -7,6 +7,7 @@
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
 #include <minecpp/command/core/ReloadChunk.h>
+#include <minecpp/command/core/Sync.h>
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
 #include <minecpp/controller/block/Stairs.h>
@@ -14,6 +15,7 @@
 #include <minecpp/controller/block/Wood.h>
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/Health.h>
+#include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/StreamingComponent.h>
 #include <minecpp/entity/EntitySystem.h>
@@ -34,12 +36,13 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
     m_entity_system(entity_system),
     m_world(world),
     m_command_std_stream(m_dispatcher),
-    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream),
+    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream, m_world),
     m_block_manager(block_manager)
 {
    m_command_manager.register_command<command::core::Echo>("echo");
-   m_command_manager.register_command<command::core::Give>("give", m_player_manager);
-   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk", m_world);
+   m_command_manager.register_command<command::core::Give>("give");
+   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk");
+   m_command_manager.register_command<command::core::Sync>("sync");
 
    m_command_manager.register_command<command::core::Format>("black", format::Color::Black, false);
    m_command_manager.register_command<command::core::Format>("black-bold", format::Color::Black, true);
@@ -154,10 +157,11 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
    auto entity  = m_entity_system.entity(player.entity_id());
 
-   if (!player.inventory().add_item(1, 64)) {
+   auto &inventory = entity.component<entity::component::Inventory>();
+   if (not inventory.add_item(m_dispatcher, 1, 64)) {
       spdlog::info("player inventory is full");
    }
-   if (!player.inventory().add_item(2, 32)) {
+   if (not inventory.add_item(m_dispatcher, 2, 32)) {
       spdlog::info("player inventory is full");
    }
 
@@ -300,13 +304,15 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
    auto entity = m_entity_system.entity(player->entity_id());
 
-   auto result = entity.component<entity::component::StreamingComponent>().send_all_visible_chunks(m_world, player_id);
+   auto result = entity.component<entity::component::StreamingComponent>().send_all_visible_chunks(m_world,
+                                                                                                   player_id);
    if (result.has_failed()) {
       spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
    }
 
-   send_inventory_data(*player);
+   entity.component<entity::component::Inventory>().synchronize_inventory(m_dispatcher);
+
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
    m_dispatcher.entity_list(player_id, entity.component<entity::component::Location>().position(), 16.0);
 
@@ -341,7 +347,10 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
       return;
    }
 
-   auto item_slot = player->inventory().active_item();
+   auto entity = m_entity_system.entity(player->entity_id());
+   auto &inventory = entity.component<entity::component::Inventory>();
+
+   auto item_slot = inventory.active_item();
    if (item_slot.count == 0)
       return;
 
@@ -356,7 +365,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    if (block_id.has_failed())
       return;
 
-   if (not player->inventory().take_from_active_slot(1))
+   if (not inventory.take_from_active_slot(m_dispatcher, 1))
       return;
 
    if (m_block_manager.on_player_place_block(m_world, player_id, static_cast<int>(*block_id), block_position,
@@ -365,39 +374,30 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    }
 }
 
-void EventHandler::send_inventory_data(const game::player::Player &player)
-{
-   for (game::SlotId id = 9; id < 5 * 9; ++id) {
-      auto slot = player.inventory().item_at(id);
-      m_dispatcher.set_inventory_slot(player.id(), slot.item_id, id, slot.count);
-   }
-}
-
 void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event,
                                                 game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.inventory().set_slot(static_cast<game::SlotId>(event.slot_id()),
-                               game::ItemSlot{
-                                       .item_id = static_cast<game::ItemId>(event.item_id().id()),
-                                       .count   = event.item_count(),
-                               });
+   auto entity  = m_entity_system.entity(player.entity_id());
 
    spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
 
-   m_dispatcher.set_inventory_slot(player_id, static_cast<game::ItemId>(event.item_id().id()),
-                                   static_cast<game::SlotId>(event.slot_id()),
-                                   static_cast<size_t>(event.item_count()));
+   entity.component<entity::component::Inventory>().set_slot(
+           m_dispatcher, static_cast<game::SlotId>(event.slot_id()),
+           game::ItemSlot{
+                   .item_id = static_cast<game::ItemId>(event.item_id().id()),
+                   .count   = event.item_count(),
+           });
 }
 
 void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event,
                                            game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));
+   auto entity = m_entity_system.entity(player.entity_id());
+   auto &inventory = entity.component<entity::component::Inventory>();
 
-   auto item = player.inventory().active_item();
-   m_dispatcher.set_player_equipment(player_id, player.entity_id(), game::EquipmentSlot::MainHand, item);
+   inventory.set_active_item(m_dispatcher, event.slot());
 }
 
 void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)

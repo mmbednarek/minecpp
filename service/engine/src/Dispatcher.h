@@ -57,7 +57,7 @@ class Dispatcher : public minecpp::game::Notifier
    void deny_player(const game::PlayerId &player_id, const std::string &reason);
 
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
-                           std::size_t count) override;
+                           int count) override;
    void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk);

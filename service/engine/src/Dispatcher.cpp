@@ -41,7 +41,8 @@ void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid /*
 void Dispatcher::player_move(game::PlayerId player_id, game::EntityId entity_id,
                              const math::Vector3s &movement, const game::Rotation &rotation)
 {
-   spdlog::info("moving player {} by {}", boost::uuids::to_string(player_id), movement.cast<double>() /  4096.0);
+   spdlog::info("moving player {} by {}", boost::uuids::to_string(player_id),
+                movement.cast<double>() / 4096.0);
    clientbound_v1::EntityMove event;
    event.set_entity_id(entity_id);
    *event.mutable_player_id() = game::player::write_id_to_proto(player_id);
@@ -219,7 +220,7 @@ void Dispatcher::entity_list(game::PlayerId player_id, const math::Vector3 &orig
 }
 
 void Dispatcher::set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
-                                    std::size_t count)
+                                    int count)
 {
    clientbound_v1::SetInventorySlot set_slot;
    set_slot.mutable_slot()->set_slot_id(slot_id);
@@ -242,7 +243,7 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
       if (id_mapping.contains(section.chunk_position().hash())) {
          id = id_mapping[section.chunk_position().hash()];
       } else {
-         id                                        = update_block_light.block_light_size();
+         id                                          = update_block_light.block_light_size();
          id_mapping[section.chunk_position().hash()] = id;
 
          proto::event::clientbound::v1::ChunkBlockLight chunk_block_light;
