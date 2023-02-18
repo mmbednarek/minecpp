@@ -1,7 +1,6 @@
 #pragma once
 #include "Id.h"
 #include "Inventory.h"
-#include "Tracking.h"
 #include <minecpp/game/Mode.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
 #include <minecpp/math/Vector3.h>
@@ -47,7 +46,6 @@ class Player
    EntityId m_entity_id{};
    std::string m_name;
    game::Mode m_game_mode = game::Mode::Survival;
-   std::unique_ptr<Tracking> m_tracking;
 
    int m_ping{};
 
@@ -64,7 +62,7 @@ class Player
    Inventory m_inventory;
 
  public:
-   Player(Id id, std::string_view name, const math::Vector3 &pos, game::Notifier &notifier);
+   Player(Id id, std::string_view name, game::Notifier &notifier);
 
    [[nodiscard]] constexpr Id id() const
    {
@@ -120,9 +118,6 @@ class Player
               .mode = m_game_mode,
       };
    }
-
-   void on_movement(game::World &w, math::Vector3 pos);
-   mb::result<mb::empty> load_chunks(game::World &w);
 
    static Player from_nbt(const nbt::player::v1::Location &player, const std::string &name,
                           game::Notifier &notifier);
