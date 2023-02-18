@@ -8,8 +8,6 @@ target_sources(minecpp_engine PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/Entities.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Entities.h
         ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/EventManager.cpp

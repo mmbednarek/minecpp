@@ -11,31 +11,19 @@ message Status {
   common.v1.GameMode game_mode = 4;
 }
 
-message Player {
-  string name = 1;
-  uint32 entity_id = 2;
-  common.v1.Vector3 position = 3;
-  common.v1.Rotation rotation = 4;
-  Abilities abilities = 5;
-  RecipeBook recipe_book = 6;
-  common.v1.GameMode game_mode = 7;
-}
-
-message Abilities {
-  float walk_speed = 1;
-  float fly_speed = 2;
-  bool flying = 3;
-  bool instant_build = 4;
-  bool invulnerable = 5;
-  bool may_build = 6;
-  bool may_fly = 7;
-}
-
 message RecipeBook {
   bool gui_open = 1;
   bool filtering_craftable = 2;
   bool furnace_gui_open = 3;
   bool furnace_filtering_craftable = 4;
+}
+
+message Player {
+  PlayerId id = 1;
+  string name = 2;
+  uint32 entity_id = 3;
+  RecipeBook recipe_book = 4;
+  common.v1.GameMode game_mode = 5;
 }
 
 message Slot {

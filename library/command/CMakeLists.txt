@@ -16,6 +16,7 @@ target_link_libraries(minecpp_command
         fmt
         minecpp_format
         minecpp_game
+        minecpp_entity
         minecpp_lexer
         LINK_PRIVATE
         minecpp_repository

@@ -15,6 +15,7 @@ target_link_libraries(minecpp_front
         minecpp_crypto
         minecpp_utils
         minecpp_engine_api
+        minecpp_entity
         minecpp_grpc
         minecpp_api_proto
         minecpp_event

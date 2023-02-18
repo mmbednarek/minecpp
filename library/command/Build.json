@@ -6,6 +6,7 @@
       "fmt",
       "minecpp_format",
       "minecpp_game",
+      "minecpp_entity",
       "minecpp_lexer"
     ],
     "private": [

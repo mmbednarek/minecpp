@@ -55,7 +55,7 @@ mb::result<game::BlockStateId> SectionSlice::get_block(const game::BlockPosition
 world::Section &SectionSlice::operator[](game::ChunkSectionPosition position)
 {
    if (not m_sections.contains(position.hash())) {
-      m_sections.emplace(position.hash(), position.y);
+      m_sections.emplace(position.hash(), position.y());
    }
    return m_sections.at(position.hash());
 }

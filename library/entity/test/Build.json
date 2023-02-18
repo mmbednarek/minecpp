@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_entity_test",
+  "dependencies": {
+    "public": [
+      "minecpp_entity",
+      "gtest",
+      "gtest_main"
+    ]
+  }
+}

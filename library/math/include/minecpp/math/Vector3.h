@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseVector.h"
-#include <minecpp/proto/common/v1/Common.pb.h>
+#include "ProtoTypes.h"
+#include <fmt/format.h>
 
 namespace minecpp::math {
 
@@ -20,14 +21,14 @@ class BaseVector<TValue, 3>
       return {x(), z()};
    }
 
-   [[nodiscard]] static SelfType from_proto(const proto::common::v1::Vector3 &proto_vec)
+   [[nodiscard]] static SelfType from_proto(const ProtoType &proto_vec)
    {
       return {proto_vec.x(), proto_vec.y(), proto_vec.z()};
    }
 
-   [[nodiscard]] proto::common::v1::Vector3 to_proto() const
+   [[nodiscard]] ProtoType to_proto() const
    {
-      proto::common::v1::Vector3 result;
+      ProtoType result;
       result.set_x(this->x());
       result.set_y(this->y());
       result.set_z(this->z());
@@ -37,6 +38,26 @@ class BaseVector<TValue, 3>
 
 using Vector3  = BaseVector<double, 3>;
 using Vector3f = BaseVector<float, 3>;
+using Vector3s = BaseVector<short, 3>;
 using Vector3i = BaseVector<int, 3>;
+using Vector3l = BaseVector<std::int64_t, 3>;
 
 }// namespace minecpp::math
+
+template<>
+struct fmt::formatter<minecpp::math::Vector3>
+{
+   using Self = minecpp::math::Vector3;
+
+   template <typename ParseContext>
+   constexpr auto parse(ParseContext& ctx)
+   {
+      return ctx.begin();
+   }
+
+   template <typename FormatContext>
+   auto format(const Self& s, FormatContext& ctx)
+   {
+      return format_to(ctx.out(), "{}, {}, {}", s.x(), s.y(), s.z());
+   }
+};

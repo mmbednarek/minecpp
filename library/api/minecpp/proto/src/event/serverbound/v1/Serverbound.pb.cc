@@ -404,52 +404,54 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_
   "\n4minecpp/proto/event/serverbound/v1/Ser"
   "verbound.proto\022\"minecpp.proto.event.serv"
   "erbound.v1\032\031google/protobuf/any.proto\032$m"
-  "inecpp/proto/common/v1/Common.proto\032 min"
-  "ecpp/proto/player/v1/Id.proto\"d\n\005Event\022%"
-  "\n\007payload\030\001 \001(\0132\024.google.protobuf.Any\0224\n"
-  "\tplayer_id\030\002 \001(\0132!.minecpp.proto.player."
-  "v1.PlayerId\"D\n\014AcceptPlayer\022\014\n\004name\030\001 \001("
-  "\t\022\024\n\014challenge_id\030\002 \001(\r\022\020\n\010front_id\030\003 \001("
-  "\r\"G\n\021SetPlayerPosition\0222\n\010position\030\001 \001(\013"
-  "2 .minecpp.proto.common.v1.Vector3\"H\n\021Se"
-  "tPlayerRotation\0223\n\010rotation\030\001 \001(\0132!.mine"
-  "cpp.proto.common.v1.Rotation\"\036\n\013ChatMess"
-  "age\022\017\n\007message\030\001 \001(\t\"\016\n\014RemovePlayer\"\315\001\n"
-  "\rPlayerDigging\022:\n\005state\030\001 \001(\0162+.minecpp."
-  "proto.common.v1.PlayerDiggingState\022>\n\016bl"
-  "ock_position\030\002 \001(\0132&.minecpp.proto.commo"
-  "n.v1.BlockPosition\022+\n\004face\030\003 \001(\0162\035.minec"
-  "pp.proto.common.v1.Face\022\023\n\013sequence_id\030\004"
-  " \001(\005\"\032\n\nUpdatePing\022\014\n\004ping\030\001 \001(\005\"\033\n\013Anim"
-  "ateHand\022\014\n\004hand\030\001 \001(\005\"\023\n\021LoadInitialChun"
-  "ks\"\346\001\n\016BlockPlacement\022\014\n\004hand\030\001 \001(\005\0228\n\010p"
-  "osition\030\002 \001(\0132&.minecpp.proto.common.v1."
-  "BlockPosition\022+\n\004face\030\003 \001(\0162\035.minecpp.pr"
-  "oto.common.v1.Face\0224\n\tcrosshair\030\004 \001(\0132!."
-  "minecpp.proto.common.v1.Vector3f\022\024\n\014insi"
-  "de_block\030\005 \001(\010\022\023\n\013sequence_id\030\006 \001(\005\"l\n\023C"
-  "hangeInventoryItem\022\017\n\007slot_id\030\001 \001(\005\0220\n\007i"
-  "tem_id\030\002 \001(\0132\037.minecpp.proto.common.v1.I"
-  "temId\022\022\n\nitem_count\030\003 \001(\005\"\036\n\016ChangeHeldI"
-  "tem\022\014\n\004slot\030\001 \001(\005\"\037\n\014IssueCommand\022\017\n\007com"
-  "mand\030\001 \001(\t\"\341\001\n\010Interact\022\021\n\tentity_id\030\001 \001"
-  "(\r\022B\n\020interaction_type\030\002 \001(\0162(.minecpp.p"
-  "roto.common.v1.InteractionType\0223\n\010positi"
-  "on\030\003 \001(\0132!.minecpp.proto.common.v1.Vecto"
-  "r3f\0224\n\thand_type\030\004 \001(\0162!.minecpp.proto.c"
-  "ommon.v1.HandType\022\023\n\013is_sneaking\030\005 \001(\010b\006"
-  "proto3"
+  "inecpp/proto/common/v1/Common.proto\032$min"
+  "ecpp/proto/common/v1/Vector.proto\032 minec"
+  "pp/proto/player/v1/Id.proto\"d\n\005Event\022%\n\007"
+  "payload\030\001 \001(\0132\024.google.protobuf.Any\0224\n\tp"
+  "layer_id\030\002 \001(\0132!.minecpp.proto.player.v1"
+  ".PlayerId\"D\n\014AcceptPlayer\022\014\n\004name\030\001 \001(\t\022"
+  "\024\n\014challenge_id\030\002 \001(\r\022\020\n\010front_id\030\003 \001(\r\""
+  "G\n\021SetPlayerPosition\0222\n\010position\030\001 \001(\0132 "
+  ".minecpp.proto.common.v1.Vector3\"H\n\021SetP"
+  "layerRotation\0223\n\010rotation\030\001 \001(\0132!.minecp"
+  "p.proto.common.v1.Rotation\"\036\n\013ChatMessag"
+  "e\022\017\n\007message\030\001 \001(\t\"\016\n\014RemovePlayer\"\315\001\n\rP"
+  "layerDigging\022:\n\005state\030\001 \001(\0162+.minecpp.pr"
+  "oto.common.v1.PlayerDiggingState\022>\n\016bloc"
+  "k_position\030\002 \001(\0132&.minecpp.proto.common."
+  "v1.BlockPosition\022+\n\004face\030\003 \001(\0162\035.minecpp"
+  ".proto.common.v1.Face\022\023\n\013sequence_id\030\004 \001"
+  "(\005\"\032\n\nUpdatePing\022\014\n\004ping\030\001 \001(\005\"\033\n\013Animat"
+  "eHand\022\014\n\004hand\030\001 \001(\005\"\023\n\021LoadInitialChunks"
+  "\"\346\001\n\016BlockPlacement\022\014\n\004hand\030\001 \001(\005\0228\n\010pos"
+  "ition\030\002 \001(\0132&.minecpp.proto.common.v1.Bl"
+  "ockPosition\022+\n\004face\030\003 \001(\0162\035.minecpp.prot"
+  "o.common.v1.Face\0224\n\tcrosshair\030\004 \001(\0132!.mi"
+  "necpp.proto.common.v1.Vector3f\022\024\n\014inside"
+  "_block\030\005 \001(\010\022\023\n\013sequence_id\030\006 \001(\005\"l\n\023Cha"
+  "ngeInventoryItem\022\017\n\007slot_id\030\001 \001(\005\0220\n\007ite"
+  "m_id\030\002 \001(\0132\037.minecpp.proto.common.v1.Ite"
+  "mId\022\022\n\nitem_count\030\003 \001(\005\"\036\n\016ChangeHeldIte"
+  "m\022\014\n\004slot\030\001 \001(\005\"\037\n\014IssueCommand\022\017\n\007comma"
+  "nd\030\001 \001(\t\"\341\001\n\010Interact\022\021\n\tentity_id\030\001 \001(\r"
+  "\022B\n\020interaction_type\030\002 \001(\0162(.minecpp.pro"
+  "to.common.v1.InteractionType\0223\n\010position"
+  "\030\003 \001(\0132!.minecpp.proto.common.v1.Vector3"
+  "f\0224\n\thand_type\030\004 \001(\0162!.minecpp.proto.com"
+  "mon.v1.HandType\022\023\n\013is_sneaking\030\005 \001(\010b\006pr"
+  "oto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps[3] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps[4] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
   &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fCommon_2eproto,
+  &::descriptor_table_minecpp_2fproto_2fcommon_2fv1_2fVector_2eproto,
   &::descriptor_table_minecpp_2fproto_2fplayer_2fv1_2fId_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto = {
-    false, false, 1486, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
+    false, false, 1524, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
     "minecpp/proto/event/serverbound/v1/Serverbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps, 3, 15,
+    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps, 4, 15,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,

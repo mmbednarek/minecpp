@@ -3,6 +3,7 @@ package minecpp.proto.event.clientbound.v1;
 
 import "google/protobuf/any.proto";
 import "minecpp/proto/common/v1/Common.proto";
+import "minecpp/proto/common/v1/Vector.proto";
 import "minecpp/proto/player/v1/Id.proto";
 import "minecpp/proto/player/v1/Player.proto";
 import "minecpp/proto/entity/v1/Entity.proto";
@@ -50,7 +51,7 @@ message SpawnPlayer {
 message EntityMove {
   player.v1.PlayerId player_id = 1;
   uint32 entity_id = 2;
-  entity.v1.Movement movement = 3;
+  common.v1.Vector3i movement = 3;
   common.v1.Rotation rotation = 4;
 }
 
@@ -128,7 +129,8 @@ message EntityList {
 
 message AcceptPlayer {
   common.v1.Gameplay gameplay = 1;
-  player.v1.Player player = 2;
+  entity.v1.Abilities abilities =  2;
+  player.v1.Player player = 3;
 }
 
 message DenyPlayer {

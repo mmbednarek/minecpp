@@ -15,6 +15,7 @@ target_link_libraries(minecpp_engine
         minecpp_controller
         minecpp_event
         minecpp_engine_api
+        minecpp_entity
         minecpp_grpc
         minecpp_utils
         minecpp_game

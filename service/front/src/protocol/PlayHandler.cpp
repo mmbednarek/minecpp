@@ -37,7 +37,7 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
-   case 0x08: {// 1.19.3 OK
+   case 0x0a: {// 1.19.3 OK
       ClickWindow msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);

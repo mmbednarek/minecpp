@@ -1,7 +1,8 @@
 #include "Players.h"
-#include "Entities.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/core.h>
+#include <minecpp/entity/EntitySystem.h>
+#include <minecpp/entity/factory/Player.h>
 #include <minecpp/game/World.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/util/Compression.h>
@@ -10,29 +11,31 @@
 
 namespace minecpp::service::engine {
 
-PlayerManager::PlayerManager(EntityManager &entities, game::BlockPosition spawn_position) :
-    m_entities(entities),
-    m_spawn_position(std::move(spawn_position))
+PlayerManager::PlayerManager(entity::EntitySystem &entity_system, game::BlockPosition spawn_position) :
+    m_entity_system(entity_system),
+    m_spawn_position(spawn_position)
 {
 }
 
 mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::string &name, game::PlayerId id)
 {
+   entity::factory::Player player_factory(m_spawn_position.to_vec3(), id, name);
+   auto player_entity = player_factory.create_entity(m_entity_system);
+
    auto player_data = MB_TRY(load_player_data(w, id));
-   auto entity_id   = m_entities.spawn(Entity::from_player_nbt(player_data));
    auto player      = game::player::Player::from_nbt(player_data, name, w.notifier());
-   player.set_entity_id(entity_id);
-   m_player_entity_map[entity_id] = id;
+   player.set_entity_id(player_entity.id());
+   m_player_entity_map[player_entity.id()] = id;
 
    m_id_map[minecpp::util::write_uuid(id)] = m_players.size();
    m_players.emplace_back(std::move(player));
    return mb::ok;
 }
 
-mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::World &w,
-                                                                             game::PlayerId id)
+mb::result<minecpp::nbt::player::v1::Location> PlayerManager::load_player_data(game::World &w,
+                                                                               game::PlayerId id)
 {
-   minecpp::nbt::player::v1::Player data;
+   minecpp::nbt::player::v1::Location data;
 
    math::Vector3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
                      static_cast<double>(m_spawn_position.z)};
@@ -56,11 +59,6 @@ mb::result<game::player::Player &> PlayerManager::get_player(game::PlayerId id)
       return mb::error("no such player");
    }
    return m_players.at(it_player->second);
-}
-
-mb::result<minecpp::game::entity::Entity &> PlayerManager::get_entity(game::PlayerId id)
-{
-   return m_entities.get_entity(MB_TRY(get_player(id)).entity_id());
 }
 
 void PlayerManager::for_each_player(const std::function<void(game::player::Player &)> &callback)

@@ -2,7 +2,6 @@
 #include "minecpp/util/Threading.h"
 
 #include <fmt/format.h>
-#include <spdlog/spdlog.h>
 #include <utility>
 
 namespace minecpp::service::engine {
@@ -36,10 +35,8 @@ void JobSystem::issue_ticket(Ticket ticket)
 
 void JobSystem::issue_job(std::unique_ptr<IJob> job)
 {
-   spdlog::debug("job system: trying to issue job");
    {
       std::lock_guard lock{m_job_ready_mutex};
-      spdlog::debug("job system: enqueuing new job");
       m_pending_jobs.push(std::move(job));
    }
    m_has_job_condition.notify_one();
@@ -51,7 +48,6 @@ void JobSystem::worker_routine(int id)
 
    while (m_is_running) {
       std::unique_lock lock{m_job_ready_mutex};
-      spdlog::debug("job system: awaiting job");
       m_has_job_condition.wait(lock, [this] { return not m_pending_jobs.is_empty(); });
 
       auto job = m_pending_jobs.pop();
@@ -59,7 +55,6 @@ void JobSystem::worker_routine(int id)
 
       lock.unlock();
 
-      spdlog::debug("job system: running job");
       job->run();
 
       process_awaiting_tickets();

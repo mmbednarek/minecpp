@@ -7,6 +7,7 @@
     "controller",
     "container",
     "command",
+    "entity",
     "event",
     "format",
     "game",

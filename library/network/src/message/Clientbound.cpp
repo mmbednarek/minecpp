@@ -173,8 +173,8 @@ Writer UpdateBlockLight::serialize() const
 {
    Writer w;
    w.write_byte(0x23);
-   w.write_varint(static_cast<mb::u32>(chunk_position.x));
-   w.write_varint(static_cast<mb::u32>(chunk_position.z));
+   w.write_varint(static_cast<mb::u32>(chunk_position.x()));
+   w.write_varint(static_cast<mb::u32>(chunk_position.z()));
 
    uint32_t block_light_count = 0;
    uint32_t block_update_mask = 0;

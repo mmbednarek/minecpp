@@ -4,11 +4,6 @@
 
 namespace minecpp::command::core {
 
-ReloadChunk::ReloadChunk(game::World &world) :
-    m_world(world)
-{
-}
-
 bool ReloadChunk::is_flag(std::string_view name) const
 {
    return false;
@@ -19,11 +14,15 @@ ObjectType ReloadChunk::return_type(RuntimeContext &ctx) const
    return command_return_type;
 }
 
+namespace {
+
 std::shared_ptr<RuntimeError> make_error(std::string_view message)
 {
    auto err = std::make_shared<RuntimeError>("reload-chunk");
    err->text("player id not specified");
    return err;
+}
+
 }
 
 Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
@@ -37,7 +36,7 @@ Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
       return make_error("could not obtain player position");
    }
 
-   auto res = m_world.send_chunk_to_player(player_id->value, player_position->value.chunk_position());
+   auto res = ctx.world().send_chunk_to_player(player_id->value, player_position->value.chunk_position());
    if (res.has_failed()) {
       return make_error("could not send chunk to the player");
    }

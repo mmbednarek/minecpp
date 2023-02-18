@@ -1,13 +1,13 @@
 #pragma once
 #include <mb/enum.h>
 #include <mb/int.h>
+#include <minecpp/math/Vector2.h>
+#include <minecpp/math/Vector3.h>
 #include <minecpp/nbt/block/v1/BlockState.nbt.h>
 #include <minecpp/nbt/common/v1/Common.nbt.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 #include <minecpp/util/Uuid.h>
-#include <minecpp/math/Vector2.h>
-#include <minecpp/math/Vector3.h>
 #include <optional>
 #include <string_view>
 
@@ -371,49 +371,57 @@ struct BlockPosition
 
 struct ChunkPosition
 {
-   int x{}, z{};
+   math::Vector2i position;
 
    constexpr ChunkPosition() = default;
 
    constexpr ChunkPosition(int x, int z) :
-       x(x),
-       z(z)
+       position{x, z}
    {
    }
 
-   constexpr explicit ChunkPosition(const math::Vector2 &v) :
-       x(static_cast<int>(v.x())),
-       z(static_cast<int>(v.y()))
+   constexpr explicit ChunkPosition(math::Vector2i position) :
+       position{position}
    {
+   }
+
+   [[nodiscard]] constexpr int x() const
+   {
+      return this->position.x();
+   }
+
+   [[nodiscard]] constexpr int z() const
+   {
+      return this->position.y();
    }
 
    [[nodiscard]] constexpr ChunkPosition operator+(const ChunkPosition &other) const
    {
-      return {x + other.x, z + other.z};
+      return ChunkPosition{this->position + other.position};
    }
 
    [[nodiscard]] constexpr ChunkHash hash() const
    {
-      return static_cast<ChunkHash>(z) + g_chunk_max_z * static_cast<ChunkHash>(x);
+      return static_cast<ChunkHash>(this->z()) + g_chunk_max_z * static_cast<ChunkHash>(this->x());
    }
 
    [[nodiscard]] constexpr BlockPosition block_at(int block_x, int block_y, int block_z) const
    {
-      return {x * g_chunk_width + block_x, block_y, z * g_chunk_depth + block_z};
+      return {this->x() * g_chunk_width + block_x, block_y, this->z() * g_chunk_depth + block_z};
    }
 
    [[nodiscard]] constexpr bool is_block_inside(int block_x, int block_z) const
    {
-      const auto left   = g_chunk_width * x;
-      const auto right  = g_chunk_width * (x + 1);
-      const auto bottom = g_chunk_depth * z;
-      const auto top    = g_chunk_depth * (z + 1);
+      const auto left   = g_chunk_width * this->x();
+      const auto right  = g_chunk_width * (this->x() + 1);
+      const auto bottom = g_chunk_depth * this->z();
+      const auto top    = g_chunk_depth * (this->z() + 1);
       return block_x >= left && block_x < right && block_z >= bottom && block_z < top;
    }
 
-   static inline ChunkPosition from_position(const math::Vector3 &v)
+   static constexpr ChunkPosition from_position(const math::Vector3 &v)
    {
-      return ChunkPosition((v.flat() / math::Vector2{g_chunk_width, g_chunk_depth}).floor());
+      return ChunkPosition{(v.flat() / math::Vector2{g_chunk_width, g_chunk_depth}).floor().cast<int>()};
    }
 
    [[nodiscard]] static inline ChunkPosition from_proto(const proto::common::v1::ChunkPosition &pos)
@@ -424,14 +432,14 @@ struct ChunkPosition
    [[nodiscard]] inline proto::common::v1::ChunkPosition to_proto() const
    {
       proto::common::v1::ChunkPosition result;
-      result.set_x(x);
-      result.set_z(z);
+      result.set_x(this->x());
+      result.set_z(this->z());
       return result;
    }
 
    [[nodiscard]] constexpr bool operator!=(const ChunkPosition &other) const
    {
-      return x != other.x || z != other.z;
+      return this->x() != other.x() || this->z() != other.z();
    }
 };
 
@@ -443,32 +451,48 @@ constexpr ChunkPosition BlockPosition::chunk_position() const
 
 struct ChunkSectionPosition
 {
-   ChunkPosition chunk_position{};
-   int y{};
+   math::Vector3i position{};
 
    constexpr ChunkSectionPosition() = default;
 
    constexpr ChunkSectionPosition(int x, int y, int z) :
-       chunk_position{x, z},
-       y{y}
+       position{x, y, z}
    {
    }
 
    constexpr ChunkSectionPosition(ChunkPosition chunk_position, int y) :
-       chunk_position{chunk_position},
-       y{y}
+       position{chunk_position.x(), y, chunk_position.z()}
    {
+   }
+
+   [[nodiscard]] constexpr int x() const
+   {
+      return this->position.x();
+   }
+
+   [[nodiscard]] constexpr int y() const
+   {
+      return this->position.y();
+   }
+
+   [[nodiscard]] constexpr int z() const
+   {
+      return this->position.z();
+   }
+
+   [[nodiscard]] constexpr ChunkPosition chunk_position() const
+   {
+      return {x(), z()};
    }
 
    [[nodiscard]] constexpr mb::u64 hash() const
    {
-      auto lx = chunk_position.x >= 0
-                        ? static_cast<mb::u64>(chunk_position.x)
-                        : static_cast<mb::u64>(static_cast<mb::i64>(chunk_position.x) + (1 << 26));
-      auto ly = y >= 0 ? static_cast<mb::u64>(y) : static_cast<mb::u64>(static_cast<mb::i64>(y) + (1 << 12));
-      auto lz = chunk_position.z >= 0
-                        ? static_cast<mb::u64>(chunk_position.z)
-                        : static_cast<mb::u64>(static_cast<mb::i64>(chunk_position.z) + (1 << 26));
+      auto lx = this->x() >= 0 ? static_cast<mb::u64>(this->x())
+                               : static_cast<mb::u64>(static_cast<mb::i64>(this->x()) + (1 << 26));
+      auto ly = this->y() >= 0 ? static_cast<mb::u64>(this->y())
+                               : static_cast<mb::u64>(static_cast<mb::i64>(this->y()) + (1 << 12));
+      auto lz = this->z() >= 0 ? static_cast<mb::u64>(this->z())
+                               : static_cast<mb::u64>(static_cast<mb::i64>(this->z()) + (1 << 26));
       return ((lx & g_block_position_mask_x) << g_block_position_bit_offset_x) |
              (ly & g_block_position_mask_y) |
              ((lz & g_block_position_mask_z) << g_block_position_bit_offset_z);
@@ -476,7 +500,7 @@ struct ChunkSectionPosition
 
    [[nodiscard]] constexpr bool operator!=(const ChunkSectionPosition &other) const
    {
-      return chunk_position != other.chunk_position || y != other.y;
+      return this->position != other.position;
    }
 
    [[nodiscard]] static inline ChunkSectionPosition
@@ -491,8 +515,8 @@ struct ChunkSectionPosition
    [[nodiscard]] inline proto::common::v1::ChunkSectionPosition to_proto() const
    {
       proto::common::v1::ChunkSectionPosition result;
-      *result.mutable_chunk_position() = chunk_position.to_proto();
-      result.set_y(y);
+      *result.mutable_chunk_position() = this->chunk_position().to_proto();
+      result.set_y(this->y());
       return result;
    }
 };
@@ -707,20 +731,20 @@ struct SectionRange
 
       constexpr Iterator &operator++()
       {
-         if (at.chunk_position.x < range.to.chunk_position.x) {
-            ++at.chunk_position.x;
+         if (at.x() < range.to.x()) {
+            at.position.set_x(at.x() + 1);
             return *this;
          }
-         at.chunk_position.x = range.from.chunk_position.x;
+         at.position.set_x(range.from.x());
 
-         if (at.chunk_position.z < range.to.chunk_position.z) {
-            ++at.chunk_position.z;
+         if (at.z() < range.to.z()) {
+            at.position.set_z(at.z() + 1);
             return *this;
          }
-         at.chunk_position.z = range.from.chunk_position.z;
+         at.position.set_z(range.from.z());
 
-         if (at.y <= range.to.y) {
-            ++at.y;
+         if (at.y() <= range.to.y()) {
+            at.position.set_y(at.y() + 1);
          }
 
          return *this;
@@ -728,17 +752,17 @@ struct SectionRange
 
       [[nodiscard]] constexpr bool operator>(const Iterator &other) const
       {
-         if (at.y > other.at.y)
+         if (at.y() > other.at.y())
             return true;
-         if (at.y < other.at.y)
+         if (at.y() < other.at.y())
             return false;
 
-         if (at.chunk_position.z > other.at.chunk_position.z)
+         if (at.z() > other.at.z())
             return true;
-         if (at.chunk_position.z < other.at.chunk_position.z)
+         if (at.z() < other.at.z())
             return false;
 
-         return at.chunk_position.x > other.at.chunk_position.x;
+         return at.x() > other.at.x();
       }
 
       [[nodiscard]] constexpr bool operator!=(const Iterator &other) const
@@ -764,7 +788,7 @@ struct SectionRange
    {
       return Iterator{
               *this,
-              {to.chunk_position, to.y + 1}
+              {to.x(), to.y() + 1, to.z()}
       };
    }
 
@@ -787,25 +811,25 @@ struct SectionRange
    [[nodiscard]] constexpr SectionRange grow(int amount) const
    {
       return SectionRange{
-              .from{from.chunk_position.x - amount, from.y - amount, from.chunk_position.z - amount},
-              .to{  to.chunk_position.x + amount,   to.y + amount,   to.chunk_position.z + amount},
+              .from{from.x() - amount, from.y() - amount, from.z() - amount},
+              .to{  to.x() + amount,   to.y() + amount,   to.z() + amount},
       };
    }
 
    [[nodiscard]] constexpr bool is_in_range(ChunkSectionPosition position) const
    {
-      if (position.chunk_position.x < from.chunk_position.x)
+      if (position.x() < from.x())
          return false;
-      if (position.chunk_position.z < from.chunk_position.z)
+      if (position.z() < from.z())
          return false;
-      if (position.y < from.y)
+      if (position.y() < from.y())
          return false;
 
-      if (position.chunk_position.x > to.chunk_position.x)
+      if (position.x() > to.x())
          return false;
-      if (position.chunk_position.z > to.chunk_position.z)
+      if (position.z() > to.z())
          return false;
-      if (position.y > to.y)
+      if (position.y() > to.y())
          return false;
 
       return true;

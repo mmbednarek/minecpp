@@ -3,19 +3,20 @@
 
 namespace minecpp::command {
 
+RuntimeContext::RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output, game::World &world) :
+        m_manager(manager),
+        m_input(input),
+        m_output(output),
+        m_world(world)
+{
+}
+
 Object::Ptr RuntimeContext::variable(const std::string &name)
 {
    if (!m_variables.contains(name)) {
       return {};
    }
    return m_variables.at(name);
-}
-
-RuntimeContext::RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output) :
-    m_manager(manager),
-    m_input(input),
-    m_output(output)
-{
 }
 
 void RuntimeContext::set_variable(const std::string &name, std::shared_ptr<Object> value)

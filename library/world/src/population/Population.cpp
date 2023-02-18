@@ -11,8 +11,8 @@ constexpr std::uint64_t chunk_seed_coef4 = 0xf84606d2fff5;
 
 constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, game::ChunkPosition pos)
 {
-   return seed * (chunk_seed_coef1 * static_cast<std::uint64_t>(pos.x) +
-                  chunk_seed_coef2 * static_cast<std::uint64_t>(pos.z) + chunk_seed_coef3) +
+   return seed * (chunk_seed_coef1 * static_cast<std::uint64_t>(pos.x()) +
+                  chunk_seed_coef2 * static_cast<std::uint64_t>(pos.z()) + chunk_seed_coef3) +
           chunk_seed_coef4;
 }
 
@@ -34,7 +34,7 @@ void Population::populate_chunk(game::ChunkPosition pos)
    get_chunk_placements_by_chunk(*chunk).populate_chunk(*chunk);
 
    // populate from chunks around
-   minecpp::util::around(pos.x, pos.z, [this, chunk](int x, int z) {
+   minecpp::util::around(pos.x(), pos.z(), [this, chunk](int x, int z) {
       game::ChunkPosition pos{x, z};
       get_chunk_placements(pos).populate_neighbour(*chunk, pos);
    });

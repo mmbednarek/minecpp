@@ -1,10 +1,9 @@
 #pragma once
 #include "Id.h"
-#include "Inventory.h"
-#include "Tracking.h"
 #include <minecpp/game/Mode.h>
-#include <minecpp/proto/player/v1/Player.pb.h>
+#include <minecpp/game/Notifier.h>
 #include <minecpp/math/Vector3.h>
+#include <minecpp/proto/player/v1/Player.pb.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -16,32 +15,12 @@ class Entity;
 }// namespace minecpp::game
 
 namespace minecpp::nbt::player::v1 {
-class Player;
+class Location;
 }
 
 namespace minecpp::game::player {
 
 using boost::uuids::uuid;
-
-struct Abilities
-{
-   float fly_speed    = 0.05f;
-   bool flying        = false;
-   bool instant_build = true;
-   bool invulnerable  = false;
-   bool may_build     = true;
-   bool may_fly       = true;
-   float walk_speed   = 0.1f;
-
-   static Abilities from_proto(const minecpp::proto::player::v1::Abilities &abilities);
-
-   [[nodiscard]] minecpp::proto::player::v1::Abilities to_proto() const;
-
-   [[nodiscard]] constexpr mb::u32 flags() const
-   {
-      return (invulnerable ? 1u : 0u) | (flying ? 2u : 0u) | (may_fly ? 4u : 0u) | (instant_build ? 8u : 0u);
-   }
-};
 
 struct Status
 {
@@ -67,7 +46,6 @@ class Player
    EntityId m_entity_id{};
    std::string m_name;
    game::Mode m_game_mode = game::Mode::Survival;
-   std::unique_ptr<Tracking> m_tracking;
 
    int m_ping{};
 
@@ -81,11 +59,8 @@ class Player
    float m_food_saturation_level = 5.0f;
    int m_food_tick_timer         = 0;
 
-   Abilities m_abilities;
-   Inventory m_inventory;
-
  public:
-   Player(Id id, std::string_view name, const math::Vector3 &pos, game::Notifier &notifier);
+   Player(Id id, std::string_view name, game::Notifier &notifier);
 
    [[nodiscard]] constexpr Id id() const
    {
@@ -100,21 +75,6 @@ class Player
    [[nodiscard]] constexpr game::Mode game_mode() const
    {
       return m_game_mode;
-   }
-
-   [[nodiscard]] constexpr const Abilities &abilities() const
-   {
-      return m_abilities;
-   }
-
-   [[nodiscard]] constexpr const Inventory &inventory() const
-   {
-      return m_inventory;
-   }
-
-   [[nodiscard]] constexpr Inventory &inventory()
-   {
-      return m_inventory;
    }
 
    [[nodiscard]] constexpr const std::string &name() const
@@ -147,13 +107,10 @@ class Player
       };
    }
 
-   void on_movement(game::World &w, math::Vector3 pos);
-   mb::result<mb::empty> load_chunks(game::World &w);
-
-   static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name,
+   static Player from_nbt(const nbt::player::v1::Location &player, const std::string &name,
                           game::Notifier &notifier);
 
-   [[nodiscard]] proto::player::v1::Player to_proto(const game::entity::Entity &entity) const;
+   [[nodiscard]] proto::player::v1::Player to_proto() const;
 };
 
 }// namespace minecpp::game::player

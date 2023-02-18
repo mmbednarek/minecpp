@@ -35,7 +35,7 @@ void Generator::generate_chunk(game::ChunkPosition position)
 
 void Generator::generate_terrain(game::ChunkPosition position)
 {
-   terrain::Terrain gen(m_seed, position.x, position.z);
+   terrain::Terrain gen(m_seed, position.x(), position.z());
 
    world::Chunk *chunk{};
    if (m_chunk_system.chunk_state_at(position) == ChunkState::ABSENT) {

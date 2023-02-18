@@ -129,7 +129,7 @@ bool Storage::update_chunk(game::ChunkPosition position,
 {
    std::unique_lock lock{m_mutex};
 
-   game::ChunkPosition chunk_position{position.x, position.z};
+   game::ChunkPosition chunk_position{position.x(), position.z()};
    auto key = fmt::format("chunk_data.{}", chunk_position.hash());
 
    auto transaction = create_transaction();
@@ -163,7 +163,7 @@ bool Storage::add_chunk_subscription(game::ChunkPosition position, const proto_s
 {
    std::unique_lock lock{m_mutex};
 
-   game::ChunkPosition chunk_position{position.x, position.z};
+   game::ChunkPosition chunk_position{position.x(), position.z()};
    auto key = fmt::format("chunk_subscription.{}", chunk_position.hash());
 
    auto transaction = create_transaction();

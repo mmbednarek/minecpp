@@ -1,6 +1,5 @@
 #include "EventHandler.h"
 #include "Dispatcher.h"
-#include "Entities.h"
 #include "Players.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/command/Command.h>
@@ -8,11 +7,18 @@
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
 #include <minecpp/command/core/ReloadChunk.h>
+#include <minecpp/command/core/Sync.h>
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
 #include <minecpp/controller/block/Stairs.h>
 #include <minecpp/controller/block/Torch.h>
 #include <minecpp/controller/block/Wood.h>
+#include <minecpp/entity/component/Abilities.h>
+#include <minecpp/entity/component/Health.h>
+#include <minecpp/entity/component/Inventory.h>
+#include <minecpp/entity/component/Location.h>
+#include <minecpp/entity/component/StreamingComponent.h>
+#include <minecpp/entity/EntitySystem.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/World.h>
 #include <minecpp/repository/Block.h>
@@ -23,19 +29,20 @@
 namespace minecpp::service::engine {
 
 EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager,
-                           EntityManager &entity_manager, game::World &world,
+                           entity::EntitySystem &entity_system, game::World &world,
                            controller::BlockManager &block_manager) :
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
-    m_entity_manager(entity_manager),
+    m_entity_system(entity_system),
     m_world(world),
     m_command_std_stream(m_dispatcher),
-    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream),
+    m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream, m_world),
     m_block_manager(block_manager)
 {
    m_command_manager.register_command<command::core::Echo>("echo");
-   m_command_manager.register_command<command::core::Give>("give", m_player_manager);
-   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk", m_world);
+   m_command_manager.register_command<command::core::Give>("give");
+   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk");
+   m_command_manager.register_command<command::core::Sync>("sync");
 
    m_command_manager.register_command<command::core::Format>("black", format::Color::Black, false);
    m_command_manager.register_command<command::core::Format>("black-bold", format::Color::Black, true);
@@ -148,19 +155,25 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    }
 
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
-   auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
+   auto entity  = m_entity_system.entity(player.entity_id());
 
-   if (!player.inventory().add_item(1, 64)) {
+   auto &inventory = entity.component<entity::component::Inventory>();
+   if (not inventory.add_item(m_dispatcher, 1, 64)) {
       spdlog::info("player inventory is full");
    }
-   if (!player.inventory().add_item(2, 32)) {
+   if (not inventory.add_item(m_dispatcher, 2, 32)) {
       spdlog::info("player inventory is full");
    }
 
-   m_dispatcher.accept_player(player, entity);
+   if (not entity.has_component<entity::component::Abilities>()) {
+      m_dispatcher.deny_player(player_id, "Player's entity doesn't have abilities component");
+   }
+
+   m_dispatcher.accept_player(player);
    m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
-   m_dispatcher.spawn_player(player.id(), player.entity_id(), entity.get_pos(),
-                             game::entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+   m_dispatcher.spawn_player(player.id(), player.entity_id(),
+                             entity.component<entity::component::Location>().position(),
+                             entity.component<entity::component::Rotation>().rotation());
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 
    m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
@@ -188,24 +201,37 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
            format::Builder()
                    .text(format::Color::Gray, "------------------------------------------------")
                    .to_string());
+   m_dispatcher.synchronise_player_position_and_rotation(
+           player_id, entity.component<entity::component::Location>().position(),
+           entity.component<entity::component::Rotation>().yaw(),
+           entity.component<entity::component::Rotation>().pitch());
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,
                                               game::PlayerId player_id)
 {
-   auto &entity         = MB_ESCAPE(m_player_manager.get_entity(player_id));
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed())
+      return;
+
+   auto entity          = m_entity_system.entity(player->entity_id());
    auto player_position = math::Vector3::from_proto(event.position());
-   entity.set_pos(m_dispatcher, player_position);
-   MB_ESCAPE(m_player_manager.get_player(player_id)).on_movement(m_world, player_position);
+   entity.component<entity::component::Location>().set_position(m_world, entity, player_position);
 }
 
 void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event,
                                               game::PlayerId player_id)
 {
-   auto &entity = MB_ESCAPE(m_player_manager.get_entity(player_id));
-   entity.set_rot(event.rotation().yaw(), event.rotation().pitch());
-   m_dispatcher.entity_look(player_id, entity.get_id(),
-                            game::entity::Rotation(entity.get_yaw(), entity.get_pitch()));
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed())
+      return;
+
+   auto entity              = m_entity_system.entity(player->entity_id());
+   auto &rotation_component = entity.component<entity::component::Rotation>();
+
+   rotation_component.set_yaw(event.rotation().yaw());
+   rotation_component.set_pitch(event.rotation().pitch());
+   m_dispatcher.player_look(player_id, entity.id(), rotation_component.rotation());
 }
 
 void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, game::PlayerId player_id)
@@ -232,7 +258,7 @@ void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &even
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player.name()));
    m_dispatcher.remove_player(player_id, player.entity_id());
 
-   m_entity_manager.remove_entity(player.entity_id());
+   m_entity_system.destroy_entity(player.entity_id());
    m_player_manager.remove_player(player_id);
 }
 
@@ -276,25 +302,27 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
       return;
    }
 
-   auto res = player->load_chunks(m_world);
-   if (!res.ok()) {
-      spdlog::error("error loading chunks: {}", res.err()->msg());
+   auto entity = m_entity_system.entity(player->entity_id());
+
+   auto result = entity.component<entity::component::StreamingComponent>().send_all_visible_chunks(m_world,
+                                                                                                   player_id);
+   if (result.has_failed()) {
+      spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
    }
 
-   auto entity = m_entity_manager.get_entity(player->entity_id());
-   if (entity.has_failed()) {
-      spdlog::error("player entity could not be obtained: {}", entity.err()->msg());
-      return;
-   }
+   entity.component<entity::component::Inventory>().synchronize_inventory(m_dispatcher);
 
-   send_inventory_data(*player);
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player_id, m_entity_manager);
+   m_dispatcher.entity_list(player_id, entity.component<entity::component::Location>().position(), 16.0);
 
-   m_dispatcher.synchronise_player_position_and_rotation(player_id, entity->get_pos(), entity->get_yaw(),
-                                                         entity->get_pitch());
-   m_dispatcher.set_spawn_position(player_id, game::BlockPosition(), entity->get_pitch());
+   m_dispatcher.synchronise_player_position_and_rotation(
+           player_id, entity.component<entity::component::Location>().position(),
+           entity.component<entity::component::Rotation>().yaw(),
+           entity.component<entity::component::Rotation>().pitch());
+
+   m_dispatcher.set_spawn_position(player_id, game::BlockPosition(),
+                                   entity.component<entity::component::Rotation>().pitch());
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
@@ -319,7 +347,10 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
       return;
    }
 
-   auto item_slot = player->inventory().active_item();
+   auto entity = m_entity_system.entity(player->entity_id());
+   auto &inventory = entity.component<entity::component::Inventory>();
+
+   auto item_slot = inventory.active_item();
    if (item_slot.count == 0)
       return;
 
@@ -334,7 +365,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    if (block_id.has_failed())
       return;
 
-   if (not player->inventory().take_from_active_slot(1))
+   if (not inventory.take_from_active_slot(m_dispatcher, 1))
       return;
 
    if (m_block_manager.on_player_place_block(m_world, player_id, static_cast<int>(*block_id), block_position,
@@ -343,57 +374,49 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    }
 }
 
-void EventHandler::send_inventory_data(const game::player::Player &player)
-{
-   for (game::SlotId id = 9; id < 5 * 9; ++id) {
-      auto slot = player.inventory().item_at(id);
-      m_dispatcher.set_inventory_slot(player.id(), slot.item_id, id, slot.count);
-   }
-}
-
 void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event,
                                                 game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.inventory().set_slot(static_cast<game::SlotId>(event.slot_id()),
-                               game::ItemSlot{
-                                       .item_id = static_cast<game::ItemId>(event.item_id().id()),
-                                       .count   = event.item_count(),
-                               });
+   auto entity  = m_entity_system.entity(player.entity_id());
 
    spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
 
-   m_dispatcher.set_inventory_slot(player_id, static_cast<game::ItemId>(event.item_id().id()),
-                                   static_cast<game::SlotId>(event.slot_id()),
-                                   static_cast<size_t>(event.item_count()));
+   entity.component<entity::component::Inventory>().set_slot(
+           m_dispatcher, static_cast<game::SlotId>(event.slot_id()),
+           game::ItemSlot{
+                   .item_id = static_cast<game::ItemId>(event.item_id().id()),
+                   .count   = event.item_count(),
+           });
 }
 
 void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event,
                                            game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.inventory().set_hot_bar_slot(static_cast<size_t>(event.slot()));
+   auto entity = m_entity_system.entity(player.entity_id());
+   auto &inventory = entity.component<entity::component::Inventory>();
 
-   auto item = player.inventory().active_item();
-   m_dispatcher.set_player_equipment(player_id, player.entity_id(), game::EquipmentSlot::MainHand, item);
+   inventory.set_active_item(m_dispatcher, event.slot());
 }
 
 void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity  = m_entity_manager.get_entity(player.entity_id());
-   if (entity.has_failed()) {
-      format::Builder builder;
-      builder.bold(format::Color::Red, "[entity-system] ").text("could not obtain entity");
-      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
-      return;
-   }
+   auto entity  = m_entity_system.entity(player.entity_id());
+   //   if (entity.has_failed()) {
+   //      format::Builder builder;
+   //      builder.bold(format::Color::Red, "[entity-system] ").text("could not obtain entity");
+   //      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
+   //      return;
+   //   }
 
    m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
    m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
    m_command_context.set_variable("entity_id", std::make_shared<command::IntObject>(player.entity_id()));
 
-   auto player_pos = game::BlockPosition::from_vec3(entity->get_pos());
+   auto player_pos =
+           game::BlockPosition::from_vec3(entity.component<entity::component::Location>().position());
    m_command_context.set_variable("here", std::make_shared<command::BlockPositionObject>(player_pos));
 
    auto res = m_command_manager.evaluate(m_command_context, event.command());
@@ -408,27 +431,20 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
 {
    spdlog::info("player {} is attacking entity {}", boost::uuids::to_string(player_id), event.entity_id());
 
-   auto source_entity = m_player_manager.get_entity(player_id);
-   if (source_entity.has_failed()) {
-      spdlog::error("no player with id {}", boost::uuids::to_string(player_id));
-      return;
-   }
+   auto &player       = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto source_entity = m_entity_system.entity(player.entity_id());
 
-   auto entity = m_entity_manager.get_entity(event.entity_id());
-   if (entity.has_failed()) {
-      spdlog::error("no entity with id {}", event.entity_id());
-      return;
-   }
+   auto entity = m_entity_system.entity(event.entity_id());
+   entity.component<entity::component::Health>().health -= 1.0f;
 
    auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
    if (target_player_id.has_value()) {
-      spdlog::info("setting players health to {}", entity->get_health());
-      m_dispatcher.set_health_and_food(*target_player_id, entity->get_health(), 20, 5.0f);
+      spdlog::info("setting players health to {}", entity.component<entity::component::Health>().health);
+      m_dispatcher.set_health_and_food(*target_player_id,
+                                       entity.component<entity::component::Health>().health, 20, 5.0f);
    }
 
    m_dispatcher.animate_entity(event.entity_id(), game::EntityAnimation::TakeDamage);
-
-   //   m_dispatcher.set_health_and_food();
 }
 
 }// namespace minecpp::service::engine

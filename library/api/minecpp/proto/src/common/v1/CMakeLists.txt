@@ -4,8 +4,10 @@ set(MINECPP_API_MINECPP_PROTO_COMMON_V1_INCLUDE_DIR ${MINECPP_API_MINECPP_PROTO_
 target_sources(minecpp_api_proto PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Common.pb.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/Vector.pb.cc
 
         # Header files
         ${MINECPP_API_MINECPP_PROTO_COMMON_V1_INCLUDE_DIR}/Common.pb.h
+        ${MINECPP_API_MINECPP_PROTO_COMMON_V1_INCLUDE_DIR}/Vector.pb.h
 )
 

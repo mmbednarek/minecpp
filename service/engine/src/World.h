@@ -1,6 +1,5 @@
 #pragma once
 #include "Dispatcher.h"
-#include "Entities.h"
 #include "Players.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
@@ -8,6 +7,10 @@
 #include <minecpp/game/World.h>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
 #include <minecpp/world/LightSystem.h>
+
+namespace minecpp::entity {
+class EntitySystem;
+}
 
 namespace minecpp::service::engine {
 
@@ -22,11 +25,11 @@ class World : public minecpp::game::World
 
  public:
    World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
-         PlayerManager &player_manager, EntityManager &entity_manager,
+         PlayerManager &player_manager, entity::EntitySystem &entity_system,
          controller::BlockManager &block_controller);
 
    game::player::Provider &players() override;
-   EntityManager &entities() override;
+   game::IEntitySystem &entity_system() override;
    minecpp::game::Notifier &notifier() override;
    mb::result<mb::empty> add_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<mb::empty> free_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
@@ -51,7 +54,7 @@ class World : public minecpp::game::World
    JobSystem &m_job_system;
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;
-   EntityManager &m_entity_manager;
+   entity::EntitySystem &m_entity_system;
    controller::BlockManager &m_block_controller;
    uuid m_engine_id;
    world::LightSystem m_light_system;

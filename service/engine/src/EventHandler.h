@@ -11,6 +11,15 @@ namespace minecpp::game {
 class World;
 }
 
+namespace minecpp::entity {
+class EntitySystem;
+
+namespace component {
+class Inventory;
+}
+
+}
+
 namespace minecpp::service::engine {
 
 namespace serverbound_v1 = proto::event::serverbound::v1;
@@ -21,17 +30,8 @@ class EntityManager;
 
 class EventHandler
 {
-   Dispatcher &m_dispatcher;
-   PlayerManager &m_player_manager;
-   EntityManager &m_entity_manager;
-   game::World &m_world;
-   command::StandardStream m_command_std_stream;
-   command::CommandManager m_command_manager;
-   command::RuntimeContext m_command_context;
-   controller::BlockManager &m_block_manager;
-
  public:
-   EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, EntityManager &entity_manager,
+   EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, entity::EntitySystem &entity_system,
                 game::World &world, controller::BlockManager &block_manager);
 
    void handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id);
@@ -51,7 +51,14 @@ class EventHandler
    void handle_interact(const serverbound_v1::Interact &event, game::PlayerId player_id);
 
  private:
-   void send_inventory_data(const game::player::Player &player);
+   Dispatcher &m_dispatcher;
+   PlayerManager &m_player_manager;
+   entity::EntitySystem &m_entity_system;
+   game::World &m_world;
+   command::StandardStream m_command_std_stream;
+   command::CommandManager m_command_manager;
+   command::RuntimeContext m_command_context;
+   controller::BlockManager &m_block_manager;
 };
 
 }// namespace minecpp::service::engine
