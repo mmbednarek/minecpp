@@ -1,9 +1,9 @@
 #pragma once
 #include "Id.h"
-#include "Inventory.h"
 #include <minecpp/game/Mode.h>
-#include <minecpp/proto/player/v1/Player.pb.h>
+#include <minecpp/game/Notifier.h>
 #include <minecpp/math/Vector3.h>
+#include <minecpp/proto/player/v1/Player.pb.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -59,8 +59,6 @@ class Player
    float m_food_saturation_level = 5.0f;
    int m_food_tick_timer         = 0;
 
-   Inventory m_inventory;
-
  public:
    Player(Id id, std::string_view name, game::Notifier &notifier);
 
@@ -77,16 +75,6 @@ class Player
    [[nodiscard]] constexpr game::Mode game_mode() const
    {
       return m_game_mode;
-   }
-
-   [[nodiscard]] constexpr const Inventory &inventory() const
-   {
-      return m_inventory;
-   }
-
-   [[nodiscard]] constexpr Inventory &inventory()
-   {
-      return m_inventory;
    }
 
    [[nodiscard]] constexpr const std::string &name() const

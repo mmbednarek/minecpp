@@ -5,8 +5,7 @@ namespace minecpp::game::player {
 
 Player::Player(Id id, std::string_view name, game::Notifier &notifier) :
     m_id(id),
-    m_name(name),
-    m_inventory(id, notifier)
+    m_name(name)
 {
 }
 
