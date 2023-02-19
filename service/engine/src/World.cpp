@@ -44,7 +44,7 @@ World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, D
 {
 }
 
-minecpp::game::Notifier &World::notifier()
+minecpp::game::IDispatcher &World::dispatcher()
 {
    return m_dispatcher;
 }

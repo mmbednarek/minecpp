@@ -8,7 +8,7 @@ void Test::on_attached(game::Entity &entity) {
    entity.component<Location>().on_position_change.connect<&Test::on_position_change>(this);
 }
 
-void Test::on_position_change(game::World &world, game::Entity entity, const math::Vector3 &old_position,
+void Test::on_position_change(game::IWorld &world, game::Entity entity, const math::Vector3 &old_position,
                               const math::Vector3 &new_position)
 {
    ++m_position_change_count;

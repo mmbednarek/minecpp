@@ -8,16 +8,16 @@ namespace minecpp::controller::block {
 class Default : public game::IBlockController
 {
  public:
-   bool on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,
+   bool on_player_place_block(game::IWorld &world, game::PlayerId player_id, game::BlockId block_id,
                               game::BlockPosition position, game::Face face) override;
 
-   std::optional<game::BlockStateId> on_neighbour_change(game::World &world,
+   std::optional<game::BlockStateId> on_neighbour_change(game::IWorld &world,
                                                          game::BlockStateId block_state_id,
                                                          game::BlockStateId neighbour_block_state_id,
                                                          game::BlockPosition position,
                                                          game::Face face) override;
 
-   bool on_player_action(game::World &world, game::PlayerId player_id, game::BlockStateId block_state_id,
+   bool on_player_action(game::IWorld &world, game::PlayerId player_id, game::BlockStateId block_state_id,
                          game::BlockPosition position, game::Face face,
                          math::Vector3 crosshair_position) override;
 
@@ -28,12 +28,12 @@ class Default : public game::IBlockController
       Water
    };
 
-   [[nodiscard]] static std::optional<SourceBlockType> get_source_block_type(game::World &world,
+   [[nodiscard]] static std::optional<SourceBlockType> get_source_block_type(game::IWorld &world,
                                                                              game::BlockPosition pos);
-   [[nodiscard]] static bool verify_source_block(game::World &world, game::BlockPosition pos);
-   [[nodiscard]] static bool verify_source_is_air(game::World &world, game::BlockPosition pos);
+   [[nodiscard]] static bool verify_source_block(game::IWorld &world, game::BlockPosition pos);
+   [[nodiscard]] static bool verify_source_is_air(game::IWorld &world, game::BlockPosition pos);
    [[nodiscard]] static std::optional<game::Direction>
-   find_player_direction(game::World &world, game::PlayerId player_id, game::BlockPosition position);
+   find_player_direction(game::IWorld &world, game::PlayerId player_id, game::BlockPosition position);
 };
 
 }// namespace minecpp::controller::block

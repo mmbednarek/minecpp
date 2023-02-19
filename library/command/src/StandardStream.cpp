@@ -4,7 +4,7 @@
 
 namespace minecpp::command {
 
-StandardStream::StandardStream(game::Notifier &notifier) :
+StandardStream::StandardStream(game::IDispatcher &notifier) :
     m_notifier(notifier)
 {
 }

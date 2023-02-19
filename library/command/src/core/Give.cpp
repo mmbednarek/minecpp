@@ -57,7 +57,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    }
 
    auto &inventory = entity.component<entity::component::Inventory>();
-   if (not inventory.add_item(world->notifier(), static_cast<game::ItemId>(item_id.get()), 64)) {
+   if (not inventory.add_item(world->dispatcher(), static_cast<game::ItemId>(item_id.get()), 64)) {
       auto err = std::make_shared<RuntimeError>("give");
       err->text("player inventory is full");
       return err;

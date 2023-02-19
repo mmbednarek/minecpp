@@ -25,7 +25,7 @@ math::Vector3 Location::extent() const
    return m_extent;
 }
 
-void Location::set_position(game::World &world, game::Entity &entity, const math::Vector3 &position)
+void Location::set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position)
 {
    if (this->on_position_change) {
       this->on_position_change(world, entity, m_position, position);
@@ -42,9 +42,9 @@ void Location::set_position(game::World &world, game::Entity &entity, const math
    auto rotation = entity.component<Rotation>();
 
    if (entity.has_component<Player>()) {
-      world.notifier().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(), rotation.rotation());
+      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(), rotation.rotation());
    } else {
-      world.notifier().entity_move(entity.id(), movement.cast<short>(), rotation.rotation());
+      world.dispatcher().entity_move(entity.id(), movement.cast<short>(), rotation.rotation());
    }
 }
 

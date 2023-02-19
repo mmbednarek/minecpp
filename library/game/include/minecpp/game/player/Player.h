@@ -1,13 +1,13 @@
 #pragma once
 #include "Id.h"
+#include <minecpp/game/IDispatcher.h>
 #include <minecpp/game/Mode.h>
-#include <minecpp/game/Notifier.h>
 #include <minecpp/math/Vector3.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
 #include <string_view>
 
 namespace minecpp::game {
-class World;
+class IWorld;
 
 namespace entity {
 class Entity;
@@ -60,7 +60,7 @@ class Player
    int m_food_tick_timer         = 0;
 
  public:
-   Player(Id id, std::string_view name, game::Notifier &notifier);
+   Player(Id id, std::string_view name, game::IDispatcher &notifier);
 
    [[nodiscard]] constexpr Id id() const
    {
@@ -108,7 +108,7 @@ class Player
    }
 
    static Player from_nbt(const nbt::player::v1::Location &player, const std::string &name,
-                          game::Notifier &notifier);
+                          game::IDispatcher &notifier);
 
    [[nodiscard]] proto::player::v1::Player to_proto() const;
 };

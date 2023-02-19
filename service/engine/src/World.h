@@ -4,7 +4,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
 #include <minecpp/controller/BlockManager.h>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
 #include <minecpp/world/LightSystem.h>
 
@@ -20,7 +20,7 @@ using minecpp::game::ChunkPosition;
 class ChunkSystem;
 class JobSystem;
 
-class World : public minecpp::game::World
+class World : public minecpp::game::IWorld
 {
 
  public:
@@ -30,7 +30,7 @@ class World : public minecpp::game::World
 
    game::player::Provider &players() override;
    game::IEntitySystem &entity_system() override;
-   minecpp::game::Notifier &notifier() override;
+   minecpp::game::IDispatcher &dispatcher() override;
    mb::result<mb::empty> add_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<mb::empty> free_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<int> height_at(int x, int z) override;

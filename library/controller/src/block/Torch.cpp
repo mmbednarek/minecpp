@@ -7,14 +7,14 @@ namespace minecpp::controller::block {
 using game::BlockId;
 using game::BlockPosition;
 using game::Face;
+using game::IWorld;
 using game::LightType;
 using game::PlayerId;
-using game::World;
 using world::BlockState;
 
 static std::optional<Face> find_connected_face(const BlockState &state);
 
-bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId /*block_id*/,
+bool Torch::on_player_place_block(IWorld &world, PlayerId /*player_id*/, BlockId /*block_id*/,
                                   BlockPosition position, Face place_face)
 {
    // Cannot place torch on a ceiling
@@ -33,7 +33,7 @@ bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId 
 
    // If we're placing the torch on a floor we should place minecraft:torch
    if (place_face == Face::Top) {
-      return world.set_block(torch_pos, BlockState(BLOCK_ID(Torch), 0).block_state_id()).ok();
+      return world.set_block(torch_pos, DEFAULT_BLOCK_STATE(Torch)).ok();
    }
 
    // Create new wall torch state and set facing to the same we are placing it
@@ -44,7 +44,7 @@ bool Torch::on_player_place_block(World &world, PlayerId /*player_id*/, BlockId 
    return world.set_block(torch_pos, state.block_state_id()).ok();
 }
 
-std::optional<game::BlockStateId> Torch::on_neighbour_change(game::World &world,
+std::optional<game::BlockStateId> Torch::on_neighbour_change(game::IWorld &world,
                                                              game::BlockStateId block_state_id,
                                                              game::BlockStateId neighbour_block_state_id,
                                                              game::BlockPosition position, game::Face face)

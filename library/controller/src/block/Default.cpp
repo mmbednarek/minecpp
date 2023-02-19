@@ -6,7 +6,7 @@
 
 namespace minecpp::controller::block {
 
-bool Default::on_player_place_block(game::World &world, game::PlayerId, game::BlockId block_id,
+bool Default::on_player_place_block(game::IWorld &world, game::PlayerId, game::BlockId block_id,
                                     game::BlockPosition position, game::Face face)
 {
    const auto neighbour_position = position.neighbour_at(face);
@@ -30,21 +30,21 @@ bool Default::on_player_place_block(game::World &world, game::PlayerId, game::Bl
    return world.set_block(neighbour_position, target_state).ok();
 }
 
-std::optional<game::BlockStateId> Default::on_neighbour_change(game::World &, game::BlockStateId,
+std::optional<game::BlockStateId> Default::on_neighbour_change(game::IWorld &, game::BlockStateId,
                                                                game::BlockStateId, game::BlockPosition,
                                                                game::Face)
 {
    return std::nullopt;
 }
 
-bool Default::on_player_action(game::World &world, game::PlayerId player_id,
+bool Default::on_player_action(game::IWorld &world, game::PlayerId player_id,
                                game::BlockStateId block_state_id, game::BlockPosition position,
                                game::Face face, math::Vector3 crosshair_position)
 {
    return false;
 }
 
-std::optional<Default::SourceBlockType> Default::get_source_block_type(game::World &world,
+std::optional<Default::SourceBlockType> Default::get_source_block_type(game::IWorld &world,
                                                                        game::BlockPosition pos)
 {
    const auto &block_ids = repository::BlockIds::the();
@@ -67,13 +67,13 @@ std::optional<Default::SourceBlockType> Default::get_source_block_type(game::Wor
    return std::nullopt;
 }
 
-bool Default::verify_source_block(game::World &world, game::BlockPosition pos)
+bool Default::verify_source_block(game::IWorld &world, game::BlockPosition pos)
 {
    const auto source_block_type = get_source_block_type(world, pos);
    return source_block_type.has_value();
 }
 
-std::optional<game::Direction> Default::find_player_direction(game::World &world, game::PlayerId player_id,
+std::optional<game::Direction> Default::find_player_direction(game::IWorld &world, game::PlayerId player_id,
                                                               game::BlockPosition position)
 {
    auto player = world.players().get_player(player_id);
@@ -87,7 +87,7 @@ std::optional<game::Direction> Default::find_player_direction(game::World &world
                                      player_entity.component<entity::component::Location>().position().flat());
 }
 
-bool Default::verify_source_is_air(game::World &world, game::BlockPosition pos)
+bool Default::verify_source_is_air(game::IWorld &world, game::BlockPosition pos)
 {
    return get_source_block_type(world, pos) == SourceBlockType::Air;
 }

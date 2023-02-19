@@ -1,16 +1,16 @@
 #ifndef MINECPP_STANDARD_STREAM_H
 #define MINECPP_STANDARD_STREAM_H
 #include "Command.h"
-#include <minecpp/game/Notifier.h>
+#include <minecpp/game/IDispatcher.h>
 
 namespace minecpp::command {
 
 class StandardStream : public OutputStream
 {
-   game::Notifier &m_notifier;
+   game::IDispatcher &m_notifier;
 
  public:
-   explicit StandardStream(game::Notifier &notifier);
+   explicit StandardStream(game::IDispatcher &notifier);
 
    bool write(Object::Ptr obj) override;
 };

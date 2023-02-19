@@ -2,7 +2,7 @@
 #include "ApiHandler.h"
 #include "minecpp/world/Chunk.h"
 #include <minecpp/chat/Chat.h>
-#include <minecpp/game/Notifier.h>
+#include <minecpp/game/IDispatcher.h>
 #include <minecpp/game/player/Id.h>
 #include <minecpp/game/player/Player.h>
 
@@ -20,7 +20,7 @@ class EventManager;
 class EntityManager;
 using boost::uuids::uuid;
 
-class Dispatcher : public minecpp::game::Notifier
+class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
    explicit Dispatcher(EventManager &events, entity::EntitySystem &entity_system);

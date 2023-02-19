@@ -10,16 +10,17 @@ using game::BlockStateId;
 using game::Direction;
 using game::Face;
 using game::Half;
+using game::IWorld;
 using game::PlayerId;
 using game::Side;
-using game::World;
 using world::BlockState;
 
-static bool check_side(World &world, BlockPosition pos, Direction dir, Side side, BlockId door_id);
+static bool check_side(IWorld &world, BlockPosition pos, Direction dir, Side side, BlockId door_id);
 
-static Side find_side(World &world, BlockPosition upper, BlockPosition lower, Direction dir, BlockId door_id);
+static Side find_side(IWorld &world, BlockPosition upper, BlockPosition lower, Direction dir,
+                      BlockId door_id);
 
-bool Door::on_player_place_block(World &world, PlayerId player_id, BlockId block_id, BlockPosition position,
+bool Door::on_player_place_block(IWorld &world, PlayerId player_id, BlockId block_id, BlockPosition position,
                                  Face face)
 {
    auto lower_pos = position.neighbour_at(face);
@@ -54,7 +55,7 @@ bool Door::on_player_place_block(World &world, PlayerId player_id, BlockId block
    return world.set_block(upper_pos, upper_state.block_state_id()).ok();
 }
 
-std::optional<BlockStateId> Door::on_neighbour_change(World & /*world*/, BlockStateId block_state_id,
+std::optional<BlockStateId> Door::on_neighbour_change(IWorld & /*world*/, BlockStateId block_state_id,
                                                       BlockStateId neighbour_block_state_id,
                                                       BlockPosition /*position*/, Face face)
 {
@@ -78,7 +79,7 @@ std::optional<BlockStateId> Door::on_neighbour_change(World & /*world*/, BlockSt
    return other_half_state.block_state_id();
 }
 
-bool Door::on_player_action(World &world, PlayerId /*player_id*/, BlockStateId block_state_id,
+bool Door::on_player_action(IWorld &world, PlayerId /*player_id*/, BlockStateId block_state_id,
                             BlockPosition position, Face /*face*/, math::Vector3 /*crosshair_position*/)
 {
    BlockState state{block_state_id};
@@ -92,7 +93,7 @@ bool Door::on_player_action(World &world, PlayerId /*player_id*/, BlockStateId b
    return world.set_block(position, state.block_state_id()).ok();
 }
 
-bool check_side(World &world, BlockPosition pos, Direction dir, Side side, BlockId door_id)
+bool check_side(IWorld &world, BlockPosition pos, Direction dir, Side side, BlockId door_id)
 {
    auto block = world.get_block(pos.neighbour_at(dir.turn(side).to_face()));
    if (block.has_failed())
@@ -103,7 +104,7 @@ bool check_side(World &world, BlockPosition pos, Direction dir, Side side, Block
    return state.block_id() != BLOCK_ID(Air) && state.block_id() != door_id;
 }
 
-Side find_side(World &world, BlockPosition upper, BlockPosition lower, Direction dir, BlockId door_id)
+Side find_side(IWorld &world, BlockPosition upper, BlockPosition lower, Direction dir, BlockId door_id)
 {
    if (check_side(world, upper, dir, Side::Right, door_id))
       return Side::Left;

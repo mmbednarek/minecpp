@@ -1,7 +1,7 @@
 #pragma once
 #include "Section.h"
 #include <minecpp/game/Game.h>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <unordered_map>
 

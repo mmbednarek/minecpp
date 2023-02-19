@@ -45,7 +45,7 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &input) const
       return make_error("could not obtain player_id");
    }
 
-   entity.component<minecpp::entity::component::Inventory>().synchronize_inventory(ctx.world()->notifier());
+   entity.component<minecpp::entity::component::Inventory>().synchronize_inventory(ctx.world()->dispatcher());
    entity.component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world, player_id->value);
 
    auto info = std::make_shared<FormattedString>();

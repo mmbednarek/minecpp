@@ -19,7 +19,7 @@ std::string_view face_to_axis(game::Face face)
 
 }// namespace
 
-bool Wood::on_player_place_block(game::World &world, game::PlayerId player_id, game::BlockId block_id,
+bool Wood::on_player_place_block(game::IWorld &world, game::PlayerId player_id, game::BlockId block_id,
                                  game::BlockPosition position, game::Face face)
 {
    const auto neighbour_position = position.neighbour_at(face);

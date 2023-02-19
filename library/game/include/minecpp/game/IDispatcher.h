@@ -15,7 +15,7 @@ class ISectionSlice;
 
 using boost::uuids::uuid;
 
-class Notifier
+class IDispatcher
 {
  public:
    virtual void load_terrain(PlayerId player, const ChunkPosition &central_chunk,

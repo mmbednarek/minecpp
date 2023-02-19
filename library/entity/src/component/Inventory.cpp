@@ -38,7 +38,7 @@ void Inventory::on_attached(game::Entity &entity)
    }
 }
 
-bool Inventory::add_item(game::Notifier &notifier, game::ItemId item, int count)
+bool Inventory::add_item(game::IDispatcher &notifier, game::ItemId item, int count)
 {
    const auto does_slot_has_space = [item, count](const game::ItemSlot &slot) {
       if (slot.count == 0) {
@@ -65,7 +65,7 @@ bool Inventory::add_item(game::Notifier &notifier, game::ItemId item, int count)
    return true;
 }
 
-int Inventory::take_item(game::Notifier &notifier, game::ItemId item, int count)
+int Inventory::take_item(game::IDispatcher &notifier, game::ItemId item, int count)
 {
    auto it           = m_slots.begin();
    auto left_to_take = count;
@@ -97,7 +97,7 @@ game::ItemSlot Inventory::item_at(game::SlotId id) const
    return m_slots[slot_id_to_index(id)];
 }
 
-void Inventory::set_slot(game::Notifier &notifier, game::SlotId id, const game::ItemSlot &slot)
+void Inventory::set_slot(game::IDispatcher &notifier, game::SlotId id, const game::ItemSlot &slot)
 {
    m_slots[slot_id_to_index(id)] = slot;
    notifier.set_inventory_slot(m_player_id, slot.item_id, id, slot.count);
@@ -107,7 +107,7 @@ void Inventory::set_slot(game::Notifier &notifier, game::SlotId id, const game::
    }
 }
 
-void Inventory::set_active_item(game::Notifier &notifier, int slot)
+void Inventory::set_active_item(game::IDispatcher &notifier, int slot)
 {
    if (slot < 0 || slot > 8)
       return;
@@ -122,7 +122,7 @@ game::ItemSlot Inventory::active_item() const
    return m_slots[hotbar_index_to_array_index(m_active_item)];
 }
 
-bool Inventory::take_from_slot(game::Notifier &notifier, game::SlotId id, int count)
+bool Inventory::take_from_slot(game::IDispatcher &notifier, game::SlotId id, int count)
 {
    auto index = slot_id_to_index(id);
 
@@ -137,12 +137,12 @@ bool Inventory::take_from_slot(game::Notifier &notifier, game::SlotId id, int co
    return true;
 }
 
-bool Inventory::take_from_active_slot(game::Notifier &notifier, int count)
+bool Inventory::take_from_active_slot(game::IDispatcher &notifier, int count)
 {
    return take_from_slot(notifier, hotbar_index_to_slot_id(m_active_item), count);
 }
 
-void Inventory::synchronize_inventory(game::Notifier &notifier) const
+void Inventory::synchronize_inventory(game::IDispatcher &notifier) const
 {
    for (game::SlotId id{9}; id < 5 * 9; ++id) {
       auto slot = this->item_at(id);

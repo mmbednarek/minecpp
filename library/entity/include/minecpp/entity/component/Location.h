@@ -1,7 +1,7 @@
 #pragma once
 #include <entt/entt.hpp>
 #include <minecpp/game/Entity.h>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <minecpp/math/Vector3.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 
@@ -20,14 +20,14 @@ struct TrackedPosition
 class Location
 {
  public:
-   entt::delegate<void(game::World &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)> on_position_change;
+   entt::delegate<void(game::IWorld &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)> on_position_change;
 
    Location(const math::Vector3 &position, const math::Vector3 &extent);
 
    [[nodiscard]] math::Vector3 position() const;
    [[nodiscard]] math::Vector3 extent() const;
 
-   void set_position(game::World &world, game::Entity &entity, const math::Vector3 &position);
+   void set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position);
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
 

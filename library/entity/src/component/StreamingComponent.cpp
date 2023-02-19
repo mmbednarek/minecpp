@@ -35,7 +35,7 @@ void StreamingComponent::on_attached(game::Entity &entity)
    location.on_position_change.connect<&StreamingComponent::on_position_change>(this);
 }
 
-mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::World &world,
+mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::IWorld &world,
                                                                   game::PlayerId player_id)
 {
    std::vector<game::ChunkPosition> chunks_to_load;
@@ -62,7 +62,7 @@ mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::World &w
       return std::move(res.err());
    }
 
-   world.notifier().update_chunk_position(player_id, m_last_chunk_position);
+   world.dispatcher().update_chunk_position(player_id, m_last_chunk_position);
 
    for (const auto &chunk_pos : chunks_to_load) {
       world.send_chunk_to_player(player_id, chunk_pos);
@@ -70,7 +70,7 @@ mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::World &w
    return mb::ok;
 }
 
-void StreamingComponent::on_position_change(game::World &world, game::Entity entity,
+void StreamingComponent::on_position_change(game::IWorld &world, game::Entity entity,
                                             const math::Vector3 &old_position,
                                             const math::Vector3 &new_position)
 {
@@ -112,14 +112,14 @@ void StreamingComponent::on_position_change(game::World &world, game::Entity ent
    m_last_chunk_position = next_chunk_pos;
 
    auto player_id = entity.component<Player>().id;
-   world.notifier().update_chunk_position(player_id, m_last_chunk_position);
+   world.dispatcher().update_chunk_position(player_id, m_last_chunk_position);
 
    if (!chunks_to_free.empty()) {
       if (auto res = world.free_refs(player_id, chunks_to_free); !res.ok()) {
          return;
       }
       for (const auto &pos : chunks_to_free) {
-         world.notifier().unload_chunk(player_id, pos);
+         world.dispatcher().unload_chunk(player_id, pos);
       }
    }
 

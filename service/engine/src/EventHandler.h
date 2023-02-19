@@ -8,7 +8,7 @@
 #include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
 
 namespace minecpp::game {
-class World;
+class IWorld;
 }
 
 namespace minecpp::entity {
@@ -32,7 +32,7 @@ class EventHandler
 {
  public:
    EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, entity::EntitySystem &entity_system,
-                game::World &world, controller::BlockManager &block_manager);
+                game::IWorld &world, controller::BlockManager &block_manager);
 
    void handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id);
    void handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, game::PlayerId player_id);
@@ -54,7 +54,7 @@ class EventHandler
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;
    entity::EntitySystem &m_entity_system;
-   game::World &m_world;
+   game::IWorld &m_world;
    command::StandardStream m_command_std_stream;
    command::CommandManager m_command_manager;
    command::RuntimeContext m_command_context;

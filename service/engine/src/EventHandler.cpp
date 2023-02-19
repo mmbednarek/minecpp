@@ -20,7 +20,7 @@
 #include <minecpp/entity/component/StreamingComponent.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/format/Format.h>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
@@ -29,7 +29,7 @@
 namespace minecpp::service::engine {
 
 EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager,
-                           entity::EntitySystem &entity_system, game::World &world,
+                           entity::EntitySystem &entity_system, game::IWorld &world,
                            controller::BlockManager &block_manager) :
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),

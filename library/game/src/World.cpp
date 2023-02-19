@@ -1,4 +1,4 @@
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 
 namespace minecpp::game {
 }

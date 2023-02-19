@@ -17,7 +17,7 @@ bool is_fence_block(game::BlockStateId state_id)
    return block->tag().ends_with("_fence");
 }
 
-bool is_fence_at_pos(game::World &world, game::BlockPosition pos)
+bool is_fence_at_pos(game::IWorld &world, game::BlockPosition pos)
 {
    auto state = world.get_block(pos);
    if (state.has_failed())
@@ -27,7 +27,7 @@ bool is_fence_at_pos(game::World &world, game::BlockPosition pos)
 
 }// namespace
 
-bool Fence::on_player_place_block(game::World &world, game::PlayerId, game::BlockId block_id,
+bool Fence::on_player_place_block(game::IWorld &world, game::PlayerId, game::BlockId block_id,
                                   game::BlockPosition position, game::Face face)
 {
    auto pos = position.neighbour_at(face);
@@ -52,7 +52,7 @@ bool Fence::on_player_place_block(game::World &world, game::PlayerId, game::Bloc
    return world.set_block(pos, state).ok();
 }
 
-std::optional<game::BlockStateId> Fence::on_neighbour_change(game::World &, game::BlockStateId block_state_id,
+std::optional<game::BlockStateId> Fence::on_neighbour_change(game::IWorld &, game::BlockStateId block_state_id,
                                                              game::BlockStateId neighbour_block_state_id,
                                                              game::BlockPosition, game::Face face)
 {

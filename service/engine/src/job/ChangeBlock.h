@@ -1,6 +1,6 @@
 #pragma once
 
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <minecpp/world/IChunkSystem.h>
 
 #include "../JobSystem.h"

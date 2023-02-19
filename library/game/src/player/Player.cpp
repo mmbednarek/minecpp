@@ -3,14 +3,14 @@
 
 namespace minecpp::game::player {
 
-Player::Player(Id id, std::string_view name, game::Notifier &notifier) :
+Player::Player(Id id, std::string_view name, game::IDispatcher &notifier) :
     m_id(id),
     m_name(name)
 {
 }
 
 Player Player::from_nbt(const nbt::player::v1::Location &player, const std::string &name,
-                        game::Notifier &notifier)
+                        game::IDispatcher &notifier)
 {
    Player result(read_id_from_nbt(player.uuid), name, notifier);
    result.m_xp_total                = player.xp_total;

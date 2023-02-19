@@ -3,7 +3,7 @@
 
 namespace minecpp::command {
 
-RuntimeContext::RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output, game::World *world) :
+RuntimeContext::RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output, game::IWorld *world) :
         m_manager(manager),
         m_input(input),
         m_output(output),

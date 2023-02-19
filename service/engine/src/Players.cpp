@@ -3,7 +3,7 @@
 #include <fmt/core.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Player.h>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/util/Compression.h>
 #include <minecpp/util/Uuid.h>
@@ -17,13 +17,13 @@ PlayerManager::PlayerManager(entity::EntitySystem &entity_system, game::BlockPos
 {
 }
 
-mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::string &name, game::PlayerId id)
+mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::string &name, game::PlayerId id)
 {
    entity::factory::Player player_factory(m_spawn_position.to_vec3(), id, name);
    auto player_entity = player_factory.create_entity(m_entity_system);
 
    auto player_data = MB_TRY(load_player_data(w, id));
-   auto player      = game::player::Player::from_nbt(player_data, name, w.notifier());
+   auto player      = game::player::Player::from_nbt(player_data, name, w.dispatcher());
    player.set_entity_id(player_entity.id());
    m_player_entity_map[player_entity.id()] = id;
 
@@ -32,7 +32,7 @@ mb::result<mb::empty> PlayerManager::join_player(game::World &w, const std::stri
    return mb::ok;
 }
 
-mb::result<minecpp::nbt::player::v1::Location> PlayerManager::load_player_data(game::World &w,
+mb::result<minecpp::nbt::player::v1::Location> PlayerManager::load_player_data(game::IWorld &w,
                                                                                game::PlayerId id)
 {
    minecpp::nbt::player::v1::Location data;

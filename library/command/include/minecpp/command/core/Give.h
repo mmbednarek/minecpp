@@ -2,10 +2,6 @@
 #define MINECPP_GIVE_H
 #include "../Command.h"
 
-namespace minecpp::game {
-class IEntitySystem;
-}
-
 namespace minecpp::command::core {
 
 class Give : public Command

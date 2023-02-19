@@ -1,6 +1,6 @@
 #include <minecpp/command/core/ReloadChunk.h>
 #include <minecpp/command/RuntimeContext.h>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 
 namespace minecpp::command::core {
 

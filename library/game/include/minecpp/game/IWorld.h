@@ -1,7 +1,7 @@
 #pragma once
 #include "Game.h"
+#include "IDispatcher.h"
 #include "IEntitySystem.hpp"
-#include "Notifier.h"
 #include <mb/result.h>
 #include <minecpp/game/player/Provider.hpp>
 
@@ -42,10 +42,10 @@ class ILightSystem
    virtual mb::emptyres reset_light(game::LightType light_type, game::BlockPosition position)  = 0;
 };
 
-class World : public IBlockContainer
+class IWorld : public IBlockContainer
 {
  public:
-   virtual Notifier &notifier()                                                                       = 0;
+   virtual IDispatcher &dispatcher()                                                                  = 0;
    virtual IEntitySystem &entity_system()                                                             = 0;
    virtual player::Provider &players()                                                                = 0;
    virtual mb::result<mb::empty> add_refs(PlayerId player, std::vector<game::ChunkPosition> refs)     = 0;

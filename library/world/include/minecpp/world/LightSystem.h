@@ -2,7 +2,7 @@
 #include "Chunk.h"
 #include <minecpp/game/Game.h>
 #include <minecpp/game/IBlockController.hpp>
-#include <minecpp/game/World.h>
+#include <minecpp/game/IWorld.h>
 #include <queue>
 #include <vector>
 
