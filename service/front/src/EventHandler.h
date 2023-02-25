@@ -27,7 +27,7 @@ class EventHandler
    }
 
    void handle_add_player(const clientbound_v1::AddPlayer &msg, const event::RecipientList &recipient_list);
-   void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
+   void handle_spawn_player(const clientbound_v1::SpawnPlayer &spawn,
                             const event::RecipientList &recipient_list);
    void handle_spawn_entity(const clientbound_v1::SpawnEntity &pos,
                             const event::RecipientList &recipient_list);

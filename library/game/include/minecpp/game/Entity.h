@@ -51,6 +51,7 @@ class Entity
    }
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
    [[nodiscard]] game::EntityId id() const;
 

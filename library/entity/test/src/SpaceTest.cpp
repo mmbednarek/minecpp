@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/EntitySystem.h>
+#include <minecpp/entity/factory/Player.h>
 
 using minecpp::entity::EntitySystem;
 
@@ -37,6 +38,23 @@ TEST(Entity, ProtoSerialize)
    entity.serialize_to_proto(&proto_entity);
 
    EXPECT_EQ(proto_entity.entity_id(), entity.id());
+   EXPECT_EQ(proto_entity.position().x(), 4);
+   EXPECT_EQ(proto_entity.position().y(), 5);
+   EXPECT_EQ(proto_entity.position().z(), 6);
+}
+
+TEST(Entity, ProtoPlayerSerialize)
+{
+   EntitySystem system;
+   minecpp::entity::factory::Player player(minecpp::game::player::read_id_from_nbt({1, 2, 3, 4}), "test");
+   auto entity = player.create_entity({4, 5, 6}, system);
+
+   minecpp::proto::entity::v1::PlayerEntity proto_entity;
+   entity.serialize_player_to_proto(&proto_entity);
+
+   EXPECT_EQ(proto_entity.entity_id(), entity.id());
+   EXPECT_EQ(proto_entity.uuid().lower(), 8589934593);
+   EXPECT_EQ(proto_entity.uuid().upper(), 17179869187);
    EXPECT_EQ(proto_entity.position().x(), 4);
    EXPECT_EQ(proto_entity.position().y(), 5);
    EXPECT_EQ(proto_entity.position().z(), 6);

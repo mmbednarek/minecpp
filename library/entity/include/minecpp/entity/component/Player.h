@@ -9,7 +9,7 @@ struct Player
    game::PlayerId id{};
    std::string name;
 
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 };
 
 }// namespace minecpp::entity::component

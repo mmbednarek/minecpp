@@ -19,6 +19,8 @@ EntitySystem::EntitySystem() :
    game::register_component<component::ItemSlot>();
 }
 
+EntitySystem::~EntitySystem() = default;
+
 game::Entity EntitySystem::create_spatial_entity(math::Vector3 position, math::Vector3 extent)
 {
    auto entity_id = m_registry.create();
@@ -33,11 +35,6 @@ game::Entity EntitySystem::create_spatial_entity(math::Vector3 position, math::V
 std::optional<game::EntityId> EntitySystem::find_nearest_to(math::Vector3 position)
 {
    return m_storage->find_nearest(position);
-}
-
-IEntitySpace &EntitySystem::space()
-{
-   return *m_storage;
 }
 
 std::vector<game::EntityId> EntitySystem::list_entities_in(math::Vector3 min, math::Vector3 max)

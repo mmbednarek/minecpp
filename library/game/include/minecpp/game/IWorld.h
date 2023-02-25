@@ -64,7 +64,7 @@ class IWorld : public IBlockContainer
    {
       TEntityFactory factory{std::forward<TArgs>(args)...};
       auto entity = factory.create_entity(position, this->entity_system());
-      this->dispatcher().spawn_entity(entity.id());
+      this->dispatcher().spawn_entity(entity.id(), position);
       return entity;
    }
 };

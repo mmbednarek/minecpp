@@ -24,6 +24,7 @@ class Connection : public IConnection
    explicit Connection(EventHandler &event_handler, BidiStream stream);
 
    void on_read(const proto::event::serverbound::v1::Event &event);
+   void send_to_many(const google::protobuf::Message &message, std::span<game::PlayerId> player_ids) override;
 
    void send_to_player(const google::protobuf::Message &message, game::PlayerId player_id) override;
    void send_to_all(const google::protobuf::Message &message) override;

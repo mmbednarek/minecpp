@@ -1,5 +1,6 @@
 #include "EventHandler.h"
 #include "Dispatcher.h"
+#include "minecpp/entity/component/Velocity.h"
 #include "Players.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/command/Command.h>
@@ -180,8 +181,7 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    m_dispatcher.accept_player(player);
    m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
    m_dispatcher.spawn_player(player.id(), player.entity_id(),
-                             entity.component<entity::component::Location>().position(),
-                             entity.component<entity::component::Rotation>().rotation());
+                             entity.component<entity::component::Location>().position());
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 
    m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
@@ -239,7 +239,9 @@ void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRot
 
    rotation_component.set_yaw(event.rotation().yaw());
    rotation_component.set_pitch(event.rotation().pitch());
-   m_dispatcher.player_look(player_id, entity.id(), rotation_component.rotation());
+   m_dispatcher.player_look(player_id, entity.id(),
+                            entity.component<entity::component::Location>().position(),
+                            rotation_component.rotation());
 }
 
 void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, game::PlayerId player_id)
@@ -309,9 +311,13 @@ void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, g
 void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, game::PlayerId player_id)
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   m_dispatcher.animate_player_entity(player_id, player.entity_id(),
-                                      event.hand() == 0 ? game::EntityAnimation::SwingMainArm
-                                                        : game::EntityAnimation::SwingOffHand);
+   auto entity  = m_entity_system.entity(player.entity_id());
+   if (entity.has_component<entity::component::Location>())
+      return;
+
+   m_dispatcher.animate_player_entity(
+           player_id, player.entity_id(), entity.component<entity::component::Location>().position(),
+           event.hand() == 0 ? game::EntityAnimation::SwingMainArm : game::EntityAnimation::SwingOffHand);
 }
 
 void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event,
@@ -451,17 +457,31 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
    auto entity  = m_entity_system.entity(event.entity_id());
    if (not entity.has_component<entity::component::Health>())
       return;
+   if (not entity.has_component<entity::component::Location>())
+      return;
+   if (not entity.has_component<entity::component::Velocity>())
+      return;
 
    entity.component<entity::component::Health>().health -= 1.0f;
 
+   auto attacking_entity = m_entity_system.entity(player.entity_id());
+   if (not attacking_entity.has_component<entity::component::Location>())
+      return;
+
+   auto diff = (entity.component<entity::component::Location>().position() - attacking_entity.component<entity::component::Location>().position()).normalize();
+   diff.set_y(0.2);
+   entity.component<entity::component::Velocity>().set_velocity(m_dispatcher, entity.component<entity::component::Location>().position(), diff);
+
    auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
    if (target_player_id.has_value()) {
+
       spdlog::info("setting players health to {}", entity.component<entity::component::Health>().health);
       m_dispatcher.set_health_and_food(*target_player_id,
                                        entity.component<entity::component::Health>().health, 20, 5.0f);
    }
 
-   m_dispatcher.animate_entity(event.entity_id(), game::EntityAnimation::TakeDamage);
+   m_dispatcher.animate_entity(event.entity_id(), entity.component<entity::component::Location>().position(),
+                               game::EntityAnimation::TakeDamage);
 }
 
 }// namespace minecpp::service::engine

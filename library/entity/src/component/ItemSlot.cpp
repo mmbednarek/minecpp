@@ -20,11 +20,15 @@ void ItemSlot::on_begin_intersect(game::IWorld &world, game::Entity &entity, gam
    if (not other_entity.has_component<Inventory>())
       return;
 
+   if (not other_entity.has_component<Location>())
+      return;
+
    auto &inv = other_entity.component<Inventory>();
    if (not inv.add_item(world.dispatcher(), this->slot.item_id, this->slot.count))
       return;
 
-   world.dispatcher().collect_item(entity.id(), other_entity.id(), this->slot.count);
+   world.dispatcher().collect_item(entity.id(), other_entity.id(),
+                                   other_entity.component<Location>().position(), this->slot.count);
    world.kill_entity(entity.id());
 }
 

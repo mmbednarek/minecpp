@@ -10,6 +10,12 @@ Velocity::Velocity(const math::Vector3 &velocity) :
 {
 }
 
+Velocity::Velocity(const math::Vector3 &velocity, bool is_on_ground) :
+    m_velocity(velocity),
+    m_is_on_ground(is_on_ground)
+{
+}
+
 void Velocity::on_attached(game::Entity &entity)
 {
    m_entity_id = entity.id();
@@ -24,7 +30,7 @@ void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time
    auto &location = entity.component<Location>();
    auto blocked   = world.is_movement_blocked_at(location.position());
    if (blocked) {
-      this->set_velocity(world.dispatcher(), {0, 0.1, 0});
+      this->set_velocity(world.dispatcher(), location.position(), {0, 0.1, 0});
       m_is_on_ground = false;
    }
 
@@ -34,7 +40,7 @@ void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time
    auto new_position = location.position() + m_velocity * delta_time;
    if (not blocked and world.is_movement_blocked_at(new_position)) {
       spdlog::info("is on ground at y={}", location.position().y());
-      this->set_velocity(world.dispatcher(), {0, 0, 0});
+      this->set_velocity(world.dispatcher(), location.position(), {0, 0, 0});
       m_is_on_ground = true;
       return;
    }
@@ -44,7 +50,7 @@ void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time
    if (m_velocity.y() > -0.9) {
       math::Vector3 new_velocity{m_velocity};
       new_velocity.set_y(m_velocity.y() - 0.03999999910593033 * delta_time);
-      this->set_velocity(world.dispatcher(), new_velocity);
+      this->set_velocity(world.dispatcher(), location.position(), new_velocity);
    }
 }
 
@@ -58,10 +64,11 @@ void Velocity::set_falling()
    m_is_on_ground = false;
 }
 
-void Velocity::set_velocity(game::IDispatcher &dispatcher, const math::Vector3 &velocity)
+void Velocity::set_velocity(game::IDispatcher &dispatcher, const math::Vector3 &position,
+                            const math::Vector3 &velocity)
 {
    m_velocity = velocity;
-   dispatcher.set_entity_velocity(m_entity_id, (velocity * 8000.0).cast<short>());
+   dispatcher.set_entity_velocity(m_entity_id, position, (velocity * 8000.0).cast<short>());
 }
 
 }// namespace minecpp::entity::component
