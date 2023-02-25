@@ -9,8 +9,10 @@ class Test
  public:
    Test() = default;
 
+   void tick(game::IWorld &world, game::Entity &entity, double delta_time);
+
    void on_attached(game::Entity &entity);
-   void on_position_change(game::IWorld &world, game::Entity entity, const math::Vector3 &old_position,
+   void on_position_change(game::IWorld &world, game::Entity &entity, const math::Vector3 &old_position,
                            const math::Vector3 &new_position);
 
  private:

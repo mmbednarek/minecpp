@@ -127,3 +127,14 @@ enum EntityAnimation {
   CriticalEffect = 4;
   MagicCriticalEffect = 5;
 }
+
+message UUID {
+  uint64 lower = 1;
+  uint64 upper = 2;
+}
+
+message Slot {
+  common.v1.ItemId item_id = 1;
+  uint32 count = 2;
+  bytes nbt_data = 3;
+}

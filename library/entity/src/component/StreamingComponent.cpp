@@ -29,10 +29,13 @@ StreamingComponent::StreamingComponent(int view_distance) :
 
 void StreamingComponent::on_attached(game::Entity &entity)
 {
-   auto &location = entity.component<Location>();
+   if (entity.has_component<Location>()) {
+      auto &location        = entity.component<Location>();
+      m_last_chunk_position = game::ChunkPosition::from_position(location.position());
 
-   m_last_chunk_position = game::ChunkPosition::from_position(location.position());
-   location.on_position_change.connect<&StreamingComponent::on_position_change>(this);
+      entt::sink on_pos_sink{location.on_position_change};
+      on_pos_sink.connect<&StreamingComponent::on_position_change>(this);
+   }
 }
 
 mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::IWorld &world,
@@ -70,7 +73,7 @@ mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::IWorld &
    return mb::ok;
 }
 
-void StreamingComponent::on_position_change(game::IWorld &world, game::Entity entity,
+void StreamingComponent::on_position_change(game::IWorld &world, game::Entity &entity,
                                             const math::Vector3 &old_position,
                                             const math::Vector3 &new_position)
 {

@@ -71,6 +71,7 @@ class BlockState
    [[nodiscard]] game::FaceMask solid_faces() const;
    [[nodiscard]] game::LightValue luminance() const;
    [[nodiscard]] game::LightValue opacity() const;
+   [[nodiscard]] std::string block_tag() const;
 
    [[nodiscard]] game::BlockStateId block_state_id() const;
 

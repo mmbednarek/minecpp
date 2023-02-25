@@ -4,7 +4,7 @@
 
 namespace minecpp::network::message {
 
-Writer SpawnObject::serialize() const
+Writer SpawnEntity::serialize() const
 {
    // 1.19.3 OK
    Writer w;
@@ -15,13 +15,13 @@ Writer SpawnObject::serialize() const
    w.write_double(x);
    w.write_double(y);
    w.write_double(z);
-   w.write_byte(pitch);
-   w.write_byte(yaw);
-   w.write_byte(head_yaw);
-   w.write_big_endian(data);
-   w.write_big_endian(vel_x);
-   w.write_big_endian(vel_y);
-   w.write_big_endian(vel_z);
+   w.write_byte(static_cast<mb::u8>(pitch / 360.0f * 256.0f));
+   w.write_byte(static_cast<mb::u8>(yaw / 360.0f * 256.0f));
+   w.write_byte(static_cast<mb::u8>(head_yaw / 360.0f * 256.0f));
+   w.write_varint(data);
+   w.write_short(vel_x);
+   w.write_short(vel_y);
+   w.write_short(vel_z);
    return w;
 }
 
@@ -437,6 +437,28 @@ Writer SetDefaultSpawnPosition::serialize() const
    return w;
 }
 
+Writer EntityMetadataSlot::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x4e);
+   w.write_varint(this->entity_id);
+   w.write_byte(this->index);
+   w.write_varint(7);
+
+   if (item_id == 0) {
+      w.write_byte(0);
+   } else {
+      w.write_byte(1);
+      w.write_varint(this->item_id);
+      w.write_byte(static_cast<std::uint8_t>(this->count));
+      w.write_byte(0);
+   }
+   w.write_byte(0xFF);
+
+   return w;
+}
+
 Writer SetSlot::serialize() const
 {
    // 1.19.3 OK
@@ -483,4 +505,26 @@ Writer SetHealth::serialize() const
    return w;
 }
 
+Writer PickupItem::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x63);
+   w.write_varint(collected_entity_id);
+   w.write_varint(collector_entity_id);
+   w.write_varint(count);
+   return w;
+}
+
+Writer SetEntityVelocity::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x50);
+   w.write_varint(entity_id);
+   w.write_short(velocity.x());
+   w.write_short(velocity.y());
+   w.write_short(velocity.z());
+   return w;
+}
 }// namespace minecpp::network::message

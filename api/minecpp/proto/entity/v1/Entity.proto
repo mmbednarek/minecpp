@@ -3,7 +3,6 @@ package minecpp.proto.entity.v1;
 
 import "minecpp/proto/common/v1/Common.proto";
 import "minecpp/proto/common/v1/Vector.proto";
-import "minecpp/proto/player/v1/Id.proto";
 
 message Abilities {
   float walk_speed = 1;
@@ -15,13 +14,30 @@ message Abilities {
   bool may_fly = 7;
 }
 
+message Metadata {
+  uint32 index = 1;
+  oneof value {
+    common.v1.Slot slot = 2;
+  }
+}
+
 message Entity {
   uint32 entity_id = 1;
-  string name = 2;
-  player.v1.PlayerId player_id = 3;
+  common.v1.UUID uuid = 2;
+  uint32 entity_type = 3;
   common.v1.Vector3 position = 4;
   common.v1.Rotation rotation = 5;
-  Abilities abilities = 6;
+  float head_yaw = 6;
+  uint32 data = 7;
+  common.v1.Vector3i velocity = 8;
+  repeated entity.v1.Metadata metadata = 9;
+}
+
+message PlayerEntity {
+  uint32 entity_id = 1;
+  common.v1.UUID uuid = 2;
+  common.v1.Vector3 position = 4;
+  common.v1.Rotation rotation = 5;
 }
 
 enum EquipmentSlot {

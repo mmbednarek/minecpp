@@ -5,18 +5,24 @@ target_sources(minecpp_entity PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Inventory.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ItemSlot.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Location.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Player.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/StreamingComponent.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Test.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/TickComponent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Velocity.cpp
 
         # Header files
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Abilities.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Health.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Inventory.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/ItemSlot.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Location.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Player.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/StreamingComponent.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Test.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/TickComponent.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Velocity.h
 )
 

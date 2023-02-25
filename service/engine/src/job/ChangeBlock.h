@@ -1,5 +1,6 @@
 #pragma once
 
+#include <minecpp/game/IEntitySystem.hpp>
 #include <minecpp/game/IWorld.h>
 #include <minecpp/world/IChunkSystem.h>
 
@@ -10,12 +11,13 @@ namespace minecpp::service::engine::job {
 class ChangeBlock : public IJob
 {
  public:
-   ChangeBlock(game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
+   ChangeBlock(game::IEntitySystem &entity_system, game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
                const game::BlockPosition &position, game::BlockStateId target_state_id);
 
    void run() override;
 
  private:
+   game::IEntitySystem &m_entity_system;
    game::ILightSystem &m_light_system;
    world::IChunkSystem &m_chunk_system;
 

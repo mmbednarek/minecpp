@@ -29,6 +29,8 @@ class EventHandler
    void handle_add_player(const clientbound_v1::AddPlayer &msg, const event::RecipientList &recipient_list);
    void handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
                             const event::RecipientList &recipient_list);
+   void handle_spawn_entity(const clientbound_v1::SpawnEntity &pos,
+                            const event::RecipientList &recipient_list);
    void handle_entity_move(const clientbound_v1::EntityMove &pos, const event::RecipientList &recipient_list);
    void handle_entity_look(const clientbound_v1::EntityLook &pos, const event::RecipientList &recipient_list);
    void handle_chat(const clientbound_v1::Chat &chat_msg, const event::RecipientList &recipient_list);
@@ -67,6 +69,9 @@ class EventHandler
    void handle_set_entity_equipment(const clientbound_v1::SetEntityEquipment &msg,
                                     const event::RecipientList &recipient_list);
    void handle_set_health(const clientbound_v1::SetHealth &msg, const event::RecipientList &recipient_list);
+   void handle_collect_item(const clientbound_v1::CollectItem &msg, const event::RecipientList &recipient_list);
+   void handle_remove_entity(const clientbound_v1::RemoveEntity &msg, const event::RecipientList &recipient_list);
+   void handle_set_entity_velocity(const clientbound_v1::SetEntityVelocity &msg, const event::RecipientList &recipient_list);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)
@@ -113,6 +118,8 @@ class EventHandler
       case event::RecipientType::Excluding: send_message_excluding(msg, recipient_list.list.front()); break;
       }
    }
+
+   void send_entity(const event::RecipientList &recipient_list, const proto::entity::v1::Entity &entity);
 };
 
 }// namespace minecpp::service::front

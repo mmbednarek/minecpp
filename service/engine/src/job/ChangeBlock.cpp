@@ -1,11 +1,14 @@
 #include "ChangeBlock.h"
 
+#include <minecpp/entity/component/Velocity.h>
 #include <minecpp/world/BlockState.h>
 
 namespace minecpp::service::engine::job {
 
-ChangeBlock::ChangeBlock(game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
-                         const game::BlockPosition &position, game::BlockStateId target_state_id) :
+ChangeBlock::ChangeBlock(game::IEntitySystem &entity_system, game::ILightSystem &light_system,
+                         world::IChunkSystem &chunk_system, const game::BlockPosition &position,
+                         game::BlockStateId target_state_id) :
+    m_entity_system(entity_system),
     m_light_system(light_system),
     m_chunk_system(chunk_system),
     m_position(position),
@@ -64,6 +67,21 @@ void ChangeBlock::run()
 
    if (recalculate_light) {
       m_light_system.recalculate_light(game::LightType::Sky, m_position, target_state.solid_faces());
+   }
+
+   if (not target_state.does_block_movement()) {
+      auto above_position = m_position.neighbour_at(game::Face::Top).to_vec3();
+      auto entities_above = m_entity_system.list_entities_in(
+              above_position - math::Vector3{1.5, 1.5, 1.5}, above_position + math::Vector3{2.5, 2.5, 2.5});
+
+      for (auto entity_id : entities_above) {
+         auto entity = m_entity_system.entity(entity_id);
+         if (not entity.has_component<entity::component::Velocity>())
+            continue;
+
+         auto &velocity = entity.component<entity::component::Velocity>();
+         velocity.set_falling();
+      }
    }
 
    m_chunk_system.save_chunk_at(m_position.chunk_position());

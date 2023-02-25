@@ -41,8 +41,6 @@ void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid /*
 void Dispatcher::player_move(game::PlayerId player_id, game::EntityId entity_id,
                              const math::Vector3s &movement, const game::Rotation &rotation)
 {
-   spdlog::info("moving player {} by {}", boost::uuids::to_string(player_id),
-                movement.cast<double>() / 4096.0);
    clientbound_v1::EntityMove event;
    event.set_entity_id(entity_id);
    *event.mutable_player_id() = game::player::write_id_to_proto(player_id);
@@ -201,20 +199,31 @@ void Dispatcher::player_list(game::PlayerId player_id, const std::vector<game::p
 void Dispatcher::entity_list(game::PlayerId player_id, const math::Vector3 &origin, double range)
 {
    auto entities = m_entity_system.list_entities_in_view_distance(origin);
-   for (auto entity_id : entities) {
-      auto entity = m_entity_system.entity(entity_id);
-      if (entity.has_component<entity::component::Player>()) {
-         spdlog::info("spawning player {} at {}", entity.component<entity::component::Player>().name,
-                      entity.component<entity::component::Location>().position());
-      }
-   }
 
    clientbound_v1::EntityList list;
-   list.mutable_list()->Reserve(static_cast<int>(entities.size()));
-   for (const auto &entity_id : entities) {
-      m_entity_system.entity(entity_id).serialize_to_proto(list.add_list());
-   }
 
+   list.mutable_player_entities()->Reserve(static_cast<int>(entities.size()));
+   list.mutable_entities()->Reserve(static_cast<int>(entities.size()));
+
+   for (const auto &entity_id : entities) {
+      auto entity = m_entity_system.entity(entity_id);
+      if (entity.has_component<entity::component::Player>()) {
+         auto *player        = list.add_player_entities();
+         auto [lower, upper] = util::write_uuid(entity.component<entity::component::Player>().id);
+
+         player->set_entity_id(entity_id);
+         player->mutable_uuid()->set_lower(lower);
+         player->mutable_uuid()->set_upper(upper);
+
+         auto &location              = entity.component<entity::component::Location>();
+         *player->mutable_position() = location.position().to_proto();
+
+         auto &rotation              = entity.component<entity::component::Rotation>();
+         *player->mutable_rotation() = rotation.rotation().to_proto();
+      } else {
+         entity.serialize_to_proto(list.add_entities());
+      }
+   }
 
    m_events.send_to(list, player_id);
 }
@@ -322,6 +331,38 @@ void Dispatcher::set_health_and_food(game::PlayerId player_id, float health, int
    equipment.set_food(food);
    equipment.set_food_saturation(food_saturation);
    m_events.send_to(equipment, player_id);
+}
+
+void Dispatcher::spawn_entity(game::EntityId entity_id)
+{
+   auto entity = m_entity_system.entity(entity_id);
+
+   clientbound_v1::SpawnEntity spawn_entity;
+   entity.serialize_to_proto(spawn_entity.mutable_entity());
+   m_events.send_to_all(spawn_entity);
+}
+
+void Dispatcher::collect_item(game::EntityId collected_entity, game::EntityId collector_entity, int count)
+{
+   clientbound_v1::CollectItem collect_item;
+   collect_item.set_collected_entity_id(collected_entity);
+   collect_item.set_collector_entity_id(collector_entity);
+   collect_item.set_count(static_cast<std::uint32_t>(count));
+   m_events.send_to_all(collect_item);
+}
+
+void Dispatcher::remove_entity(game::EntityId entity_id)
+{
+   clientbound_v1::RemoveEntity remove_entity;
+   remove_entity.set_entity_id(entity_id);
+   m_events.send_to_all(remove_entity);
+}
+
+void Dispatcher::set_entity_velocity(game::EntityId entity_id, const math::Vector3s &velocity) {
+   clientbound_v1::SetEntityVelocity update_velocity;
+   update_velocity.set_entity_id(entity_id);
+   *update_velocity.mutable_velocity() = velocity.to_proto();
+   m_events.send_to_all(update_velocity);
 }
 
 }// namespace minecpp::service::engine
