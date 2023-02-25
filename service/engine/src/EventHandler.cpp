@@ -1,6 +1,5 @@
 #include "EventHandler.h"
 #include "Dispatcher.h"
-#include "minecpp/entity/component/Velocity.h"
 #include "Players.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/command/Command.h>
@@ -18,7 +17,9 @@
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Location.h>
+#include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/StreamingComponent.h>
+#include <minecpp/entity/component/Velocity.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Item.h>
 #include <minecpp/format/Format.h>
@@ -180,8 +181,10 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
 
    m_dispatcher.accept_player(player);
    m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
-   m_dispatcher.spawn_player(player.id(), player.entity_id(),
-                             entity.component<entity::component::Location>().position());
+
+//   m_dispatcher.spawn_player(player.id(), player.entity_id(),
+//                             entity.component<entity::component::Location>().position());
+
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 
    m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
@@ -342,7 +345,9 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
    entity.component<entity::component::Inventory>().synchronize_inventory(m_dispatcher);
 
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
-   m_dispatcher.entity_list(player_id, entity.component<entity::component::Location>().position(), 16.0);
+
+   entity.component<entity::component::Player>().init_visible_entities(
+           m_dispatcher, m_entity_system, entity.component<entity::component::Location>().position());
 
    m_dispatcher.synchronise_player_position_and_rotation(
            player_id, entity.component<entity::component::Location>().position(),
@@ -468,9 +473,12 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
    if (not attacking_entity.has_component<entity::component::Location>())
       return;
 
-   auto diff = (entity.component<entity::component::Location>().position() - attacking_entity.component<entity::component::Location>().position()).normalize();
+   auto diff = (entity.component<entity::component::Location>().position() -
+                attacking_entity.component<entity::component::Location>().position())
+                       .normalize();
    diff.set_y(0.2);
-   entity.component<entity::component::Velocity>().set_velocity(m_dispatcher, entity.component<entity::component::Location>().position(), diff);
+   entity.component<entity::component::Velocity>().set_velocity(
+           m_dispatcher, entity.component<entity::component::Location>().position(), diff);
 
    auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
    if (target_player_id.has_value()) {

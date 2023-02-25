@@ -49,7 +49,7 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    }
 
    if (entity.has_component<Player>()) {
-      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), position,
+      world.dispatcher().player_move(entity.component<Player>().id(), entity.id(), position,
                                      movement.cast<short>(), rotation);
    } else {
       world.dispatcher().entity_move(entity.id(), position, movement.cast<short>(), rotation);

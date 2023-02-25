@@ -48,7 +48,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
 
    if (entity->has_component<entity::component::Player>()) {
       info->text(format::Color::White, " to player ");
-      info->text(format::Color::Yellow, entity->component<entity::component::Player>().name);
+      info->text(format::Color::Yellow, entity->component<entity::component::Player>().name());
    } else {
       info->text(format::Color::White, " to entity ");
       info->text(format::Color::Yellow, std::to_string(entity->id()));

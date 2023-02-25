@@ -6,6 +6,7 @@
 #include <minecpp/game/Game.h>
 #include <minecpp/game/item/Item.h>
 #include <minecpp/math/Vector3.h>
+#include <span>
 #include <string>
 #include <vector>
 
@@ -29,6 +30,7 @@ class IDispatcher
    virtual void player_look(PlayerId player, EntityId entity_id, const math::Vector3 &position,
                             const Rotation &rotation)                                                    = 0;
    virtual void entity_look(EntityId entity_id, const math::Vector3 &position, const Rotation &rotation) = 0;
+   virtual void entity_list(PlayerId player_id, std::span<EntityId> entities)                            = 0;
    virtual void add_player(PlayerId player, const std::string &name, mb::u32 ping)                       = 0;
    virtual void spawn_player(PlayerId player, EntityId entity_id, const math::Vector3 &position)         = 0;
    virtual void spawn_player_for_player(PlayerId receiver, PlayerId spawned_player, EntityId entity_id)  = 0;

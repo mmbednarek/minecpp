@@ -37,7 +37,7 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &/*input*/) const
    if (entity->has_component<minecpp::entity::component::StreamingComponent>())
       return make_error(command_name, "entity doesn't stream chunks");
 
-   auto player_id = entity->component<minecpp::entity::component::Player>().id;
+   auto player_id = entity->component<minecpp::entity::component::Player>().id();
    entity->component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world, player_id);
 
    auto info = std::make_shared<FormattedString>();

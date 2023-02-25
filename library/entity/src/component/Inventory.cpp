@@ -34,7 +34,7 @@ void Inventory::on_attached(game::Entity &entity)
 {
    m_entity_id = entity.id();
    if (entity.has_component<Player>()) {
-      m_player_id = entity.component<Player>().id;
+      m_player_id = entity.component<Player>().id();
    }
 }
 

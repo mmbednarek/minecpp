@@ -214,10 +214,8 @@ void Dispatcher::player_list(game::PlayerId player_id, const std::vector<game::p
    m_events.send_to(player_list, player_id);
 }
 
-void Dispatcher::entity_list(game::PlayerId player_id, const math::Vector3 &origin, double range)
+void Dispatcher::entity_list(game::PlayerId player_id, const std::span<game::EntityId> entities)
 {
-   auto entities = m_entity_system.list_entities_in_view_distance(origin);
-
    clientbound_v1::EntityList list;
 
    list.mutable_player_entities()->Reserve(static_cast<int>(entities.size()));
@@ -226,7 +224,7 @@ void Dispatcher::entity_list(game::PlayerId player_id, const math::Vector3 &orig
    for (const auto &entity_id : entities) {
       auto entity = m_entity_system.entity(entity_id);
       if (entity.has_component<entity::component::Player>()) {
-         if (entity.component<entity::component::Player>().id == player_id)
+         if (entity.component<entity::component::Player>().id() == player_id)
             continue;
 
          entity.serialize_player_to_proto(list.add_player_entities());
@@ -410,7 +408,7 @@ void Dispatcher::send_to_players_in_view_distance(const math::Vector3 &position,
          continue;
 
       const auto &player = entity.component<entity::component::Player>();
-      players.push_back(player.id);
+      players.push_back(player.id());
    }
 
    m_events.send_to_many(message, players);
@@ -429,10 +427,10 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
          continue;
 
       const auto &player = entity.component<entity::component::Player>();
-      if (player.id == player_id)
+      if (player.id() == player_id)
          continue;
 
-      players.push_back(player.id);
+      players.push_back(player.id());
    }
 
    m_events.send_to_many(message, players);
@@ -441,7 +439,8 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
 void Dispatcher::remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id)
 {
    auto msg = fmt::format("removing entity {} for player {}", entity_id, boost::uuids::to_string(player_id));
-   this->send_direct_chat(player_id, chat::MessageType::PlayerMessage, format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
+   this->send_direct_chat(player_id, chat::MessageType::PlayerMessage,
+                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
 
    clientbound_v1::RemoveEntity remove_entity;
    remove_entity.set_entity_id(entity_id);
@@ -462,7 +461,8 @@ void Dispatcher::spawn_player_for_player(game::PlayerId receiver, game::PlayerId
                                          game::EntityId entity_id)
 {
    auto msg = fmt::format("spawning entity {} for player {}", entity_id, boost::uuids::to_string(receiver));
-   this->send_direct_chat(receiver, chat::MessageType::PlayerMessage, format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
+   this->send_direct_chat(receiver, chat::MessageType::PlayerMessage,
+                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
 
    auto entity = m_entity_system.entity(entity_id);
 

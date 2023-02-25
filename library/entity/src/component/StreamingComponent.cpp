@@ -115,7 +115,8 @@ void StreamingComponent::on_position_change(game::IWorld &world, game::Entity &e
 
    m_last_chunk_position = next_chunk_pos;
 
-   auto player_id = entity.component<Player>().id;
+   auto &player   = entity.component<Player>();
+   auto player_id = player.id();
    world.dispatcher().update_chunk_position(player_id, m_last_chunk_position);
 
    if (!chunks_to_free.empty()) {
@@ -144,51 +145,7 @@ void StreamingComponent::on_position_change(game::IWorld &world, game::Entity &e
       }
    }
 
-   auto new_visible_entities = world.entity_system().list_entities_in_view_distance(new_position);
-   std::sort(new_visible_entities.begin(), new_visible_entities.end());
-
-   auto new_it = new_visible_entities.begin();
-   auto old_it = m_visible_entities.begin();
-
-   while (new_it != new_visible_entities.end() or old_it != m_visible_entities.end()) {
-      if (new_it == new_visible_entities.end() or (old_it != m_visible_entities.end() and *old_it < *new_it))
-      {
-        world.dispatcher().remove_entity_for_player(player_id, *old_it);
-        auto other_entity = world.entity_system().entity(*old_it);
-        if (other_entity.has_component<Player>()) {
-           world.dispatcher().remove_entity_for_player(other_entity.component<Player>().id, entity.id());
-        }
-
-        ++old_it;
-         continue;
-      }
-
-      if (old_it == m_visible_entities.end() or *new_it < *old_it)
-      {
-         auto other_entity = world.entity_system().entity(*new_it);
-         if (other_entity.has_component<Player>()) {
-           if (other_entity.component<Player>().id == player_id) {
-              ++new_it;
-              continue;
-           }
-
-            world.dispatcher().spawn_player_for_player(player_id, other_entity.component<Player>().id, other_entity.id());
-            world.dispatcher().spawn_player_for_player(other_entity.component<Player>().id, player_id, entity.id());
-         } else {
-            world.dispatcher().spawn_entity_for_player(player_id, other_entity.id());
-         }
-
-         ++new_it;
-         continue;
-      }
-
-      if (old_it != m_visible_entities.end())
-         ++old_it;
-      if (new_it != new_visible_entities.end())
-         ++new_it;
-   }
-
-   m_visible_entities = new_visible_entities;
+   player.refresh_visible_entities(world.dispatcher(), world.entity_system(), new_position);
 }
 
 }// namespace minecpp::entity::component
