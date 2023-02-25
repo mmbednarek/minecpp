@@ -60,7 +60,7 @@ class IWorld : public IBlockContainer
    virtual void kill_entity(game::EntityId id)                                                        = 0;
 
    template<typename TEntityFactory, typename... TArgs>
-   Entity spawn(const math::Vector3 &position, TArgs&&... args)
+   Entity spawn(const math::Vector3 &position, TArgs &&...args)
    {
       TEntityFactory factory{std::forward<TArgs>(args)...};
       auto entity = factory.create_entity(position, this->entity_system());

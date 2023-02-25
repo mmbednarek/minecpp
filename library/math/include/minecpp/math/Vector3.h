@@ -49,14 +49,14 @@ struct fmt::formatter<minecpp::math::Vector3>
 {
    using Self = minecpp::math::Vector3;
 
-   template <typename ParseContext>
-   constexpr auto parse(ParseContext& ctx)
+   template<typename ParseContext>
+   constexpr auto parse(ParseContext &ctx)
    {
       return ctx.begin();
    }
 
-   template <typename FormatContext>
-   auto format(const Self& s, FormatContext& ctx)
+   template<typename FormatContext>
+   auto format(const Self &s, FormatContext &ctx)
    {
       return format_to(ctx.out(), "{}, {}, {}", s.x(), s.y(), s.z());
    }

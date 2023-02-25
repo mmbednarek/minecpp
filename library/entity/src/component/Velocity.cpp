@@ -21,8 +21,8 @@ void Velocity::on_attached(game::Entity &entity)
 
 void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time)
 {
-   auto &location    = entity.component<Location>();
-   auto blocked = world.is_movement_blocked_at(location.position());
+   auto &location = entity.component<Location>();
+   auto blocked   = world.is_movement_blocked_at(location.position());
    if (blocked) {
       this->set_velocity(world.dispatcher(), {0, 0.1, 0});
       m_is_on_ground = false;
@@ -34,7 +34,7 @@ void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time
    auto new_position = location.position() + m_velocity * delta_time;
    if (not blocked and world.is_movement_blocked_at(new_position)) {
       spdlog::info("is on ground at y={}", location.position().y());
-      this->set_velocity(world.dispatcher(),  {0, 0, 0});
+      this->set_velocity(world.dispatcher(), {0, 0, 0});
       m_is_on_ground = true;
       return;
    }

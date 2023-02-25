@@ -71,8 +71,8 @@ void ChangeBlock::run()
 
    if (not target_state.does_block_movement()) {
       auto above_position = m_position.neighbour_at(game::Face::Top).to_vec3();
-      auto entities_above = m_entity_system.list_entities_in(
-              above_position - math::Vector3{1.5, 1.5, 1.5}, above_position + math::Vector3{2.5, 2.5, 2.5});
+      auto entities_above = m_entity_system.list_entities_in(above_position - math::Vector3{1.5, 1.5, 1.5},
+                                                             above_position + math::Vector3{2.5, 2.5, 2.5});
 
       for (auto entity_id : entities_above) {
          auto entity = m_entity_system.entity(entity_id);

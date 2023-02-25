@@ -8,7 +8,8 @@ Entity::Entity(entt::registry &registry, game::EntityId id) :
 {
 }
 
-void Entity::serialize_to_proto(proto::entity::v1::Entity *entity) const {
+void Entity::serialize_to_proto(proto::entity::v1::Entity *entity) const
+{
    assert(entity);
 
    entity->set_entity_id(static_cast<mb::u32>(m_entity));
@@ -29,7 +30,7 @@ game::EntityId Entity::id() const
 
 Movement Movement::from_vector3(const math::Vector3 &position)
 {
-    return {(position * 4096.0).cast<short>()};
+   return {(position * 4096.0).cast<short>()};
 }
 
 math::Vector3 Movement::to_vector3() const
@@ -44,4 +45,4 @@ proto::common::v1::Rotation Rotation::to_proto() const
    result.set_pitch(pitch);
    return result;
 }
-}// namespace minecpp::entity
+}// namespace minecpp::game

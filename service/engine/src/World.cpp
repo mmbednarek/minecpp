@@ -3,9 +3,9 @@
 #include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
-#include <minecpp/world/BlockState.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/util/Uuid.h>
+#include <minecpp/world/BlockState.h>
 #include <minecpp/world/SectionSlice.h>
 #include <utility>
 
@@ -182,7 +182,8 @@ mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::C
    return mb::ok;
 }
 
-void World::tick(double delta_time) {
+void World::tick(double delta_time)
+{
    m_entity_system.tick_entities(*this, delta_time);
 }
 

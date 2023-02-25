@@ -12,4 +12,4 @@ class TickComponent
    void tick(game::IWorld &world, game::Entity &entity, double delta_time);
 };
 
-}
+}// namespace minecpp::entity::component

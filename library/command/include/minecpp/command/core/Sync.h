@@ -13,4 +13,4 @@ class Sync : public Command
    Object::Ptr run(RuntimeContext &ctx, CommandInput &input) const override;
 };
 
-}
+}// namespace minecpp::command::core

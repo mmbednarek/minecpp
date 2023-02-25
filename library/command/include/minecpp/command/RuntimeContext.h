@@ -21,7 +21,8 @@ class RuntimeContext
    game::IWorld *m_world{};
 
  public:
-   RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output, game::IWorld *world);
+   RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output,
+                  game::IWorld *world);
 
    std::shared_ptr<Object> variable(const std::string &name);
    void set_variable(const std::string &name, std::shared_ptr<Object> object);

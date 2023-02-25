@@ -358,7 +358,8 @@ void Dispatcher::remove_entity(game::EntityId entity_id)
    m_events.send_to_all(remove_entity);
 }
 
-void Dispatcher::set_entity_velocity(game::EntityId entity_id, const math::Vector3s &velocity) {
+void Dispatcher::set_entity_velocity(game::EntityId entity_id, const math::Vector3s &velocity)
+{
    clientbound_v1::SetEntityVelocity update_velocity;
    update_velocity.set_entity_id(entity_id);
    *update_velocity.mutable_velocity() = velocity.to_proto();

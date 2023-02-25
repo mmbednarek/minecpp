@@ -561,7 +561,7 @@ void EventHandler::handle_collect_item(const clientbound_v1::CollectItem &msg,
    network::message::PickupItem pickup_item{
            .collected_entity_id = msg.collected_entity_id(),
            .collector_entity_id = msg.collector_entity_id(),
-           .count = msg.count(),
+           .count               = msg.count(),
    };
    send_message(pickup_item, recipient_list);
 }
@@ -580,7 +580,7 @@ void EventHandler::handle_set_entity_velocity(const clientbound_v1::SetEntityVel
 {
    network::message::SetEntityVelocity update_velocity{
            .entity_id = static_cast<uint32_t>(msg.entity_id()),
-           .velocity = math::Vector3i::from_proto(msg.velocity()).cast<short>(),
+           .velocity  = math::Vector3i::from_proto(msg.velocity()).cast<short>(),
    };
    send_message(update_velocity, recipient_list);
 }

@@ -51,7 +51,7 @@ class IDispatcher
                                     float food_saturation)                                                = 0;
    virtual void collect_item(game::EntityId collected_entity, game::EntityId collector_entity, int count) = 0;
    virtual void remove_entity(game::EntityId entity_id)                                                   = 0;
-   virtual void set_entity_velocity(game::EntityId entity_id, const math::Vector3s &velocity)                    = 0;
+   virtual void set_entity_velocity(game::EntityId entity_id, const math::Vector3s &velocity)             = 0;
 };
 
 }// namespace minecpp::game

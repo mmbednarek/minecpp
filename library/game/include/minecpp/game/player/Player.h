@@ -15,7 +15,7 @@ class Entity;
 }// namespace minecpp::game
 
 namespace minecpp::nbt::player::v1 {
-class Location;
+class Player;
 }
 
 namespace minecpp::game::player {
@@ -107,7 +107,7 @@ class Player
       };
    }
 
-   static Player from_nbt(const nbt::player::v1::Location &player, const std::string &name,
+   static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name,
                           game::IDispatcher &notifier);
 
    [[nodiscard]] proto::player::v1::Player to_proto() const;

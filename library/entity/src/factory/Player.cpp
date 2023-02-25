@@ -1,12 +1,12 @@
 #pragma once
 #include <minecpp/entity/component/Abilities.h>
-#include <minecpp/entity/component/TickComponent.h>
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/StreamingComponent.h>
 #include <minecpp/entity/component/Test.h>
+#include <minecpp/entity/component/TickComponent.h>
 #include <minecpp/entity/factory/Player.h>
 
 namespace minecpp::entity::factory {
@@ -30,7 +30,7 @@ game::Entity Player::create_entity(const math::Vector3 &position, game::IEntityS
    player_entity.add_component<component::StreamingComponent>(
            static_cast<int>(entity_system.view_distance()));
    player_entity.add_component<component::Inventory>();
-//   player_entity.add_component<component::Test>();
+   //   player_entity.add_component<component::Test>();
 
    return player_entity;
 }

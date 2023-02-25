@@ -2,13 +2,15 @@
 
 namespace minecpp::entity::component {
 
-struct Health {
+struct Health
+{
    float health{};
 };
 
-struct Food {
+struct Food
+{
    int food{};
    float saturation{};
 };
 
-}
+}// namespace minecpp::entity::component

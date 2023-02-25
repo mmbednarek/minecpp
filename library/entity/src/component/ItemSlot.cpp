@@ -1,6 +1,6 @@
+#include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/ItemSlot.h>
 #include <minecpp/entity/component/Location.h>
-#include <minecpp/entity/component/Inventory.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::entity::component {

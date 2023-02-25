@@ -32,10 +32,10 @@ mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::str
    return mb::ok;
 }
 
-mb::result<minecpp::nbt::player::v1::Location> PlayerManager::load_player_data(game::IWorld &w,
+mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::IWorld &w,
                                                                                game::PlayerId id)
 {
-   minecpp::nbt::player::v1::Location data;
+   minecpp::nbt::player::v1::Player data;
 
    math::Vector3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
                      static_cast<double>(m_spawn_position.z)};

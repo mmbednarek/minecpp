@@ -27,7 +27,7 @@ class PlayerManager : public game::player::Provider
    PlayerManager(entity::EntitySystem &entity_system, game::BlockPosition spawn_position);
 
    mb::result<mb::empty> join_player(minecpp::game::IWorld &w, const std::string &name, game::PlayerId id);
-   mb::result<nbt::player::v1::Location> load_player_data(minecpp::game::IWorld &w, game::PlayerId id);
+   mb::result<nbt::player::v1::Player> load_player_data(minecpp::game::IWorld &w, game::PlayerId id);
 
    mb::result<minecpp::game::player::Player &> get_player(game::PlayerId id) override;
    std::optional<game::PlayerId> get_player_id_by_entity_id(game::EntityId id);

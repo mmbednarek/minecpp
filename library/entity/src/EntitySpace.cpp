@@ -40,7 +40,7 @@ std::vector<game::EntityId> EntitySpace::list_entities_in(math::Vector3 min, mat
 {
    std::shared_lock lk{m_mutex};
    std::vector<game::EntityId> result{};
-   for (auto it = m_storage.qbegin(geo::within(Box{min, max})); it != m_storage.qend(); ++it)  {
+   for (auto it = m_storage.qbegin(geo::within(Box{min, max})); it != m_storage.qend(); ++it) {
       result.push_back(it->second);
    }
    return result;
@@ -50,7 +50,7 @@ std::vector<game::EntityId> EntitySpace::list_entities_intersecting_with(math::V
 {
    std::shared_lock lk{m_mutex};
    std::vector<game::EntityId> result{};
-   for (auto it = m_storage.qbegin(geo::intersects(Box{min, max})); it != m_storage.qend(); ++it)  {
+   for (auto it = m_storage.qbegin(geo::intersects(Box{min, max})); it != m_storage.qend(); ++it) {
       result.push_back(it->second);
    }
    return result;

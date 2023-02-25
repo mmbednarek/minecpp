@@ -23,8 +23,7 @@ class Location
  public:
    entt::sigh<void(game::IWorld &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)>
            on_position_change;
-   entt::sigh<void(game::IWorld &world, game::Entity &entity, game::Entity &other_entity)>
-           on_begin_intersect;
+   entt::sigh<void(game::IWorld &world, game::Entity &entity, game::Entity &other_entity)> on_begin_intersect;
 
    Location(const math::Vector3 &position, const math::Vector3 &extent);
 

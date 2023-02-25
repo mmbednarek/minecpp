@@ -40,7 +40,7 @@ struct ProtoVector<float, 3>
 template<>
 struct ProtoVector<short, 3>
 {
-   using Type = proto::common::v1::Vector3i; // Proto doesn't support i16
+   using Type = proto::common::v1::Vector3i;// Proto doesn't support i16
 };
 
 template<>

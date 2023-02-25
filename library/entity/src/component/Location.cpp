@@ -44,13 +44,14 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    }
 
    if (entity.has_component<Player>()) {
-      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(), rotation);
+      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(),
+                                     rotation);
    } else {
       world.dispatcher().entity_move(entity.id(), movement.cast<short>(), rotation);
    }
 
-   auto min = m_position - m_extent*0.5;
-   auto max = m_position + m_extent*0.5;
+   auto min = m_position - m_extent * 0.5;
+   auto max = m_position + m_extent * 0.5;
    min.set_y(m_position.y());
    max.set_y(m_position.y() + m_extent.y());
    auto intersecting_entities = world.entity_system().list_entities_intersecting_with(min, max);

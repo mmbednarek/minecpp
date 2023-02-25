@@ -52,7 +52,8 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
    if (not entity.has_component<entity::component::Inventory>()) {
       auto err = std::make_shared<RuntimeError>("give");
       err->text("entity ")
-              .text(format::Color::Yellow, std::to_string(entity_id_obj->value)).text(" doesn't have inventory");
+              .text(format::Color::Yellow, std::to_string(entity_id_obj->value))
+              .text(" doesn't have inventory");
       return err;
    }
 

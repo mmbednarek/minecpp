@@ -18,7 +18,7 @@ void Test::on_attached(game::Entity &entity)
    }
 }
 
-void Test::tick(game::IWorld &/*world*/, game::Entity &entity, double delta_time)
+void Test::tick(game::IWorld & /*world*/, game::Entity &entity, double delta_time)
 {
    spdlog::debug("Ticking entity {}, TPS={}", entity.id(), 1000.0 / delta_time);
 }
