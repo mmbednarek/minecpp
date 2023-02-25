@@ -12,3 +12,5 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_format
 )
+
+add_subdirectory("test")

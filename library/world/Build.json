@@ -1,6 +1,6 @@
 {
   "name": "minecpp_world",
-  "tests": true,
+  "has_test": true,
   "dependencies": {
     "public": [
       "minecpp_api_proto",

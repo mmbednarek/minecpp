@@ -1,0 +1,11 @@
+{
+  "name": "minecpp_random_test",
+  "is_test": true,
+  "dependencies": {
+    "public": [
+      "gtest",
+      "gtest_main",
+      "minecpp_random"
+    ]
+  }
+}

@@ -1,6 +1,5 @@
 #include <any>
 #include <gtest/gtest.h>
-#include <minecpp/util/Format.h>
 #include <minecpp/util/Loop.h>
 #include <minecpp/util/Packed.h>
 #include <minecpp/util/StaticQueue.h>

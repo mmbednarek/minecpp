@@ -27,7 +27,7 @@ TEST(MinecppCrypto, RSA_KeyLoadedFromFile)
    std::string message("hello world");
    auto input_buffer = minecpp::container::Buffer::from_string(message);
 
-   minecpp::crypto::PrivateKey key("library/crypto/test/key.pem", "");
+   minecpp::crypto::PrivateKey key("key.pem", "");
 
    auto encrypted_message = key.encrypt_message(input_buffer);
    ASSERT_TRUE(encrypted_message.ok());

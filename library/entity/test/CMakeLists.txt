@@ -16,3 +16,5 @@ target_link_libraries(minecpp_entity_test
         gtest
         gtest_main
 )
+
+add_test(NAME minecpp_entity COMMAND minecpp_entity_test)

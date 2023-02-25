@@ -1,5 +1,9 @@
 {
   "name": "minecpp_crypto_test",
+  "is_test": true,
+  "resources": [
+    "key.pem"
+  ],
   "dependencies": {
     "public": [
     ],

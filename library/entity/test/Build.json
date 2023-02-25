@@ -1,5 +1,6 @@
 {
   "name": "minecpp_entity_test",
+  "is_test": true,
   "dependencies": {
     "public": [
       "minecpp_entity",

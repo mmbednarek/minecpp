@@ -7,14 +7,21 @@ targettype=$3
 targetname=$(jq -r '.name' < "$libdir/Build.json")
 header_only=$(jq -r '.header_only' < "$libdir/Build.json")
 api_library=$(jq -r '.api_library' < "$libdir/Build.json")
-test_executable=$(jq -r '.tests' < "$libdir/Build.json")
+has_test=$(jq -r '.has_test' < "$libdir/Build.json")
+is_test=$(jq -r '.is_test' < "$libdir/Build.json")
 
 examples=$(jq -r '.examples' < "$libdir/Build.json")
-
 if [[ $examples = "null" ]]; then
   examples=()
 else
   examples=$(jq -r '.examples[]' < "$libdir/Build.json")
+fi
+
+resources=$(jq -r '.resources' < "$libdir/Build.json")
+if [[ $resources = "null" ]]; then
+  resources=()
+else
+  resources=$(jq -r '.resources[]' < "$libdir/Build.json")
 fi
 
 if ! include_path=$(jq -r '.include_path' < "$libdir/Build.json"); then
@@ -83,12 +90,22 @@ function generate_cmake_target() {
 
   echo ")"
 
+  if [[ $is_test == "true" ]]; then
+    echo ""
+    echo "add_test(NAME ${targetname%_test} COMMAND $targetname)"
+  fi
+
+  for resource in $resources; do
+    echo ""
+    echo "configure_file(\"$resource\" \"\${CMAKE_BINARY_DIR}/$libdir/$(basename "$resource")\" COPYONLY)"
+  done
+
   if [[ $api_library == "true" ]]; then
     echo ""
     echo "add_subdirectory(\"api\")"
   fi
 
-  if [[ $test_executable == "true" ]]; then
+  if [[ $has_test == "true" ]]; then
     echo ""
     echo "add_subdirectory(\"test\")"
   fi
@@ -109,7 +126,7 @@ if [[ $api_library == "true" ]]; then
   ./meta/cmake-generate-target.sh "$libname""_api" "$libdir/api" "library"
 fi
 
-if [[ $test_executable  == "true" ]]; then
+if [[ $has_test  == "true" ]]; then
   ./meta/cmake-generate-target.sh "$libname""_test" "$libdir/test" "executable"
 fi
 

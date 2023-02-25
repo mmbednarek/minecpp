@@ -1,5 +1,6 @@
 {
   "name": "minecpp_network",
+  "has_test": true,
   "dependencies": {
     "public": [
       "minecpp_world"

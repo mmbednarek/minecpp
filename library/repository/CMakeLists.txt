@@ -13,6 +13,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_repository
         LINK_PUBLIC
         libmb
-        LINK_PRIVATE
         minecpp_game
+        minecpp_api_nbt
 )
+
+add_subdirectory("test")

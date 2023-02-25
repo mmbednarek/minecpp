@@ -1,8 +1,11 @@
 {
   "name": "minecpp_random",
+  "has_test": true,
   "dependencies": {
+    "public": [
+      "minecpp_math"
+    ],
     "private": [
-      "minecpp_math",
       "minecpp_utils"
     ]
   }

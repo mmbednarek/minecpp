@@ -25,3 +25,5 @@ target_link_libraries(minecpp_game
         ${Protobuf_LIBRARIES}
         grpc++
 )
+
+add_subdirectory("test")

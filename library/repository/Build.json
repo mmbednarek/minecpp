@@ -1,11 +1,11 @@
 {
   "name": "minecpp_repository",
+  "has_test": true,
   "dependencies": {
     "public": [
-      "libmb"
-    ],
-    "private": [
-      "minecpp_game"
+      "libmb",
+      "minecpp_game",
+      "minecpp_api_nbt"
     ]
   }
 }

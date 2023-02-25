@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_command_test",
+  "is_test": true,
+  "dependencies": {
+    "public": [
+      "gtest",
+      "gtest_main",
+      "minecpp_command",
+      "minecpp_repository"
+    ]
+  }
+}

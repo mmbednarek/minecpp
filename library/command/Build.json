@@ -1,5 +1,6 @@
 {
   "name": "minecpp_command",
+  "has_test": true,
   "dependencies": {
     "public": [
       "libmb",

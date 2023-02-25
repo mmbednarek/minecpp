@@ -21,6 +21,7 @@ find_package(OpenSSL REQUIRED)
 
 find_library(FDB_LIBRARY NAMES fdb_c)
 
+include(CTest)
 include(FetchContent)
 
 if (${USE_LOCAL_GPRC})
@@ -74,9 +75,6 @@ FetchContent_MakeAvailable(entt)
 
 # Libraries
 add_subdirectory(library)
-
-# Tests
-add_subdirectory(test)
 
 # Tools
 add_subdirectory(tool)
