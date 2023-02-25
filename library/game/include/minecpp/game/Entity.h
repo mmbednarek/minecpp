@@ -75,4 +75,4 @@ struct Rotation
    [[nodiscard]] proto::common::v1::Rotation to_proto() const;
 };
 
-}// namespace minecpp::entity
+}// namespace minecpp::game

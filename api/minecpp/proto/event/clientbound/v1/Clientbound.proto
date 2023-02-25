@@ -41,6 +41,10 @@ message AddPlayer {
   uint32 ping = 4;
 }
 
+message SpawnEntity {
+  entity.v1.Entity entity = 1;
+}
+
 message SpawnPlayer {
   player.v1.PlayerId player_id = 1;
   uint32 entity_id = 2;
@@ -124,7 +128,13 @@ message PlayerList {
 }
 
 message EntityList {
-  repeated entity.v1.Entity list = 1;
+  repeated entity.v1.Entity entities = 1;
+  repeated entity.v1.PlayerEntity player_entities = 2;
+}
+
+message SetEntityVelocity {
+  uint32 entity_id = 1;
+  common.v1.Vector3i velocity = 2;
 }
 
 message AcceptPlayer {
@@ -173,4 +183,14 @@ message SetHealth {
   float health = 1;
   int32 food = 2;
   float food_saturation = 3;
+}
+
+message CollectItem {
+  uint32 collected_entity_id = 1;
+  uint32 collector_entity_id = 2;
+  uint32 count = 3;
+}
+
+message RemoveEntity {
+  uint32 entity_id = 1;
 }

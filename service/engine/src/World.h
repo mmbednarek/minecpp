@@ -22,7 +22,6 @@ class JobSystem;
 
 class World : public minecpp::game::IWorld
 {
-
  public:
    World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
          PlayerManager &player_manager, entity::EntitySystem &entity_system,
@@ -46,6 +45,9 @@ class World : public minecpp::game::IWorld
    game::ILightSystem &light_system() override;
    mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) override;
    mb::emptyres send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position) override;
+   void tick(double delta_time);
+   bool is_movement_blocked_at(const math::Vector3 &position) override;
+   void kill_entity(game::EntityId id) override;
 
  private:
    void notify_neighbours(game::BlockPosition position, game::BlockStateId state);

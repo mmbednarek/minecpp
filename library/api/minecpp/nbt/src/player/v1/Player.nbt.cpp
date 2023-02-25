@@ -284,7 +284,7 @@ RecipeBook RecipeBook::deserialize(std::istream &in) {
    return RecipeBook::deserialize_no_header(r);
 }
 
-void Location::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Player::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Float, "AbsorptionAmount");
    w.write_float_content(absorption_amount);
    w.write_header(minecpp::nbt::TagId::Short, "Air");
@@ -387,14 +387,14 @@ void Location::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Location::serialize(std::ostream &out, std::string_view name) const {
+void Player::serialize(std::ostream &out, std::string_view name) const {
    minecpp::nbt::Writer w(out);
    w.begin_compound(name);
    serialize_no_header(w);
 }
 
-Location Location::deserialize_no_header(minecpp::nbt::Reader &r) {
-   Location res;
+Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
+   Player res;
    r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Byte:
@@ -485,13 +485,13 @@ Location Location::deserialize_no_header(minecpp::nbt::Reader &r) {
    return res;
 }
 
-Location Location::deserialize(std::istream &in) {
+Player Player::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
       return {};
    }
-   return Location::deserialize_no_header(r);
+   return Player::deserialize_no_header(r);
 }
 
 }

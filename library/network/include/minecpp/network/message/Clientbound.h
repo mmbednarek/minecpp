@@ -14,13 +14,13 @@ namespace minecpp::network::message {
 using boost::uuids::uuid;
 
 // 0x00
-struct SpawnObject
+struct SpawnEntity
 {
    uint32_t entity_id;
    uuid unique_id;
    int entity_type;
    double x, y, z;
-   uint8_t yaw, pitch, head_yaw;
+   float yaw, pitch, head_yaw;
    int data;
    uint16_t vel_x, vel_y, vel_z;
 
@@ -358,6 +358,33 @@ struct SetHealth
    float health{};
    int food{};
    float food_saturation{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct EntityMetadataSlot
+{
+   std::uint32_t entity_id{};
+   std::uint8_t index{};
+   std::uint32_t item_id{};
+   int count{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct PickupItem
+{
+   std::uint32_t collected_entity_id{};
+   std::uint32_t collector_entity_id{};
+   std::uint32_t count{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct SetEntityVelocity
+{
+   std::uint32_t entity_id{};
+   math::Vector3s velocity{};
 
    [[nodiscard]] Writer serialize() const;
 };

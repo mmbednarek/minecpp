@@ -5,6 +5,7 @@
 #include "JobSystem.h"
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/util/Uuid.h>
+#include <minecpp/world/BlockState.h>
 #include <minecpp/world/SectionSlice.h>
 #include <utility>
 
@@ -82,7 +83,7 @@ mb::result<int> World::height_at(int x, int z)
 mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
 {
    m_job_system.when<job::ChunkIsComplete>(m_chunk_system, pos.chunk_position())
-           .run_job<job::ChangeBlock>(m_light_system, m_chunk_system, pos, state);
+           .run_job<job::ChangeBlock>(m_entity_system, m_light_system, m_chunk_system, pos, state);
    m_dispatcher.update_block(pos, state);
    return mb::ok;
 }
@@ -179,6 +180,28 @@ mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::C
    ACCESS_CHUNK_AT(position,
                    [this, player_id](world::Chunk *chunk) { m_dispatcher.send_chunk(player_id, chunk); });
    return mb::ok;
+}
+
+void World::tick(double delta_time)
+{
+   m_entity_system.tick_entities(*this, delta_time);
+}
+
+bool World::is_movement_blocked_at(const math::Vector3 &position)
+{
+   auto block_position = game::BlockPosition::from_vec3(position);
+
+   auto block_state_id = this->get_block(block_position);
+   if (block_state_id.has_failed())
+      return false;
+
+   return world::BlockState(*block_state_id).does_block_movement();
+}
+
+void World::kill_entity(game::EntityId id)
+{
+   m_dispatcher.remove_entity(id);
+   m_entity_system.destroy_entity(id);
 }
 
 }// namespace minecpp::service::engine

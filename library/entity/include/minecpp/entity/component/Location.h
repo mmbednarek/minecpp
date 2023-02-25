@@ -4,6 +4,7 @@
 #include <minecpp/game/IWorld.h>
 #include <minecpp/math/Vector3.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <set>
 
 namespace minecpp::entity::component {
 
@@ -20,7 +21,9 @@ struct TrackedPosition
 class Location
 {
  public:
-   entt::delegate<void(game::IWorld &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)> on_position_change;
+   entt::sigh<void(game::IWorld &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)>
+           on_position_change;
+   entt::sigh<void(game::IWorld &world, game::Entity &entity, game::Entity &other_entity)> on_begin_intersect;
 
    Location(const math::Vector3 &position, const math::Vector3 &extent);
 
@@ -35,6 +38,7 @@ class Location
    math::Vector3 m_position{};
    math::Vector3 m_extent{};
    TrackedPosition m_tracked_position{};
+   std::set<game::EntityId> m_entities_intersecting_with;
 };
 
 class Rotation

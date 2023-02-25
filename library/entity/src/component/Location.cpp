@@ -27,9 +27,8 @@ math::Vector3 Location::extent() const
 
 void Location::set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position)
 {
-   if (this->on_position_change) {
-      this->on_position_change(world, entity, m_position, position);
-   }
+   this->on_position_change.publish(world, entity, m_position, position);
+   world.entity_system().move_spatial_entity(entity.id(), m_extent, m_position, position);
 
    m_position = position;
 
@@ -39,12 +38,43 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
 
    m_tracked_position.position += movement;
 
-   auto rotation = entity.component<Rotation>();
+   game::Rotation rotation{};
+   if (entity.has_component<Rotation>()) {
+      rotation = entity.component<Rotation>().rotation();
+   }
 
    if (entity.has_component<Player>()) {
-      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(), rotation.rotation());
+      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(),
+                                     rotation);
    } else {
-      world.dispatcher().entity_move(entity.id(), movement.cast<short>(), rotation.rotation());
+      world.dispatcher().entity_move(entity.id(), movement.cast<short>(), rotation);
+   }
+
+   auto min = m_position - m_extent * 0.5;
+   auto max = m_position + m_extent * 0.5;
+   min.set_y(m_position.y());
+   max.set_y(m_position.y() + m_extent.y());
+   auto intersecting_entities = world.entity_system().list_entities_intersecting_with(min, max);
+   for (auto entity_id : intersecting_entities) {
+      if (entity_id == entity.id())
+         continue;
+
+      if (m_entities_intersecting_with.contains(entity_id))
+         continue;
+
+      auto other = world.entity_system().entity(entity_id);
+      this->on_begin_intersect.publish(world, entity, other);
+      if (other.has_component<Location>()) {
+         other.component<Location>().on_begin_intersect.publish(world, other, entity);
+      }
+   }
+
+   // FIXME: It is stupid to create the same RB tree on each tick
+   m_entities_intersecting_with.clear();
+   for (auto entity_id : intersecting_entities) {
+      if (entity_id == entity.id())
+         continue;
+      this->m_entities_intersecting_with.insert(entity_id);
    }
 }
 

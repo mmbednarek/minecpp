@@ -56,6 +56,17 @@ class IWorld : public IBlockContainer
    virtual mb::emptyres apply_slice(ISectionSlice &slice)                                             = 0;
    virtual ILightSystem &light_system()                                                               = 0;
    virtual mb::emptyres send_chunk_to_player(PlayerId player_id, const ChunkPosition &position)       = 0;
+   virtual bool is_movement_blocked_at(const math::Vector3 &position)                                 = 0;
+   virtual void kill_entity(game::EntityId id)                                                        = 0;
+
+   template<typename TEntityFactory, typename... TArgs>
+   Entity spawn(const math::Vector3 &position, TArgs &&...args)
+   {
+      TEntityFactory factory{std::forward<TArgs>(args)...};
+      auto entity = factory.create_entity(position, this->entity_system());
+      this->dispatcher().spawn_entity(entity.id());
+      return entity;
+   }
 };
 
 }// namespace minecpp::game

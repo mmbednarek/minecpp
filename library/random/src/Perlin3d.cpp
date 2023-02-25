@@ -23,9 +23,9 @@ Perlin3d::Perlin3d(Random &rand) :
 double Perlin3d::at(Vector3 pos)
 {
    auto floored_pos = pos.floor();
-   auto left = static_cast<int>(floored_pos.x());
-   auto top  = static_cast<int>(floored_pos.y());
-   auto far  = static_cast<int>(floored_pos.z());
+   auto left        = static_cast<int>(floored_pos.x());
+   auto top         = static_cast<int>(floored_pos.y());
+   auto far         = static_cast<int>(floored_pos.z());
    int right = left + 1, bot = top + 1, close = far + 1;
 
    auto weight = (pos - floored_pos).transform(smooth);

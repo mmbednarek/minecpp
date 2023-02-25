@@ -24,8 +24,8 @@ Perlin::Perlin(random::Random &rand) :
 double Perlin::at(Vector2 pos)
 {
    auto floored_pos = pos.floor();
-   auto left = static_cast<int>(floored_pos.x());
-   auto top  = static_cast<int>(floored_pos.y());
+   auto left        = static_cast<int>(floored_pos.x());
+   auto top         = static_cast<int>(floored_pos.y());
    int right = left + 1, bot = top + 1;
 
    auto weight = (pos - floored_pos).transform(smooth);

@@ -7,6 +7,7 @@
 #include "minecpp/world/population/Object.h"
 #include "Players.h"
 #include "StorageResponseHandler.h"
+#include "TickSystem.h"
 #include "World.h"
 #include <mb/core.h>
 #include <minecpp/entity/EntitySystem.h>
@@ -76,14 +77,17 @@ auto main() -> int
 
    minecpp::entity::EntitySystem entity_system;
    PlayerManager players(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
-                                    config.gameplay_spawn_point_z});
+                                         config.gameplay_spawn_point_z});
 
    EventManager manager;
    Dispatcher dispatcher(manager, entity_system);
    minecpp::controller::BlockManager block_manager;
 
-   World world(boost::uuids::uuid(), chunk_system, job_system, dispatcher, players, entity_system, block_manager);
+   World world(boost::uuids::uuid(), chunk_system, job_system, dispatcher, players, entity_system,
+               block_manager);
    EventHandler handler(dispatcher, players, entity_system, world, block_manager);
+
+   TickSystem tick_system(world);
 
    ApiHandler api_handler(handler, manager,
                           fmt::format("{}:{}", config.server_bind_address, config.server_bind_port));

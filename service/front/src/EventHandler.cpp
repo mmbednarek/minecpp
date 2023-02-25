@@ -332,27 +332,26 @@ void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg,
 void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
                                       const event::RecipientList &recipient_list)
 {
-   for (auto player_id : recipient_list.list) {
-      if (!m_server.has_connection(player_id)) {
-         spdlog::error("connection {} not found", game::player::format_player_id(player_id));
-         return;
-      }
+   for (auto const &entity : msg.entities()) {
+      auto id = util::read_uuid(entity.uuid().lower(), entity.uuid().upper());
+      spdlog::info("sending entity data {}", to_string(id));
 
-      auto conn = m_server.connection_by_player_id(player_id);
-      if (!conn) {
-         spdlog::error("connection {} is null", game::player::format_player_id(player_id));
-         return;
-      }
+      this->send_entity(recipient_list, entity);
+   }
 
-      for (auto const &entity : msg.list()) {
-         auto id = game::player::read_id_from_proto(entity.player_id());
-         spdlog::info("sending player data {}", to_string(id));
+   for (auto const &entity : msg.player_entities()) {
+      auto id = util::read_uuid(entity.uuid().lower(), entity.uuid().upper());
+      spdlog::info("sending player data {}", to_string(id));
 
-         if (id == player_id) {
-            spdlog::info("skipping same as player id {}", to_string(player_id));
+      for (auto player_id : recipient_list.list) {
+         if (player_id == id)
+            continue;
+
+         auto conn = m_server.connection_by_player_id(player_id);
+         if (not conn) {
+            spdlog::error("connection {} is null", game::player::format_player_id(player_id));
             continue;
          }
-
          send(conn, network::message::SpawnPlayer{
                             .entity_id = entity.entity_id(),
                             .id        = id,
@@ -515,6 +514,75 @@ void EventHandler::handle_set_health(const clientbound_v1::SetHealth &msg,
            .food_saturation = msg.food_saturation(),
    };
    send_message(set_health, recipient_list);
+}
+
+void EventHandler::handle_spawn_entity(const clientbound_v1::SpawnEntity &msg,
+                                       const event::RecipientList &recipient_list)
+{
+   send_entity(recipient_list, msg.entity());
+}
+
+void EventHandler::send_entity(const event::RecipientList &recipient_list,
+                               const proto::entity::v1::Entity &entity)
+{
+   network::message::SpawnEntity spawn_entity{
+           .entity_id   = entity.entity_id(),
+           .unique_id   = util::read_uuid(entity.uuid().lower(), entity.uuid().upper()),
+           .entity_type = static_cast<int>(entity.entity_type()),
+           .x           = entity.position().x(),
+           .y           = entity.position().y(),
+           .z           = entity.position().z(),
+           .yaw         = entity.rotation().yaw(),
+           .pitch       = entity.rotation().pitch(),
+           .head_yaw    = entity.head_yaw(),
+           .data        = static_cast<int>(entity.data()),
+           .vel_x       = static_cast<uint16_t>(entity.velocity().x()),
+           .vel_y       = static_cast<uint16_t>(entity.velocity().y()),
+           .vel_z       = static_cast<uint16_t>(entity.velocity().z()),
+   };
+   send_message(spawn_entity, recipient_list);
+
+   for (const auto &meta : entity.metadata()) {
+      if (meta.has_slot()) {
+         network::message::EntityMetadataSlot slot{
+                 .entity_id = entity.entity_id(),
+                 .index     = static_cast<uint8_t>(meta.index()),
+                 .item_id   = meta.slot().item_id().id(),
+                 .count     = static_cast<int>(meta.slot().count()),
+         };
+         send_message(slot, recipient_list);
+      }
+   }
+}
+
+void EventHandler::handle_collect_item(const clientbound_v1::CollectItem &msg,
+                                       const event::RecipientList &recipient_list)
+{
+   network::message::PickupItem pickup_item{
+           .collected_entity_id = msg.collected_entity_id(),
+           .collector_entity_id = msg.collector_entity_id(),
+           .count               = msg.count(),
+   };
+   send_message(pickup_item, recipient_list);
+}
+
+void EventHandler::handle_remove_entity(const clientbound_v1::RemoveEntity &msg,
+                                        const event::RecipientList &recipient_list)
+{
+   network::message::DestroyEntity destroy_entity{
+           .entity_id = static_cast<uint32_t>(msg.entity_id()),
+   };
+   send_message(destroy_entity, recipient_list);
+}
+
+void EventHandler::handle_set_entity_velocity(const clientbound_v1::SetEntityVelocity &msg,
+                                              const event::RecipientList &recipient_list)
+{
+   network::message::SetEntityVelocity update_velocity{
+           .entity_id = static_cast<uint32_t>(msg.entity_id()),
+           .velocity  = math::Vector3i::from_proto(msg.velocity()).cast<short>(),
+   };
+   send_message(update_velocity, recipient_list);
 }
 
 }// namespace minecpp::service::front

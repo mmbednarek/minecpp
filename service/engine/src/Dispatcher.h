@@ -24,9 +24,10 @@ class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
    explicit Dispatcher(EventManager &events, entity::EntitySystem &entity_system);
-
+   void spawn_entity(game::EntityId entity_id) override;
    void load_terrain(game::PlayerId player_id, const game::ChunkPosition &central_chunk,
                      std::vector<minecpp::game::ChunkPosition> coords) override;
+   void remove_entity(game::EntityId entity_id) override;
    void transfer_player(game::PlayerId player_id, boost::uuids::uuid target_engine);
    void update_block(game::BlockPosition block, game::BlockStateId state) override;
 
@@ -68,6 +69,8 @@ class Dispatcher : public minecpp::game::IDispatcher
    void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id, game::EquipmentSlot slot,
                              game::ItemSlot item) override;
    void set_health_and_food(game::PlayerId player_id, float health, int food, float food_saturation) override;
+   void collect_item(game::EntityId collected_entity, game::EntityId collector_entity, int count) override;
+   void set_entity_velocity(game::EntityId entity_id, const math::Vector3s &velocity) override;
 
  private:
    EventManager &m_events;

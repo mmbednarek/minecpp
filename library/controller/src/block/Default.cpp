@@ -83,8 +83,8 @@ std::optional<game::Direction> Default::find_player_direction(game::IWorld &worl
    auto player_entity = world.entity_system().entity(player->entity_id());
 
    const auto block_pos = position.to_vec3().flat();
-   return game::Direction::from_vec2(block_pos -
-                                     player_entity.component<entity::component::Location>().position().flat());
+   return game::Direction::from_vec2(
+           block_pos - player_entity.component<entity::component::Location>().position().flat());
 }
 
 bool Default::verify_source_is_air(game::IWorld &world, game::BlockPosition pos)

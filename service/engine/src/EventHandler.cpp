@@ -19,11 +19,13 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/StreamingComponent.h>
 #include <minecpp/entity/EntitySystem.h>
+#include <minecpp/entity/factory/Item.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/IWorld.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
+#include <minecpp/world/BlockState.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine {
@@ -272,7 +274,16 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    case game::PlayerDiggingState::CanceledDigging:
    case game::PlayerDiggingState::FinishedDigging: {
       auto block_position = game::BlockPosition::from_proto(event.block_position());
-      m_world.set_block(block_position, 0);
+      auto block_state_id = m_world.get_block(block_position);
+      if (block_state_id.ok()) {
+         world::BlockState block_state{*block_state_id};
+         auto item_id = repository::Item::the().find_id_by_tag(block_state.block_tag());
+         if (item_id.ok()) {
+            m_world.spawn<entity::factory::Item>(block_position.to_vec3() + math::Vector3{0.5, 0.75, 0.5},
+                                                 game::ItemSlot{*item_id, 1});
+            m_world.set_block(block_position, 0);
+         }
+      }
    } break;
    default: break;
    }
@@ -431,10 +442,11 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
 {
    spdlog::info("player {} is attacking entity {}", boost::uuids::to_string(player_id), event.entity_id());
 
-   auto &player       = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto source_entity = m_entity_system.entity(player.entity_id());
+   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+   auto entity  = m_entity_system.entity(event.entity_id());
+   if (not entity.has_component<entity::component::Health>())
+      return;
 
-   auto entity = m_entity_system.entity(event.entity_id());
    entity.component<entity::component::Health>().health -= 1.0f;
 
    auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());

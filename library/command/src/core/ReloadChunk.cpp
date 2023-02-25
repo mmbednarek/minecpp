@@ -23,7 +23,7 @@ std::shared_ptr<RuntimeError> make_error(std::string_view message)
    return err;
 }
 
-}
+}// namespace
 
 Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput &input) const
 {

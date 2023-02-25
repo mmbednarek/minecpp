@@ -13,6 +13,7 @@ concept ClientboundVisitor =
         requires(T t) {
            t.handle_add_player(clientbound_v1::AddPlayer(), RecipientList{});
            t.handle_spawn_player(clientbound_v1::SpawnPlayer(), RecipientList{});
+           t.handle_spawn_entity(clientbound_v1::SpawnEntity(), RecipientList{});
            t.handle_entity_move(clientbound_v1::EntityMove(), RecipientList{});
            t.handle_entity_look(clientbound_v1::EntityLook(), RecipientList{});
            t.handle_remove_player(clientbound_v1::RemovePlayer(), RecipientList{});
@@ -35,6 +36,9 @@ concept ClientboundVisitor =
            t.handle_set_spawn_position(clientbound_v1::SetSpawnPosition(), RecipientList{});
            t.handle_set_entity_equipment(clientbound_v1::SetEntityEquipment(), RecipientList{});
            t.handle_set_health(clientbound_v1::SetHealth(), RecipientList{});
+           t.handle_collect_item(clientbound_v1::CollectItem(), RecipientList{});
+           t.handle_remove_entity(clientbound_v1::RemoveEntity(), RecipientList{});
+           t.handle_set_entity_velocity(clientbound_v1::SetEntityVelocity(), RecipientList{});
         };
 
 template<typename TEvent, typename TVisitor, typename TCallback>
@@ -94,6 +98,7 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
 
    MINECPP_EVENT_HANDLE_CLIENTBOUND(AddPlayer, handle_add_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SpawnPlayer, handle_spawn_player);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(SpawnEntity, handle_spawn_entity);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(EntityMove, handle_entity_move);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(EntityLook, handle_entity_look);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(RemovePlayer, handle_remove_player);
@@ -116,6 +121,9 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetSpawnPosition, handle_set_spawn_position);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetEntityEquipment, handle_set_entity_equipment);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetHealth, handle_set_health);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(CollectItem, handle_collect_item);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(RemoveEntity, handle_remove_entity);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(SetEntityVelocity, handle_set_entity_velocity);
 }
 
 }// namespace minecpp::event

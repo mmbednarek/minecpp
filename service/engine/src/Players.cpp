@@ -19,8 +19,8 @@ PlayerManager::PlayerManager(entity::EntitySystem &entity_system, game::BlockPos
 
 mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::string &name, game::PlayerId id)
 {
-   entity::factory::Player player_factory(m_spawn_position.to_vec3(), id, name);
-   auto player_entity = player_factory.create_entity(m_entity_system);
+   entity::factory::Player player_factory(id, name);
+   auto player_entity = player_factory.create_entity(m_spawn_position.to_vec3(), m_entity_system);
 
    auto player_data = MB_TRY(load_player_data(w, id));
    auto player      = game::player::Player::from_nbt(player_data, name, w.dispatcher());
@@ -32,10 +32,10 @@ mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::str
    return mb::ok;
 }
 
-mb::result<minecpp::nbt::player::v1::Location> PlayerManager::load_player_data(game::IWorld &w,
+mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::IWorld &w,
                                                                                game::PlayerId id)
 {
-   minecpp::nbt::player::v1::Location data;
+   minecpp::nbt::player::v1::Player data;
 
    math::Vector3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
                      static_cast<double>(m_spawn_position.z)};

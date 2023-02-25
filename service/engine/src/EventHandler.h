@@ -18,7 +18,7 @@ namespace component {
 class Inventory;
 }
 
-}
+}// namespace minecpp::entity
 
 namespace minecpp::service::engine {
 

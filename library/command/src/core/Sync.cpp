@@ -24,7 +24,7 @@ std::shared_ptr<RuntimeError> make_error(std::string_view message)
    return err;
 }
 
-}
+}// namespace
 
 Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &input) const
 {
@@ -46,11 +46,12 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &input) const
    }
 
    entity.component<minecpp::entity::component::Inventory>().synchronize_inventory(ctx.world()->dispatcher());
-   entity.component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world, player_id->value);
+   entity.component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(
+           *world, player_id->value);
 
    auto info = std::make_shared<FormattedString>();
    info->bold(format::Color::Green, "INFO ");
    info->text(format::Color::White, "synchronized chunks and inventory");
    return info;
 }
-}
+}// namespace minecpp::command::core

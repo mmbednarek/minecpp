@@ -5,8 +5,11 @@ namespace minecpp::entity::component {
 
 void Player::serialize_to_proto(proto::entity::v1::Entity *entity) const
 {
-   entity->set_name(this->name);
-   *entity->mutable_player_id() = game::player::write_id_to_proto(this->id);
+   entity->set_entity_type(116);
+
+   auto [lower, upper] = util::write_uuid(this->id);
+   entity->mutable_uuid()->set_lower(lower);
+   entity->mutable_uuid()->set_upper(upper);
 }
 
 }// namespace minecpp::entity::component
