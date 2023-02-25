@@ -2,6 +2,7 @@
 #define MINECPP_COMMAND_H
 #include "Object.h"
 #include <memory>
+#include <minecpp/command/ast/Ast.h>
 #include <minecpp/command/Object.h>
 #include <string>
 #include <string_view>
@@ -46,11 +47,24 @@ class NullStream : public InputStream,
 
 extern NullStream g_null_stream;
 
-struct CommandInput
+class CommandInput
 {
-   std::vector<Object::Ptr> arguments;
-   std::unordered_set<std::string> flags;
-   std::unordered_map<std::string, Object::Ptr> params;
+ public:
+   using iterator = std::vector<Object::Ptr>::iterator;
+   CommandInput(RuntimeContext &ctx, const std::vector<ast::Expression::Ptr> &arguments,
+                const std::unordered_set<std::string> &flags,
+                const std::unordered_map<std::string, ast::Expression::Ptr> &params);
+   [[nodiscard]] std::size_t arg_count() const;
+   [[nodiscard]] Object::Ptr obj_org(std::size_t index) const;
+   [[nodiscard]] std::string string_arg(std::size_t index) const;
+
+   iterator begin();
+   iterator end();
+
+ private:
+   std::vector<Object::Ptr> m_arguments;
+   std::unordered_set<std::string> m_flags;
+   std::unordered_map<std::string, Object::Ptr> m_params;
 };
 
 class Command

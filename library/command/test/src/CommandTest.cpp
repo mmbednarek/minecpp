@@ -7,6 +7,9 @@
 class EchoCommand : public minecpp::command::Command
 {
  public:
+   static constexpr auto command_return_type = minecpp::command::ObjectType::String;
+   static constexpr auto command_name = "echo";
+
    [[nodiscard]] bool is_flag(std::string_view name) const override
    {
       if (name == "f")
@@ -17,7 +20,7 @@ class EchoCommand : public minecpp::command::Command
    minecpp::command::Object::Ptr run(minecpp::command::RuntimeContext &ctx,
                                      minecpp::command::CommandInput &input) const override
    {
-      for (auto &obj : input.arguments) {
+      for (auto &obj : input) {
          ctx.out().write(obj);
       }
       return {};
@@ -52,7 +55,7 @@ TEST(CommandTest, BasicTest)
    StringOutStream out;
 
    minecpp::command::CommandManager manager;
-   manager.register_command<EchoCommand>("echo");
+   manager.register_command<EchoCommand>();
 
    minecpp::command::RuntimeContext ctx(manager, minecpp::command::g_null_stream, out, nullptr);
 

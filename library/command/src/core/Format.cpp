@@ -8,21 +8,21 @@ Format::Format(format::Color color, bool bold) :
 {
 }
 
-bool Format::is_flag(std::string_view name) const
+bool Format::is_flag(std::string_view /*name*/) const
 {
    return true;
 }
 
-ObjectType Format::return_type(RuntimeContext &ctx) const
+ObjectType Format::return_type(RuntimeContext & /*ctx*/) const
 {
    return ObjectType::FormattedString;
 }
 
-Object::Ptr Format::run(RuntimeContext &ctx, CommandInput &input) const
+Object::Ptr Format::run(RuntimeContext & /*ctx*/, CommandInput &input) const
 {
    auto str = std::make_shared<FormattedString>();
 
-   for (const auto &obj : input.arguments) {
+   for (const auto &obj : input) {
       if (obj->type() == ObjectType::FormattedString) {
          auto formatted_node = cast<FormattedString>(obj);
          if (formatted_node != nullptr) {

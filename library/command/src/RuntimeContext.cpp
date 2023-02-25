@@ -12,7 +12,7 @@ RuntimeContext::RuntimeContext(const CommandManager &manager, InputStream &input
 {
 }
 
-Object::Ptr RuntimeContext::variable(const std::string &name)
+Object::Ptr RuntimeContext::obj_variable(const std::string &name)
 {
    if (!m_variables.contains(name)) {
       return {};
@@ -23,6 +23,40 @@ Object::Ptr RuntimeContext::variable(const std::string &name)
 void RuntimeContext::set_variable(const std::string &name, std::shared_ptr<Object> value)
 {
    m_variables[name] = std::move(value);
+}
+
+std::optional<game::EntityId> RuntimeContext::entity_id()
+{
+   auto result = this->variable<int>("entity_id");
+   if (not result.has_value())
+      return std::nullopt;
+   return static_cast<game::EntityId>(*result);
+}
+
+std::optional<game::Entity> RuntimeContext::entity()
+{
+   auto id = this->entity_id();
+   if (not id.has_value())
+      return std::nullopt;
+
+   auto *world = this->world();
+   if (world == nullptr)
+      return std::nullopt;
+
+   return world->entity_system().entity(*id);
+}
+
+std::optional<game::PlayerId> RuntimeContext::player_id()
+{
+   auto player_id = this->variable<util::uuid>("player_id");
+   if (not player_id.has_value())
+      return std::nullopt;
+   return static_cast<game::PlayerId>(*player_id);
+}
+
+std::optional<game::BlockPosition> RuntimeContext::current_position()
+{
+   return this->variable<game::BlockPosition>("here");
 }
 
 }// namespace minecpp::command

@@ -19,7 +19,13 @@ class CommandManager
    [[nodiscard]] Command *command(const std::string &name) const;
 
    template<typename TCommand, typename... TArgs>
-   void register_command(const std::string &name, TArgs &&...args)
+   void register_command(TArgs &&...args)
+   {
+      m_commands[TCommand::command_name] = std::make_unique<TCommand>(std::forward<TArgs>(args)...);
+   }
+
+   template<typename TCommand, typename... TArgs>
+   void register_command_as(const std::string &name, TArgs &&...args)
    {
       m_commands[name] = std::make_unique<TCommand>(std::forward<TArgs>(args)...);
    }

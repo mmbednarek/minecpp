@@ -41,47 +41,53 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
     m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream, &m_world),
     m_block_manager(block_manager)
 {
-   m_command_manager.register_command<command::core::Echo>("echo");
-   m_command_manager.register_command<command::core::Give>("give");
-   m_command_manager.register_command<command::core::ReloadChunk>("reload-chunk");
-   m_command_manager.register_command<command::core::Sync>("sync");
+   m_command_manager.register_command<command::core::Echo>();
+   m_command_manager.register_command<command::core::Give>();
+   m_command_manager.register_command<command::core::ReloadChunk>();
+   m_command_manager.register_command<command::core::Sync>();
 
-   m_command_manager.register_command<command::core::Format>("black", format::Color::Black, false);
-   m_command_manager.register_command<command::core::Format>("black-bold", format::Color::Black, true);
-   m_command_manager.register_command<command::core::Format>("dark-blue", format::Color::DarkBlue, false);
-   m_command_manager.register_command<command::core::Format>("dark-blue-bold", format::Color::DarkBlue, true);
-   m_command_manager.register_command<command::core::Format>("dark-green", format::Color::DarkGreen, false);
-   m_command_manager.register_command<command::core::Format>("dark-green-bold", format::Color::DarkGreen,
-                                                             true);
-   m_command_manager.register_command<command::core::Format>("dark-aqua", format::Color::DarkAqua, false);
-   m_command_manager.register_command<command::core::Format>("dark-aqua-bold", format::Color::DarkAqua, true);
-   m_command_manager.register_command<command::core::Format>("dark-red", format::Color::DarkRed, false);
-   m_command_manager.register_command<command::core::Format>("dark-red-bold", format::Color::DarkRed, true);
-   m_command_manager.register_command<command::core::Format>("dark-purple", format::Color::DarkPurple, false);
-   m_command_manager.register_command<command::core::Format>("dark-purple-bold", format::Color::DarkPurple,
-                                                             true);
-   m_command_manager.register_command<command::core::Format>("gold", format::Color::Gold, false);
-   m_command_manager.register_command<command::core::Format>("gold-bold", format::Color::Gold, true);
-   m_command_manager.register_command<command::core::Format>("gray", format::Color::Gray, false);
-   m_command_manager.register_command<command::core::Format>("gray-bold", format::Color::Gray, true);
-   m_command_manager.register_command<command::core::Format>("darkgray", format::Color::DarkGray, false);
-   m_command_manager.register_command<command::core::Format>("darkgray-bold", format::Color::DarkGray, true);
-   m_command_manager.register_command<command::core::Format>("blue", format::Color::Blue, false);
-   m_command_manager.register_command<command::core::Format>("blue-bold", format::Color::Blue, true);
-   m_command_manager.register_command<command::core::Format>("green", format::Color::Green, false);
-   m_command_manager.register_command<command::core::Format>("green-bold", format::Color::Green, true);
-   m_command_manager.register_command<command::core::Format>("aqua", format::Color::Aqua, false);
-   m_command_manager.register_command<command::core::Format>("aqua-bold", format::Color::Aqua, true);
-   m_command_manager.register_command<command::core::Format>("red", format::Color::Red, false);
-   m_command_manager.register_command<command::core::Format>("red-bold", format::Color::Red, true);
-   m_command_manager.register_command<command::core::Format>("light-purple", format::Color::LightPurple,
-                                                             false);
-   m_command_manager.register_command<command::core::Format>("light-purple-bold", format::Color::LightPurple,
-                                                             true);
-   m_command_manager.register_command<command::core::Format>("yellow", format::Color::Yellow, false);
-   m_command_manager.register_command<command::core::Format>("yellow-bold", format::Color::Yellow, true);
-   m_command_manager.register_command<command::core::Format>("white", format::Color::White, false);
-   m_command_manager.register_command<command::core::Format>("white-bold", format::Color::White, true);
+   m_command_manager.register_command_as<command::core::Format>("black", format::Color::Black, false);
+   m_command_manager.register_command_as<command::core::Format>("black-bold", format::Color::Black, true);
+   m_command_manager.register_command_as<command::core::Format>("dark-blue", format::Color::DarkBlue, false);
+   m_command_manager.register_command_as<command::core::Format>("dark-blue-bold", format::Color::DarkBlue,
+                                                                true);
+   m_command_manager.register_command_as<command::core::Format>("dark-green", format::Color::DarkGreen,
+                                                                false);
+   m_command_manager.register_command_as<command::core::Format>("dark-green-bold", format::Color::DarkGreen,
+                                                                true);
+   m_command_manager.register_command_as<command::core::Format>("dark-aqua", format::Color::DarkAqua, false);
+   m_command_manager.register_command_as<command::core::Format>("dark-aqua-bold", format::Color::DarkAqua,
+                                                                true);
+   m_command_manager.register_command_as<command::core::Format>("dark-red", format::Color::DarkRed, false);
+   m_command_manager.register_command_as<command::core::Format>("dark-red-bold", format::Color::DarkRed,
+                                                                true);
+   m_command_manager.register_command_as<command::core::Format>("dark-purple", format::Color::DarkPurple,
+                                                                false);
+   m_command_manager.register_command_as<command::core::Format>("dark-purple-bold", format::Color::DarkPurple,
+                                                                true);
+   m_command_manager.register_command_as<command::core::Format>("gold", format::Color::Gold, false);
+   m_command_manager.register_command_as<command::core::Format>("gold-bold", format::Color::Gold, true);
+   m_command_manager.register_command_as<command::core::Format>("gray", format::Color::Gray, false);
+   m_command_manager.register_command_as<command::core::Format>("gray-bold", format::Color::Gray, true);
+   m_command_manager.register_command_as<command::core::Format>("darkgray", format::Color::DarkGray, false);
+   m_command_manager.register_command_as<command::core::Format>("darkgray-bold", format::Color::DarkGray,
+                                                                true);
+   m_command_manager.register_command_as<command::core::Format>("blue", format::Color::Blue, false);
+   m_command_manager.register_command_as<command::core::Format>("blue-bold", format::Color::Blue, true);
+   m_command_manager.register_command_as<command::core::Format>("green", format::Color::Green, false);
+   m_command_manager.register_command_as<command::core::Format>("green-bold", format::Color::Green, true);
+   m_command_manager.register_command_as<command::core::Format>("aqua", format::Color::Aqua, false);
+   m_command_manager.register_command_as<command::core::Format>("aqua-bold", format::Color::Aqua, true);
+   m_command_manager.register_command_as<command::core::Format>("red", format::Color::Red, false);
+   m_command_manager.register_command_as<command::core::Format>("red-bold", format::Color::Red, true);
+   m_command_manager.register_command_as<command::core::Format>("light-purple", format::Color::LightPurple,
+                                                                false);
+   m_command_manager.register_command_as<command::core::Format>("light-purple-bold",
+                                                                format::Color::LightPurple, true);
+   m_command_manager.register_command_as<command::core::Format>("yellow", format::Color::Yellow, false);
+   m_command_manager.register_command_as<command::core::Format>("yellow-bold", format::Color::Yellow, true);
+   m_command_manager.register_command_as<command::core::Format>("white", format::Color::White, false);
+   m_command_manager.register_command_as<command::core::Format>("white-bold", format::Color::White, true);
 
    for (auto wood_type : game::g_wood_types) {
       if (auto wood_id = repository::Block::the().find_id_by_tag(
@@ -275,13 +281,18 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    case game::PlayerDiggingState::FinishedDigging: {
       auto block_position = game::BlockPosition::from_proto(event.block_position());
       auto block_state_id = m_world.get_block(block_position);
-      if (block_state_id.ok()) {
+
+      m_world.set_block(block_position, 0);
+
+      if (block_state_id.ok() && *block_state_id != 0) {
          world::BlockState block_state{*block_state_id};
          auto item_id = repository::Item::the().find_id_by_tag(block_state.block_tag());
          if (item_id.ok()) {
-            m_world.spawn<entity::factory::Item>(block_position.to_vec3() + math::Vector3{0.5, 0.75, 0.5},
-                                                 game::ItemSlot{*item_id, 1});
-            m_world.set_block(block_position, 0);
+            auto position = block_position.to_vec3() + math::Vector3{0.5, 0.75, 0.5};
+            auto msg      = fmt::format("spawning item {} at {}", *item_id, position);
+            m_dispatcher.send_direct_chat(player_id, chat::MessageType::PlayerMessage,
+                                          format::Builder().text(msg).to_string());
+            m_world.spawn<entity::factory::Item>(position, game::ItemSlot{*item_id, 1});
          }
       }
    } break;
@@ -415,12 +426,6 @@ void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &even
 {
    auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
    auto entity  = m_entity_system.entity(player.entity_id());
-   //   if (entity.has_failed()) {
-   //      format::Builder builder;
-   //      builder.bold(format::Color::Red, "[entity-system] ").text("could not obtain entity");
-   //      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
-   //      return;
-   //   }
 
    m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
    m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
@@ -434,7 +439,7 @@ void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &even
    if (res.has_value()) {
       format::Builder builder;
       builder.bold(format::Color::Red, "COMMAND FAILED ").text(res->message);
-      m_dispatcher.send_chat(chat::MessageType::SystemMessage, builder.to_string());
+      m_dispatcher.send_direct_chat(player_id, chat::MessageType::PlayerMessage, builder.to_string());
    }
 }
 

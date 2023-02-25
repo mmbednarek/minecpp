@@ -31,7 +31,7 @@ class Repository
 
    [[nodiscard]] mb::result<index_type> find_id_by_tag(const std::string &tag)
    {
-      if (m_tags.contains(std::string(tag))) {
+      if (m_tags.contains(tag)) {
          return static_cast<index_type>(m_tags.at(tag));
       }
       return mb::error("not found");

@@ -12,18 +12,7 @@ Object::Ptr Command::execute(RuntimeContext &ctx)
    if (command == nullptr)
       return {};
 
-   CommandInput input{
-           .flags = flags,
-   };
-
-   input.arguments.resize(arguments.size());
-   std::transform(arguments.begin(), arguments.end(), input.arguments.begin(),
-                  [&ctx](Expression::Ptr &expr) { return expr->execute(ctx); });
-
-   for (const auto &[param, expr] : params) {
-      input.params[param] = expr->execute(ctx);
-   }
-
+   CommandInput input(ctx, arguments, flags, params);
    return command->run(ctx, input);
 }
 
@@ -37,12 +26,12 @@ ObjectType Command::type(RuntimeContext &ctx) const
 
 Object::Ptr Variable::execute(RuntimeContext &ctx)
 {
-   return ctx.variable(name);
+   return ctx.obj_variable(name);
 }
 
 ObjectType Variable::type(RuntimeContext &ctx) const
 {
-   return ctx.variable(name)->type();
+   return ctx.obj_variable(name)->type();
 }
 
 }// namespace minecpp::command::ast

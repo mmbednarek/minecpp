@@ -9,6 +9,7 @@ class ReloadChunk : public Command
 {
  public:
    static constexpr auto command_return_type = ObjectType::String;
+   static constexpr auto command_name = "reload-chunk";
 
    [[nodiscard]] bool is_flag(std::string_view name) const override;
    ObjectType return_type(RuntimeContext &ctx) const override;

@@ -11,18 +11,14 @@ bool Echo::is_flag(std::string_view name) const
 
 Object::Ptr Echo::run(RuntimeContext &ctx, CommandInput &input) const
 {
-   std::stringstream ss;
-   auto it        = input.arguments.begin();
-   const auto end = input.arguments.end();
-
-   if (it == end)
+   if (input.arg_count() == 0)
       return {};
 
+   std::stringstream ss;
    auto fmt = std::make_shared<FormattedString>();
 
    bool first = true;
-
-   for (const auto &obj : input.arguments) {
+   for (const auto &obj : input) {
       if (first) {
          first = false;
       } else {
@@ -36,12 +32,6 @@ Object::Ptr Echo::run(RuntimeContext &ctx, CommandInput &input) const
       }
       fmt->text(format::Color::White, obj->to_string());
    }
-
-   //   ss << (*it)->to_string();
-   //   std::for_each(it + 1, end, [&ss](Object::Ptr &obj) {
-   //      ss << ' ' << obj->to_string();
-   //
-   //   });
 
    return fmt;
 }

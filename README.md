@@ -56,7 +56,7 @@ The configuration is done by environmental variables and yaml files.
 
 Engine is a main service that actually processes game logic, generates terrain, etc.
 It doesn't actually implement Minecraft protocol. Game needs to connect to front service.
-Configuration file can be provided with `CONFIG_FILE` environmental variable.
+Configuration file can be provided with `CONFIG_FILE` environmental obj_variable.
 Example configuration for the engine.
 
 ```yaml
@@ -81,7 +81,7 @@ gameplay:
 ### Front
 
 Front is designed load balance the traffic between engine instances.
-Front service reads `CONFIG_FILE` environmental variable (the default value is `config.yaml`)
+Front service reads `CONFIG_FILE` environmental obj_variable (the default value is `config.yaml`)
 that specifies a yaml configuration file. Example configuration:
 
 ```yaml

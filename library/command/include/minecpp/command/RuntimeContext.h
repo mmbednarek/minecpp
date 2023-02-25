@@ -1,5 +1,6 @@
 #ifndef MINECPP_RUNTIME_CONTEXT_H
 #define MINECPP_RUNTIME_CONTEXT_H
+#include "Object.h"
 #include <memory>
 #include <minecpp/game/IWorld.h>
 #include <string>
@@ -8,7 +9,6 @@
 namespace minecpp::command {
 
 class CommandManager;
-class Object;
 class InputStream;
 class OutputStream;
 
@@ -24,8 +24,22 @@ class RuntimeContext
    RuntimeContext(const CommandManager &manager, InputStream &input, OutputStream &output,
                   game::IWorld *world);
 
-   std::shared_ptr<Object> variable(const std::string &name);
+   std::shared_ptr<Object> obj_variable(const std::string &name);
    void set_variable(const std::string &name, std::shared_ptr<Object> object);
+
+   template<typename TValue>
+   std::optional<TValue> variable(const std::string &name)
+   {
+      auto obj = obj_variable(name);
+      if (obj == nullptr)
+         return std::nullopt;
+      return cast<typename WrapperFinder<TValue>::Type>(obj)->value;
+   }
+
+   std::optional<game::EntityId> entity_id();
+   std::optional<game::Entity> entity();
+   std::optional<game::PlayerId> player_id();
+   std::optional<game::BlockPosition> current_position();
 
    [[nodiscard]] constexpr const CommandManager &commands() const
    {

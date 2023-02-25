@@ -8,6 +8,7 @@ class Give : public Command
 {
  public:
    static constexpr auto command_return_type = ObjectType::String;
+   static constexpr auto command_name = "give";
 
    [[nodiscard]] bool is_flag(std::string_view name) const override;
    Object::Ptr run(RuntimeContext &ctx, CommandInput &input) const override;

@@ -36,6 +36,11 @@ class Object
    virtual std::string to_string() = 0;
 };
 
+template<typename T>
+struct WrapperFinder {
+   using Type = Object;
+};
+
 struct StringObject final : public Object
 {
    constexpr static ObjectType object_type = ObjectType::String;
@@ -56,6 +61,11 @@ struct StringObject final : public Object
    {
       return value;
    }
+};
+
+template<>
+struct WrapperFinder<std::string> {
+   using Type = StringObject;
 };
 
 struct IntObject final : public Object
@@ -80,6 +90,11 @@ struct IntObject final : public Object
    }
 };
 
+template<>
+struct WrapperFinder<int> {
+   using Type = IntObject;
+};
+
 struct UUIDObject final : public Object
 {
    constexpr static ObjectType object_type = ObjectType::UUID;
@@ -100,6 +115,11 @@ struct UUIDObject final : public Object
    {
       return boost::uuids::to_string(value);
    }
+};
+
+template<>
+struct WrapperFinder<util::uuid> {
+   using Type = UUIDObject;
 };
 
 struct FormattedString : public Object
@@ -190,6 +210,15 @@ struct RuntimeError : public FormattedString
    }
 };
 
+template<typename... TArgs>
+std::shared_ptr<RuntimeError> make_error(std::string command_name, fmt::format_string<TArgs...> format_str, TArgs &&...args)
+{
+   auto err = std::make_shared<RuntimeError>(std::move(command_name));
+   auto msg = fmt::format(format_str, std::forward<TArgs>(args)...);
+   err->text(msg);
+   return err;
+}
+
 struct BlockPositionObject final : public Object
 {
    constexpr static ObjectType object_type = ObjectType::BlockPosition;
@@ -210,6 +239,11 @@ struct BlockPositionObject final : public Object
    {
       return fmt::format("({}, {}, {})", value.x, value.y, value.z);
    }
+};
+
+template<>
+struct WrapperFinder<game::BlockPosition> {
+   using Type = BlockPositionObject;
 };
 
 template<typename T>

@@ -15,6 +15,8 @@ class Item : public Repository<game::item::Item, game::ItemId>
    {
       return g_instance;
    }
+
+   mb::result<game::ItemId> lookup_id(const std::string &tag);
 };
 
 }// namespace minecpp::repository
