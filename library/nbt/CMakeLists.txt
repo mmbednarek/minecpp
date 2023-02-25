@@ -14,3 +14,5 @@ target_link_libraries(minecpp_nbt
         LINK_PUBLIC
         minecpp_utils
 )
+
+add_subdirectory("test")

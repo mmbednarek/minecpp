@@ -10,15 +10,22 @@ using minecpp::world::BlockState;
 using minecpp::world::LightSystem;
 using minecpp::world::testing::BlockContainer;
 
+bool g_initialised_repository{false};
+
 class WorldLightTest : public ::testing::Test
 {
  protected:
+
    void SetUp() override
    {
-      ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
+      if (not g_initialised_repository) {
+         ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
+         g_initialised_repository = true;
+      }
    }
 
    void TearDown() override {}
+
 };
 
 TEST_F(WorldLightTest, LightTest_MinorLightSource)

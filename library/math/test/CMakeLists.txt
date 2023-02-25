@@ -16,3 +16,5 @@ target_link_libraries(minecpp_math_test
         gtest
         gtest_main
 )
+
+add_test(NAME minecpp_math COMMAND minecpp_math_test)

@@ -19,3 +19,5 @@ target_link_libraries(minecpp_network
         minecpp_game
         Boost::system
 )
+
+add_subdirectory("test")

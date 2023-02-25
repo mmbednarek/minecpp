@@ -1,4 +1,5 @@
 {
   "name": "minecpp_format",
+  "has_test": true,
   "dependencies": {}
 }

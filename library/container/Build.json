@@ -1,6 +1,6 @@
 {
   "name": "minecpp_container",
-  "tests": true,
+  "has_test": true,
   "dependencies": {
     "public": [
       "libmb"

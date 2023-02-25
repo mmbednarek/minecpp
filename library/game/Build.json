@@ -1,5 +1,6 @@
 {
   "name": "minecpp_game",
+  "has_test": true,
   "dependencies": {
     "public": [
       "EnTT",

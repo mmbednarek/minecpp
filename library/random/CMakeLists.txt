@@ -11,7 +11,10 @@ target_include_directories(minecpp_random PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc
 add_subdirectory("src")
 
 target_link_libraries(minecpp_random
-        LINK_PRIVATE
+        LINK_PUBLIC
         minecpp_math
+        LINK_PRIVATE
         minecpp_utils
 )
+
+add_subdirectory("test")

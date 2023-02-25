@@ -1,5 +1,9 @@
 {
   "name": "minecpp_world_test",
+  "is_test": true,
+  "resources": [
+    "../../../repository.bin"
+  ],
   "dependencies": {
     "public": [
       "minecpp_world",

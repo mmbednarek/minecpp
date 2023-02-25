@@ -21,3 +21,5 @@ target_link_libraries(minecpp_command
         LINK_PRIVATE
         minecpp_repository
 )
+
+add_subdirectory("test")

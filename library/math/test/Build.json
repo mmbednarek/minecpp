@@ -1,5 +1,6 @@
 {
   "name": "minecpp_math_test",
+  "is_test": true,
   "dependencies": {
     "public": [
       "minecpp_math",

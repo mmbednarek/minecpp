@@ -19,7 +19,7 @@ TEST(Section, ProtoTest)
 
    auto proto = section.to_proto();
 
-   ASSERT_EQ(proto.sky_light().size(), 4096);
+   ASSERT_EQ(proto.sky_light().size(), 2048);
 
    auto decoded_section = Section::from_proto(proto);
 

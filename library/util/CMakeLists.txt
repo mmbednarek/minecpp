@@ -18,3 +18,5 @@ target_link_libraries(minecpp_utils
         fmt
         grpc++
 )
+
+add_subdirectory("test")

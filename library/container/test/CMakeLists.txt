@@ -16,3 +16,5 @@ target_link_libraries(minecpp_container_test
         gtest
         gtest_main
 )
+
+add_test(NAME minecpp_container COMMAND minecpp_container_test)

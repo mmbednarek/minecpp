@@ -11,5 +11,5 @@ TEST(Format, ok)
 
    EXPECT_EQ(
            text,
-           R"({"extra":[{"color":"white","text":"hello "},{"color":"dark_purple","bold":true,"text":"purple "},{"color":"green","text":"world"}],"text":""})");
+           R"({"text": "hello ", "extra": [{"text": "purple ", "color": "dark_purple", "bold": true}, {"text": "world", "color": "green"}]})");
 }

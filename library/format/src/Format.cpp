@@ -4,6 +4,10 @@ namespace minecpp::format {
 
 // TODO: Escape characters
 
+std::string_view format_bool(bool value)  {
+   return value ? "true" : "false";
+}
+
 Builder &Builder::text(std::string_view s)
 {
    if (m_first) {
@@ -87,7 +91,7 @@ void Node::write(std::ostream &stream) const
    if (color)
       stream << R"(, "color": ")" << color_to_str(*color) << R"(")";
    if (bold)
-      stream << R"(, "bold": ")" << *bold << R"(")";
+      stream << R"(, "bold": )" << format_bool(*bold);
    if (click_event) {
       stream << R"(, "clickEvent": )";
       click_event->write(stream);

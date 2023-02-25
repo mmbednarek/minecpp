@@ -17,3 +17,7 @@ target_link_libraries(minecpp_world_test
         gtest
         gtest_main
 )
+
+add_test(NAME minecpp_world COMMAND minecpp_world_test)
+
+configure_file("../../../repository.bin" "${CMAKE_BINARY_DIR}/library/world/test/repository.bin" COPYONLY)

@@ -1,5 +1,6 @@
 {
   "name": "minecpp_container_test",
+  "is_test": true,
   "dependencies": {
     "private": [
       "minecpp_container",

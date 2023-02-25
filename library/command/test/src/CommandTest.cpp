@@ -1,10 +1,8 @@
 #include <gtest/gtest.h>
 #include <minecpp/command/Command.h>
 #include <minecpp/command/CommandManager.h>
-#include <minecpp/command/Parser.h>
 #include <minecpp/command/RuntimeContext.h>
 #include <minecpp/lexer/Lexer.h>
-#include <minecpp/lexer/Reader.h>
 
 class EchoCommand : public minecpp::command::Command
 {
@@ -31,24 +29,33 @@ class EchoCommand : public minecpp::command::Command
    }
 };
 
-class StdOutStream : public minecpp::command::OutputStream
+class StringOutStream : public minecpp::command::OutputStream
 {
  public:
    bool write(minecpp::command::Object::Ptr obj) override
    {
-      std::cout << obj->to_string() << '\n';
+      m_ss << obj->to_string() << ' ';
       return true;
    }
+
+   std::string to_string() const
+   {
+      return m_ss.str();
+   }
+
+ private:
+   std::stringstream m_ss;
 };
 
 TEST(CommandTest, BasicTest)
 {
-   StdOutStream out;
+   StringOutStream out;
 
    minecpp::command::CommandManager manager;
    manager.register_command<EchoCommand>("echo");
 
    minecpp::command::RuntimeContext ctx(manager, minecpp::command::g_null_stream, out, nullptr);
 
-   manager.evaluate(ctx, "Echo.hello world");
+   manager.evaluate(ctx, "echo hello world");
+   EXPECT_EQ(out.to_string(), "hello world ");
 }

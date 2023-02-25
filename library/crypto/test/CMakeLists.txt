@@ -17,3 +17,7 @@ target_link_libraries(minecpp_crypto_test
         gtest_main
         minecpp_crypto
 )
+
+add_test(NAME minecpp_crypto COMMAND minecpp_crypto_test)
+
+configure_file("key.pem" "${CMAKE_BINARY_DIR}/library/crypto/test/key.pem" COPYONLY)

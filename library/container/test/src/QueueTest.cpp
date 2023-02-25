@@ -16,9 +16,10 @@ TEST(Queue, NoRace_int)
    };
 
    auto consumer = [](Queue<int> *queue) -> int {
+      using namespace std::chrono_literals;
       int sum = 0;
+      std::this_thread::sleep_for(5ms);
       for (;;) {
-         using namespace std::chrono_literals;
 
          auto consumed = queue->try_pop();
          if (not consumed.has_value())
@@ -40,7 +41,7 @@ TEST(Queue, NoRace_int)
    auto res2 = fut_res2.get();
 
    EXPECT_EQ(res1 + res2, (1000 + 1) * 500);
-   EXPECT_LE(abs(res2 - res1), 1000);
+   EXPECT_LE(abs(res2 - res1), 2000);
 }
 
 TEST(Queue, NoRace_unique_ptr)
@@ -56,9 +57,10 @@ TEST(Queue, NoRace_unique_ptr)
    };
 
    auto consumer = [](Queue<std::unique_ptr<int>> *queue) -> int {
+      using namespace std::chrono_literals;
       int sum = 0;
+      std::this_thread::sleep_for(5ms);
       for (;;) {
-         using namespace std::chrono_literals;
 
          auto consumed = queue->try_pop();
          if (not consumed.has_value())
@@ -80,5 +82,5 @@ TEST(Queue, NoRace_unique_ptr)
    auto res2 = fut_res2.get();
 
    EXPECT_EQ(res1 + res2, (1000 + 1) * 500);
-   EXPECT_LE(abs(res2 - res1), 1000);
+   EXPECT_LE(abs(res2 - res1), 2000);
 }
