@@ -31,7 +31,7 @@ game::Entity EntitySystem::create_spatial_entity(math::Vector3 position, math::V
    auto entity    = this->entity(static_cast<game::EntityId>(entity_id));
 
    entity.add_component<component::Location>(position, extent);
-   m_storage->register_entity(entity.id(), position, extent);
+   m_storage->register_entity(entity.id(), entity.component<component::Location>().logical_position(), extent);
 
    return entity;
 }
@@ -91,7 +91,7 @@ void EntitySystem::apply_pending_kills()
          auto entity = this->entity(entity_id);
          if (entity.has_component<component::Location>()) {
             auto &location = entity.component<component::Location>();
-            m_storage->remove_entity(entity_id, location.position(), location.extent());
+            m_storage->remove_entity(entity_id, location.logical_position(), location.extent());
          }
       }
 

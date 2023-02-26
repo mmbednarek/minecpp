@@ -29,6 +29,7 @@ class Location
    Location(const math::Vector3 &position, const math::Vector3 &extent);
 
    [[nodiscard]] math::Vector3 position() const;
+   [[nodiscard]] math::Vector3 logical_position() const;
    [[nodiscard]] math::Vector3 extent() const;
 
    void set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position);
@@ -48,6 +49,8 @@ class Rotation
  public:
    Rotation(float yaw, float pitch);
 
+   void on_attached(game::Entity &entity);
+
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
    void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
@@ -61,10 +64,13 @@ class Rotation
    [[nodiscard]] math::Radians pitch() const;
    void set_yaw(math::Radians yaw);
    void set_pitch(math::Radians pitch);
+   void set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position, math::Radians yaw,
+                     math::Radians pitch);
 
  private:
    math::Radians m_yaw{};
    math::Radians m_pitch{};
+   game::EntityId m_entity_id{};
 };
 
 }// namespace minecpp::entity::component

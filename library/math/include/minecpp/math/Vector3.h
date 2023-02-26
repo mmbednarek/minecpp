@@ -39,8 +39,8 @@ class BaseVector<TValue, 3>
 
    [[nodiscard]] static SelfType from_yaw_and_pitch(Radians yaw, Radians pitch)
    {
-      return {static_cast<ValueType>(std::cos(yaw)), static_cast<ValueType>(std::sin(pitch)),
-              static_cast<ValueType>(std::sin(yaw))};
+      return {static_cast<ValueType>(-std::sin(yaw)), static_cast<ValueType>(-std::sin(pitch)),
+              static_cast<ValueType>(std::cos(yaw))};
    }
 
    [[nodiscard]] ProtoType to_proto() const
