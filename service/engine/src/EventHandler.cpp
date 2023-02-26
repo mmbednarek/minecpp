@@ -13,6 +13,7 @@
 #include <minecpp/controller/block/Stairs.h>
 #include <minecpp/controller/block/Torch.h>
 #include <minecpp/controller/block/Wood.h>
+#include <minecpp/controller/block/Foliage.h>
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Inventory.h>
@@ -151,6 +152,18 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    if (auto torch_id = repository::Block::the().find_id_by_tag("minecraft:wall_torch"); torch_id.ok()) {
       m_block_manager.register_controller<controller::block::Torch>(*torch_id);
    }
+   if (auto block_id = repository::Block::the().find_id_by_tag("minecraft:tall_grass"); block_id.ok()) {
+      m_block_manager.register_controller<controller::block::Foliage>(*block_id);
+   }
+   if (auto block_id = repository::Block::the().find_id_by_tag("minecraft:poppy"); block_id.ok()) {
+      m_block_manager.register_controller<controller::block::Foliage>(*block_id);
+   }
+   if (auto block_id = repository::Block::the().find_id_by_tag("minecraft:dandelion"); block_id.ok()) {
+      m_block_manager.register_controller<controller::block::Foliage>(*block_id);
+   }
+   if (auto block_id = repository::Block::the().find_id_by_tag("minecraft:blue_orchid"); block_id.ok()) {
+      m_block_manager.register_controller<controller::block::Foliage>(*block_id);
+   }
 }
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id)
@@ -281,22 +294,7 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    case game::PlayerDiggingState::Digging:
    case game::PlayerDiggingState::CanceledDigging:
    case game::PlayerDiggingState::FinishedDigging: {
-      auto block_position = game::BlockPosition::from_proto(event.block_position());
-      auto block_state_id = m_world.get_block(block_position);
-
-      m_world.set_block(block_position, 0);
-
-      if (block_state_id.ok() && *block_state_id != 0) {
-         world::BlockState block_state{*block_state_id};
-         auto item_id = repository::Item::the().find_id_by_tag(block_state.block_tag());
-         if (item_id.ok()) {
-            auto position = block_position.to_vec3() + math::Vector3{0.5, 0.75, 0.5};
-            auto msg      = fmt::format("spawning item {} at {}", *item_id, position);
-            m_dispatcher.send_direct_chat(player_id, chat::MessageType::PlayerMessage,
-                                          format::Builder().text(msg).to_string());
-            m_world.spawn<entity::factory::Item>(position, game::ItemSlot{*item_id, 1});
-         }
-      }
+      m_world.destroy_block(game::BlockPosition::from_proto(event.block_position()));
    } break;
    default: break;
    }

@@ -26,6 +26,7 @@ class World : public minecpp::game::IWorld
    World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
          PlayerManager &player_manager, entity::EntitySystem &entity_system,
          controller::BlockManager &block_controller);
+   void destroy_block(const game::BlockPosition &position) override;
 
    game::player::Provider &players() override;
    game::IEntitySystem &entity_system() override;

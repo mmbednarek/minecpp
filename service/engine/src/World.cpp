@@ -3,7 +3,9 @@
 #include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
+#include <minecpp/entity/factory/Item.h>
 #include <minecpp/entity/EntitySystem.h>
+#include <minecpp/repository/Item.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/world/BlockState.h>
 #include <minecpp/world/SectionSlice.h>
@@ -12,6 +14,8 @@
 using minecpp::game::Face;
 
 namespace minecpp::service::engine {
+
+using ItemFactory = entity::factory::Item;
 
 template<typename TFunction>
 void when_chunk_is_complete(ChunkSystem &chunk_system, JobSystem &job_system,
@@ -202,6 +206,25 @@ void World::kill_entity(game::EntityId id)
 {
    m_dispatcher.remove_entity(id);
    m_entity_system.destroy_entity(id);
+}
+
+void World::destroy_block(const game::BlockPosition &position)
+{
+   auto block_state_id = this->get_block(position);
+   if (block_state_id.has_failed())
+      return;
+   if (*block_state_id == DEFAULT_BLOCK_STATE(Air))
+      return;
+
+   this->set_block(position, DEFAULT_BLOCK_STATE(Air));
+
+   world::BlockState block_state{*block_state_id};
+   auto item_id = repository::Item::the().find_id_by_tag(block_state.block_tag());
+   if (not item_id.ok())
+      return;
+
+   auto item_position = position.to_vec3() + math::Vector3{0.5, 0.75, 0.5};
+   this->spawn<ItemFactory>(item_position, game::ItemSlot{*item_id, 1});
 }
 
 }// namespace minecpp::service::engine
