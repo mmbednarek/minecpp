@@ -112,6 +112,7 @@ void Player::init_visible_entities(game::IDispatcher &dispatcher, game::IEntityS
 {
    std::lock_guard lk{m_visible_entities_mutex};
    m_visible_entities = entity_system.list_entities_in_view_distance(position);
+   std::sort(m_visible_entities.begin(), m_visible_entities.end());
    dispatcher.entity_list(m_id, m_visible_entities);
 
    for (auto entity_id : m_visible_entities) {

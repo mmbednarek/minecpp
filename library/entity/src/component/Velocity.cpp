@@ -71,4 +71,9 @@ void Velocity::set_velocity(game::IDispatcher &dispatcher, const math::Vector3 &
    dispatcher.set_entity_velocity(m_entity_id, position, (velocity * 8000.0).cast<short>());
 }
 
+const math::Vector3 &Velocity::velocity() const
+{
+   return m_velocity;
+}
+
 }// namespace minecpp::entity::component

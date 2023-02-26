@@ -17,6 +17,7 @@ class Velocity
    void set_falling();
    void set_velocity(game::IDispatcher &dispatcher, const math::Vector3 &position,
                      const math::Vector3 &velocity);
+   [[nodiscard]] const math::Vector3 &velocity() const;
 
  private:
    game::EntityId m_entity_id{};
