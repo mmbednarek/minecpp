@@ -12,8 +12,9 @@ concept ProtoSerializable =
         requires(const T &t, proto::entity::v1::Entity *proto_entity) { t.serialize_to_proto(proto_entity); };
 
 template<typename T>
-concept PlayerProtoSerializable =
-requires(const T &t, proto::entity::v1::PlayerEntity *proto_entity) { t.serialize_player_to_proto(proto_entity); };
+concept PlayerProtoSerializable = requires(const T &t, proto::entity::v1::PlayerEntity *proto_entity) {
+                                     t.serialize_player_to_proto(proto_entity);
+                                  };
 
 template<typename T>
 concept IsAttachable = requires(T &t, Entity &entity) { t.on_attached(entity); };

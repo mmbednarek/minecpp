@@ -182,9 +182,6 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
    m_dispatcher.accept_player(player);
    m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
 
-//   m_dispatcher.spawn_player(player.id(), player.entity_id(),
-//                             entity.component<entity::component::Location>().position());
-
    m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
 
    m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,

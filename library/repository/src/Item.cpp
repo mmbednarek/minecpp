@@ -1,5 +1,5 @@
-#include <minecpp/repository/Item.h>
 #include <fmt/core.h>
+#include <minecpp/repository/Item.h>
 
 namespace minecpp::repository {
 

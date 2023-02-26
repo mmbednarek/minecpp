@@ -37,7 +37,8 @@ class Object
 };
 
 template<typename T>
-struct WrapperFinder {
+struct WrapperFinder
+{
    using Type = Object;
 };
 
@@ -64,7 +65,8 @@ struct StringObject final : public Object
 };
 
 template<>
-struct WrapperFinder<std::string> {
+struct WrapperFinder<std::string>
+{
    using Type = StringObject;
 };
 
@@ -91,7 +93,8 @@ struct IntObject final : public Object
 };
 
 template<>
-struct WrapperFinder<int> {
+struct WrapperFinder<int>
+{
    using Type = IntObject;
 };
 
@@ -118,7 +121,8 @@ struct UUIDObject final : public Object
 };
 
 template<>
-struct WrapperFinder<util::uuid> {
+struct WrapperFinder<util::uuid>
+{
    using Type = UUIDObject;
 };
 
@@ -211,7 +215,8 @@ struct RuntimeError : public FormattedString
 };
 
 template<typename... TArgs>
-std::shared_ptr<RuntimeError> make_error(std::string command_name, fmt::format_string<TArgs...> format_str, TArgs &&...args)
+std::shared_ptr<RuntimeError> make_error(std::string command_name, fmt::format_string<TArgs...> format_str,
+                                         TArgs &&...args)
 {
    auto err = std::make_shared<RuntimeError>(std::move(command_name));
    auto msg = fmt::format(format_str, std::forward<TArgs>(args)...);
@@ -242,7 +247,8 @@ struct BlockPositionObject final : public Object
 };
 
 template<>
-struct WrapperFinder<game::BlockPosition> {
+struct WrapperFinder<game::BlockPosition>
+{
    using Type = BlockPositionObject;
 };
 

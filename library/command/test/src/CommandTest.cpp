@@ -8,7 +8,7 @@ class EchoCommand : public minecpp::command::Command
 {
  public:
    static constexpr auto command_return_type = minecpp::command::ObjectType::String;
-   static constexpr auto command_name = "echo";
+   static constexpr auto command_name        = "echo";
 
    [[nodiscard]] bool is_flag(std::string_view name) const override
    {

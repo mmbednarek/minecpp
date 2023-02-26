@@ -81,8 +81,10 @@ class Dispatcher : public minecpp::game::IDispatcher
    void set_entity_velocity(game::EntityId entity_id, const math::Vector3 &position,
                             const math::Vector3s &velocity) override;
 
-   void send_to_players_in_view_distance(const math::Vector3 &position, const google::protobuf::Message &message) const;
-   void send_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position, const google::protobuf::Message &message) const;
+   void send_to_players_in_view_distance(const math::Vector3 &position,
+                                         const google::protobuf::Message &message) const;
+   void send_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position,
+                                                const google::protobuf::Message &message) const;
 
  private:
    EventManager &m_events;

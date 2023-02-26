@@ -1,7 +1,7 @@
-#include <minecpp/entity/component/Player.h>
 #include <minecpp/command/core/Sync.h>
 #include <minecpp/command/RuntimeContext.h>
 #include <minecpp/entity/component/Inventory.h>
+#include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/StreamingComponent.h>
 
 namespace minecpp::command::core {
@@ -11,12 +11,12 @@ bool Sync::is_flag(std::string_view /*name*/) const
    return false;
 }
 
-ObjectType Sync::return_type(RuntimeContext &/*ctx*/) const
+ObjectType Sync::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }
 
-Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &/*input*/) const
+Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput & /*input*/) const
 {
    auto *world = ctx.world();
    if (world == nullptr)
@@ -38,7 +38,8 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput &/*input*/) const
       return make_error(command_name, "entity doesn't stream chunks");
 
    auto player_id = entity->component<minecpp::entity::component::Player>().id();
-   entity->component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world, player_id);
+   entity->component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world,
+                                                                                               player_id);
 
    auto info = std::make_shared<FormattedString>();
    info->bold(format::Color::Green, "INFO ");

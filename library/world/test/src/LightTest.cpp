@@ -15,7 +15,6 @@ bool g_initialised_repository{false};
 class WorldLightTest : public ::testing::Test
 {
  protected:
-
    void SetUp() override
    {
       if (not g_initialised_repository) {
@@ -25,7 +24,6 @@ class WorldLightTest : public ::testing::Test
    }
 
    void TearDown() override {}
-
 };
 
 TEST_F(WorldLightTest, LightTest_MinorLightSource)

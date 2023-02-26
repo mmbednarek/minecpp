@@ -9,12 +9,12 @@ bool ReloadChunk::is_flag(std::string_view /*name*/) const
    return false;
 }
 
-ObjectType ReloadChunk::return_type(RuntimeContext &/*ctx*/) const
+ObjectType ReloadChunk::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }
 
-Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput &/*input*/) const
+Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput & /*input*/) const
 {
    auto player_id = ctx.player_id();
    if (not player_id.has_value())

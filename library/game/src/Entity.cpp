@@ -25,17 +25,17 @@ void Entity::serialize_to_proto(proto::entity::v1::Entity *entity) const
 
 void Entity::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
 {
-    assert(entity);
+   assert(entity);
 
-    entity->set_entity_id(static_cast<mb::u32>(m_entity));
+   entity->set_entity_id(static_cast<mb::u32>(m_entity));
 
-    this->for_each_component([entity](const entt::meta_any &obj) mutable {
-        using namespace entt::literals;
-        auto serialize = obj.type().func("serialize_player_to_proto"_hs);
-        if (serialize) {
-            serialize.invoke(obj, entity);
-        }
-    });
+   this->for_each_component([entity](const entt::meta_any &obj) mutable {
+      using namespace entt::literals;
+      auto serialize = obj.type().func("serialize_player_to_proto"_hs);
+      if (serialize) {
+         serialize.invoke(obj, entity);
+      }
+   });
 }
 
 game::EntityId Entity::id() const

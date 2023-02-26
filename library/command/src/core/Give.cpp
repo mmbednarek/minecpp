@@ -22,7 +22,7 @@ Object::Ptr Give::run(RuntimeContext &ctx, CommandInput &input) const
       return make_error(command_name, "invalid argument count");
 
    const auto item_tag = input.string_arg(0);
-   auto item_id = repository::Item::the().lookup_id(item_tag);
+   auto item_id        = repository::Item::the().lookup_id(item_tag);
    if (item_id.has_failed())
       return make_error(command_name, "item with tag {} not found: {}", item_tag, item_id.err()->msg());
 

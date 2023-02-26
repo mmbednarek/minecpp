@@ -53,7 +53,7 @@ void Connection::send_to_many(const google::protobuf::Message &message, std::spa
    Event proto_event;
    for (auto player_id : player_ids) {
       auto [lower, upper] = util::write_uuid(player_id);
-      auto *proto_id = proto_event.mutable_multiple_players()->add_player_ids();
+      auto *proto_id      = proto_event.mutable_multiple_players()->add_player_ids();
       proto_id->set_lower(lower);
       proto_id->set_upper(upper);
    }

@@ -33,7 +33,7 @@ mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::str
 }
 
 mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::IWorld &w,
-                                                                               game::PlayerId id)
+                                                                             game::PlayerId id)
 {
    minecpp::nbt::player::v1::Player data;
 

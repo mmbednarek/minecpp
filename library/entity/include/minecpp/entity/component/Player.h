@@ -19,11 +19,12 @@ class Player
    [[nodiscard]] game::PlayerId id() const;
    [[nodiscard]] const std::string &name() const;
    void refresh_visible_entities(game::IDispatcher &dispatcher, game::IEntitySystem &entity_system,
-                                      const math::Vector3 &position);
+                                 const math::Vector3 &position);
    void init_visible_entities(game::IDispatcher &dispatcher, game::IEntitySystem &entity_system,
-                                      const math::Vector3 &position);
+                              const math::Vector3 &position);
    void remove_visible_entity(game::IDispatcher &dispatcher, game::EntityId entity_id);
-   void add_visible_player_entity(game::IDispatcher &dispatcher, game::PlayerId player_id, game::EntityId entity_id);
+   void add_visible_player_entity(game::IDispatcher &dispatcher, game::PlayerId player_id,
+                                  game::EntityId entity_id);
 
  private:
    game::PlayerId m_id;
