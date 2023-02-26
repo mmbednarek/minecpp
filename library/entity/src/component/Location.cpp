@@ -49,7 +49,8 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
       return;
 
    m_tracked_position.position += movement;
-   world.entity_system().move_spatial_entity(entity.id(), m_extent, prev_logical_position, this->logical_position());
+   world.entity_system().move_spatial_entity(entity.id(), m_extent, prev_logical_position,
+                                             this->logical_position());
 
    game::Rotation rotation{};
    if (entity.has_component<Rotation>()) {

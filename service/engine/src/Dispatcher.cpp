@@ -359,8 +359,10 @@ void Dispatcher::spawn_entity(game::EntityId entity_id, const math::Vector3 &pos
    clientbound_v1::SpawnEntity spawn_entity;
    entity.serialize_to_proto(spawn_entity.mutable_entity());
 
-   auto msg = fmt::format("spawning entity {} at with yaw {}", spawn_entity.entity().entity_id(), spawn_entity.entity().rotation().yaw());
-   this->send_chat(chat::MessageType::PlayerMessage, format::Builder().text(format::Color::Gold, "INFO  ").text(msg).to_string());
+   auto msg = fmt::format("spawning entity {} at with yaw {}", spawn_entity.entity().entity_id(),
+                          spawn_entity.entity().rotation().yaw());
+   this->send_chat(chat::MessageType::PlayerMessage,
+                   format::Builder().text(format::Color::Gold, "INFO  ").text(msg).to_string());
    this->send_to_players_in_view_distance(position, spawn_entity);
 }
 

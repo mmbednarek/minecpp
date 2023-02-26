@@ -35,12 +35,12 @@ void Projectile::on_begin_intersect(game::IWorld &world, game::Entity &entity, g
 
    if (other_entity.has_component<Velocity>()) {
       auto &velocity = other_entity.component<Velocity>();
-      velocity.set_velocity(world.dispatcher(), other_entity.component<Location>().position(), entity.component<Velocity>().velocity().normalize());
+      velocity.set_velocity(world.dispatcher(), other_entity.component<Location>().position(),
+                            entity.component<Velocity>().velocity().normalize());
    }
 
    if (other_entity.has_component<Player>()) {
-      world.dispatcher().set_health_and_food(other_entity.component<Player>().id(),
-                                             health.health, 20, 5.0f);
+      world.dispatcher().set_health_and_food(other_entity.component<Player>().id(), health.health, 20, 5.0f);
    }
 
    world.kill_entity(entity.id());

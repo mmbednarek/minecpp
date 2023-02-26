@@ -21,7 +21,6 @@ RUN cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja
 WORKDIR /root/minecpp/build-docker
 RUN cmake --build . -j $(nproc) -t minecpp_game  \
   -t minecpp_controller  \
-  -t minecpp_event  \
   -t minecpp_engine_api  \
   -t minecpp_utils  \
   -t minecpp_game  \
