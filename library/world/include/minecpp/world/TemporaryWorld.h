@@ -1,6 +1,6 @@
 #pragma once
 #include "IChunkSystem.h"
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::world {
 

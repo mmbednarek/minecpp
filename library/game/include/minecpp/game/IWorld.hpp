@@ -1,6 +1,6 @@
 #pragma once
 #include "Game.h"
-#include "IDispatcher.h"
+#include "IDispatcher.hpp"
 #include "IEntitySystem.hpp"
 #include <mb/result.h>
 #include <minecpp/game/player/Provider.hpp>

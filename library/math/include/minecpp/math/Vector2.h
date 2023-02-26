@@ -26,6 +26,11 @@ class BaseVector<TValue, 2>
       result.set_y(this->y());
       return result;
    }
+
+   [[nodiscard]] static SelfType from_yaw(ValueType yaw)
+   {
+      return {std::cos(yaw), std::sin(yaw)};
+   }
 };
 
 using Vector2  = BaseVector<double, 2>;

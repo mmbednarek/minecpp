@@ -59,6 +59,11 @@ message BlockPlacement {
   int32 sequence_id = 6;
 }
 
+message UseItem {
+  int32 hand = 1;
+  int32 sequence_id = 2;
+}
+
 message ChangeInventoryItem {
   int32 slot_id = 1;
   common.v1.ItemId item_id = 2;

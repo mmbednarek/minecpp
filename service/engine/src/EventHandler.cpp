@@ -10,21 +10,23 @@
 #include <minecpp/command/core/Sync.h>
 #include <minecpp/controller/block/Door.h>
 #include <minecpp/controller/block/Fence.h>
+#include <minecpp/controller/block/Foliage.h>
 #include <minecpp/controller/block/Stairs.h>
 #include <minecpp/controller/block/Torch.h>
 #include <minecpp/controller/block/Wood.h>
-#include <minecpp/controller/block/Foliage.h>
+#include <minecpp/controller/item/Bow.h>
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/component/StreamingComponent.h>
+#include <minecpp/entity/component/Streamer.h>
 #include <minecpp/entity/component/Velocity.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Item.h>
+#include <minecpp/entity/PlayerComponents.hpp>
 #include <minecpp/format/Format.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
@@ -35,14 +37,16 @@ namespace minecpp::service::engine {
 
 EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager,
                            entity::EntitySystem &entity_system, game::IWorld &world,
-                           controller::BlockManager &block_manager) :
+                           controller::BlockManager &block_manager,
+                           controller::RootItem &root_item_controller) :
     m_dispatcher(dispatcher),
     m_player_manager(player_manager),
     m_entity_system(entity_system),
     m_world(world),
     m_command_std_stream(m_dispatcher),
     m_command_context(m_command_manager, command::g_null_stream, m_command_std_stream, &m_world),
-    m_block_manager(block_manager)
+    m_block_manager(block_manager),
+    m_root_item_controller(root_item_controller)
 {
    m_command_manager.register_command<command::core::Echo>();
    m_command_manager.register_command<command::core::Give>();
@@ -164,6 +168,10 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    if (auto block_id = repository::Block::the().find_id_by_tag("minecraft:blue_orchid"); block_id.ok()) {
       m_block_manager.register_controller<controller::block::Foliage>(*block_id);
    }
+
+   if (auto item_id = repository::Item::the().find_id_by_tag("minecraft:bow"); item_id.ok()) {
+      m_root_item_controller.register_controller<controller::item::Bow>(*item_id);
+   }
 }
 
 void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id)
@@ -224,8 +232,8 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
                    .to_string());
    m_dispatcher.synchronise_player_position_and_rotation(
            player_id, entity.component<entity::component::Location>().position(),
-           entity.component<entity::component::Rotation>().yaw(),
-           entity.component<entity::component::Rotation>().pitch());
+           entity.component<entity::component::Rotation>().yaw_degrees(),
+           entity.component<entity::component::Rotation>().pitch_degrees());
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,
@@ -250,8 +258,8 @@ void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRot
    auto entity              = m_entity_system.entity(player->entity_id());
    auto &rotation_component = entity.component<entity::component::Rotation>();
 
-   rotation_component.set_yaw(event.rotation().yaw());
-   rotation_component.set_pitch(event.rotation().pitch());
+   rotation_component.set_yaw_degrees(event.rotation().yaw());
+   rotation_component.set_pitch_degrees(event.rotation().pitch());
    m_dispatcher.player_look(player_id, entity.id(),
                             entity.component<entity::component::Location>().position(),
                             rotation_component.rotation());
@@ -330,8 +338,7 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
    auto entity = m_entity_system.entity(player->entity_id());
 
-   auto result = entity.component<entity::component::StreamingComponent>().send_all_visible_chunks(m_world,
-                                                                                                   player_id);
+   auto result = entity.component<entity::component::Streamer>().send_all_visible_chunks(m_world, player_id);
    if (result.has_failed()) {
       spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
@@ -346,11 +353,11 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
    m_dispatcher.synchronise_player_position_and_rotation(
            player_id, entity.component<entity::component::Location>().position(),
-           entity.component<entity::component::Rotation>().yaw(),
-           entity.component<entity::component::Rotation>().pitch());
+           entity.component<entity::component::Rotation>().yaw_degrees(),
+           entity.component<entity::component::Rotation>().pitch_degrees());
 
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(),
-                                   entity.component<entity::component::Rotation>().pitch());
+                                   entity.component<entity::component::Rotation>().pitch_degrees());
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
@@ -478,13 +485,32 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
    auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
    if (target_player_id.has_value()) {
 
-      spdlog::info("setting players health to {}", entity.component<entity::component::Health>().health);
+      spdlog::info("setting players health to {}", entity.component<HealthComponent>().health);
       m_dispatcher.set_health_and_food(*target_player_id,
                                        entity.component<entity::component::Health>().health, 20, 5.0f);
    }
 
-   m_dispatcher.animate_entity(event.entity_id(), entity.component<entity::component::Location>().position(),
+   m_dispatcher.animate_entity(event.entity_id(), entity.component<LocationComponent>().position(),
                                game::EntityAnimation::TakeDamage);
+}
+
+void EventHandler::handle_use_item(const serverbound_v1::UseItem & /*use_item*/, game::PlayerId player_id)
+{
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::error("invalid player id {}", boost::uuids::to_string(player_id));
+      return;
+   }
+
+   auto entity = m_entity_system.entity(player->entity_id());
+   if (not entity.has_component<InventoryComponent>()) {
+      spdlog::error("player entity doesn't have inventory (entity_id:{})", player->entity_id());
+      return;
+   }
+
+   auto slot_item = entity.component<InventoryComponent>().active_item();
+   spdlog::debug("using item {}", slot_item.item_id);
+   m_root_item_controller.on_item_use(m_world, player_id, entity.id(), slot_item.item_id);
 }
 
 }// namespace minecpp::service::engine

@@ -1,6 +1,6 @@
 #pragma once
 #include <minecpp/game/Entity.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/math/Vector3.h>
 
 namespace minecpp::entity::component {

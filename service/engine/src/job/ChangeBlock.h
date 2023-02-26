@@ -1,7 +1,7 @@
 #pragma once
 
 #include <minecpp/game/IEntitySystem.hpp>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/world/IChunkSystem.h>
 
 #include "../JobSystem.h"

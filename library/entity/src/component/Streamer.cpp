@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/component/StreamingComponent.h>
+#include <minecpp/entity/component/Streamer.h>
 #include <minecpp/game/Game.h>
 #include <minecpp/math/Vector2.h>
 
@@ -21,24 +21,24 @@ int distance_squared(const minecpp::math::Vector2i &lhs, const minecpp::math::Ve
 
 namespace minecpp::entity::component {
 
-StreamingComponent::StreamingComponent(int view_distance) :
+Streamer::Streamer(int view_distance) :
     m_view_distance(view_distance),
     m_view_distance_squared(view_distance * view_distance)
 {
 }
 
-void StreamingComponent::on_attached(game::Entity &entity)
+void Streamer::on_attached(game::Entity &entity)
 {
    if (entity.has_component<Location>()) {
       auto &location        = entity.component<Location>();
       m_last_chunk_position = game::ChunkPosition::from_position(location.position());
 
       entt::sink on_pos_sink{location.on_position_change};
-      on_pos_sink.connect<&StreamingComponent::on_position_change>(this);
+      on_pos_sink.connect<&Streamer::on_position_change>(this);
    }
 }
 
-mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::IWorld &world,
+mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world,
                                                                   game::PlayerId player_id)
 {
    std::vector<game::ChunkPosition> chunks_to_load;
@@ -74,7 +74,7 @@ mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::IWorld &
    return mb::ok;
 }
 
-void StreamingComponent::on_position_change(game::IWorld &world, game::Entity &entity,
+void Streamer::on_position_change(game::IWorld &world, game::Entity &entity,
                                             const math::Vector3 &old_position,
                                             const math::Vector3 &new_position)
 {

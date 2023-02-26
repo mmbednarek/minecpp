@@ -170,5 +170,13 @@ struct PlayerBlockPlacement
 
 void deserialize(Reader &r, PlayerBlockPlacement &msg);
 
+// 0x2e
+struct UseItem
+{
+   PlayerHand hand{};
+   int sequence_id;
+};
+
+void deserialize(Reader &r, UseItem &msg);
 
 }// namespace minecpp::network::message

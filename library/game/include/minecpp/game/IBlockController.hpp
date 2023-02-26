@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IWorld.h"
+#include "IWorld.hpp"
 #include <minecpp/math/Vector3.h>
 
 namespace minecpp::game {

@@ -67,6 +67,7 @@ class Service
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClickWindow msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::HeldItemChange msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PluginMessage msg);
+   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::UseItem msg);
 };
 
 }// namespace minecpp::service::front

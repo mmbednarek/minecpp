@@ -13,9 +13,10 @@ target_sources(minecpp_game PUBLIC
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h
         ${MINECPP_GAME_INCLUDE_DIR}/Hand.h
         ${MINECPP_GAME_INCLUDE_DIR}/IBlockController.hpp
-        ${MINECPP_GAME_INCLUDE_DIR}/IDispatcher.h
+        ${MINECPP_GAME_INCLUDE_DIR}/IDispatcher.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/IEntitySystem.hpp
-        ${MINECPP_GAME_INCLUDE_DIR}/IWorld.h
+        ${MINECPP_GAME_INCLUDE_DIR}/IItemController.hpp
+        ${MINECPP_GAME_INCLUDE_DIR}/IWorld.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Mode.h
         ${MINECPP_GAME_INCLUDE_DIR}/Rules.h
         ${MINECPP_GAME_INCLUDE_DIR}/State.h

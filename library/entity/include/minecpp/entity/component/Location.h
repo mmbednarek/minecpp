@@ -1,7 +1,8 @@
 #pragma once
 #include <entt/entt.hpp>
 #include <minecpp/game/Entity.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
+#include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 #include <set>
@@ -51,14 +52,19 @@ class Rotation
    void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
    [[nodiscard]] game::Rotation rotation() const;
-   [[nodiscard]] float yaw() const;
-   [[nodiscard]] float pitch() const;
-   void set_yaw(float yaw);
-   void set_pitch(float pitch);
+   [[nodiscard]] math::Degrees yaw_degrees() const;
+   [[nodiscard]] math::Degrees pitch_degrees() const;
+   void set_yaw_degrees(math::Degrees yaw);
+   void set_pitch_degrees(math::Degrees pitch);
+
+   [[nodiscard]] math::Radians yaw() const;
+   [[nodiscard]] math::Radians pitch() const;
+   void set_yaw(math::Radians yaw);
+   void set_pitch(math::Radians pitch);
 
  private:
-   float m_yaw{};
-   float m_pitch{};
+   math::Radians m_yaw{};
+   math::Radians m_pitch{};
 };
 
 }// namespace minecpp::entity::component

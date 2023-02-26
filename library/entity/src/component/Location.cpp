@@ -1,5 +1,6 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
+#include <minecpp/math/Rotation.h>
 
 namespace minecpp::entity::component {
 
@@ -101,29 +102,49 @@ void Rotation::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity
    entity->mutable_rotation()->set_pitch(this->m_pitch);
 }
 
-float Rotation::yaw() const
+math::Degrees Rotation::yaw_degrees() const
 {
-   return m_yaw;
+   return math::radians_to_degrees(m_yaw);
 }
 
-float Rotation::pitch() const
+math::Degrees Rotation::pitch_degrees() const
 {
-   return m_pitch;
+   return math::radians_to_degrees(m_pitch);
 }
 
-void Rotation::set_yaw(float yaw)
+void Rotation::set_yaw_degrees(math::Degrees yaw)
 {
-   m_yaw = yaw;
+   m_yaw = math::degrees_to_radians(yaw);
 }
 
-void Rotation::set_pitch(float pitch)
+void Rotation::set_pitch_degrees(math::Degrees pitch)
 {
-   m_pitch = pitch;
+   m_pitch = math::degrees_to_radians(pitch);
 }
 
 game::Rotation Rotation::rotation() const
 {
    return {m_yaw, m_pitch};
+}
+
+math::Radians Rotation::yaw() const
+{
+   return m_yaw;
+}
+
+math::Radians Rotation::pitch() const
+{
+   return m_pitch;
+}
+
+void Rotation::set_yaw(math::Radians yaw)
+{
+   m_yaw = yaw;
+}
+
+void Rotation::set_pitch(math::Radians pitch)
+{
+   m_pitch = pitch;
 }
 
 TrackedPosition TrackedPosition::from_vector3(const math::Vector3 &position)

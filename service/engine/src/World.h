@@ -4,7 +4,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
 #include <minecpp/controller/BlockManager.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
 #include <minecpp/world/LightSystem.h>
 

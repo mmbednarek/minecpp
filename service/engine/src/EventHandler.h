@@ -4,6 +4,7 @@
 #include <minecpp/command/RuntimeContext.h>
 #include <minecpp/command/StandardStream.h>
 #include <minecpp/controller/BlockManager.h>
+#include <minecpp/controller/RootItem.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
 
@@ -32,7 +33,8 @@ class EventHandler
 {
  public:
    EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager, entity::EntitySystem &entity_system,
-                game::IWorld &world, controller::BlockManager &block_manager);
+                game::IWorld &world, controller::BlockManager &block_manager,
+                controller::RootItem &root_item_controller);
 
    void handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id);
    void handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, game::PlayerId player_id);
@@ -49,6 +51,7 @@ class EventHandler
    void handle_change_held_item(const serverbound_v1::ChangeHeldItem &event, game::PlayerId player_id);
    void handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id);
    void handle_interact(const serverbound_v1::Interact &event, game::PlayerId player_id);
+   void handle_use_item(const serverbound_v1::UseItem &use_item, game::PlayerId player_id);
 
  private:
    Dispatcher &m_dispatcher;
@@ -59,6 +62,7 @@ class EventHandler
    command::CommandManager m_command_manager;
    command::RuntimeContext m_command_context;
    controller::BlockManager &m_block_manager;
+   controller::RootItem &m_root_item_controller;
 };
 
 }// namespace minecpp::service::engine

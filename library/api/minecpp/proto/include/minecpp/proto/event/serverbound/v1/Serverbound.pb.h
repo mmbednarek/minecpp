@@ -99,6 +99,9 @@ extern SetPlayerRotationDefaultTypeInternal _SetPlayerRotation_default_instance_
 class UpdatePing;
 struct UpdatePingDefaultTypeInternal;
 extern UpdatePingDefaultTypeInternal _UpdatePing_default_instance_;
+class UseItem;
+struct UseItemDefaultTypeInternal;
+extern UseItemDefaultTypeInternal _UseItem_default_instance_;
 }  // namespace v1
 }  // namespace serverbound
 }  // namespace event
@@ -120,6 +123,7 @@ template<> ::minecpp::proto::event::serverbound::v1::RemovePlayer* Arena::Create
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerPosition* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerPosition>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerRotation* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerRotation>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::UpdatePing* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::UpdatePing>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::UseItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::UseItem>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace minecpp {
 namespace proto {
@@ -1891,6 +1895,165 @@ class BlockPlacement final :
 };
 // -------------------------------------------------------------------
 
+class UseItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.UseItem) */ {
+ public:
+  inline UseItem() : UseItem(nullptr) {}
+  ~UseItem() override;
+  explicit PROTOBUF_CONSTEXPR UseItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UseItem(const UseItem& from);
+  UseItem(UseItem&& from) noexcept
+    : UseItem() {
+    *this = ::std::move(from);
+  }
+
+  inline UseItem& operator=(const UseItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UseItem& operator=(UseItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UseItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UseItem* internal_default_instance() {
+    return reinterpret_cast<const UseItem*>(
+               &_UseItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(UseItem& a, UseItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UseItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UseItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UseItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UseItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UseItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UseItem& from) {
+    UseItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UseItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.UseItem";
+  }
+  protected:
+  explicit UseItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kHandFieldNumber = 1,
+    kSequenceIdFieldNumber = 2,
+  };
+  // int32 hand = 1;
+  void clear_hand();
+  int32_t hand() const;
+  void set_hand(int32_t value);
+  private:
+  int32_t _internal_hand() const;
+  void _internal_set_hand(int32_t value);
+  public:
+
+  // int32 sequence_id = 2;
+  void clear_sequence_id();
+  int32_t sequence_id() const;
+  void set_sequence_id(int32_t value);
+  private:
+  int32_t _internal_sequence_id() const;
+  void _internal_set_sequence_id(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.UseItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t hand_;
+    int32_t sequence_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ChangeInventoryItem final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.ChangeInventoryItem) */ {
  public:
@@ -1939,7 +2102,7 @@ class ChangeInventoryItem final :
                &_ChangeInventoryItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(ChangeInventoryItem& a, ChangeInventoryItem& b) {
     a.Swap(&b);
@@ -2118,7 +2281,7 @@ class ChangeHeldItem final :
                &_ChangeHeldItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(ChangeHeldItem& a, ChangeHeldItem& b) {
     a.Swap(&b);
@@ -2266,7 +2429,7 @@ class IssueCommand final :
                &_IssueCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(IssueCommand& a, IssueCommand& b) {
     a.Swap(&b);
@@ -2419,7 +2582,7 @@ class Interact final :
                &_Interact_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(Interact& a, Interact& b) {
     a.Swap(&b);
@@ -3538,6 +3701,50 @@ inline void BlockPlacement::set_sequence_id(int32_t value) {
 
 // -------------------------------------------------------------------
 
+// UseItem
+
+// int32 hand = 1;
+inline void UseItem::clear_hand() {
+  _impl_.hand_ = 0;
+}
+inline int32_t UseItem::_internal_hand() const {
+  return _impl_.hand_;
+}
+inline int32_t UseItem::hand() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.UseItem.hand)
+  return _internal_hand();
+}
+inline void UseItem::_internal_set_hand(int32_t value) {
+  
+  _impl_.hand_ = value;
+}
+inline void UseItem::set_hand(int32_t value) {
+  _internal_set_hand(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.UseItem.hand)
+}
+
+// int32 sequence_id = 2;
+inline void UseItem::clear_sequence_id() {
+  _impl_.sequence_id_ = 0;
+}
+inline int32_t UseItem::_internal_sequence_id() const {
+  return _impl_.sequence_id_;
+}
+inline int32_t UseItem::sequence_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.UseItem.sequence_id)
+  return _internal_sequence_id();
+}
+inline void UseItem::_internal_set_sequence_id(int32_t value) {
+  
+  _impl_.sequence_id_ = value;
+}
+inline void UseItem::set_sequence_id(int32_t value) {
+  _internal_set_sequence_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.UseItem.sequence_id)
+}
+
+// -------------------------------------------------------------------
+
 // ChangeInventoryItem
 
 // int32 slot_id = 1;
@@ -3915,6 +4122,8 @@ inline void Interact::set_is_sneaking(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

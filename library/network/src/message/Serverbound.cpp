@@ -158,4 +158,10 @@ void deserialize(Reader &r, Interact &msg)
    msg.is_sneaking = r.read_byte();
 }
 
+void deserialize(Reader &r, UseItem &msg)
+{
+   msg.hand         = static_cast<PlayerHand>(r.read_varint());
+   msg.sequence_id  = r.read_varint();
+}
+
 }// namespace minecpp::network::message

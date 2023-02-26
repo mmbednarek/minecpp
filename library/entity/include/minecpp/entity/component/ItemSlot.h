@@ -1,7 +1,7 @@
 #pragma once
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/Game.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::entity::component {
 
