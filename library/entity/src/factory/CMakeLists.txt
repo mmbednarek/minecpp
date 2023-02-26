@@ -3,10 +3,12 @@
 set(MINECPP_ENTITY_FACTORY_INCLUDE_DIR ${MINECPP_ENTITY_DIR}/include/minecpp/entity/factory)
 target_sources(minecpp_entity PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Arrow.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Item.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Player.cpp
 
         # Header files
+        ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Arrow.h
         ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Item.h
         ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Player.h
 )

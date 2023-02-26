@@ -1,10 +1,10 @@
 #pragma once
 #include <entt/entt.hpp>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::entity::component {
 
-class TickComponent
+class Ticker
 {
  public:
    entt::sigh<void(game::IWorld &, game::Entity &, double)> on_tick;

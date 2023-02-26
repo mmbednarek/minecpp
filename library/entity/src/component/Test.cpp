@@ -1,6 +1,6 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Test.h>
-#include <minecpp/entity/component/TickComponent.h>
+#include <minecpp/entity/component/Ticker.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::entity::component {
@@ -12,8 +12,8 @@ void Test::on_attached(game::Entity &entity)
       sink.connect<&Test::on_position_change>(this);
    }
 
-   if (entity.has_component<TickComponent>()) {
-      entt::sink sink{entity.component<TickComponent>().on_tick};
+   if (entity.has_component<Ticker>()) {
+      entt::sink sink{entity.component<Ticker>().on_tick};
       sink.connect<&Test::tick>(this);
    }
 }

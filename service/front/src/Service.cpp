@@ -189,6 +189,14 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    m_stream->send(command, player_id);
 }
 
+void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::UseItem msg)
+{
+   serverbound_v1::UseItem use_item;
+   use_item.set_hand(static_cast<int32_t>(msg.hand));
+   use_item.set_sequence_id(msg.sequence_id);
+   m_stream->send(use_item, player_id);
+}
+
 const char command_list[]{
         0x11, 0x14, 0x00, 0x09, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x05, 0x01, 0x0a, 0x04,
         0x68, 0x65, 0x6c, 0x70, 0x05, 0x01, 0x0b, 0x04, 0x6c, 0x69, 0x73, 0x74, 0x01, 0x01, 0x0c, 0x02, 0x6d,

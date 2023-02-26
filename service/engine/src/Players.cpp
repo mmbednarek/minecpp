@@ -3,7 +3,7 @@
 #include <fmt/core.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Player.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/util/Compression.h>
 #include <minecpp/util/Uuid.h>

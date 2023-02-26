@@ -2,6 +2,7 @@
 
 target_sources(minecpp_math_test PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/RotationTest.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/VectorTest.cpp
 )
 

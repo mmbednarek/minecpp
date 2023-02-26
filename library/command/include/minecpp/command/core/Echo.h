@@ -1,7 +1,7 @@
 #ifndef MINECPP_ECHO_H
 #define MINECPP_ECHO_H
 #include "../Command.h"
-#include <minecpp/game/IDispatcher.h>
+#include <minecpp/game/IDispatcher.hpp>
 
 namespace minecpp::command::core {
 

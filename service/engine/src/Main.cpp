@@ -82,10 +82,11 @@ auto main() -> int
    EventManager manager;
    Dispatcher dispatcher(manager, entity_system);
    minecpp::controller::BlockManager block_manager;
+   minecpp::controller::RootItem root_item_controller;
 
    World world(boost::uuids::uuid(), chunk_system, job_system, dispatcher, players, entity_system,
                block_manager);
-   EventHandler handler(dispatcher, players, entity_system, world, block_manager);
+   EventHandler handler(dispatcher, players, entity_system, world, block_manager, root_item_controller);
 
    TickSystem tick_system(world);
 

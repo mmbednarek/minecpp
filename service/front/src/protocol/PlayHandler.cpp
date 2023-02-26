@@ -92,6 +92,11 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
+   case 0x32: {// 1.19.3 OK
+      UseItem msg{};
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
    default:
       spdlog::info("unknown op {}, packet data: {}", op, r.get_hex_data());
       send(conn, minecpp::network::message::SystemChat{

@@ -1,6 +1,6 @@
 #pragma once
 #include "Game.h"
-#include "IDispatcher.h"
+#include "IDispatcher.hpp"
 #include "IEntitySystem.hpp"
 #include <mb/result.h>
 #include <minecpp/game/player/Provider.hpp>
@@ -58,6 +58,7 @@ class IWorld : public IBlockContainer
    virtual mb::emptyres send_chunk_to_player(PlayerId player_id, const ChunkPosition &position)       = 0;
    virtual bool is_movement_blocked_at(const math::Vector3 &position)                                 = 0;
    virtual void kill_entity(game::EntityId id)                                                        = 0;
+   virtual void destroy_block(const BlockPosition &position)                                           = 0;
 
    template<typename TEntityFactory, typename... TArgs>
    Entity spawn(const math::Vector3 &position, TArgs &&...args)

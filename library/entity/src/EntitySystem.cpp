@@ -3,7 +3,9 @@
 #include <minecpp/entity/component/ItemSlot.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/component/TickComponent.h>
+#include <minecpp/entity/component/Projectile.h>
+#include <minecpp/entity/component/Ticker.h>
+#include <minecpp/entity/component/UniqueId.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/game/Concepts.h>
 
@@ -12,11 +14,13 @@ namespace minecpp::entity {
 EntitySystem::EntitySystem() :
     m_storage(std::make_unique<EntitySpace>())
 {
+   game::register_component<component::UniqueId>();
    game::register_component<component::Location>();
    game::register_component<component::Player>();
    game::register_component<component::Health>();
    game::register_component<component::Rotation>();
    game::register_component<component::ItemSlot>();
+   game::register_component<component::Projectile>();
 }
 
 EntitySystem::~EntitySystem() = default;
@@ -27,7 +31,7 @@ game::Entity EntitySystem::create_spatial_entity(math::Vector3 position, math::V
    auto entity    = this->entity(static_cast<game::EntityId>(entity_id));
 
    entity.add_component<component::Location>(position, extent);
-   m_storage->register_entity(entity.id(), position, extent);
+   m_storage->register_entity(entity.id(), entity.component<component::Location>().logical_position(), extent);
 
    return entity;
 }
@@ -67,9 +71,9 @@ double EntitySystem::view_distance() const
 
 void EntitySystem::tick_entities(game::IWorld &world, double delta_time)
 {
-   for (auto entity_id : m_registry.view<component::TickComponent>()) {
+   for (auto entity_id : m_registry.view<component::Ticker>()) {
       auto entity = this->entity(static_cast<game::EntityId>(entity_id));
-      m_registry.get<component::TickComponent>(entity_id).tick(world, entity, delta_time);
+      m_registry.get<component::Ticker>(entity_id).tick(world, entity, delta_time);
    }
 
    this->apply_pending_kills();
@@ -87,7 +91,7 @@ void EntitySystem::apply_pending_kills()
          auto entity = this->entity(entity_id);
          if (entity.has_component<component::Location>()) {
             auto &location = entity.component<component::Location>();
-            m_storage->remove_entity(entity_id, location.position(), location.extent());
+            m_storage->remove_entity(entity_id, location.logical_position(), location.extent());
          }
       }
 

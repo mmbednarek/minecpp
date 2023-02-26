@@ -1,5 +1,5 @@
 #include <minecpp/entity/component/Location.h>
-#include <minecpp/entity/component/TickComponent.h>
+#include <minecpp/entity/component/Ticker.h>
 #include <minecpp/entity/component/Velocity.h>
 #include <spdlog/spdlog.h>
 
@@ -19,8 +19,8 @@ Velocity::Velocity(const math::Vector3 &velocity, bool is_on_ground) :
 void Velocity::on_attached(game::Entity &entity)
 {
    m_entity_id = entity.id();
-   if (entity.has_component<TickComponent>()) {
-      entt::sink sink{entity.component<TickComponent>().on_tick};
+   if (entity.has_component<Ticker>()) {
+      entt::sink sink{entity.component<Ticker>().on_tick};
       sink.connect<&Velocity::tick>(this);
    }
 }
@@ -69,6 +69,11 @@ void Velocity::set_velocity(game::IDispatcher &dispatcher, const math::Vector3 &
 {
    m_velocity = velocity;
    dispatcher.set_entity_velocity(m_entity_id, position, (velocity * 8000.0).cast<short>());
+}
+
+const math::Vector3 &Velocity::velocity() const
+{
+   return m_velocity;
 }
 
 }// namespace minecpp::entity::component

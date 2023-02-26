@@ -4,7 +4,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
 #include <minecpp/controller/BlockManager.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
 #include <minecpp/world/LightSystem.h>
 
@@ -26,6 +26,7 @@ class World : public minecpp::game::IWorld
    World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
          PlayerManager &player_manager, entity::EntitySystem &entity_system,
          controller::BlockManager &block_controller);
+   void destroy_block(const game::BlockPosition &position) override;
 
    game::player::Provider &players() override;
    game::IEntitySystem &entity_system() override;

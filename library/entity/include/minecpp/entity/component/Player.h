@@ -1,6 +1,6 @@
 #pragma once
 #include <minecpp/game/Game.h>
-#include <minecpp/game/IDispatcher.h>
+#include <minecpp/game/IDispatcher.hpp>
 #include <minecpp/game/IEntitySystem.hpp>
 #include <string>
 #include <vector>

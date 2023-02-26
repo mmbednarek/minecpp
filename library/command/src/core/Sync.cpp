@@ -2,7 +2,7 @@
 #include <minecpp/command/RuntimeContext.h>
 #include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/component/StreamingComponent.h>
+#include <minecpp/entity/component/Streamer.h>
 
 namespace minecpp::command::core {
 
@@ -34,11 +34,11 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput & /*input*/) const
    if (entity->has_component<minecpp::entity::component::Player>())
       return make_error(command_name, "entity is not a player");
 
-   if (entity->has_component<minecpp::entity::component::StreamingComponent>())
+   if (entity->has_component<minecpp::entity::component::Streamer>())
       return make_error(command_name, "entity doesn't stream chunks");
 
    auto player_id = entity->component<minecpp::entity::component::Player>().id();
-   entity->component<minecpp::entity::component::StreamingComponent>().send_all_visible_chunks(*world,
+   entity->component<minecpp::entity::component::Streamer>().send_all_visible_chunks(*world,
                                                                                                player_id);
 
    auto info = std::make_shared<FormattedString>();

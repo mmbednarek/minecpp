@@ -2,7 +2,7 @@
 #include <array>
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/Game.h>
-#include <minecpp/game/IDispatcher.h>
+#include <minecpp/game/IDispatcher.hpp>
 
 namespace minecpp::entity::component {
 

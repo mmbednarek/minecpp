@@ -2,7 +2,7 @@
 #define MINECPP_RUNTIME_CONTEXT_H
 #include "Object.h"
 #include <memory>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <string>
 #include <unordered_map>
 

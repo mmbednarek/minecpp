@@ -1,8 +1,8 @@
-#include <minecpp/entity/component/TickComponent.h>
+#include <minecpp/entity/component/Ticker.h>
 
 namespace minecpp::entity::component {
 
-void TickComponent::tick(game::IWorld &world, game::Entity &entity, double delta_time)
+void Ticker::tick(game::IWorld &world, game::Entity &entity, double delta_time)
 {
    on_tick.publish(world, entity, delta_time);
 }

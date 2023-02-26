@@ -5,7 +5,7 @@
 #include <minecpp/container/PalettedVector.h>
 #include <minecpp/container/TightArray.h>
 #include <minecpp/game/Game.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 #include <minecpp/nbt/chunk/v1/Chunk.nbt.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <shared_mutex>

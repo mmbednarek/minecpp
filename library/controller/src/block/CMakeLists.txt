@@ -6,6 +6,7 @@ target_sources(minecpp_controller PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Default.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Door.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Fence.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Foliage.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Stairs.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Torch.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Wood.cpp
@@ -14,6 +15,7 @@ target_sources(minecpp_controller PUBLIC
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Default.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Door.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Fence.h
+        ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Foliage.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Stairs.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Torch.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Wood.h

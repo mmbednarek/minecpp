@@ -1,5 +1,6 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
+#include <minecpp/math/Rotation.h>
 
 namespace minecpp::entity::component {
 
@@ -32,8 +33,14 @@ math::Vector3 Location::extent() const
 
 void Location::set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position)
 {
-   this->on_position_change.publish(world, entity, m_position, position);
-   world.entity_system().move_spatial_entity(entity.id(), m_extent, m_position, position);
+   auto prev_logical_position = this->logical_position();
+   if ((position - prev_logical_position).length() < 0.1) {
+      // just apply position
+      m_position = position;
+      return;
+   }
+
+   this->on_position_change.publish(world, entity, prev_logical_position, position);
 
    m_position = position;
 
@@ -42,6 +49,7 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
       return;
 
    m_tracked_position.position += movement;
+   world.entity_system().move_spatial_entity(entity.id(), m_extent, prev_logical_position, this->logical_position());
 
    game::Rotation rotation{};
    if (entity.has_component<Rotation>()) {
@@ -83,6 +91,11 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    }
 }
 
+math::Vector3 Location::logical_position() const
+{
+   return m_tracked_position.position.cast<double>() / 4096.0;
+}
+
 Rotation::Rotation(float yaw, float pitch) :
     m_yaw(yaw),
     m_pitch(pitch)
@@ -91,39 +104,72 @@ Rotation::Rotation(float yaw, float pitch) :
 
 void Rotation::serialize_to_proto(proto::entity::v1::Entity *entity) const
 {
-   entity->mutable_rotation()->set_yaw(this->m_yaw);
-   entity->mutable_rotation()->set_pitch(this->m_pitch);
+   entity->mutable_rotation()->set_yaw(math::radians_to_degrees(this->m_yaw));
+   entity->mutable_rotation()->set_pitch(math::radians_to_degrees(this->m_pitch));
 }
 
 void Rotation::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
 {
-   entity->mutable_rotation()->set_yaw(this->m_yaw);
-   entity->mutable_rotation()->set_pitch(this->m_pitch);
+   entity->mutable_rotation()->set_yaw(math::radians_to_degrees(this->m_yaw));
+   entity->mutable_rotation()->set_pitch(math::radians_to_degrees(this->m_pitch));
 }
 
-float Rotation::yaw() const
+math::Degrees Rotation::yaw_degrees() const
 {
-   return m_yaw;
+   return math::radians_to_degrees(m_yaw);
 }
 
-float Rotation::pitch() const
+math::Degrees Rotation::pitch_degrees() const
 {
-   return m_pitch;
+   return math::radians_to_degrees(m_pitch);
 }
 
-void Rotation::set_yaw(float yaw)
+void Rotation::set_yaw_degrees(math::Degrees yaw)
 {
-   m_yaw = yaw;
+   m_yaw = math::degrees_to_radians(yaw);
 }
 
-void Rotation::set_pitch(float pitch)
+void Rotation::set_pitch_degrees(math::Degrees pitch)
 {
-   m_pitch = pitch;
+   m_pitch = math::degrees_to_radians(pitch);
 }
 
 game::Rotation Rotation::rotation() const
 {
-   return {m_yaw, m_pitch};
+   return {math::radians_to_degrees(m_yaw), math::radians_to_degrees(m_pitch)};
+}
+
+math::Radians Rotation::yaw() const
+{
+   return m_yaw;
+}
+
+math::Radians Rotation::pitch() const
+{
+   return m_pitch;
+}
+
+void Rotation::set_yaw(math::Radians yaw)
+{
+   m_yaw = yaw;
+}
+
+void Rotation::set_pitch(math::Radians pitch)
+{
+   m_pitch = pitch;
+}
+
+void Rotation::set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position, math::Radians yaw,
+                            math::Radians pitch)
+{
+   m_yaw   = yaw;
+   m_pitch = pitch;
+   dispatcher.entity_look(m_entity_id, position, {this->yaw_degrees(), this->pitch_degrees()});
+}
+
+void Rotation::on_attached(game::Entity &entity)
+{
+   m_entity_id = entity.id();
 }
 
 TrackedPosition TrackedPosition::from_vector3(const math::Vector3 &position)

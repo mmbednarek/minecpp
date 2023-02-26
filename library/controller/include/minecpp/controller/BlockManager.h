@@ -4,7 +4,7 @@
 #include <memory>
 #include <minecpp/game/Game.h>
 #include <minecpp/game/IBlockController.hpp>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::controller {
 

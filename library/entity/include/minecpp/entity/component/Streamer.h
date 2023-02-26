@@ -1,13 +1,13 @@
 #pragma once
 #include <minecpp/game/Game.h>
-#include <minecpp/game/IWorld.h>
+#include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::entity::component {
 
-class StreamingComponent
+class Streamer
 {
  public:
-   explicit StreamingComponent(int view_distance);
+   explicit Streamer(int view_distance);
 
    void on_attached(game::Entity &entity);
 
@@ -20,7 +20,6 @@ class StreamingComponent
    game::ChunkPosition m_last_chunk_position{};
    int m_view_distance{};
    int m_view_distance_squared{};
-   std::vector<game::EntityId> m_visible_entities{};
 };
 
 }// namespace minecpp::entity::component

@@ -1,6 +1,6 @@
 #pragma once
 #include "Id.h"
-#include <minecpp/game/IDispatcher.h>
+#include <minecpp/game/IDispatcher.hpp>
 #include <minecpp/game/Mode.h>
 #include <minecpp/math/Vector3.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
