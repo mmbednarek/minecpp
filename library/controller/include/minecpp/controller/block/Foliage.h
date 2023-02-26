@@ -4,7 +4,8 @@
 
 namespace minecpp::controller::block {
 
-class Foliage : public Default {
+class Foliage : public Default
+{
  public:
    std::optional<game::BlockStateId> on_neighbour_change(game::IWorld &world,
                                                          game::BlockStateId block_state_id,
@@ -13,4 +14,4 @@ class Foliage : public Default {
                                                          game::Face face) override;
 };
 
-}
+}// namespace minecpp::controller::block

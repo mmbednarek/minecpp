@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 #include <minecpp/math/Vector3.h>
 
-TEST(MathTest, Rotation_VectorFromYaw) {
+TEST(MathTest, Rotation_VectorFromYaw)
+{
    auto vec1 = minecpp::math::Vector3::from_yaw_and_pitch(0, 0);
    EXPECT_EQ(vec1.x(), 0.0f);
    EXPECT_EQ(vec1.z(), 1.0f);
@@ -19,11 +20,12 @@ TEST(MathTest, Rotation_VectorFromYaw) {
    EXPECT_LE(abs(vec4.z()), 0.00001f);
 }
 
-TEST(MathTest, Rotation_RadiansDegTest) {
+TEST(MathTest, Rotation_RadiansDegTest)
+{
    EXPECT_EQ(minecpp::math::radians_to_degrees(std::numbers::pi), 180.0f);
-   EXPECT_EQ(minecpp::math::radians_to_degrees(std::numbers::pi/2.0), 90.0f);
-   EXPECT_EQ(minecpp::math::radians_to_degrees(3.0*std::numbers::pi/2.0), 270.0f);
+   EXPECT_EQ(minecpp::math::radians_to_degrees(std::numbers::pi / 2.0), 90.0f);
+   EXPECT_EQ(minecpp::math::radians_to_degrees(3.0 * std::numbers::pi / 2.0), 270.0f);
    EXPECT_EQ(minecpp::math::degrees_to_radians(180.0f), std::numbers::pi);
-   EXPECT_EQ(minecpp::math::degrees_to_radians(90.0f), std::numbers::pi/2.0);
-   EXPECT_EQ(minecpp::math::degrees_to_radians(270.0f), 3.0*std::numbers::pi/2.0);
+   EXPECT_EQ(minecpp::math::degrees_to_radians(90.0f), std::numbers::pi / 2.0);
+   EXPECT_EQ(minecpp::math::degrees_to_radians(270.0f), 3.0 * std::numbers::pi / 2.0);
 }

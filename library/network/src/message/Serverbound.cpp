@@ -160,8 +160,8 @@ void deserialize(Reader &r, Interact &msg)
 
 void deserialize(Reader &r, UseItem &msg)
 {
-   msg.hand         = static_cast<PlayerHand>(r.read_varint());
-   msg.sequence_id  = r.read_varint();
+   msg.hand        = static_cast<PlayerHand>(r.read_varint());
+   msg.sequence_id = r.read_varint();
 }
 
 }// namespace minecpp::network::message

@@ -38,8 +38,7 @@ void Streamer::on_attached(game::Entity &entity)
    }
 }
 
-mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world,
-                                                                  game::PlayerId player_id)
+mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world, game::PlayerId player_id)
 {
    std::vector<game::ChunkPosition> chunks_to_load;
 
@@ -75,8 +74,7 @@ mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world,
 }
 
 void Streamer::on_position_change(game::IWorld &world, game::Entity &entity,
-                                            const math::Vector3 &old_position,
-                                            const math::Vector3 &new_position)
+                                  const math::Vector3 &old_position, const math::Vector3 &new_position)
 {
    std::lock_guard<std::mutex> lock(m_mutex);
 

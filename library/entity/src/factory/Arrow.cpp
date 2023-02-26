@@ -8,9 +8,9 @@
 namespace minecpp::entity::factory {
 
 Arrow::Arrow(const math::Vector3 &initial_velocity, float initial_yaw, float initial_pitch) :
-        m_initial_velocity(initial_velocity),
-        m_initial_yaw(initial_yaw),
-        m_initial_pitch(initial_pitch)
+    m_initial_velocity(initial_velocity),
+    m_initial_yaw(initial_yaw),
+    m_initial_pitch(initial_pitch)
 {
 }
 

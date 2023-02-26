@@ -3,8 +3,8 @@
 #include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
-#include <minecpp/entity/factory/Item.h>
 #include <minecpp/entity/EntitySystem.h>
+#include <minecpp/entity/factory/Item.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/world/BlockState.h>
