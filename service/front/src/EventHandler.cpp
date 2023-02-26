@@ -28,19 +28,19 @@ void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg,
    send_message(add_player, recipient_list);
 }
 
-void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &pos,
+void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &spawn,
                                        const event::RecipientList &recipient_list)
 {
-   auto player_id = game::player::read_id_from_proto(pos.player_id());
+   auto player_id = game::player::read_id_from_proto(spawn.player_id());
 
    auto spawn_player = minecpp::network::message::SpawnPlayer{
-           .entity_id = pos.entity_id(),
+           .entity_id = spawn.entity().entity_id(),
            .id        = player_id,
-           .x         = pos.position().x(),
-           .y         = pos.position().y(),
-           .z         = pos.position().z(),
-           .yaw       = pos.rotation().yaw(),
-           .pitch     = pos.rotation().pitch(),
+           .x         = spawn.entity().position().x(),
+           .y         = spawn.entity().position().y(),
+           .z         = spawn.entity().position().z(),
+           .yaw       = spawn.entity().rotation().yaw(),
+           .pitch     = spawn.entity().rotation().pitch(),
    };
    // FIXME: temporary hack to not send a Player.himself
    send_message_excluding(spawn_player, player_id);

@@ -4,7 +4,8 @@ namespace minecpp::format {
 
 // TODO: Escape characters
 
-std::string_view format_bool(bool value)  {
+std::string_view format_bool(bool value)
+{
    return value ? "true" : "false";
 }
 

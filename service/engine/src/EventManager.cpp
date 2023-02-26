@@ -38,4 +38,11 @@ void EventManager::send_to_all_excluding(const EventManager::Message &message, g
    }
 }
 
+void EventManager::send_to_many(const EventManager::Message &message, std::span<game::PlayerId> player_id)
+{
+   for (auto &q : m_queues) {
+      q.second->send_to_many(message, player_id);
+   }
+}
+
 }// namespace minecpp::service::engine

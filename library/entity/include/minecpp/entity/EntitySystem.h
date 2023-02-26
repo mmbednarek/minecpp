@@ -1,6 +1,5 @@
 #pragma once
 
-#include "IEntitySpace.h"
 #include <entt/entt.hpp>
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/Game.h>
@@ -10,10 +9,13 @@
 
 namespace minecpp::entity {
 
+class EntitySpace;
+
 class EntitySystem final : public game::IEntitySystem
 {
  public:
    EntitySystem();
+   ~EntitySystem() override;
 
    game::Entity create_spatial_entity(math::Vector3 position, math::Vector3 extent) override;
    std::vector<game::EntityId> list_entities_in(math::Vector3 min, math::Vector3 max) override;
@@ -22,7 +24,6 @@ class EntitySystem final : public game::IEntitySystem
    void destroy_entity(game::EntityId id) override;
    std::vector<game::EntityId> list_entities_in_view_distance(math::Vector3 position) override;
    std::vector<game::EntityId> list_entities_intersecting_with(math::Vector3 min, math::Vector3 max) override;
-   IEntitySpace &space();
    [[nodiscard]] double view_distance() const override;
    void move_spatial_entity(game::EntityId id, math::Vector3 extend, math::Vector3 old_position,
                             math::Vector3 new_position) override;
@@ -33,7 +34,7 @@ class EntitySystem final : public game::IEntitySystem
 
    std::mutex m_kill_mtx;
    entt::registry m_registry;
-   std::unique_ptr<IEntitySpace> m_storage;
+   std::unique_ptr<EntitySpace> m_storage;
    std::vector<game::EntityId> m_pending_kills;
    double m_view_distance{16.0};
    double m_min_y{-64.0};

@@ -20,6 +20,7 @@ class StreamingComponent
    game::ChunkPosition m_last_chunk_position{};
    int m_view_distance{};
    int m_view_distance_squared{};
+   std::vector<game::EntityId> m_visible_entities{};
 };
 
 }// namespace minecpp::entity::component

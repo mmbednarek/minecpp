@@ -70,6 +70,7 @@ mb::result<mb::empty> StreamingComponent::send_all_visible_chunks(game::IWorld &
    for (const auto &chunk_pos : chunks_to_load) {
       world.send_chunk_to_player(player_id, chunk_pos);
    }
+
    return mb::ok;
 }
 
@@ -114,7 +115,8 @@ void StreamingComponent::on_position_change(game::IWorld &world, game::Entity &e
 
    m_last_chunk_position = next_chunk_pos;
 
-   auto player_id = entity.component<Player>().id;
+   auto &player   = entity.component<Player>();
+   auto player_id = player.id();
    world.dispatcher().update_chunk_position(player_id, m_last_chunk_position);
 
    if (!chunks_to_free.empty()) {
@@ -142,6 +144,8 @@ void StreamingComponent::on_position_change(game::IWorld &world, game::Entity &e
          world.send_chunk_to_player(player_id, chunk_pos);
       }
    }
+
+   player.refresh_visible_entities(world.dispatcher(), world.entity_system(), new_position);
 }
 
 }// namespace minecpp::entity::component

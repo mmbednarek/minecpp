@@ -15,6 +15,11 @@ void Location::serialize_to_proto(proto::entity::v1::Entity *entity) const
    *entity->mutable_position() = this->m_position.to_proto();
 }
 
+void Location::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
+{
+   *entity->mutable_position() = this->m_position.to_proto();
+}
+
 math::Vector3 Location::position() const
 {
    return m_position;
@@ -44,10 +49,10 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    }
 
    if (entity.has_component<Player>()) {
-      world.dispatcher().player_move(entity.component<Player>().id, entity.id(), movement.cast<short>(),
-                                     rotation);
+      world.dispatcher().player_move(entity.component<Player>().id(), entity.id(), position,
+                                     movement.cast<short>(), rotation);
    } else {
-      world.dispatcher().entity_move(entity.id(), movement.cast<short>(), rotation);
+      world.dispatcher().entity_move(entity.id(), position, movement.cast<short>(), rotation);
    }
 
    auto min = m_position - m_extent * 0.5;
@@ -85,6 +90,12 @@ Rotation::Rotation(float yaw, float pitch) :
 }
 
 void Rotation::serialize_to_proto(proto::entity::v1::Entity *entity) const
+{
+   entity->mutable_rotation()->set_yaw(this->m_yaw);
+   entity->mutable_rotation()->set_pitch(this->m_pitch);
+}
+
+void Rotation::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
 {
    entity->mutable_rotation()->set_yaw(this->m_yaw);
    entity->mutable_rotation()->set_pitch(this->m_pitch);

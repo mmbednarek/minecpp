@@ -33,6 +33,7 @@ class Location
    void set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position);
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
  private:
    math::Vector3 m_position{};
@@ -47,6 +48,7 @@ class Rotation
    Rotation(float yaw, float pitch);
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
    [[nodiscard]] game::Rotation rotation() const;
    [[nodiscard]] float yaw() const;

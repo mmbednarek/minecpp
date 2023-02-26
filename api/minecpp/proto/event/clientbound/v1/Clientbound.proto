@@ -47,9 +47,7 @@ message SpawnEntity {
 
 message SpawnPlayer {
   player.v1.PlayerId player_id = 1;
-  uint32 entity_id = 2;
-  common.v1.Vector3 position = 3;
-  common.v1.Rotation rotation = 4;
+  entity.v1.PlayerEntity entity = 2;
 }
 
 message EntityMove {
@@ -193,4 +191,9 @@ message CollectItem {
 
 message RemoveEntity {
   uint32 entity_id = 1;
+}
+
+message TeleportEntity {
+  uint32 entity_id = 1;
+  common.v1.Vector3 position = 2;
 }

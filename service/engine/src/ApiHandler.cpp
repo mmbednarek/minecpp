@@ -48,6 +48,19 @@ void Connection::send_to_all_excluding(const google::protobuf::Message &message,
    m_stream.write(proto_event);
 }
 
+void Connection::send_to_many(const google::protobuf::Message &message, std::span<game::PlayerId> player_ids)
+{
+   Event proto_event;
+   for (auto player_id : player_ids) {
+      auto [lower, upper] = util::write_uuid(player_id);
+      auto *proto_id      = proto_event.mutable_multiple_players()->add_player_ids();
+      proto_id->set_lower(lower);
+      proto_id->set_upper(upper);
+   }
+   proto_event.mutable_payload()->PackFrom(message);
+   m_stream.write(proto_event);
+}
+
 ApiHandler::ApiHandler(EventHandler &event_handler, EventManager &event_manager, const std::string &address) :
     m_event_handler{event_handler},
     m_event_manager{event_manager},
