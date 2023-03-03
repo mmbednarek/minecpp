@@ -1,5 +1,7 @@
 #include <minecpp/entity/component/Inventory.h>
+#include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
+#include <minecpp/entity/factory/Item.h>
 
 namespace minecpp::entity::component {
 
@@ -44,7 +46,7 @@ bool Inventory::add_item(game::IDispatcher &notifier, game::ItemId item, int cou
       if (slot.count == 0) {
          return true;
       }
-      return slot.item_id == item && (slot.count + count) < 64;
+      return slot.item_id == item && (slot.count + count) <= 64;
    };
 
    // First check for active hot bar slow
@@ -99,6 +101,10 @@ game::ItemSlot Inventory::item_at(game::SlotId id) const
 
 void Inventory::set_slot(game::IDispatcher &notifier, game::SlotId id, const game::ItemSlot &slot)
 {
+   auto index = slot_id_to_index(id);
+   if (index > 9 * 4)
+      return;
+
    m_slots[slot_id_to_index(id)] = slot;
    notifier.set_inventory_slot(m_player_id, slot.item_id, id, slot.count);
 
@@ -148,6 +154,57 @@ void Inventory::synchronize_inventory(game::IDispatcher &notifier) const
       auto slot = this->item_at(id);
       notifier.set_inventory_slot(m_player_id, slot.item_id, id, slot.count);
    }
+}
+
+void Inventory::drop_active_item(game::IWorld &world, bool whole_stack)
+{
+   auto active_item = this->active_item();
+   if (active_item.count == 0)
+      return;
+
+   if (not whole_stack) {
+      active_item.count = 1;
+      this->take_from_slot(world.dispatcher(), hotbar_index_to_slot_id(m_active_item), 1);
+   } else {
+      this->take_from_slot(world.dispatcher(), hotbar_index_to_slot_id(m_active_item), active_item.count);
+   }
+
+   drop_stack(world, active_item);
+}
+
+void Inventory::drop_stack(game::IWorld &world, const game::ItemSlot &active_item) const
+{
+   auto entity = world.entity_system().entity(m_entity_id);
+   if (not entity.has_component<Rotation>())
+      return;
+
+   auto velocity = math::Vector3::from_yaw_and_pitch(entity.component<Rotation>().yaw(),
+                                                     entity.component<Rotation>().pitch());
+   velocity.set_y(1.0);
+
+   const math::Vector3 offset{velocity.x(), 0.75, velocity.z()};
+   world.spawn<factory::Item>(entity.component<Location>().position() + offset, active_item, velocity * 0.2);
+}
+
+void Inventory::set_carried_item(const game::ItemSlot &slot)
+{
+   m_carried_item = slot;
+}
+
+void Inventory::drop_carried_item(game::IWorld &world, bool whole_stack)
+{
+   if (m_carried_item.count == 0)
+      return;
+
+   if (whole_stack) {
+      this->drop_stack(world, m_carried_item);
+      m_carried_item.item_id = 0;
+      m_carried_item.count   = 0;
+      return;
+   }
+
+   this->drop_stack(world, {m_carried_item.item_id, 1});
+   --m_carried_item.count;
 }
 
 }// namespace minecpp::entity::component

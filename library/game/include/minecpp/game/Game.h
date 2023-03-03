@@ -242,6 +242,13 @@ struct BlockPosition
    {
    }
 
+   constexpr explicit BlockPosition(const math::Vector3i &position) :
+       x(position.x()),
+       y(position.y()),
+       z(position.z())
+   {
+   }
+
    constexpr explicit BlockPosition(mb::u64 encoded) :
        x(decode_x(encoded)),
        y(decode_y(encoded)),
@@ -334,11 +341,7 @@ struct BlockPosition
 
    static BlockPosition from_vec3(const math::Vector3 &position)
    {
-      return {
-              static_cast<int>(position.x()),
-              static_cast<int>(position.y()),
-              static_cast<int>(position.z()),
-      };
+      return BlockPosition{position.floor().cast<int>()};
    }
 
    bool operator==(const BlockPosition &other) const

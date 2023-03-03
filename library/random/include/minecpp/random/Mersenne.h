@@ -1,10 +1,10 @@
 #pragma once
-#include "Random.h"
+#include "IRandom.h"
 #include <random>
 
 namespace minecpp::random {
 
-class Mersenne : public Random
+class Mersenne : public IRandom
 {
    std::mt19937_64 engine;
 

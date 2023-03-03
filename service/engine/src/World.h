@@ -6,6 +6,7 @@
 #include <minecpp/controller/BlockManager.h>
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
+#include <minecpp/random/JavaRandom.h>
 #include <minecpp/world/LightSystem.h>
 
 namespace minecpp::entity {
@@ -61,6 +62,7 @@ class World : public minecpp::game::IWorld
    controller::BlockManager &m_block_controller;
    uuid m_engine_id;
    world::LightSystem m_light_system;
+   random::JavaRandom m_general_purpose_random;
 };
 
 }// namespace minecpp::service::engine

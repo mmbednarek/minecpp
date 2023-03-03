@@ -1,5 +1,5 @@
+#include "minecpp/random/IRandom.h"
 #include <minecpp/random/JavaRandom.h>
-#include <minecpp/random/Random.h>
 
 namespace minecpp::random {
 

@@ -104,6 +104,13 @@ class BaseVector
       return m_storage[index];                                 \
    }
 
+#define MCC_MATH_DECLARE_VEC_LENGTH_METHOD                                                     \
+   [[nodiscard]] ValueType length() const                                                      \
+   {                                                                                           \
+      return std::sqrt(this->transform(+[](ValueType value) { return value * value; }).sum()); \
+   }
+
+
 #define MCC_MATH_DEFINE_VECTOR_TRAITS(count)                                \
    using ValueType             = TValue;                                    \
    using SelfType              = BaseVector<ValueType, count>;              \
@@ -132,4 +139,5 @@ class BaseVector
    MCC_MATH_DECLARE_ACCUMULATE_METHOD                                       \
    MCC_MATH_DECLARE_TRANSFORM_FUNC                                          \
    MCC_MATH_DECLARE_CAST_FUNC                                               \
-   MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR
+   MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR                                      \
+   MCC_MATH_DECLARE_VEC_LENGTH_METHOD

@@ -1,16 +1,16 @@
 #pragma once
+#include "IRandom.h"
 #include <minecpp/math/Vector2.h>
-#include <minecpp/random/Random.h>
 
 namespace minecpp::random {
 
 class Perlin
 {
-   Random &rand;
+   IRandom &rand;
    uint64_t coef1, coef2, coef3;
 
  public:
-   explicit Perlin(Random &rand);
+   explicit Perlin(IRandom &rand);
 
    [[nodiscard]] double dot_grad(int x, int z, minecpp::math::Vector2 pos);
    [[nodiscard]] double at(minecpp::math::Vector2 pos);
@@ -29,7 +29,7 @@ class DisplacedPerlin
    minecpp::math::Vector2 move_dis_z;
 
  public:
-   explicit DisplacedPerlin(Random &rand, double scale, double amp);
+   explicit DisplacedPerlin(IRandom &rand, double scale, double amp);
 
    [[nodiscard]] double at(minecpp::math::Vector2 pos);
 };

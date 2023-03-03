@@ -214,7 +214,7 @@ void Dispatcher::player_list(game::PlayerId player_id, const std::vector<game::p
    m_events.send_to(player_list, player_id);
 }
 
-void Dispatcher::entity_list(game::PlayerId player_id, const std::span<game::EntityId> entities)
+void Dispatcher::send_entities(game::PlayerId player_id, std::span<game::EntityId> entities)
 {
    clientbound_v1::EntityList list;
 

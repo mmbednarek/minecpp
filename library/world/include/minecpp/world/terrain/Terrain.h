@@ -1,11 +1,11 @@
 #pragma once
 #include "Height.h"
+#include "minecpp/random/IRandom.h"
 #include <cstdint>
 #include <memory>
 #include <minecpp/random/JavaRandom.h>
 #include <minecpp/random/Perlin.h>
 #include <minecpp/random/Perlin3d.h>
-#include <minecpp/random/Random.h>
 #include <minecpp/world/Chunk.h>
 #include <minecpp/world/Section.h>
 

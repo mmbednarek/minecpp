@@ -7,7 +7,7 @@ namespace minecpp::random {
 
 using minecpp::math::Vector2;
 
-Perlin::Perlin(random::Random &rand) :
+Perlin::Perlin(random::IRandom &rand) :
     rand(rand),
     coef1(rand.next_int()),
     coef2(rand.next_int()),
@@ -54,7 +54,7 @@ minecpp::math::Vector2 Perlin::grad(int x, int z)
    return {r.next_double(), r.next_double()};
 }
 
-DisplacedPerlin::DisplacedPerlin(Random &rand, double scale, double amp) :
+DisplacedPerlin::DisplacedPerlin(IRandom &rand, double scale, double amp) :
     base(rand),
     dis_x(rand),
     dis_z(rand),

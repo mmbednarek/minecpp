@@ -6,7 +6,7 @@ namespace minecpp::random {
 
 using minecpp::math::Vector3;
 
-Perlin3d::Perlin3d(Random &rand) :
+Perlin3d::Perlin3d(IRandom &rand) :
     rand(rand),
     coef1(rand.next_int()),
     coef2(rand.next_int()),

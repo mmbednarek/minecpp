@@ -45,7 +45,8 @@ World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, D
     m_entity_system(entity_system),
     m_block_controller(block_controller),
     m_engine_id(engine_id),
-    m_light_system(*this)
+    m_light_system(*this),
+    m_general_purpose_random(2356)
 {
 }
 
@@ -199,7 +200,9 @@ bool World::is_movement_blocked_at(const math::Vector3 &position)
    if (block_state_id.has_failed())
       return false;
 
-   return world::BlockState(*block_state_id).does_block_movement();
+   auto block_state = world::BlockState(*block_state_id);
+
+   return block_state.does_block_movement() && block_state.solid_faces() == game::FaceMask::All;
 }
 
 void World::kill_entity(game::EntityId id)
@@ -224,7 +227,7 @@ void World::destroy_block(const game::BlockPosition &position)
       return;
 
    auto item_position = position.to_vec3() + math::Vector3{0.5, 0.75, 0.5};
-   this->spawn<ItemFactory>(item_position, game::ItemSlot{*item_id, 1});
+   this->spawn<ItemFactory>(item_position, game::ItemSlot{*item_id, 1}, m_general_purpose_random);
 }
 
 }// namespace minecpp::service::engine

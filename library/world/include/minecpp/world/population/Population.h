@@ -1,8 +1,8 @@
 #pragma once
 #include "Chunk.h"
+#include "minecpp/random/IRandom.h"
 #include <cstdint>
 #include <map>
-#include <minecpp/random/Random.h>
 #include <minecpp/world/IChunkSystem.h>
 
 namespace minecpp::world::population {

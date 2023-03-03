@@ -25,6 +25,8 @@ concept ServerboundVisitor =
            t.handle_issue_command(serverbound_v1::IssueCommand(), game::PlayerId());
            t.handle_interact(serverbound_v1::Interact(), game::PlayerId());
            t.handle_use_item(serverbound_v1::UseItem(), game::PlayerId());
+           t.handle_drop_inventory_item(serverbound_v1::DropInventoryItem(), game::PlayerId());
+           t.handle_set_carried_item(serverbound_v1::SetCarriedItem(), game::PlayerId());
         };
 
 #define MINECPP_EVENT_HANDLE_SERVICEBOUND(event_type, handler_method)                      \
@@ -58,6 +60,8 @@ void visit_serverbound(const serverbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_SERVICEBOUND(IssueCommand, handle_issue_command);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(Interact, handle_interact);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(UseItem, handle_use_item);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(DropInventoryItem, handle_drop_inventory_item);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(SetCarriedItem, handle_set_carried_item);
 }
 
 }// namespace minecpp::event

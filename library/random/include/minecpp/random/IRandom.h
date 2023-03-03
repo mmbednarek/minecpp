@@ -3,7 +3,7 @@
 
 namespace minecpp::random {
 
-class Random
+class IRandom
 {
  public:
    [[nodiscard]] virtual int next_int()               = 0;
