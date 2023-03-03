@@ -59,7 +59,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    void unload_chunk(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
 
    void player_list(game::PlayerId player_id, const std::vector<game::player::Status> &status_list);
-   void entity_list(game::PlayerId player_id, const std::span<game::EntityId> entities) override;
+   void send_entities(game::PlayerId player_id, std::span<game::EntityId> entities) override;
 
    void accept_player(const game::player::Player &player_id);
    void deny_player(const game::PlayerId &player_id, const std::string &reason);

@@ -1,10 +1,10 @@
 #pragma once
-#include "Random.h"
+#include "IRandom.h"
 #include <cstdint>
 
 namespace minecpp::random {
 
-class JavaRandom : public Random
+class JavaRandom : public IRandom
 {
  public:
    explicit JavaRandom(uint64_t seed);

@@ -15,6 +15,7 @@
 #include <minecpp/controller/block/Torch.h>
 #include <minecpp/controller/block/Wood.h>
 #include <minecpp/controller/item/Bow.h>
+#include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Inventory.h>
@@ -24,7 +25,6 @@
 #include <minecpp/entity/component/Velocity.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Item.h>
-#include <minecpp/entity/PlayerComponents.hpp>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/repository/Block.h>
@@ -304,6 +304,18 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    case game::PlayerDiggingState::FinishedDigging: {
       m_world.destroy_block(game::BlockPosition::from_proto(event.block_position()));
    } break;
+   case game::PlayerDiggingState::DropAllItems:
+   case game::PlayerDiggingState::DropItem: {
+      auto player = m_player_manager.get_player(player_id);
+      if (player.has_failed())
+         return;
+      auto entity = m_entity_system.entity(player->entity_id());
+      if (not entity.has_component<InventoryComponent>())
+         return;
+
+      entity.component<InventoryComponent>().drop_active_item(
+              m_world, status == game::PlayerDiggingState::DropAllItems);
+   }
    default: break;
    }
 }
@@ -484,7 +496,6 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
 
    auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
    if (target_player_id.has_value()) {
-
       spdlog::info("setting players health to {}", entity.component<HealthComponent>().health);
       m_dispatcher.set_health_and_food(*target_player_id,
                                        entity.component<entity::component::Health>().health, 20, 5.0f);
@@ -511,6 +522,36 @@ void EventHandler::handle_use_item(const serverbound_v1::UseItem & /*use_item*/,
    auto slot_item = entity.component<InventoryComponent>().active_item();
    spdlog::debug("using item {}", slot_item.item_id);
    m_root_item_controller.on_item_use(m_world, player_id, entity.id(), slot_item.item_id);
+}
+
+void EventHandler::handle_drop_inventory_item(const serverbound_v1::DropInventoryItem &drop_inventory_item,
+                                              game::PlayerId player_id)
+{
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed())
+      return;
+
+   auto entity = m_entity_system.entity(player->entity_id());
+   if (not entity.has_component<InventoryComponent>())
+      return;
+
+   entity.component<InventoryComponent>().drop_carried_item(m_world, drop_inventory_item.full_stack());
+}
+
+void EventHandler::handle_set_carried_item(const serverbound_v1::SetCarriedItem &set_carried_item_msg,
+                                           game::PlayerId player_id)
+{
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed())
+      return;
+
+   auto entity = m_entity_system.entity(player->entity_id());
+   if (not entity.has_component<InventoryComponent>())
+      return;
+
+   entity.component<InventoryComponent>().set_carried_item(
+           {static_cast<game::ItemId>(set_carried_item_msg.carried_item_id().id()),
+            set_carried_item_msg.carried_item_count()});
 }
 
 }// namespace minecpp::service::engine

@@ -1,6 +1,7 @@
 #include <minecpp/controller/item/Bow.h>
+#include <minecpp/entity/Aliases.hpp>
+#include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/factory/Arrow.h>
-#include <minecpp/entity/PlayerComponents.hpp>
 
 namespace minecpp::controller::item {
 

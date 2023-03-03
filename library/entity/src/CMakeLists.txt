@@ -10,8 +10,8 @@ target_sources(minecpp_entity PUBLIC
 
         # Header files
         ${MINECPP_ENTITY_INCLUDE_DIR}/Abilities.h
+        ${MINECPP_ENTITY_INCLUDE_DIR}/Aliases.hpp
         ${MINECPP_ENTITY_INCLUDE_DIR}/EntitySystem.h
-        ${MINECPP_ENTITY_INCLUDE_DIR}/PlayerComponents.hpp
 )
 
 # Subdirectories

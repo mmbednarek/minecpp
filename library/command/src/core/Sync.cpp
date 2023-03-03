@@ -1,5 +1,6 @@
 #include <minecpp/command/core/Sync.h>
 #include <minecpp/command/RuntimeContext.h>
+#include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/Streamer.h>
@@ -26,18 +27,18 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput & /*input*/) const
    if (not entity.has_value())
       return make_error(command_name, "could not obtain entity");
 
-   if (entity->has_component<minecpp::entity::component::Inventory>())
+   if (not entity->has_component<InventoryComponent>())
       return make_error(command_name, "entity doesn't have inventory");
 
    entity->component<minecpp::entity::component::Inventory>().synchronize_inventory(world->dispatcher());
 
-   if (entity->has_component<minecpp::entity::component::Player>())
+   if (not entity->has_component<PlayerComponent>())
       return make_error(command_name, "entity is not a player");
 
-   if (entity->has_component<minecpp::entity::component::Streamer>())
+   if (not entity->has_component<StreamerComponent>())
       return make_error(command_name, "entity doesn't stream chunks");
 
-   auto player_id = entity->component<minecpp::entity::component::Player>().id();
+   auto player_id = entity->component<PlayerComponent>().id();
    entity->component<minecpp::entity::component::Streamer>().send_all_visible_chunks(*world, player_id);
 
    auto info = std::make_shared<FormattedString>();

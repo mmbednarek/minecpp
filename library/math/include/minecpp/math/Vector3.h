@@ -22,11 +22,6 @@ class BaseVector<TValue, 3>
       return {x(), z()};
    }
 
-   TValue length() const
-   {
-      return std::sqrt(this->transform([](TValue value) { return value * value; }).sum());
-   }
-
    BaseVector<TValue, 3> normalize() const
    {
       return this->transform([l = this->length()](TValue value) { return value / l; });

@@ -72,6 +72,9 @@ extern ChangeInventoryItemDefaultTypeInternal _ChangeInventoryItem_default_insta
 class ChatMessage;
 struct ChatMessageDefaultTypeInternal;
 extern ChatMessageDefaultTypeInternal _ChatMessage_default_instance_;
+class DropInventoryItem;
+struct DropInventoryItemDefaultTypeInternal;
+extern DropInventoryItemDefaultTypeInternal _DropInventoryItem_default_instance_;
 class Event;
 struct EventDefaultTypeInternal;
 extern EventDefaultTypeInternal _Event_default_instance_;
@@ -90,6 +93,9 @@ extern PlayerDiggingDefaultTypeInternal _PlayerDigging_default_instance_;
 class RemovePlayer;
 struct RemovePlayerDefaultTypeInternal;
 extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
+class SetCarriedItem;
+struct SetCarriedItemDefaultTypeInternal;
+extern SetCarriedItemDefaultTypeInternal _SetCarriedItem_default_instance_;
 class SetPlayerPosition;
 struct SetPlayerPositionDefaultTypeInternal;
 extern SetPlayerPositionDefaultTypeInternal _SetPlayerPosition_default_instance_;
@@ -114,12 +120,14 @@ template<> ::minecpp::proto::event::serverbound::v1::BlockPlacement* Arena::Crea
 template<> ::minecpp::proto::event::serverbound::v1::ChangeHeldItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChangeHeldItem>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::ChangeInventoryItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChangeInventoryItem>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::ChatMessage* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::ChatMessage>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::DropInventoryItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::DropInventoryItem>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Event>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::Interact* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Interact>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::IssueCommand* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::IssueCommand>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::LoadInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadInitialChunks>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::PlayerDigging* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PlayerDigging>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::RemovePlayer>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::SetCarriedItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetCarriedItem>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerPosition* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerPosition>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetPlayerRotation* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetPlayerRotation>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::UpdatePing* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::UpdatePing>(Arena*);
@@ -2233,6 +2241,322 @@ class ChangeInventoryItem final :
 };
 // -------------------------------------------------------------------
 
+class DropInventoryItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.DropInventoryItem) */ {
+ public:
+  inline DropInventoryItem() : DropInventoryItem(nullptr) {}
+  ~DropInventoryItem() override;
+  explicit PROTOBUF_CONSTEXPR DropInventoryItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  DropInventoryItem(const DropInventoryItem& from);
+  DropInventoryItem(DropInventoryItem&& from) noexcept
+    : DropInventoryItem() {
+    *this = ::std::move(from);
+  }
+
+  inline DropInventoryItem& operator=(const DropInventoryItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DropInventoryItem& operator=(DropInventoryItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DropInventoryItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DropInventoryItem* internal_default_instance() {
+    return reinterpret_cast<const DropInventoryItem*>(
+               &_DropInventoryItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  friend void swap(DropInventoryItem& a, DropInventoryItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DropInventoryItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DropInventoryItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DropInventoryItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DropInventoryItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DropInventoryItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const DropInventoryItem& from) {
+    DropInventoryItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DropInventoryItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.DropInventoryItem";
+  }
+  protected:
+  explicit DropInventoryItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFullStackFieldNumber = 1,
+  };
+  // bool full_stack = 1;
+  void clear_full_stack();
+  bool full_stack() const;
+  void set_full_stack(bool value);
+  private:
+  bool _internal_full_stack() const;
+  void _internal_set_full_stack(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.DropInventoryItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    bool full_stack_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SetCarriedItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.SetCarriedItem) */ {
+ public:
+  inline SetCarriedItem() : SetCarriedItem(nullptr) {}
+  ~SetCarriedItem() override;
+  explicit PROTOBUF_CONSTEXPR SetCarriedItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetCarriedItem(const SetCarriedItem& from);
+  SetCarriedItem(SetCarriedItem&& from) noexcept
+    : SetCarriedItem() {
+    *this = ::std::move(from);
+  }
+
+  inline SetCarriedItem& operator=(const SetCarriedItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetCarriedItem& operator=(SetCarriedItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetCarriedItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetCarriedItem* internal_default_instance() {
+    return reinterpret_cast<const SetCarriedItem*>(
+               &_SetCarriedItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(SetCarriedItem& a, SetCarriedItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetCarriedItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetCarriedItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SetCarriedItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetCarriedItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetCarriedItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetCarriedItem& from) {
+    SetCarriedItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetCarriedItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.SetCarriedItem";
+  }
+  protected:
+  explicit SetCarriedItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCarriedItemIdFieldNumber = 1,
+    kCarriedItemCountFieldNumber = 2,
+  };
+  // .minecpp.proto.common.v1.ItemId carried_item_id = 1;
+  bool has_carried_item_id() const;
+  private:
+  bool _internal_has_carried_item_id() const;
+  public:
+  void clear_carried_item_id();
+  const ::minecpp::proto::common::v1::ItemId& carried_item_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ItemId* release_carried_item_id();
+  ::minecpp::proto::common::v1::ItemId* mutable_carried_item_id();
+  void set_allocated_carried_item_id(::minecpp::proto::common::v1::ItemId* carried_item_id);
+  private:
+  const ::minecpp::proto::common::v1::ItemId& _internal_carried_item_id() const;
+  ::minecpp::proto::common::v1::ItemId* _internal_mutable_carried_item_id();
+  public:
+  void unsafe_arena_set_allocated_carried_item_id(
+      ::minecpp::proto::common::v1::ItemId* carried_item_id);
+  ::minecpp::proto::common::v1::ItemId* unsafe_arena_release_carried_item_id();
+
+  // int32 carried_item_count = 2;
+  void clear_carried_item_count();
+  int32_t carried_item_count() const;
+  void set_carried_item_count(int32_t value);
+  private:
+  int32_t _internal_carried_item_count() const;
+  void _internal_set_carried_item_count(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.SetCarriedItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::ItemId* carried_item_id_;
+    int32_t carried_item_count_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
+};
+// -------------------------------------------------------------------
+
 class ChangeHeldItem final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.ChangeHeldItem) */ {
  public:
@@ -2281,7 +2605,7 @@ class ChangeHeldItem final :
                &_ChangeHeldItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(ChangeHeldItem& a, ChangeHeldItem& b) {
     a.Swap(&b);
@@ -2429,7 +2753,7 @@ class IssueCommand final :
                &_IssueCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    16;
 
   friend void swap(IssueCommand& a, IssueCommand& b) {
     a.Swap(&b);
@@ -2582,7 +2906,7 @@ class Interact final :
                &_Interact_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   friend void swap(Interact& a, Interact& b) {
     a.Swap(&b);
@@ -3874,6 +4198,139 @@ inline void ChangeInventoryItem::set_item_count(int32_t value) {
 
 // -------------------------------------------------------------------
 
+// DropInventoryItem
+
+// bool full_stack = 1;
+inline void DropInventoryItem::clear_full_stack() {
+  _impl_.full_stack_ = false;
+}
+inline bool DropInventoryItem::_internal_full_stack() const {
+  return _impl_.full_stack_;
+}
+inline bool DropInventoryItem::full_stack() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.DropInventoryItem.full_stack)
+  return _internal_full_stack();
+}
+inline void DropInventoryItem::_internal_set_full_stack(bool value) {
+  
+  _impl_.full_stack_ = value;
+}
+inline void DropInventoryItem::set_full_stack(bool value) {
+  _internal_set_full_stack(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.DropInventoryItem.full_stack)
+}
+
+// -------------------------------------------------------------------
+
+// SetCarriedItem
+
+// .minecpp.proto.common.v1.ItemId carried_item_id = 1;
+inline bool SetCarriedItem::_internal_has_carried_item_id() const {
+  return this != internal_default_instance() && _impl_.carried_item_id_ != nullptr;
+}
+inline bool SetCarriedItem::has_carried_item_id() const {
+  return _internal_has_carried_item_id();
+}
+inline const ::minecpp::proto::common::v1::ItemId& SetCarriedItem::_internal_carried_item_id() const {
+  const ::minecpp::proto::common::v1::ItemId* p = _impl_.carried_item_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ItemId&>(
+      ::minecpp::proto::common::v1::_ItemId_default_instance_);
+}
+inline const ::minecpp::proto::common::v1::ItemId& SetCarriedItem::carried_item_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_id)
+  return _internal_carried_item_id();
+}
+inline void SetCarriedItem::unsafe_arena_set_allocated_carried_item_id(
+    ::minecpp::proto::common::v1::ItemId* carried_item_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.carried_item_id_);
+  }
+  _impl_.carried_item_id_ = carried_item_id;
+  if (carried_item_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_id)
+}
+inline ::minecpp::proto::common::v1::ItemId* SetCarriedItem::release_carried_item_id() {
+  
+  ::minecpp::proto::common::v1::ItemId* temp = _impl_.carried_item_id_;
+  _impl_.carried_item_id_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::common::v1::ItemId* SetCarriedItem::unsafe_arena_release_carried_item_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_id)
+  
+  ::minecpp::proto::common::v1::ItemId* temp = _impl_.carried_item_id_;
+  _impl_.carried_item_id_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::common::v1::ItemId* SetCarriedItem::_internal_mutable_carried_item_id() {
+  
+  if (_impl_.carried_item_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ItemId>(GetArenaForAllocation());
+    _impl_.carried_item_id_ = p;
+  }
+  return _impl_.carried_item_id_;
+}
+inline ::minecpp::proto::common::v1::ItemId* SetCarriedItem::mutable_carried_item_id() {
+  ::minecpp::proto::common::v1::ItemId* _msg = _internal_mutable_carried_item_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_id)
+  return _msg;
+}
+inline void SetCarriedItem::set_allocated_carried_item_id(::minecpp::proto::common::v1::ItemId* carried_item_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.carried_item_id_);
+  }
+  if (carried_item_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(carried_item_id));
+    if (message_arena != submessage_arena) {
+      carried_item_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, carried_item_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.carried_item_id_ = carried_item_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_id)
+}
+
+// int32 carried_item_count = 2;
+inline void SetCarriedItem::clear_carried_item_count() {
+  _impl_.carried_item_count_ = 0;
+}
+inline int32_t SetCarriedItem::_internal_carried_item_count() const {
+  return _impl_.carried_item_count_;
+}
+inline int32_t SetCarriedItem::carried_item_count() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_count)
+  return _internal_carried_item_count();
+}
+inline void SetCarriedItem::_internal_set_carried_item_count(int32_t value) {
+  
+  _impl_.carried_item_count_ = value;
+}
+inline void SetCarriedItem::set_carried_item_count(int32_t value) {
+  _internal_set_carried_item_count(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.v1.SetCarriedItem.carried_item_count)
+}
+
+// -------------------------------------------------------------------
+
 // ChangeHeldItem
 
 // int32 slot = 1;
@@ -4122,6 +4579,10 @@ inline void Interact::set_is_sneaking(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

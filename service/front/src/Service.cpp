@@ -158,6 +158,13 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
    if (msg.window_id != 0)
       return;
 
+   if (msg.slot == -999 && msg.mode == 0) {
+      serverbound_v1::DropInventoryItem drop_item;
+      drop_item.set_full_stack(msg.button == 0);
+      m_stream->send(drop_item, player_id);
+      return;
+   }
+
    for (const auto &slot : msg.slots) {
       serverbound_v1::ChangeInventoryItem change_item;
       change_item.mutable_item_id()->set_id(static_cast<uint32_t>(slot.item_id));
@@ -165,6 +172,11 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
       change_item.set_item_count(slot.count);
       m_stream->send(change_item, player_id);
    }
+
+   serverbound_v1::SetCarriedItem carried_item;
+   carried_item.mutable_carried_item_id()->set_id(static_cast<std::uint32_t>(msg.carried_item_id));
+   carried_item.set_carried_item_count(msg.carried_count);
+   m_stream->send(carried_item, player_id);
 }
 
 void Service::on_message(uuid engine_id, game::PlayerId player_id,

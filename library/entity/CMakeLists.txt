@@ -16,6 +16,7 @@ target_link_libraries(minecpp_entity
         minecpp_api_proto
         minecpp_api_nbt
         minecpp_game
+        minecpp_random
         minecpp_math
         minecpp_utils
 )

@@ -63,8 +63,8 @@ struct ClickWindow
    uint8_t button;
    int mode;
    std::vector<Slot> slots;
-   int carried_item_id;
-   uint8_t carried_count;
+   int carried_item_id{};
+   uint8_t carried_count{};
 };
 
 void deserialize(Reader &r, ClickWindow &msg);

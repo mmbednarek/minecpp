@@ -52,6 +52,10 @@ class EventHandler
    void handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id);
    void handle_interact(const serverbound_v1::Interact &event, game::PlayerId player_id);
    void handle_use_item(const serverbound_v1::UseItem &use_item, game::PlayerId player_id);
+   void handle_drop_inventory_item(const serverbound_v1::DropInventoryItem &drop_inventory_item,
+                                   game::PlayerId player_id);
+   void handle_set_carried_item(const serverbound_v1::SetCarriedItem &set_carried_item_msg,
+                                game::PlayerId player_id);
 
  private:
    Dispatcher &m_dispatcher;
