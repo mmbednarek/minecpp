@@ -252,6 +252,26 @@ struct WrapperFinder<game::BlockPosition>
    using Type = BlockPositionObject;
 };
 
+struct ArrayObject final : public Object
+{
+   constexpr static ObjectType object_type = ObjectType::Array;
+
+   std::vector<Object::Ptr> value;
+
+   ObjectType type() override
+   {
+      return object_type;
+   }
+
+   template<typename TObj>
+   void emplace_back(TObj &&obj)
+   {
+      this->value.emplace_back(std::make_shared<typename WrapperFinder<TObj>::Type>(std::forward<TObj>(obj)));
+   }
+
+   [[nodiscard]] std::string to_string() override;
+};
+
 template<typename T>
 T *cast(const Object::Ptr &object)
 {

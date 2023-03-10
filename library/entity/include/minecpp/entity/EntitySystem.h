@@ -22,12 +22,15 @@ class EntitySystem final : public game::IEntitySystem
    std::optional<game::EntityId> find_nearest_to(math::Vector3 position) override;
    game::Entity entity(game::EntityId id) override;
    void destroy_entity(game::EntityId id) override;
+   void detach_entity(game::EntityId id) override;
    std::vector<game::EntityId> list_entities_in_view_distance(math::Vector3 position) override;
    std::vector<game::EntityId> list_entities_intersecting_with(math::Vector3 min, math::Vector3 max) override;
    [[nodiscard]] double view_distance() const override;
    void move_spatial_entity(game::EntityId id, math::Vector3 extend, math::Vector3 old_position,
                             math::Vector3 new_position) override;
    void tick_entities(game::IWorld &world, double delta_time) override;
+   void attach_entity(game::IWorld &world, game::EntityId entity_id, const math::Vector3 &position,
+                      const math::Vector3 &extent) override;
 
  private:
    void apply_pending_kills();

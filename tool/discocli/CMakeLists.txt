@@ -13,5 +13,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_tool_discocli
         LINK_PRIVATE
         minecpp_discovery_api
+        grpc++
+        grpc
+        gpr
         fmt
 )

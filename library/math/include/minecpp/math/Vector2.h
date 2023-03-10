@@ -19,6 +19,14 @@ class BaseVector<TValue, 2>
       return {proto_vec.x(), proto_vec.y()};
    }
 
+   BaseVector<TValue, 2> normalize() const
+   {
+      const auto len = this->length();
+      if (std::abs(len) < 0.001)
+         return {0, 0, 0};
+      return this->transform([l = len](TValue value) { return value / l; });
+   }
+
    [[nodiscard]] ProtoType to_proto() const
    {
       ProtoType result;

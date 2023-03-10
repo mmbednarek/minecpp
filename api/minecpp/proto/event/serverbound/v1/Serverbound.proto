@@ -19,10 +19,22 @@ message AcceptPlayer {
 
 message SetPlayerPosition {
   common.v1.Vector3 position = 1;
+  bool is_on_ground = 2;
 }
 
 message SetPlayerRotation {
   common.v1.Rotation rotation = 1;
+  bool is_on_ground = 2;
+}
+
+message SetPlayerPositionRotation {
+  common.v1.Vector3 position = 1;
+  common.v1.Rotation rotation = 2;
+  bool is_on_ground = 3;
+}
+
+message SetPlayerOnGround {
+  bool is_on_ground = 1;
 }
 
 message ChatMessage {
@@ -94,3 +106,6 @@ message Interact  {
   common.v1.HandType hand_type = 4;
   bool is_sneaking = 5;
 }
+
+message RequestRespawn {
+};

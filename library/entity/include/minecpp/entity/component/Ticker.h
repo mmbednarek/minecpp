@@ -2,6 +2,10 @@
 #include <entt/entt.hpp>
 #include <minecpp/game/IWorld.hpp>
 
+namespace minecpp::game {
+class Entity;
+}
+
 namespace minecpp::entity::component {
 
 class Ticker

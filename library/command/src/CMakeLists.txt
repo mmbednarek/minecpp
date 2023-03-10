@@ -5,6 +5,7 @@ target_sources(minecpp_command PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Command.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/CommandManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Object.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Parser.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/RuntimeContext.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/StandardStream.cpp

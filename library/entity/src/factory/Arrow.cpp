@@ -7,10 +7,12 @@
 
 namespace minecpp::entity::factory {
 
-Arrow::Arrow(const math::Vector3 &initial_velocity, float initial_yaw, float initial_pitch) :
+Arrow::Arrow(const math::Vector3 &initial_velocity, float initial_yaw, float initial_pitch,
+             game::EntityId owner_id) :
     m_initial_velocity(initial_velocity),
     m_initial_yaw(initial_yaw),
-    m_initial_pitch(initial_pitch)
+    m_initial_pitch(initial_pitch),
+    m_owner_id(owner_id)
 {
 }
 
@@ -22,7 +24,7 @@ game::Entity Arrow::create_entity(const math::Vector3 &position, game::IEntitySy
    arrow_entity.add_component<component::Rotation>(m_initial_yaw, m_initial_pitch);
    arrow_entity.add_component<component::Ticker>();
    arrow_entity.add_component<component::Velocity>(m_initial_velocity);
-   arrow_entity.add_component<component::Projectile>();
+   arrow_entity.add_component<component::Projectile>(m_owner_id);
 
    return arrow_entity;
 }

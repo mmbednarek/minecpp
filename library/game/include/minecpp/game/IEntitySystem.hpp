@@ -1,5 +1,4 @@
-#ifndef MINECPP_IENTITYSYSTEM_HPP
-#define MINECPP_IENTITYSYSTEM_HPP
+#pragma once
 #include "Entity.h"
 #include "Game.h"
 #include <optional>
@@ -16,7 +15,6 @@ class IEntitySystem
 
    [[nodiscard]] virtual Entity create_spatial_entity(math::Vector3 position, math::Vector3 extent)     = 0;
    [[nodiscard]] virtual Entity entity(EntityId id)                                                     = 0;
-   [[nodiscard]] virtual void destroy_entity(EntityId id)                                               = 0;
    [[nodiscard]] virtual std::vector<game::EntityId> list_entities_in(math::Vector3 min,
                                                                       math::Vector3 max)                = 0;
    [[nodiscard]] virtual std::vector<game::EntityId> list_entities_intersecting_with(math::Vector3 min,
@@ -28,8 +26,10 @@ class IEntitySystem
    virtual void move_spatial_entity(EntityId id, math::Vector3 extend, math::Vector3 old_position,
                                     math::Vector3 new_position)                                = 0;
    virtual double view_distance() const                                                        = 0;
+   virtual void destroy_entity(EntityId id)                                                    = 0;
+   virtual void detach_entity(EntityId id)                                                     = 0;
+   virtual void attach_entity(game::IWorld &world, game::EntityId entity_id, const math::Vector3 &position,
+                              const math::Vector3 &extent)                                     = 0;
 };
 
 }// namespace minecpp::game
-
-#endif//MINECPP_IENTITYSYSTEM_HPP

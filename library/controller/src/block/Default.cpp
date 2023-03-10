@@ -1,5 +1,8 @@
 #include <minecpp/controller/block/Default.h>
+#include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Location.h>
+#include <minecpp/game/IEntitySystem.hpp>
+#include <minecpp/game/player/Player.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/util/String.h>
@@ -80,11 +83,19 @@ std::optional<game::Direction> Default::find_player_direction(game::IWorld &worl
    if (player.has_failed())
       return std::nullopt;
 
-   auto player_entity = world.entity_system().entity(player->entity_id());
+   if (not player->is_alive())
+      return std::nullopt;
 
-   const auto block_pos = position.to_vec3().flat();
-   return game::Direction::from_vec2(
-           block_pos - player_entity.component<entity::component::Location>().position().flat());
+   auto player_entity = world.entity_system().entity(player->entity_id());
+   if (not player_entity.is_valid())
+      return std::nullopt;
+
+   if (not player_entity.has_component<LocationComponent>())
+      return std::nullopt;
+
+   const auto block_position  = position.to_vec3().flat() + math::Vector2{0.5, 0.5};
+   const auto player_position = player_entity.component<LocationComponent>().position().flat();
+   return game::Direction::from_vec2(block_position - player_position);
 }
 
 bool Default::verify_source_is_air(game::IWorld &world, game::BlockPosition pos)

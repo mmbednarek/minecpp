@@ -30,8 +30,7 @@ game::Entity Player::create_entity(const math::Vector3 &position, game::IEntityS
    player_entity.add_component<component::Abilities>(Abilities{});
    player_entity.add_component<component::Streamer>(static_cast<int>(entity_system.view_distance()));
    player_entity.add_component<component::Inventory>();
-   player_entity.add_component<component::Velocity>(math::Vector3{0, 0, 0}, true);
-   //   player_entity.add_component<component::Test>();
+   player_entity.add_component<component::Velocity>(math::Vector3{0, 0, 0});
 
    return player_entity;
 }

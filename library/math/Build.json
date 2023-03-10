@@ -5,6 +5,9 @@
   "dependencies": {
     "interface": [
       "minecpp_api_proto",
+      "grpc++",
+      "grpc",
+      "gpr",
       "fmt"
     ]
   }

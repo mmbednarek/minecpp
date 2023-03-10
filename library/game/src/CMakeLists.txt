@@ -10,8 +10,10 @@ target_sources(minecpp_game PUBLIC
         # Header files
         ${MINECPP_GAME_INCLUDE_DIR}/Concepts.h
         ${MINECPP_GAME_INCLUDE_DIR}/Entity.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Entt.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h
         ${MINECPP_GAME_INCLUDE_DIR}/Hand.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Health.h
         ${MINECPP_GAME_INCLUDE_DIR}/IBlockController.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/IDispatcher.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/IEntitySystem.hpp

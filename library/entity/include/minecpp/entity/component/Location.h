@@ -31,8 +31,14 @@ class Location
    [[nodiscard]] math::Vector3 position() const;
    [[nodiscard]] math::Vector3 logical_position() const;
    [[nodiscard]] math::Vector3 extent() const;
+   [[nodiscard]] bool is_on_ground() const;
 
-   void set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position);
+   void on_killed(game::IWorld *world, game::Entity *entity);
+   void reset_position_and_extent(const math::Vector3 &position, const math::Vector3 &extent);
+
+   void set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position,
+                     bool is_on_ground);
+   void set_is_on_ground(game::IDispatcher &dispatcher, game::Entity &entity, bool is_on_ground);
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
    void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
@@ -42,6 +48,9 @@ class Location
    math::Vector3 m_extent{};
    TrackedPosition m_tracked_position{};
    std::set<game::EntityId> m_entities_intersecting_with;
+   bool m_is_detached{false};
+   int m_refresh_count{0};
+   bool m_is_on_ground{false};
 };
 
 class Rotation
@@ -54,7 +63,7 @@ class Rotation
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
    void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
-   [[nodiscard]] game::Rotation rotation() const;
+   [[nodiscard]] math::Rotation rotation() const;
    [[nodiscard]] math::Degrees yaw_degrees() const;
    [[nodiscard]] math::Degrees pitch_degrees() const;
    void set_yaw_degrees(math::Degrees yaw);

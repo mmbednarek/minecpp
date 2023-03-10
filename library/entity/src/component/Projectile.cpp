@@ -6,6 +6,11 @@
 
 namespace minecpp::entity::component {
 
+Projectile::Projectile(game::EntityId owner) :
+    m_owner(owner)
+{
+}
+
 void Projectile::on_attached(game::Entity &entity)
 {
    if (entity.has_component<Location>()) {
@@ -27,23 +32,21 @@ void Projectile::on_begin_intersect(game::IWorld &world, game::Entity &entity, g
    if (not other_entity.has_component<Location>())
       return;
 
-   auto &health  = other_entity.component<Health>();
-   health.health = std::max(0.0f, health.health - 2.0f);
-
-   world.dispatcher().animate_entity(other_entity.id(), other_entity.component<Location>().position(),
-                                     game::EntityAnimation::TakeDamage);
-
-   if (other_entity.has_component<Velocity>()) {
-      auto &velocity = other_entity.component<Velocity>();
-      velocity.set_velocity(world.dispatcher(), other_entity.component<Location>().position(),
-                            entity.component<Velocity>().velocity().normalize());
-   }
-
-   if (other_entity.has_component<Player>()) {
-      world.dispatcher().set_health_and_food(other_entity.component<Player>().id(), health.health, 20, 5.0f);
-   }
+   auto &health = other_entity.component<Health>();
+   health.apply_damage(world, game::Damage{
+                                      .amount        = 2.0f,
+                                      .source        = game::DamageSourceValue::Projectile,
+                                      .source_entity = entity.id(),
+                                      .target_entity = other_entity.id(),
+                                      .vector        = entity.component<Velocity>().velocity().normalize(),
+                              });
 
    world.kill_entity(entity.id());
+}
+
+game::EntityId Projectile::owner() const
+{
+   return m_owner;
 }
 
 }// namespace minecpp::entity::component

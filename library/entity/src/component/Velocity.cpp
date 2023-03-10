@@ -1,4 +1,5 @@
 #include <minecpp/entity/component/Location.h>
+#include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/Ticker.h>
 #include <minecpp/entity/component/Velocity.h>
 #include <spdlog/spdlog.h>
@@ -7,12 +8,6 @@ namespace minecpp::entity::component {
 
 Velocity::Velocity(const math::Vector3 &velocity) :
     m_velocity(velocity)
-{
-}
-
-Velocity::Velocity(const math::Vector3 &velocity, bool is_on_ground) :
-    m_velocity(velocity),
-    m_is_on_ground(is_on_ground)
 {
 }
 
@@ -27,25 +22,30 @@ void Velocity::on_attached(game::Entity &entity)
 
 void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time)
 {
+   if (entity.has_component<Player>())
+      return;
+
    auto &location = entity.component<Location>();
    auto blocked   = world.is_movement_blocked_at(location.position());
    if (blocked) {
       this->set_velocity(world.dispatcher(), location.position(), {0, 0.1, 0});
-      m_is_on_ground = false;
+      location.set_is_on_ground(world.dispatcher(), entity, false);
    }
 
-   if (m_is_on_ground)
+   if (location.is_on_ground())
       return;
 
    auto new_position = location.position() + m_velocity * delta_time;
    if (not blocked and world.is_movement_blocked_at(new_position)) {
-      spdlog::info("is on ground at y={}", location.position().y());
+      world.dispatcher().send_chat(
+              chat::MessageType::PlayerMessage,
+              format::Builder().text(fmt::format("entity {} hit ground", entity.id())).to_string());
       this->set_velocity(world.dispatcher(), location.position(), {0, 0, 0});
-      m_is_on_ground = true;
+      location.set_is_on_ground(world.dispatcher(), entity, true);
       return;
    }
 
-   location.set_position(world, entity, new_position);
+   location.set_position(world, entity, new_position, false);
 
    if (m_velocity.y() > -0.9) {
       math::Vector3 new_velocity{m_velocity};
@@ -59,14 +59,12 @@ void Velocity::serialize_to_proto(proto::entity::v1::Entity *entity) const
    *entity->mutable_velocity() = (m_velocity * 8000.0).cast<short>().to_proto();
 }
 
-void Velocity::set_falling()
-{
-   m_is_on_ground = false;
-}
-
 void Velocity::set_velocity(game::IDispatcher &dispatcher, const math::Vector3 &position,
                             const math::Vector3 &velocity)
 {
+   assert(position.is_correct());
+   assert(velocity.is_correct());
+
    m_velocity = velocity;
    dispatcher.set_entity_velocity(m_entity_id, position, (velocity * 8000.0).cast<short>());
 }

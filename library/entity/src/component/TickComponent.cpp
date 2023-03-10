@@ -1,4 +1,5 @@
 #include <minecpp/entity/component/Ticker.h>
+#include <minecpp/game/Entity.h>
 
 namespace minecpp::entity::component {
 

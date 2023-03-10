@@ -1,14 +1,16 @@
 #include "ChangeBlock.h"
 
-#include <minecpp/entity/component/Velocity.h>
+#include <minecpp/entity/Aliases.hpp>
+#include <minecpp/entity/component/Location.h>
 #include <minecpp/world/BlockState.h>
 
 namespace minecpp::service::engine::job {
 
-ChangeBlock::ChangeBlock(game::IEntitySystem &entity_system, game::ILightSystem &light_system,
-                         world::IChunkSystem &chunk_system, const game::BlockPosition &position,
-                         game::BlockStateId target_state_id) :
+ChangeBlock::ChangeBlock(game::IEntitySystem &entity_system, game::IDispatcher &dispatcher,
+                         game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
+                         const game::BlockPosition &position, game::BlockStateId target_state_id) :
     m_entity_system(entity_system),
+    m_dispatcher(dispatcher),
     m_light_system(light_system),
     m_chunk_system(chunk_system),
     m_position(position),
@@ -18,7 +20,6 @@ ChangeBlock::ChangeBlock(game::IEntitySystem &entity_system, game::ILightSystem 
 
 void ChangeBlock::run()
 {
-
    auto chunk = m_chunk_system.chunk_at(m_position.chunk_position());
    assert(chunk);// job-system guarantees the chunk is present.
 
@@ -76,11 +77,11 @@ void ChangeBlock::run()
 
       for (auto entity_id : entities_above) {
          auto entity = m_entity_system.entity(entity_id);
-         if (not entity.has_component<entity::component::Velocity>())
+         if (not entity.has_component<LocationComponent>())
             continue;
 
-         auto &velocity = entity.component<entity::component::Velocity>();
-         velocity.set_falling();
+         auto &location = entity.component<LocationComponent>();
+         location.set_is_on_ground(m_dispatcher, entity, false);
       }
    }
 

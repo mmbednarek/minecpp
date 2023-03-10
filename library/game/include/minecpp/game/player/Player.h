@@ -46,21 +46,11 @@ class Player
    EntityId m_entity_id{};
    std::string m_name;
    game::Mode m_game_mode = game::Mode::Survival;
-
+   bool m_is_alive{false};
    int m_ping{};
 
-   int m_xp_level    = 0;
-   float m_xp_points = .0f;
-   int m_xp_seed     = 0;
-   int m_xp_total    = 0;
-
-   int m_food_level              = 20;
-   float m_food_exhaustion_level = 0.16f;
-   float m_food_saturation_level = 5.0f;
-   int m_food_tick_timer         = 0;
-
  public:
-   Player(Id id, std::string_view name, game::IDispatcher &notifier);
+   Player(Id id, std::string_view name);
 
    [[nodiscard]] constexpr Id id() const
    {
@@ -89,7 +79,18 @@ class Player
 
    constexpr void set_entity_id(EntityId entity_id)
    {
+      m_is_alive  = true;
       m_entity_id = entity_id;
+   }
+
+   constexpr void set_is_alive(bool is_alive)
+   {
+      m_is_alive = is_alive;
+   }
+
+   [[nodiscard]] constexpr bool is_alive() const
+   {
+      return m_is_alive;
    }
 
    constexpr void set_ping(int ping)
@@ -107,8 +108,7 @@ class Player
       };
    }
 
-   static Player from_nbt(const nbt::player::v1::Player &player, const std::string &name,
-                          game::IDispatcher &notifier);
+   static Player from_nbt(const nbt::player::v1::Player &player, std::string_view name);
 
    [[nodiscard]] proto::player::v1::Player to_proto() const;
 };

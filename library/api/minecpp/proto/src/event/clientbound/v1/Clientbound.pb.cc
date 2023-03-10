@@ -135,10 +135,10 @@ struct SpawnPlayerDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SpawnPlayerDefaultTypeInternal _SpawnPlayer_default_instance_;
 PROTOBUF_CONSTEXPR EntityMove::EntityMove(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.player_id_)*/nullptr
-  , /*decltype(_impl_.movement_)*/nullptr
+    /*decltype(_impl_.movement_)*/nullptr
   , /*decltype(_impl_.rotation_)*/nullptr
   , /*decltype(_impl_.entity_id_)*/0u
+  , /*decltype(_impl_.is_on_ground_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct EntityMoveDefaultTypeInternal {
   PROTOBUF_CONSTEXPR EntityMoveDefaultTypeInternal()
@@ -531,7 +531,9 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR TeleportEntity::TeleportEntity(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.position_)*/nullptr
+  , /*decltype(_impl_.rotation_)*/nullptr
   , /*decltype(_impl_.entity_id_)*/0u
+  , /*decltype(_impl_.is_on_ground_)*/false
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct TeleportEntityDefaultTypeInternal {
   PROTOBUF_CONSTEXPR TeleportEntityDefaultTypeInternal()
@@ -542,12 +544,51 @@ struct TeleportEntityDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TeleportEntityDefaultTypeInternal _TeleportEntity_default_instance_;
+PROTOBUF_CONSTEXPR DisplayDeathScreen::DisplayDeathScreen(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.death_message_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.victim_entity_id_)*/0u
+  , /*decltype(_impl_.killer_entity_id_)*/0u
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct DisplayDeathScreenDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR DisplayDeathScreenDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~DisplayDeathScreenDefaultTypeInternal() {}
+  union {
+    DisplayDeathScreen _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DisplayDeathScreenDefaultTypeInternal _DisplayDeathScreen_default_instance_;
+PROTOBUF_CONSTEXPR Respawn::Respawn(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.dimension_type_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.dimension_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.death_dimension_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.death_position_)*/nullptr
+  , /*decltype(_impl_.hashed_seed_)*/int64_t{0}
+  , /*decltype(_impl_.game_mode_)*/0
+  , /*decltype(_impl_.previous_game_mode_)*/0
+  , /*decltype(_impl_.is_debug_)*/false
+  , /*decltype(_impl_.is_flat_)*/false
+  , /*decltype(_impl_.copy_metadata_)*/false
+  , /*decltype(_impl_.has_death_location_)*/false} {}
+struct RespawnDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR RespawnDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~RespawnDefaultTypeInternal() {}
+  union {
+    Respawn _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RespawnDefaultTypeInternal _Respawn_default_instance_;
 }  // namespace v1
 }  // namespace clientbound
 }  // namespace event
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[37];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[39];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = nullptr;
 
@@ -622,10 +663,10 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbo
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::EntityMove, _impl_.player_id_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::EntityMove, _impl_.entity_id_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::EntityMove, _impl_.movement_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::EntityMove, _impl_.rotation_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::EntityMove, _impl_.is_on_ground_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::EntityLook, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -851,6 +892,45 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbo
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::TeleportEntity, _impl_.entity_id_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::TeleportEntity, _impl_.position_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::TeleportEntity, _impl_.rotation_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::TeleportEntity, _impl_.is_on_ground_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _impl_.victim_entity_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _impl_.killer_entity_id_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _impl_.death_message_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_._has_bits_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.dimension_type_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.dimension_name_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.hashed_seed_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.game_mode_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.previous_game_mode_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.is_debug_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.is_flat_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.copy_metadata_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.has_death_location_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.death_dimension_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.death_position_),
+  ~0u,
+  ~0u,
+  ~0u,
+  ~0u,
+  0,
+  ~0u,
+  ~0u,
+  ~0u,
+  ~0u,
+  ~0u,
+  ~0u,
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::Event)},
@@ -890,6 +970,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 275, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::CollectItem)},
   { 284, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::RemoveEntity)},
   { 291, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::TeleportEntity)},
+  { 301, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen)},
+  { 310, 327, -1, sizeof(::minecpp::proto::event::clientbound::v1::Respawn)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -930,6 +1012,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::event::clientbound::v1::_CollectItem_default_instance_._instance,
   &::minecpp::proto::event::clientbound::v1::_RemoveEntity_default_instance_._instance,
   &::minecpp::proto::event::clientbound::v1::_TeleportEntity_default_instance_._instance,
+  &::minecpp::proto::event::clientbound::v1::_DisplayDeathScreen_default_instance_._instance,
+  &::minecpp::proto::event::clientbound::v1::_Respawn_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -966,77 +1050,90 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_
   ".Entity\"z\n\013SpawnPlayer\0224\n\tplayer_id\030\001 \001("
   "\0132!.minecpp.proto.player.v1.PlayerId\0225\n\006"
   "entity\030\002 \001(\0132%.minecpp.proto.entity.v1.P"
-  "layerEntity\"\277\001\n\nEntityMove\0224\n\tplayer_id\030"
-  "\001 \001(\0132!.minecpp.proto.player.v1.PlayerId"
-  "\022\021\n\tentity_id\030\002 \001(\r\0223\n\010movement\030\003 \001(\0132!."
-  "minecpp.proto.common.v1.Vector3i\0223\n\010rota"
-  "tion\030\004 \001(\0132!.minecpp.proto.common.v1.Rot"
-  "ation\"\212\001\n\nEntityLook\0224\n\tplayer_id\030\001 \001(\0132"
-  "!.minecpp.proto.player.v1.PlayerId\022\021\n\ten"
-  "tity_id\030\002 \001(\r\0223\n\010rotation\030\003 \001(\0132!.minecp"
-  "p.proto.common.v1.Rotation\"\201\001\n\026PlayerPos"
-  "itionRotation\0222\n\010position\030\001 \001(\0132 .minecp"
-  "p.proto.common.v1.Vector3\0223\n\010rotation\030\002 "
-  "\001(\0132!.minecpp.proto.common.v1.Rotation\"3"
-  "\n\020SetSpawnPosition\022\020\n\010position\030\001 \001(\004\022\r\n\005"
-  "angle\030\002 \001(\002\"%\n\004Chat\022\017\n\007message\030\001 \001(\t\022\014\n\004"
-  "type\030\002 \001(\005\"W\n\014RemovePlayer\0224\n\tplayer_id\030"
-  "\001 \001(\0132!.minecpp.proto.player.v1.PlayerId"
-  "\022\021\n\tentity_id\030\002 \001(\r\"4\n\013UpdateBlock\022\026\n\016bl"
-  "ock_position\030\001 \001(\004\022\r\n\005state\030\002 \001(\r\"_\n\rAni"
-  "mateEntity\022\021\n\tentity_id\030\001 \001(\r\022;\n\tanimati"
-  "on\030\002 \001(\0162(.minecpp.proto.common.v1.Entit"
-  "yAnimation\"-\n\026AcknowledgeBlockChange\022\023\n\013"
-  "sequence_id\030\001 \001(\005\"\204\001\n\013LoadTerrain\022=\n\rcen"
-  "tral_chunk\030\001 \001(\0132&.minecpp.proto.common."
-  "v1.ChunkPosition\0226\n\006coords\030\002 \003(\0132&.minec"
-  "pp.proto.common.v1.ChunkPosition\",\n\016Tran"
-  "sferPlayer\022\032\n\022engine_instance_id\030\002 \001(\004\"\312"
-  "\001\n\025UpdatePlayerAbilities\0224\n\tplayer_id\030\001 "
-  "\001(\0132!.minecpp.proto.player.v1.PlayerId\022\024"
-  "\n\014invulnerable\030\002 \001(\010\022\021\n\tis_flying\030\003 \001(\010\022"
-  "\024\n\014allow_flying\030\004 \001(\010\022\025\n\rcreative_mode\030\005"
-  " \001(\010\022\022\n\nwalk_speed\030\007 \001(\002\022\021\n\tfly_speed\030\010 "
-  "\001(\002\"\203\001\n\013UnloadChunk\0224\n\tplayer_id\030\001 \001(\0132!"
-  ".minecpp.proto.player.v1.PlayerId\022>\n\016chu"
-  "nk_position\030\002 \001(\0132&.minecpp.proto.common"
-  ".v1.ChunkPosition\";\n\nPlayerList\022-\n\004list\030"
-  "\001 \003(\0132\037.minecpp.proto.player.v1.Status\"\177"
-  "\n\nEntityList\0221\n\010entities\030\001 \003(\0132\037.minecpp"
-  ".proto.entity.v1.Entity\022>\n\017player_entiti"
-  "es\030\002 \003(\0132%.minecpp.proto.entity.v1.Playe"
-  "rEntity\"[\n\021SetEntityVelocity\022\021\n\tentity_i"
-  "d\030\001 \001(\r\0223\n\010velocity\030\002 \001(\0132!.minecpp.prot"
-  "o.common.v1.Vector3i\"\253\001\n\014AcceptPlayer\0223\n"
-  "\010gameplay\030\001 \001(\0132!.minecpp.proto.common.v"
-  "1.Gameplay\0225\n\tabilities\030\002 \001(\0132\".minecpp."
-  "proto.entity.v1.Abilities\022/\n\006player\030\003 \001("
-  "\0132\037.minecpp.proto.player.v1.Player\"#\n\nDe"
-  "nyPlayer\022\025\n\rdenial_reason\030\001 \001(\t\"\?\n\020SetIn"
-  "ventorySlot\022+\n\004slot\030\001 \001(\0132\035.minecpp.prot"
-  "o.player.v1.Slot\"3\n\021SectionBlockLight\022\t\n"
-  "\001y\030\001 \001(\005\022\023\n\013block_light\030\002 \001(\014\"\224\001\n\017ChunkB"
-  "lockLight\0228\n\010position\030\001 \001(\0132&.minecpp.pr"
-  "oto.common.v1.ChunkPosition\022G\n\010sections\030"
-  "\002 \003(\01325.minecpp.proto.event.clientbound."
-  "v1.SectionBlockLight\"\\\n\020UpdateBlockLight"
-  "\022H\n\013block_light\030\001 \003(\01323.minecpp.proto.ev"
-  "ent.clientbound.v1.ChunkBlockLight\"9\n\tCh"
-  "unkData\022,\n\005chunk\030\001 \001(\0132\035.minecpp.proto.c"
-  "hunk.v1.Chunk\"J\n\016SetCenterChunk\0228\n\010posit"
-  "ion\030\001 \001(\0132&.minecpp.proto.common.v1.Chun"
-  "kPosition\"\224\001\n\022SetEntityEquipment\022\021\n\tenti"
-  "ty_id\030\001 \001(\r\022>\n\016equipment_slot\030\002 \001(\0162&.mi"
-  "necpp.proto.entity.v1.EquipmentSlot\022+\n\004i"
-  "tem\030\003 \001(\0132\035.minecpp.proto.player.v1.Slot"
-  "\"B\n\tSetHealth\022\016\n\006health\030\001 \001(\002\022\014\n\004food\030\002 "
-  "\001(\005\022\027\n\017food_saturation\030\003 \001(\002\"V\n\013CollectI"
-  "tem\022\033\n\023collected_entity_id\030\001 \001(\r\022\033\n\023coll"
-  "ector_entity_id\030\002 \001(\r\022\r\n\005count\030\003 \001(\r\"!\n\014"
-  "RemoveEntity\022\021\n\tentity_id\030\001 \001(\r\"W\n\016Telep"
-  "ortEntity\022\021\n\tentity_id\030\001 \001(\r\0222\n\010position"
-  "\030\002 \001(\0132 .minecpp.proto.common.v1.Vector3"
-  "b\006proto3"
+  "layerEntity\"\237\001\n\nEntityMove\022\021\n\tentity_id\030"
+  "\001 \001(\r\0223\n\010movement\030\002 \001(\0132!.minecpp.proto."
+  "common.v1.Vector3i\0223\n\010rotation\030\003 \001(\0132!.m"
+  "inecpp.proto.common.v1.Rotation\022\024\n\014is_on"
+  "_ground\030\004 \001(\010\"\212\001\n\nEntityLook\0224\n\tplayer_i"
+  "d\030\001 \001(\0132!.minecpp.proto.player.v1.Player"
+  "Id\022\021\n\tentity_id\030\002 \001(\r\0223\n\010rotation\030\003 \001(\0132"
+  "!.minecpp.proto.common.v1.Rotation\"\201\001\n\026P"
+  "layerPositionRotation\0222\n\010position\030\001 \001(\0132"
+  " .minecpp.proto.common.v1.Vector3\0223\n\010rot"
+  "ation\030\002 \001(\0132!.minecpp.proto.common.v1.Ro"
+  "tation\"3\n\020SetSpawnPosition\022\020\n\010position\030\001"
+  " \001(\004\022\r\n\005angle\030\002 \001(\002\"%\n\004Chat\022\017\n\007message\030\001"
+  " \001(\t\022\014\n\004type\030\002 \001(\005\"W\n\014RemovePlayer\0224\n\tpl"
+  "ayer_id\030\001 \001(\0132!.minecpp.proto.player.v1."
+  "PlayerId\022\021\n\tentity_id\030\002 \001(\r\"4\n\013UpdateBlo"
+  "ck\022\026\n\016block_position\030\001 \001(\004\022\r\n\005state\030\002 \001("
+  "\r\"_\n\rAnimateEntity\022\021\n\tentity_id\030\001 \001(\r\022;\n"
+  "\tanimation\030\002 \001(\0162(.minecpp.proto.common."
+  "v1.EntityAnimation\"-\n\026AcknowledgeBlockCh"
+  "ange\022\023\n\013sequence_id\030\001 \001(\005\"\204\001\n\013LoadTerrai"
+  "n\022=\n\rcentral_chunk\030\001 \001(\0132&.minecpp.proto"
+  ".common.v1.ChunkPosition\0226\n\006coords\030\002 \003(\013"
+  "2&.minecpp.proto.common.v1.ChunkPosition"
+  "\",\n\016TransferPlayer\022\032\n\022engine_instance_id"
+  "\030\002 \001(\004\"\312\001\n\025UpdatePlayerAbilities\0224\n\tplay"
+  "er_id\030\001 \001(\0132!.minecpp.proto.player.v1.Pl"
+  "ayerId\022\024\n\014invulnerable\030\002 \001(\010\022\021\n\tis_flyin"
+  "g\030\003 \001(\010\022\024\n\014allow_flying\030\004 \001(\010\022\025\n\rcreativ"
+  "e_mode\030\005 \001(\010\022\022\n\nwalk_speed\030\007 \001(\002\022\021\n\tfly_"
+  "speed\030\010 \001(\002\"\203\001\n\013UnloadChunk\0224\n\tplayer_id"
+  "\030\001 \001(\0132!.minecpp.proto.player.v1.PlayerI"
+  "d\022>\n\016chunk_position\030\002 \001(\0132&.minecpp.prot"
+  "o.common.v1.ChunkPosition\";\n\nPlayerList\022"
+  "-\n\004list\030\001 \003(\0132\037.minecpp.proto.player.v1."
+  "Status\"\177\n\nEntityList\0221\n\010entities\030\001 \003(\0132\037"
+  ".minecpp.proto.entity.v1.Entity\022>\n\017playe"
+  "r_entities\030\002 \003(\0132%.minecpp.proto.entity."
+  "v1.PlayerEntity\"[\n\021SetEntityVelocity\022\021\n\t"
+  "entity_id\030\001 \001(\r\0223\n\010velocity\030\002 \001(\0132!.mine"
+  "cpp.proto.common.v1.Vector3i\"\253\001\n\014AcceptP"
+  "layer\0223\n\010gameplay\030\001 \001(\0132!.minecpp.proto."
+  "common.v1.Gameplay\0225\n\tabilities\030\002 \001(\0132\"."
+  "minecpp.proto.entity.v1.Abilities\022/\n\006pla"
+  "yer\030\003 \001(\0132\037.minecpp.proto.player.v1.Play"
+  "er\"#\n\nDenyPlayer\022\025\n\rdenial_reason\030\001 \001(\t\""
+  "\?\n\020SetInventorySlot\022+\n\004slot\030\001 \001(\0132\035.mine"
+  "cpp.proto.player.v1.Slot\"3\n\021SectionBlock"
+  "Light\022\t\n\001y\030\001 \001(\005\022\023\n\013block_light\030\002 \001(\014\"\224\001"
+  "\n\017ChunkBlockLight\0228\n\010position\030\001 \001(\0132&.mi"
+  "necpp.proto.common.v1.ChunkPosition\022G\n\010s"
+  "ections\030\002 \003(\01325.minecpp.proto.event.clie"
+  "ntbound.v1.SectionBlockLight\"\\\n\020UpdateBl"
+  "ockLight\022H\n\013block_light\030\001 \003(\01323.minecpp."
+  "proto.event.clientbound.v1.ChunkBlockLig"
+  "ht\"9\n\tChunkData\022,\n\005chunk\030\001 \001(\0132\035.minecpp"
+  ".proto.chunk.v1.Chunk\"J\n\016SetCenterChunk\022"
+  "8\n\010position\030\001 \001(\0132&.minecpp.proto.common"
+  ".v1.ChunkPosition\"\224\001\n\022SetEntityEquipment"
+  "\022\021\n\tentity_id\030\001 \001(\r\022>\n\016equipment_slot\030\002 "
+  "\001(\0162&.minecpp.proto.entity.v1.EquipmentS"
+  "lot\022+\n\004item\030\003 \001(\0132\035.minecpp.proto.player"
+  ".v1.Slot\"B\n\tSetHealth\022\016\n\006health\030\001 \001(\002\022\014\n"
+  "\004food\030\002 \001(\005\022\027\n\017food_saturation\030\003 \001(\002\"V\n\013"
+  "CollectItem\022\033\n\023collected_entity_id\030\001 \001(\r"
+  "\022\033\n\023collector_entity_id\030\002 \001(\r\022\r\n\005count\030\003"
+  " \001(\r\"!\n\014RemoveEntity\022\021\n\tentity_id\030\001 \001(\r\""
+  "\242\001\n\016TeleportEntity\022\021\n\tentity_id\030\001 \001(\r\0222\n"
+  "\010position\030\002 \001(\0132 .minecpp.proto.common.v"
+  "1.Vector3\0223\n\010rotation\030\003 \001(\0132!.minecpp.pr"
+  "oto.common.v1.Rotation\022\024\n\014is_on_ground\030\004"
+  " \001(\010\"_\n\022DisplayDeathScreen\022\030\n\020victim_ent"
+  "ity_id\030\001 \001(\r\022\030\n\020killer_entity_id\030\002 \001(\r\022\025"
+  "\n\rdeath_message\030\003 \001(\t\"\210\003\n\007Respawn\022\026\n\016dim"
+  "ension_type\030\001 \001(\t\022\026\n\016dimension_name\030\002 \001("
+  "\t\022\023\n\013hashed_seed\030\003 \001(\003\0224\n\tgame_mode\030\004 \001("
+  "\0162!.minecpp.proto.common.v1.GameMode\022B\n\022"
+  "previous_game_mode\030\005 \001(\0162!.minecpp.proto"
+  ".common.v1.GameModeH\000\210\001\001\022\020\n\010is_debug\030\006 \001"
+  "(\010\022\017\n\007is_flat\030\007 \001(\010\022\025\n\rcopy_metadata\030\010 \001"
+  "(\010\022\032\n\022has_death_location\030\t \001(\010\022\027\n\017death_"
+  "dimension\030\n \001(\t\0228\n\016death_position\030\013 \001(\0132"
+  " .minecpp.proto.common.v1.Vector3B\025\n\023_pr"
+  "evious_game_modeb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps[7] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -1049,9 +1146,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = {
-    false, false, 4128, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
+    false, false, 4664, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
     "minecpp/proto/event/clientbound/v1/Clientbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps, 7, 37,
+    &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps, 7, 39,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
@@ -2930,15 +3027,10 @@ void SpawnPlayer::InternalSwap(SpawnPlayer* other) {
 
 class EntityMove::_Internal {
  public:
-  static const ::minecpp::proto::player::v1::PlayerId& player_id(const EntityMove* msg);
   static const ::minecpp::proto::common::v1::Vector3i& movement(const EntityMove* msg);
   static const ::minecpp::proto::common::v1::Rotation& rotation(const EntityMove* msg);
 };
 
-const ::minecpp::proto::player::v1::PlayerId&
-EntityMove::_Internal::player_id(const EntityMove* msg) {
-  return *msg->_impl_.player_id_;
-}
 const ::minecpp::proto::common::v1::Vector3i&
 EntityMove::_Internal::movement(const EntityMove* msg) {
   return *msg->_impl_.movement_;
@@ -2946,12 +3038,6 @@ EntityMove::_Internal::movement(const EntityMove* msg) {
 const ::minecpp::proto::common::v1::Rotation&
 EntityMove::_Internal::rotation(const EntityMove* msg) {
   return *msg->_impl_.rotation_;
-}
-void EntityMove::clear_player_id() {
-  if (GetArenaForAllocation() == nullptr && _impl_.player_id_ != nullptr) {
-    delete _impl_.player_id_;
-  }
-  _impl_.player_id_ = nullptr;
 }
 void EntityMove::clear_movement() {
   if (GetArenaForAllocation() == nullptr && _impl_.movement_ != nullptr) {
@@ -2975,23 +3061,22 @@ EntityMove::EntityMove(const EntityMove& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   EntityMove* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.player_id_){nullptr}
-    , decltype(_impl_.movement_){nullptr}
+      decltype(_impl_.movement_){nullptr}
     , decltype(_impl_.rotation_){nullptr}
     , decltype(_impl_.entity_id_){}
+    , decltype(_impl_.is_on_ground_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_player_id()) {
-    _this->_impl_.player_id_ = new ::minecpp::proto::player::v1::PlayerId(*from._impl_.player_id_);
-  }
   if (from._internal_has_movement()) {
     _this->_impl_.movement_ = new ::minecpp::proto::common::v1::Vector3i(*from._impl_.movement_);
   }
   if (from._internal_has_rotation()) {
     _this->_impl_.rotation_ = new ::minecpp::proto::common::v1::Rotation(*from._impl_.rotation_);
   }
-  _this->_impl_.entity_id_ = from._impl_.entity_id_;
+  ::memcpy(&_impl_.entity_id_, &from._impl_.entity_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.is_on_ground_) -
+    reinterpret_cast<char*>(&_impl_.entity_id_)) + sizeof(_impl_.is_on_ground_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.EntityMove)
 }
 
@@ -3000,10 +3085,10 @@ inline void EntityMove::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.player_id_){nullptr}
-    , decltype(_impl_.movement_){nullptr}
+      decltype(_impl_.movement_){nullptr}
     , decltype(_impl_.rotation_){nullptr}
     , decltype(_impl_.entity_id_){0u}
+    , decltype(_impl_.is_on_ground_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -3019,7 +3104,6 @@ EntityMove::~EntityMove() {
 
 inline void EntityMove::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.player_id_;
   if (this != internal_default_instance()) delete _impl_.movement_;
   if (this != internal_default_instance()) delete _impl_.rotation_;
 }
@@ -3034,10 +3118,6 @@ void EntityMove::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.player_id_ != nullptr) {
-    delete _impl_.player_id_;
-  }
-  _impl_.player_id_ = nullptr;
   if (GetArenaForAllocation() == nullptr && _impl_.movement_ != nullptr) {
     delete _impl_.movement_;
   }
@@ -3046,7 +3126,9 @@ void EntityMove::Clear() {
     delete _impl_.rotation_;
   }
   _impl_.rotation_ = nullptr;
-  _impl_.entity_id_ = 0u;
+  ::memset(&_impl_.entity_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.is_on_ground_) -
+      reinterpret_cast<char*>(&_impl_.entity_id_)) + sizeof(_impl_.is_on_ground_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3056,34 +3138,34 @@ const char* EntityMove::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .minecpp.proto.player.v1.PlayerId player_id = 1;
+      // uint32 entity_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_player_id(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // uint32 entity_id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.common.v1.Vector3i movement = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+      // .minecpp.proto.common.v1.Vector3i movement = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_movement(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // .minecpp.proto.common.v1.Rotation rotation = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+      // .minecpp.proto.common.v1.Rotation rotation = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool is_on_ground = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.is_on_ground_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3117,31 +3199,30 @@ uint8_t* EntityMove::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .minecpp.proto.player.v1.PlayerId player_id = 1;
-  if (this->_internal_has_player_id()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::player_id(this),
-        _Internal::player_id(this).GetCachedSize(), target, stream);
-  }
-
-  // uint32 entity_id = 2;
+  // uint32 entity_id = 1;
   if (this->_internal_entity_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_entity_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_entity_id(), target);
   }
 
-  // .minecpp.proto.common.v1.Vector3i movement = 3;
+  // .minecpp.proto.common.v1.Vector3i movement = 2;
   if (this->_internal_has_movement()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::movement(this),
+      InternalWriteMessage(2, _Internal::movement(this),
         _Internal::movement(this).GetCachedSize(), target, stream);
   }
 
-  // .minecpp.proto.common.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
   if (this->_internal_has_rotation()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, _Internal::rotation(this),
+      InternalWriteMessage(3, _Internal::rotation(this),
         _Internal::rotation(this).GetCachedSize(), target, stream);
+  }
+
+  // bool is_on_ground = 4;
+  if (this->_internal_is_on_ground() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_is_on_ground(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3160,30 +3241,28 @@ size_t EntityMove::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .minecpp.proto.player.v1.PlayerId player_id = 1;
-  if (this->_internal_has_player_id()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.player_id_);
-  }
-
-  // .minecpp.proto.common.v1.Vector3i movement = 3;
+  // .minecpp.proto.common.v1.Vector3i movement = 2;
   if (this->_internal_has_movement()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.movement_);
   }
 
-  // .minecpp.proto.common.v1.Rotation rotation = 4;
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
   if (this->_internal_has_rotation()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.rotation_);
   }
 
-  // uint32 entity_id = 2;
+  // uint32 entity_id = 1;
   if (this->_internal_entity_id() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_entity_id());
+  }
+
+  // bool is_on_ground = 4;
+  if (this->_internal_is_on_ground() != 0) {
+    total_size += 1 + 1;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -3204,10 +3283,6 @@ void EntityMove::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_player_id()) {
-    _this->_internal_mutable_player_id()->::minecpp::proto::player::v1::PlayerId::MergeFrom(
-        from._internal_player_id());
-  }
   if (from._internal_has_movement()) {
     _this->_internal_mutable_movement()->::minecpp::proto::common::v1::Vector3i::MergeFrom(
         from._internal_movement());
@@ -3218,6 +3293,9 @@ void EntityMove::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   }
   if (from._internal_entity_id() != 0) {
     _this->_internal_set_entity_id(from._internal_entity_id());
+  }
+  if (from._internal_is_on_ground() != 0) {
+    _this->_internal_set_is_on_ground(from._internal_is_on_ground());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -3237,11 +3315,11 @@ void EntityMove::InternalSwap(EntityMove* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(EntityMove, _impl_.entity_id_)
-      + sizeof(EntityMove::_impl_.entity_id_)
-      - PROTOBUF_FIELD_OFFSET(EntityMove, _impl_.player_id_)>(
-          reinterpret_cast<char*>(&_impl_.player_id_),
-          reinterpret_cast<char*>(&other->_impl_.player_id_));
+      PROTOBUF_FIELD_OFFSET(EntityMove, _impl_.is_on_ground_)
+      + sizeof(EntityMove::_impl_.is_on_ground_)
+      - PROTOBUF_FIELD_OFFSET(EntityMove, _impl_.movement_)>(
+          reinterpret_cast<char*>(&_impl_.movement_),
+          reinterpret_cast<char*>(&other->_impl_.movement_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata EntityMove::GetMetadata() const {
@@ -9429,17 +9507,28 @@ void RemoveEntity::InternalSwap(RemoveEntity* other) {
 class TeleportEntity::_Internal {
  public:
   static const ::minecpp::proto::common::v1::Vector3& position(const TeleportEntity* msg);
+  static const ::minecpp::proto::common::v1::Rotation& rotation(const TeleportEntity* msg);
 };
 
 const ::minecpp::proto::common::v1::Vector3&
 TeleportEntity::_Internal::position(const TeleportEntity* msg) {
   return *msg->_impl_.position_;
 }
+const ::minecpp::proto::common::v1::Rotation&
+TeleportEntity::_Internal::rotation(const TeleportEntity* msg) {
+  return *msg->_impl_.rotation_;
+}
 void TeleportEntity::clear_position() {
   if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
     delete _impl_.position_;
   }
   _impl_.position_ = nullptr;
+}
+void TeleportEntity::clear_rotation() {
+  if (GetArenaForAllocation() == nullptr && _impl_.rotation_ != nullptr) {
+    delete _impl_.rotation_;
+  }
+  _impl_.rotation_ = nullptr;
 }
 TeleportEntity::TeleportEntity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -9452,14 +9541,21 @@ TeleportEntity::TeleportEntity(const TeleportEntity& from)
   TeleportEntity* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.rotation_){nullptr}
     , decltype(_impl_.entity_id_){}
+    , decltype(_impl_.is_on_ground_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_position()) {
     _this->_impl_.position_ = new ::minecpp::proto::common::v1::Vector3(*from._impl_.position_);
   }
-  _this->_impl_.entity_id_ = from._impl_.entity_id_;
+  if (from._internal_has_rotation()) {
+    _this->_impl_.rotation_ = new ::minecpp::proto::common::v1::Rotation(*from._impl_.rotation_);
+  }
+  ::memcpy(&_impl_.entity_id_, &from._impl_.entity_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.is_on_ground_) -
+    reinterpret_cast<char*>(&_impl_.entity_id_)) + sizeof(_impl_.is_on_ground_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.TeleportEntity)
 }
 
@@ -9469,7 +9565,9 @@ inline void TeleportEntity::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.position_){nullptr}
+    , decltype(_impl_.rotation_){nullptr}
     , decltype(_impl_.entity_id_){0u}
+    , decltype(_impl_.is_on_ground_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -9486,6 +9584,7 @@ TeleportEntity::~TeleportEntity() {
 inline void TeleportEntity::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.position_;
+  if (this != internal_default_instance()) delete _impl_.rotation_;
 }
 
 void TeleportEntity::SetCachedSize(int size) const {
@@ -9502,7 +9601,13 @@ void TeleportEntity::Clear() {
     delete _impl_.position_;
   }
   _impl_.position_ = nullptr;
-  _impl_.entity_id_ = 0u;
+  if (GetArenaForAllocation() == nullptr && _impl_.rotation_ != nullptr) {
+    delete _impl_.rotation_;
+  }
+  _impl_.rotation_ = nullptr;
+  ::memset(&_impl_.entity_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.is_on_ground_) -
+      reinterpret_cast<char*>(&_impl_.entity_id_)) + sizeof(_impl_.is_on_ground_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -9524,6 +9629,22 @@ const char* TeleportEntity::_InternalParse(const char* ptr, ::_pbi::ParseContext
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.Rotation rotation = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_rotation(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool is_on_ground = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.is_on_ground_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -9570,6 +9691,19 @@ uint8_t* TeleportEntity::_InternalSerialize(
         _Internal::position(this).GetCachedSize(), target, stream);
   }
 
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
+  if (this->_internal_has_rotation()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, _Internal::rotation(this),
+        _Internal::rotation(this).GetCachedSize(), target, stream);
+  }
+
+  // bool is_on_ground = 4;
+  if (this->_internal_is_on_ground() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_is_on_ground(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -9593,9 +9727,21 @@ size_t TeleportEntity::ByteSizeLong() const {
         *_impl_.position_);
   }
 
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
+  if (this->_internal_has_rotation()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.rotation_);
+  }
+
   // uint32 entity_id = 1;
   if (this->_internal_entity_id() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_entity_id());
+  }
+
+  // bool is_on_ground = 4;
+  if (this->_internal_is_on_ground() != 0) {
+    total_size += 1 + 1;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -9620,8 +9766,15 @@ void TeleportEntity::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
     _this->_internal_mutable_position()->::minecpp::proto::common::v1::Vector3::MergeFrom(
         from._internal_position());
   }
+  if (from._internal_has_rotation()) {
+    _this->_internal_mutable_rotation()->::minecpp::proto::common::v1::Rotation::MergeFrom(
+        from._internal_rotation());
+  }
   if (from._internal_entity_id() != 0) {
     _this->_internal_set_entity_id(from._internal_entity_id());
+  }
+  if (from._internal_is_on_ground() != 0) {
+    _this->_internal_set_is_on_ground(from._internal_is_on_ground());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -9641,8 +9794,8 @@ void TeleportEntity::InternalSwap(TeleportEntity* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TeleportEntity, _impl_.entity_id_)
-      + sizeof(TeleportEntity::_impl_.entity_id_)
+      PROTOBUF_FIELD_OFFSET(TeleportEntity, _impl_.is_on_ground_)
+      + sizeof(TeleportEntity::_impl_.is_on_ground_)
       - PROTOBUF_FIELD_OFFSET(TeleportEntity, _impl_.position_)>(
           reinterpret_cast<char*>(&_impl_.position_),
           reinterpret_cast<char*>(&other->_impl_.position_));
@@ -9652,6 +9805,820 @@ void TeleportEntity::InternalSwap(TeleportEntity* other) {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[36]);
+}
+
+// ===================================================================
+
+class DisplayDeathScreen::_Internal {
+ public:
+};
+
+DisplayDeathScreen::DisplayDeathScreen(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+}
+DisplayDeathScreen::DisplayDeathScreen(const DisplayDeathScreen& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  DisplayDeathScreen* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.death_message_){}
+    , decltype(_impl_.victim_entity_id_){}
+    , decltype(_impl_.killer_entity_id_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.death_message_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.death_message_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_death_message().empty()) {
+    _this->_impl_.death_message_.Set(from._internal_death_message(), 
+      _this->GetArenaForAllocation());
+  }
+  ::memcpy(&_impl_.victim_entity_id_, &from._impl_.victim_entity_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.killer_entity_id_) -
+    reinterpret_cast<char*>(&_impl_.victim_entity_id_)) + sizeof(_impl_.killer_entity_id_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+}
+
+inline void DisplayDeathScreen::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.death_message_){}
+    , decltype(_impl_.victim_entity_id_){0u}
+    , decltype(_impl_.killer_entity_id_){0u}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.death_message_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.death_message_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+DisplayDeathScreen::~DisplayDeathScreen() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void DisplayDeathScreen::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.death_message_.Destroy();
+}
+
+void DisplayDeathScreen::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void DisplayDeathScreen::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.death_message_.ClearToEmpty();
+  ::memset(&_impl_.victim_entity_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.killer_entity_id_) -
+      reinterpret_cast<char*>(&_impl_.victim_entity_id_)) + sizeof(_impl_.killer_entity_id_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* DisplayDeathScreen::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint32 victim_entity_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.victim_entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint32 killer_entity_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.killer_entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string death_message = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_death_message();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* DisplayDeathScreen::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint32 victim_entity_id = 1;
+  if (this->_internal_victim_entity_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_victim_entity_id(), target);
+  }
+
+  // uint32 killer_entity_id = 2;
+  if (this->_internal_killer_entity_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_killer_entity_id(), target);
+  }
+
+  // string death_message = 3;
+  if (!this->_internal_death_message().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_death_message().data(), static_cast<int>(this->_internal_death_message().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_death_message(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  return target;
+}
+
+size_t DisplayDeathScreen::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string death_message = 3;
+  if (!this->_internal_death_message().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_death_message());
+  }
+
+  // uint32 victim_entity_id = 1;
+  if (this->_internal_victim_entity_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_victim_entity_id());
+  }
+
+  // uint32 killer_entity_id = 2;
+  if (this->_internal_killer_entity_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_killer_entity_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DisplayDeathScreen::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    DisplayDeathScreen::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DisplayDeathScreen::GetClassData() const { return &_class_data_; }
+
+
+void DisplayDeathScreen::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<DisplayDeathScreen*>(&to_msg);
+  auto& from = static_cast<const DisplayDeathScreen&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_death_message().empty()) {
+    _this->_internal_set_death_message(from._internal_death_message());
+  }
+  if (from._internal_victim_entity_id() != 0) {
+    _this->_internal_set_victim_entity_id(from._internal_victim_entity_id());
+  }
+  if (from._internal_killer_entity_id() != 0) {
+    _this->_internal_set_killer_entity_id(from._internal_killer_entity_id());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DisplayDeathScreen::CopyFrom(const DisplayDeathScreen& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool DisplayDeathScreen::IsInitialized() const {
+  return true;
+}
+
+void DisplayDeathScreen::InternalSwap(DisplayDeathScreen* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.death_message_, lhs_arena,
+      &other->_impl_.death_message_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(DisplayDeathScreen, _impl_.killer_entity_id_)
+      + sizeof(DisplayDeathScreen::_impl_.killer_entity_id_)
+      - PROTOBUF_FIELD_OFFSET(DisplayDeathScreen, _impl_.victim_entity_id_)>(
+          reinterpret_cast<char*>(&_impl_.victim_entity_id_),
+          reinterpret_cast<char*>(&other->_impl_.victim_entity_id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata DisplayDeathScreen::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[37]);
+}
+
+// ===================================================================
+
+class Respawn::_Internal {
+ public:
+  using HasBits = decltype(std::declval<Respawn>()._impl_._has_bits_);
+  static void set_has_previous_game_mode(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static const ::minecpp::proto::common::v1::Vector3& death_position(const Respawn* msg);
+};
+
+const ::minecpp::proto::common::v1::Vector3&
+Respawn::_Internal::death_position(const Respawn* msg) {
+  return *msg->_impl_.death_position_;
+}
+void Respawn::clear_death_position() {
+  if (GetArenaForAllocation() == nullptr && _impl_.death_position_ != nullptr) {
+    delete _impl_.death_position_;
+  }
+  _impl_.death_position_ = nullptr;
+}
+Respawn::Respawn(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.clientbound.v1.Respawn)
+}
+Respawn::Respawn(const Respawn& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Respawn* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.dimension_type_){}
+    , decltype(_impl_.dimension_name_){}
+    , decltype(_impl_.death_dimension_){}
+    , decltype(_impl_.death_position_){nullptr}
+    , decltype(_impl_.hashed_seed_){}
+    , decltype(_impl_.game_mode_){}
+    , decltype(_impl_.previous_game_mode_){}
+    , decltype(_impl_.is_debug_){}
+    , decltype(_impl_.is_flat_){}
+    , decltype(_impl_.copy_metadata_){}
+    , decltype(_impl_.has_death_location_){}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.dimension_type_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.dimension_type_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_dimension_type().empty()) {
+    _this->_impl_.dimension_type_.Set(from._internal_dimension_type(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.dimension_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.dimension_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_dimension_name().empty()) {
+    _this->_impl_.dimension_name_.Set(from._internal_dimension_name(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.death_dimension_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.death_dimension_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_death_dimension().empty()) {
+    _this->_impl_.death_dimension_.Set(from._internal_death_dimension(), 
+      _this->GetArenaForAllocation());
+  }
+  if (from._internal_has_death_position()) {
+    _this->_impl_.death_position_ = new ::minecpp::proto::common::v1::Vector3(*from._impl_.death_position_);
+  }
+  ::memcpy(&_impl_.hashed_seed_, &from._impl_.hashed_seed_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.has_death_location_) -
+    reinterpret_cast<char*>(&_impl_.hashed_seed_)) + sizeof(_impl_.has_death_location_));
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.v1.Respawn)
+}
+
+inline void Respawn::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_._has_bits_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.dimension_type_){}
+    , decltype(_impl_.dimension_name_){}
+    , decltype(_impl_.death_dimension_){}
+    , decltype(_impl_.death_position_){nullptr}
+    , decltype(_impl_.hashed_seed_){int64_t{0}}
+    , decltype(_impl_.game_mode_){0}
+    , decltype(_impl_.previous_game_mode_){0}
+    , decltype(_impl_.is_debug_){false}
+    , decltype(_impl_.is_flat_){false}
+    , decltype(_impl_.copy_metadata_){false}
+    , decltype(_impl_.has_death_location_){false}
+  };
+  _impl_.dimension_type_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.dimension_type_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.dimension_name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.dimension_name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.death_dimension_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.death_dimension_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+Respawn::~Respawn() {
+  // @@protoc_insertion_point(destructor:minecpp.proto.event.clientbound.v1.Respawn)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Respawn::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.dimension_type_.Destroy();
+  _impl_.dimension_name_.Destroy();
+  _impl_.death_dimension_.Destroy();
+  if (this != internal_default_instance()) delete _impl_.death_position_;
+}
+
+void Respawn::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Respawn::Clear() {
+// @@protoc_insertion_point(message_clear_start:minecpp.proto.event.clientbound.v1.Respawn)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.dimension_type_.ClearToEmpty();
+  _impl_.dimension_name_.ClearToEmpty();
+  _impl_.death_dimension_.ClearToEmpty();
+  if (GetArenaForAllocation() == nullptr && _impl_.death_position_ != nullptr) {
+    delete _impl_.death_position_;
+  }
+  _impl_.death_position_ = nullptr;
+  ::memset(&_impl_.hashed_seed_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.game_mode_) -
+      reinterpret_cast<char*>(&_impl_.hashed_seed_)) + sizeof(_impl_.game_mode_));
+  _impl_.previous_game_mode_ = 0;
+  ::memset(&_impl_.is_debug_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.has_death_location_) -
+      reinterpret_cast<char*>(&_impl_.is_debug_)) + sizeof(_impl_.has_death_location_));
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Respawn::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string dimension_type = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_dimension_type();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.event.clientbound.v1.Respawn.dimension_type"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string dimension_name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_dimension_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.event.clientbound.v1.Respawn.dimension_name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int64 hashed_seed = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          _impl_.hashed_seed_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.GameMode game_mode = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_game_mode(static_cast<::minecpp::proto::common::v1::GameMode>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_previous_game_mode(static_cast<::minecpp::proto::common::v1::GameMode>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // bool is_debug = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
+          _impl_.is_debug_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool is_flat = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 56)) {
+          _impl_.is_flat_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool copy_metadata = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 64)) {
+          _impl_.copy_metadata_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // bool has_death_location = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 72)) {
+          _impl_.has_death_location_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string death_dimension = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 82)) {
+          auto str = _internal_mutable_death_dimension();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.event.clientbound.v1.Respawn.death_dimension"));
+        } else
+          goto handle_unusual;
+        continue;
+      // .minecpp.proto.common.v1.Vector3 death_position = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 90)) {
+          ptr = ctx->ParseMessage(_internal_mutable_death_position(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  _impl_._has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Respawn::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.event.clientbound.v1.Respawn)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string dimension_type = 1;
+  if (!this->_internal_dimension_type().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_dimension_type().data(), static_cast<int>(this->_internal_dimension_type().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.proto.event.clientbound.v1.Respawn.dimension_type");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_dimension_type(), target);
+  }
+
+  // string dimension_name = 2;
+  if (!this->_internal_dimension_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_dimension_name().data(), static_cast<int>(this->_internal_dimension_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.proto.event.clientbound.v1.Respawn.dimension_name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_dimension_name(), target);
+  }
+
+  // int64 hashed_seed = 3;
+  if (this->_internal_hashed_seed() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt64ToArray(3, this->_internal_hashed_seed(), target);
+  }
+
+  // .minecpp.proto.common.v1.GameMode game_mode = 4;
+  if (this->_internal_game_mode() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      4, this->_internal_game_mode(), target);
+  }
+
+  // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+  if (_internal_has_previous_game_mode()) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      5, this->_internal_previous_game_mode(), target);
+  }
+
+  // bool is_debug = 6;
+  if (this->_internal_is_debug() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(6, this->_internal_is_debug(), target);
+  }
+
+  // bool is_flat = 7;
+  if (this->_internal_is_flat() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(7, this->_internal_is_flat(), target);
+  }
+
+  // bool copy_metadata = 8;
+  if (this->_internal_copy_metadata() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(8, this->_internal_copy_metadata(), target);
+  }
+
+  // bool has_death_location = 9;
+  if (this->_internal_has_death_location() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(9, this->_internal_has_death_location(), target);
+  }
+
+  // string death_dimension = 10;
+  if (!this->_internal_death_dimension().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_death_dimension().data(), static_cast<int>(this->_internal_death_dimension().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "minecpp.proto.event.clientbound.v1.Respawn.death_dimension");
+    target = stream->WriteStringMaybeAliased(
+        10, this->_internal_death_dimension(), target);
+  }
+
+  // .minecpp.proto.common.v1.Vector3 death_position = 11;
+  if (this->_internal_has_death_position()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(11, _Internal::death_position(this),
+        _Internal::death_position(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:minecpp.proto.event.clientbound.v1.Respawn)
+  return target;
+}
+
+size_t Respawn::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:minecpp.proto.event.clientbound.v1.Respawn)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string dimension_type = 1;
+  if (!this->_internal_dimension_type().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_dimension_type());
+  }
+
+  // string dimension_name = 2;
+  if (!this->_internal_dimension_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_dimension_name());
+  }
+
+  // string death_dimension = 10;
+  if (!this->_internal_death_dimension().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_death_dimension());
+  }
+
+  // .minecpp.proto.common.v1.Vector3 death_position = 11;
+  if (this->_internal_has_death_position()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.death_position_);
+  }
+
+  // int64 hashed_seed = 3;
+  if (this->_internal_hashed_seed() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_hashed_seed());
+  }
+
+  // .minecpp.proto.common.v1.GameMode game_mode = 4;
+  if (this->_internal_game_mode() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_game_mode());
+  }
+
+  // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_previous_game_mode());
+  }
+
+  // bool is_debug = 6;
+  if (this->_internal_is_debug() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool is_flat = 7;
+  if (this->_internal_is_flat() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool copy_metadata = 8;
+  if (this->_internal_copy_metadata() != 0) {
+    total_size += 1 + 1;
+  }
+
+  // bool has_death_location = 9;
+  if (this->_internal_has_death_location() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Respawn::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Respawn::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Respawn::GetClassData() const { return &_class_data_; }
+
+
+void Respawn::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Respawn*>(&to_msg);
+  auto& from = static_cast<const Respawn&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.event.clientbound.v1.Respawn)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_dimension_type().empty()) {
+    _this->_internal_set_dimension_type(from._internal_dimension_type());
+  }
+  if (!from._internal_dimension_name().empty()) {
+    _this->_internal_set_dimension_name(from._internal_dimension_name());
+  }
+  if (!from._internal_death_dimension().empty()) {
+    _this->_internal_set_death_dimension(from._internal_death_dimension());
+  }
+  if (from._internal_has_death_position()) {
+    _this->_internal_mutable_death_position()->::minecpp::proto::common::v1::Vector3::MergeFrom(
+        from._internal_death_position());
+  }
+  if (from._internal_hashed_seed() != 0) {
+    _this->_internal_set_hashed_seed(from._internal_hashed_seed());
+  }
+  if (from._internal_game_mode() != 0) {
+    _this->_internal_set_game_mode(from._internal_game_mode());
+  }
+  if (from._internal_has_previous_game_mode()) {
+    _this->_internal_set_previous_game_mode(from._internal_previous_game_mode());
+  }
+  if (from._internal_is_debug() != 0) {
+    _this->_internal_set_is_debug(from._internal_is_debug());
+  }
+  if (from._internal_is_flat() != 0) {
+    _this->_internal_set_is_flat(from._internal_is_flat());
+  }
+  if (from._internal_copy_metadata() != 0) {
+    _this->_internal_set_copy_metadata(from._internal_copy_metadata());
+  }
+  if (from._internal_has_death_location() != 0) {
+    _this->_internal_set_has_death_location(from._internal_has_death_location());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Respawn::CopyFrom(const Respawn& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:minecpp.proto.event.clientbound.v1.Respawn)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Respawn::IsInitialized() const {
+  return true;
+}
+
+void Respawn::InternalSwap(Respawn* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.dimension_type_, lhs_arena,
+      &other->_impl_.dimension_type_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.dimension_name_, lhs_arena,
+      &other->_impl_.dimension_name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.death_dimension_, lhs_arena,
+      &other->_impl_.death_dimension_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Respawn, _impl_.has_death_location_)
+      + sizeof(Respawn::_impl_.has_death_location_)
+      - PROTOBUF_FIELD_OFFSET(Respawn, _impl_.death_position_)>(
+          reinterpret_cast<char*>(&_impl_.death_position_),
+          reinterpret_cast<char*>(&other->_impl_.death_position_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Respawn::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto[38]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -9808,6 +10775,14 @@ Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::RemoveEntit
 template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::TeleportEntity*
 Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::TeleportEntity >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::TeleportEntity >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::DisplayDeathScreen*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::DisplayDeathScreen >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::DisplayDeathScreen >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::clientbound::v1::Respawn*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::Respawn >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::clientbound::v1::Respawn >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

@@ -4,6 +4,7 @@ set(MINECPP_ENTITY_COMPONENT_INCLUDE_DIR ${MINECPP_ENTITY_DIR}/include/minecpp/e
 target_sources(minecpp_entity PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Health.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Inventory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ItemSlot.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Location.cpp

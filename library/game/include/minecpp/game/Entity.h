@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Concepts.h"
-#include <entt/entt.hpp>
-#include <minecpp/game/Game.h>
+#include "Entt.hpp"
+#include "Game.h"
 #include <minecpp/math/Vector3.h>
 
 namespace minecpp::game {
@@ -52,8 +52,11 @@ class Entity
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
    void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
+   void on_killed(IWorld &world);
+   void on_attached_to_world(IWorld &world, const math::Vector3 &position, const math::Vector3 &extent);
 
    [[nodiscard]] game::EntityId id() const;
+   [[nodiscard]] bool is_valid() const;
 
  private:
    entt::entity m_entity;
@@ -66,14 +69,6 @@ struct Movement
 
    [[nodiscard]] static Movement from_vector3(const math::Vector3 &position);
    [[nodiscard]] math::Vector3 to_vector3() const;
-};
-
-struct Rotation
-{
-   float yaw;
-   float pitch;
-
-   [[nodiscard]] proto::common::v1::Rotation to_proto() const;
 };
 
 }// namespace minecpp::game

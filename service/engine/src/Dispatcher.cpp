@@ -1,6 +1,7 @@
 #include "Dispatcher.h"
 #include "EventManager.h"
 #include <minecpp/chat/Chat.h>
+#include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
@@ -40,28 +41,22 @@ void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid /*
    m_events.send_to(event, player_id);
 }
 
-void Dispatcher::player_move(game::PlayerId player_id, game::EntityId entity_id,
-                             const math::Vector3 &position, const math::Vector3s &movement,
-                             const game::Rotation &rotation)
-{
-   clientbound_v1::EntityMove event;
-   event.set_entity_id(entity_id);
-   *event.mutable_player_id() = game::player::write_id_to_proto(player_id);
-   *event.mutable_movement()  = movement.to_proto();
-   *event.mutable_rotation()  = rotation.to_proto();
-
-   this->send_to_players_in_view_distance_except(player_id, position, event);
-}
-
 void Dispatcher::entity_move(game::EntityId entity_id, const math::Vector3 &position,
-                             const math::Vector3s &movement, const game::Rotation &rotation)
+                             const math::Vector3s &movement, const math::Rotation &rotation,
+                             const bool is_on_ground)
 {
    clientbound_v1::EntityMove event;
    event.set_entity_id(entity_id);
    *event.mutable_movement() = movement.to_proto();
    *event.mutable_rotation() = rotation.to_proto();
+   event.set_is_on_ground(is_on_ground);
 
-   this->send_to_players_in_view_distance(position, event);
+   auto entity = m_entity_system.entity(entity_id);
+   if (entity.has_component<PlayerComponent>()) {
+      this->send_to_player_visible_by(entity, event);
+   } else {
+      this->send_to_players_in_view_distance(position, event);
+   }
 }
 
 void Dispatcher::add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping)
@@ -106,7 +101,7 @@ void Dispatcher::send_direct_chat(game::PlayerId player_id, chat::MessageType ms
 }
 
 void Dispatcher::player_look(game::PlayerId player_id, game::EntityId entity_id,
-                             const math::Vector3 &position, const game::Rotation &rotation)
+                             const math::Vector3 &position, const math::Rotation &rotation)
 {
    clientbound_v1::EntityLook event;
    *event.mutable_player_id() = game::player::write_id_to_proto(player_id);
@@ -117,7 +112,7 @@ void Dispatcher::player_look(game::PlayerId player_id, game::EntityId entity_id,
 }
 
 void Dispatcher::entity_look(game::EntityId entity_id, const math::Vector3 &position,
-                             const game::Rotation &rotation)
+                             const math::Rotation &rotation)
 {
    clientbound_v1::EntityLook event;
    event.set_entity_id(entity_id);
@@ -188,7 +183,8 @@ void Dispatcher::accept_player(const game::player::Player &player)
    *accept_player.mutable_player() = player.to_proto();
 
    auto entity = m_entity_system.entity(player.entity_id());
-   // It's assumed entity has abilities component
+   assert(entity.has_component<entity::component::Abilities>());
+
    auto abilities                     = entity.component<entity::component::Abilities>();
    *accept_player.mutable_abilities() = abilities.abilities.to_proto();
 
@@ -307,12 +303,11 @@ void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::Chu
 }
 
 void Dispatcher::synchronise_player_position_and_rotation(game::PlayerId player_id, math::Vector3 position,
-                                                          float yaw, float pitch)
+                                                          math::Rotation rotation)
 {
    clientbound_v1::PlayerPositionRotation player_pos_rot;
    *player_pos_rot.mutable_position() = position.to_proto();
-   player_pos_rot.mutable_rotation()->set_yaw(yaw);
-   player_pos_rot.mutable_rotation()->set_pitch(pitch);
+   *player_pos_rot.mutable_rotation() = rotation.to_proto();
    m_events.send_to(player_pos_rot, player_id);
 }
 
@@ -386,6 +381,13 @@ void Dispatcher::remove_entity(game::EntityId entity_id)
    if (not entity.has_component<entity::component::Location>())
       return;
 
+   if (entity.has_component<entity::component::Player>()) {
+      this->send_to_players_in_view_distance_except(
+              entity.component<entity::component::Player>().id(),
+              entity.component<entity::component::Location>().position(), remove_entity);
+      return;
+   }
+
    this->send_to_players_in_view_distance(entity.component<entity::component::Location>().position(),
                                           remove_entity);
 }
@@ -398,6 +400,109 @@ void Dispatcher::set_entity_velocity(game::EntityId entity_id, const math::Vecto
    *update_velocity.mutable_velocity() = velocity.to_proto();
 
    this->send_to_players_in_view_distance(position, update_velocity);
+}
+
+void Dispatcher::remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id)
+{
+   auto msg = fmt::format("removing entity {} for player {}", entity_id, boost::uuids::to_string(player_id));
+   this->send_direct_chat(player_id, chat::MessageType::PlayerMessage,
+                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
+
+   clientbound_v1::RemoveEntity remove_entity;
+   remove_entity.set_entity_id(entity_id);
+   m_events.send_to(remove_entity, player_id);
+}
+
+void Dispatcher::spawn_entity_for_player(game::PlayerId player_id, game::EntityId entity_id)
+{
+   auto entity = m_entity_system.entity(entity_id);
+
+   clientbound_v1::SpawnEntity spawn_entity;
+   entity.serialize_to_proto(spawn_entity.mutable_entity());
+
+   m_events.send_to(spawn_entity, player_id);
+}
+
+void Dispatcher::spawn_player_for_player(game::PlayerId receiver, game::PlayerId spawned_player,
+                                         game::EntityId entity_id)
+{
+   auto msg = fmt::format("spawning entity {} for player {}", entity_id, boost::uuids::to_string(receiver));
+   this->send_direct_chat(receiver, chat::MessageType::PlayerMessage,
+                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
+
+   auto entity = m_entity_system.entity(entity_id);
+
+   clientbound_v1::SpawnPlayer spawn_player;
+   *spawn_player.mutable_player_id() = game::player::write_id_to_proto(spawned_player);
+   entity.serialize_player_to_proto(spawn_player.mutable_entity());
+
+   m_events.send_to(spawn_player, receiver);
+}
+
+void Dispatcher::display_death_screen(game::PlayerId player_id, game::EntityId victim_entity_id,
+                                      game::EntityId killer_entity_id, const std::string &message)
+{
+   clientbound_v1::DisplayDeathScreen display_death_screen;
+   display_death_screen.set_victim_entity_id(victim_entity_id);
+   display_death_screen.set_killer_entity_id(killer_entity_id);
+   display_death_screen.set_death_message(message);
+   m_events.send_to(display_death_screen, player_id);
+}
+
+void Dispatcher::respawn_player(game::PlayerId player_id)
+{
+   clientbound_v1::Respawn respawn;
+   respawn.set_dimension_type("minecraft:overworld");
+   respawn.set_dimension_name("overworld");
+   respawn.set_hashed_seed(0x12345);
+   respawn.set_game_mode(proto::common::v1::GameMode::Survival);
+   respawn.set_previous_game_mode(proto::common::v1::GameMode::Survival);
+   respawn.set_is_debug(false);
+   respawn.set_is_flat(false);
+   respawn.set_copy_metadata(true);
+   respawn.set_has_death_location(false);
+   m_events.send_to(respawn, player_id);
+}
+
+void Dispatcher::teleport_entity(game::EntityId entity_id, const math::Vector3 &position,
+                                 const math::Rotation &rotation, bool is_on_ground)
+{
+   clientbound_v1::TeleportEntity teleport_entity;
+   teleport_entity.set_entity_id(entity_id);
+   *teleport_entity.mutable_position() = position.to_proto();
+   *teleport_entity.mutable_rotation() = rotation.to_proto();
+   teleport_entity.set_is_on_ground(is_on_ground);
+
+   auto entity = m_entity_system.entity(entity_id);
+   if (entity.has_component<PlayerComponent>()) {
+      this->send_to_player_visible_by(entity, teleport_entity);
+   } else {
+      this->send_to_players_in_view_distance(position, teleport_entity);
+   }
+}
+
+void Dispatcher::send_to_player_visible_by(game::Entity &entity,
+                                           const google::protobuf::Message &message) const
+{
+   assert(entity.has_component<PlayerComponent>());
+
+   const auto &visible_entities = entity.component<PlayerComponent>().visible_entities();
+
+   std::vector<game::PlayerId> players;
+   players.reserve(visible_entities.size());
+
+   for (const auto visible_entity_id : visible_entities) {
+      if (visible_entity_id == entity.id())
+         continue;
+
+      auto visible_entity = m_entity_system.entity(visible_entity_id);
+      if (not visible_entity.has_component<PlayerComponent>())
+         continue;
+
+      players.emplace_back(visible_entity.component<PlayerComponent>().id());
+   }
+
+   m_events.send_to_many(message, players);
 }
 
 void Dispatcher::send_to_players_in_view_distance(const math::Vector3 &position,
@@ -438,43 +543,6 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
    }
 
    m_events.send_to_many(message, players);
-}
-
-void Dispatcher::remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id)
-{
-   auto msg = fmt::format("removing entity {} for player {}", entity_id, boost::uuids::to_string(player_id));
-   this->send_direct_chat(player_id, chat::MessageType::PlayerMessage,
-                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
-
-   clientbound_v1::RemoveEntity remove_entity;
-   remove_entity.set_entity_id(entity_id);
-   m_events.send_to(remove_entity, player_id);
-}
-
-void Dispatcher::spawn_entity_for_player(game::PlayerId player_id, game::EntityId entity_id)
-{
-   auto entity = m_entity_system.entity(entity_id);
-
-   clientbound_v1::SpawnEntity spawn_entity;
-   entity.serialize_to_proto(spawn_entity.mutable_entity());
-
-   m_events.send_to(spawn_entity, player_id);
-}
-
-void Dispatcher::spawn_player_for_player(game::PlayerId receiver, game::PlayerId spawned_player,
-                                         game::EntityId entity_id)
-{
-   auto msg = fmt::format("spawning entity {} for player {}", entity_id, boost::uuids::to_string(receiver));
-   this->send_direct_chat(receiver, chat::MessageType::PlayerMessage,
-                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
-
-   auto entity = m_entity_system.entity(entity_id);
-
-   clientbound_v1::SpawnPlayer spawn_player;
-   *spawn_player.mutable_player_id() = game::player::write_id_to_proto(spawned_player);
-   entity.serialize_player_to_proto(spawn_player.mutable_entity());
-
-   m_events.send_to(spawn_player, receiver);
 }
 
 }// namespace minecpp::service::engine

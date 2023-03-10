@@ -13,6 +13,9 @@ concept ServerboundVisitor =
            t.handle_accept_player(serverbound_v1::AcceptPlayer(), game::PlayerId());
            t.handle_set_player_position(serverbound_v1::SetPlayerPosition(), game::PlayerId());
            t.handle_set_player_rotation(serverbound_v1::SetPlayerRotation(), game::PlayerId());
+           t.handle_set_player_position_rotation(serverbound_v1::SetPlayerPositionRotation(),
+                                                 game::PlayerId());
+           t.handle_set_player_on_ground(serverbound_v1::SetPlayerOnGround(), game::PlayerId());
            t.handle_chat_message(serverbound_v1::ChatMessage(), game::PlayerId());
            t.handle_remove_player(serverbound_v1::RemovePlayer(), game::PlayerId());
            t.handle_player_digging(serverbound_v1::PlayerDigging(), game::PlayerId());
@@ -27,6 +30,7 @@ concept ServerboundVisitor =
            t.handle_use_item(serverbound_v1::UseItem(), game::PlayerId());
            t.handle_drop_inventory_item(serverbound_v1::DropInventoryItem(), game::PlayerId());
            t.handle_set_carried_item(serverbound_v1::SetCarriedItem(), game::PlayerId());
+           t.handle_request_respawn(serverbound_v1::RequestRespawn(), game::PlayerId());
         };
 
 #define MINECPP_EVENT_HANDLE_SERVICEBOUND(event_type, handler_method)                      \
@@ -48,6 +52,8 @@ void visit_serverbound(const serverbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_SERVICEBOUND(AcceptPlayer, handle_accept_player);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(SetPlayerPosition, handle_set_player_position);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(SetPlayerRotation, handle_set_player_rotation);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(SetPlayerPositionRotation, handle_set_player_position_rotation);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(SetPlayerOnGround, handle_set_player_on_ground);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(ChatMessage, handle_chat_message);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(RemovePlayer, handle_remove_player);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(PlayerDigging, handle_player_digging);
@@ -62,6 +68,7 @@ void visit_serverbound(const serverbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_SERVICEBOUND(UseItem, handle_use_item);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(DropInventoryItem, handle_drop_inventory_item);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(SetCarriedItem, handle_set_carried_item);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(RequestRespawn, handle_request_respawn);
 }
 
 }// namespace minecpp::event

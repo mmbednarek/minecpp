@@ -3,6 +3,8 @@
 #include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
+#include <minecpp/entity/Aliases.hpp>
+#include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Item.h>
 #include <minecpp/repository/Item.h>
@@ -88,7 +90,8 @@ mb::result<int> World::height_at(int x, int z)
 mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
 {
    m_job_system.when<job::ChunkIsComplete>(m_chunk_system, pos.chunk_position())
-           .run_job<job::ChangeBlock>(m_entity_system, m_light_system, m_chunk_system, pos, state);
+           .run_job<job::ChangeBlock>(m_entity_system, m_dispatcher, m_light_system, m_chunk_system, pos,
+                                      state);
    m_dispatcher.update_block(pos, state);
    return mb::ok;
 }
@@ -208,7 +211,17 @@ bool World::is_movement_blocked_at(const math::Vector3 &position)
 void World::kill_entity(game::EntityId id)
 {
    m_dispatcher.remove_entity(id);
-   m_entity_system.destroy_entity(id);
+
+   auto entity = m_entity_system.entity(id);
+   entity.on_killed(*this);
+
+   if (entity.has_component<PlayerComponent>()) {
+      // Don't actually remove the entity just detach from the world
+      m_player_manager.mark_player_as_dead(entity.component<PlayerComponent>().id());
+      m_entity_system.detach_entity(id);
+   } else {
+      m_entity_system.destroy_entity(id);
+   }
 }
 
 void World::destroy_block(const game::BlockPosition &position)

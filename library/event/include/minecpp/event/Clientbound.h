@@ -39,6 +39,9 @@ concept ClientboundVisitor =
            t.handle_collect_item(clientbound_v1::CollectItem(), RecipientList{});
            t.handle_remove_entity(clientbound_v1::RemoveEntity(), RecipientList{});
            t.handle_set_entity_velocity(clientbound_v1::SetEntityVelocity(), RecipientList{});
+           t.handle_display_death_screen(clientbound_v1::DisplayDeathScreen(), RecipientList{});
+           t.handle_respawn(clientbound_v1::Respawn(), RecipientList{});
+           t.handle_teleport_entity(clientbound_v1::TeleportEntity(), RecipientList{});
         };
 
 template<typename TEvent, typename TVisitor, typename TCallback>
@@ -124,6 +127,9 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_CLIENTBOUND(CollectItem, handle_collect_item);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(RemoveEntity, handle_remove_entity);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(SetEntityVelocity, handle_set_entity_velocity);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(DisplayDeathScreen, handle_display_death_screen);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(Respawn, handle_respawn);
+   MINECPP_EVENT_HANDLE_CLIENTBOUND(TeleportEntity, handle_teleport_entity);
 }
 
 }// namespace minecpp::event

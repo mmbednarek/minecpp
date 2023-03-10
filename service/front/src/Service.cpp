@@ -66,22 +66,21 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    player_position.mutable_position()->set_x(msg.x);
    player_position.mutable_position()->set_y(msg.y);
    player_position.mutable_position()->set_z(msg.z);
+   player_position.set_is_on_ground(msg.on_ground);
    m_stream->send(player_position, player_id);
 }
 
 void Service::on_message(uuid engine_id, game::PlayerId player_id,
                          minecpp::network::message::PlayerPositionRotation msg)
 {
-   serverbound_v1::SetPlayerPosition player_position;
-   player_position.mutable_position()->set_x(msg.x);
-   player_position.mutable_position()->set_y(msg.y);
-   player_position.mutable_position()->set_z(msg.z);
-   m_stream->send(player_position, player_id);
-
-   serverbound_v1::SetPlayerRotation player_rotation;
-   player_rotation.mutable_rotation()->set_yaw(msg.yaw);
-   player_rotation.mutable_rotation()->set_pitch(msg.pitch);
-   m_stream->send(player_rotation, player_id);
+   serverbound_v1::SetPlayerPositionRotation player_position_rotation;
+   player_position_rotation.mutable_position()->set_x(msg.x);
+   player_position_rotation.mutable_position()->set_y(msg.y);
+   player_position_rotation.mutable_position()->set_z(msg.z);
+   player_position_rotation.mutable_rotation()->set_yaw(msg.yaw);
+   player_position_rotation.mutable_rotation()->set_pitch(msg.pitch);
+   player_position_rotation.set_is_on_ground(msg.on_ground);
+   m_stream->send(player_position_rotation, player_id);
 }
 
 void Service::on_message(uuid engine_id, game::PlayerId player_id,
@@ -91,6 +90,14 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    player_rotation.mutable_rotation()->set_yaw(msg.yaw);
    player_rotation.mutable_rotation()->set_pitch(msg.pitch);
    m_stream->send(player_rotation, player_id);
+}
+
+void Service::on_message(uuid engine_id, game::PlayerId player_id,
+                         minecpp::network::message::PlayerOnGround msg)
+{
+   serverbound_v1::SetPlayerOnGround player_on_ground;
+   player_on_ground.set_is_on_ground(msg.is_on_ground);
+   m_stream->send(player_on_ground, player_id);
 }
 
 void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::Interact msg)
@@ -207,6 +214,15 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
    use_item.set_hand(static_cast<int32_t>(msg.hand));
    use_item.set_sequence_id(msg.sequence_id);
    m_stream->send(use_item, player_id);
+}
+
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
+                         minecpp::network::message::ClientCommand msg)
+{
+   if (msg.action_id == 0) {
+      serverbound_v1::RequestRespawn request_respawn;
+      m_stream->send(request_respawn, player_id);
+   }
 }
 
 const char command_list[]{
