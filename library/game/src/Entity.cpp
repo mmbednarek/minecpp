@@ -1,4 +1,5 @@
 #include <minecpp/game/Entity.h>
+#include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::game {
 
@@ -43,6 +44,33 @@ game::EntityId Entity::id() const
    return static_cast<game::EntityId>(m_entity);
 }
 
+bool Entity::is_valid() const
+{
+   return this->m_registry.valid(m_entity);
+}
+
+void Entity::on_killed(IWorld &world)
+{
+   this->for_each_component([this, &world](entt::meta_any &obj) mutable {
+      using namespace entt::literals;
+      auto on_killed = obj.type().func("on_killed"_hs);
+      if (on_killed) {
+         on_killed.invoke(obj, &world, this);
+      }
+   });
+}
+
+void Entity::on_attached_to_world(IWorld &world, const math::Vector3 &position, const math::Vector3 &extent)
+{
+   this->for_each_component([this, &world, &position, &extent](entt::meta_any &obj) mutable {
+      using namespace entt::literals;
+      auto on_attached_to_world = obj.type().func("on_attached_to_world"_hs);
+      if (on_attached_to_world) {
+         on_attached_to_world.invoke(obj, &world, this, position, extent);
+      }
+   });
+}
+
 Movement Movement::from_vector3(const math::Vector3 &position)
 {
    return {(position * 4096.0).cast<short>()};
@@ -53,11 +81,4 @@ math::Vector3 Movement::to_vector3() const
    return this->movement.cast<double>() / 4096.0;
 }
 
-proto::common::v1::Rotation Rotation::to_proto() const
-{
-   proto::common::v1::Rotation result;
-   result.set_yaw(yaw);
-   result.set_pitch(pitch);
-   return result;
-}
 }// namespace minecpp::game

@@ -1,8 +1,10 @@
 #pragma once
-#include "Player.h"
+#include "Id.h"
 #include <mb/result.h>
 
 namespace minecpp::game::player {
+
+class Player;
 
 class Provider
 {
@@ -12,4 +14,4 @@ class Provider
    virtual mb::result<Player &> get_player(Id id) = 0;
 };
 
-}// namespace minecpp::player
+}// namespace minecpp::game::player

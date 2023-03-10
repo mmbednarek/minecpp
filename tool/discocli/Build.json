@@ -3,6 +3,9 @@
   "dependencies": {
     "private": [
       "minecpp_discovery_api",
+      "grpc++",
+      "grpc",
+      "gpr",
       "fmt"
     ]
   }

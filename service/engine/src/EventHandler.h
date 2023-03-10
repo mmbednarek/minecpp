@@ -39,6 +39,9 @@ class EventHandler
    void handle_accept_player(const serverbound_v1::AcceptPlayer &event, game::PlayerId player_id);
    void handle_set_player_position(const serverbound_v1::SetPlayerPosition &event, game::PlayerId player_id);
    void handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event, game::PlayerId player_id);
+   void handle_set_player_position_rotation(const serverbound_v1::SetPlayerPositionRotation &event,
+                                            game::PlayerId player_id);
+   void handle_set_player_on_ground(const serverbound_v1::SetPlayerOnGround &event, game::PlayerId player_id);
    void handle_chat_message(const serverbound_v1::ChatMessage &event, game::PlayerId player_id);
    void handle_remove_player(const serverbound_v1::RemovePlayer &event, game::PlayerId player_id);
    void handle_player_digging(const serverbound_v1::PlayerDigging &event, game::PlayerId player_id);
@@ -56,8 +59,12 @@ class EventHandler
                                    game::PlayerId player_id);
    void handle_set_carried_item(const serverbound_v1::SetCarriedItem &set_carried_item_msg,
                                 game::PlayerId player_id);
+   void handle_request_respawn(const serverbound_v1::RequestRespawn &set_carried_item_msg,
+                               game::PlayerId player_id);
 
  private:
+   mb::result<game::Entity> player_entity(game::PlayerId player_id);
+
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;
    entity::EntitySystem &m_entity_system;

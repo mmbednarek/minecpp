@@ -57,6 +57,7 @@ class CommandInput
    [[nodiscard]] std::size_t arg_count() const;
    [[nodiscard]] Object::Ptr obj_org(std::size_t index) const;
    [[nodiscard]] std::string string_arg(std::size_t index) const;
+   [[nodiscard]] bool has_flag(const std::string &flag) const;
 
    iterator begin();
    iterator end();

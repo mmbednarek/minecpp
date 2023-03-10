@@ -100,6 +100,18 @@ struct SystemChat
    [[nodiscard]] Writer serialize() const;
 };
 
+// 0x64
+struct TeleportEntity
+{
+   game::EntityId entity_id;
+   math::Vector3 position{};
+   float yaw{};
+   float pitch{};
+   bool is_on_ground{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
 struct SetSlot
 {
    uint8_t window_id;
@@ -214,7 +226,7 @@ struct EntityRelativeMove
 // 0x2a
 struct EntityMove
 {
-   int entity_id;
+   game::EntityId entity_id;
    short x, y, z;
    float yaw, pitch;
    bool on_ground;
@@ -385,6 +397,35 @@ struct SetEntityVelocity
 {
    std::uint32_t entity_id{};
    math::Vector3s velocity{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct DisplayDeathScreen
+{
+   std::uint32_t victim_entity_id{};
+   std::uint32_t killer_entity_id{};
+   std::string message;
+
+   [[nodiscard]] Writer serialize() const;
+};
+
+struct Respawn
+{
+   std::string dimension_codec{};
+   std::string dimension_name{};
+
+   uint64_t seed{};
+   uint8_t game_mode{};
+   uint8_t prev_game_mode{};
+
+   bool is_debug{};
+   bool is_flat{};
+   bool should_copy_metadata{};
+
+   bool has_death_location{};
+   std::string death_dimension;
+   math::Vector3 death_position;
 
    [[nodiscard]] Writer serialize() const;
 };

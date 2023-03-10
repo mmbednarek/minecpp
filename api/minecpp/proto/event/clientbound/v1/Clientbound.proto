@@ -51,10 +51,10 @@ message SpawnPlayer {
 }
 
 message EntityMove {
-  player.v1.PlayerId player_id = 1;
-  uint32 entity_id = 2;
-  common.v1.Vector3i movement = 3;
-  common.v1.Rotation rotation = 4;
+  uint32 entity_id = 1;
+  common.v1.Vector3i movement = 2;
+  common.v1.Rotation rotation = 3;
+  bool is_on_ground = 4;
 }
 
 message EntityLook {
@@ -196,4 +196,26 @@ message RemoveEntity {
 message TeleportEntity {
   uint32 entity_id = 1;
   common.v1.Vector3 position = 2;
+  common.v1.Rotation rotation = 3;
+  bool is_on_ground = 4;
 }
+
+message DisplayDeathScreen {
+  uint32 victim_entity_id = 1;
+  uint32 killer_entity_id = 2;
+  string death_message = 3;
+};
+
+message Respawn {
+  string dimension_type = 1;
+  string dimension_name = 2;
+  int64 hashed_seed = 3;
+  common.v1.GameMode game_mode = 4;
+  optional common.v1.GameMode previous_game_mode = 5;
+  bool is_debug = 6;
+  bool is_flat = 7;
+  bool copy_metadata = 8;
+  bool has_death_location = 9;
+  string death_dimension = 10;
+  common.v1.Vector3 death_position = 11;
+};

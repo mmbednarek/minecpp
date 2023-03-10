@@ -48,4 +48,9 @@ CommandInput::CommandInput(RuntimeContext &ctx, const std::vector<ast::Expressio
    }
 }
 
+bool CommandInput::has_flag(const std::string &flag) const
+{
+   return m_flags.contains(flag);
+}
+
 }// namespace minecpp::command

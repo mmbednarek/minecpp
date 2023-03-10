@@ -22,9 +22,14 @@ class Player
                                  const math::Vector3 &position);
    void init_visible_entities(game::IDispatcher &dispatcher, game::IEntitySystem &entity_system,
                               const math::Vector3 &position);
-   void remove_visible_entity(game::IDispatcher &dispatcher, game::EntityId entity_id);
+   void on_killed(game::IWorld *world, game::Entity *entity);
+   void on_attached_to_world(game::IWorld *world, game::Entity *entity, const math::Vector3 &position,
+                             const math::Vector3 &extent);
+
+   [[nodiscard]] const std::vector<game::EntityId> &visible_entities() const;
    void add_visible_player_entity(game::IDispatcher &dispatcher, game::PlayerId player_id,
                                   game::EntityId entity_id);
+   void remove_visible_entity(game::IDispatcher &dispatcher, game::EntityId entity_id);
 
  private:
    game::PlayerId m_id;

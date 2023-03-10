@@ -1,6 +1,7 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/math/Rotation.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::entity::component {
 
@@ -31,10 +32,15 @@ math::Vector3 Location::extent() const
    return m_extent;
 }
 
-void Location::set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position)
+void Location::set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position,
+                            bool is_on_ground)
 {
-   auto prev_logical_position = this->logical_position();
-   if ((position - prev_logical_position).length() < 0.1) {
+   if (m_is_detached)
+      return;// cannot set the position while the entity is detached
+
+   const auto prev_logical_position = this->logical_position();
+   const auto distance              = (position - prev_logical_position).length();
+   if (distance < 0.1) {
       // just apply position
       m_position = position;
       return;
@@ -42,7 +48,8 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
 
    this->on_position_change.publish(world, entity, prev_logical_position, position);
 
-   m_position = position;
+   m_is_on_ground = is_on_ground;
+   m_position     = position;
 
    auto movement = (m_position * 4096.0).cast<int64_t>() - m_tracked_position.position;
    if (movement == math::Vector3l{0, 0, 0})
@@ -52,16 +59,17 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    world.entity_system().move_spatial_entity(entity.id(), m_extent, prev_logical_position,
                                              this->logical_position());
 
-   game::Rotation rotation{};
+   math::Rotation rotation{};
    if (entity.has_component<Rotation>()) {
       rotation = entity.component<Rotation>().rotation();
    }
 
-   if (entity.has_component<Player>()) {
-      world.dispatcher().player_move(entity.component<Player>().id(), entity.id(), position,
-                                     movement.cast<short>(), rotation);
+   if (m_refresh_count <= 0 || distance >= 16.0) {
+      m_refresh_count = 100;
+      world.dispatcher().teleport_entity(entity.id(), position, rotation, m_is_on_ground);
    } else {
-      world.dispatcher().entity_move(entity.id(), position, movement.cast<short>(), rotation);
+      world.dispatcher().entity_move(entity.id(), position, movement.cast<short>(), rotation, m_is_on_ground);
+      --m_refresh_count;
    }
 
    auto min = m_position - m_extent * 0.5;
@@ -95,6 +103,40 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
 math::Vector3 Location::logical_position() const
 {
    return m_tracked_position.position.cast<double>() / 4096.0;
+}
+
+void Location::on_killed(game::IWorld * /*world*/, game::Entity *entity)
+{
+   spdlog::info("called on kill! eid:{}", entity->id());
+   m_is_detached = true;
+}
+
+void Location::reset_position_and_extent(const math::Vector3 &position, const math::Vector3 &extent)
+{
+   m_tracked_position = TrackedPosition::from_vector3(position);
+   m_position         = position;
+   m_extent           = extent;
+   m_is_detached      = false;
+}
+
+bool Location::is_on_ground() const
+{
+   return m_is_on_ground;
+}
+
+void Location::set_is_on_ground(game::IDispatcher &dispatcher, game::Entity &entity, const bool is_on_ground)
+{
+   if (m_is_on_ground == is_on_ground)
+      return;
+
+   m_is_on_ground = is_on_ground;
+
+   math::Rotation rotation{0, 0};
+   if (entity.has_component<Rotation>()) {
+      rotation = entity.component<Rotation>().rotation();
+   }
+
+   dispatcher.teleport_entity(entity.id(), m_position, rotation, is_on_ground);
 }
 
 Rotation::Rotation(float yaw, float pitch) :
@@ -135,9 +177,9 @@ void Rotation::set_pitch_degrees(math::Degrees pitch)
    m_pitch = math::degrees_to_radians(pitch);
 }
 
-game::Rotation Rotation::rotation() const
+math::Rotation Rotation::rotation() const
 {
-   return {math::radians_to_degrees(m_yaw), math::radians_to_degrees(m_pitch)};
+   return {m_yaw, m_pitch};
 }
 
 math::Radians Rotation::yaw() const

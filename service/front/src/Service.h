@@ -58,6 +58,7 @@ class Service
    void on_message(uuid engine_id, game::PlayerId player_id,
                    minecpp::network::message::PlayerPositionRotation msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerRotation msg);
+   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerOnGround msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PlayerDigging msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::KeepAliveClient msg);
    void on_message(uuid engine_id, game::PlayerId player_id,
@@ -68,6 +69,7 @@ class Service
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::HeldItemChange msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PluginMessage msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::UseItem msg);
+   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClientCommand msg);
 };
 
 }// namespace minecpp::service::front

@@ -1,5 +1,6 @@
 #include <minecpp/command/Object.h>
 #include <minecpp/command/RuntimeContext.h>
+#include <minecpp/game/IEntitySystem.hpp>
 
 namespace minecpp::command {
 

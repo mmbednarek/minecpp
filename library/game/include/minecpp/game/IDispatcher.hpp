@@ -1,10 +1,10 @@
 #pragma once
+#include "Game.h"
+#include "item/Item.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <minecpp/chat/Chat.h>
-#include <minecpp/game/Entity.h>
-#include <minecpp/game/Game.h>
-#include <minecpp/game/item/Item.h>
+#include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
 #include <span>
 #include <string>
@@ -21,16 +21,15 @@ class IDispatcher
  public:
    virtual void load_terrain(PlayerId player, const ChunkPosition &central_chunk,
                              std::vector<ChunkPosition> coords)                                          = 0;
-   virtual void player_move(PlayerId player_id, EntityId entity_id, const math::Vector3 &position,
-                            const math::Vector3s &movement, const Rotation &rotation)                    = 0;
    virtual void spawn_entity(EntityId entity_id, const math::Vector3 &position)                          = 0;
    virtual void spawn_entity_for_player(PlayerId player_id, EntityId entity_id)                          = 0;
    virtual void entity_move(EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
-                            const Rotation &rotation)                                                    = 0;
+                            const math::Rotation &rotation, bool is_on_ground)                                              = 0;
    virtual void player_look(PlayerId player, EntityId entity_id, const math::Vector3 &position,
-                            const Rotation &rotation)                                                    = 0;
-   virtual void entity_look(EntityId entity_id, const math::Vector3 &position, const Rotation &rotation) = 0;
-   virtual void send_entities(PlayerId player_id, std::span<EntityId> entities)                            = 0;
+                            const math::Rotation &rotation)                                              = 0;
+   virtual void entity_look(EntityId entity_id, const math::Vector3 &position,
+                            const math::Rotation &rotation)                                              = 0;
+   virtual void send_entities(PlayerId player_id, std::span<EntityId> entities)                          = 0;
    virtual void add_player(PlayerId player, const std::string &name, mb::u32 ping)                       = 0;
    virtual void spawn_player(PlayerId player, EntityId entity_id, const math::Vector3 &position)         = 0;
    virtual void spawn_player_for_player(PlayerId receiver, PlayerId spawned_player, EntityId entity_id)  = 0;
@@ -48,7 +47,7 @@ class IDispatcher
    virtual void update_block_light(ISectionSlice &slice, SectionRange range)                             = 0;
    virtual void update_chunk_position(PlayerId player_id, const ChunkPosition &chunk_position)           = 0;
    virtual void synchronise_player_position_and_rotation(PlayerId player_id, math::Vector3 position,
-                                                         float yaw, float pitch)                         = 0;
+                                                         math::Rotation rotation)                        = 0;
    virtual void set_spawn_position(PlayerId player_id, BlockPosition position, float angle)              = 0;
    virtual void set_player_equipment(PlayerId player_id, EntityId entity_id, EquipmentSlot slot,
                                      ItemSlot item)                                                      = 0;
@@ -59,6 +58,11 @@ class IDispatcher
    virtual void remove_entity_for_player(PlayerId player_id, EntityId entity_id)                         = 0;
    virtual void set_entity_velocity(EntityId entity_id, const math::Vector3 &position,
                                     const math::Vector3s &velocity)                                      = 0;
+   virtual void display_death_screen(PlayerId player_id, EntityId victim_entity_id, EntityId killer_entity_id,
+                                     const std::string &message)                                         = 0;
+   virtual void respawn_player(PlayerId player_id)                                                       = 0;
+   virtual void teleport_entity(EntityId entity_id, const math::Vector3 &position,
+                                const math::Rotation &rotation, bool is_on_ground)                       = 0;
 };
 
 }// namespace minecpp::game

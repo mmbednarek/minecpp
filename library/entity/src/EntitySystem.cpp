@@ -118,4 +118,38 @@ std::vector<game::EntityId> EntitySystem::list_entities_intersecting_with(math::
    return m_storage->list_entities_intersecting_with(min, max);
 }
 
+void EntitySystem::detach_entity(game::EntityId id)
+{
+   assert(m_storage != nullptr);
+
+   auto entity = this->entity(id);
+   if (not entity.has_component<component::Location>())
+      return;
+
+   const auto &location = entity.component<component::Location>();
+   m_storage->remove_entity(id, location.logical_position(), location.extent());
+
+   // TODO: We can attempt removing location component and see what will happen
+}
+
+void EntitySystem::attach_entity(game::IWorld &world, game::EntityId entity_id, const math::Vector3 &position,
+                                 const math::Vector3 &extent)
+{
+   assert(m_storage != nullptr);
+
+   auto entity = this->entity(entity_id);
+   if (not entity.is_valid())
+      return;
+
+   if (not entity.has_component<component::Location>()) {
+      entity.add_component<component::Location>(position, extent);
+   }
+
+   auto &location = entity.component<component::Location>();
+   location.reset_position_and_extent(position, extent);
+   m_storage->register_entity(entity_id, location.logical_position(), extent);
+
+   entity.on_attached_to_world(world, position, extent);
+}
+
 }// namespace minecpp::entity

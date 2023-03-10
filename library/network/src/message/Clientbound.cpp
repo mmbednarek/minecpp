@@ -263,7 +263,7 @@ Writer EntityMove::serialize() const
    // 1.19.3 ok
    Writer w;
    w.write_byte(0x28);
-   w.write_varint(static_cast<mb::u32>(entity_id));
+   w.write_varint(entity_id);
    w.write_big_endian<short>(x);
    w.write_big_endian<short>(y);
    w.write_big_endian<short>(z);
@@ -525,6 +525,56 @@ Writer SetEntityVelocity::serialize() const
    w.write_short(velocity.x());
    w.write_short(velocity.y());
    w.write_short(velocity.z());
+   return w;
+}
+
+Writer DisplayDeathScreen::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x34);
+   w.write_varint(victim_entity_id);
+   w.write_big_endian(killer_entity_id);
+   w.write_string(message);
+   return w;
+}
+
+Writer Respawn::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x3d);
+   w.write_string(dimension_codec);
+   w.write_string(dimension_name);
+   w.write_long(seed);
+   w.write_byte(game_mode);
+   w.write_byte(prev_game_mode);
+   w.write_byte(is_debug);
+   w.write_byte(is_flat);
+   w.write_byte(should_copy_metadata);
+   w.write_byte(has_death_location);
+   if (has_death_location) {
+      w.write_string(death_dimension);
+      w.write_double(death_position.x());
+      w.write_double(death_position.y());
+      w.write_double(death_position.z());
+   }
+   return w;
+}
+
+Writer TeleportEntity::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   //   w.write_byte(0x64);
+   w.write_byte(0x64);
+   w.write_varint(entity_id);
+   w.write_double(position.x());
+   w.write_double(position.y());
+   w.write_double(position.z());
+   w.write_byte(static_cast<mb::u8>(yaw * 256.0f / 360.0f));
+   w.write_byte(static_cast<mb::u8>(pitch * 256.0f / 360.0f));
+   w.write_byte(is_on_ground);
    return w;
 }
 }// namespace minecpp::network::message

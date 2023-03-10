@@ -50,17 +50,16 @@ void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
                                       const event::RecipientList &recipient_list)
 {
    minecpp::network::message::EntityMove entity_move{
-           .entity_id = static_cast<int>(pos.entity_id()),
+           .entity_id = pos.entity_id(),
            .x         = static_cast<short>(pos.movement().x()),
            .y         = static_cast<short>(pos.movement().y()),
            .z         = static_cast<short>(pos.movement().z()),
            .yaw       = pos.rotation().yaw(),
            .pitch     = pos.rotation().pitch(),
-           .on_ground = true,
+           .on_ground = pos.is_on_ground(),
    };
-   // FIXME: temporary hack to not send a Player.himself
-   auto player_id = game::player::read_id_from_proto(pos.player_id());
-   send_message_excluding(entity_move, player_id);
+
+   send_message(entity_move, recipient_list);
 }
 
 void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
@@ -583,6 +582,50 @@ void EventHandler::handle_set_entity_velocity(const clientbound_v1::SetEntityVel
            .velocity  = math::Vector3i::from_proto(msg.velocity()).cast<short>(),
    };
    send_message(update_velocity, recipient_list);
+}
+
+void EventHandler::handle_display_death_screen(const clientbound_v1::DisplayDeathScreen &msg,
+                                               const event::RecipientList &recipient_list)
+{
+   network::message::DisplayDeathScreen display_death_screen{
+           .victim_entity_id = msg.victim_entity_id(),
+           .killer_entity_id = msg.killer_entity_id(),
+           .message          = msg.death_message(),
+   };
+   send_message(display_death_screen, recipient_list);
+}
+
+void EventHandler::handle_respawn(const clientbound_v1::Respawn &msg,
+                                  const event::RecipientList &recipient_list)
+{
+   network::message::Respawn respawn{
+           .dimension_codec = msg.dimension_type(),
+           .dimension_name  = msg.dimension_name(),
+
+           .seed           = static_cast<uint64_t>(msg.hashed_seed()),
+           .game_mode      = static_cast<uint8_t>(msg.game_mode()),
+           .prev_game_mode = static_cast<uint8_t>(msg.game_mode()),
+
+           .is_debug             = msg.is_debug(),
+           .is_flat              = msg.is_flat(),
+           .should_copy_metadata = msg.copy_metadata(),
+
+           .has_death_location = msg.has_death_location(),
+           .death_dimension    = msg.death_dimension(),
+           .death_position     = math::Vector3::from_proto(msg.death_position()),
+   };
+   send_message(respawn, recipient_list);
+}
+
+void EventHandler::handle_teleport_entity(const clientbound_v1::TeleportEntity &msg,
+                                          const event::RecipientList &recipient_list)
+{
+   network::message::TeleportEntity teleport_entity{.entity_id    = msg.entity_id(),
+                                                    .position     = math::Vector3::from_proto(msg.position()),
+                                                    .yaw          = msg.rotation().yaw(),
+                                                    .pitch        = msg.rotation().pitch(),
+                                                    .is_on_ground = msg.is_on_ground()};
+   send_message(teleport_entity, recipient_list);
 }
 
 }// namespace minecpp::service::front

@@ -14,6 +14,9 @@ target_link_libraries(minecpp_discovery
         LINK_PRIVATE
         minecpp_api_proto
         minecpp_discovery_api
+        grpc++
+        grpc
+        gpr
         libmb
         spdlog
 )

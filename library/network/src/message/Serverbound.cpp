@@ -164,4 +164,14 @@ void deserialize(Reader &r, UseItem &msg)
    msg.sequence_id = r.read_varint();
 }
 
+void deserialize(Reader &r, ClientCommand &msg)
+{
+   msg.action_id = r.read_varint();
+}
+
+void deserialize(Reader &r, PlayerOnGround &msg)
+{
+   msg.is_on_ground = r.read_byte();
+}
+
 }// namespace minecpp::network::message

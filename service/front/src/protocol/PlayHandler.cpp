@@ -32,6 +32,11 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
+   case 0x06: {// 1.19.3 OK
+      ClientCommand msg;
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
    case 0x07: {// 1.19.3 OK
       ClientSettings msg;
       deserialize(r, msg);
@@ -69,6 +74,11 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
    } break;
    case 0x15: {// 1.19.3 OK
       PlayerRotation msg{};
+      deserialize(r, msg);
+      service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
+   case 0x16: {// 1.19.3 OK
+      PlayerOnGround msg{};
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;

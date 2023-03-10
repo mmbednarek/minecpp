@@ -47,6 +47,14 @@ struct ClientSettings
 
 void deserialize(Reader &r, ClientSettings &msg);
 
+// 0x06
+struct ClientCommand
+{
+   int action_id{};
+};
+
+void deserialize(Reader &r, ClientCommand &msg);
+
 // 0x08
 struct ClickWindow
 {
@@ -124,6 +132,14 @@ struct PlayerRotation
 };
 
 void deserialize(Reader &r, PlayerRotation &msg);
+
+// 0x16
+struct PlayerOnGround
+{
+   bool is_on_ground;
+};
+
+void deserialize(Reader &r, PlayerOnGround &msg);
 
 // 0x1a
 struct PlayerDigging

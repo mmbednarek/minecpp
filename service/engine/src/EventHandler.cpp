@@ -6,6 +6,7 @@
 #include <minecpp/command/core/Echo.h>
 #include <minecpp/command/core/Format.h>
 #include <minecpp/command/core/Give.h>
+#include <minecpp/command/core/ListEntities.h>
 #include <minecpp/command/core/ReloadChunk.h>
 #include <minecpp/command/core/Sync.h>
 #include <minecpp/controller/block/Door.h>
@@ -24,13 +25,11 @@
 #include <minecpp/entity/component/Streamer.h>
 #include <minecpp/entity/component/Velocity.h>
 #include <minecpp/entity/EntitySystem.h>
-#include <minecpp/entity/factory/Item.h>
 #include <minecpp/format/Format.h>
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
-#include <minecpp/world/BlockState.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine {
@@ -52,6 +51,7 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    m_command_manager.register_command<command::core::Give>();
    m_command_manager.register_command<command::core::ReloadChunk>();
    m_command_manager.register_command<command::core::Sync>();
+   m_command_manager.register_command<command::core::ListEntities>();
 
    m_command_manager.register_command_as<command::core::Format>("black", format::Color::Black, false);
    m_command_manager.register_command_as<command::core::Format>("black-bold", format::Color::Black, true);
@@ -185,10 +185,13 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
       return;
    }
 
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));// We can assume no problems here
-   auto entity  = m_entity_system.entity(player.entity_id());
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
 
-   auto &inventory = entity.component<entity::component::Inventory>();
+   auto &inventory = entity->component<entity::component::Inventory>();
    if (not inventory.add_item(m_dispatcher, 1, 64)) {
       spdlog::info("player inventory is full");
    }
@@ -196,73 +199,122 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
       spdlog::info("player inventory is full");
    }
 
-   if (not entity.has_component<entity::component::Abilities>()) {
+   if (not entity->has_component<entity::component::Abilities>()) {
       m_dispatcher.deny_player(player_id, "Player's entity doesn't have abilities component");
    }
 
-   m_dispatcher.accept_player(player);
-   m_dispatcher.add_player(player.id(), player.name(), static_cast<mb::u32>(player.ping()));
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("player is invalid: {}", player.err()->msg());
+      return;
+   }
 
-   m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player.name()));
+   m_dispatcher.accept_player(*player);
+   m_dispatcher.add_player(player_id, player->name(), static_cast<mb::u32>(player->ping()));
 
-   m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
+   m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_join_message(player->name()));
+
+   m_dispatcher.send_direct_chat(player_id, chat::MessageType::PlayerMessage,
                                  format::Builder()
                                          .bold(format::Color::Green, "Welcome ")
-                                         .bold(format::Color::Green, player.name())
+                                         .bold(format::Color::Green, player->name())
                                          .bold(format::Color::Green, "!")
                                          .to_string());
    m_dispatcher.send_direct_chat(
-           player.id(), chat::MessageType::PlayerMessage,
+           player_id, chat::MessageType::PlayerMessage,
            format::Builder()
                    .text(format::Color::Gray, "------------------------------------------------")
                    .to_string());
    m_dispatcher.send_direct_chat(
-           player.id(), chat::MessageType::PlayerMessage,
+           player_id, chat::MessageType::PlayerMessage,
            format::Builder().text("This server implementation is under development").to_string());
-   m_dispatcher.send_direct_chat(player.id(), chat::MessageType::PlayerMessage,
+   m_dispatcher.send_direct_chat(player_id, chat::MessageType::PlayerMessage,
                                  format::Builder()
                                          .text("To obtain a block please type ")
                                          .text(format::Color::Yellow, "/give ")
                                          .text(format::Color::Gold, "<block name>")
                                          .to_string());
    m_dispatcher.send_direct_chat(
-           player.id(), chat::MessageType::PlayerMessage,
+           player_id, chat::MessageType::PlayerMessage,
            format::Builder()
                    .text(format::Color::Gray, "------------------------------------------------")
                    .to_string());
-   m_dispatcher.synchronise_player_position_and_rotation(
-           player_id, entity.component<entity::component::Location>().position(),
-           entity.component<entity::component::Rotation>().yaw_degrees(),
-           entity.component<entity::component::Rotation>().pitch_degrees());
+   m_dispatcher.synchronise_player_position_and_rotation(player_id,
+                                                         entity->component<LocationComponent>().position(),
+                                                         entity->component<RotationComponent>().rotation());
 }
 
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,
                                               game::PlayerId player_id)
 {
-   auto player = m_player_manager.get_player(player_id);
-   if (player.has_failed())
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+
+   if (not entity->has_component<LocationComponent>())
       return;
 
-   auto entity          = m_entity_system.entity(player->entity_id());
    auto player_position = math::Vector3::from_proto(event.position());
-   entity.component<entity::component::Location>().set_position(m_world, entity, player_position);
+   auto &location       = entity->component<LocationComponent>();
+   location.set_position(m_world, *entity, player_position, event.is_on_ground());
 }
 
 void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event,
                                               game::PlayerId player_id)
 {
-   auto player = m_player_manager.get_player(player_id);
-   if (player.has_failed())
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
       return;
+   }
 
-   auto entity              = m_entity_system.entity(player->entity_id());
-   auto &rotation_component = entity.component<entity::component::Rotation>();
-
+   auto &rotation_component = entity->component<RotationComponent>();
    rotation_component.set_yaw_degrees(event.rotation().yaw());
    rotation_component.set_pitch_degrees(event.rotation().pitch());
-   m_dispatcher.player_look(player_id, entity.id(),
-                            entity.component<entity::component::Location>().position(),
-                            rotation_component.rotation());
+
+   auto &location = entity->component<LocationComponent>();
+   location.set_is_on_ground(m_dispatcher, *entity, event.is_on_ground());
+
+   m_dispatcher.player_look(player_id, entity->id(), location.position(), rotation_component.rotation());
+}
+
+void EventHandler::handle_set_player_position_rotation(const serverbound_v1::SetPlayerPositionRotation &event,
+                                                       game::PlayerId player_id)
+{
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+
+   if (not entity->has_component<LocationComponent>())
+      return;
+
+   auto &rotation_component = entity->component<RotationComponent>();
+   rotation_component.set_yaw_degrees(event.rotation().yaw());
+   rotation_component.set_pitch_degrees(event.rotation().pitch());
+
+   auto player_position = math::Vector3::from_proto(event.position());
+   auto &location       = entity->component<LocationComponent>();
+   location.set_is_on_ground(m_dispatcher, *entity, event.is_on_ground());
+   location.set_position(m_world, *entity, player_position, false);
+}
+
+void EventHandler::handle_set_player_on_ground(const serverbound_v1::SetPlayerOnGround &event,
+                                               game::PlayerId player_id)
+{
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+
+   if (not entity->has_component<LocationComponent>())
+      return;
+
+   entity->component<LocationComponent>().set_is_on_ground(m_dispatcher, *entity, event.is_on_ground());
 }
 
 void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event, game::PlayerId player_id)
@@ -281,15 +333,23 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
    }
 }
 
-void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer &event, game::PlayerId player_id)
+void EventHandler::handle_remove_player(const serverbound_v1::RemovePlayer & /*event*/,
+                                        game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   spdlog::info("removing player {}", player.name());
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("no such player {}", util::uuid_to_string(player_id));
+      return;
+   }
 
-   m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player.name()));
-   m_dispatcher.remove_player(player_id, player.entity_id());
+   spdlog::info("removing player {}", player->name());
 
-   m_entity_system.destroy_entity(player.entity_id());
+   auto entity_id = player->entity_id();
+
+   m_dispatcher.send_chat(chat::MessageType::SystemMessage, chat::format_left_message(player->name()));
+   m_dispatcher.remove_player(player_id, entity_id);
+
+   m_entity_system.destroy_entity(entity_id);
    m_player_manager.remove_player(player_id);
 }
 
@@ -306,14 +366,15 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
    } break;
    case game::PlayerDiggingState::DropAllItems:
    case game::PlayerDiggingState::DropItem: {
-      auto player = m_player_manager.get_player(player_id);
-      if (player.has_failed())
+      auto entity = this->player_entity(player_id);
+      if (entity.has_failed()) {
+         spdlog::warn("player entity is invalid: {}", entity.err()->msg());
          return;
-      auto entity = m_entity_system.entity(player->entity_id());
-      if (not entity.has_component<InventoryComponent>())
+      }
+      if (not entity->has_component<InventoryComponent>())
          return;
 
-      entity.component<InventoryComponent>().drop_active_item(
+      entity->component<InventoryComponent>().drop_active_item(
               m_world, status == game::PlayerDiggingState::DropAllItems);
    }
    default: break;
@@ -328,48 +389,48 @@ void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, g
 
 void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity  = m_entity_system.entity(player.entity_id());
-   if (entity.has_component<entity::component::Location>())
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+   if (entity->has_component<entity::component::Location>())
       return;
 
    m_dispatcher.animate_player_entity(
-           player_id, player.entity_id(), entity.component<entity::component::Location>().position(),
+           player_id, entity->id(), entity->component<entity::component::Location>().position(),
            event.hand() == 0 ? game::EntityAnimation::SwingMainArm : game::EntityAnimation::SwingOffHand);
 }
 
-void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event,
+void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks & /*event*/,
                                               game::PlayerId player_id)
 {
    spdlog::info("loading initial chunks!");
-   auto player = m_player_manager.get_player(player_id);
-   if (player.has_failed()) {
-      spdlog::error("could not obtain player info: {}", player.err()->msg());
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
       return;
    }
 
-   auto entity = m_entity_system.entity(player->entity_id());
-
-   auto result = entity.component<entity::component::Streamer>().send_all_visible_chunks(m_world, player_id);
+   auto result = entity->component<StreamerComponent>().send_all_visible_chunks(m_world, player_id);
    if (result.has_failed()) {
       spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
    }
 
-   entity.component<entity::component::Inventory>().synchronize_inventory(m_dispatcher);
+   entity->component<InventoryComponent>().synchronize_inventory(m_dispatcher);
 
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
 
-   entity.component<entity::component::Player>().init_visible_entities(
-           m_dispatcher, m_entity_system, entity.component<entity::component::Location>().position());
+   entity->component<PlayerComponent>().init_visible_entities(
+           m_dispatcher, m_entity_system, entity->component<LocationComponent>().position());
 
-   m_dispatcher.synchronise_player_position_and_rotation(
-           player_id, entity.component<entity::component::Location>().position(),
-           entity.component<entity::component::Rotation>().yaw_degrees(),
-           entity.component<entity::component::Rotation>().pitch_degrees());
+   m_dispatcher.synchronise_player_position_and_rotation(player_id,
+                                                         entity->component<LocationComponent>().position(),
+                                                         entity->component<RotationComponent>().rotation());
 
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(),
-                                   entity.component<entity::component::Rotation>().pitch_degrees());
+                                   entity->component<entity::component::Rotation>().pitch_degrees());
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
@@ -389,15 +450,14 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
       return;
    }
 
-   auto player = m_world.players().get_player(player_id);
-   if (player.has_failed()) {
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
       return;
    }
 
-   auto entity     = m_entity_system.entity(player->entity_id());
-   auto &inventory = entity.component<entity::component::Inventory>();
-
-   auto item_slot = inventory.active_item();
+   auto &inventory = entity->component<entity::component::Inventory>();
+   auto item_slot  = inventory.active_item();
    if (item_slot.count == 0)
       return;
 
@@ -424,12 +484,13 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
 void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event,
                                                 game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity  = m_entity_system.entity(player.entity_id());
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
 
-   spdlog::info("setting slot {} to {} {}", event.slot_id(), event.item_id().id(), event.item_count());
-
-   entity.component<entity::component::Inventory>().set_slot(
+   entity->component<entity::component::Inventory>().set_slot(
            m_dispatcher, static_cast<game::SlotId>(event.slot_id()),
            game::ItemSlot{
                    .item_id = static_cast<game::ItemId>(event.item_id().id()),
@@ -440,24 +501,36 @@ void EventHandler::handle_change_inventory_item(const serverbound_v1::ChangeInve
 void EventHandler::handle_change_held_item(const serverbound_v1::ChangeHeldItem &event,
                                            game::PlayerId player_id)
 {
-   auto &player    = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity     = m_entity_system.entity(player.entity_id());
-   auto &inventory = entity.component<entity::component::Inventory>();
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
 
+   auto &inventory = entity->component<InventoryComponent>();
    inventory.set_active_item(m_dispatcher, event.slot());
 }
 
 void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &event, game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity  = m_entity_system.entity(player.entity_id());
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("player is invalid: {}", player.err()->msg());
+      return;
+   }
+
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
 
    m_command_context.set_variable("player_id", std::make_shared<command::UUIDObject>(player_id));
-   m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player.name()));
-   m_command_context.set_variable("entity_id", std::make_shared<command::IntObject>(player.entity_id()));
+   m_command_context.set_variable("player_name", std::make_shared<command::StringObject>(player->name()));
+   m_command_context.set_variable("entity_id", std::make_shared<command::IntObject>(entity->id()));
 
    auto player_pos =
-           game::BlockPosition::from_vec3(entity.component<entity::component::Location>().position());
+           game::BlockPosition::from_vec3(entity->component<entity::component::Location>().position());
    m_command_context.set_variable("here", std::make_shared<command::BlockPositionObject>(player_pos));
 
    auto res = m_command_manager.evaluate(m_command_context, event.command());
@@ -472,86 +545,125 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
 {
    spdlog::info("player {} is attacking entity {}", boost::uuids::to_string(player_id), event.entity_id());
 
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   auto entity  = m_entity_system.entity(event.entity_id());
-   if (not entity.has_component<entity::component::Health>())
+   auto player_entity = this->player_entity(player_id);
+   if (player_entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", player_entity.err()->msg());
       return;
-   if (not entity.has_component<entity::component::Location>())
-      return;
-   if (not entity.has_component<entity::component::Velocity>())
-      return;
-
-   entity.component<entity::component::Health>().health -= 1.0f;
-
-   auto attacking_entity = m_entity_system.entity(player.entity_id());
-   if (not attacking_entity.has_component<entity::component::Location>())
+   }
+   if (not player_entity->has_component<LocationComponent>())
       return;
 
-   auto diff = (entity.component<entity::component::Location>().position() -
-                attacking_entity.component<entity::component::Location>().position())
-                       .normalize();
-   diff.set_y(0.2);
-   entity.component<entity::component::Velocity>().set_velocity(
-           m_dispatcher, entity.component<entity::component::Location>().position(), diff);
-
-   auto target_player_id = m_player_manager.get_player_id_by_entity_id(event.entity_id());
-   if (target_player_id.has_value()) {
-      spdlog::info("setting players health to {}", entity.component<HealthComponent>().health);
-      m_dispatcher.set_health_and_food(*target_player_id,
-                                       entity.component<entity::component::Health>().health, 20, 5.0f);
+   auto attacked_entity = m_entity_system.entity(event.entity_id());
+   if (not attacked_entity.is_valid()) {
+      spdlog::warn("attacked entity is invalid: {}", player_entity.err()->msg());
+      return;
    }
 
-   m_dispatcher.animate_entity(event.entity_id(), entity.component<LocationComponent>().position(),
-                               game::EntityAnimation::TakeDamage);
+   if (not attacked_entity.has_component<HealthComponent>())
+      return;
+   if (not attacked_entity.has_component<LocationComponent>())
+      return;
+
+   auto diff = (attacked_entity.component<LocationComponent>().position() -
+                player_entity->component<LocationComponent>().position())
+                       .normalize();
+   //   diff.set_y(0.2);
+
+   auto &health = attacked_entity.component<HealthComponent>();
+   health.apply_damage(m_world, game::Damage{
+                                        .amount        = 1.0f,
+                                        .source        = game::DamageSourceValue::PlayerAttack,
+                                        .source_entity = player_entity->id(),
+                                        .target_entity = attacked_entity.id(),
+                                        .vector        = diff,
+                                });
 }
 
 void EventHandler::handle_use_item(const serverbound_v1::UseItem & /*use_item*/, game::PlayerId player_id)
 {
-   auto player = m_player_manager.get_player(player_id);
-   if (player.has_failed()) {
-      spdlog::error("invalid player id {}", boost::uuids::to_string(player_id));
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
       return;
    }
 
-   auto entity = m_entity_system.entity(player->entity_id());
-   if (not entity.has_component<InventoryComponent>()) {
-      spdlog::error("player entity doesn't have inventory (entity_id:{})", player->entity_id());
+   if (not entity->has_component<InventoryComponent>()) {
+      spdlog::error("player entity doesn't have inventory (entity_id:{})", entity->id());
       return;
    }
 
-   auto slot_item = entity.component<InventoryComponent>().active_item();
+   auto slot_item = entity->component<InventoryComponent>().active_item();
    spdlog::debug("using item {}", slot_item.item_id);
-   m_root_item_controller.on_item_use(m_world, player_id, entity.id(), slot_item.item_id);
+   m_root_item_controller.on_item_use(m_world, player_id, entity->id(), slot_item.item_id);
 }
 
 void EventHandler::handle_drop_inventory_item(const serverbound_v1::DropInventoryItem &drop_inventory_item,
                                               game::PlayerId player_id)
 {
-   auto player = m_player_manager.get_player(player_id);
-   if (player.has_failed())
+   auto entity = this->player_entity(player_id);
+   if (not entity->has_component<InventoryComponent>())
       return;
 
-   auto entity = m_entity_system.entity(player->entity_id());
-   if (not entity.has_component<InventoryComponent>())
-      return;
-
-   entity.component<InventoryComponent>().drop_carried_item(m_world, drop_inventory_item.full_stack());
+   entity->component<InventoryComponent>().drop_carried_item(m_world, drop_inventory_item.full_stack());
 }
 
 void EventHandler::handle_set_carried_item(const serverbound_v1::SetCarriedItem &set_carried_item_msg,
                                            game::PlayerId player_id)
 {
-   auto player = m_player_manager.get_player(player_id);
-   if (player.has_failed())
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+
+   if (not entity->has_component<InventoryComponent>())
       return;
 
-   auto entity = m_entity_system.entity(player->entity_id());
-   if (not entity.has_component<InventoryComponent>())
-      return;
-
-   entity.component<InventoryComponent>().set_carried_item(
+   entity->component<InventoryComponent>().set_carried_item(
            {static_cast<game::ItemId>(set_carried_item_msg.carried_item_id().id()),
             set_carried_item_msg.carried_item_count()});
+}
+
+void EventHandler::handle_request_respawn(const serverbound_v1::RequestRespawn & /*request_respawn*/,
+                                          game::PlayerId player_id)
+{
+   auto entity = m_player_manager.respawn_player(m_world, player_id);
+   if (entity.has_failed())
+      return;
+
+   m_dispatcher.respawn_player(player_id);
+   m_dispatcher.set_health_and_food(player_id, 20.0f, 20, 5.0f);
+
+   m_dispatcher.synchronise_player_position_and_rotation(player_id,
+                                                         entity->component<LocationComponent>().position(),
+                                                         entity->component<RotationComponent>().rotation());
+
+   auto result = entity->component<StreamerComponent>().send_all_visible_chunks(m_world, player_id);
+   if (result.has_failed()) {
+      spdlog::error("error loading chunks: {}", result.err()->msg());
+      return;
+   }
+
+   entity->component<InventoryComponent>().synchronize_inventory(m_dispatcher);
+
+   m_dispatcher.synchronise_player_position_and_rotation(player_id,
+                                                         entity->component<LocationComponent>().position(),
+                                                         entity->component<RotationComponent>().rotation());
+
+   m_dispatcher.spawn_player(player_id, entity->id(), entity->component<LocationComponent>().position());
+}
+
+mb::result<game::Entity> EventHandler::player_entity(game::PlayerId player_id)
+{
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed())
+      return std::move(player.err());
+
+   auto entity = m_entity_system.entity(player->entity_id());
+   if (not entity.is_valid())
+      return mb::error("invalid entity");
+
+   return entity;
 }
 
 }// namespace minecpp::service::engine

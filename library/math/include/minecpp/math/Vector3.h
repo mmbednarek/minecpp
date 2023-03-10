@@ -24,7 +24,10 @@ class BaseVector<TValue, 3>
 
    BaseVector<TValue, 3> normalize() const
    {
-      return this->transform([l = this->length()](TValue value) { return value / l; });
+      const auto len = this->length();
+      if (std::abs(len) < 0.00000001)
+         return {0, 0, 0};
+      return this->transform([l = len](TValue value) { return value / l; });
    }
 
    [[nodiscard]] static SelfType from_proto(const ProtoType &proto_vec)
@@ -36,6 +39,13 @@ class BaseVector<TValue, 3>
    {
       return {static_cast<ValueType>(-std::sin(yaw)), static_cast<ValueType>(-std::sin(pitch)),
               static_cast<ValueType>(std::cos(yaw))};
+   }
+
+   [[nodiscard]] bool is_correct() const
+   {
+      return std::all_of(m_storage, m_storage + Count, [](const ValueType value) {
+         return not std::isnan(value) and not std::isinf(value);
+      });
    }
 
    [[nodiscard]] ProtoType to_proto() const

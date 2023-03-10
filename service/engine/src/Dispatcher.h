@@ -10,6 +10,10 @@ namespace minecpp::player {
 class Player;
 }
 
+namespace minecpp::game {
+class Entity;
+}
+
 namespace minecpp::entity {
 class EntitySystem;
 }
@@ -35,14 +39,14 @@ class Dispatcher : public minecpp::game::IDispatcher
                                 game::EntityId entity_id) override;
    void update_block(game::BlockPosition block, game::BlockStateId state) override;
 
-   void player_move(game::PlayerId player_id, game::EntityId entity_id, const math::Vector3 &position,
-                    const math::Vector3s &movement, const game::Rotation &rotation) override;
    void entity_move(game::EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
-                    const game::Rotation &rotation) override;
+                    const math::Rotation &rotation, bool is_on_ground) override;
    void player_look(game::PlayerId player_id, game::EntityId entity_id, const math::Vector3 &position,
-                    const game::Rotation &rotation) override;
+                    const math::Rotation &rotation) override;
    void entity_look(game::EntityId entity_id, const math::Vector3 &position,
-                    const game::Rotation &rotation) override;
+                    const math::Rotation &rotation) override;
+   void teleport_entity(game::EntityId entity_id, const math::Vector3 &position,
+                        const math::Rotation &rotation, bool is_on_ground) override;
 
    void add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping) override;
    void spawn_player(game::PlayerId player_id, game::EntityId entity_id,
@@ -70,8 +74,8 @@ class Dispatcher : public minecpp::game::IDispatcher
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
-   void synchronise_player_position_and_rotation(game::PlayerId player_id, math::Vector3 position, float yaw,
-                                                 float pitch) override;
+   void synchronise_player_position_and_rotation(game::PlayerId player_id, math::Vector3 position,
+                                                 math::Rotation rotation) override;
    void set_spawn_position(game::PlayerId player_id, game::BlockPosition position, float angle) override;
    void set_player_equipment(game::PlayerId player_id, game::EntityId entity_id, game::EquipmentSlot slot,
                              game::ItemSlot item) override;
@@ -80,13 +84,17 @@ class Dispatcher : public minecpp::game::IDispatcher
                      const math::Vector3 &position, int count) override;
    void set_entity_velocity(game::EntityId entity_id, const math::Vector3 &position,
                             const math::Vector3s &velocity) override;
+   void display_death_screen(game::PlayerId player_id, game::EntityId victim_entity_id,
+                             game::EntityId killer_entity_id, const std::string &message) override;
+   void respawn_player(game::PlayerId player_id) override;
 
+ private:
    void send_to_players_in_view_distance(const math::Vector3 &position,
                                          const google::protobuf::Message &message) const;
    void send_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position,
                                                 const google::protobuf::Message &message) const;
+   void send_to_player_visible_by(game::Entity &entity, const google::protobuf::Message &message) const;
 
- private:
    EventManager &m_events;
    entity::EntitySystem &m_entity_system;
 };

@@ -75,6 +75,11 @@ class EventHandler
                              const event::RecipientList &recipient_list);
    void handle_set_entity_velocity(const clientbound_v1::SetEntityVelocity &msg,
                                    const event::RecipientList &recipient_list);
+   void handle_display_death_screen(const clientbound_v1::DisplayDeathScreen &msg,
+                                    const event::RecipientList &recipient_list);
+   void handle_respawn(const clientbound_v1::Respawn &msg, const event::RecipientList &recipient_list);
+   void handle_teleport_entity(const clientbound_v1::TeleportEntity &msg,
+                               const event::RecipientList &recipient_list);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)

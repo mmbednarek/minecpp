@@ -6,6 +6,7 @@ target_sources(minecpp_command PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Echo.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Format.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Give.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ListEntities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ReloadChunk.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Sync.cpp
 
@@ -13,6 +14,7 @@ target_sources(minecpp_command PUBLIC
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Echo.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Format.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Give.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/ListEntities.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/ReloadChunk.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Sync.h
 )

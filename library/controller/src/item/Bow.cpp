@@ -29,7 +29,8 @@ void Bow::on_item_use(game::IWorld &world, game::PlayerId player_id, game::Entit
    auto initial_position =
            player_entity.component<LocationComponent>().position() + math::Vector3{0, 1.3, 0} + dir;
 
-   world.spawn<Arrow>(initial_position, dir * 1.5, normalize_rot(-rot.yaw()), normalize_rot(-rot.pitch()));
+   world.spawn<Arrow>(initial_position, dir * 1.5, normalize_rot(-rot.yaw()), normalize_rot(-rot.pitch()),
+                      player_entity_id);
 }
 
 }// namespace minecpp::controller::item
