@@ -50,6 +50,7 @@ class World : public minecpp::game::IWorld
    void tick(double delta_time);
    bool is_movement_blocked_at(const math::Vector3 &position) override;
    void kill_entity(game::EntityId id) override;
+   void apply_damage_or_kill_entity(game::EntityId id, const game::Damage &damage) override;
 
  private:
    void notify_neighbours(game::BlockPosition position, game::BlockStateId state);

@@ -18,6 +18,7 @@ message Metadata {
   uint32 index = 1;
   oneof value {
     common.v1.Slot slot = 2;
+    uint32 byte = 3;
   }
 }
 
@@ -33,13 +34,6 @@ message Entity {
   repeated entity.v1.Metadata metadata = 9;
 }
 
-message PlayerEntity {
-  uint32 entity_id = 1;
-  common.v1.UUID uuid = 2;
-  common.v1.Vector3 position = 4;
-  common.v1.Rotation rotation = 5;
-}
-
 enum EquipmentSlot {
   MAIN_HAND = 0;
   OFF_HAND = 1;
@@ -47,4 +41,17 @@ enum EquipmentSlot {
   LEGGINGS = 3;
   CHESTPLATE = 4;
   HELMET = 5;
+}
+
+message EntityEquipment {
+  EquipmentSlot slot = 1;
+  common.v1.Slot item = 2;
+}
+
+message PlayerEntity {
+  uint32 entity_id = 1;
+  common.v1.UUID uuid = 2;
+  common.v1.Vector3 position = 4;
+  common.v1.Rotation rotation = 5;
+  repeated EntityEquipment equipment = 6;
 }

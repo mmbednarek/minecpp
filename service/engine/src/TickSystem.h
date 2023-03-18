@@ -18,6 +18,7 @@ class TickSystem
    World &m_world;
    std::atomic_bool m_running{true};
    std::thread m_tick_thread;
+   double m_delta_sum{};
 };
 
 }// namespace minecpp::service::engine

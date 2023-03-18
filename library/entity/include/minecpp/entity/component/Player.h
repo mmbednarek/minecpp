@@ -31,12 +31,16 @@ class Player
                                   game::EntityId entity_id);
    void remove_visible_entity(game::IDispatcher &dispatcher, game::EntityId entity_id);
 
+   void begin_use_item();
+   std::chrono::steady_clock::duration end_use_item();
+
  private:
    game::PlayerId m_id;
    game::EntityId m_entity_id{};
    std::string m_name;
    std::vector<game::EntityId> m_visible_entities;
    std::mutex m_visible_entities_mutex;
+   std::optional<std::chrono::steady_clock::time_point> m_started_using_item;
 };
 
 }// namespace minecpp::entity::component

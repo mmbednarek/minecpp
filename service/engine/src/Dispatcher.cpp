@@ -100,17 +100,6 @@ void Dispatcher::send_direct_chat(game::PlayerId player_id, chat::MessageType ms
    m_events.send_to(chat, player_id);
 }
 
-void Dispatcher::player_look(game::PlayerId player_id, game::EntityId entity_id,
-                             const math::Vector3 &position, const math::Rotation &rotation)
-{
-   clientbound_v1::EntityLook event;
-   *event.mutable_player_id() = game::player::write_id_to_proto(player_id);
-   event.set_entity_id(entity_id);
-   *event.mutable_rotation() = rotation.to_proto();
-
-   this->send_to_players_in_view_distance_except(player_id, position, event);
-}
-
 void Dispatcher::entity_look(game::EntityId entity_id, const math::Vector3 &position,
                              const math::Rotation &rotation)
 {
@@ -118,7 +107,12 @@ void Dispatcher::entity_look(game::EntityId entity_id, const math::Vector3 &posi
    event.set_entity_id(entity_id);
    *event.mutable_rotation() = rotation.to_proto();
 
-   this->send_to_players_in_view_distance(position, event);
+   auto entity = m_entity_system.entity(entity_id);
+   if (entity.has_component<PlayerComponent>()) {
+      this->send_to_player_visible_by(entity, event);
+   } else {
+      this->send_to_players_in_view_distance(position, event);
+   }
 }
 
 void Dispatcher::remove_player(game::PlayerId player_id, mb::u32 entity_id)
@@ -186,7 +180,7 @@ void Dispatcher::accept_player(const game::player::Player &player)
    assert(entity.has_component<entity::component::Abilities>());
 
    auto abilities                     = entity.component<entity::component::Abilities>();
-   *accept_player.mutable_abilities() = abilities.abilities.to_proto();
+   *accept_player.mutable_abilities() = abilities.abilities().to_proto();
 
    m_events.send_to(accept_player, player.id());
 }
@@ -354,10 +348,6 @@ void Dispatcher::spawn_entity(game::EntityId entity_id, const math::Vector3 &pos
    clientbound_v1::SpawnEntity spawn_entity;
    entity.serialize_to_proto(spawn_entity.mutable_entity());
 
-   auto msg = fmt::format("spawning entity {} at with yaw {}", spawn_entity.entity().entity_id(),
-                          spawn_entity.entity().rotation().yaw());
-   this->send_chat(chat::MessageType::PlayerMessage,
-                   format::Builder().text(format::Color::Gold, "INFO  ").text(msg).to_string());
    this->send_to_players_in_view_distance(position, spawn_entity);
 }
 
@@ -404,10 +394,6 @@ void Dispatcher::set_entity_velocity(game::EntityId entity_id, const math::Vecto
 
 void Dispatcher::remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id)
 {
-   auto msg = fmt::format("removing entity {} for player {}", entity_id, boost::uuids::to_string(player_id));
-   this->send_direct_chat(player_id, chat::MessageType::PlayerMessage,
-                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
-
    clientbound_v1::RemoveEntity remove_entity;
    remove_entity.set_entity_id(entity_id);
    m_events.send_to(remove_entity, player_id);
@@ -426,10 +412,6 @@ void Dispatcher::spawn_entity_for_player(game::PlayerId player_id, game::EntityI
 void Dispatcher::spawn_player_for_player(game::PlayerId receiver, game::PlayerId spawned_player,
                                          game::EntityId entity_id)
 {
-   auto msg = fmt::format("spawning entity {} for player {}", entity_id, boost::uuids::to_string(receiver));
-   this->send_direct_chat(receiver, chat::MessageType::PlayerMessage,
-                          format::Builder().bold(format::Color::Gold, "INFO ").text(msg).to_string());
-
    auto entity = m_entity_system.entity(entity_id);
 
    clientbound_v1::SpawnPlayer spawn_player;
@@ -543,6 +525,13 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
    }
 
    m_events.send_to_many(message, players);
+}
+
+void Dispatcher::set_abilities(game::PlayerId player_id, const game::Abilities &abilities)
+{
+   clientbound_v1::SetAbilities set_abilities;
+   *set_abilities.mutable_abilities() = abilities.to_proto();
+   m_events.send_to(set_abilities, player_id);
 }
 
 }// namespace minecpp::service::engine

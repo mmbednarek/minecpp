@@ -4,6 +4,7 @@ set(MINECPP_ENTITY_COMPONENT_INCLUDE_DIR ${MINECPP_ENTITY_DIR}/include/minecpp/e
 target_sources(minecpp_entity PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/DeathScreen.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Health.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Inventory.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ItemSlot.cpp
@@ -11,13 +12,17 @@ target_sources(minecpp_entity PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Player.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Projectile.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Streamer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Team.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Test.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/TickComponent.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Totem.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Trader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/UniqueId.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Velocity.cpp
 
         # Header files
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Abilities.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/DealthScreen.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Health.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Inventory.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/ItemSlot.h
@@ -25,8 +30,11 @@ target_sources(minecpp_entity PUBLIC
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Player.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Projectile.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Streamer.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Team.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Test.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Ticker.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Totem.h
+        ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Trader.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/UniqueId.h
         ${MINECPP_ENTITY_COMPONENT_INCLUDE_DIR}/Velocity.h
 )

@@ -1,7 +1,7 @@
 #pragma once
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 
-namespace minecpp::entity {
+namespace minecpp::game {
 
 struct Abilities
 {
@@ -10,7 +10,7 @@ struct Abilities
    bool instant_build = true;
    bool invulnerable  = false;
    bool may_build     = true;
-   bool may_fly       = true;
+   bool may_fly       = false;
    float walk_speed   = 0.1f;
 
    static Abilities from_proto(const minecpp::proto::entity::v1::Abilities &abilities);
@@ -22,4 +22,4 @@ struct Abilities
    }
 };
 
-}// namespace minecpp::entity
+}// namespace minecpp::game

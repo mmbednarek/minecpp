@@ -3,19 +3,29 @@
 set(MINECPP_COMMAND_CORE_INCLUDE_DIR ${MINECPP_COMMAND_DIR}/include/minecpp/command/core)
 target_sources(minecpp_command PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Cord.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Echo.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Fly.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Format.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Give.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/KillAll.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ListEntities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ReloadChunk.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Spawn.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Sync.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Teleport.cpp
 
         # Header files
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Cord.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Echo.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Fly.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Format.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Give.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/KillAll.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/ListEntities.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/ReloadChunk.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Spawn.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Sync.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Teleport.h
 )
 

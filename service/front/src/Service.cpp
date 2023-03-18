@@ -107,8 +107,9 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
    interact.mutable_position()->set_x(msg.x);
    interact.mutable_position()->set_y(msg.y);
    interact.mutable_position()->set_z(msg.z);
-   interact.set_hand_type(static_cast<proto::common::v1::HandType>(msg.hand));
    interact.set_is_sneaking(msg.is_sneaking);
+   interact.set_interaction_type(static_cast<proto::common::v1::InteractionType>(msg.type));
+   interact.set_hand_type(static_cast<proto::common::v1::HandType>(msg.hand));
    m_stream->send(interact, player_id);
 }
 

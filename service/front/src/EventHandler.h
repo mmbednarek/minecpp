@@ -80,6 +80,8 @@ class EventHandler
    void handle_respawn(const clientbound_v1::Respawn &msg, const event::RecipientList &recipient_list);
    void handle_teleport_entity(const clientbound_v1::TeleportEntity &msg,
                                const event::RecipientList &recipient_list);
+   void handle_set_abilities(const clientbound_v1::SetAbilities &msg,
+                             const event::RecipientList &recipient_list);
 
    template<typename T>
    void send_message_to_all_players(const T &msg)

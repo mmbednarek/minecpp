@@ -9,10 +9,12 @@ enum class DamageSourceValue
    MobAttack,
    FallDamage,
    Projectile,
+   VoidDamage,
+   CommandKill,
 };
 
-using DamageSource_Base =
-        mb::enum_wrapper<DamageSourceValue, "PlayerAttack", "MobAttack", "FallDamage", "Projectile">;
+using DamageSource_Base = mb::enum_wrapper<DamageSourceValue, "PlayerAttack", "MobAttack", "FallDamage",
+                                           "Projectile", "VoidDamage", "CommandKill">;
 
 class DamageSource : public DamageSource_Base
 {
@@ -23,6 +25,8 @@ class DamageSource : public DamageSource_Base
    MB_ENUM_FIELD(MobAttack)
    MB_ENUM_FIELD(FallDamage)
    MB_ENUM_FIELD(Projectile)
+   MB_ENUM_FIELD(VoidDamage)
+   MB_ENUM_FIELD(CommandKill)
 };
 
 using Health = float;
@@ -33,7 +37,7 @@ struct Damage
    DamageSource source;
    std::optional<EntityId> source_entity;
    EntityId target_entity{};
-   math::Vector3 vector;
+   math::Vector3 vector{};
 };
 
 }// namespace minecpp::game

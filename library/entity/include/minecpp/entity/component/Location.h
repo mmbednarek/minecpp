@@ -1,10 +1,12 @@
 #pragma once
 #include <entt/entt.hpp>
+#include <minecpp/game/Delegate.hpp>
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <mutex>
 #include <set>
 
 namespace minecpp::entity::component {
@@ -22,9 +24,19 @@ struct TrackedPosition
 class Location
 {
  public:
-   entt::sigh<void(game::IWorld &world, game::Entity &entity, const math::Vector3 &, const math::Vector3 &)>
-           on_position_change;
-   entt::sigh<void(game::IWorld &world, game::Entity &entity, game::Entity &other_entity)> on_begin_intersect;
+   using PositionChange =
+           game::Delegate<game::IWorld & /*world*/, game::Entity & /*entity*/,
+                          const math::Vector3 & /*old_position*/, const math::Vector3 & /*new_position*/>;
+
+   using BeginIntersect = game::Delegate<game::IWorld & /*world*/, game::Entity & /*entity*/,
+                                         game::Entity & /*other_entity*/>;
+
+   using HitGround = game::Delegate<game::IWorld & /*world*/, game::Entity & /*entity*/,
+                                    const math::Vector3 & /*position*/>;
+
+   PositionChange on_position_change;
+   BeginIntersect on_begin_intersect;
+   HitGround on_hit_ground;
 
    Location(const math::Vector3 &position, const math::Vector3 &extent);
 
@@ -38,12 +50,17 @@ class Location
 
    void set_position(game::IWorld &world, game::Entity &entity, const math::Vector3 &position,
                      bool is_on_ground);
-   void set_is_on_ground(game::IDispatcher &dispatcher, game::Entity &entity, bool is_on_ground);
+   void teleport_player(game::IWorld &world, game::Entity &entity, const math::Vector3 &position);
+   void set_is_on_ground(game::IWorld &world, game::Entity &entity, bool is_on_ground);
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
    void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
 
+
  private:
+   math::Vector3l set_logical_position(game::IWorld &world, game::EntityId entity_id,
+                                       const math::Vector3 &position);
+
    math::Vector3 m_position{};
    math::Vector3 m_extent{};
    TrackedPosition m_tracked_position{};
@@ -51,12 +68,14 @@ class Location
    bool m_is_detached{false};
    int m_refresh_count{0};
    bool m_is_on_ground{false};
+   std::mutex m_mutex;
 };
 
 class Rotation
 {
  public:
-   Rotation(float yaw, float pitch);
+   Rotation(math::Radians yaw, math::Radians pitch);
+   explicit Rotation(const math::Rotation &rotation);
 
    void on_attached(game::Entity &entity);
 
@@ -73,12 +92,11 @@ class Rotation
    [[nodiscard]] math::Radians pitch() const;
    void set_yaw(math::Radians yaw);
    void set_pitch(math::Radians pitch);
-   void set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position, math::Radians yaw,
-                     math::Radians pitch);
+   void set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position,
+                     const math::Rotation &rotation);
 
  private:
-   math::Radians m_yaw{};
-   math::Radians m_pitch{};
+   math::Rotation m_rotation{};
    game::EntityId m_entity_id{};
 };
 

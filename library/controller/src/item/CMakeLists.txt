@@ -4,8 +4,14 @@ set(MINECPP_CONTROLLER_ITEM_INCLUDE_DIR ${MINECPP_CONTROLLER_DIR}/include/minecp
 target_sources(minecpp_controller PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Bow.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Default.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Food.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Sword.cpp
 
         # Header files
         ${MINECPP_CONTROLLER_ITEM_INCLUDE_DIR}/Bow.h
+        ${MINECPP_CONTROLLER_ITEM_INCLUDE_DIR}/Default.h
+        ${MINECPP_CONTROLLER_ITEM_INCLUDE_DIR}/Food.h
+        ${MINECPP_CONTROLLER_ITEM_INCLUDE_DIR}/Sword.h
 )
 

@@ -560,23 +560,23 @@ constexpr std::array<WoodType, 7> g_wood_types{WoodType::Oak,     WoodType::Spru
 
 enum class DirectionValues
 {
-   East,
-   West,
+   North,
    South,
-   North
+   West,
+   East
 };
 
-using Direction_Base = mb::enum_wrapper<DirectionValues, "east", "west", "south", "north">;
+using Direction_Base = mb::enum_wrapper<DirectionValues, "north", "south", "west", "east">;
 
 class Direction final : public Direction_Base
 {
  public:
    MB_ENUM_TRAITS(Direction);
 
-   MB_ENUM_FIELD(East)
-   MB_ENUM_FIELD(West)
-   MB_ENUM_FIELD(South)
    MB_ENUM_FIELD(North)
+   MB_ENUM_FIELD(South)
+   MB_ENUM_FIELD(West)
+   MB_ENUM_FIELD(East)
 
    [[nodiscard]] constexpr Direction turn(Side side) const
    {
@@ -623,29 +623,18 @@ class Direction final : public Direction_Base
          return Direction::South;
       return Direction::North;
    }
+
+   [[nodiscard]] constexpr Direction opposite()
+   {
+      switch (value()) {
+      case East: return West;
+      case West: return East;
+      case South: return North;
+      case North: return South;
+      }
+      assert(false);
+   }
 };
-
-[[nodiscard]] constexpr Direction opposite_direction(Direction direction)
-{
-   switch (direction) {
-   case Direction::East: return Direction::West;
-   case Direction::West: return Direction::East;
-   case Direction::South: return Direction::North;
-   case Direction::North: return Direction::South;
-   }
-   return Direction::West;
-}
-
-[[nodiscard]] constexpr std::optional<Face> direction_to_face(Direction direction)
-{
-   switch (direction) {
-   case Direction::North: return Face::North;
-   case Direction::South: return Face::South;
-   case Direction::West: return Face::West;
-   case Direction::East: return Face::East;
-   }
-   return std::nullopt;
-}
 
 [[nodiscard]] constexpr std::string_view to_string(Direction direction)
 {
@@ -725,7 +714,25 @@ class Half final : public Half_Base
    MB_ENUM_FIELD(Upper)
 };
 
+enum class HalfPlacementValue
+{
+   Top,
+   Bottom
+};
+
+using HalfPlacement_Base = mb::enum_wrapper<HalfPlacementValue, "top", "bottom">;
+
+class HalfPlacement final : public HalfPlacement_Base
+{
+ public:
+   MB_ENUM_TRAITS(HalfPlacement);
+
+   MB_ENUM_FIELD(Top)
+   MB_ENUM_FIELD(Bottom)
+};
+
 struct SectionRange
+
 {
    struct Iterator
    {
@@ -1072,6 +1079,59 @@ class EntityAnimation : public EntityAnimation_Base
    proto::common::v1::EntityAnimation to_proto()
    {
       return static_cast<proto::common::v1::EntityAnimation>(index());
+   }
+};
+
+enum class SlabTypeValue
+{
+   Top,
+   Bottom,
+   Double
+};
+
+using SlabType_Base = mb::enum_wrapper<SlabTypeValue, "top", "bottom", "double">;
+
+class SlabType : public SlabType_Base
+{
+ public:
+   MB_ENUM_TRAITS(SlabType)
+
+   MB_ENUM_FIELD(Top)
+   MB_ENUM_FIELD(Bottom)
+   MB_ENUM_FIELD(Double)
+
+   static SlabType from_half_placement(HalfPlacement half)
+   {
+      switch (half.value()) {
+      case HalfPlacement::Top: return Top;
+      case HalfPlacement::Bottom: return Bottom;
+      }
+      assert(false);
+   }
+};
+
+enum class InteractionTypeValue
+{
+   Standard,
+   Attack
+};
+
+using InteractionType_Base = mb::enum_wrapper<InteractionTypeValue, "standard", "attack">;
+
+class InteractionType : public InteractionType_Base
+{
+ public:
+   MB_ENUM_TRAITS(InteractionType)
+
+   MB_ENUM_FIELD(Standard)
+   MB_ENUM_FIELD(Attack)
+
+   [[nodiscard]] static InteractionType from_proto(proto::common::v1::InteractionType type)
+   {
+      if (type == proto::common::v1::Attack)
+         return Attack;
+
+      return Standard;
    }
 };
 

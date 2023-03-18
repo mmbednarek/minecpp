@@ -68,11 +68,14 @@ class Server
    void index_connection(game::PlayerId index, ConnectionId id);
 
  private:
+   void add_connection(ConnectionPtr connection, Protocol::State state);
+
    std::map<game::PlayerId, ConnectionId> m_player_id_to_connection_id_map;
    std::map<ConnectionId, ConnectionPtr> m_connections;
    tcp::acceptor m_acceptor;
    Protocol::Handler *m_handlers[3];
    ConnectionId m_top_connection{};
+   std::mutex m_connection_add_mutex{};
 };
 
 }// namespace minecpp::service::front

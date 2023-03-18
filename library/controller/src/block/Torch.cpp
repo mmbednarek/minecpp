@@ -14,8 +14,8 @@ using world::BlockState;
 
 static std::optional<Face> find_connected_face(const BlockState &state);
 
-bool Torch::on_player_place_block(IWorld &world, PlayerId /*player_id*/, BlockId /*block_id*/,
-                                  BlockPosition position, Face place_face)
+bool Torch::on_player_place_block(IWorld &world, PlayerId, BlockId, BlockPosition position, Face place_face,
+                                  const math::Vector3f &crosshair_position)
 {
    // Cannot place torch on a ceiling
    if (place_face == Face::Bottom)

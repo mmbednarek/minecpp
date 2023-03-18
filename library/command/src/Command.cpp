@@ -17,9 +17,9 @@ std::string CommandInput::string_arg(std::size_t index) const
    return m_arguments[index]->to_string();
 }
 
-Object::Ptr CommandInput::obj_org(std::size_t index) const
+Object::Ptr CommandInput::obj_arg(std::size_t index) const
 {
-   if (m_arguments.size() >= index)
+   if (index >= m_arguments.size())
       return nullptr;
    return m_arguments[index];
 }

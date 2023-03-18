@@ -55,12 +55,21 @@ class CommandInput
                 const std::unordered_set<std::string> &flags,
                 const std::unordered_map<std::string, ast::Expression::Ptr> &params);
    [[nodiscard]] std::size_t arg_count() const;
-   [[nodiscard]] Object::Ptr obj_org(std::size_t index) const;
+   [[nodiscard]] Object::Ptr obj_arg(std::size_t index) const;
    [[nodiscard]] std::string string_arg(std::size_t index) const;
    [[nodiscard]] bool has_flag(const std::string &flag) const;
 
    iterator begin();
    iterator end();
+
+   template<typename TValue>
+   std::optional<TValue> arg(std::size_t index)
+   {
+      auto obj = cast<typename WrapperFinder<TValue>::Type>(this->obj_arg(index));
+      if (obj == nullptr)
+         return std::nullopt;
+      return obj->value;
+   }
 
  private:
    std::vector<Object::Ptr> m_arguments;

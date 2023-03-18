@@ -8,7 +8,7 @@ class ListEntities : public Command
 {
  public:
    static constexpr auto command_return_type = ObjectType::Array;
-   static constexpr auto command_name        = "list-entities";
+   static constexpr auto command_name        = "lsentity";
 
    [[nodiscard]] bool is_flag(std::string_view name) const override;
    Object::Ptr run(RuntimeContext &ctx, CommandInput &input) const override;

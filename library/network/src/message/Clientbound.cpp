@@ -459,6 +459,19 @@ Writer EntityMetadataSlot::serialize() const
    return w;
 }
 
+Writer EntityMetadataByte::serialize() const
+{
+   // 1.19.3 OK
+   Writer w;
+   w.write_byte(0x4e);
+   w.write_varint(this->entity_id);
+   w.write_byte(this->index);
+   w.write_varint(0);
+   w.write_byte(this->value);
+   w.write_byte(0xFF);
+   return w;
+}
+
 Writer SetSlot::serialize() const
 {
    // 1.19.3 OK
@@ -577,4 +590,5 @@ Writer TeleportEntity::serialize() const
    w.write_byte(is_on_ground);
    return w;
 }
+
 }// namespace minecpp::network::message

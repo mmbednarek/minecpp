@@ -17,6 +17,11 @@ class RootItem : public game::IItemController
       m_controllers[item_id] = std::make_unique<TController>(std::forward<TArgs>(args)...);
    }
 
+   void on_released_item(game::IWorld &world, game::ItemId item_id, game::EntityId player_entity_id) override;
+   void on_interact(game::IWorld &world, game::ItemId item_id, game::InteractionType interaction_type,
+                    game::EntityId player_entity_id, game::EntityId interaction_entity_id,
+                    const math::Vector3f &position, bool is_offhand) override;
+
  private:
    std::map<game::ItemId, std::unique_ptr<game::IItemController>> m_controllers;
 };

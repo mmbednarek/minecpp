@@ -32,6 +32,9 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput & /*input*/) const
 
    entity->component<minecpp::entity::component::Inventory>().synchronize_inventory(world->dispatcher());
 
+   if (not entity->has_component<LocationComponent>())
+      return make_error(command_name, "entity is not special");
+
    if (not entity->has_component<PlayerComponent>())
       return make_error(command_name, "entity is not a player");
 
@@ -39,7 +42,8 @@ Object::Ptr Sync::run(RuntimeContext &ctx, CommandInput & /*input*/) const
       return make_error(command_name, "entity doesn't stream chunks");
 
    auto player_id = entity->component<PlayerComponent>().id();
-   entity->component<minecpp::entity::component::Streamer>().send_all_visible_chunks(*world, player_id);
+   entity->component<minecpp::entity::component::Streamer>().send_all_visible_chunks(
+           *world, player_id, entity->component<LocationComponent>().position());
 
    auto info = std::make_shared<FormattedString>();
    info->bold(format::Color::Green, "INFO ");

@@ -1,4 +1,6 @@
 #pragma once
+#include "Location.h"
+#include "Ticker.h"
 #include <minecpp/game/Game.h>
 #include <minecpp/game/IWorld.hpp>
 
@@ -11,12 +13,15 @@ class Streamer
 
    void on_attached(game::Entity &entity);
 
-   mb::result<mb::empty> send_all_visible_chunks(game::IWorld &world, game::PlayerId player_id);
+   mb::result<mb::empty> send_all_visible_chunks(game::IWorld &world, game::PlayerId player_id,
+                                                 const math::Vector3 &position);
    void on_position_change(game::IWorld &world, game::Entity &entity, const math::Vector3 &old_position,
                            const math::Vector3 &new_position);
    void tick(game::IWorld &world, game::Entity &entity, double delta_time);
 
  private:
+   Location::PositionChange::OptSink<Streamer> m_position_change_sink;
+   Ticker::Tick::OptSink<Streamer> m_tick_sink;
    std::mutex m_mutex{};
    game::ChunkPosition m_last_chunk_position{};
    int m_view_distance{};

@@ -40,6 +40,12 @@ void TickSystem::run_tick(double delta_time)
    if (tps > 120.0) {
       std::this_thread::sleep_for(5ms);
    }
+
+   m_delta_sum += delta_time;
+   if (m_delta_sum > 40.0) {
+      spdlog::debug("system: tps={}", tps);
+      m_delta_sum = 0.0;
+   }
 }
 
 }// namespace minecpp::service::engine

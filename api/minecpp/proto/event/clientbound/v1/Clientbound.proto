@@ -219,3 +219,7 @@ message Respawn {
   string death_dimension = 10;
   common.v1.Vector3 death_position = 11;
 };
+
+message SetAbilities {
+  entity.v1.Abilities abilities = 1;
+}

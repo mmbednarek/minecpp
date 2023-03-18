@@ -31,10 +31,9 @@ class EntitySystem final : public game::IEntitySystem
    void tick_entities(game::IWorld &world, double delta_time) override;
    void attach_entity(game::IWorld &world, game::EntityId entity_id, const math::Vector3 &position,
                       const math::Vector3 &extent) override;
-
- private:
    void apply_pending_kills();
 
+ private:
    std::mutex m_kill_mtx;
    entt::registry m_registry;
    std::unique_ptr<EntitySpace> m_storage;

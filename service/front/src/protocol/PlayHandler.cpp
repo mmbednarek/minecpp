@@ -47,6 +47,10 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
+   case 0x0b: {// 1.19.3 OK
+      // TODO: Implement
+      // Close window
+   } break;
    case 0x0c: {// 1.19.3 OK
       PluginMessage msg;
       deserialize(r, msg);
@@ -82,10 +86,18 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
    } break;
+   case 0x1b: {// 1.19.3 OK
+      // TODO: Implement
+      // Flying
+   } break;
    case 0x1c: {// 1.19.3 OK
       PlayerDigging msg;
       deserialize(r, msg);
       service.on_message(conn->service_id(), conn->uuid(), msg);
+   } break;
+   case 0x1d: {// 1.19.3 OK
+      // TODO: Implement
+      // Crouching
    } break;
    case 0x28: {// 1.19.3 OK
       HeldItemChange msg{};
@@ -111,7 +123,7 @@ void PlayHandler::handle(const std::shared_ptr<Connection> &conn, Reader &r)
       spdlog::info("unknown op {}, packet data: {}", op, r.get_hex_data());
       send(conn, minecpp::network::message::SystemChat{
                          .message = minecpp::chat::format_warning_unknown_op_code(op),
-                         .type    = minecpp::chat::MessageType::SystemMessage,
+                         .type    = minecpp::chat::MessageType::PlayerMessage,
                  });
    }
 }

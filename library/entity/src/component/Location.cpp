@@ -1,5 +1,7 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
+#include <minecpp/entity/component/Streamer.h>
+#include <minecpp/math/Math.h>
 #include <minecpp/math/Rotation.h>
 #include <spdlog/spdlog.h>
 
@@ -38,26 +40,30 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    if (m_is_detached)
       return;// cannot set the position while the entity is detached
 
-   const auto prev_logical_position = this->logical_position();
-   const auto distance              = (position - prev_logical_position).length();
+   const auto old_logical_position = this->logical_position();
+   const auto distance             = (position - old_logical_position).length();
    if (distance < 0.1) {
       // just apply position
+      this->set_is_on_ground(world, entity, is_on_ground);
       m_position = position;
       return;
    }
 
-   this->on_position_change.publish(world, entity, prev_logical_position, position);
+   if (position.y() < -16.0) {
+      world.apply_damage_or_kill_entity(entity.id(), game::Damage{
+                                                             .amount        = 100.0f,
+                                                             .source        = game::DamageSource::VoidDamage,
+                                                             .target_entity = entity.id(),
+                                                     });
+      return;
+   }
+
+   auto movement = this->set_logical_position(world, entity.id(), position);
 
    m_is_on_ground = is_on_ground;
    m_position     = position;
 
-   auto movement = (m_position * 4096.0).cast<int64_t>() - m_tracked_position.position;
-   if (movement == math::Vector3l{0, 0, 0})
-      return;
-
-   m_tracked_position.position += movement;
-   world.entity_system().move_spatial_entity(entity.id(), m_extent, prev_logical_position,
-                                             this->logical_position());
+   this->on_position_change.publish(world, entity, old_logical_position, position);
 
    math::Rotation rotation{};
    if (entity.has_component<Rotation>()) {
@@ -96,7 +102,7 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    for (auto entity_id : intersecting_entities) {
       if (entity_id == entity.id())
          continue;
-      this->m_entities_intersecting_with.insert(entity_id);
+      m_entities_intersecting_with.insert(entity_id);
    }
 }
 
@@ -124,7 +130,7 @@ bool Location::is_on_ground() const
    return m_is_on_ground;
 }
 
-void Location::set_is_on_ground(game::IDispatcher &dispatcher, game::Entity &entity, const bool is_on_ground)
+void Location::set_is_on_ground(game::IWorld &world, game::Entity &entity, const bool is_on_ground)
 {
    if (m_is_on_ground == is_on_ground)
       return;
@@ -136,78 +142,112 @@ void Location::set_is_on_ground(game::IDispatcher &dispatcher, game::Entity &ent
       rotation = entity.component<Rotation>().rotation();
    }
 
-   dispatcher.teleport_entity(entity.id(), m_position, rotation, is_on_ground);
+   world.dispatcher().teleport_entity(entity.id(), m_position, rotation, is_on_ground);
+
+   if (is_on_ground) {
+      on_hit_ground.publish(world, entity, m_position);
+   }
+}
+
+math::Vector3l Location::set_logical_position(game::IWorld &world, game::EntityId entity_id,
+                                              const math::Vector3 &position)
+{
+   std::lock_guard lk{m_mutex};
+   auto old_logical_position = this->logical_position();
+
+   auto movement = (position * 4096.0).cast<int64_t>() - m_tracked_position.position;
+   m_tracked_position.position += movement;
+
+   auto new_logical_position = this->logical_position();
+   world.entity_system().move_spatial_entity(entity_id, m_extent, old_logical_position, new_logical_position);
+
+   return movement;
+}
+
+void Location::teleport_player(game::IWorld &world, game::Entity &entity, const math::Vector3 &position)
+{
+   assert(entity.has_component<Player>());
+   assert(entity.has_component<Rotation>());
+   assert(entity.has_component<Streamer>());
+
+   auto player_id = entity.component<Player>().id();
+
+   this->set_position(world, entity, position, false);
+   world.dispatcher().synchronise_player_position_and_rotation(player_id, position,
+                                                               entity.component<Rotation>().rotation());
+   entity.component<Streamer>().send_all_visible_chunks(world, player_id, position);
 }
 
 Rotation::Rotation(float yaw, float pitch) :
-    m_yaw(yaw),
-    m_pitch(pitch)
+    m_rotation{yaw, pitch}
+{
+}
+
+Rotation::Rotation(const math::Rotation &rotation) :
+    m_rotation(rotation)
 {
 }
 
 void Rotation::serialize_to_proto(proto::entity::v1::Entity *entity) const
 {
-   entity->mutable_rotation()->set_yaw(math::radians_to_degrees(this->m_yaw));
-   entity->mutable_rotation()->set_pitch(math::radians_to_degrees(this->m_pitch));
+   *entity->mutable_rotation() = m_rotation.to_proto();
 }
 
 void Rotation::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
 {
-   entity->mutable_rotation()->set_yaw(math::radians_to_degrees(this->m_yaw));
-   entity->mutable_rotation()->set_pitch(math::radians_to_degrees(this->m_pitch));
+   *entity->mutable_rotation() = m_rotation.to_proto();
 }
 
 math::Degrees Rotation::yaw_degrees() const
 {
-   return math::radians_to_degrees(m_yaw);
+   return math::radians_to_degrees(m_rotation.yaw);
 }
 
 math::Degrees Rotation::pitch_degrees() const
 {
-   return math::radians_to_degrees(m_pitch);
+   return math::radians_to_degrees(m_rotation.pitch);
 }
 
 void Rotation::set_yaw_degrees(math::Degrees yaw)
 {
-   m_yaw = math::degrees_to_radians(yaw);
+   this->set_yaw(math::degrees_to_radians(yaw));
 }
 
 void Rotation::set_pitch_degrees(math::Degrees pitch)
 {
-   m_pitch = math::degrees_to_radians(pitch);
+   this->set_pitch(math::degrees_to_radians(pitch));
 }
 
 math::Rotation Rotation::rotation() const
 {
-   return {m_yaw, m_pitch};
+   return m_rotation;
 }
 
 math::Radians Rotation::yaw() const
 {
-   return m_yaw;
+   return m_rotation.yaw;
 }
 
 math::Radians Rotation::pitch() const
 {
-   return m_pitch;
+   return m_rotation.pitch;
 }
 
 void Rotation::set_yaw(math::Radians yaw)
 {
-   m_yaw = yaw;
+   m_rotation.yaw = math::fmod(yaw, 2 * math::g_pi);
 }
 
 void Rotation::set_pitch(math::Radians pitch)
 {
-   m_pitch = pitch;
+   m_rotation.pitch = math::fmod(pitch, 2 * math::g_pi);
 }
 
-void Rotation::set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position, math::Radians yaw,
-                            math::Radians pitch)
+void Rotation::set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position,
+                            const math::Rotation &rotation)
 {
-   m_yaw   = yaw;
-   m_pitch = pitch;
-   dispatcher.entity_look(m_entity_id, position, {this->yaw_degrees(), this->pitch_degrees()});
+   m_rotation = rotation;
+   dispatcher.entity_look(m_entity_id, position, rotation);
 }
 
 void Rotation::on_attached(game::Entity &entity)

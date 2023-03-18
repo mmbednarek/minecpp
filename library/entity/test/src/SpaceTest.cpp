@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Player.h>
+#include <minecpp/game/player/Id.h>
 
 using minecpp::entity::EntitySystem;
 
@@ -41,6 +41,9 @@ TEST(Entity, ProtoSerialize)
    EXPECT_EQ(proto_entity.position().x(), 4);
    EXPECT_EQ(proto_entity.position().y(), 5);
    EXPECT_EQ(proto_entity.position().z(), 6);
+
+   system.destroy_entity(entity.id());
+   system.apply_pending_kills();
 }
 
 TEST(Entity, ProtoPlayerSerialize)
@@ -58,4 +61,7 @@ TEST(Entity, ProtoPlayerSerialize)
    EXPECT_EQ(proto_entity.position().x(), 4);
    EXPECT_EQ(proto_entity.position().y(), 5);
    EXPECT_EQ(proto_entity.position().z(), 6);
+
+   system.destroy_entity(entity.id());
+   system.apply_pending_kills();
 }

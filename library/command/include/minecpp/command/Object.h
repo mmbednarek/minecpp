@@ -231,7 +231,12 @@ struct BlockPositionObject final : public Object
    game::BlockPosition value;
 
    explicit BlockPositionObject(game::BlockPosition position) :
-       value(position)
+       value{position}
+   {
+   }
+
+   BlockPositionObject(int x, int y, int z) :
+       value{x, y, z}
    {
    }
 
@@ -282,6 +287,12 @@ T *cast(const Object::Ptr &object)
       return nullptr;
    }
    return dynamic_cast<T *>(object.get());
+}
+
+template<typename TResult, typename... TArgs>
+std::shared_ptr<typename WrapperFinder<TResult>::Type> make_obj(TArgs &&...args)
+{
+   return std::make_shared<typename WrapperFinder<TResult>::Type>(std::forward<TArgs>(args)...);
 }
 
 }// namespace minecpp::command

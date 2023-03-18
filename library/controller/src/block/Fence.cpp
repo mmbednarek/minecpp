@@ -27,8 +27,9 @@ bool is_fence_at_pos(game::IWorld &world, game::BlockPosition pos)
 
 }// namespace
 
-bool Fence::on_player_place_block(game::IWorld &world, game::PlayerId, game::BlockId block_id,
-                                  game::BlockPosition position, game::Face face)
+bool Fence::on_player_place_block(game::IWorld &world, game::PlayerId, int block_id,
+                                  game::BlockPosition position, game::Face face,
+                                  const math::Vector3f &crosshair_position)
 {
    auto pos = position.neighbour_at(face);
 
