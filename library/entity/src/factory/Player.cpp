@@ -1,10 +1,12 @@
 #pragma once
 #include <minecpp/entity/component/Abilities.h>
+#include <minecpp/entity/component/DealthScreen.h>
 #include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/Streamer.h>
+#include <minecpp/entity/component/Team.h>
 #include <minecpp/entity/component/Test.h>
 #include <minecpp/entity/component/Ticker.h>
 #include <minecpp/entity/component/Velocity.h>
@@ -27,10 +29,11 @@ game::Entity Player::create_entity(const math::Vector3 &position, game::IEntityS
    player_entity.add_component<component::Rotation>(0.0f, 0.0f);
    player_entity.add_component<component::Health>(20.0f);
    player_entity.add_component<component::Food>(20, 5.0f);
-   player_entity.add_component<component::Abilities>(Abilities{});
+   player_entity.add_component<component::Abilities>();
    player_entity.add_component<component::Streamer>(static_cast<int>(entity_system.view_distance()));
    player_entity.add_component<component::Inventory>();
    player_entity.add_component<component::Velocity>(math::Vector3{0, 0, 0});
+   player_entity.add_component<component::DeathScreen>();
 
    return player_entity;
 }

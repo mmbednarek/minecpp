@@ -1,6 +1,8 @@
 #include "Players.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/core.h>
+#include <minecpp/entity/Aliases.hpp>
+#include <minecpp/entity/component/Team.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Player.h>
 #include <minecpp/game/IWorld.hpp>
@@ -48,7 +50,7 @@ mb::result<game::Entity> PlayerManager::respawn_player(game::IWorld &world, cons
 }
 
 mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::IWorld & /*world*/,
-                                                                             game::PlayerId id)
+                                                                             game::PlayerId id) const
 {
    minecpp::nbt::player::v1::Player data;
 

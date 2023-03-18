@@ -384,6 +384,15 @@ struct EntityMetadataSlot
    [[nodiscard]] Writer serialize() const;
 };
 
+struct EntityMetadataByte
+{
+   std::uint32_t entity_id{};
+   std::uint8_t index{};
+   std::uint8_t value{};
+
+   [[nodiscard]] Writer serialize() const;
+};
+
 struct PickupItem
 {
    std::uint32_t collected_entity_id{};

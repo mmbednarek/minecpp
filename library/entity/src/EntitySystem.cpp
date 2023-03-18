@@ -1,10 +1,15 @@
 #include "EntitySpace.h"
+#include <minecpp/entity/component/DealthScreen.h>
 #include <minecpp/entity/component/Health.h>
+#include <minecpp/entity/component/Inventory.h>
 #include <minecpp/entity/component/ItemSlot.h>
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/Projectile.h>
+#include <minecpp/entity/component/Team.h>
 #include <minecpp/entity/component/Ticker.h>
+#include <minecpp/entity/component/Totem.h>
+#include <minecpp/entity/component/Trader.h>
 #include <minecpp/entity/component/UniqueId.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/game/Concepts.h>
@@ -21,6 +26,11 @@ EntitySystem::EntitySystem() :
    game::register_component<component::Rotation>();
    game::register_component<component::ItemSlot>();
    game::register_component<component::Projectile>();
+   game::register_component<component::Inventory>();
+   game::register_component<component::Totem>();
+   game::register_component<component::Trader>();
+   game::register_component<component::Team>();
+   game::register_component<component::DeathScreen>();
 }
 
 EntitySystem::~EntitySystem() = default;
@@ -82,18 +92,18 @@ void EntitySystem::tick_entities(game::IWorld &world, double delta_time)
 
 void EntitySystem::apply_pending_kills()
 {
+   assert(m_storage != nullptr);
+
    std::lock_guard lk{m_kill_mtx};
 
    for (auto entity_id : m_pending_kills) {
       if (not m_registry.valid(static_cast<entt::entity>(entity_id)))
          continue;
 
-      if (m_storage != nullptr) {
-         auto entity = this->entity(entity_id);
-         if (entity.has_component<component::Location>()) {
-            auto &location = entity.component<component::Location>();
-            m_storage->remove_entity(entity_id, location.logical_position(), location.extent());
-         }
+      auto entity = this->entity(entity_id);
+      if (entity.has_component<component::Location>()) {
+         auto &location = entity.component<component::Location>();
+         m_storage->remove_entity(entity_id, location.logical_position(), location.extent());
       }
 
       m_registry.destroy(static_cast<entt::entity>(entity_id));

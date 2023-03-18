@@ -6,31 +6,36 @@
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/util/String.h>
+#include <minecpp/world/BlockState.h>
+
+using minecpp::game::Face;
+using minecpp::game::HalfPlacement;
+using minecpp::world::BlockState;
 
 namespace minecpp::controller::block {
 
-bool Default::on_player_place_block(game::IWorld &world, game::PlayerId, game::BlockId block_id,
-                                    game::BlockPosition position, game::Face face)
+bool Default::on_player_place_block(game::IWorld &world, game::PlayerId, int block_id,
+                                    game::BlockPosition position, game::Face face,
+                                    const math::Vector3f & /*crosshair_position*/)
 {
    const auto neighbour_position = position.neighbour_at(face);
-   const auto source_block_type  = get_source_block_type(world, neighbour_position);
-   if (not source_block_type.has_value()) {
-      return false;
-   }
+
+   game::BlockStateId target_state_id{};
 
    auto block = repository::Block::the().get_by_id(block_id);
-
-   game::BlockStateId target_state{};
-
    if (block->has_state("waterlogged")) {
-      target_state = repository::encode_block_state_by_id(
-              block_id,
-              std::make_pair("waterlogged", util::to_string(*source_block_type == SourceBlockType::Water)));
+      const auto source_block_type = get_source_block_type(world, neighbour_position);
+      if (not source_block_type.has_value())
+         return false;
+
+      BlockState target_state(block_id, 0);
+      target_state.set("waterlogged", *source_block_type == SourceBlockType::Water);
+      target_state_id = target_state.block_state_id();
    } else {
-      target_state = repository::StateManager::the().block_base_state(block_id);
+      target_state_id = repository::StateManager::the().block_base_state(block_id);
    }
 
-   return world.set_block(neighbour_position, target_state).ok();
+   return world.set_block(neighbour_position, target_state_id).ok();
 }
 
 std::optional<game::BlockStateId> Default::on_neighbour_change(game::IWorld &, game::BlockStateId,
@@ -42,7 +47,7 @@ std::optional<game::BlockStateId> Default::on_neighbour_change(game::IWorld &, g
 
 bool Default::on_player_action(game::IWorld &world, game::PlayerId player_id,
                                game::BlockStateId block_state_id, game::BlockPosition position,
-                               game::Face face, math::Vector3 crosshair_position)
+                               game::Face face, const math::Vector3f &crosshair_position)
 {
    return false;
 }
@@ -103,4 +108,17 @@ bool Default::verify_source_is_air(game::IWorld &world, game::BlockPosition pos)
    return get_source_block_type(world, pos) == SourceBlockType::Air;
 }
 
+HalfPlacement Default::deduce_half_placement(Face face, float y)
+{
+   if (face == Face::Bottom)
+      return HalfPlacement::Top;
+   if (face == Face::Top)
+      return HalfPlacement::Bottom;
+   if (y > 0.5f)
+      return HalfPlacement::Top;
+   return HalfPlacement::Bottom;
+}
+
 }// namespace minecpp::controller::block
+
+// namespace minecpp::controller::block

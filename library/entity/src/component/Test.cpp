@@ -7,15 +7,14 @@ namespace minecpp::entity::component {
 
 void Test::on_attached(game::Entity &entity)
 {
-   if (entity.has_component<Location>()) {
-      entt::sink sink{entity.component<Location>().on_position_change};
-      sink.connect<&Test::on_position_change>(this);
-   }
+   assert(entity.has_component<Location>());
+   assert(entity.has_component<Ticker>());
 
-   if (entity.has_component<Ticker>()) {
-      entt::sink sink{entity.component<Ticker>().on_tick};
-      sink.connect<&Test::tick>(this);
-   }
+   auto &location = entity.component<Location>();
+   location.on_position_change.connect_to<&Test::on_position_change>(m_position_change_sink, this);
+
+   auto &ticker = entity.component<Ticker>();
+   ticker.on_tick.connect_to<&Test::tick>(m_tick_sink, this);
 }
 
 void Test::tick(game::IWorld & /*world*/, game::Entity &entity, double delta_time)

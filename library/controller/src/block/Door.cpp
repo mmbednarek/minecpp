@@ -21,7 +21,7 @@ static Side find_side(IWorld &world, BlockPosition upper, BlockPosition lower, D
                       BlockId door_id);
 
 bool Door::on_player_place_block(IWorld &world, PlayerId player_id, BlockId block_id, BlockPosition position,
-                                 Face face)
+                                 Face face, const math::Vector3f &crosshair_position)
 {
    auto lower_pos = position.neighbour_at(face);
    auto upper_pos = lower_pos.neighbour_at(Face::Top);
@@ -37,7 +37,7 @@ bool Door::on_player_place_block(IWorld &world, PlayerId player_id, BlockId bloc
 
    auto hinge_side = find_side(world, upper_pos, lower_pos, *player_direction, block_id);
    if (hinge_side == Side::Right)
-      door_direction = game::opposite_direction(door_direction);
+      door_direction = door_direction.opposite();
 
    BlockState lower_state{block_id, 0};
    lower_state.set<Half>("half", Half::Lower);
@@ -80,7 +80,8 @@ std::optional<BlockStateId> Door::on_neighbour_change(IWorld & /*world*/, BlockS
 }
 
 bool Door::on_player_action(IWorld &world, PlayerId /*player_id*/, BlockStateId block_state_id,
-                            BlockPosition position, Face /*face*/, math::Vector3 /*crosshair_position*/)
+                            BlockPosition position, Face /*face*/,
+                            const math::Vector3f /*crosshair_position*/ &)
 {
    BlockState state{block_state_id};
    auto open = state.get<bool>("open");

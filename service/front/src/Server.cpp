@@ -7,6 +7,10 @@
 
 namespace minecpp::service::front {
 
+constexpr auto g_protocol_version = 761;
+constexpr auto g_disconnect_message =
+        R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " invalid protocol version"}], "text": ""})";
+
 Server::Server(boost::asio::io_context &ctx, mb::u16 port, Protocol::Handler *play, Protocol::Handler *status,
                Protocol::Handler *login) :
     m_acceptor(ctx, tcp::endpoint(tcp::v4(), port)),
@@ -68,17 +72,20 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
                                protocol_version, host, port, static_cast<int>(request_state));
 
                  if (request_state != Protocol::Login && request_state != Protocol::Status) {
-                    delete buff;
                     return;
                  }
 
-                 // TODO: Mutex here ??
-                 conn->set_state(request_state);
-                 conn->m_id = m_top_connection;
-                 m_connections.emplace(m_top_connection, conn);
-                 ++m_top_connection;
+                 this->add_connection(conn, request_state);
 
-                 async_read_packet(conn, *m_handlers[request_state]);
+                 if (request_state == Protocol::Login && protocol_version != g_protocol_version) {
+                    network::message::Writer msg_disconnect;
+                    msg_disconnect.write_byte(0);
+                    msg_disconnect.write_string(g_disconnect_message);
+                    conn->send_and_disconnect(conn, msg_disconnect);
+                    return;
+                 } else {
+                    async_read_packet(conn, *m_handlers[request_state]);
+                 }
               });
    });
 }
@@ -132,6 +139,16 @@ std::shared_ptr<Connection> Server::connection_by_player_id(game::PlayerId playe
    }
 
    return connection_it->second;
+}
+
+void Server::add_connection(ConnectionPtr connection, Protocol::State state)
+{
+   std::lock_guard lk{m_connection_add_mutex};
+
+   connection->set_state(state);
+   connection->m_id = m_top_connection;
+   m_connections.emplace(m_top_connection, std::move(connection));
+   ++m_top_connection;
 }
 
 }// namespace minecpp::service::front

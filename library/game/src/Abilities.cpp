@@ -1,6 +1,6 @@
-#include <minecpp/entity/Abilities.h>
+#include <minecpp/game/Abilities.h>
 
-namespace minecpp::entity {
+namespace minecpp::game {
 
 Abilities Abilities::from_proto(const proto::entity::v1::Abilities &abilities)
 {
@@ -28,4 +28,4 @@ minecpp::proto::entity::v1::Abilities Abilities::to_proto() const
    return abilities;
 }
 
-}// namespace minecpp::entity
+}// namespace minecpp::game

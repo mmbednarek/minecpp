@@ -19,4 +19,22 @@ bool RootItem::has_controller_for(game::ItemId item_id) const
 {
    return m_controllers.contains(item_id);
 }
+
+void RootItem::on_interact(game::IWorld &world, game::ItemId item_id, game::InteractionType interaction_type,
+                           game::EntityId player_entity_id, game::EntityId interaction_entity_id,
+                           const math::Vector3f &position, bool is_offhand)
+{
+   if (this->has_controller_for(item_id)) {
+      this->controller(item_id).on_interact(world, item_id, interaction_type, player_entity_id,
+                                            interaction_entity_id, position, is_offhand);
+   }
+}
+
+void RootItem::on_released_item(game::IWorld &world, game::ItemId item_id, game::EntityId player_entity_id)
+{
+   if (this->has_controller_for(item_id)) {
+      this->controller(item_id).on_released_item(world, item_id, player_entity_id);
+   }
+}
+
 }// namespace minecpp::controller

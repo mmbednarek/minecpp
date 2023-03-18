@@ -4,6 +4,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <minecpp/chat/Chat.h>
+#include <minecpp/game/Abilities.h>
 #include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
 #include <span>
@@ -24,9 +25,7 @@ class IDispatcher
    virtual void spawn_entity(EntityId entity_id, const math::Vector3 &position)                          = 0;
    virtual void spawn_entity_for_player(PlayerId player_id, EntityId entity_id)                          = 0;
    virtual void entity_move(EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
-                            const math::Rotation &rotation, bool is_on_ground)                                              = 0;
-   virtual void player_look(PlayerId player, EntityId entity_id, const math::Vector3 &position,
-                            const math::Rotation &rotation)                                              = 0;
+                            const math::Rotation &rotation, bool is_on_ground)                           = 0;
    virtual void entity_look(EntityId entity_id, const math::Vector3 &position,
                             const math::Rotation &rotation)                                              = 0;
    virtual void send_entities(PlayerId player_id, std::span<EntityId> entities)                          = 0;
@@ -63,6 +62,7 @@ class IDispatcher
    virtual void respawn_player(PlayerId player_id)                                                       = 0;
    virtual void teleport_entity(EntityId entity_id, const math::Vector3 &position,
                                 const math::Rotation &rotation, bool is_on_ground)                       = 0;
+   virtual void set_abilities(PlayerId player_id, const game::Abilities &abilities)                      = 0;
 };
 
 }// namespace minecpp::game

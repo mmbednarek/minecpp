@@ -1,7 +1,6 @@
 #pragma once
 #include "BaseVector.h"
 #include "ProtoTypes.h"
-#include "Rotation.h"
 #include <fmt/format.h>
 
 namespace minecpp::math {
@@ -22,23 +21,9 @@ class BaseVector<TValue, 3>
       return {x(), z()};
    }
 
-   BaseVector<TValue, 3> normalize() const
-   {
-      const auto len = this->length();
-      if (std::abs(len) < 0.00000001)
-         return {0, 0, 0};
-      return this->transform([l = len](TValue value) { return value / l; });
-   }
-
    [[nodiscard]] static SelfType from_proto(const ProtoType &proto_vec)
    {
       return {proto_vec.x(), proto_vec.y(), proto_vec.z()};
-   }
-
-   [[nodiscard]] static SelfType from_yaw_and_pitch(Radians yaw, Radians pitch)
-   {
-      return {static_cast<ValueType>(-std::sin(yaw)), static_cast<ValueType>(-std::sin(pitch)),
-              static_cast<ValueType>(std::cos(yaw))};
    }
 
    [[nodiscard]] bool is_correct() const
@@ -70,6 +55,24 @@ template<>
 struct fmt::formatter<minecpp::math::Vector3>
 {
    using Self = minecpp::math::Vector3;
+
+   template<typename ParseContext>
+   constexpr auto parse(ParseContext &ctx)
+   {
+      return ctx.begin();
+   }
+
+   template<typename FormatContext>
+   auto format(const Self &s, FormatContext &ctx)
+   {
+      return format_to(ctx.out(), "{}, {}, {}", s.x(), s.y(), s.z());
+   }
+};
+
+template<>
+struct fmt::formatter<minecpp::math::Vector3f>
+{
+   using Self = minecpp::math::Vector3f;
 
    template<typename ParseContext>
    constexpr auto parse(ParseContext &ctx)

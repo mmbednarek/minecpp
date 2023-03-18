@@ -132,6 +132,9 @@ extern RespawnDefaultTypeInternal _Respawn_default_instance_;
 class SectionBlockLight;
 struct SectionBlockLightDefaultTypeInternal;
 extern SectionBlockLightDefaultTypeInternal _SectionBlockLight_default_instance_;
+class SetAbilities;
+struct SetAbilitiesDefaultTypeInternal;
+extern SetAbilitiesDefaultTypeInternal _SetAbilities_default_instance_;
 class SetCenterChunk;
 struct SetCenterChunkDefaultTypeInternal;
 extern SetCenterChunkDefaultTypeInternal _SetCenterChunk_default_instance_;
@@ -205,6 +208,7 @@ template<> ::minecpp::proto::event::clientbound::v1::RemoveEntity* Arena::Create
 template<> ::minecpp::proto::event::clientbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemovePlayer>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::Respawn* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Respawn>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SectionBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SectionBlockLight>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetAbilities* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetAbilities>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SetCenterChunk* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetCenterChunk>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SetEntityEquipment* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetEntityEquipment>(Arena*);
 template<> ::minecpp::proto::event::clientbound::v1::SetEntityVelocity* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetEntityVelocity>(Arena*);
@@ -6999,6 +7003,163 @@ class Respawn final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
+// -------------------------------------------------------------------
+
+class SetAbilities final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetAbilities) */ {
+ public:
+  inline SetAbilities() : SetAbilities(nullptr) {}
+  ~SetAbilities() override;
+  explicit PROTOBUF_CONSTEXPR SetAbilities(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetAbilities(const SetAbilities& from);
+  SetAbilities(SetAbilities&& from) noexcept
+    : SetAbilities() {
+    *this = ::std::move(from);
+  }
+
+  inline SetAbilities& operator=(const SetAbilities& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetAbilities& operator=(SetAbilities&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetAbilities& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetAbilities* internal_default_instance() {
+    return reinterpret_cast<const SetAbilities*>(
+               &_SetAbilities_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
+
+  friend void swap(SetAbilities& a, SetAbilities& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetAbilities* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetAbilities* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SetAbilities* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetAbilities>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetAbilities& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetAbilities& from) {
+    SetAbilities::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetAbilities* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetAbilities";
+  }
+  protected:
+  explicit SetAbilities(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAbilitiesFieldNumber = 1,
+  };
+  // .minecpp.proto.entity.v1.Abilities abilities = 1;
+  bool has_abilities() const;
+  private:
+  bool _internal_has_abilities() const;
+  public:
+  void clear_abilities();
+  const ::minecpp::proto::entity::v1::Abilities& abilities() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Abilities* release_abilities();
+  ::minecpp::proto::entity::v1::Abilities* mutable_abilities();
+  void set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities);
+  private:
+  const ::minecpp::proto::entity::v1::Abilities& _internal_abilities() const;
+  ::minecpp::proto::entity::v1::Abilities* _internal_mutable_abilities();
+  public:
+  void unsafe_arena_set_allocated_abilities(
+      ::minecpp::proto::entity::v1::Abilities* abilities);
+  ::minecpp::proto::entity::v1::Abilities* unsafe_arena_release_abilities();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetAbilities)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::entity::v1::Abilities* abilities_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+};
 // ===================================================================
 
 
@@ -11550,9 +11711,100 @@ inline void Respawn::set_allocated_death_position(::minecpp::proto::common::v1::
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_position)
 }
 
+// -------------------------------------------------------------------
+
+// SetAbilities
+
+// .minecpp.proto.entity.v1.Abilities abilities = 1;
+inline bool SetAbilities::_internal_has_abilities() const {
+  return this != internal_default_instance() && _impl_.abilities_ != nullptr;
+}
+inline bool SetAbilities::has_abilities() const {
+  return _internal_has_abilities();
+}
+inline const ::minecpp::proto::entity::v1::Abilities& SetAbilities::_internal_abilities() const {
+  const ::minecpp::proto::entity::v1::Abilities* p = _impl_.abilities_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Abilities&>(
+      ::minecpp::proto::entity::v1::_Abilities_default_instance_);
+}
+inline const ::minecpp::proto::entity::v1::Abilities& SetAbilities::abilities() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+  return _internal_abilities();
+}
+inline void SetAbilities::unsafe_arena_set_allocated_abilities(
+    ::minecpp::proto::entity::v1::Abilities* abilities) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  _impl_.abilities_ = abilities;
+  if (abilities) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+}
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::release_abilities() {
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::unsafe_arena_release_abilities() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
+  return temp;
+}
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::_internal_mutable_abilities() {
+  
+  if (_impl_.abilities_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(GetArenaForAllocation());
+    _impl_.abilities_ = p;
+  }
+  return _impl_.abilities_;
+}
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::mutable_abilities() {
+  ::minecpp::proto::entity::v1::Abilities* _msg = _internal_mutable_abilities();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+  return _msg;
+}
+inline void SetAbilities::set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  if (abilities) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(abilities));
+    if (message_arena != submessage_arena) {
+      abilities = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, abilities, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.abilities_ = abilities;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

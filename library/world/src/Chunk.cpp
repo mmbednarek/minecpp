@@ -91,7 +91,7 @@ mb::result<game::BlockStateId> Chunk::get_block(const game::BlockPosition &posit
 
    auto it_section = m_sections.find(section_id);
    if (it_section == m_sections.end())
-      return mb::error("section is empty");
+      return DEFAULT_BLOCK_STATE(Air);
 
    return it_section->second.get_block(position);
 }

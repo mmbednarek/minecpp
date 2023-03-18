@@ -1,10 +1,10 @@
 #include <algorithm>
-#include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/component/Streamer.h>
 #include <minecpp/entity/component/Ticker.h>
 #include <minecpp/game/Game.h>
 #include <minecpp/math/Vector2.h>
+#include <spdlog/spdlog.h>
 
 namespace {
 
@@ -30,21 +30,21 @@ Streamer::Streamer(int view_distance) :
 
 void Streamer::on_attached(game::Entity &entity)
 {
-   if (entity.has_component<Location>()) {
-      auto &location        = entity.component<Location>();
-      m_last_chunk_position = game::ChunkPosition::from_position(location.position());
+   assert(entity.has_component<Location>());
+   assert(entity.has_component<Ticker>());
 
-      entt::sink on_pos_sink{location.on_position_change};
-      on_pos_sink.connect<&Streamer::on_position_change>(this);
-   }
-   if (entity.has_component<Ticker>()) {
-      entt::sink sink{entity.component<Ticker>().on_tick};
-      sink.connect<&Streamer::tick>(this);
-   }
+   auto &location = entity.component<Location>();
+   location.on_position_change.connect_to<&Streamer::on_position_change>(m_position_change_sink, this);
+
+   auto &ticker = entity.component<Ticker>();
+   ticker.on_tick.connect_to<&Streamer::tick>(m_tick_sink, this);
 }
 
-mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world, game::PlayerId player_id)
+mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world, game::PlayerId player_id,
+                                                        const math::Vector3 &position)
 {
+   m_last_chunk_position = game::ChunkPosition::from_position(position);
+
    std::vector<game::ChunkPosition> chunks_to_load;
 
    for (auto z{-m_view_distance}; z < m_view_distance; ++z) {
@@ -79,9 +79,8 @@ mb::result<mb::empty> Streamer::send_all_visible_chunks(game::IWorld &world, gam
 }
 
 void Streamer::on_position_change(game::IWorld &world, game::Entity &entity,
-                                  const math::Vector3 &old_position, const math::Vector3 &new_position)
+                                  const math::Vector3 & /*old_position*/, const math::Vector3 &new_position)
 {
-   std::lock_guard<std::mutex> lock(m_mutex);
 
    if (not entity.has_component<Player>())
       return;
@@ -92,30 +91,33 @@ void Streamer::on_position_change(game::IWorld &world, game::Entity &entity,
 
    std::vector<game::ChunkPosition> chunks_to_free;// TODO: pre alloc
 
-   for (int z = -m_view_distance - 1; z < m_view_distance + 1; ++z) {
-      for (int x = -m_view_distance - 1; x < m_view_distance + 1; ++x) {
-         math::Vector2i offset{x, z};
-         if (offset.transform(pow2).sum() > m_view_distance_squared)
-            continue;
+   {
+      std::lock_guard<std::mutex> lock(m_mutex);
+      for (int z = -m_view_distance - 1; z < m_view_distance + 1; ++z) {
+         for (int x = -m_view_distance - 1; x < m_view_distance + 1; ++x) {
+            math::Vector2i offset{x, z};
+            if (offset.transform(pow2).sum() > m_view_distance_squared)
+               continue;
 
-         auto next_chunk_pos_off = next_chunk_pos.position + offset;
-         auto last_chunk_pos_off = m_last_chunk_position.position + offset;
+            auto next_chunk_pos_off = next_chunk_pos.position + offset;
+            auto last_chunk_pos_off = m_last_chunk_position.position + offset;
 
-         auto next_off_to_last = distance_squared(next_chunk_pos_off, m_last_chunk_position.position);
-         auto last_off_to_next = distance_squared(last_chunk_pos_off, next_chunk_pos.position);
+            auto next_off_to_last = distance_squared(next_chunk_pos_off, m_last_chunk_position.position);
+            auto last_off_to_next = distance_squared(last_chunk_pos_off, next_chunk_pos.position);
 
-         if (next_off_to_last >= m_view_distance_squared) {
-            // new chunks to load
-            m_chunks_to_load.emplace_back(next_chunk_pos_off);
-         }
-         if (last_off_to_next >= m_view_distance_squared) {
-            // chunks to free
-            chunks_to_free.emplace_back(last_chunk_pos_off);
+            if (next_off_to_last >= m_view_distance_squared) {
+               // new chunks to load
+               m_chunks_to_load.emplace_back(next_chunk_pos_off);
+            }
+            if (last_off_to_next >= m_view_distance_squared) {
+               // chunks to free
+               chunks_to_free.emplace_back(last_chunk_pos_off);
+            }
          }
       }
-   }
 
-   m_last_chunk_position = next_chunk_pos;
+      m_last_chunk_position = next_chunk_pos;
+   }
 
    auto &player   = entity.component<Player>();
    auto player_id = player.id();
@@ -131,12 +133,17 @@ void Streamer::on_position_change(game::IWorld &world, game::Entity &entity,
    }
 
    if (!m_chunks_to_load.empty()) {
+      std::lock_guard<std::mutex> lock(m_mutex);
+
       // sort so chunks closer to the player would load first
       std::sort(m_chunks_to_load.begin(), m_chunks_to_load.end(),
                 [next_chunk_pos](const game::ChunkPosition &lhs, const game::ChunkPosition &rhs) {
                    return distance_squared(next_chunk_pos.position, lhs.position) <
                           distance_squared(next_chunk_pos.position, rhs.position);
                 });
+
+      spdlog::debug("chunks to load: {}", m_chunks_to_load.size());
+
       if (auto res = world.add_refs(player_id, m_chunks_to_load); !res.ok()) {
          return;
       }
@@ -154,7 +161,7 @@ void Streamer::tick(game::IWorld &world, game::Entity &entity, double delta_time
       return;
 
    m_tick_sum += delta_time;
-   if (m_tick_sum > 1.0) {
+   if (m_tick_sum > 0.5) {
       m_tick_sum = 0.0;
       std::lock_guard<std::mutex> lock(m_mutex);
       const auto chunk_pos = m_chunks_to_load.front();

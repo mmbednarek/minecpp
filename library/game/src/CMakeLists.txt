@@ -3,12 +3,15 @@
 set(MINECPP_GAME_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game)
 target_sources(minecpp_game PUBLIC
         # Source files
+        ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Rules.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World.cpp
 
         # Header files
+        ${MINECPP_GAME_INCLUDE_DIR}/Abilities.h
         ${MINECPP_GAME_INCLUDE_DIR}/Concepts.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Delegate.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Entity.h
         ${MINECPP_GAME_INCLUDE_DIR}/Entt.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h
@@ -22,6 +25,7 @@ target_sources(minecpp_game PUBLIC
         ${MINECPP_GAME_INCLUDE_DIR}/Mode.h
         ${MINECPP_GAME_INCLUDE_DIR}/Rules.h
         ${MINECPP_GAME_INCLUDE_DIR}/State.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Team.h
 )
 
 # Subdirectories

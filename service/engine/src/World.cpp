@@ -4,6 +4,7 @@
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
 #include <minecpp/entity/Aliases.hpp>
+#include <minecpp/entity/component/Health.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Item.h>
@@ -14,6 +15,8 @@
 #include <utility>
 
 using minecpp::game::Face;
+using minecpp::service::engine::job::ChangeBlock;
+using minecpp::service::engine::job::ChunkIsComplete;
 
 namespace minecpp::service::engine {
 
@@ -89,9 +92,8 @@ mb::result<int> World::height_at(int x, int z)
 
 mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
 {
-   m_job_system.when<job::ChunkIsComplete>(m_chunk_system, pos.chunk_position())
-           .run_job<job::ChangeBlock>(m_entity_system, m_dispatcher, m_light_system, m_chunk_system, pos,
-                                      state);
+   m_job_system.when<ChunkIsComplete>(m_chunk_system, pos.chunk_position())
+           .run_job<ChangeBlock>(*this, m_chunk_system, pos, state);
    m_dispatcher.update_block(pos, state);
    return mb::ok;
 }
@@ -241,6 +243,17 @@ void World::destroy_block(const game::BlockPosition &position)
 
    auto item_position = position.to_vec3() + math::Vector3{0.5, 0.75, 0.5};
    this->spawn<ItemFactory>(item_position, game::ItemSlot{*item_id, 1}, m_general_purpose_random);
+}
+
+void World::apply_damage_or_kill_entity(game::EntityId id, const game::Damage &damage)
+{
+   auto entity = m_entity_system.entity(id);
+   if (not entity.has_component<HealthComponent>()) {
+      this->kill_entity(id);
+      return;
+   }
+
+   entity.component<HealthComponent>().apply_damage(*this, damage);
 }
 
 }// namespace minecpp::service::engine

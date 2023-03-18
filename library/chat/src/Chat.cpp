@@ -24,22 +24,30 @@ std::string format_chat_message(std::string_view player_name, std::string_view m
 std::string format_left_message(std::string_view player_name)
 {
    using format::Color;
-   return format::Builder().text(Color::Yellow, fmt::format("{} left the game", player_name)).to_string();
+   return format::Builder()
+           .bold(Color::White, "[Info] ")
+           .text(Color::Yellow, fmt::format("{} left the game", player_name))
+           .to_string();
 }
 
 std::string format_join_message(std::string_view player_name)
 {
    using format::Color;
-   return format::Builder().text(Color::Yellow, fmt::format("{} joined the game", player_name)).to_string();
+   return format::Builder()
+           .bold(Color::White, "[Info] ")
+           .text(Color::Yellow, fmt::format("{} joined the game", player_name))
+           .to_string();
 }
 
 std::string format_warning_unknown_op_code(int code)
 {
    using format::Color;
    return format::Builder()
-           .text(Color::Yellow, "WARN ")
-           .text("unknown serverbound message with op code ")
-           .text(Color::Yellow, fmt::format("{:#02x}", code))
+           .bold(Color::White, "[Warning] ")
+           .bold(Color::Yellow, "TCP Error: ")
+           .text(Color::Yellow, "No handler for incoming message ")
+           .text(Color::White, "OP_Code=")
+           .bold(Color::White, fmt::format("{:02X}", code))
            .to_string();
 }
 

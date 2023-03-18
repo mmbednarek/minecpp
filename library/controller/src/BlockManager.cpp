@@ -4,10 +4,12 @@
 namespace minecpp::controller {
 
 bool controller::BlockManager::on_player_place_block(game::IWorld &world, game::PlayerId player_id,
-                                                     game::BlockId block_id, game::BlockPosition position,
-                                                     game::Face face)
+                                                     int block_id, game::BlockPosition position,
+                                                     game::Face face,
+                                                     const math::Vector3f &crosshair_position)
 {
-   return controller(block_id).on_player_place_block(world, player_id, block_id, position, face);
+   return controller(block_id).on_player_place_block(world, player_id, block_id, position, face,
+                                                     crosshair_position);
 }
 
 std::optional<game::BlockStateId> BlockManager::on_neighbour_change(game::IWorld &world,
@@ -23,7 +25,7 @@ std::optional<game::BlockStateId> BlockManager::on_neighbour_change(game::IWorld
 
 bool BlockManager::on_player_action(game::IWorld &world, game::PlayerId player_id,
                                     game::BlockStateId block_state_id, game::BlockPosition position,
-                                    game::Face face, math::Vector3 crosshair_position)
+                                    game::Face face, const math::Vector3f &crosshair_position)
 {
    auto [block_id, block_state] = repository::StateManager::the().parse_block_id(block_state_id);
    return controller(block_id).on_player_action(world, player_id, block_state_id, position, face,

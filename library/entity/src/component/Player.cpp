@@ -172,4 +172,20 @@ const std::vector<game::EntityId> &Player::visible_entities() const
    return m_visible_entities;
 }
 
+void Player::begin_use_item()
+{
+   m_started_using_item = std::chrono::steady_clock::now();
+}
+
+std::chrono::steady_clock::duration Player::end_use_item()
+{
+   using namespace std::chrono_literals;
+   if (not m_started_using_item.has_value())
+      return 0s;
+
+   auto result = std::chrono::steady_clock::now() - *m_started_using_item;
+   m_started_using_item.reset();
+   return result;
+}
+
 }// namespace minecpp::entity::component

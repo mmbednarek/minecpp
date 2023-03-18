@@ -13,6 +13,8 @@ class Inventory
    void on_attached(game::Entity &entity);
 
    [[nodiscard]] bool add_item(game::IDispatcher &notifier, game::ItemId item, int count);
+   [[nodiscard]] mb::emptyres add_item_by_tag(game::IDispatcher &dispatcher, const std::string &name,
+                                              int count);
    [[nodiscard]] int take_item(game::IDispatcher &notifier, game::ItemId item, int count);
    bool take_from_slot(game::IDispatcher &notifier, game::SlotId id, int count);
    bool take_from_active_slot(game::IDispatcher &notifier, int count);
@@ -22,6 +24,7 @@ class Inventory
    void drop_active_item(game::IWorld &world, bool whole_stack);
    void drop_carried_item(game::IWorld &world, bool whole_stack);
    void set_carried_item(const game::ItemSlot &slot);
+   [[nodiscard]] int count_item(game::ItemId item) const;
 
    void set_slot(game::IDispatcher &notifier, game::SlotId id, const game::ItemSlot &slot);
    void set_active_item(game::IDispatcher &notifier, int slot);

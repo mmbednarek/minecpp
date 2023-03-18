@@ -5,30 +5,33 @@
 
 namespace minecpp::entity::component {
 
-void ItemSlot::on_attached(game::Entity &entity)
+ItemSlot::ItemSlot(game::ItemSlot slot) :
+    m_slot{slot}
 {
-   if (entity.has_component<Location>()) {
-      auto &location = entity.component<Location>();
-      entt::sink sink{location.on_begin_intersect};
-      sink.connect<&ItemSlot::on_begin_intersect>(this);
-   }
 }
 
-void ItemSlot::on_begin_intersect(game::IWorld &world, game::Entity &entity, game::Entity &other_entity)
+void ItemSlot::on_attached(game::Entity &entity)
 {
-   spdlog::info("entity {} intersecting with entity {}", entity.id(), other_entity.id());
+   assert(entity.has_component<Location>());
+
+   auto &location = entity.component<Location>();
+   location.on_begin_intersect.connect_to<&ItemSlot::on_begin_intersect>(m_begin_intersect_sink, this);
+}
+
+void ItemSlot::on_begin_intersect(game::IWorld &world, game::Entity &entity, game::Entity &other_entity) const
+{
    if (not other_entity.has_component<Inventory>())
       return;
 
    if (not other_entity.has_component<Location>())
       return;
 
-   auto &inv = other_entity.component<Inventory>();
-   if (not inv.add_item(world.dispatcher(), this->slot.item_id, this->slot.count))
+   auto &inventory = other_entity.component<Inventory>();
+   if (not inventory.add_item(world.dispatcher(), m_slot.item_id, m_slot.count))
       return;
 
    world.dispatcher().collect_item(entity.id(), other_entity.id(),
-                                   other_entity.component<Location>().position(), this->slot.count);
+                                   other_entity.component<Location>().position(), m_slot.count);
    world.kill_entity(entity.id());
 }
 
@@ -38,8 +41,8 @@ void ItemSlot::serialize_to_proto(proto::entity::v1::Entity *entity) const
 
    auto *metadata = entity->mutable_metadata()->Add();
    metadata->set_index(8);
-   metadata->mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(this->slot.item_id));
-   metadata->mutable_slot()->set_count(static_cast<uint32_t>(this->slot.count));
+   metadata->mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(m_slot.item_id));
+   metadata->mutable_slot()->set_count(static_cast<uint32_t>(m_slot.count));
 }
 
 }// namespace minecpp::entity::component

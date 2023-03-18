@@ -110,6 +110,15 @@ class BaseVector
       return std::sqrt(this->transform(+[](ValueType value) { return value * value; }).sum()); \
    }
 
+#define MCC_MATH_DECLARE_VEC_NORMALIZE_METHOD                                \
+   SelfType normalize() const                                                \
+   {                                                                         \
+      const auto len = this->length();                                       \
+      if (std::abs(len) < 0.00000001)                                        \
+         return {};                                                          \
+      return this->transform([l = len](TValue value) { return value / l; }); \
+   }
+
 
 #define MCC_MATH_DEFINE_VECTOR_TRAITS(count)                                \
    using ValueType             = TValue;                                    \
@@ -140,4 +149,5 @@ class BaseVector
    MCC_MATH_DECLARE_TRANSFORM_FUNC                                          \
    MCC_MATH_DECLARE_CAST_FUNC                                               \
    MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR                                      \
-   MCC_MATH_DECLARE_VEC_LENGTH_METHOD
+   MCC_MATH_DECLARE_VEC_LENGTH_METHOD                                       \
+   MCC_MATH_DECLARE_VEC_NORMALIZE_METHOD

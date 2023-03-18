@@ -2,6 +2,8 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/factory/Item.h>
+#include <minecpp/repository/Item.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::entity::component {
 
@@ -34,6 +36,7 @@ constexpr game::SlotId hotbar_index_to_slot_id(int hotbar_index)
 
 void Inventory::on_attached(game::Entity &entity)
 {
+   spdlog::info("inventory: called on attached for entity: {}", entity.id());
    m_entity_id = entity.id();
    if (entity.has_component<Player>()) {
       m_player_id = entity.component<Player>().id();
@@ -79,6 +82,8 @@ int Inventory::take_item(game::IDispatcher &notifier, game::ItemId item, int cou
          }
          return slot.item_id == item;
       });
+      if (it == m_slots.end())
+         break;
 
       auto taken = std::min(it->count, left_to_take);
       it->count -= taken;
@@ -178,12 +183,11 @@ void Inventory::drop_stack(game::IWorld &world, const game::ItemSlot &active_ite
    if (not entity.has_component<Rotation>())
       return;
 
-   auto velocity = math::Vector3::from_yaw_and_pitch(entity.component<Rotation>().yaw(),
-                                                     entity.component<Rotation>().pitch());
-   velocity.set_y(1.0);
 
-   const math::Vector3 offset{velocity.x(), 0.75, velocity.z()};
-   world.spawn<factory::Item>(entity.component<Location>().position() + offset, active_item, velocity * 0.2);
+   auto direction        = entity.component<Rotation>().rotation().vector3<double>();
+   auto initial_position = entity.component<Location>().position() + math::Vector3{0, 1.6, 0} + direction;
+
+   world.spawn<factory::Item>(initial_position, active_item, direction * 0.3);
 }
 
 void Inventory::set_carried_item(const game::ItemSlot &slot)
@@ -205,6 +209,31 @@ void Inventory::drop_carried_item(game::IWorld &world, bool whole_stack)
 
    this->drop_stack(world, {m_carried_item.item_id, 1});
    --m_carried_item.count;
+}
+
+mb::emptyres Inventory::add_item_by_tag(game::IDispatcher &dispatcher, const std::string &name, int count)
+{
+   auto id = repository::Item::the().lookup_id(name);
+   MB_VERIFY(id)
+
+   if (not this->add_item(dispatcher, *id, count))
+      return mb::error("inventory is full");
+
+   return mb::ok;
+}
+
+int Inventory::count_item(game::ItemId item) const
+{
+   int total = 0;
+
+   for (auto slot : m_slots) {
+      if (slot.item_id != item)
+         continue;
+
+      total += slot.count;
+   }
+
+   return total;
 }
 
 }// namespace minecpp::entity::component

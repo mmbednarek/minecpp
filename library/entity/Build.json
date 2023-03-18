@@ -8,6 +8,7 @@
       "minecpp_api_nbt",
       "minecpp_game",
       "minecpp_random",
+      "minecpp_repository",
       "minecpp_math",
       "minecpp_utils"
     ]

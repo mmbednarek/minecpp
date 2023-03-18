@@ -1,4 +1,6 @@
 #pragma once
+#include "Location.h"
+#include "Ticker.h"
 #include <minecpp/game/Entity.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 
@@ -17,6 +19,8 @@ class Test
 
  private:
    int m_position_change_count{};
+   Location::PositionChange::OptSink<Test> m_position_change_sink;
+   Ticker::Tick::OptSink<Test> m_tick_sink;
 };
 
 }// namespace minecpp::entity::component

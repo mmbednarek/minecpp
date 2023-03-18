@@ -11,7 +11,8 @@ class IBlockController
    virtual ~IBlockController() noexcept = default;
 
    virtual bool on_player_place_block(IWorld &world, PlayerId player_id, BlockId block_id,
-                                      BlockPosition position, Face face) = 0;
+                                      BlockPosition position, Face face,
+                                      const math::Vector3f &crosshair_position) = 0;
 
    virtual std::optional<BlockStateId> on_neighbour_change(IWorld &world, BlockStateId block_state_id,
                                                            BlockStateId neighbour_block_state_id,
@@ -26,7 +27,8 @@ class IBlockController
     * @return supress block placement
     */
    virtual bool on_player_action(IWorld &world, PlayerId player_id, BlockStateId block_state_id,
-                                 BlockPosition position, Face face, math::Vector3 crosshair_position) = 0;
+                                 BlockPosition position, Face face,
+                                 const math::Vector3f &crosshair_position) = 0;
 };
 
 }// namespace minecpp::game

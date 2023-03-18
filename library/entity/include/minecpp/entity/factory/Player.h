@@ -1,5 +1,6 @@
 #pragma once
 #include "../EntitySystem.h"
+#include <minecpp/game/Team.h>
 #include <minecpp/math/Vector3.h>
 
 namespace minecpp::entity::factory {

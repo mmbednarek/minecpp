@@ -2,16 +2,14 @@
 
 #include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Location.h>
+#include <minecpp/game/IEntitySystem.hpp>
 #include <minecpp/world/BlockState.h>
 
 namespace minecpp::service::engine::job {
 
-ChangeBlock::ChangeBlock(game::IEntitySystem &entity_system, game::IDispatcher &dispatcher,
-                         game::ILightSystem &light_system, world::IChunkSystem &chunk_system,
+ChangeBlock::ChangeBlock(game::IWorld &world, world::IChunkSystem &chunk_system,
                          const game::BlockPosition &position, game::BlockStateId target_state_id) :
-    m_entity_system(entity_system),
-    m_dispatcher(dispatcher),
-    m_light_system(light_system),
+    m_world(world),
     m_chunk_system(chunk_system),
     m_position(position),
     m_target_state_id(target_state_id)
@@ -41,10 +39,10 @@ void ChangeBlock::run()
     */
    auto reset_light = (target_state.solid_faces() - source_state.solid_faces()) != game::FaceMask::None;
    if (reset_light) {
-      m_light_system.reset_light(game::LightType::Block, m_position);
-      m_light_system.reset_light(game::LightType::Sky, m_position);
+      m_world.light_system().reset_light(game::LightType::Block, m_position);
+      m_world.light_system().reset_light(game::LightType::Sky, m_position);
    } else if (target_state.luminance() < source_state.luminance()) {
-      m_light_system.reset_light(game::LightType::Block, m_position);
+      m_world.light_system().reset_light(game::LightType::Block, m_position);
    }
 
    chunk->set_block(m_position, m_target_state_id);
@@ -61,27 +59,28 @@ void ChangeBlock::run()
            new_opaque_faces or (reset_light and target_state.solid_faces() != game::FaceMask::All);
 
    if (target_state.luminance() > source_state.luminance()) {
-      m_light_system.add_light_source(m_position, target_state.luminance());
+      m_world.light_system().add_light_source(m_position, target_state.luminance());
    } else if (recalculate_light) {
-      m_light_system.recalculate_light(game::LightType::Block, m_position, target_state.solid_faces());
+      m_world.light_system().recalculate_light(game::LightType::Block, m_position,
+                                               target_state.solid_faces());
    }
 
    if (recalculate_light) {
-      m_light_system.recalculate_light(game::LightType::Sky, m_position, target_state.solid_faces());
+      m_world.light_system().recalculate_light(game::LightType::Sky, m_position, target_state.solid_faces());
    }
 
    if (not target_state.does_block_movement()) {
-      auto above_position = m_position.neighbour_at(game::Face::Top).to_vec3();
-      auto entities_above = m_entity_system.list_entities_in(above_position - math::Vector3{1.5, 1.5, 1.5},
-                                                             above_position + math::Vector3{2.5, 2.5, 2.5});
+      const auto real_position = m_position.to_vec3();
+      auto entities_above      = m_world.entity_system().list_entities_intersecting_with(
+              real_position - math::Vector3{0.5, 0.5, 0.5}, real_position + math::Vector3{1.5, 1.5, 1.5});
 
       for (auto entity_id : entities_above) {
-         auto entity = m_entity_system.entity(entity_id);
+         auto entity = m_world.entity_system().entity(entity_id);
          if (not entity.has_component<LocationComponent>())
             continue;
 
          auto &location = entity.component<LocationComponent>();
-         location.set_is_on_ground(m_dispatcher, entity, false);
+         location.set_is_on_ground(m_world, entity, false);
       }
    }
 

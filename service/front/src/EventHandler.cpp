@@ -1,6 +1,6 @@
 #include "EventHandler.h"
 #include <boost/uuid/uuid_io.hpp>
-#include <minecpp/entity/Abilities.h>
+#include <minecpp/game/Abilities.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/network/message/Clientbound.h>
 #include <minecpp/repository/Repository.h>
@@ -42,8 +42,23 @@ void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &spawn,
            .yaw       = spawn.entity().rotation().yaw(),
            .pitch     = spawn.entity().rotation().pitch(),
    };
-   // FIXME: temporary hack to not send a Player.himself
-   send_message_excluding(spawn_player, player_id);
+
+   send_message(spawn_player, recipient_list);
+
+   for (const auto &equipment : spawn.entity().equipment()) {
+      if (equipment.item().count() == 0)
+         continue;
+
+      send_message(
+              network::message::SetEquipment{
+                      .entity_id = spawn.entity().entity_id(),
+                      .slot      = static_cast<uint8_t>(equipment.slot()),
+                      .present   = true,
+                      .item_id   = equipment.item().item_id().id(),
+                      .count     = static_cast<int>(equipment.item().count()),
+              },
+              recipient_list);
+   }
 }
 
 void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
@@ -71,14 +86,13 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
            .pitch     = pos.rotation().pitch(),
            .on_ground = true,
    };
+   send_message(entity_look, recipient_list);
+
    minecpp::network::message::EntityHeadLook entity_head_look{
            .entity_id = static_cast<int>(pos.entity_id()),
            .yaw       = pos.rotation().yaw(),
    };
-   // FIXME: temporary hack to not send a Player.himself
-   auto player_id = game::player::read_id_from_proto(pos.player_id());
-   send_message_excluding(entity_look, player_id);
-   send_message_excluding(entity_head_look, player_id);
+   send_message(entity_head_look, recipient_list);
 }
 
 void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg,
@@ -241,7 +255,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                          .locked     = false,
                  });
 
-      auto abilities = minecpp::entity::Abilities::from_proto(msg.abilities());
+      auto abilities = minecpp::game::Abilities::from_proto(msg.abilities());
 
       send(conn, PlayerAbilities{
                          .flags         = static_cast<mb::u8>(abilities.flags()),
@@ -360,6 +374,19 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
                             .yaw       = entity.rotation().yaw(),
                             .pitch     = entity.rotation().pitch(),
                     });
+
+         for (const auto &equipment : entity.equipment()) {
+            if (equipment.item().count() == 0)
+               continue;
+
+            send(conn, network::message::SetEquipment{
+                               .entity_id = entity.entity_id(),
+                               .slot      = static_cast<uint8_t>(equipment.slot()),
+                               .present   = true,
+                               .item_id   = equipment.item().item_id().id(),
+                               .count     = static_cast<int>(equipment.item().count()),
+                       });
+         }
       }
    }
 }
@@ -550,6 +577,16 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
                  .count     = static_cast<int>(meta.slot().count()),
          };
          send_message(slot, recipient_list);
+         continue;
+      }
+      if (meta.has_byte()) {
+         network::message::EntityMetadataByte byte_meta{
+                 .entity_id = entity.entity_id(),
+                 .index     = static_cast<uint8_t>(meta.index()),
+                 .value     = static_cast<uint8_t>(meta.byte()),
+         };
+         send_message(byte_meta, recipient_list);
+         continue;
       }
    }
 }
@@ -626,6 +663,25 @@ void EventHandler::handle_teleport_entity(const clientbound_v1::TeleportEntity &
                                                     .pitch        = msg.rotation().pitch(),
                                                     .is_on_ground = msg.is_on_ground()};
    send_message(teleport_entity, recipient_list);
+}
+
+void EventHandler::handle_set_abilities(const clientbound_v1::SetAbilities &msg,
+                                        const event::RecipientList &recipient_list)
+{
+   using minecpp::network::message::PlayerAbilityFlag;
+   uint8_t flags = 0;
+   flags |= msg.abilities().invulnerable() ? PlayerAbilityFlag::Invulnerable : 0;
+   flags |= msg.abilities().flying() ? PlayerAbilityFlag::IsFlying : 0;
+   flags |= msg.abilities().may_fly() ? PlayerAbilityFlag::AllowFlying : 0;
+   flags |= msg.abilities().may_build() ? PlayerAbilityFlag::CreativeMode : 0;
+
+   minecpp::network::message::PlayerAbilities player_abilities{
+           .flags         = flags,
+           .fly_speed     = msg.abilities().fly_speed(),
+           .field_of_view = msg.abilities().walk_speed(),
+   };
+
+   send_message(player_abilities, recipient_list);
 }
 
 }// namespace minecpp::service::front

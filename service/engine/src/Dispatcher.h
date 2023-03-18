@@ -1,5 +1,6 @@
 #pragma once
 #include "ApiHandler.h"
+#include "minecpp/game/Abilities.h"
 #include "minecpp/world/Chunk.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/IDispatcher.hpp>
@@ -41,8 +42,6 @@ class Dispatcher : public minecpp::game::IDispatcher
 
    void entity_move(game::EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
                     const math::Rotation &rotation, bool is_on_ground) override;
-   void player_look(game::PlayerId player_id, game::EntityId entity_id, const math::Vector3 &position,
-                    const math::Rotation &rotation) override;
    void entity_look(game::EntityId entity_id, const math::Vector3 &position,
                     const math::Rotation &rotation) override;
    void teleport_entity(game::EntityId entity_id, const math::Vector3 &position,
@@ -87,6 +86,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    void display_death_screen(game::PlayerId player_id, game::EntityId victim_entity_id,
                              game::EntityId killer_entity_id, const std::string &message) override;
    void respawn_player(game::PlayerId player_id) override;
+   void set_abilities(game::PlayerId player_id, const game::Abilities &abilities) override;
 
  private:
    void send_to_players_in_view_distance(const math::Vector3 &position,

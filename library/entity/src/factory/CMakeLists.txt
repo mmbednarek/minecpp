@@ -6,10 +6,14 @@ target_sources(minecpp_entity PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Arrow.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Item.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Player.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Totem.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Trader.cpp
 
         # Header files
         ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Arrow.h
         ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Item.h
         ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Player.h
+        ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Totem.h
+        ${MINECPP_ENTITY_FACTORY_INCLUDE_DIR}/Trader.h
 )
 

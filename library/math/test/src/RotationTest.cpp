@@ -1,23 +1,44 @@
 #include <gtest/gtest.h>
+#include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
+
+using minecpp::math::Rotation;
+using minecpp::math::Vector3;
+
+constexpr auto is_zero(float value)
+{
+   return std::abs(value) < 0.0001f;
+}
 
 TEST(MathTest, Rotation_VectorFromYaw)
 {
-   auto vec1 = minecpp::math::Vector3::from_yaw_and_pitch(0, 0);
-   EXPECT_EQ(vec1.x(), 0.0f);
-   EXPECT_EQ(vec1.z(), 1.0f);
+   auto vec1 = Rotation{0, 0}.vector3();
+   EXPECT_TRUE(is_zero(vec1.x()));
+   EXPECT_FLOAT_EQ(vec1.z(), 1.0f);
+   auto rot1 = Rotation::from_vector3(vec1);
+   EXPECT_TRUE(is_zero(rot1.yaw));
+   EXPECT_TRUE(is_zero(rot1.pitch));
 
-   auto vec2 = minecpp::math::Vector3::from_yaw_and_pitch(std::numbers::pi / 2.0, 0);
-   EXPECT_EQ(vec2.x(), -1);
-   EXPECT_LE(abs(vec2.z()), 0.00001f);
+   auto vec2 = Rotation{std::numbers::pi / 2.0, 0}.vector3();
+   EXPECT_FLOAT_EQ(vec2.x(), -1.0f);
+   EXPECT_TRUE(is_zero(vec2.z()));
+   auto rot2 = Rotation::from_vector3(vec2);
+   EXPECT_FLOAT_EQ(rot2.yaw, std::numbers::pi / 2.0);
+   EXPECT_TRUE(is_zero(rot2.pitch));
 
-   auto vec3 = minecpp::math::Vector3::from_yaw_and_pitch(std::numbers::pi, 0);
-   EXPECT_LE(abs(vec3.x()), 0.00001f);
-   EXPECT_EQ(vec3.z(), -1);
+   auto vec3 = Rotation{std::numbers::pi, 0}.vector3();
+   EXPECT_TRUE(is_zero(vec3.x()));
+   EXPECT_FLOAT_EQ(vec3.z(), -1.0f);
+   auto rot3 = Rotation::from_vector3(vec3);
+   EXPECT_FLOAT_EQ(rot3.yaw, std::numbers::pi);
+   EXPECT_TRUE(is_zero(rot3.pitch));
 
-   auto vec4 = minecpp::math::Vector3::from_yaw_and_pitch(3.0 * std::numbers::pi / 2.0, 0);
-   EXPECT_EQ(vec4.x(), 1);
-   EXPECT_LE(abs(vec4.z()), 0.00001f);
+   auto vec4 = Rotation{1.5 * std::numbers::pi, 0}.vector3();
+   EXPECT_FLOAT_EQ(vec4.x(), 1.0f);
+   EXPECT_TRUE(is_zero(vec4.z()));
+   auto rot4 = Rotation::from_vector3(vec4);
+   EXPECT_FLOAT_EQ(rot4.yaw, 1.5f * std::numbers::pi);
+   EXPECT_TRUE(is_zero(rot4.pitch));
 }
 
 TEST(MathTest, Rotation_RadiansDegTest)
