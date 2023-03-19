@@ -9,8 +9,8 @@
 
 namespace minecpp::repository {
 
-Block Block::g_instance;
-BlockState BlockState::g_instance;
+Block Block::s_instance;
+BlockState BlockState::s_instance;
 
 mb::emptyres load_repository_from_file(std::string_view filename)
 {
@@ -88,13 +88,15 @@ std::function<int(const game::State &)> make_compound_encoder(const nbt::Compoun
       case nbt::TagId::Int: return state.index_from_value(content.as<int>());
       default: break;
       }
+
+      return 0;
    };
 }
 
-int encode_block_by_tag(std::string_view tag)
+game::BlockStateId encode_block_by_tag(std::string_view tag)
 {
    auto block_id = repository::Block::the().find_id_by_tag(std::string(tag)).unwrap();
-   return static_cast<int>(repository::StateManager::the().block_base_state(static_cast<int>(block_id)));
+   return repository::StateManager::the().block_base_state(static_cast<int>(block_id));
 }
 
 std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateOffset block_state,
@@ -133,7 +135,7 @@ mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::s
    if (!in_file.is_open()) {
       return mb::error("could not open file");
    }
-   return std::move(minecpp::nbt::repository::v1::Registry::deserialize(in_file));
+   return minecpp::nbt::repository::v1::Registry::deserialize(in_file);
 }
 
 BlockIds &BlockIds::the()

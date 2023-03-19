@@ -12,25 +12,25 @@ void BlockEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void BlockEntry::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void BlockEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 BlockEntry BlockEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    BlockEntry res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Int:
-         res.__xx_put(name, r.read_int());
+         res.set_property(in_field_name, r.read_int());
          return;
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "Block") {
-            res.__xx_put(name, block::v1::Block::deserialize_no_header(r));
+         if (in_field_name == "Block") {
+            res.set_property(in_field_name, block::v1::Block::deserialize_no_header(r));
             return;
          }
          break;
@@ -61,25 +61,25 @@ void ItemEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void ItemEntry::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void ItemEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 ItemEntry ItemEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    ItemEntry res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Int:
-         res.__xx_put(name, r.read_int());
+         res.set_property(in_field_name, r.read_int());
          return;
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "Item") {
-            res.__xx_put(name, item::v1::Item::deserialize_no_header(r));
+         if (in_field_name == "Item") {
+            res.set_property(in_field_name, item::v1::Item::deserialize_no_header(r));
             return;
          }
          break;
@@ -108,22 +108,22 @@ void EnumPropertyEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void EnumPropertyEntry::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void EnumPropertyEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 EnumPropertyEntry EnumPropertyEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    EnumPropertyEntry res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "Property") {
-            res.__xx_put(name, block::v1::EnumProperty::deserialize_no_header(r));
+         if (in_field_name == "Property") {
+            res.set_property(in_field_name, block::v1::EnumProperty::deserialize_no_header(r));
             return;
          }
          break;
@@ -152,22 +152,22 @@ void IntPropertyEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void IntPropertyEntry::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void IntPropertyEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 IntPropertyEntry IntPropertyEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    IntPropertyEntry res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "Property") {
-            res.__xx_put(name, block::v1::IntProperty::deserialize_no_header(r));
+         if (in_field_name == "Property") {
+            res.set_property(in_field_name, block::v1::IntProperty::deserialize_no_header(r));
             return;
          }
          break;
@@ -196,22 +196,22 @@ void BoolPropertyEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void BoolPropertyEntry::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void BoolPropertyEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 BoolPropertyEntry BoolPropertyEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    BoolPropertyEntry res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "Property") {
-            res.__xx_put(name, block::v1::BoolProperty::deserialize_no_header(r));
+         if (in_field_name == "Property") {
+            res.set_property(in_field_name, block::v1::BoolProperty::deserialize_no_header(r));
             return;
          }
          break;
@@ -242,25 +242,25 @@ void BlockStateEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void BlockStateEntry::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void BlockStateEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 BlockStateEntry BlockStateEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    BlockStateEntry res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Int:
-         res.__xx_put(name, r.read_int());
+         res.set_property(in_field_name, r.read_int());
          return;
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "State") {
-            res.__xx_put(name, block::v1::BlockState::deserialize_no_header(r));
+         if (in_field_name == "State") {
+            res.set_property(in_field_name, block::v1::BlockState::deserialize_no_header(r));
             return;
          }
          break;
@@ -315,67 +315,67 @@ void Repository::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Repository::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void Repository::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 Repository Repository::deserialize_no_header(minecpp::nbt::Reader &r) {
    Repository res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
          if (list_info0.size > 0) {
             switch (list_info0.tagid) {
             case minecpp::nbt::TagId::Compound: {
-               if (name == "BlockStates") {
+               if (in_field_name == "BlockStates") {
                   std::vector<BlockStateEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return BlockStateEntry::deserialize_no_header(r);
                   });
-                  res.__xx_put(name, ls);
+                  res.set_property(in_field_name, ls);
                   return;
                }
-               if (name == "Blocks") {
+               if (in_field_name == "Blocks") {
                   std::vector<BlockEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return BlockEntry::deserialize_no_header(r);
                   });
-                  res.__xx_put(name, ls);
+                  res.set_property(in_field_name, ls);
                   return;
                }
-               if (name == "Items") {
+               if (in_field_name == "Items") {
                   std::vector<ItemEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return ItemEntry::deserialize_no_header(r);
                   });
-                  res.__xx_put(name, ls);
+                  res.set_property(in_field_name, ls);
                   return;
                }
-               if (name == "EnumProperties") {
+               if (in_field_name == "EnumProperties") {
                   std::vector<EnumPropertyEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return EnumPropertyEntry::deserialize_no_header(r);
                   });
-                  res.__xx_put(name, ls);
+                  res.set_property(in_field_name, ls);
                   return;
                }
-               if (name == "IntProperties") {
+               if (in_field_name == "IntProperties") {
                   std::vector<IntPropertyEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return IntPropertyEntry::deserialize_no_header(r);
                   });
-                  res.__xx_put(name, ls);
+                  res.set_property(in_field_name, ls);
                   return;
                }
-               if (name == "BoolProperties") {
+               if (in_field_name == "BoolProperties") {
                   std::vector<BoolPropertyEntry> ls(list_info0.size);
                   std::generate(ls.begin(), ls.end(), [&r]() {
                      return BoolPropertyEntry::deserialize_no_header(r);
                   });
-                  res.__xx_put(name, ls);
+                  res.set_property(in_field_name, ls);
                   return;
                }
                break;

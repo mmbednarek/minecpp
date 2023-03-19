@@ -5,7 +5,7 @@ namespace minecpp::service::front {
 
 class Connection;
 
-namespace Protocol {
+namespace protocol {
 
 class Handler
 {
@@ -14,6 +14,6 @@ class Handler
    virtual void handle_disconnect(Connection &conn)                                                   = 0;
 };
 
-}// namespace Protocol
+}// namespace protocol
 
 }// namespace minecpp::service::front

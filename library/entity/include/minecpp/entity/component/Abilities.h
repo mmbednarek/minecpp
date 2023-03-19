@@ -6,7 +6,7 @@
 
 namespace minecpp::entity::component {
 
-struct Abilities
+class Abilities
 {
  public:
    void on_attached(game::Entity &entity);

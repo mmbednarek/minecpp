@@ -400,11 +400,15 @@ void EventHandler::handle_chat_message(const serverbound_v1::ChatMessage &event,
       if (event.message().empty())
          return;
 
-      auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
+      auto player = m_player_manager.get_player(player_id);
+      if (player.has_failed()) {
+         spdlog::warn("no player with id: {}", util::uuid_to_string(player_id));
+         return;
+      }
 
-      spdlog::info("CHAT [{}] {}", player.name(), event.message());
+      spdlog::info("CHAT [{}] {}", player->name(), event.message());
       m_dispatcher.send_chat(chat::MessageType::PlayerMessage,
-                             chat::format_chat_message(player.name(), event.message()));
+                             chat::format_chat_message(player->name(), event.message()));
    } catch (std::runtime_error &err) {
       spdlog::error("handle chat message: {}", err.what());
    }
@@ -470,8 +474,12 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
 
 void EventHandler::handle_update_ping(const serverbound_v1::UpdatePing &event, game::PlayerId player_id)
 {
-   auto &player = MB_ESCAPE(m_player_manager.get_player(player_id));
-   player.set_ping(event.ping());
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::error("no player with id {}", util::uuid_to_string(player_id));
+      return;
+   }
+   player->set_ping(event.ping());
 }
 
 void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event, game::PlayerId player_id)

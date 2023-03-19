@@ -73,6 +73,8 @@ bool Storage::write_chunk(const proto_chunk::Chunk &chunk)
       spdlog::error("failed to commit transaction: {}", err.to_string());
       return false;
    }
+
+   return true;
 }
 
 Result<Transaction> Storage::create_transaction()

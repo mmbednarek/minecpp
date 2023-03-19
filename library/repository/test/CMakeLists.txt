@@ -18,3 +18,5 @@ target_link_libraries(minecpp_repository_test
 )
 
 add_test(NAME minecpp_repository COMMAND minecpp_repository_test)
+
+configure_file("../../../repository.bin" "${CMAKE_BINARY_DIR}/library/repository/test/repository.bin" COPYONLY)

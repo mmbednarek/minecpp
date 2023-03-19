@@ -1,6 +1,6 @@
 #include "Protocol.h"
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 std::string_view state_to_str(State s)
 {
@@ -13,4 +13,4 @@ std::string_view state_to_str(State s)
    return "unknown";
 }
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

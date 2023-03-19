@@ -1,19 +1,17 @@
 #include "Ticks.h"
-#include <grpcpp/client_context.h>
 #include <minecpp/network/message/Clientbound.h>
 #include <minecpp/util/Time.h>
 #include <spdlog/spdlog.h>
 #include <thread>
-#include <utility>
 
 namespace minecpp::service::front {
+
+constexpr int g_keep_alive_count = 800;
 
 TickManager::TickManager(Server &server) :
     server(server)
 {
 }
-
-constexpr int keep_alive_count = 800;
 
 [[noreturn]] void TickManager::tick()
 {
@@ -23,7 +21,7 @@ constexpr int keep_alive_count = 800;
       auto start_time = util::now_milis();
 
       ++keep_alive_counter;
-      if (keep_alive_counter >= keep_alive_count) {
+      if (keep_alive_counter >= g_keep_alive_count) {
          keep_alive_counter = 0;
          keep_alive();
       }
@@ -41,12 +39,12 @@ void TickManager::keep_alive()
       if (!conn)
          return;
 
-      if (conn->state() != Protocol::State::Play) {
+      if (conn->state() != protocol::State::Play) {
          return;
       }
 
       send(conn, minecpp::network::message::KeepAlive{
-                         .time = minecpp::util::now_milis(),
+                         .time = static_cast<std::uint32_t>(minecpp::util::now_milis()),
                  });
    });
 }

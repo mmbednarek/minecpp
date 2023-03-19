@@ -15,7 +15,7 @@ using world::BlockState;
 static std::optional<Face> find_connected_face(const BlockState &state);
 
 bool Torch::on_player_place_block(IWorld &world, PlayerId, BlockId, BlockPosition position, Face place_face,
-                                  const math::Vector3f &crosshair_position)
+                                  const math::Vector3f & /*crosshair_position*/)
 {
    // Cannot place torch on a ceiling
    if (place_face == Face::Bottom)
@@ -44,10 +44,11 @@ bool Torch::on_player_place_block(IWorld &world, PlayerId, BlockId, BlockPositio
    return world.set_block(torch_pos, state.block_state_id()).ok();
 }
 
-std::optional<game::BlockStateId> Torch::on_neighbour_change(game::IWorld &world,
+std::optional<game::BlockStateId> Torch::on_neighbour_change(game::IWorld & /*world*/,
                                                              game::BlockStateId block_state_id,
-                                                             game::BlockStateId neighbour_block_state_id,
-                                                             game::BlockPosition position, game::Face face)
+                                                             game::BlockStateId /*neighbour_block_state_id*/,
+                                                             game::BlockPosition /*position*/,
+                                                             game::Face face)
 {
    auto connected_face = find_connected_face(BlockState{block_state_id});
 
@@ -65,6 +66,6 @@ std::optional<Face> find_connected_face(const BlockState &state)
       return Face::Bottom;
 
    return state.get<Face>("facing");
-};
+}
 
 }// namespace minecpp::controller::block

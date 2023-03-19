@@ -6,7 +6,7 @@
 
 namespace minecpp::tool::nbt_idl {
 
-constexpr auto g_put_method = "__xx_put";
+constexpr auto g_put_method = "set_property";
 
 Generator::Generator(Semantics::Structure &structure, const std::string &module_name,
                      const std::string &header_path) :
@@ -86,12 +86,12 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
       // void serialize()
       message_class.add_public(method("void", "serialize",
                                       {
-                                              {    "std::ostream", "&out"},
-                                              {"std::string_view", "name"}
+                                              {    "std::ostream",      "&out_stream"},
+                                              {"std::string_view", "in_compound_name"}
       },
                                       true, [](statement::collector &col) {
-                                         col << call("minecpp::nbt::Writer w", raw("out"));
-                                         col << call("w.begin_compound", raw("name"));
+                                         col << call("minecpp::nbt::Writer w", raw("out_stream"));
+                                         col << call("w.begin_compound", raw("in_compound_name"));
                                          col << call("serialize_no_header", raw("w"));
                                       }));
 
@@ -106,9 +106,9 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
                  col << call("r.read_compound",
                              lambda(
                                      {
-                                             {"minecpp::nbt::Reader",    "&r"},
-                                             { "minecpp::nbt::TagId", "tagid"},
-                                             {   "const std::string", "&name"}
+                                             {"minecpp::nbt::Reader",             "&r"},
+                                             { "minecpp::nbt::TagId",          "tagid"},
+                                             {   "const std::string", "&in_field_name"}
                  },
                                      [&msg](statement::collector &col) { put_deserialize_logic(msg, col); },
                                      raw("&res")));
@@ -144,33 +144,37 @@ Generator::Generator(Semantics::Structure &structure, const std::string &module_
                        offset_map.add(pair);
                     });
 
-      message_class.add_private(method_template(
-              "void", g_put_method,
-              {
-                      {"typename", "T"}
-      },
-              {{"const std::string", "&name"}, {"T", "&&value"}}, [&type_names](statement::collector &col) {
-                 col << raw("using TDc = typename std::decay<T>::type");
-                 for (auto &pair : type_names) {
-                    if (pair.second.empty())
-                       continue;
+      if (not type_names.empty()) {
+         message_class.add_private(method_template(
+                 "void", g_put_method,
+                 {
+                         {"typename", "T"}
+         },
+                 {{"const std::string", "&in_field_name"}, {"T", "&&in_value"}},
+                 [&type_names](statement::collector &col) {
+                    col << raw("using TDc = typename std::decay<T>::type");
+                    for (auto &pair : type_names) {
+                       if (pair.second.empty())
+                          continue;
 
-                    auto stmt = if_statement(
-                            raw("std::is_same_v<TDc, {}>", pair.first), [&pair](statement::collector &col) {
-                               for (auto &item : pair.second) {
-                                  col << if_statement(raw("name == \"{}\"", item.label),
-                                                      [&item](statement::collector &col) {
-                                                         col << raw("this->{} = std::forward<T>(value)",
-                                                                    item.name);
-                                                         col << raw("return");
-                                                      });
-                               }
-                               col << raw("return");
-                            });
-                    stmt.with_constexpr();
-                    col << stmt;
-                 }
-              }));
+                       auto stmt = if_statement(
+                               raw("std::is_same_v<TDc, {}>", pair.first),
+                               [&pair](statement::collector &col) {
+                                  for (auto &item : pair.second) {
+                                     col << if_statement(raw("in_field_name == \"{}\"", item.label),
+                                                         [&item](statement::collector &col) {
+                                                            col << raw("this->{} = std::forward<T>(in_value)",
+                                                                       item.name);
+                                                            col << raw("return");
+                                                         });
+                                  }
+                                  col << raw("return");
+                               });
+                       stmt.with_constexpr();
+                       col << stmt;
+                    }
+                 }));
+      }
 
       m_component << message_class;
    });
@@ -228,7 +232,7 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
                  auto deserializer = std::any_cast<Semantics::StaticDeserializer>(pair.second);
                  tag_switch.add_noscope(raw(Semantics::variant_to_nbt_tag(deserializer.variant)),
                                         [&deserializer](statement::collector &col) {
-                                           col << call("res.__xx_put", raw("name"),
+                                           col << call("res.set_property", raw("in_field_name"),
                                                        raw(Semantics::put_static_read(deserializer)));
                                            col << raw("return");
                                         });
@@ -242,59 +246,65 @@ void put_deserialize_logic(const Semantics::Message &msg, mb::codegen::statement
                     std::for_each(
                             deserializer.elems.begin(), deserializer.elems.end(),
                             [&col](const Semantics::CompoundDeserializer::Elem &elem) {
-                               col << if_statement(raw("name == \"{}\"", elem.label), [&elem](statement::collector
-                                                                                                      &col) {
-                                  switch (elem.kind) {
-                                  case Semantics::CompoundKind::Struct:
-                                     col << call("res.__xx_put", raw("name"),
-                                                 raw("{}::deserialize_no_header(r)", elem.typeName));
-                                     col << raw("return");
-                                     return;
-                                  case Semantics::CompoundKind::Map:
-                                     col << call(
-                                             "r.read_compound",
-                                             lambda(
-                                                     {
-                                                             {"minecpp::nbt::Reader",    "&r"},
-                                                             { "minecpp::nbt::TagId", "tagid"},
-                                                             {   "const std::string", "&name"}
-                                     },
-                                                     [&elem](statement::collector &col) {
-                                                        col << if_statement(raw("tagid != {}",
-                                                                                Semantics::variant_to_nbt_tag(
-                                                                                        elem.subtype)),
-                                                                            [](statement::collector &col) {
-                                                                               col << call("r.skip_payload",
-                                                                                           raw("tagid"));
-                                                                               col << raw("return");
-                                                                            });
-                                                        if (elem.subtype == Semantics::TypeVariant::Struct) {
-                                                           col << method_call(
-                                                                   raw("res.{}", elem.name), "insert",
-                                                                   call("std::make_pair", raw("name"),
-                                                                        call(raw("{}::deserialize_no_header",
-                                                                                 elem.subtypeName),
-                                                                             raw("r"))));
-                                                        } else {
-                                                           col << method_call(
-                                                                   raw("res.{}", elem.name), "insert",
-                                                                   call("std::make_pair", raw("name"),
-                                                                        raw(Semantics::put_static_read(
-                                                                                Semantics::StaticDeserializer{
-                                                                                        elem.subtype}))));
-                                                        }
-                                                     },
-                                                     raw("&res")));
-                                     col << raw("return");
-                                     return;
-                                  case Semantics::CompoundKind::Compound:
-                                     col << call("res.__xx_put", raw("name"),
-                                                 call("r.read_compound_content"));
-                                     col << raw("return");
-                                     return;
-                                  }
-                                  col << raw("break");
-                               });
+                               col << if_statement(
+                                       raw("in_field_name == \"{}\"", elem.label),
+                                       [&elem](statement::collector &col) {
+                                          switch (elem.kind) {
+                                          case Semantics::CompoundKind::Struct:
+                                             col << call("res.set_property", raw("in_field_name"),
+                                                         raw("{}::deserialize_no_header(r)", elem.type_name));
+                                             col << raw("return");
+                                             return;
+                                          case Semantics::CompoundKind::Map:
+                                             col << call(
+                                                     "r.read_compound",
+                                                     lambda(
+                                                             {
+                                                                     {"minecpp::nbt::Reader",             "&r"},
+                                                                     { "minecpp::nbt::TagId",          "tagid"},
+                                                                     {   "const std::string", "&in_field_name"}
+                                             },
+                                                             [&elem](statement::collector &col) {
+                                                                col << if_statement(
+                                                                        raw("tagid != {}",
+                                                                            Semantics::variant_to_nbt_tag(
+                                                                                    elem.subtype)),
+                                                                        [](statement::collector &col) {
+                                                                           col << call("r.skip_payload",
+                                                                                       raw("tagid"));
+                                                                           col << raw("return");
+                                                                        });
+                                                                if (elem.subtype ==
+                                                                    Semantics::TypeVariant::Struct) {
+                                                                   col << method_call(
+                                                                           raw("res.{}", elem.name), "insert",
+                                                                           call("std::make_pair",
+                                                                                raw("in_field_name"),
+                                                                                call(raw("{}::deserialize_no_"
+                                                                                         "header",
+                                                                                         elem.subtype_name),
+                                                                                     raw("r"))));
+                                                                } else {
+                                                                   col << method_call(
+                                                                           raw("res.{}", elem.name), "insert",
+                                                                           call("std::make_pair",
+                                                                                raw("in_field_name"),
+                                                                                raw(Semantics::put_static_read(
+                                                                                        Semantics::StaticDeserializer{
+                                                                                                elem.subtype}))));
+                                                                }
+                                                             },
+                                                             raw("&res")));
+                                             col << raw("return");
+                                             return;
+                                          case Semantics::CompoundKind::Compound:
+                                             col << call("res.set_property", raw("in_field_name"),
+                                                         call("r.read_compound_content"));
+                                             col << raw("return");
+                                             return;
+                                          }
+                                          col << raw("break");
+                                       });
                             });
                     col << raw("break");
                  });
@@ -346,7 +356,7 @@ void put_deserialize_list_logic(const Semantics::ListDeserializer &deserializer,
                                std::for_each(
                                        elem_deserializer.elems.begin(), elem_deserializer.elems.end(),
                                        [&col, depth](const Semantics::CompoundDeserializer::Elem &elem) {
-                                          col << if_statement(raw("name == \"{}\"", elem.label),
+                                          col << if_statement(raw("in_field_name == \"{}\"", elem.label),
                                                               [&elem, depth](statement::collector &col) {
                                                                  put_deserialize_list_logic_compound(
                                                                          elem, col, 0, depth);
@@ -424,7 +434,7 @@ void put_deserialize_list_logic_static(const Semantics::StaticDeserializer &dese
    }
 
    if (depth == 0) {
-      col << call("res.__xx_put", raw("name"), raw("ls"));
+      col << call("res.set_property", raw("in_field_name"), raw("ls"));
       col << return_statement();
    } else {
       col << return_statement(raw("ls"));
@@ -439,17 +449,17 @@ void put_deserialize_list_logic_compound(const Semantics::CompoundDeserializer::
    using minecpp::util::repeat_string;
 
    if (depth == target_depth) {
-      col << raw("std::vector<{}> ls(list_info{}.size)", elem.typeName, depth);
+      col << raw("std::vector<{}> ls(list_info{}.size)", elem.type_name, depth);
       col << call("std::generate", call("ls.begin"), call("ls.end"),
                   lambda(
                           {},
                           [&elem](statement::collector &col) {
-                             col << raw("return {}::deserialize_no_header(r)", elem.typeName);
+                             col << raw("return {}::deserialize_no_header(r)", elem.type_name);
                           },
                           raw("&r")));
    } else {
       col << raw("{}{}{} ls(list_info{}.size)", repeat_string("std::vector<", target_depth - depth + 1),
-                 elem.typeName, std::string(target_depth - depth + 1, '>'), depth);
+                 elem.type_name, std::string(target_depth - depth + 1, '>'), depth);
 
       col << if_statement(
               raw("list_info{}.size != 0", depth), [&elem, depth, target_depth](statement::collector &col) {
@@ -479,7 +489,7 @@ void put_deserialize_list_logic_compound(const Semantics::CompoundDeserializer::
    }
 
    if (depth == 0) {
-      col << call("res.__xx_put", raw("name"), raw("ls"));
+      col << call("res.set_property", raw("in_field_name"), raw("ls"));
       col << return_statement();
    } else {
       col << return_statement(raw("ls"));
@@ -509,7 +519,9 @@ void put_serialize_logic(mb::codegen::statement::collector &col, Semantics::Type
    }
 
    switch (type.variant) {
-   case Semantics::TypeVariant::Int8: col << call("w.write_byte_content", value); break;
+   case Semantics::TypeVariant::Int8:
+      col << call("w.write_byte_content", call("static_cast<std::uint8_t>", value));
+      break;
    case Semantics::TypeVariant::Int16: col << call("w.write_short_content", value); break;
    case Semantics::TypeVariant::Int32: col << call("w.write_int_content", value); break;
    case Semantics::TypeVariant::Int64: col << call("w.write_long_content", value); break;

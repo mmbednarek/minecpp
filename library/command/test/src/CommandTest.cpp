@@ -26,7 +26,7 @@ class EchoCommand : public minecpp::command::Command
       return {};
    }
 
-   minecpp::command::ObjectType return_type(minecpp::command::RuntimeContext &ctx) const override
+   minecpp::command::ObjectType return_type(minecpp::command::RuntimeContext & /*ctx*/) const override
    {
       return minecpp::command::ObjectType::Null;
    }

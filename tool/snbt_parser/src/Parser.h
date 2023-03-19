@@ -50,14 +50,14 @@ class Parser
  public:
    explicit Parser(const std::vector<Token> &tokens);
 
-   mb::result<Token> expect(TokenType type);
-   mb::result<std::string> expect_identifier();
+   Token expect(TokenType type);
+   std::string expect_identifier();
 
-   mb::result<nbt::CompoundContent> read_compound();
-   mb::result<nbt::Content> read_content();
-   mb::result<nbt::ListContent> read_list();
+   nbt::CompoundContent read_compound();
+   nbt::Content read_content();
+   nbt::ListContent read_list();
 
-   mb::emptyres assert_not_end();
+   void assert_not_end();
 };
 
 }// namespace minecpp::tool::snbt_parser

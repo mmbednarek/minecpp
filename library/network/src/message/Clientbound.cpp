@@ -18,10 +18,10 @@ Writer SpawnEntity::serialize() const
    w.write_byte(static_cast<mb::u8>(pitch / 360.0f * 256.0f));
    w.write_byte(static_cast<mb::u8>(yaw / 360.0f * 256.0f));
    w.write_byte(static_cast<mb::u8>(head_yaw / 360.0f * 256.0f));
-   w.write_varint(data);
-   w.write_short(vel_x);
-   w.write_short(vel_y);
-   w.write_short(vel_z);
+   w.write_varint(static_cast<mb::u32>(data));
+   w.write_big_endian(vel_x);
+   w.write_big_endian(vel_y);
+   w.write_big_endian(vel_z);
    return w;
 }
 

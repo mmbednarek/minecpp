@@ -1,3 +1,4 @@
+#include <minecpp/util/Cast.hpp>
 #include <minecpp/util/Reader.h>
 
 namespace minecpp::util {
@@ -18,25 +19,25 @@ std::vector<uint8_t> Reader::read_byte_vec() const
 std::string Reader::read_string() const
 {
    auto size = static_cast<std::size_t>(read_big_endian<short>());
-   char s[size];
-   m_stream.read(s, static_cast<int>(size));
-   return {s, size};
+   std::string str(size, ' ');
+   m_stream.read(str.data(), static_cast<int>(size));
+   return str;
 }
 
 float Reader::read_float() const
 {
-   int v;
-   m_stream.read((char *) &v, sizeof(int));
+   std::int32_t v;
+   m_stream.read(reinterpret_cast<char *>(&v), sizeof(std::int32_t));
    v = boost::endian::big_to_native(v);
-   return *reinterpret_cast<float *>(&v);
+   return unsafe_cast<float>(v);
 }
 
 double Reader::read_double() const
 {
-   long long v;
-   m_stream.read((char *) &v, sizeof(long long));
+   std::int64_t v;
+   m_stream.read(reinterpret_cast<char *>(&v), sizeof(std::int64_t));
    v = boost::endian::big_to_native(v);
-   return *reinterpret_cast<double *>(&v);
+   return unsafe_cast<double>(v);
 }
 
 std::istream &Reader::get_stream()

@@ -19,9 +19,9 @@ std::string_view face_to_axis(game::Face face)
 
 }// namespace
 
-bool Wood::on_player_place_block(game::IWorld &world, game::PlayerId player_id, int block_id,
+bool Wood::on_player_place_block(game::IWorld &world, game::PlayerId /*player_id*/, int block_id,
                                  game::BlockPosition position, game::Face face,
-                                 const math::Vector3f &crosshair_position)
+                                 const math::Vector3f & /*crosshair_position*/)
 {
    const auto neighbour_position = position.neighbour_at(face);
    if (not verify_source_block(world, neighbour_position)) {

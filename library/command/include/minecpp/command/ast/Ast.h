@@ -50,7 +50,7 @@ struct String : public Expression
       return std::make_unique<StringObject>(value);
    }
 
-   [[nodiscard]] ObjectType type(RuntimeContext &ctx) const override
+   [[nodiscard]] ObjectType type(RuntimeContext & /*ctx*/) const override
    {
       return ObjectType::String;
    }
@@ -70,7 +70,7 @@ struct Int : public Expression
       return std::make_unique<IntObject>(value);
    }
 
-   [[nodiscard]] ObjectType type(RuntimeContext &ctx) const override
+   [[nodiscard]] ObjectType type(RuntimeContext & /*ctx*/) const override
    {
       return ObjectType::Int32;
    }

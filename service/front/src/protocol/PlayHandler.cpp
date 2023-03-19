@@ -7,7 +7,7 @@
 #include <minecpp/network/message/Serverbound.h>
 #include <spdlog/spdlog.h>
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 PlayHandler::PlayHandler(Service &service) :
     service(service)
@@ -133,4 +133,4 @@ void PlayHandler::handle_disconnect(Connection &conn)
    service.on_player_disconnect(conn.service_id(), conn.uuid());
 }
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

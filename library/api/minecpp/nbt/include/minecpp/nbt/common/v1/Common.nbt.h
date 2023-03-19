@@ -15,15 +15,15 @@ namespace minecpp::nbt::common::v1 {
 class ChunkPosition {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "x") {
-            this->x = std::forward<T>(value);
+         if (in_field_name == "x") {
+            this->x = std::forward<T>(in_value);
             return;
          }
-         if (name == "y") {
-            this->y = std::forward<T>(value);
+         if (in_field_name == "y") {
+            this->y = std::forward<T>(in_value);
             return;
          }
          return;
@@ -35,7 +35,7 @@ class ChunkPosition {
    std::int32_t y{};
    ChunkPosition() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static ChunkPosition deserialize_no_header(minecpp::nbt::Reader &r);
    static ChunkPosition deserialize(std::istream &in);
 };
@@ -43,19 +43,19 @@ class ChunkPosition {
 class BlockPosition {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "x") {
-            this->x = std::forward<T>(value);
+         if (in_field_name == "x") {
+            this->x = std::forward<T>(in_value);
             return;
          }
-         if (name == "y") {
-            this->y = std::forward<T>(value);
+         if (in_field_name == "y") {
+            this->y = std::forward<T>(in_value);
             return;
          }
-         if (name == "z") {
-            this->z = std::forward<T>(value);
+         if (in_field_name == "z") {
+            this->z = std::forward<T>(in_value);
             return;
          }
          return;
@@ -68,7 +68,7 @@ class BlockPosition {
    std::int32_t z{};
    BlockPosition() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static BlockPosition deserialize_no_header(minecpp::nbt::Reader &r);
    static BlockPosition deserialize(std::istream &in);
 };
@@ -76,31 +76,31 @@ class BlockPosition {
 class FaceMask {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "down") {
-            this->down = std::forward<T>(value);
+         if (in_field_name == "down") {
+            this->down = std::forward<T>(in_value);
             return;
          }
-         if (name == "east") {
-            this->east = std::forward<T>(value);
+         if (in_field_name == "east") {
+            this->east = std::forward<T>(in_value);
             return;
          }
-         if (name == "north") {
-            this->north = std::forward<T>(value);
+         if (in_field_name == "north") {
+            this->north = std::forward<T>(in_value);
             return;
          }
-         if (name == "south") {
-            this->south = std::forward<T>(value);
+         if (in_field_name == "south") {
+            this->south = std::forward<T>(in_value);
             return;
          }
-         if (name == "up") {
-            this->up = std::forward<T>(value);
+         if (in_field_name == "up") {
+            this->up = std::forward<T>(in_value);
             return;
          }
-         if (name == "west") {
-            this->west = std::forward<T>(value);
+         if (in_field_name == "west") {
+            this->west = std::forward<T>(in_value);
             return;
          }
          return;
@@ -116,7 +116,7 @@ class FaceMask {
    std::int8_t west{};
    FaceMask() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static FaceMask deserialize_no_header(minecpp::nbt::Reader &r);
    static FaceMask deserialize(std::istream &in);
 };

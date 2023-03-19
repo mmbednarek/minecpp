@@ -7,12 +7,12 @@
 
 namespace minecpp::world {
 
-int calculate_ref_count(const std::vector<std::int64_t> &data, const std::vector<std::uint32_t> &palette)
+int calculate_ref_count(const std::vector<std::uint64_t> &data, const std::vector<std::uint32_t> &palette)
 {
    if (data.empty()) {
       return 0;
    }
-   int bits = static_cast<int>(minecpp::util::log2(palette.size()));
+   auto bits = static_cast<std::uint8_t>(minecpp::util::log2(static_cast<std::uint32_t>(palette.size())));
    if (bits < 4) {
       bits = 4;
    }

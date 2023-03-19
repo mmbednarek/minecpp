@@ -1,5 +1,6 @@
 #include <mb/int.h>
 #include <minecpp/nbt/Writer.h>
+#include <minecpp/util/Cast.hpp>
 
 namespace minecpp::nbt {
 
@@ -75,8 +76,9 @@ void Writer::write_string_content(std::string_view str)
 
 void Writer::put_string(const std::string_view s)
 {
-   put_big_endian<short>(s.length());
-   stream.write((char *) s.data(), s.length());
+   const auto length = static_cast<short>(s.length());
+   put_big_endian<short>(length);
+   stream.write(reinterpret_cast<const char *>(s.data()), length);
 }
 
 void Writer::begin_compound(const std::string_view name)
@@ -94,32 +96,29 @@ void Writer::write_long_array(std::string_view name, const long *array, size_t s
 {
    put_byte(static_cast<uint8_t>(TagId::LongArray));
    put_string(name);
-   put_big_endian<int32_t>(size);
+   put_big_endian<std::int32_t>(static_cast<std::int32_t>(size));
    for (size_t i = 0; i < size; ++i) {
-      put_big_endian<int64_t>(array[i]);
+      put_big_endian<std::int64_t>(array[i]);
    }
 }
 
 void Writer::write_float_content(float value)
 {
-   uint32_t v = *reinterpret_cast<uint32_t *>(&value);
-   put_big_endian(v);
+   put_big_endian(util::unsafe_cast<std::uint32_t>(value));
 }
 
 void Writer::write_float(std::string_view name, float value)
 {
-   static_assert(sizeof(float) == sizeof(uint32_t));
+   static_assert(sizeof(float) == sizeof(std::uint32_t));
 
    put_byte(static_cast<uint8_t>(TagId::Float));
    put_string(name);
-   uint32_t v = *reinterpret_cast<uint32_t *>(&value);
-   put_big_endian(v);
+   write_float_content(value);
 }
 
 void Writer::write_double_content(double value)
 {
-   uint64_t v = *reinterpret_cast<uint64_t *>(&value);
-   put_big_endian(v);
+   put_big_endian(util::unsafe_cast<std::uint64_t>(value));
 }
 
 void Writer::write_double(std::string_view name, double value)
@@ -128,8 +127,7 @@ void Writer::write_double(std::string_view name, double value)
 
    put_byte(static_cast<uint8_t>(TagId::Double));
    put_string(name);
-   uint64_t v = *reinterpret_cast<uint64_t *>(&value);
-   put_big_endian(v);
+   write_double_content(value);
 }
 
 void Writer::begin_list(std::string_view name, nbt::TagId tag, const std::size_t num_elements)
@@ -148,25 +146,25 @@ void Writer::begin_list_no_header(const nbt::TagId tag, const std::size_t num_el
 
 void Writer::write_bytes_content(const std::vector<uint8_t> &values)
 {
-   put_big_endian<int32_t>(values.size());
+   put_big_endian<std::int32_t>(static_cast<std::int32_t>(values.size()));
    for (const auto &val : values) {
-      put_big_endian<uint8_t>(val);
+      put_big_endian<std::uint8_t>(val);
    }
 }
 
 void Writer::write_bytes(std::string_view name, const std::vector<uint8_t> &values)
 {
-   put_byte(static_cast<uint8_t>(TagId::ByteArray));
+   put_byte(static_cast<std::uint8_t>(TagId::ByteArray));
    put_string(name);
-   put_big_endian<int32_t>(values.size());
+   put_big_endian<std::int32_t>(static_cast<std::int32_t>(values.size()));
    for (const auto &val : values) {
-      put_big_endian<uint8_t>(val);
+      put_big_endian<std::uint8_t>(val);
    }
 }
 
 void Writer::write_ints_content(const std::vector<int> &values)
 {
-   put_big_endian<int32_t>(values.size());
+   put_big_endian<int32_t>(static_cast<std::int32_t>(values.size()));
    for (const auto &val : values) {
       put_big_endian<int>(val);
    }
@@ -174,9 +172,9 @@ void Writer::write_ints_content(const std::vector<int> &values)
 
 void Writer::write_ints(std::string_view name, const std::vector<int> &values)
 {
-   put_byte(static_cast<uint8_t>(TagId::IntArray));
+   put_byte(static_cast<std::uint8_t>(TagId::IntArray));
    put_string(name);
-   put_big_endian<int32_t>(values.size());
+   put_big_endian<std::int32_t>(static_cast<std::int32_t>(values.size()));
    for (const auto &val : values) {
       put_big_endian<int>(val);
    }
@@ -184,7 +182,7 @@ void Writer::write_ints(std::string_view name, const std::vector<int> &values)
 
 void Writer::write_longs_content(const std::vector<int64_t> &values)
 {
-   put_big_endian<int32_t>(values.size());
+   put_big_endian<std::int32_t>(static_cast<std::int32_t>(values.size()));
    for (const auto &val : values) {
       put_big_endian<int64_t>(val);
    }
@@ -192,9 +190,9 @@ void Writer::write_longs_content(const std::vector<int64_t> &values)
 
 void Writer::write_longs(std::string_view name, const std::vector<int64_t> &values)
 {
-   put_byte(static_cast<uint8_t>(TagId::LongArray));
+   put_byte(static_cast<std::uint8_t>(TagId::LongArray));
    put_string(name);
-   put_big_endian<int32_t>(values.size());
+   put_big_endian<std::int32_t>(static_cast<std::int32_t>(values.size()));
    for (const auto &val : values) {
       put_big_endian<int64_t>(val);
    }

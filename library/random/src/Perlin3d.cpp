@@ -1,17 +1,16 @@
 #include <cmath>
 #include <minecpp/random/JavaRandom.h>
-#include <minecpp/random/Perlin3d.h>
-
-namespace minecpp::random {
+#include <minecpp/random/Perlin3D.h>
 
 using minecpp::math::Vector3;
 
-Perlin3d::Perlin3d(IRandom &rand) :
-    rand(rand),
-    coef1(rand.next_int()),
-    coef2(rand.next_int()),
-    coef3(rand.next_int()),
-    coef4(rand.next_int())
+namespace minecpp::random {
+
+Perlin3D::Perlin3D(IRandom &rand) :
+    m_coefficient1(rand.next_int()),
+    m_coefficient2(rand.next_int()),
+    m_coefficient3(rand.next_int()),
+    m_coefficient4(rand.next_int())
 {
 }
 
@@ -20,7 +19,7 @@ Perlin3d::Perlin3d(IRandom &rand) :
    return t * t * t * (t * (t * 6 - 15) + 10);
 }
 
-double Perlin3d::at(Vector3 pos)
+double Perlin3D::at(const Vector3 &pos) const
 {
    auto floored_pos = pos.floor();
    auto left        = static_cast<int>(floored_pos.x());
@@ -53,13 +52,14 @@ double Perlin3d::at(Vector3 pos)
    return std::lerp(inter_far, inter_close, weight.z());
 }
 
-minecpp::math::Vector3 Perlin3d::grad(int x, int y, int z)
+minecpp::math::Vector3 Perlin3D::grad(int x, int y, int z) const
 {
-   random::JavaRandom r(x * coef1 + y * coef2 + z * coef3 + coef4);
+   auto seed = x * m_coefficient1 + y * m_coefficient2 + z * m_coefficient3 + m_coefficient4;
+   random::JavaRandom r(static_cast<std::size_t>(seed));
    return {r.next_double(), r.next_double(), r.next_double()};
 }
 
-double Perlin3d::dot_grad(int x, int y, int z, minecpp::math::Vector3 pos)
+double Perlin3D::dot_grad(int x, int y, int z, const Vector3 &pos) const
 {
    auto g = grad(x, y, z);
    auto d = pos - math::Vector3{static_cast<double>(x), static_cast<double>(y), static_cast<double>(z)};

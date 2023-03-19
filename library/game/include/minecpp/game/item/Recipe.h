@@ -61,38 +61,39 @@ class Recipe
    T details() const
    {
       if constexpr (std::is_same<T, CraftingShaped>::value) {
-         if (_type == RecipeType::CraftingShaped) {
-            return std::get<CraftingShaped>(_details);
+         if (m_type == RecipeType::CraftingShaped) {
+            return std::get<CraftingShaped>(m_details);
          }
       }
       if constexpr (std::is_same<T, CraftingShapeless>::value) {
-         if (_type == RecipeType::CraftingShapeless) {
-            return std::get<CraftingShapeless>(_details);
+         if (m_type == RecipeType::CraftingShapeless) {
+            return std::get<CraftingShapeless>(m_details);
          }
       }
       if constexpr (std::is_same<T, HeatTreatment>::value) {
-         switch (_type) {
+         switch (m_type) {
          case Smelting:
          case Blasting:
          case Smoking:
-         case CampfireCooking: return std::get<HeatTreatment>(_details);
+         case CampfireCooking: return std::get<HeatTreatment>(m_details);
          default: break;
          }
       }
       if constexpr (std::is_same<T, StoneCutting>::value) {
-         if (_type == RecipeType::StoneCutting) {
-            return std::get<StoneCutting>(_details);
+         if (m_type == RecipeType::StoneCutting) {
+            return std::get<StoneCutting>(m_details);
          }
       }
+      return T{};
    }
 
  private:
    typedef std::variant<CraftingShaped, CraftingShapeless, HeatTreatment, StoneCutting, Special> Details;
 
-   ItemStack _outcome_item;
-   RecipeType _type;
-   Details _details;
-   std::string _group;
+   ItemStack m_outcome_item;
+   RecipeType m_type;
+   Details m_details;
+   std::string m_group;
 };
 
 }// namespace minecpp::game::item

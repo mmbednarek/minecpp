@@ -8,21 +8,14 @@
 
 namespace minecpp::world::population {
 
-struct Pos
-{
-   int x, z;
-};
-
 class PopObject
 {
  public:
    virtual ~PopObject() noexcept = default;
 
-   virtual int width() const                       = 0;
-   virtual int height() const                      = 0;
-   virtual int length() const                      = 0;
-   virtual Pos center() const                      = 0;
-   virtual int block_at(int x, int y, int z) const = 0;
+   [[nodiscard]] virtual math::Vector3i extent() const                                  = 0;
+   [[nodiscard]] virtual math::Vector2i center() const                                  = 0;
+   [[nodiscard]] virtual game::BlockStateId block(const math::Vector3i &position) const = 0;
 };
 
 class ObjectFactory
@@ -42,29 +35,22 @@ class StaticObjectWrapper final : public PopObject
    {
    }
 
-   [[nodiscard]] int width() const override
+   [[nodiscard]] math::Vector3i extent() const override
    {
-      return m_object->width();
+      assert(m_object);
+      return m_object->extent();
    }
 
-   [[nodiscard]] int height() const override
+   [[nodiscard]] math::Vector2i center() const override
    {
-      return m_object->height();
-   }
-
-   [[nodiscard]] int length() const override
-   {
-      return m_object->length();
-   }
-
-   [[nodiscard]] Pos center() const override
-   {
+      assert(m_object);
       return m_object->center();
    }
 
-   [[nodiscard]] int block_at(int x, int y, int z) const override
+   [[nodiscard]] game::BlockStateId block(const math::Vector3i &position) const override
    {
-      return m_object->block_at(x, y, z);
+      assert(m_object);
+      return m_object->block(position);
    }
 
  private:
@@ -83,7 +69,7 @@ class StaticObjectFactory final : public ObjectFactory
    {
    }
 
-   std::unique_ptr<PopObject> create(unsigned int seed) override
+   std::unique_ptr<PopObject> create(unsigned int /*seed*/) override
    {
       return std::make_unique<StaticObjectWrapper>(m_object.get());
    }
@@ -97,58 +83,49 @@ class StaticObjectFactory final : public ObjectFactory
 template<int w, int l, int h>
 class ShapedObject final : public PopObject
 {
-   std::array<int, w * l * h> m_shape;
+   std::array<game::BlockStateId, w * l * h> m_shape;
 
  public:
-   explicit ShapedObject(std::array<int, w * l * h> shape) :
+   explicit ShapedObject(std::array<game::BlockStateId, w * l * h> shape) :
        m_shape(std::move(shape))
    {
    }
 
-   [[nodiscard]] int width() const override
+   [[nodiscard]] math::Vector3i extent() const override
    {
-      return w;
+      return {w, h, l};
    }
 
-   [[nodiscard]] int height() const override
+   [[nodiscard]] math::Vector2i center() const override
    {
-      return h;
+      return extent().flat() / 2;
    }
 
-   [[nodiscard]] int length() const override
+   [[nodiscard]] game::BlockStateId block(const math::Vector3i &position) const override
    {
-      return l;
-   }
-
-   [[nodiscard]] Pos center() const override
-   {
-      return Pos{.x = w / 2, .z = l / 2};
-   };
-
-   [[nodiscard]] int block_at(int x, int y, int z) const override
-   {
-      assert(x >= 0 && x < w);
-      assert(z >= 0 && z < l);
-      assert(y >= 0 && y < h);
-      return m_shape[x + z * w + y * w * l];
+      assert(position.x() >= 0 && position.x() < w);
+      assert(position.y() >= 0 && position.y() < h);
+      assert(position.z() >= 0 && position.z() < l);
+      const auto offset = position.x() + position.z() * w + position.y() * w * l;
+      return m_shape[static_cast<std::size_t>(offset)];
    }
 };
 
 class ObjectRepository
 {
-   static ObjectRepository g_instance;
+   static ObjectRepository s_instance;
 
    std::vector<std::unique_ptr<ObjectFactory>> m_objects;
 
  public:
    [[nodiscard]] static ObjectRepository &the()
    {
-      return g_instance;
+      return s_instance;
    }
 
    void register_objects();
 
-   mb::size find_object_id(int value);
+   std::optional<std::size_t> find_object_id(int value);
 
    [[nodiscard]] std::unique_ptr<PopObject> get_object(mb::size id, unsigned seed) const
    {

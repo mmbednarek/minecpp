@@ -4,7 +4,7 @@
 
 namespace minecpp::service::discovery {
 
-grpc::Status Service::Resolve(::grpc::ServerContext *context,
+grpc::Status Service::Resolve(::grpc::ServerContext * /*context*/,
                               const ::minecpp::proto::service::discovery::v1::DiscoveryRequest *request,
                               ::minecpp::proto::service::discovery::v1::DiscoveryResponse *response)
 {
@@ -25,9 +25,9 @@ grpc::Status Service::Resolve(::grpc::ServerContext *context,
 }
 
 grpc::Status
-Service::RegisterService(::grpc::ServerContext *context,
+Service::RegisterService(::grpc::ServerContext * /*context*/,
                          const ::minecpp::proto::service::discovery::v1::RegisterRequest *request,
-                         ::minecpp::proto::service::discovery::v1::EmptyResult *response)
+                         ::minecpp::proto::service::discovery::v1::EmptyResult * /*response*/)
 {
    auto endpoint = Endpoint::from_proto(request->endpoint());
    spdlog::info("registering endpoint {} for service {}", endpoint.to_string(), request->service_name());

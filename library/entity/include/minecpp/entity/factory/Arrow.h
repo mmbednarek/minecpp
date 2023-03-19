@@ -1,7 +1,7 @@
 #pragma once
 
 #include <minecpp/entity/EntitySystem.h>
-#include <minecpp/game/Team.h>;
+#include <minecpp/game/Team.h>
 
 namespace minecpp::entity::factory {
 

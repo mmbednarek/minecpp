@@ -18,25 +18,25 @@ namespace minecpp::nbt::repository::v1 {
 class BlockEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::Block>) {
-         if (name == "Block") {
-            this->block = std::forward<T>(value);
+         if (in_field_name == "Block") {
+            this->block = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "Id") {
-            this->id = std::forward<T>(value);
+         if (in_field_name == "Id") {
+            this->id = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Tag") {
-            this->tag = std::forward<T>(value);
+         if (in_field_name == "Tag") {
+            this->tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -49,7 +49,7 @@ class BlockEntry {
    std::string tag{};
    BlockEntry() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static BlockEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static BlockEntry deserialize(std::istream &in);
 };
@@ -57,25 +57,25 @@ class BlockEntry {
 class ItemEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, item::v1::Item>) {
-         if (name == "Item") {
-            this->item = std::forward<T>(value);
+         if (in_field_name == "Item") {
+            this->item = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "Id") {
-            this->id = std::forward<T>(value);
+         if (in_field_name == "Id") {
+            this->id = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Tag") {
-            this->tag = std::forward<T>(value);
+         if (in_field_name == "Tag") {
+            this->tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -88,7 +88,7 @@ class ItemEntry {
    std::string tag{};
    ItemEntry() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static ItemEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static ItemEntry deserialize(std::istream &in);
 };
@@ -96,18 +96,18 @@ class ItemEntry {
 class EnumPropertyEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::EnumProperty>) {
-         if (name == "Property") {
-            this->property = std::forward<T>(value);
+         if (in_field_name == "Property") {
+            this->property = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Tag") {
-            this->tag = std::forward<T>(value);
+         if (in_field_name == "Tag") {
+            this->tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -119,7 +119,7 @@ class EnumPropertyEntry {
    std::string tag{};
    EnumPropertyEntry() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static EnumPropertyEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static EnumPropertyEntry deserialize(std::istream &in);
 };
@@ -127,18 +127,18 @@ class EnumPropertyEntry {
 class IntPropertyEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::IntProperty>) {
-         if (name == "Property") {
-            this->property = std::forward<T>(value);
+         if (in_field_name == "Property") {
+            this->property = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Tag") {
-            this->tag = std::forward<T>(value);
+         if (in_field_name == "Tag") {
+            this->tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -150,7 +150,7 @@ class IntPropertyEntry {
    std::string tag{};
    IntPropertyEntry() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static IntPropertyEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static IntPropertyEntry deserialize(std::istream &in);
 };
@@ -158,18 +158,18 @@ class IntPropertyEntry {
 class BoolPropertyEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::BoolProperty>) {
-         if (name == "Property") {
-            this->property = std::forward<T>(value);
+         if (in_field_name == "Property") {
+            this->property = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Tag") {
-            this->tag = std::forward<T>(value);
+         if (in_field_name == "Tag") {
+            this->tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -181,7 +181,7 @@ class BoolPropertyEntry {
    std::string tag{};
    BoolPropertyEntry() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static BoolPropertyEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static BoolPropertyEntry deserialize(std::istream &in);
 };
@@ -189,25 +189,25 @@ class BoolPropertyEntry {
 class BlockStateEntry {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::BlockState>) {
-         if (name == "State") {
-            this->state = std::forward<T>(value);
+         if (in_field_name == "State") {
+            this->state = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "Id") {
-            this->id = std::forward<T>(value);
+         if (in_field_name == "Id") {
+            this->id = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Tag") {
-            this->tag = std::forward<T>(value);
+         if (in_field_name == "Tag") {
+            this->tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -220,7 +220,7 @@ class BlockStateEntry {
    std::string tag{};
    BlockStateEntry() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static BlockStateEntry deserialize_no_header(minecpp::nbt::Reader &r);
    static BlockStateEntry deserialize(std::istream &in);
 };
@@ -228,46 +228,46 @@ class BlockStateEntry {
 class Repository {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<BlockEntry>>) {
-         if (name == "Blocks") {
-            this->blocks = std::forward<T>(value);
+         if (in_field_name == "Blocks") {
+            this->blocks = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<BlockStateEntry>>) {
-         if (name == "BlockStates") {
-            this->block_states = std::forward<T>(value);
+         if (in_field_name == "BlockStates") {
+            this->block_states = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<BoolPropertyEntry>>) {
-         if (name == "BoolProperties") {
-            this->bool_properties = std::forward<T>(value);
+         if (in_field_name == "BoolProperties") {
+            this->bool_properties = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<EnumPropertyEntry>>) {
-         if (name == "EnumProperties") {
-            this->enum_properties = std::forward<T>(value);
+         if (in_field_name == "EnumProperties") {
+            this->enum_properties = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<IntPropertyEntry>>) {
-         if (name == "IntProperties") {
-            this->int_properties = std::forward<T>(value);
+         if (in_field_name == "IntProperties") {
+            this->int_properties = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<ItemEntry>>) {
-         if (name == "Items") {
-            this->items = std::forward<T>(value);
+         if (in_field_name == "Items") {
+            this->items = std::forward<T>(in_value);
             return;
          }
          return;
@@ -283,7 +283,7 @@ class Repository {
    std::vector<BoolPropertyEntry> bool_properties{};
    Repository() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Repository deserialize_no_header(minecpp::nbt::Reader &r);
    static Repository deserialize(std::istream &in);
 };

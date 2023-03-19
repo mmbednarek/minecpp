@@ -19,7 +19,7 @@ TightVector::value_type TightVector::at(size_type i) const
 {
    uint32_t parts     = 64 / m_bits;
    auto pack          = i / parts;
-   uint32_t offset    = (i % parts) * m_bits;
+   auto offset        = (i % parts) * m_bits;
    uint64_t mask      = ((1u << m_bits) - 1u);
    uint64_t full_pack = m_data[pack];
    return static_cast<value_type>((full_pack >> offset) & mask);
@@ -37,10 +37,10 @@ void TightVector::set(std::size_t i, std::int32_t value)
       set_bits(min_bits);
    }
 
-   uint32_t parts  = 64 / m_bits;
-   auto pack       = i / parts;
-   uint32_t offset = (i % parts) * m_bits;
-   uint64_t mask   = ((1u << m_bits) - 1u);
+   uint32_t parts = 64 / m_bits;
+   auto pack      = i / parts;
+   auto offset    = (i % parts) * m_bits;
+   uint64_t mask  = ((1u << m_bits) - 1u);
 
    if (i >= m_size) {
       m_size = i + 1;
@@ -132,7 +132,7 @@ TightVector::Iterator &TightVector::Iterator::operator++()
    return *this;
 }
 
-TightVector::Iterator TightVector::Iterator::operator++(int)
+const TightVector::Iterator TightVector::Iterator::operator++(int)
 {
    TightVector::Iterator copy{*this};
    this->operator++();

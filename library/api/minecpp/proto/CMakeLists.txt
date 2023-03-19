@@ -18,3 +18,7 @@ target_link_libraries(minecpp_api_proto
         absl::base
         absl::synchronization
 )
+
+target_compile_options(minecpp_api_proto PUBLIC
+        -Wno-sign-conversion
+)

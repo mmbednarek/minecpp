@@ -39,7 +39,7 @@ class NullStream : public InputStream,
       return {};
    }
 
-   bool write(Object::Ptr obj) override
+   bool write(Object::Ptr /*obj*/) override
    {
       return false;
    }

@@ -1,3 +1,4 @@
+#include "Error.h"
 #include "Generator.h"
 #include "Lexer.h"
 #include "Parser.h"
@@ -10,6 +11,7 @@
 #include <vector>
 
 namespace opts = boost::program_options;
+using minecpp::tool::nbt_idl::Error;
 
 constexpr auto g_version = "0.0.1";
 
@@ -17,7 +19,7 @@ std::string find_module_name(std::string scheme_file)
 {
    auto beg = scheme_file.begin() +
               (scheme_file.rend() - std::find(scheme_file.rbegin(), scheme_file.rend(), '/'));
-   return std::string(beg, std::find(beg, scheme_file.end(), '.'));
+   return {beg, std::find(beg, scheme_file.end(), '.')};
 }
 
 template<typename T>
@@ -59,7 +61,7 @@ int main(int argc, char *argv[])
    auto scheme_file_res = get<std::string>(values, "scheme-file");
    if (!scheme_file_res.ok()) {
       std::cerr << "input scheme file not specified\n";
-      return 1;
+      return EXIT_FAILURE;
    }
    auto scheme_file = scheme_file_res.unwrap();
 
@@ -71,34 +73,35 @@ int main(int argc, char *argv[])
    std::ifstream s(scheme_file);
    if (!s.is_open()) {
       std::cerr << "could not open file\n";
-      return 1;
+      return EXIT_FAILURE;
    }
 
    auto tkn_reader = Lex::lex(s);
    auto parser     = Syntax::Parser(tkn_reader);
-   auto nodes_res  = parser.parse();
-   if (!nodes_res.ok()) {
-      std::cerr << nodes_res.err()->msg() << '\n';
-      return 2;
-   }
-   auto nodes     = nodes_res.unwrap();
-   auto structure = Semantics::Structure(nodes);
+   try {
+      auto nodes     = parser.parse();
+      auto structure = Semantics::Structure(nodes);
 
-   minecpp::tool::nbt_idl::Generator gen(structure, module_name, include_path);
+      minecpp::tool::nbt_idl::Generator gen(structure, module_name, include_path);
 
-   std::ofstream header_out(fmt::format("{}/{}.nbt.h", header_output, module_name));
-   if (!header_out.is_open()) {
-      std::cerr << "could not open header output file\n";
-      return 1;
-   }
-   gen.write_header(header_out);
+      std::ofstream header_out(fmt::format("{}/{}.nbt.h", header_output, module_name));
+      if (!header_out.is_open()) {
+         std::cerr << "could not open header output file\n";
+         return EXIT_FAILURE;
+      }
+      gen.write_header(header_out);
 
-   std::ofstream source_out(fmt::format("{}/{}.nbt.cpp", source_output, module_name));
-   if (!source_out.is_open()) {
-      std::cerr << "could not open source output file, path "
-                << fmt::format("{}/{}.nbt.cpp", source_output, module_name) << '\n';
-      return 1;
+      std::ofstream source_out(fmt::format("{}/{}.nbt.cpp", source_output, module_name));
+      if (!source_out.is_open()) {
+         std::cerr << "could not open source output file, path "
+                   << fmt::format("{}/{}.nbt.cpp", source_output, module_name) << '\n';
+         return EXIT_FAILURE;
+      }
+      gen.write_source(source_out);
+   } catch (const Error &err) {
+      std::cerr << "error parsing file: " << err.message() << '\n';
+      return EXIT_FAILURE;
    }
-   gen.write_source(source_out);
-   return 0;
+
+   return EXIT_SUCCESS;
 }

@@ -7,7 +7,7 @@
 
 TEST(minecpp_util, PackingTest)
 {
-   int i     = 0;
+   std::uint32_t i{};
    auto data = minecpp::util::generate_packed(12, 4096, [&i]() -> uint32_t { return i++; });
 
    i = 0;
@@ -36,7 +36,7 @@ TEST(minecpp_util, StaticQueue)
 
    std::thread t1([&queue]() {
       for (int i = 0; i < 100; ++i) {
-         queue.push(std::move(i));
+         queue.push(i);
       }
    });
 

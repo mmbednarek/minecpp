@@ -2,7 +2,7 @@
 #include "Handler.h"
 #include <minecpp/network/message/File.h>
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 class StatusHandler : public Handler
 {
@@ -13,7 +13,7 @@ class StatusHandler : public Handler
 
  private:
    void handle_info(const std::shared_ptr<Connection> &conn);
-   void handle_ping(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r);
+   static void handle_ping(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r);
 };
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

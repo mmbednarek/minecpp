@@ -18,6 +18,4 @@ enum class ChatVisibility : uint8_t
    Hidden
 };
 
-std::string format_system_info(std::string_view message);
-
 }// namespace minecpp::network

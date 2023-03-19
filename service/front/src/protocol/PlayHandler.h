@@ -8,7 +8,7 @@ namespace minecpp::service::front {
 class Service;
 }
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 using minecpp::network::message::Reader;
 
@@ -23,4 +23,4 @@ class PlayHandler : public Handler
    void handle_disconnect(Connection &conn) override;
 };
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

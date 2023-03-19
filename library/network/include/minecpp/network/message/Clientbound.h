@@ -246,6 +246,7 @@ struct EntityLook
 
 enum PlayerAbilityFlag : uint8_t
 {
+   None         = 0u,
    Invulnerable = 1u << 0u,
    IsFlying     = 1u << 1u,
    AllowFlying  = 1u << 2u,

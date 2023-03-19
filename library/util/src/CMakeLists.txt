@@ -5,7 +5,6 @@ target_sources(minecpp_utils PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Compression.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Format.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Grpc.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Hex.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Loop.cpp
@@ -16,9 +15,9 @@ target_sources(minecpp_utils PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/Uuid.cpp
 
         # Header files
+        ${MINECPP_UTIL_INCLUDE_DIR}/Cast.hpp
         ${MINECPP_UTIL_INCLUDE_DIR}/Compression.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Concepts.h
-        ${MINECPP_UTIL_INCLUDE_DIR}/Format.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Grpc.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Hex.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Loop.h

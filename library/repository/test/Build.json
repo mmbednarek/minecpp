@@ -1,6 +1,9 @@
 {
   "name": "minecpp_repository_test",
   "is_test": true,
+  "resources": [
+    "../../../repository.bin"
+  ],
   "dependencies": {
     "public": [
       "gtest",

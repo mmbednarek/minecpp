@@ -16,29 +16,29 @@ namespace minecpp::nbt::block::v1 {
 class BlockState {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, common::v1::FaceMask>) {
-         if (name == "SolidFaces") {
-            this->solid_faces = std::forward<T>(value);
+         if (in_field_name == "SolidFaces") {
+            this->solid_faces = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "Luminance") {
-            this->luminance = std::forward<T>(value);
+         if (in_field_name == "Luminance") {
+            this->luminance = std::forward<T>(in_value);
             return;
          }
-         if (name == "Opacity") {
-            this->opacity = std::forward<T>(value);
+         if (in_field_name == "Opacity") {
+            this->opacity = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "BlocksMovement") {
-            this->blocks_movement = std::forward<T>(value);
+         if (in_field_name == "BlocksMovement") {
+            this->blocks_movement = std::forward<T>(in_value);
             return;
          }
          return;
@@ -52,7 +52,7 @@ class BlockState {
    common::v1::FaceMask solid_faces{};
    BlockState() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static BlockState deserialize_no_header(minecpp::nbt::Reader &r);
    static BlockState deserialize(std::istream &in);
 };

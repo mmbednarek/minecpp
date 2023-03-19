@@ -67,10 +67,10 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes)
          continue;
       }
       if (std::holds_alternative<Syntax::Ast::Message>(node)) {
-         auto astMsg = std::get<Syntax::Ast::Message>(node);
-         Message msg(astMsg.name);
-         msg.attribs.resize(astMsg.attributes.size());
-         std::transform(astMsg.attributes.begin(), astMsg.attributes.end(), msg.attribs.begin(),
+         auto ast_msg = std::get<Syntax::Ast::Message>(node);
+         Message msg(ast_msg.name);
+         msg.attribs.resize(ast_msg.attributes.size());
+         std::transform(ast_msg.attributes.begin(), ast_msg.attributes.end(), msg.attribs.begin(),
                         [](const Syntax::Ast::Attribute &attrib) {
                            return Attribute(Type(attrib.package, attrib.type, attrib.repeated,
                                                  attrib.optional, attrib.subtype),
@@ -80,8 +80,8 @@ Structure::Structure(std::vector<Syntax::Ast::Node> nodes)
          continue;
       }
       if (std::holds_alternative<Syntax::Ast::Import>(node)) {
-         auto astImport = std::get<Syntax::Ast::Import>(node);
-         imports.emplace_back(astImport.path);
+         auto ast_import = std::get<Syntax::Ast::Import>(node);
+         imports.emplace_back(ast_import.path);
       }
    }
 }
@@ -217,6 +217,7 @@ std::string Type::nbt_tagid() const
    case TypeVariant::Bytes: return "minecpp::nbt::TagId::ByteArray";
    case TypeVariant::Ints: return "minecpp::nbt::TagId::IntArray";
    case TypeVariant::Longs: return "minecpp::nbt::TagId::LongArray";
+   default: break;
    }
    return "minecpp::nbt::TagId::Compound";
 }
@@ -297,21 +298,25 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
          auto it = res.find(TypeVariant::Struct);
          if (it == res.end()) {
             res[TypeVariant::Struct] = CompoundDeserializer{.elems{{
-                    .kind     = CompoundKind::Struct,
-                    .typeName = type.to_cpp_type(),
-                    .name     = att.name,
-                    .id       = att.id,
-                    .label    = att.label,
+                    .kind      = CompoundKind::Struct,
+                    .type_name = type.to_cpp_type(),
+                    .name      = att.name,
+                    .id        = att.id,
+                    .subtype{},
+                    .subtype_name{},
+                    .label = att.label,
             }}};
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .kind     = CompoundKind::Struct,
-                 .typeName = type.to_cpp_type(),
-                 .name     = att.name,
-                 .id       = att.id,
-                 .label    = att.label,
+                 .kind      = CompoundKind::Struct,
+                 .type_name = type.to_cpp_type(),
+                 .name      = att.name,
+                 .id        = att.id,
+                 .subtype{},
+                 .subtype_name{},
+                 .label = att.label,
          });
          continue;
       }
@@ -324,26 +329,26 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
             res[TypeVariant::Struct] = CompoundDeserializer{
                     .elems{
                            {
-                           .kind        = CompoundKind::Map,
-                           .typeName    = att.type.to_cpp_type(),
-                           .name        = att.name,
-                           .id          = att.id,
-                           .subtype     = att.type.subtype->variant,
-                           .subtypeName = att.type.subtype->name,
-                           .label       = att.label,
+                           .kind         = CompoundKind::Map,
+                           .type_name    = att.type.to_cpp_type(),
+                           .name         = att.name,
+                           .id           = att.id,
+                           .subtype      = att.type.subtype->variant,
+                           .subtype_name = att.type.subtype->name,
+                           .label        = att.label,
                            }, }
             };
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .kind        = CompoundKind::Map,
-                 .typeName    = att.type.to_cpp_type(),
-                 .name        = att.name,
-                 .id          = att.id,
-                 .subtype     = att.type.subtype->variant,
-                 .subtypeName = att.type.subtype->to_cpp_type(),
-                 .label       = att.label,
+                 .kind         = CompoundKind::Map,
+                 .type_name    = att.type.to_cpp_type(),
+                 .name         = att.name,
+                 .id           = att.id,
+                 .subtype      = att.type.subtype->variant,
+                 .subtype_name = att.type.subtype->to_cpp_type(),
+                 .label        = att.label,
          });
          continue;
       }
@@ -353,22 +358,26 @@ std::map<TypeVariant, std::any> make_message_des(const std::vector<Attribute> &a
             res[TypeVariant::Struct] = CompoundDeserializer{
                     .elems{
                            {
-                           .kind     = CompoundKind::Compound,
-                           .typeName = att.type.to_cpp_type(),
-                           .name     = att.name,
-                           .id       = att.id,
-                           .label    = att.label,
+                           .kind      = CompoundKind::Compound,
+                           .type_name = att.type.to_cpp_type(),
+                           .name      = att.name,
+                           .id        = att.id,
+                           .subtype{},
+                           .subtype_name{},
+                           .label = att.label,
                            }, }
             };
             continue;
          }
          auto compound = std::any_cast<CompoundDeserializer>(&it->second);
          compound->elems.emplace_back(CompoundDeserializer::Elem{
-                 .kind     = CompoundKind::Compound,
-                 .typeName = att.type.to_cpp_type(),
-                 .name     = att.name,
-                 .id       = att.id,
-                 .label    = att.label,
+                 .kind      = CompoundKind::Compound,
+                 .type_name = att.type.to_cpp_type(),
+                 .name      = att.name,
+                 .id        = att.id,
+                 .subtype{},
+                 .subtype_name{},
+                 .label = att.label,
          });
          continue;
       }

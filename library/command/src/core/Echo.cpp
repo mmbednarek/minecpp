@@ -4,12 +4,12 @@
 
 namespace minecpp::command::core {
 
-bool Echo::is_flag(std::string_view name) const
+bool Echo::is_flag(std::string_view /*name*/) const
 {
    return true;
 }
 
-Object::Ptr Echo::run(RuntimeContext &ctx, CommandInput &input) const
+Object::Ptr Echo::run(RuntimeContext & /*ctx*/, CommandInput &input) const
 {
    if (input.arg_count() == 0)
       return {};
@@ -36,7 +36,7 @@ Object::Ptr Echo::run(RuntimeContext &ctx, CommandInput &input) const
    return fmt;
 }
 
-ObjectType Echo::return_type(RuntimeContext &ctx) const
+ObjectType Echo::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }

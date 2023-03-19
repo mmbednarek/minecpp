@@ -16,8 +16,14 @@ Builder &Builder::text(std::string_view s)
       return *this;
    }
 
-   m_first = false;
-   m_node.children.push_back(Node{.text = std::string(s)});
+   m_node.children.push_back(Node{
+           .text = std::string(s),
+           .color{},
+           .bold{},
+           .click_event{},
+           .hover_event{},
+           .children{},
+   });
    m_first = false;
    return *this;
 }
@@ -27,6 +33,10 @@ Builder &Builder::text(Color c, std::string_view s)
    m_node.children.push_back(Node{
            .text  = std::string(s),
            .color = c,
+           .bold{},
+           .click_event{},
+           .hover_event{},
+           .children{},
    });
    m_first = false;
    return *this;
@@ -38,6 +48,9 @@ Builder &Builder::bold(Color c, std::string_view s)
            .text  = std::string(s),
            .color = c,
            .bold  = true,
+           .click_event{},
+           .hover_event{},
+           .children{},
    });
    m_first = false;
    return *this;
@@ -87,7 +100,6 @@ void Action::write(std::ostream &stream) const
 void Node::write(std::ostream &stream) const
 {
    stream << "{";
-   bool next_item = false;
    stream << R"("text": ")" << text << R"(")";
    if (color)
       stream << R"(, "color": ")" << color_to_str(*color) << R"(")";
@@ -117,4 +129,5 @@ void Node::write(std::ostream &stream) const
    }
    stream << "}";
 }
+
 }// namespace minecpp::format

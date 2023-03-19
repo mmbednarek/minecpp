@@ -3,20 +3,20 @@
 
 namespace minecpp::random {
 
-constexpr auto MULTIPLIER  = 0x5DEECE66DULL;
-constexpr auto ADDEND      = 0xBULL;
-constexpr auto MASK        = (1ULL << 48ULL) - 1;
-constexpr auto DOUBLE_UNIT = 0x1.0p-53;
+constexpr auto g_multiplier  = 0x5DEECE66DULL;
+constexpr auto g_addend      = 0xBULL;
+constexpr auto g_mask        = (1ULL << 48ULL) - 1;
+constexpr auto g_double_unit = 0x1.0p-53;
 
-JavaRandom::JavaRandom(uint64_t seed)
+JavaRandom::JavaRandom(std::uint64_t seed)
 {
-   _seed = (seed ^ MULTIPLIER) & MASK;
+   m_seed = (seed ^ g_multiplier) & g_mask;
 }
 
 int JavaRandom::next(int bits)
 {
-   _seed = (_seed * MULTIPLIER + ADDEND) & MASK;
-   return (int) (_seed >> (48ULL - bits));
+   m_seed = (m_seed * g_multiplier + g_addend) & g_mask;
+   return (int) (m_seed >> (48ULL - static_cast<std::uint64_t>(bits)));
 }
 
 int JavaRandom::next_int()
@@ -24,27 +24,29 @@ int JavaRandom::next_int()
    return next(32);
 }
 
-int JavaRandom::next_int(const uint32_t bound)
+int JavaRandom::next_int(const std::uint32_t bound)
 {
-   int r      = next(31);
-   uint32_t m = bound - 1;
+   auto r          = static_cast<std::uint32_t>(next(31));
+   std::uint32_t m = bound - 1;
    if ((bound & m) == 0)
-      r = (int) ((bound * (uint64_t) r) >> 31ULL);
+      r = (bound * r) >> 31ULL;
    else {
-      for (uint64_t u = r; u - (r = u % bound) + m < 0; u = next(31))
+      for (auto u{r}; static_cast<int>(u - (r = u % bound) + m) < 0; u = static_cast<std::uint32_t>(next(31)))
          ;
    }
-   return r;
+   return static_cast<int>(r);
 }
 
 double JavaRandom::next_double()
 {
-   return static_cast<double>((static_cast<uint64_t>(next(26)) << 27u) + next(27)) * DOUBLE_UNIT;
+   return static_cast<double>((static_cast<std::uint64_t>(next(26)) << 27u) +
+                              static_cast<std::uint64_t>(next(27))) *
+          g_double_unit;
 }
 
-void JavaRandom::reset_seed(uint64_t seed)
+void JavaRandom::reset_seed(std::uint64_t seed)
 {
-   _seed = (seed ^ MULTIPLIER) & MASK;
+   m_seed = (seed ^ g_multiplier) & g_mask;
 }
 
 

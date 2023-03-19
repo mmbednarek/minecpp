@@ -3,7 +3,7 @@
 #include <minecpp/math/Vector3.h>
 #include <minecpp/random/JavaRandom.h>
 #include <minecpp/random/Perlin.h>
-#include <minecpp/random/Perlin3d.h>
+#include <minecpp/random/Perlin3D.h>
 
 TEST(Rand, JavaRandom)
 {
@@ -94,7 +94,7 @@ TEST(Rand, Perlin)
 TEST(Rand, Perlin3d)
 {
    minecpp::random::JavaRandom rand(8091867987493326313);
-   minecpp::random::Perlin3d perlin(rand);
+   minecpp::random::Perlin3D perlin(rand);
 
    for (double z = 0.0; z <= 16.0; z += 0.1) {
       for (double x = 0.0; x <= 16.0; x += 0.1) {

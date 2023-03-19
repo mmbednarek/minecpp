@@ -165,12 +165,12 @@ mb::emptyres World::set_light(game::LightType light_type, const game::BlockPosit
    return mb::ok;
 }
 
-mb::result<std::unique_ptr<game::ISectionSlice>> World::get_slice(game::SectionRange range)
+mb::result<std::unique_ptr<game::ISectionSlice>> World::get_slice(game::SectionRange /*range*/)
 {
    return mb::error("not implemented");
 }
 
-mb::emptyres World::apply_slice(game::ISectionSlice &slice)
+mb::emptyres World::apply_slice(game::ISectionSlice & /*slice*/)
 {
    return mb::error("not implemented");
 }
@@ -180,7 +180,7 @@ game::ILightSystem &World::light_system()
    return m_light_system;
 }
 
-mb::emptyres World::recalculate_light(game::LightType light_type, const game::BlockPosition &pos)
+mb::emptyres World::recalculate_light(game::LightType /*light_type*/, const game::BlockPosition & /*pos*/)
 {
    return mb::error("not implemented");
 }

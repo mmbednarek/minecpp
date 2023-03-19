@@ -7,9 +7,9 @@ using game::BlockStateId;
 using game::Face;
 using game::IWorld;
 
-std::optional<BlockStateId> Foliage::on_neighbour_change(IWorld &world, BlockStateId block_state_id,
-                                                         BlockStateId neighbour_block_state_id,
-                                                         BlockPosition position, Face face)
+std::optional<BlockStateId> Foliage::on_neighbour_change(IWorld &world, BlockStateId /*block_state_id*/,
+                                                         BlockStateId /*neighbour_block_state_id*/,
+                                                         BlockPosition position, Face /*face*/)
 {
    // destroy block if any block change, forward neighbour change
    world.destroy_block(position);

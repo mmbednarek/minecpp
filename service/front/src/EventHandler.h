@@ -13,11 +13,6 @@ namespace clientbound_v1 = proto::event::clientbound::v1;
 
 class EventHandler
 {
-   Server &m_server;
-   engine::IStream *m_stream = nullptr;
-   nbt::repository::v1::Registry &m_registry;
-   std::unique_ptr<std::future<bool>> m_player_list{};
-
  public:
    explicit EventHandler(Server &server, nbt::repository::v1::Registry &registry);
 
@@ -46,8 +41,6 @@ class EventHandler
                             const event::RecipientList &recipient_list);
    void handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
                                const event::RecipientList &recipient_list);
-   void handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg,
-                                       const event::RecipientList &recipient_list);
    void handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
                             const event::RecipientList &recipient_list);
    void handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
@@ -130,6 +123,12 @@ class EventHandler
    }
 
    void send_entity(const event::RecipientList &recipient_list, const proto::entity::v1::Entity &entity);
+
+ private:
+   Server &m_server;
+   engine::IStream *m_stream = nullptr;
+   nbt::repository::v1::Registry &m_registry;
+   std::unique_ptr<std::future<bool>> m_player_list{};
 };
 
 }// namespace minecpp::service::front

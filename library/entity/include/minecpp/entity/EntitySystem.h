@@ -1,7 +1,7 @@
 #pragma once
 
-#include <entt/entt.hpp>
 #include <minecpp/game/Entity.h>
+#include <minecpp/game/Entt.hpp>
 #include <minecpp/game/Game.h>
 #include <minecpp/game/IEntitySystem.hpp>
 #include <minecpp/proto/entity/v1/Entity.pb.h>

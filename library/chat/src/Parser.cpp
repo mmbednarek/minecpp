@@ -71,9 +71,7 @@ mb::result<Command> parse(std::vector<Token> &tokens)
       return mb::error("command name must be an identifier");
    }
 
-   Command result{
-           .name = tokens[0].value,
-   };
+   Command result{.name = tokens[0].value, .args{}};
 
    if (tokens.size() == 1) {
       return result;

@@ -1,5 +1,4 @@
 #include <minecpp/crypto/AESKey.h>
-#include <openssl/aes.h>
 
 namespace minecpp::crypto {
 
@@ -65,35 +64,35 @@ AESKey &AESKey::operator=(AESKey &&other) noexcept
 
 EmptyResult AESKey::encrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count)
 {
-   char in_data[count];
-   in_stream.read(in_data, static_cast<int>(count));
+   std::vector<char> in_data(count);
+   in_stream.read(in_data.data(), static_cast<std::streamsize>(in_data.size()));
+
+   std::vector<unsigned char> out_data(count);
 
    int data_size = static_cast<int>(count);
-   unsigned char out_data[data_size];
-
-   if (not EVP_EncryptUpdate(m_encrypt_ctx, out_data, &data_size, reinterpret_cast<std::uint8_t *>(in_data),
-                             static_cast<int>(count))) {
+   if (not EVP_EncryptUpdate(m_encrypt_ctx, out_data.data(), &data_size,
+                             reinterpret_cast<std::uint8_t *>(in_data.data()), static_cast<int>(count))) {
       return ErrorType::EncryptionError;
    }
 
-   out_stream.write(reinterpret_cast<const char *>(out_data), data_size);
+   out_stream.write(reinterpret_cast<const char *>(out_data.data()), data_size);
    return mb::ok;
 }
 
 EmptyResult AESKey::decrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count)
 {
-   char in_data[count];
-   in_stream.read(in_data, static_cast<int>(count));
+   std::vector<char> in_data(count);
+   in_stream.read(in_data.data(), static_cast<std::streamsize>(in_data.size()));
 
-   unsigned char out_data[count];
+   std::vector<unsigned char> out_data(count);
+
    int data_size = static_cast<int>(count);
-
-   if (not EVP_DecryptUpdate(m_decrypt_ctx, out_data, &data_size, reinterpret_cast<std::uint8_t *>(in_data),
-                             static_cast<int>(count))) {
+   if (not EVP_DecryptUpdate(m_decrypt_ctx, out_data.data(), &data_size,
+                             reinterpret_cast<std::uint8_t *>(in_data.data()), static_cast<int>(count))) {
       return ErrorType::DecryptionError;
    }
 
-   out_stream.write(reinterpret_cast<const char *>(out_data), data_size);
+   out_stream.write(reinterpret_cast<const char *>(out_data.data()), data_size);
    return mb::ok;
 }
 

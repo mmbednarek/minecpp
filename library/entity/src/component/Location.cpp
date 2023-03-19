@@ -50,11 +50,11 @@ void Location::set_position(game::IWorld &world, game::Entity &entity, const mat
    }
 
    if (position.y() < -16.0) {
-      world.apply_damage_or_kill_entity(entity.id(), game::Damage{
-                                                             .amount        = 100.0f,
-                                                             .source        = game::DamageSource::VoidDamage,
-                                                             .target_entity = entity.id(),
-                                                     });
+      world.apply_damage_or_kill_entity(entity.id(), game::Damage{.amount = 100.0f,
+                                                                  .source = game::DamageSource::VoidDamage,
+                                                                  .source_entity{},
+                                                                  .target_entity = entity.id(),
+                                                                  .vector{}});
       return;
    }
 

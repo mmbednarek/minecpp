@@ -15,25 +15,25 @@ namespace minecpp::nbt::item::v1 {
 class Item {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "MaxItemStack") {
-            this->max_item_stack = std::forward<T>(value);
+         if (in_field_name == "MaxItemStack") {
+            this->max_item_stack = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "IsBlock") {
-            this->is_block = std::forward<T>(value);
+         if (in_field_name == "IsBlock") {
+            this->is_block = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "CorrespondingBlockTag") {
-            this->corresponding_block_tag = std::forward<T>(value);
+         if (in_field_name == "CorrespondingBlockTag") {
+            this->corresponding_block_tag = std::forward<T>(in_value);
             return;
          }
          return;
@@ -46,7 +46,7 @@ class Item {
    std::int32_t max_item_stack{};
    Item() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Item deserialize_no_header(minecpp::nbt::Reader &r);
    static Item deserialize(std::istream &in);
 };

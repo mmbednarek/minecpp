@@ -1,7 +1,10 @@
 #include "TokenReader.h"
-#include <fmt/core.h>
+#include "Error.h"
 
 namespace Lex {
+
+using minecpp::tool::nbt_idl::Error;
+using minecpp::tool::nbt_idl::ErrorType;
 
 TokenReader::TokenReader(std::vector<Token> elements) :
     elements(std::move(elements))
@@ -18,11 +21,11 @@ Token TokenReader::next()
    return elements[at++];
 }
 
-mb::result<Token> TokenReader::expect(TokenType t)
+Token TokenReader::expect(TokenType t)
 {
    auto tkn = next();
    if (tkn.tt != t) {
-      return mb::error(fmt::format("[{}:{}] unexpected token \"{}\"", tkn.line, tkn.col, tkn.value));
+      throw Error(tkn.line, tkn.col, ErrorType::UnexpectedToken, "");
    }
    return tkn;
 }

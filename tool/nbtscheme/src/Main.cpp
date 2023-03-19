@@ -12,7 +12,7 @@ static std::string to_camel_case(const std::string_view name)
    std::string result;
 
    auto it = name.begin();
-   result.push_back(std::toupper(*it));
+   result.push_back(static_cast<char>(std::toupper(*it)));
 
    bool next_upper{false};
    std::for_each(it + 1, name.end(), [&result, &next_upper](char c) {
@@ -20,7 +20,7 @@ static std::string to_camel_case(const std::string_view name)
          next_upper = true;
       } else if (next_upper) {
          next_upper = false;
-         result.push_back(std::toupper(c));
+         result.push_back(static_cast<char>(std::toupper(c)));
       } else {
          result.push_back(c);
       }
@@ -60,7 +60,7 @@ struct NameProvider
       return register_name(scoped_name, parent_label, std::string(label) + "X");
    }
 
-   std::string_view get_type(std::string scoped_name)
+   std::string_view get_type(const std::string &scoped_name)
    {
       return labels[scoped_name];
    }
@@ -82,14 +82,15 @@ std::string format_name(const std::string_view name)
    std::string result;
 
    if (all_upper_case(name)) {
-      std::for_each(name.begin(), name.end(), [&result](char c) { result.push_back(std::tolower(c)); });
+      std::for_each(name.begin(), name.end(),
+                    [&result](char c) { result.push_back(static_cast<char>(std::tolower(c))); });
       return result;
    }
 
    auto it    = name.begin();
    auto first = *it;
    if (std::isupper(first)) {
-      result.push_back(std::tolower(first));
+      result.push_back(static_cast<char>(std::tolower(first)));
    } else {
       result.push_back(first);
    }
@@ -99,7 +100,7 @@ std::string format_name(const std::string_view name)
          result.push_back('_');
       } else if (std::isupper(c)) {
          result.push_back('_');
-         result.push_back(std::tolower(c));
+         result.push_back(static_cast<char>(std::tolower(c)));
       } else {
          result.push_back(c);
       }
@@ -192,6 +193,7 @@ std::string find_type(NameProvider &np, std::string_view scope, minecpp::nbt::Co
    case minecpp::nbt::TagId::Compound: {
       return std::string(np.get_type(std::string(scope)));
    }
+   default: break;
    }
 
    return "<unknown>";

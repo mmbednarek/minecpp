@@ -21,10 +21,13 @@ class PalettedVector
    PalettedVector(TIterator begin, TIterator end)
    {
       std::map<value_type, size_type> unique_values;
-      std::for_each(begin, end, [&unique_values, index = 0](auto value) mutable {
+      std::for_each(begin, end, [&unique_values, index = 0](auto item_value) mutable {
+         auto value = static_cast<value_type>(item_value);
+
          if (unique_values.contains(value))
             return;
-         unique_values.emplace(static_cast<value_type>(value), index++);
+
+         unique_values.emplace(value, index++);
       });
 
       m_palette.resize(unique_values.size());
@@ -32,12 +35,12 @@ class PalettedVector
          m_palette[pair.second] = pair.first;
       }
 
-      const auto data_size = end - begin;
+      const auto data_size = static_cast<size_type>(end - begin);
       m_data.resize(data_size);
 
       auto at = begin;
       for (size_type i{0}; i < data_size; ++i) {
-         m_data.set(i, unique_values[*at]);
+         m_data.set(i, static_cast<index_type>(unique_values[*at]));
          ++at;
       }
    }
@@ -58,10 +61,10 @@ class PalettedVector
       auto palette_index = std::find(m_palette.begin(), m_palette.end(), value);
       if (palette_index == m_palette.end()) {
          m_palette.push_back(value);
-         m_data.set(index, m_palette.size() - 1);
+         m_data.set(index, static_cast<index_type>(m_palette.size() - 1ul));
          return;
       }
-      m_data.set(index, palette_index - m_palette.begin());
+      m_data.set(index, static_cast<index_type>(palette_index - m_palette.begin()));
    }
 
    [[nodiscard]] constexpr size_type size() const
@@ -76,7 +79,7 @@ class PalettedVector
    {
       PalettedVector result;
 
-      result.m_palette.resize(palette_end - palette_begin);
+      result.m_palette.resize(static_cast<std::size_t>(palette_end - palette_begin));
       std::copy(palette_begin, palette_end, result.m_palette.begin());
 
       result.m_data = TightVector::from_raw(bits, size, indices_begin, indices_end);
@@ -93,11 +96,12 @@ class PalettedVector
 
       const auto palette_size = palette_end - palette_begin;
 
-      result.m_palette.resize(palette_size);
+      result.m_palette.resize(static_cast<std::size_t>(palette_size));
       std::copy(palette_begin, palette_end, result.m_palette.begin());
 
-      result.m_data = TightVector::from_raw(TightVector::min_bits_to_encode(palette_size), size,
-                                            indices_begin, indices_end);
+      result.m_data =
+              TightVector::from_raw(TightVector::min_bits_to_encode(static_cast<mb::i32>(palette_size)), size,
+                                    indices_begin, indices_end);
 
       return result;
    }
@@ -135,7 +139,7 @@ class PalettedVector
 
       [[nodiscard]] value_type operator*() const
       {
-         return m_vector.palette().at(*m_at);
+         return m_vector.palette().at(static_cast<std::size_t>(*m_at));
       }
    };
 

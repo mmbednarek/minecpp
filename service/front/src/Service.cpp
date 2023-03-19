@@ -3,7 +3,6 @@
 #include "Server.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/name_generator.hpp>
-#include <fstream>
 #include <minecpp/game/Game.h>
 #include <minecpp/network/message/Clientbound.h>
 #include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
@@ -11,14 +10,13 @@
 #include <minecpp/util/Uuid.h>
 #include <spdlog/spdlog.h>
 
+using google::protobuf::Message;
+
 namespace minecpp::service::front {
 
 namespace serverbound_v1 = proto::event::serverbound::v1;
 
-const char *internal_reason =
-        R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " INTERNAL ERROR"}], "text": ""})";
-
-Service::Service(Config &conf) {}
+Service::Service(Config & /*config*/) {}
 
 Service::LoginResponse Service::login_player(std::string &user_name)
 {
@@ -26,40 +24,44 @@ Service::LoginResponse Service::login_player(std::string &user_name)
    boost::uuids::name_generator gen(g_player_uuid_namespace);
 
    return Service::LoginResponse{
-           .accepted  = true,
+           .accepted = true,
+           .refusal_reason{},
            .user_name = user_name,
            .id        = gen(user_name),
    };
 }
 
-minecpp::network::message::Raw get_command_list();
-
 void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name)
 {
    using namespace minecpp::network::message;
 
-   conn->set_state(Protocol::State::Play);
+   assert(m_stream != nullptr);
+
+   conn->set_state(protocol::State::Play);
    conn->set_uuid(id);
 
    proto::event::serverbound::v1::AcceptPlayer accept_player;
    accept_player.set_challenge_id(0);
    accept_player.set_name(std::string(name));
-   m_stream->send(accept_player, id);
+   this->send(accept_player, id);
 }
 
-void Service::on_player_disconnect(uuid engine_id, game::PlayerId player_id)
+void Service::on_player_disconnect(uuid /*engine_id*/, game::PlayerId player_id)
 {
+   assert(m_stream != nullptr);
+
    proto::event::serverbound::v1::RemovePlayer remove_player{};
-   m_stream->send(remove_player, player_id);
+   this->send(remove_player, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::ClientSettings msg)
 {
+   assert(this);
    spdlog::info("client {} language: {}", game::player::format_player_id(player_id), msg.lang);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerPosition msg)
 {
    serverbound_v1::SetPlayerPosition player_position;
@@ -67,10 +69,10 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    player_position.mutable_position()->set_y(msg.y);
    player_position.mutable_position()->set_z(msg.z);
    player_position.set_is_on_ground(msg.on_ground);
-   m_stream->send(player_position, player_id);
+   this->send(player_position, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerPositionRotation msg)
 {
    serverbound_v1::SetPlayerPositionRotation player_position_rotation;
@@ -80,27 +82,28 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    player_position_rotation.mutable_rotation()->set_yaw(msg.yaw);
    player_position_rotation.mutable_rotation()->set_pitch(msg.pitch);
    player_position_rotation.set_is_on_ground(msg.on_ground);
-   m_stream->send(player_position_rotation, player_id);
+   this->send(player_position_rotation, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerRotation msg)
 {
    serverbound_v1::SetPlayerRotation player_rotation;
    player_rotation.mutable_rotation()->set_yaw(msg.yaw);
    player_rotation.mutable_rotation()->set_pitch(msg.pitch);
-   m_stream->send(player_rotation, player_id);
+   this->send(player_rotation, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerOnGround msg)
 {
    serverbound_v1::SetPlayerOnGround player_on_ground;
    player_on_ground.set_is_on_ground(msg.is_on_ground);
-   m_stream->send(player_on_ground, player_id);
+   this->send(player_on_ground, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::Interact msg)
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
+                         minecpp::network::message::Interact msg)
 {
    serverbound_v1::Interact interact;
    interact.set_entity_id(static_cast<mb::u32>(msg.entity_id));
@@ -110,43 +113,44 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
    interact.set_is_sneaking(msg.is_sneaking);
    interact.set_interaction_type(static_cast<proto::common::v1::InteractionType>(msg.type));
    interact.set_hand_type(static_cast<proto::common::v1::HandType>(msg.hand));
-   m_stream->send(interact, player_id);
+   this->send(interact, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ChatMessage msg)
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
+                         minecpp::network::message::ChatMessage msg)
 {
    serverbound_v1::ChatMessage chat_message;
    chat_message.set_message(msg.message);
-   m_stream->send(chat_message, player_id);
+   this->send(chat_message, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerDigging msg)
 {
    serverbound_v1::PlayerDigging player_digging;
    player_digging.set_state(static_cast<proto::common::v1::PlayerDiggingState>(msg.action));
    *player_digging.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
    player_digging.set_face(msg.facing.to_proto());
-   m_stream->send(player_digging, player_id);
+   this->send(player_digging, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::KeepAliveClient msg)
 {
    serverbound_v1::UpdatePing update_ping;
-   update_ping.set_ping(static_cast<int>(minecpp::util::now_milis() - msg.time));
-   m_stream->send(update_ping, player_id);
+   update_ping.set_ping(static_cast<int>(static_cast<std::uint64_t>(minecpp::util::now_milis()) - msg.time));
+   this->send(update_ping, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::AnimateHandClient msg)
 {
    serverbound_v1::AnimateHand animate_hand;
    animate_hand.set_hand(static_cast<int>(msg.hand));
-   m_stream->send(animate_hand, player_id);
+   this->send(animate_hand, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerBlockPlacement msg)
 {
    serverbound_v1::BlockPlacement block_placement;
@@ -158,10 +162,11 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id,
    block_placement.mutable_crosshair()->set_z(msg.z);
    block_placement.set_inside_block(msg.inside_block);
    block_placement.set_sequence_id(msg.sequence_id);
-   m_stream->send(block_placement, player_id);
+   this->send(block_placement, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClickWindow msg)
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
+                         const minecpp::network::message::ClickWindow &msg)
 {
    if (msg.window_id != 0)
       return;
@@ -169,7 +174,7 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
    if (msg.slot == -999 && msg.mode == 0) {
       serverbound_v1::DropInventoryItem drop_item;
       drop_item.set_full_stack(msg.button == 0);
-      m_stream->send(drop_item, player_id);
+      this->send(drop_item, player_id);
       return;
    }
 
@@ -178,43 +183,44 @@ void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::netw
       change_item.mutable_item_id()->set_id(static_cast<uint32_t>(slot.item_id));
       change_item.set_slot_id(slot.slot_id);
       change_item.set_item_count(slot.count);
-      m_stream->send(change_item, player_id);
+      this->send(change_item, player_id);
    }
 
    serverbound_v1::SetCarriedItem carried_item;
    carried_item.mutable_carried_item_id()->set_id(static_cast<std::uint32_t>(msg.carried_item_id));
    carried_item.set_carried_item_count(msg.carried_count);
-   m_stream->send(carried_item, player_id);
+   this->send(carried_item, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::HeldItemChange msg)
 {
    serverbound_v1::ChangeHeldItem held_item;
    held_item.set_slot(msg.slot);
-   m_stream->send(held_item, player_id);
+   this->send(held_item, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId /*player_id*/,
                          minecpp::network::message::PluginMessage msg)
 {
+   assert(this);
    spdlog::info("received plugin message channel={}, data={}", msg.channel, msg.data);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id,
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          const minecpp::network::message::ChatCommand &msg)
 {
    serverbound_v1::IssueCommand command;
    command.set_command(msg.command);
-   m_stream->send(command, player_id);
+   this->send(command, player_id);
 }
 
-void Service::on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::UseItem msg)
+void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id, minecpp::network::message::UseItem msg)
 {
    serverbound_v1::UseItem use_item;
    use_item.set_hand(static_cast<int32_t>(msg.hand));
    use_item.set_sequence_id(msg.sequence_id);
-   m_stream->send(use_item, player_id);
+   this->send(use_item, player_id);
 }
 
 void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
@@ -222,8 +228,21 @@ void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
 {
    if (msg.action_id == 0) {
       serverbound_v1::RequestRespawn request_respawn;
-      m_stream->send(request_respawn, player_id);
+      this->send(request_respawn, player_id);
    }
+}
+
+void Service::send(const google::protobuf::Message &message, game::PlayerId id)
+{
+   if (m_stream == nullptr)
+      throw std::runtime_error("no available engine connection");
+
+   m_stream->send(message, id);
+}
+
+void Service::set_stream(engine::IStream *stream)
+{
+   m_stream = stream;
 }
 
 const char command_list[]{

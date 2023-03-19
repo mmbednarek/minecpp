@@ -88,7 +88,7 @@ class State
                     return std::to_string(detail.min + index);
                  }
                  if constexpr (std::is_same_v<T, EnumState>) {
-                    return detail.values[index];
+                    return detail.values[static_cast<std::size_t>(index)];
                  }
                  return "";
               },
@@ -104,11 +104,11 @@ class State
                     return value == "true" ? 0 : 1;
                  }
                  if constexpr (std::is_same_v<T, IntState>) {
-                    return std::atoi(value.data()) - detail.min;
+                    return static_cast<int>(std::strtol(value.data(), nullptr, 10) - detail.min);
                  }
                  if constexpr (std::is_same_v<T, EnumState>) {
-                    return std::find(detail.values.begin(), detail.values.end(), value) -
-                           detail.values.begin();
+                    return static_cast<int>(std::find(detail.values.begin(), detail.values.end(), value) -
+                                            detail.values.begin());
                  }
                  return 0;
               },
@@ -130,7 +130,7 @@ class State
                     auto it = std::find(detail.values.begin(), detail.values.end(), std::to_string(value));
                     if (it == detail.values.end())
                        return 0;
-                    return it - detail.values.begin();
+                    return static_cast<int>(it - detail.values.begin());
                  }
                  return 0;
               },

@@ -41,7 +41,7 @@ Object::Ptr ListEntities::run(RuntimeContext &ctx, CommandInput &input) const
    return output;
 }
 
-ObjectType ListEntities::return_type(RuntimeContext &ctx) const
+ObjectType ListEntities::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }

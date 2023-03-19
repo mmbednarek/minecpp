@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iostream>
 #include <minecpp/network/message/Chunk.h>
 #include <minecpp/region/File.h>
@@ -20,9 +19,9 @@ auto main(int argc, char *argv[]) -> int
 
    minecpp::region::RegionFile r(stream);
 
-   uint32_t x = std::stoi(argv[2]);
-   uint32_t z = std::stoi(argv[3]);
-   auto data  = r.load_chunk(x, z).unwrap();
+   auto x    = std::stoi(argv[2]);
+   auto z    = std::stoi(argv[3]);
+   auto data = r.load_chunk(x, z).unwrap();
 
    std::istringstream ss(std::string((char *) data.data(), data.size()));
    minecpp::util::ZlibInputStream zlib_stream(ss);

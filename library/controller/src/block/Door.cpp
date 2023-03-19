@@ -21,7 +21,7 @@ static Side find_side(IWorld &world, BlockPosition upper, BlockPosition lower, D
                       BlockId door_id);
 
 bool Door::on_player_place_block(IWorld &world, PlayerId player_id, BlockId block_id, BlockPosition position,
-                                 Face face, const math::Vector3f &crosshair_position)
+                                 Face face, const math::Vector3f & /*crosshair_position*/)
 {
    auto lower_pos = position.neighbour_at(face);
    auto upper_pos = lower_pos.neighbour_at(Face::Top);

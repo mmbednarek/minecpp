@@ -15,7 +15,7 @@ JobConditionStatus ChunkIsComplete::status() const
    return JobConditionStatus::NotQueued;
 }
 
-void ChunkIsComplete::resolve(JobSystem &job_system)
+void ChunkIsComplete::resolve(JobSystem & /*job_system*/)
 {
    m_chunk_system.subscribe_chunk(m_chunk_position);
 }

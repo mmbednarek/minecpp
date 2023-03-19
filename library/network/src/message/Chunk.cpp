@@ -21,15 +21,15 @@ void write_chunk(Writer &w, const Chunk &chunk)
    nbt::Writer height_maps(w.raw_stream());
    height_maps.begin_compound("");
    {
-      auto mb = chunk.hm_motion_blocking();
-      height_maps.write_long_array("MOTION_BLOCKING", mb.data(), mb.size());
-      auto ws = chunk.hm_world_surface();
-      height_maps.write_long_array("WORLD_SURFACE", ws.data(), ws.size());
+      const auto &mb = chunk.hm_motion_blocking();
+      height_maps.write_long_array("MOTION_BLOCKING", mb.data(), static_cast<std::size_t>(mb.size()));
+      const auto &ws = chunk.hm_world_surface();
+      height_maps.write_long_array("WORLD_SURFACE", ws.data(), static_cast<std::size_t>(ws.size()));
    }
    height_maps.end_compound();
 
    auto chunk_data_writer = get_chunk_data(chunk);
-   w.write_varint(chunk_data_writer.peek_size());
+   w.write_varint(static_cast<std::uint32_t>(chunk_data_writer.peek_size()));
    w.write_from(chunk_data_writer);
 
    // tile entity, left for now
@@ -40,8 +40,8 @@ void write_chunk(Writer &w, const Chunk &chunk)
 
 void write_light(Writer &w, const Chunk &chunk)
 {
-   w.write_varint(chunk.position().x());
-   w.write_varint(chunk.position().z());
+   w.write_varint(static_cast<std::uint32_t>(chunk.position().x()));
+   w.write_varint(static_cast<std::uint32_t>(chunk.position().z()));
    write_light_data(w, chunk);
 }
 
@@ -50,36 +50,36 @@ void write_light_data(Writer &w, const Chunk &chunk)
    uint32_t sky_light_count   = 0;
    uint32_t block_light_count = 0;
 
-   uint32_t skyUpdateMask   = 0;
-   uint32_t blockUpdateMask = 0;
-   uint32_t skyResetMask    = 0;
-   uint32_t blockResetMask  = 0;
+   uint32_t sky_update_mask   = 0;
+   uint32_t block_update_mask = 0;
+   uint32_t sky_reset_mask    = 0;
+   uint32_t block_reset_mask  = 0;
 
    for (auto const &sec : chunk.sections()) {
-      uint8_t place = static_cast<char>(sec.y()) + 1;
+      auto place = static_cast<char>(sec.y()) + 1;
       if (sec.sky_light().empty()) {
-         skyResetMask |= 1u << place;
+         sky_reset_mask |= 1u << place;
       } else {
          ++sky_light_count;
-         skyUpdateMask |= 1u << place;
+         sky_update_mask |= 1u << place;
       }
       if (sec.block_light().empty()) {
-         blockResetMask |= 1u << place;
+         block_reset_mask |= 1u << place;
       } else {
          ++block_light_count;
-         blockUpdateMask |= 1u << place;
+         block_update_mask |= 1u << place;
       }
    }
 
    w.write_byte(1);// Trust edges
    w.write_varint(1);
-   w.write_long(skyUpdateMask);
+   w.write_long(sky_update_mask);
    w.write_varint(1);
-   w.write_long(blockUpdateMask);
+   w.write_long(block_update_mask);
    w.write_varint(1);
-   w.write_long(skyResetMask);
+   w.write_long(sky_reset_mask);
    w.write_varint(1);
-   w.write_long(blockResetMask);
+   w.write_long(block_reset_mask);
 
    w.write_varint(sky_light_count);
 
@@ -88,7 +88,7 @@ void write_light_data(Writer &w, const Chunk &chunk)
          if (sec.sky_light().size() != 2048) {
             spdlog::error("shiitt");
          }
-         w.write_varint(sec.sky_light().size());
+         w.write_varint(static_cast<std::uint32_t>(sec.sky_light().size()));
          w.write_bytes(sec.sky_light().data(), sec.sky_light().size());
       }
    }
@@ -100,7 +100,7 @@ void write_light_data(Writer &w, const Chunk &chunk)
          if (sec.block_light().size() != 2048) {
             spdlog::error("shiitt");
          }
-         w.write_varint(sec.block_light().size());
+         w.write_varint(static_cast<std::uint32_t>(sec.block_light().size()));
          w.write_bytes(sec.block_light().data(), sec.block_light().size());
       }
    }

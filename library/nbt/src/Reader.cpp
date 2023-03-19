@@ -107,7 +107,7 @@ TagHeader Reader::peek_tag()
 {
    auto tagid = read_static(TagId::End);
    if (tagid == TagId::End) {
-      return TagHeader{.id = tagid};
+      return TagHeader{.id = tagid, .name{}};
    }
    return TagHeader{.id = tagid, .name = read_string()};
 }

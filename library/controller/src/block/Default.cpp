@@ -5,7 +5,6 @@
 #include <minecpp/game/player/Player.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
-#include <minecpp/util/String.h>
 #include <minecpp/world/BlockState.h>
 
 using minecpp::game::Face;
@@ -20,7 +19,7 @@ bool Default::on_player_place_block(game::IWorld &world, game::PlayerId, int blo
 {
    const auto neighbour_position = position.neighbour_at(face);
 
-   game::BlockStateId target_state_id{};
+   game::BlockStateId target_state_id;
 
    auto block = repository::Block::the().get_by_id(block_id);
    if (block->has_state("waterlogged")) {
@@ -45,9 +44,9 @@ std::optional<game::BlockStateId> Default::on_neighbour_change(game::IWorld &, g
    return std::nullopt;
 }
 
-bool Default::on_player_action(game::IWorld &world, game::PlayerId player_id,
-                               game::BlockStateId block_state_id, game::BlockPosition position,
-                               game::Face face, const math::Vector3f &crosshair_position)
+bool Default::on_player_action(game::IWorld & /*world*/, game::PlayerId /*player_id*/,
+                               game::BlockStateId /*block_state_id*/, game::BlockPosition /*position*/,
+                               game::Face /*face*/, const math::Vector3f & /*crosshair_position*/)
 {
    return false;
 }

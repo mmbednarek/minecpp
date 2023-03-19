@@ -229,7 +229,7 @@ class ConnectionManager
       });
    }
 
-   mb::result<mb::empty> worker_routine(int id)
+   mb::result<mb::empty> worker_routine(int /*id*/)
    {
       minecpp::util::label_thread("Stream API worker");
 

@@ -90,6 +90,15 @@ function generate_cmake_target() {
 
   echo ")"
 
+  if compiler_flags=$(jq -r '.compiler_flags[]' < "$libdir/Build.json" 2>/dev/null); then
+    echo ""
+    echo "target_compile_options($targetname PUBLIC"
+    for flag in $compiler_flags; do
+      echo "        $flag"
+    done
+    echo ")"
+  fi
+
   if [[ $is_test == "true" ]]; then
     echo ""
     echo "add_test(NAME ${targetname%_test} COMMAND $targetname)"

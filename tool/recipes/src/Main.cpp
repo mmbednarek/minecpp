@@ -5,7 +5,7 @@
 
 namespace options = boost::program_options;
 
-void print_shaped(minecpp::game::item::Recipe recipe)
+void print_shaped(const minecpp::game::item::Recipe &recipe)
 {
    std::cout << "shaped:\n";
    auto details = recipe.details<minecpp::game::item::Recipe::CraftingShaped>();
@@ -13,13 +13,16 @@ void print_shaped(minecpp::game::item::Recipe recipe)
    for (int y = 0; y < details.height; ++y) {
       std::cout << "  ";
       for (int x = 0; x < details.width; ++x) {
-         auto in = details.ingredients[y * details.width + x];
+         auto index = y * details.width + x;
+         auto in    = details.ingredients[static_cast<std::size_t>(index)];
          if (in.empty()) {
             std::cout << "empty ";
             continue;
          }
-         auto item = MB_ESCAPE(minecpp::repository::Item::the().get_by_id(in[0].id));
-         std::cout << item.tag() << " ";
+         auto item = minecpp::repository::Item::the().get_by_id(in[0].id);
+         if (item.has_failed())
+            continue;
+         std::cout << item->tag() << " ";
       }
       std::cout << "\n";
    }

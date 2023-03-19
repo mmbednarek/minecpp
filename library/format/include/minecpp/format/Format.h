@@ -50,9 +50,6 @@ std::string_view color_to_str(Color c);
 
 class Builder
 {
-   Node m_node;
-   bool m_first = true;
-
  public:
    Builder &text(std::string_view s);
    Builder &text(Color c, std::string_view s);
@@ -60,6 +57,10 @@ class Builder
 
    Node node();
    std::string to_string();
+
+ private:
+   Node m_node;
+   bool m_first = true;
 };
 
 }// namespace minecpp::format

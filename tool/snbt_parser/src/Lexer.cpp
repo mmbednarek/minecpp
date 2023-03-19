@@ -27,6 +27,7 @@ std::vector<Token> Lexer::lex()
             m_result.push_back(Token{.type = TokenType::String, .value = m_identifier});
             m_identifier.clear();
             continue;
+         default: break;
          }
          m_identifier.push_back(static_cast<char>(ch));
          continue;
@@ -37,6 +38,7 @@ std::vector<Token> Lexer::lex()
          case 'n': m_identifier.push_back('\n'); break;
          case 't': m_identifier.push_back('\t'); break;
          case 'r': m_identifier.push_back('\r'); break;
+         default: break;
          }
          m_state = State::String;
          continue;
@@ -76,6 +78,7 @@ std::vector<Token> Lexer::lex()
          push_identifier();
          m_state = State::String;
          continue;
+      default: break;
       }
 
       m_identifier.push_back(static_cast<char>(ch));

@@ -14,6 +14,9 @@ void Default::on_interact(minecpp::game::IWorld & /*world*/, game::ItemId /*item
 {
 }
 
-void Default::on_released_item(game::IWorld &world, game::ItemId item_id, game::EntityId player_entity_id) {}
+void Default::on_released_item(game::IWorld & /*world*/, game::ItemId /*item_id*/,
+                               game::EntityId /*player_entity_id*/)
+{
+}
 
 }// namespace minecpp::controller::item

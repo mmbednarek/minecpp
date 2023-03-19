@@ -182,7 +182,7 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
 {
    Section result{section.y};
 
-   result.m_y         = section.y;
+   result.m_y         = static_cast<int>(section.y);
    result.m_sky_light = std::make_unique<LightContainer>(
            LightContainer::from_raw(section.sky_light.begin(), section.sky_light.end()));
    result.m_block_light = std::make_unique<LightContainer>(
@@ -194,7 +194,7 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
                   [](const nbt::chunk::v1::PaletteItem &item) -> game::BlockStateId {
                      auto block_id = repository::Block::the().find_id_by_tag(item.name);
                      if (block_id.has_failed())
-                        return BLOCK_ID(Air);
+                        return DEFAULT_BLOCK_STATE(Air);
 
                      BlockState state{*block_id, 0};
                      for (const auto &property : item.properties) {

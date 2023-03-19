@@ -2,6 +2,7 @@ syntax = "nbt";
 package minecpp.nbt.level.v1;
 
 message Memories {
+    int32 no_empty = 1;
 }
 
 message Brain {
@@ -77,6 +78,7 @@ message DragonFight {
 }
 
 message CustomBossEvents {
+    int32 no_empty = 1;
 }
 
 message Player {
