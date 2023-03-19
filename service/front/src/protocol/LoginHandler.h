@@ -5,7 +5,7 @@
 #include <minecpp/crypto/Key.h>
 #include <minecpp/network/message/Io.h>
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 class LoginHandler : public Handler
 {
@@ -18,15 +18,16 @@ class LoginHandler : public Handler
                                    minecpp::network::message::Reader &r);
    void handle_disconnect(Connection &conn) override;
 
-   bool write_encryption_request(std::shared_ptr<Connection> conn);
+   bool write_encryption_request(const std::shared_ptr<Connection> &conn);
 
-   void reject(const std::shared_ptr<Connection> &conn, std::string_view message);
+   static void reject(const std::shared_ptr<Connection> &conn, std::string_view message);
 
  private:
-   crypto::PrivateKey *m_private_key;
-   Service &service;
-   PlayHandler &play_handler;
    void accept_connection(const std::shared_ptr<Connection> &conn);
+
+   crypto::PrivateKey *m_private_key;
+   Service &m_service;
+   PlayHandler &m_play_handler;
 };
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

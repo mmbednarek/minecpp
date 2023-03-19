@@ -6,15 +6,16 @@ namespace minecpp::random {
 
 class Mersenne : public IRandom
 {
-   std::mt19937_64 engine;
-
  public:
-   explicit Mersenne(uint64_t seed);
+   explicit Mersenne(std::uint64_t seed);
 
    int next_int() override;
-   int next_int(uint32_t bound) override;
+   int next_int(std::uint32_t bound) override;
    double next_double() override;
-   void reset_seed(uint64_t seed) override;
+   void reset_seed(std::uint64_t seed) override;
+
+ private:
+   std::mt19937_64 m_engine;
 };
 
 }// namespace minecpp::random

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <minecpp/game/Game.h>
 #include <minecpp/game/State.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/State.h>
@@ -40,12 +41,11 @@ TEST(State, stateValues)
 
 TEST(State, loadStates)
 {
-   //   ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
-   ASSERT_TRUE(minecpp::repository::load_repository_from_file("/home/ego/test.bin").ok());
+   ASSERT_TRUE(minecpp::repository::load_repository_from_file("repository.bin").ok());
 
-   for (std::size_t i = 0; i < minecpp::repository::StateManager::the().top_state(); ++i) {
-      auto [block_id, state] = minecpp::repository::StateManager::the().parse_block_id(static_cast<int>(i));
-      auto block = minecpp::repository::Block::the().get_by_id(static_cast<std::size_t>(block_id)).unwrap();
+   for (minecpp::game::BlockStateId i = 0; i < minecpp::repository::StateManager::the().top_state(); ++i) {
+      auto [block_id, state] = minecpp::repository::StateManager::the().parse_block_id(i);
+      auto block             = minecpp::repository::Block::the().get_by_id(block_id).unwrap();
 
       if (state == 0)
          std::cout << block_id << ": " << block.tag() << "\n";

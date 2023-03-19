@@ -1,4 +1,3 @@
-#pragma once
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Ticker.h>
 #include <minecpp/entity/component/Totem.h>

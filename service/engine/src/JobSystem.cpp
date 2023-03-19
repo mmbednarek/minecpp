@@ -42,7 +42,7 @@ void JobSystem::issue_job(std::unique_ptr<IJob> job)
    m_has_job_condition.notify_one();
 }
 
-void JobSystem::worker_routine(int id)
+void JobSystem::worker_routine()
 {
    minecpp::util::label_thread("Job System worker {}");
 
@@ -80,7 +80,7 @@ JobSystem::JobSystem(std::size_t thread_count)
 {
    m_threads.reserve(thread_count);
    std::generate_n(std::back_inserter(m_threads), thread_count,
-                   [this, id = 0]() mutable { return std::thread(&JobSystem::worker_routine, this, id++); });
+                   [this]() { return std::thread(&JobSystem::worker_routine, this); });
 }
 
 bool Ticket::is_completed() const

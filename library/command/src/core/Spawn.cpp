@@ -6,7 +6,7 @@
 
 namespace minecpp::command::core {
 
-bool Spawn::is_flag(std::string_view name) const
+bool Spawn::is_flag(std::string_view /*name*/) const
 {
    return false;
 }
@@ -51,7 +51,7 @@ Object::Ptr Spawn::run(RuntimeContext &ctx, CommandInput &input) const
    return info;
 }
 
-ObjectType Spawn::return_type(RuntimeContext &ctx) const
+ObjectType Spawn::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }

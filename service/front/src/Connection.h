@@ -35,12 +35,12 @@ class Connection
 
    void set_non_blocking();
 
-   void async_write_then_read(const Ptr &conn, container::Buffer buffer, Protocol::Handler &h);
+   void async_write_then_read(const Ptr &conn, container::Buffer buffer, protocol::Handler &h);
    void async_write(const Ptr &conn, container::Buffer buffer);
    void async_write_then_disconnect(const Ptr &conn, container::Buffer buffer);
 
    void send(const Ptr &conn, minecpp::network::message::Writer &w);
-   void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, Protocol::Handler &h);
+   void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, protocol::Handler &h);
    void send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w);
 
    void set_encryption(container::Buffer key);
@@ -48,8 +48,8 @@ class Connection
 
    Server *get_server();
 
-   Protocol::State state();
-   void set_state(Protocol::State s);
+   protocol::State state();
+   void set_state(protocol::State s);
    void set_compression_threshold(std::size_t threshold);
    void set_service_id(boost::uuids::uuid id);
    boost::uuids::uuid service_id();
@@ -57,7 +57,7 @@ class Connection
    void set_uuid(boost::uuids::uuid uuid);
 
    [[nodiscard]] const boost::uuids::uuid &uuid() const;
-   [[nodiscard]] ConnectionId id() const;
+   [[nodiscard]] std::optional<ConnectionId> id() const;
    [[nodiscard]] mb::size compression_threshold() const;
 
    void push_chunk(int x, int z);
@@ -72,14 +72,14 @@ class Connection
    std::string user_name;
 
  private:
-   ConnectionId m_id = -1;
+   std::optional<ConnectionId> m_id;
    tcp::socket m_socket;
 
    boost::uuids::uuid m_player_id{};
    boost::uuids::uuid m_engine_service_id{};
 
    Server *m_server;
-   Protocol::State m_state;
+   protocol::State m_state;
    mb::size m_compression_threshold = 0;
    boost::object_pool<mb::u8> m_byte_pool;
    minecpp::util::StaticQueue<minecpp::game::ChunkPosition, 200> m_chunk_queue{};
@@ -89,7 +89,7 @@ class Connection
 
 void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
                        const std::function<void(mb::u32)> &callback);
-void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler);
+void async_read_packet(const Connection::Ptr &conn, protocol::Handler &handler);
 
 template<typename M>
 void send(const Connection::Ptr &conn, M msg)
@@ -99,7 +99,7 @@ void send(const Connection::Ptr &conn, M msg)
 }
 
 template<typename M>
-void send_and_read(const Connection::Ptr &conn, M msg, Protocol::Handler &h)
+void send_and_read(const Connection::Ptr &conn, M msg, protocol::Handler &h)
 {
    auto w = msg.serialize();
    conn->send_and_read(conn, w, h);

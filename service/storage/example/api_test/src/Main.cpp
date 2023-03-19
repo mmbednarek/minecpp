@@ -17,7 +17,7 @@ class Handler : public IResponseHandler
       spdlog::info("block at 1 2 3: {}", *chunk.get_block({1, 2, 3}));
    }
 
-   void handle_empty_chunk(const minecpp::service::storage::ResponseEmptyChunk &chunk) override {}
+   void handle_empty_chunk(const minecpp::service::storage::ResponseEmptyChunk & /*chunk*/) override {}
 };
 
 int main()
@@ -26,10 +26,6 @@ int main()
 
    StorageClient client{0, &handler, {"127.0.0.1:7000"}};
 
-   //   Chunk chunk{1, 2, {}};
-   //   chunk.set_block({1, 2, 3}, 2137);
-
-   //   client.push_chunk(chunk);
    client.subscribe_chunk({1, 2});
 
    client.wait();

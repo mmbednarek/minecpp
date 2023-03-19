@@ -30,12 +30,22 @@ class InputStreamBuffer : public virtual StreamBuffer,
    {
    }
 
+#if defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wextra"
+#endif
+   // Justification: warning occurs in libstdc++ code
+
    InputStreamBuffer(const InputStreamBuffer &other) :
        StreamBuffer(other.m_buffer),
        std::istream(static_cast<std::streambuf *>(this)),
        m_buffer(other.m_buffer.data(), other.m_buffer.size())
    {
    }
+
+#if defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
    InputStreamBuffer &operator=(const InputStreamBuffer &other)
    {
@@ -244,7 +254,7 @@ template<typename TByte, typename TAllocator>
 InputStreamBuffer<BasicBuffer<TByte, TAllocator>> BasicBuffer<TByte, TAllocator>::make_stream() const
 {
    InputStreamBuffer<BasicBuffer<TByte, TAllocator>> stream(*this);
-   return std::move(stream);
+   return stream;
 }
 
 using Buffer = BasicBuffer<std::uint8_t>;

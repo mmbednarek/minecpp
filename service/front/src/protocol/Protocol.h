@@ -1,7 +1,7 @@
 #pragma once
 #include <string_view>
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 enum State : char
 {
@@ -13,4 +13,4 @@ enum State : char
 
 std::string_view state_to_str(State s);
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

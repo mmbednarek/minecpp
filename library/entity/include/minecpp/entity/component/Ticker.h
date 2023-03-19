@@ -1,6 +1,6 @@
 #pragma once
-#include <entt/entt.hpp>
 #include <minecpp/game/Delegate.hpp>
+#include <minecpp/game/Entt.hpp>
 #include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::game {

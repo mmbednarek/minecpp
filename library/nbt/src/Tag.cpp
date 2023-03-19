@@ -2,7 +2,7 @@
 #include <minecpp/nbt/Writer.h>
 
 #include <fmt/format.h>
-#include <minecpp/util/Format.h>
+#include <sstream>
 #include <utility>
 
 namespace minecpp::nbt {
@@ -15,7 +15,8 @@ NamedTag::NamedTag(std::string name, TagId tag_id, std::any content) :
 
 static std::string pad(int padding)
 {
-   return std::string(padding, '\t');
+   std::string out(static_cast<std::size_t>(padding), '\t');
+   return out;
 }
 
 template<typename I, char prefix>
@@ -92,20 +93,20 @@ std::string Content::to_string(int padding) const
 {
    switch (tag_id) {
    case TagId::End: return "<end>";
-   case TagId::Byte: return minecpp::util::format("{}b", static_cast<int32_t>(as<int8_t>()));
-   case TagId::Short: return minecpp::util::format("{}s", as<int16_t>());
+   case TagId::Byte: return fmt::format("{}b", static_cast<int32_t>(as<int8_t>()));
+   case TagId::Short: return fmt::format("{}s", as<int16_t>());
    case TagId::Int: return std::to_string(as<int32_t>());
-   case TagId::Long: return minecpp::util::format("{}l", as<int64_t>());
-   case TagId::Float: return minecpp::util::format("{}f", as<float>());
-   case TagId::Double: return minecpp::util::format("{}d", as<double>());
+   case TagId::Long: return fmt::format("{}l", as<int64_t>());
+   case TagId::Float: return fmt::format("{}f", as<float>());
+   case TagId::Double: return fmt::format("{}d", as<double>());
    case TagId::ByteArray: return format_int_vec<uint8_t, 'B'>(as<std::vector<uint8_t>>(), padding);
-   case TagId::String: return minecpp::util::format("\"{}\"", as<std::string>());
+   case TagId::String: return fmt::format("\"{}\"", as<std::string>());
    case TagId::List: return format_list(as<ListContent>(), padding);
    case TagId::Compound: return format_compound(as<std::map<std::string, Content>>(), padding);
    case TagId::IntArray: return format_int_vec<int32_t, 'I'>(as<std::vector<int32_t>>(), padding);
    case TagId::LongArray: return format_int_vec<int64_t, 'L'>(as<std::vector<int64_t>>(), padding);
    }
-   return std::string();
+   return {};
 }
 
 bool Content::empty() const
@@ -125,7 +126,7 @@ void serialize_compound_content(nbt::Writer &w, const CompoundContent &cc)
 void serialize_content(nbt::Writer &w, const Content *c)
 {
    switch (c->tag_id) {
-   case TagId::Byte: w.write_byte_content(c->as<int8_t>()); return;
+   case TagId::Byte: w.write_byte_content(static_cast<std::uint8_t>(c->as<int8_t>())); return;
    case TagId::Short: w.write_short_content(c->as<int16_t>()); return;
    case TagId::Int: w.write_int_content(c->as<int32_t>()); return;
    case TagId::Long: w.write_long_content(c->as<int64_t>()); return;
@@ -148,6 +149,7 @@ void serialize_content(nbt::Writer &w, const Content *c)
    }
    case TagId::IntArray: w.write_ints_content(c->as<std::vector<int32_t>>()); return;
    case TagId::LongArray: w.write_longs_content(c->as<std::vector<int64_t>>()); return;
+   default: break;
    }
 }
 

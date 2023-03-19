@@ -24,16 +24,8 @@ constexpr boost::uuids::uuid g_player_uuid_namespace{
 
 class Service
 {
-   boost::random::mt19937 rand;
-   engine::IStream *m_stream{};
-
  public:
    explicit Service(Config &conf);
-
-   constexpr void set_stream(engine::IStream *stream)
-   {
-      m_stream = stream;
-   }
 
    struct LoginResponse
    {
@@ -43,11 +35,12 @@ class Service
       uuid id;
    };
 
-   LoginResponse login_player(std::string &user_name);
+   static LoginResponse login_player(std::string &user_name);
 
    void init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name);
-
    void on_player_disconnect(uuid engine_id, game::PlayerId player_id);
+   void set_stream(engine::IStream *stream);
+   void send(const ::google::protobuf::Message &message, game::PlayerId id);
 
    void on_message(uuid engine_id, game::PlayerId player_id,
                    const minecpp::network::message::ChatCommand &msg);
@@ -65,11 +58,15 @@ class Service
                    minecpp::network::message::AnimateHandClient msg);
    void on_message(uuid engine_id, game::PlayerId player_id,
                    minecpp::network::message::PlayerBlockPlacement msg);
-   void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClickWindow msg);
+   void on_message(uuid engine_id, game::PlayerId player_id,
+                   const minecpp::network::message::ClickWindow &msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::HeldItemChange msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::PluginMessage msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::UseItem msg);
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClientCommand msg);
+
+ private:
+   engine::IStream *m_stream{};
 };
 
 }// namespace minecpp::service::front

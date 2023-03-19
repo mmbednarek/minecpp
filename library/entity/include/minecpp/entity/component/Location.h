@@ -1,7 +1,7 @@
 #pragma once
-#include <entt/entt.hpp>
 #include <minecpp/game/Delegate.hpp>
 #include <minecpp/game/Entity.h>
+#include <minecpp/game/Entt.hpp>
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>

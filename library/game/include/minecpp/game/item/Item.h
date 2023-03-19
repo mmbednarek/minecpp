@@ -62,8 +62,6 @@ class Item
 
  private:
    std::string m_tag;
-   ItemGroup m_group;
-   int m_max_stack_size;
    bool m_is_block;
    std::string m_corresponding_block_tag;
 };

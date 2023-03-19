@@ -17,7 +17,7 @@ class JavaRandom : public IRandom
  private:
    int next(int bits);
 
-   uint64_t _seed;
+   uint64_t m_seed;
 };
 
 }// namespace minecpp::random

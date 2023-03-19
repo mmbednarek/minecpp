@@ -12,34 +12,36 @@ namespace minecpp::repository {
 
 class Block : public Repository<game::block::Block, game::BlockId>
 {
-   static Block g_instance;
+   static Block s_instance;
 
  public:
    constexpr static Block &the()
    {
-      return g_instance;
+      return s_instance;
    }
 };
 
 class BlockState : public Repository<game::State>
 {
-   static BlockState g_instance;
+   static BlockState s_instance;
 
  public:
    constexpr static BlockState &the()
    {
-      return g_instance;
+      return s_instance;
    }
 };
 
 template<typename TFunc>
 mb::result<game::BlockStateId> encode_state(game::BlockId block_id, TFunc fn)
 {
-   const auto &block = MB_TRY(Block::the().get_by_id(block_id));
+   auto block = Block::the().get_by_id(block_id);
+   MB_VERIFY(block);
+
    game::BlockStateId state_id{0};
-   for (auto const &state : block) {
+   for (auto const &state : *block) {
       state_id *= static_cast<game::BlockStateId>(state.value_count());
-      state_id += fn(state);
+      state_id += static_cast<game::BlockStateId>(fn(state));
    }
    return StateManager::the().block_base_state(block_id) + state_id;
 }
@@ -49,7 +51,7 @@ std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateO
 
 std::function<int(const game::State &)> make_compound_encoder(const nbt::CompoundContent &cnt);
 
-int encode_block_by_tag(std::string_view tag);
+game::BlockStateId encode_block_by_tag(std::string_view tag);
 
 template<typename... TRest>
 game::BlockStateId encode_block_inner(const game::State &state,

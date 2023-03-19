@@ -12,7 +12,7 @@ target_sources(minecpp_random PUBLIC
         ${MINECPP_RANDOM_INCLUDE_DIR}/IRandom.h
         ${MINECPP_RANDOM_INCLUDE_DIR}/JavaRandom.h
         ${MINECPP_RANDOM_INCLUDE_DIR}/Mersenne.h
-        ${MINECPP_RANDOM_INCLUDE_DIR}/Perlin3d.h
+        ${MINECPP_RANDOM_INCLUDE_DIR}/Perlin3D.h
         ${MINECPP_RANDOM_INCLUDE_DIR}/Perlin.h
 )
 

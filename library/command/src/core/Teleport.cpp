@@ -7,7 +7,7 @@
 
 namespace minecpp::command::core {
 
-bool Teleport::is_flag(std::string_view name) const
+bool Teleport::is_flag(std::string_view /*name*/) const
 {
    return false;
 }

@@ -37,7 +37,7 @@ inline std::pair<mb::u64, mb::u64> write_uuid(uuid id)
 
 inline std::tuple<mb::i32, mb::i32, mb::i32, mb::i32> write_uuid4(uuid id)
 {
-   mb::u64 a, b, c, d;
+   mb::i32 a, b, c, d;
    a = *reinterpret_cast<mb::i32 *>(id.data);
    b = *reinterpret_cast<mb::i32 *>(id.data + sizeof(mb::i32));
    c = *reinterpret_cast<mb::i32 *>(id.data + 2 * sizeof(mb::i32));

@@ -1,6 +1,7 @@
 #pragma once
 
-#include <entt/entt.hpp>
+#include "Entt.hpp"
+
 #include <optional>
 
 namespace minecpp::game {

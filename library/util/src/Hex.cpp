@@ -4,20 +4,20 @@ namespace minecpp::util {
 
 std::array<char, 2> char_hex(char c)
 {
-   std::array<char, 2> result;
+   std::array<char, 2> result{};
 
    auto most = c / 16;
    if (most > 9) {
-      result[0] = most - 10 + 'a';
+      result[0] = static_cast<char>(most - 10 + 'a');
    } else {
-      result[0] = most + '0';
+      result[0] = static_cast<char>(most + '0');
    }
 
    auto least = c % 16;
    if (least > 9) {
-      result[1] = least - 10 + 'a';
+      result[1] = static_cast<char>(least - 10 + 'a');
    } else {
-      result[1] = least + '0';
+      result[1] = static_cast<char>(least + '0');
    }
 
    return result;

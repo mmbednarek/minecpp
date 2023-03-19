@@ -9,12 +9,12 @@
 
 namespace minecpp::service::front {
 
-void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, const container::Buffer &buffer);
+void handle_message(const Connection::Ptr &conn, protocol::Handler &handler, const container::Buffer &buffer);
 
 Connection::Connection(boost::asio::io_context &ctx, Server *server) :
     m_socket(ctx),
     m_server(server),
-    m_state(Protocol::Handshake)
+    m_state(protocol::Handshake)
 {
 }
 
@@ -31,24 +31,27 @@ Connection::~Connection()
    }
 }
 
-Protocol::State Connection::state()
+protocol::State Connection::state()
 {
    return m_state;
 }
 
-void Connection::set_state(Protocol::State s)
+void Connection::set_state(protocol::State s)
 {
    m_state = s;
 }
 
-void Connection::async_write_then_read(const Ptr &conn, container::Buffer buffer, Protocol::Handler &h)
+void Connection::async_write_then_read(const Ptr &conn, container::Buffer buffer, protocol::Handler &h)
 {
+   auto asio_buffer = boost::asio::buffer(buffer.data(), buffer.size());
    boost::asio::async_write(
-           m_socket, boost::asio::buffer(buffer.data(), buffer.size()),
-           [conn, &h, buffer = std::move(buffer)](const boost::system::error_code &err, size_t size) {
+           m_socket, asio_buffer,
+           [conn, &h, buffer = std::move(buffer)](const boost::system::error_code &err, size_t /*size*/) {
               if (err) {
                  spdlog::error("error reading data from client: {}", err.message());
-                 conn->get_server()->drop_connection(conn->m_id);
+                 if (conn->m_id.has_value()) {
+                    conn->get_server()->drop_connection(*conn->m_id);
+                 }
                  return;
               }
 
@@ -58,12 +61,15 @@ void Connection::async_write_then_read(const Ptr &conn, container::Buffer buffer
 
 void Connection::async_write(const Ptr &conn, container::Buffer buffer)
 {
+   auto asio_buffer = boost::asio::buffer(buffer.data(), buffer.size());
    boost::asio::async_write(
-           m_socket, boost::asio::buffer(buffer.data(), buffer.size()),
-           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t size) {
+           m_socket, asio_buffer,
+           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t /*size*/) {
               if (err) {
                  spdlog::error("error reading data from client: {}", err.message());
-                 conn->get_server()->drop_connection(conn->m_id);
+                 if (conn->m_id.has_value()) {
+                    conn->get_server()->drop_connection(*conn->m_id);
+                 }
                  return;
               }
            });
@@ -71,14 +77,17 @@ void Connection::async_write(const Ptr &conn, container::Buffer buffer)
 
 void Connection::async_write_then_disconnect(const Ptr &conn, container::Buffer buffer)
 {
+   auto asio_buffer = boost::asio::buffer(buffer.data(), buffer.size());
    boost::asio::async_write(
-           m_socket, boost::asio::buffer(buffer.data(), buffer.size()),
-           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t size) {
+           m_socket, asio_buffer,
+           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t /*size*/) {
               if (err) {
                  spdlog::debug("error reading data from client: {}", err.message());
               }
 
-              conn->get_server()->drop_connection(conn->m_id);
+              if (conn->m_id.has_value()) {
+                 conn->get_server()->drop_connection(*conn->m_id);
+              }
            });
 }
 
@@ -95,7 +104,7 @@ void Connection::send(const Ptr &conn, minecpp::network::message::Writer &w)
    }
 }
 
-void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, Protocol::Handler &h)
+void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, protocol::Handler &h)
 {
    auto [bf, bf_size] = w.buff(m_compression_threshold);
 
@@ -128,8 +137,10 @@ void Connection::set_compression_threshold(std::size_t threshold)
 
 void Connection::set_uuid(boost::uuids::uuid uuid)
 {
+   assert(m_id.has_value());
+
    m_player_id = uuid;
-   m_server->index_connection(uuid, m_id);
+   m_server->index_connection(uuid, *m_id);
 }
 
 const boost::uuids::uuid &Connection::uuid() const
@@ -159,7 +170,7 @@ boost::uuids::uuid Connection::service_id()
 
 void Connection::push_chunk(int x, int z)
 {
-   m_chunk_queue.push({x, z});
+   m_chunk_queue.push(game::ChunkPosition{x, z});
 }
 
 minecpp::game::ChunkPosition Connection::pop_chunk()
@@ -177,7 +188,7 @@ tcp::socket &Connection::socket()
    return m_socket;
 }
 
-ConnectionId Connection::id() const
+std::optional<ConnectionId> Connection::id() const
 {
    return m_id;
 }
@@ -211,7 +222,7 @@ crypto::AESKey *Connection::encryption_key() const
    return m_encryption_key.get();
 }
 
-void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler)
+void async_read_packet(const Connection::Ptr &conn, protocol::Handler &handler)
 {
    async_read_varint(conn, 0u, 0u, [conn, &handler](mb::u32 packet_size) {
       if (packet_size == 0) {
@@ -236,7 +247,7 @@ void async_read_packet(const Connection::Ptr &conn, Protocol::Handler &handler)
    });
 }
 
-void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, const container::Buffer &buffer)
+void handle_message(const Connection::Ptr &conn, protocol::Handler &handler, const container::Buffer &buffer)
 {
    auto stream = buffer.make_stream();
 
@@ -259,7 +270,7 @@ void handle_message(const Connection::Ptr &conn, Protocol::Handler &handler, con
    }
 }
 
-void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
+void async_read_varint(const Connection::Ptr &conn, mb::u32 /*result*/, mb::u32 /*shift*/,
                        const std::function<void(mb::u32)> &callback)
 {
    auto bp = conn->alloc_byte();
@@ -268,7 +279,10 @@ void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shif
                               if (err) {
                                  conn->free_byte(bp);
                                  spdlog::warn("error reading data from client: {}", err.message());
-                                 conn->get_server()->drop_connection(conn->id());
+                                 const auto connection_id = conn->id();
+                                 if (connection_id.has_value()) {
+                                    conn->get_server()->drop_connection(*connection_id);
+                                 }
                                  return;
                               }
 

@@ -155,7 +155,7 @@ int Chunk::height_at(int x, int z)
 void Chunk::put_section(int8_t level, Section sec)
 {
    if (m_sections.contains(level)) {
-      m_sections.at(level) = std::move(sec);
+      m_sections.at(level) = sec;
       return;
    }
    m_sections.emplace(level, std::move(sec));
@@ -164,9 +164,9 @@ void Chunk::put_section(int8_t level, Section sec)
 std::array<short, 256> Chunk::get_height_map()
 {
    std::array<short, 256> result{};
-   for (int z = 0; z < 16; ++z) {
-      for (int x = 0; x < 16; ++x) {
-         result[z * 16 + x] = height_at(x, z);
+   for (std::size_t z{}; z < 16ul; ++z) {
+      for (std::size_t x{}; x < 16ul; ++x) {
+         result[z * 16 + x] = static_cast<short>(height_at(static_cast<int>(x), static_cast<int>(z)));
       }
    }
    return result;
@@ -248,6 +248,7 @@ HeightContainer &Chunk::height_by_type(game::HeightType type)
    case game::HeightTypeValues::LightBlocking: return m_light_blocking_height;
    }
    assert(false && "not reachable");
+   return m_world_surface_height;
 }
 
 const HeightContainer &Chunk::height_by_type(game::HeightType type) const
@@ -258,6 +259,7 @@ const HeightContainer &Chunk::height_by_type(game::HeightType type) const
    case game::HeightTypeValues::LightBlocking: return m_light_blocking_height;
    }
    assert(false && "not reachable");
+   return m_world_surface_height;
 }
 
 minecpp::proto::chunk::v1::Chunk Chunk::to_proto() const

@@ -20,8 +20,9 @@ void EventHandler::handle_add_player(const clientbound_v1::AddPlayer &msg,
                                      const event::RecipientList &recipient_list)
 {
    auto add_player = minecpp::network::message::AddPlayer{
-           .id        = game::player::read_id_from_proto(msg.player_id()),
-           .name      = msg.name(),
+           .id   = game::player::read_id_from_proto(msg.player_id()),
+           .name = msg.name(),
+           .properties{},
            .game_mode = static_cast<mb::u8>(msg.game_mode()),
            .ping      = static_cast<mb::u32>(msg.ping()),
    };
@@ -174,32 +175,10 @@ void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
    }
 }
 
-const char *player_transfer_message =
-        R"({"extra":[{"color":"dark_green", "text": "player transfer"}], "text": ""})";
-
-void EventHandler::handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
-                                          const event::RecipientList &recipient_list)
+void EventHandler::handle_transfer_player(const clientbound_v1::TransferPlayer & /*msg*/,
+                                          const event::RecipientList & /*recipient_list*/)
 {
    // TODO: Implement this
-}
-
-void EventHandler::handle_update_player_abilities(const clientbound_v1::UpdatePlayerAbilities &msg,
-                                                  const event::RecipientList &recipient_list)
-{
-   using minecpp::network::message::PlayerAbilityFlag;
-   uint8_t flags = 0;
-   flags |= msg.invulnerable() ? PlayerAbilityFlag::Invulnerable : 0;
-   flags |= msg.is_flying() ? PlayerAbilityFlag::IsFlying : 0;
-   flags |= msg.allow_flying() ? PlayerAbilityFlag::AllowFlying : 0;
-   flags |= msg.creative_mode() ? PlayerAbilityFlag::CreativeMode : 0;
-
-   minecpp::network::message::PlayerAbilities player_abilities{
-           .flags         = flags,
-           .fly_speed     = msg.fly_speed(),
-           .field_of_view = msg.walk_speed(),
-   };
-
-   send_message(player_abilities, recipient_list);
 }
 
 void EventHandler::handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
@@ -333,8 +312,9 @@ void EventHandler::handle_player_list(const clientbound_v1::PlayerList &msg,
 
       for (auto const &player_status : msg.list()) {
          send(conn, network::message::AddPlayer{
-                            .id        = game::player::read_id_from_proto(player_status.id()),
-                            .name      = player_status.name(),
+                            .id   = game::player::read_id_from_proto(player_status.id()),
+                            .name = player_status.name(),
+                            .properties{},
                             .game_mode = static_cast<mb::u8>(player_status.game_mode()),
                             .ping      = static_cast<mb::u32>(player_status.ping()),
                     });
@@ -478,13 +458,14 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
                                                    const event::RecipientList &recipient_list)
 {
    network::message::PlayerPositionLook player_pos_look{
-           .x     = msg.position().x(),
-           .y     = msg.position().y(),
-           .z     = msg.position().z(),
-           .yaw   = msg.rotation().yaw(),
-           .pitch = msg.rotation().pitch(),
-           .flags = 0,
-           .tp_id = 0,
+           .x                = msg.position().x(),
+           .y                = msg.position().y(),
+           .z                = msg.position().z(),
+           .yaw              = msg.rotation().yaw(),
+           .pitch            = msg.rotation().pitch(),
+           .flags            = 0,
+           .tp_id            = 0,
+           .dismount_vehicle = false,
    };
 
    for (auto player_id : recipient_list.list) {
@@ -669,11 +650,12 @@ void EventHandler::handle_set_abilities(const clientbound_v1::SetAbilities &msg,
                                         const event::RecipientList &recipient_list)
 {
    using minecpp::network::message::PlayerAbilityFlag;
-   uint8_t flags = 0;
-   flags |= msg.abilities().invulnerable() ? PlayerAbilityFlag::Invulnerable : 0;
-   flags |= msg.abilities().flying() ? PlayerAbilityFlag::IsFlying : 0;
-   flags |= msg.abilities().may_fly() ? PlayerAbilityFlag::AllowFlying : 0;
-   flags |= msg.abilities().may_build() ? PlayerAbilityFlag::CreativeMode : 0;
+
+   std::uint8_t flags{};
+   flags |= msg.abilities().invulnerable() ? PlayerAbilityFlag::Invulnerable : PlayerAbilityFlag::None;
+   flags |= msg.abilities().flying() ? PlayerAbilityFlag::IsFlying : PlayerAbilityFlag::None;
+   flags |= msg.abilities().may_fly() ? PlayerAbilityFlag::AllowFlying : PlayerAbilityFlag::None;
+   flags |= msg.abilities().may_build() ? PlayerAbilityFlag::CreativeMode : PlayerAbilityFlag::None;
 
    minecpp::network::message::PlayerAbilities player_abilities{
            .flags         = flags,

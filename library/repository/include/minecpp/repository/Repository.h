@@ -27,27 +27,28 @@ class Repository
    std::unordered_map<std::string, TId> m_tags;
 
  public:
-   using index_type = TId;
+   using IndexType = TId;
 
-   [[nodiscard]] mb::result<index_type> find_id_by_tag(const std::string &tag)
+   [[nodiscard]] mb::result<IndexType> find_id_by_tag(const std::string &tag)
    {
       if (m_tags.contains(tag)) {
-         return static_cast<index_type>(m_tags.at(tag));
+         return static_cast<IndexType>(m_tags.at(tag));
       }
       return mb::error("not found");
    }
 
    [[nodiscard]] mb::result<const TResource &> find_by_tag(std::string_view tag)
    {
-      auto id = MB_TRY(find_id_by_tag(std::string(tag)));
-      return m_description[id].resource;
+      auto id = find_id_by_tag(std::string(tag));
+      MB_VERIFY(id);
+      return m_description[static_cast<std::size_t>(*id)].resource;
    }
 
-   [[nodiscard]] mb::result<const TResource &> get_by_id(index_type id) const
+   [[nodiscard]] mb::result<const TResource &> get_by_id(IndexType id) const
    {
-      using size_type = typename decltype(m_description)::size_type;
+      using SizeType = typename decltype(m_description)::size_type;
 
-      auto size_index = static_cast<size_type>(id);
+      auto size_index = static_cast<SizeType>(id);
 
       if (size_index >= m_description.size())
          return mb::error("invalid id");
@@ -57,7 +58,7 @@ class Repository
 
    void register_resource(const std::string &tag, const TResource &res)
    {
-      auto index = static_cast<index_type>(m_description.size());
+      auto index = static_cast<IndexType>(m_description.size());
       m_description.push_back(Description<TResource, TId>{res, tag.data(), index});
       m_tags[tag] = index;
    }

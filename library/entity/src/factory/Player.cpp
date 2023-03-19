@@ -1,4 +1,3 @@
-#pragma once
 #include <minecpp/entity/component/Abilities.h>
 #include <minecpp/entity/component/DealthScreen.h>
 #include <minecpp/entity/component/Health.h>

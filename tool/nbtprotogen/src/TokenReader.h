@@ -14,7 +14,7 @@ class TokenReader
    explicit TokenReader(std::vector<Token> elements);
 
    Token next();
-   mb::result<Token> expect(TokenType t);
+   Token expect(TokenType t);
    void back();
 };
 

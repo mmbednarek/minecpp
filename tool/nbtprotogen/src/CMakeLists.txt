@@ -3,6 +3,8 @@
 target_sources(minecpp_protonbt PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Ast.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Error.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Error.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Generator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Generator.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Lexer.cpp

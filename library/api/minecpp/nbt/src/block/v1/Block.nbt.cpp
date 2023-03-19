@@ -13,18 +13,18 @@ void EnumProperty::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void EnumProperty::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void EnumProperty::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 EnumProperty EnumProperty::deserialize_no_header(minecpp::nbt::Reader &r) {
    EnumProperty res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
@@ -35,7 +35,7 @@ EnumProperty EnumProperty::deserialize_no_header(minecpp::nbt::Reader &r) {
                std::generate(ls.begin(), ls.end(), [&r]() {
                   return r.read_str();
                });
-               res.__xx_put(name, ls);
+               res.set_property(in_field_name, ls);
                return;
             }
             default: 
@@ -74,21 +74,21 @@ void IntProperty::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void IntProperty::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void IntProperty::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 IntProperty IntProperty::deserialize_no_header(minecpp::nbt::Reader &r) {
    IntProperty res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Int:
-         res.__xx_put(name, r.read_int());
+         res.set_property(in_field_name, r.read_int());
          return;
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       default: 
          break;
@@ -113,18 +113,18 @@ void BoolProperty::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void BoolProperty::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void BoolProperty::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 BoolProperty BoolProperty::deserialize_no_header(minecpp::nbt::Reader &r) {
    BoolProperty res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       default: 
          break;
@@ -152,15 +152,15 @@ void Block::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Block::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void Block::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 Block Block::deserialize_no_header(minecpp::nbt::Reader &r) {
    Block res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::List: {
          auto list_info0 = r.peek_list();
@@ -171,7 +171,7 @@ Block Block::deserialize_no_header(minecpp::nbt::Reader &r) {
                std::generate(ls.begin(), ls.end(), [&r]() {
                   return r.read_str();
                });
-               res.__xx_put(name, ls);
+               res.set_property(in_field_name, ls);
                return;
             }
             default: 

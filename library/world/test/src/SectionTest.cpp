@@ -8,7 +8,7 @@ TEST(Section, ProtoTest)
 {
    std::vector<BlockStateId> ids;
    ids.resize(4096);
-   for (std::size_t i{0}; i < 4096; ++i) {
+   for (BlockStateId i{0}; i < 4096; ++i) {
       ids[i] = i % 22;
    }
 

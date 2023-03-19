@@ -35,7 +35,7 @@ class TightVector
          pack          = 0;
          mb::u32 shift = 0;
          for (mb::u32 j{1}; j < per_pack; ++j) {
-            pack |= static_cast<mb::u64>(*at & mask) << shift;
+            pack |= (static_cast<mb::u64>(*at) & mask) << shift;
             ++at;
 
             if (at == end) {
@@ -49,7 +49,7 @@ class TightVector
             break;
          }
 
-         pack |= static_cast<mb::u64>(*at & mask) << shift;
+         pack |= (static_cast<mb::u64>(*at) & mask) << shift;
          ++at;
       }
    }
@@ -69,7 +69,7 @@ class TightVector
    static TightVector from_raw(bits_type bits, size_type size, TIterator begin, TIterator end)
    {
       std::vector<raw_value_type> raw;
-      raw.resize(end - begin);
+      raw.resize(static_cast<std::size_t>(end - begin));
       std::copy(begin, end, raw.begin());
       return {bits, size, std::move(raw)};
    }
@@ -111,7 +111,7 @@ class TightVector
       mb::u32 offset;
 
       Iterator &operator++();
-      Iterator operator++(int);
+      const Iterator operator++(int);
 
       bool operator==(Iterator other) const;
 
@@ -120,8 +120,8 @@ class TightVector
       [[nodiscard]] value_type operator*() const;
    };
 
-   Iterator begin() const;
-   Iterator end() const;
+   [[nodiscard]] Iterator begin() const;
+   [[nodiscard]] Iterator end() const;
 
    [[nodiscard]] static constexpr mb::u8 min_bits_to_encode(mb::i32 value)
    {

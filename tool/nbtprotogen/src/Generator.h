@@ -98,11 +98,11 @@ struct CompoundDeserializer
    struct Elem
    {
       CompoundKind kind = CompoundKind::Struct;
-      std::string typeName;
+      std::string type_name;
       std::string name;
       int id;
       TypeVariant subtype;
-      std::string subtypeName;
+      std::string subtype_name;
       std::string label;
    };
 

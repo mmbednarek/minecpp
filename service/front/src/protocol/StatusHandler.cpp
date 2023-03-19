@@ -3,7 +3,7 @@
 #include <minecpp/format/Format.h>
 #include <spdlog/spdlog.h>
 
-namespace minecpp::service::front::Protocol {
+namespace minecpp::service::front::protocol {
 
 StatusHandler::StatusHandler() {}
 
@@ -49,7 +49,7 @@ void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn, minecpp
    conn->send_and_disconnect(conn, w);
 }
 
-void StatusHandler::handle_disconnect(Connection &conn) {}
+void StatusHandler::handle_disconnect(Connection & /*conn*/) {}
 
 const char *favicon = R"(
 iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9
@@ -78,4 +78,4 @@ kThXmsJA7GCIFJnEc70kiwXl3FAhgTmBumUI1b6MPH+ZL0izxkINQANQ2/+B3gWAv5hjW5zpJFU/
 AAAAAElFTkSuQmCC
 )";
 
-}// namespace minecpp::service::front::Protocol
+}// namespace minecpp::service::front::protocol

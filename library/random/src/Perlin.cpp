@@ -8,10 +8,9 @@ namespace minecpp::random {
 using minecpp::math::Vector2;
 
 Perlin::Perlin(random::IRandom &rand) :
-    rand(rand),
-    coef1(rand.next_int()),
-    coef2(rand.next_int()),
-    coef3(rand.next_int())
+    m_coefficient1(rand.next_int()),
+    m_coefficient2(rand.next_int()),
+    m_coefficient3(rand.next_int())
 {
 }
 
@@ -48,29 +47,30 @@ double Perlin::dot_grad(int x, int z, minecpp::math::Vector2 pos)
    return (g * d).sum();
 }
 
-minecpp::math::Vector2 Perlin::grad(int x, int z)
+minecpp::math::Vector2 Perlin::grad(int x, int z) const
 {
-   random::JavaRandom r(x * coef1 + z * coef2 + coef3);
+   const auto seed = x * m_coefficient1 + z * m_coefficient2 + m_coefficient3;
+   random::JavaRandom r(static_cast<std::uint64_t>(seed));
    return {r.next_double(), r.next_double()};
 }
 
 DisplacedPerlin::DisplacedPerlin(IRandom &rand, double scale, double amp) :
-    base(rand),
-    dis_x(rand),
-    dis_z(rand),
-    scale(scale),
-    amp(amp),
-    move_dis_x{rand.next_double(), rand.next_double()},
-    move_dis_z{rand.next_double(), rand.next_double()}
+    m_base_perlin(rand),
+    m_x_displacement(rand),
+    m_z_displacement(rand),
+    m_scale(scale),
+    m_amp(amp),
+    m_move_dis_x{rand.next_double(), rand.next_double()},
+    m_move_dis_z{rand.next_double(), rand.next_double()}
 {
 }
 
 double DisplacedPerlin::at(const minecpp::math::Vector2 pos)
 {
-   return base.at(pos + minecpp::math::Vector2{
-                                dis_x.at(pos * scale + move_dis_x) * amp,
-                                dis_z.at(pos * scale + move_dis_z) * amp,
-                        });
+   return m_base_perlin.at(pos + minecpp::math::Vector2{
+                                         m_x_displacement.at(pos * m_scale + m_move_dis_x) * m_amp,
+                                         m_z_displacement.at(pos * m_scale + m_move_dis_z) * m_amp,
+                                 });
 }
 
 }// namespace minecpp::random

@@ -23,7 +23,7 @@ class BlockState
          return std::nullopt;
 
       return TResult::from_string(block->state_value(name, m_state_offset));
-   };
+   }
 
    template<typename TValue>
    bool set(std::string_view name, TValue value)
@@ -53,7 +53,7 @@ class BlockState
       });
 
       return true;
-   };
+   }
 
    bool set_from_string(std::string_view name, std::string_view value);
 

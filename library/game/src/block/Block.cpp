@@ -6,7 +6,7 @@ std::size_t Block::state_count() const
 {
    std::size_t result = 1;
    for (auto &state : m_states) {
-      result *= state.value_count();
+      result *= static_cast<std::size_t>(state.value_count());
    }
    return result;
 }

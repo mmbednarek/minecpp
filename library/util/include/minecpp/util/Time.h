@@ -3,7 +3,7 @@
 
 namespace minecpp::util {
 
-uint64_t now();
-uint64_t now_milis();
+int64_t now();
+int64_t now_milis();
 
 }// namespace minecpp::util

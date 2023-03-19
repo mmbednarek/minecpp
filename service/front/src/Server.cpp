@@ -11,8 +11,8 @@ constexpr auto g_protocol_version = 761;
 constexpr auto g_disconnect_message =
         R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " invalid protocol version"}], "text": ""})";
 
-Server::Server(boost::asio::io_context &ctx, mb::u16 port, Protocol::Handler *play, Protocol::Handler *status,
-               Protocol::Handler *login) :
+Server::Server(boost::asio::io_context &ctx, mb::u16 port, protocol::Handler *play, protocol::Handler *status,
+               protocol::Handler *login) :
     m_acceptor(ctx, tcp::endpoint(tcp::v4(), port)),
     m_handlers{play, status, login}
 {
@@ -65,19 +65,19 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
                  auto protocol_version = r.read_varint();
                  auto host             = r.read_string();
                  auto port             = r.read_big_endian<uint16_t>();
-                 auto request_state    = static_cast<Protocol::State>(r.read_varint());
+                 auto request_state    = static_cast<protocol::State>(r.read_varint());
                  delete buff;
 
                  spdlog::debug("client information: proto_version={}, host={}, port={}, requested_handler={}",
                                protocol_version, host, port, static_cast<int>(request_state));
 
-                 if (request_state != Protocol::Login && request_state != Protocol::Status) {
+                 if (request_state != protocol::Login && request_state != protocol::Status) {
                     return;
                  }
 
                  this->add_connection(conn, request_state);
 
-                 if (request_state == Protocol::Login && protocol_version != g_protocol_version) {
+                 if (request_state == protocol::Login && protocol_version != g_protocol_version) {
                     network::message::Writer msg_disconnect;
                     msg_disconnect.write_byte(0);
                     msg_disconnect.write_string(g_disconnect_message);
@@ -111,7 +111,7 @@ void Server::drop_connection(ConnectionId id)
    m_connections.erase(connection_it);
 }
 
-Protocol::Handler &Server::get_handler(const Protocol::State state)
+protocol::Handler &Server::get_handler(const protocol::State state)
 {
    return *m_handlers[state];
 }
@@ -141,7 +141,7 @@ std::shared_ptr<Connection> Server::connection_by_player_id(game::PlayerId playe
    return connection_it->second;
 }
 
-void Server::add_connection(ConnectionPtr connection, Protocol::State state)
+void Server::add_connection(ConnectionPtr connection, protocol::State state)
 {
    std::lock_guard lk{m_connection_add_mutex};
 

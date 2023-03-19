@@ -6,43 +6,43 @@ namespace minecpp::game::item {
 
 const ItemStack &Recipe::outcome() const
 {
-   return _outcome_item;
+   return m_outcome_item;
 }
 
 RecipeType Recipe::type() const
 {
-   return _type;
+   return m_type;
 }
 
 Recipe::Recipe(ItemStack item, std::string group, Recipe::CraftingShaped details) :
-    _outcome_item(item),
-    _type(RecipeType::CraftingShaped),
-    _details(std::move(details)),
-    _group(std::move(group))
+    m_outcome_item(item),
+    m_type(RecipeType::CraftingShaped),
+    m_details(std::move(details)),
+    m_group(std::move(group))
 {
 }
 
 Recipe::Recipe(ItemStack item, std::string group, Recipe::CraftingShapeless details) :
-    _outcome_item(item),
-    _type(RecipeType::CraftingShapeless),
-    _details(std::move(details)),
-    _group(std::move(group))
+    m_outcome_item(item),
+    m_type(RecipeType::CraftingShapeless),
+    m_details(std::move(details)),
+    m_group(std::move(group))
 {
 }
 
 Recipe::Recipe(ItemStack item, RecipeType method) :
-    _outcome_item(item),
-    _type(method),
-    _details(Recipe::Special{}),
-    _group("special")
+    m_outcome_item(item),
+    m_type(method),
+    m_details(Recipe::Special{}),
+    m_group("special")
 {
 }
 
 Recipe::Recipe(ItemStack item, std::string group, RecipeType method, Recipe::HeatTreatment smelted) :
-    _outcome_item(item),
-    _type(method),
-    _details(std::move(smelted)),
-    _group(std::move(group))
+    m_outcome_item(item),
+    m_type(method),
+    m_details(std::move(smelted)),
+    m_group(std::move(group))
 {
    switch (method) {
    case Smelting:
@@ -54,20 +54,20 @@ Recipe::Recipe(ItemStack item, std::string group, RecipeType method, Recipe::Hea
 }
 
 Recipe::Recipe(ItemStack item, std::string group, Recipe::StoneCutting details) :
-    _outcome_item(item),
-    _type(RecipeType::StoneCutting),
-    _details(std::move(details)),
-    _group(std::move(group))
+    m_outcome_item(item),
+    m_type(RecipeType::StoneCutting),
+    m_details(std::move(details)),
+    m_group(std::move(group))
 {
 }
 
 template<>
 Recipe::StoneCutting Recipe::details() const
 {
-   if (_type != RecipeType::StoneCutting)
+   if (m_type != RecipeType::StoneCutting)
       throw std::runtime_error("invalid recipe type");
 
-   return std::get<Recipe::StoneCutting>(_details);
+   return std::get<Recipe::StoneCutting>(m_details);
 }
 
 }// namespace minecpp::game::item

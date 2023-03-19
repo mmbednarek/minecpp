@@ -155,6 +155,7 @@ class Face final : public Face_Base
       case Face::East: return Face::West;
       }
       assert(false && "SHOULD NOT BE REACHED");
+      return {};
    }
 
    [[nodiscard]] constexpr FaceMask to_mask()
@@ -168,6 +169,7 @@ class Face final : public Face_Base
       case Face::East: return FaceMask::East;
       }
       assert(false && "SHOULD NOT BE REACHED");
+      return {};
    }
 };
 
@@ -422,7 +424,7 @@ struct ChunkPosition
       return block_x >= left && block_x < right && block_z >= bottom && block_z < top;
    }
 
-   static constexpr ChunkPosition from_position(const math::Vector3 &v)
+   static ChunkPosition from_position(const math::Vector3 &v)
    {
       return ChunkPosition{(v.flat() / math::Vector2{g_chunk_width, g_chunk_depth}).floor().cast<int>()};
    }
@@ -501,7 +503,7 @@ struct ChunkSectionPosition
              ((lz & g_block_position_mask_z) << g_block_position_bit_offset_z);
    }
 
-   [[nodiscard]] constexpr bool operator!=(const ChunkSectionPosition &other) const
+   [[nodiscard]] bool operator!=(const ChunkSectionPosition &other) const
    {
       return this->position != other.position;
    }
@@ -597,6 +599,7 @@ class Direction final : public Direction_Base
       }
 
       assert(false && "not reachable");
+      return {};
    }
 
    [[nodiscard]] constexpr Face to_face()
@@ -607,7 +610,9 @@ class Direction final : public Direction_Base
       case Direction::West: return Face::West;
       case Direction::East: return Face::East;
       }
+
       assert(false && "not reachable");
+      return {};
    }
 
    [[nodiscard]] static constexpr Direction from_vec2(const math::Vector2 &vec)
@@ -632,7 +637,9 @@ class Direction final : public Direction_Base
       case South: return North;
       case North: return South;
       }
+
       assert(false);
+      return {};
    }
 };
 
@@ -645,29 +652,6 @@ class Direction final : public Direction_Base
    case Direction::North: return "north";
    }
    return "";
-}
-
-[[nodiscard]] constexpr std::optional<Direction> direction_at(Direction dir, Side side)
-{
-   if (side == Side::Left) {
-      switch (dir) {
-      case Direction::North: return Direction::West;
-      case Direction::South: return Direction::East;
-      case Direction::West: return Direction::South;
-      case Direction::East: return Direction::North;
-      }
-
-      return std::nullopt;
-   }
-
-   switch (dir) {
-   case Direction::North: return Direction::East;
-   case Direction::South: return Direction::West;
-   case Direction::West: return Direction::North;
-   case Direction::East: return Direction::South;
-   }
-
-   return std::nullopt;
 }
 
 enum class LightTypeValue
@@ -775,7 +759,7 @@ struct SectionRange
          return at.x() > other.at.x();
       }
 
-      [[nodiscard]] constexpr bool operator!=(const Iterator &other) const
+      [[nodiscard]] bool operator!=(const Iterator &other) const
       {
          return at != other.at;
       }
@@ -1042,6 +1026,7 @@ class EquipmentSlot final : public EquipmentSlot_Base
       }
 
       assert(false);
+      return {};
    }
 };
 
@@ -1107,6 +1092,7 @@ class SlabType : public SlabType_Base
       case HalfPlacement::Bottom: return Bottom;
       }
       assert(false);
+      return {};
    }
 };
 

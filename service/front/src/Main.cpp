@@ -37,15 +37,15 @@ auto main() -> int
       }
    }
 
-   Protocol::StatusHandler status_handler;
-   Protocol::PlayHandler play_handler(service);
-   Protocol::LoginHandler login_handler(service, play_handler, private_key.get());
+   protocol::StatusHandler status_handler;
+   protocol::PlayHandler play_handler(service);
+   protocol::LoginHandler login_handler(service, play_handler, private_key.get());
 
    boost::asio::io_context ctx;
    Server svr(ctx, static_cast<mb::u16>(config.server_bind_port),
-              dynamic_cast<Protocol::Handler *>(&play_handler),
-              dynamic_cast<Protocol::Handler *>(&status_handler),
-              dynamic_cast<Protocol::Handler *>(&login_handler));
+              dynamic_cast<protocol::Handler *>(&play_handler),
+              dynamic_cast<protocol::Handler *>(&status_handler),
+              dynamic_cast<protocol::Handler *>(&login_handler));
 
    EventHandler handler(svr, registry);
    Client engine_client(config.engine_endpoints, handler);

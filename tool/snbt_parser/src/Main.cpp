@@ -1,25 +1,10 @@
 #include "Lexer.h"
 #include "Parser.h"
-#include <array>
 #include <boost/program_options.hpp>
 #include <fstream>
 #include <iostream>
-#include <minecpp/nbt/Parser.h>
-#include <sstream>
 
 namespace opts = boost::program_options;
-
-std::array<std::string, 9> token_names{
-        "Identifier",
-        "String",
-        "Numeric",
-        "Colon",
-        "Comma",
-        "LeftBrace",
-        "RightBrace",
-        "LeftSquareBracket",
-        "RightSquareBracket",
-};
 
 int main(int argc, char **argv)
 {
@@ -70,14 +55,14 @@ int main(int argc, char **argv)
    auto tokens = lexer.lex();
    Parser parser(tokens);
 
-   auto result = parser.read_content();
-   if (!result.ok()) {
-      std::cerr << result.err()->msg() << '\n';
-      return 1;
-   }
+   try {
+      auto content = parser.read_content();
 
-   auto content = result.unwrap();
-   std::ofstream out(output_file);
-   content.serialize("", out);
-   return 0;
+      std::ofstream out(output_file);
+      content.serialize("", out);
+   } catch (const std::runtime_error &err) {
+      std::cerr << "Failed to parse input: " << err.what() << '\n';
+      return EXIT_FAILURE;
+   }
+   return EXIT_SUCCESS;
 }

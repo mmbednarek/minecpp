@@ -84,7 +84,7 @@ class JobSystem
 
    void issue_ticket(Ticket ticket);
    void issue_job(std::unique_ptr<IJob> job);
-   void worker_routine(int id);
+   void worker_routine();
 
    template<typename TJob, typename... TArgs>
    void create_job(TArgs &&...args);

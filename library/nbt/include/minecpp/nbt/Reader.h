@@ -5,7 +5,6 @@
 #include <functional>
 #include <mb/result.h>
 #include <minecpp/util/Concepts.h>
-#include <minecpp/util/Format.h>
 #include <minecpp/util/Reader.h>
 #include <numeric>
 #include <string>
@@ -251,7 +250,8 @@ mb::emptyres Reader::try_read_compound(TCallback for_value)
       auto header = peek_tag();
       if (header.id == nbt::TagId::End)
          return mb::ok;
-      MB_TRY(for_value(*this, header.id, header.name));
+      auto result = for_value(*this, header.id, header.name);
+      MB_VERIFY(result);
    }
 }
 

@@ -4,7 +4,7 @@ namespace minecpp::nbt::item::v1 {
 
 void Item::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Byte, "IsBlock");
-   w.write_byte_content(is_block);
+   w.write_byte_content(static_cast<std::uint8_t>(is_block));
    w.write_header(minecpp::nbt::TagId::String, "CorrespondingBlockTag");
    w.write_string_content(corresponding_block_tag);
    w.write_header(minecpp::nbt::TagId::Int, "MaxItemStack");
@@ -12,24 +12,24 @@ void Item::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Item::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void Item::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 Item Item::deserialize_no_header(minecpp::nbt::Reader &r) {
    Item res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Byte:
-         res.__xx_put(name, r.read_byte());
+         res.set_property(in_field_name, r.read_byte());
          return;
       case minecpp::nbt::TagId::Int:
-         res.__xx_put(name, r.read_int());
+         res.set_property(in_field_name, r.read_int());
          return;
       case minecpp::nbt::TagId::String:
-         res.__xx_put(name, r.read_str());
+         res.set_property(in_field_name, r.read_str());
          return;
       default: 
          break;

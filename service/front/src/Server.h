@@ -22,8 +22,8 @@ class Server
    using ConstConnectionIter = ConnectionStorage::const_iterator;
 
  public:
-   explicit Server(boost::asio::io_context &ctx, mb::u16 port, Protocol::Handler *play,
-                   Protocol::Handler *status, Protocol::Handler *login);
+   explicit Server(boost::asio::io_context &ctx, mb::u16 port, protocol::Handler *play,
+                   protocol::Handler *status, protocol::Handler *login);
 
    void accept_conn();
 
@@ -63,17 +63,17 @@ class Server
 
    std::shared_ptr<Connection> connection_by_player_id(game::PlayerId player_id);
 
-   Protocol::Handler &get_handler(Protocol::State state);
+   protocol::Handler &get_handler(protocol::State state);
 
    void index_connection(game::PlayerId index, ConnectionId id);
 
  private:
-   void add_connection(ConnectionPtr connection, Protocol::State state);
+   void add_connection(ConnectionPtr connection, protocol::State state);
 
    std::map<game::PlayerId, ConnectionId> m_player_id_to_connection_id_map;
    std::map<ConnectionId, ConnectionPtr> m_connections;
    tcp::acceptor m_acceptor;
-   Protocol::Handler *m_handlers[3];
+   protocol::Handler *m_handlers[3];
    ConnectionId m_top_connection{};
    std::mutex m_connection_add_mutex{};
 };

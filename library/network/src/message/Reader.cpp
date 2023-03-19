@@ -1,6 +1,7 @@
 #include <boost/endian/conversion.hpp>
 #include <minecpp/nbt/Parser.h>
 #include <minecpp/network/message/File.h>
+#include <minecpp/util/Cast.hpp>
 #include <stdexcept>
 
 namespace minecpp::network::message {
@@ -19,8 +20,8 @@ uint8_t Reader::read_byte()
 
 int Reader::read_varint()
 {
-   uint32_t result = 0u;
-   uint32_t shift  = 0u;
+   std::uint32_t result = 0u;
+   std::uint32_t shift  = 0u;
 
    for (;;) {
       uint8_t b = read_byte();
@@ -29,36 +30,35 @@ int Reader::read_varint()
          shift += 7u;
          continue;
       }
-      result |= b << shift;
+      result |= static_cast<std::uint32_t>(b << shift);
       break;
    }
-   return result;
+
+   return static_cast<int>(result);
 }
 
 std::string Reader::read_string()
 {
-   int size = read_varint();
-   char buff[size];
-   m_stream.read(buff, size);
-   return {buff, static_cast<std::size_t>(size)};
+   auto size = read_varint();
+   std::string out(static_cast<std::size_t>(size), ' ');
+   m_stream.read(out.data(), size);
+   return out;
 }
 
 float Reader::read_float()
 {
-   static_assert(sizeof(uint32_t) == sizeof(float));
-   uint32_t value;
-   m_stream.read((char *) &value, sizeof(uint32_t));
-   value = boost::endian::big_to_native(value);
-   return *reinterpret_cast<float *>(&value);
+   static_assert(sizeof(std::uint32_t) == sizeof(float));
+   std::uint32_t value;
+   m_stream.read(reinterpret_cast<char *>(&value), sizeof(std::uint32_t));
+   return util::unsafe_cast<float>(boost::endian::big_to_native(value));
 }
 
 double Reader::read_double()
 {
-   static_assert(sizeof(uint64_t) == sizeof(double));
-   uint64_t value;
-   m_stream.read((char *) &value, sizeof(uint64_t));
-   value = boost::endian::big_to_native(value);
-   return *reinterpret_cast<double *>(&value);
+   static_assert(sizeof(std::uint64_t) == sizeof(double));
+   std::uint64_t value;
+   m_stream.read(reinterpret_cast<char *>(&value), sizeof(std::uint64_t));
+   return util::unsafe_cast<double>(boost::endian::big_to_native(value));
 }
 
 nbt::CompoundContent Reader::read_nbt_tag()
@@ -93,22 +93,23 @@ game::item::Recipe Reader::read_recipe()
 
 game::item::Recipe Reader::read_recipe_shaped()
 {
-   auto width  = read_varint();
-   auto height = read_varint();
+   auto width  = static_cast<std::size_t>(read_varint());
+   auto height = static_cast<std::size_t>(read_varint());
    auto group  = read_string();
 
    auto num = width * height;
-
    std::vector<game::item::StackVariants> ingredients(num);
-   for (int i = 0; i < num; i++) {
+
+   for (std::size_t i{}; i < num; i++) {
       ingredients[i] = read_stack_variants();
    }
+
    auto crafted = read_stack();
 
    return game::item::Recipe(crafted, group,
                              game::item::Recipe::CraftingShaped{
-                                     .width       = width,
-                                     .height      = height,
+                                     .width       = static_cast<int>(width),
+                                     .height      = static_cast<int>(height),
                                      .ingredients = std::move(ingredients),
                              });
 }
@@ -116,10 +117,10 @@ game::item::Recipe Reader::read_recipe_shaped()
 game::item::Recipe Reader::read_recipe_shapeless()
 {
    auto group = read_string();
-   auto num   = read_varint();
+   auto num   = static_cast<std::size_t>(read_varint());
 
    std::vector<game::item::StackVariants> ingredients(num);
-   for (int i = 0; i < num; i++) {
+   for (std::size_t i{}; i < num; i++) {
       ingredients[i] = read_stack_variants();
    }
    auto outcome = read_stack();
@@ -158,9 +159,9 @@ game::item::Recipe Reader::read_recipe_stone_cutting()
 
 game::item::StackVariants Reader::read_stack_variants()
 {
-   auto num_variants = read_varint();
+   auto num_variants = static_cast<std::size_t>(read_varint());
    game::item::StackVariants result(num_variants);
-   for (int v = 0; v < num_variants; v++) {
+   for (std::size_t v = 0; v < num_variants; v++) {
       result[v] = read_stack();
    }
    return result;
@@ -193,15 +194,15 @@ std::string Reader::get_hex_data()
       auto least = c % 16;
 
       if (most > 9) {
-         result.push_back(most - 10 + 'a');
+         result.push_back(static_cast<char>(most - 10 + 'a'));
       } else {
-         result.push_back(most + '0');
+         result.push_back(static_cast<char>(most + '0'));
       }
 
       if (least > 9) {
-         result.push_back(least - 10 + 'a');
+         result.push_back(static_cast<char>(least - 10 + 'a'));
       } else {
-         result.push_back(least + '0');
+         result.push_back(static_cast<char>(least + '0'));
       }
    }
 

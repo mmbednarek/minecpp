@@ -15,18 +15,18 @@ namespace minecpp::nbt::player::v1 {
 class Attribute {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
-         if (name == "Base") {
-            this->base = std::forward<T>(value);
+         if (in_field_name == "Base") {
+            this->base = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Name") {
-            this->name = std::forward<T>(value);
+         if (in_field_name == "Name") {
+            this->name = std::forward<T>(in_value);
             return;
          }
          return;
@@ -38,7 +38,7 @@ class Attribute {
    std::string name{};
    Attribute() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Attribute deserialize_no_header(minecpp::nbt::Reader &r);
    static Attribute deserialize(std::istream &in);
 };
@@ -46,14 +46,22 @@ class Attribute {
 class Memories {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
+      if constexpr (std::is_same_v<TDc, std::int32_t>) {
+         if (in_field_name == "no_empty") {
+            this->no_empty = std::forward<T>(in_value);
+            return;
+         }
+         return;
+      }
    }
 
  public:
+   std::int32_t no_empty{};
    Memories() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Memories deserialize_no_header(minecpp::nbt::Reader &r);
    static Memories deserialize(std::istream &in);
 };
@@ -61,11 +69,11 @@ class Memories {
 class Brain {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Memories>) {
-         if (name == "memories") {
-            this->memories = std::forward<T>(value);
+         if (in_field_name == "memories") {
+            this->memories = std::forward<T>(in_value);
             return;
          }
          return;
@@ -76,7 +84,7 @@ class Brain {
    Memories memories{};
    Brain() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Brain deserialize_no_header(minecpp::nbt::Reader &r);
    static Brain deserialize(std::istream &in);
 };
@@ -84,22 +92,22 @@ class Brain {
 class InventoryElement {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "Count") {
-            this->count = std::forward<T>(value);
+         if (in_field_name == "Count") {
+            this->count = std::forward<T>(in_value);
             return;
          }
-         if (name == "Slot") {
-            this->slot = std::forward<T>(value);
+         if (in_field_name == "Slot") {
+            this->slot = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "id") {
-            this->id = std::forward<T>(value);
+         if (in_field_name == "id") {
+            this->id = std::forward<T>(in_value);
             return;
          }
          return;
@@ -112,7 +120,7 @@ class InventoryElement {
    std::string id{};
    InventoryElement() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static InventoryElement deserialize_no_header(minecpp::nbt::Reader &r);
    static InventoryElement deserialize(std::istream &in);
 };
@@ -120,38 +128,38 @@ class InventoryElement {
 class Abilities {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, float>) {
-         if (name == "flySpeed") {
-            this->fly_speed = std::forward<T>(value);
+         if (in_field_name == "flySpeed") {
+            this->fly_speed = std::forward<T>(in_value);
             return;
          }
-         if (name == "walkSpeed") {
-            this->walk_speed = std::forward<T>(value);
+         if (in_field_name == "walkSpeed") {
+            this->walk_speed = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "flying") {
-            this->flying = std::forward<T>(value);
+         if (in_field_name == "flying") {
+            this->flying = std::forward<T>(in_value);
             return;
          }
-         if (name == "instabuild") {
-            this->instabuild = std::forward<T>(value);
+         if (in_field_name == "instabuild") {
+            this->instabuild = std::forward<T>(in_value);
             return;
          }
-         if (name == "invulnerable") {
-            this->invulnerable = std::forward<T>(value);
+         if (in_field_name == "invulnerable") {
+            this->invulnerable = std::forward<T>(in_value);
             return;
          }
-         if (name == "mayBuild") {
-            this->may_build = std::forward<T>(value);
+         if (in_field_name == "mayBuild") {
+            this->may_build = std::forward<T>(in_value);
             return;
          }
-         if (name == "mayfly") {
-            this->mayfly = std::forward<T>(value);
+         if (in_field_name == "mayfly") {
+            this->mayfly = std::forward<T>(in_value);
             return;
          }
          return;
@@ -168,7 +176,7 @@ class Abilities {
    float walk_speed{};
    Abilities() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Abilities deserialize_no_header(minecpp::nbt::Reader &r);
    static Abilities deserialize(std::istream &in);
 };
@@ -176,50 +184,50 @@ class Abilities {
 class RecipeBook {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "isBlastingFurnaceFilteringCraftable") {
-            this->is_blasting_furnace_filtering_craftable = std::forward<T>(value);
+         if (in_field_name == "isBlastingFurnaceFilteringCraftable") {
+            this->is_blasting_furnace_filtering_craftable = std::forward<T>(in_value);
             return;
          }
-         if (name == "isBlastingFurnaceGuiOpen") {
-            this->is_blasting_furnace_gui_open = std::forward<T>(value);
+         if (in_field_name == "isBlastingFurnaceGuiOpen") {
+            this->is_blasting_furnace_gui_open = std::forward<T>(in_value);
             return;
          }
-         if (name == "isFilteringCraftable") {
-            this->is_filtering_craftable = std::forward<T>(value);
+         if (in_field_name == "isFilteringCraftable") {
+            this->is_filtering_craftable = std::forward<T>(in_value);
             return;
          }
-         if (name == "isFurnaceFilteringCraftable") {
-            this->is_furnace_filtering_craftable = std::forward<T>(value);
+         if (in_field_name == "isFurnaceFilteringCraftable") {
+            this->is_furnace_filtering_craftable = std::forward<T>(in_value);
             return;
          }
-         if (name == "isFurnaceGuiOpen") {
-            this->is_furnace_gui_open = std::forward<T>(value);
+         if (in_field_name == "isFurnaceGuiOpen") {
+            this->is_furnace_gui_open = std::forward<T>(in_value);
             return;
          }
-         if (name == "isGuiOpen") {
-            this->is_gui_open = std::forward<T>(value);
+         if (in_field_name == "isGuiOpen") {
+            this->is_gui_open = std::forward<T>(in_value);
             return;
          }
-         if (name == "isSmokerFilteringCraftable") {
-            this->is_smoker_filtering_craftable = std::forward<T>(value);
+         if (in_field_name == "isSmokerFilteringCraftable") {
+            this->is_smoker_filtering_craftable = std::forward<T>(in_value);
             return;
          }
-         if (name == "isSmokerGuiOpen") {
-            this->is_smoker_gui_open = std::forward<T>(value);
+         if (in_field_name == "isSmokerGuiOpen") {
+            this->is_smoker_gui_open = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<std::string>>) {
-         if (name == "recipes") {
-            this->recipes = std::forward<T>(value);
+         if (in_field_name == "recipes") {
+            this->recipes = std::forward<T>(in_value);
             return;
          }
-         if (name == "toBeDisplayed") {
-            this->to_be_displayed = std::forward<T>(value);
+         if (in_field_name == "toBeDisplayed") {
+            this->to_be_displayed = std::forward<T>(in_value);
             return;
          }
          return;
@@ -239,7 +247,7 @@ class RecipeBook {
    std::vector<std::string> to_be_displayed{};
    RecipeBook() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static RecipeBook deserialize_no_header(minecpp::nbt::Reader &r);
    static RecipeBook deserialize(std::istream &in);
 };
@@ -247,211 +255,211 @@ class RecipeBook {
 class Player {
 
    template<typename T>
-   void __xx_put(const std::string &name, T &&value) {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Abilities>) {
-         if (name == "abilities") {
-            this->abilities = std::forward<T>(value);
+         if (in_field_name == "abilities") {
+            this->abilities = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, Brain>) {
-         if (name == "Brain") {
-            this->brain = std::forward<T>(value);
+         if (in_field_name == "Brain") {
+            this->brain = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, RecipeBook>) {
-         if (name == "recipeBook") {
-            this->recipe_book = std::forward<T>(value);
+         if (in_field_name == "recipeBook") {
+            this->recipe_book = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, float>) {
-         if (name == "AbsorptionAmount") {
-            this->absorption_amount = std::forward<T>(value);
+         if (in_field_name == "AbsorptionAmount") {
+            this->absorption_amount = std::forward<T>(in_value);
             return;
          }
-         if (name == "FallDistance") {
-            this->fall_distance = std::forward<T>(value);
+         if (in_field_name == "FallDistance") {
+            this->fall_distance = std::forward<T>(in_value);
             return;
          }
-         if (name == "Health") {
-            this->health = std::forward<T>(value);
+         if (in_field_name == "Health") {
+            this->health = std::forward<T>(in_value);
             return;
          }
-         if (name == "SpawnAngle") {
-            this->spawn_angle = std::forward<T>(value);
+         if (in_field_name == "SpawnAngle") {
+            this->spawn_angle = std::forward<T>(in_value);
             return;
          }
-         if (name == "XpP") {
-            this->xp_p = std::forward<T>(value);
+         if (in_field_name == "XpP") {
+            this->xp_p = std::forward<T>(in_value);
             return;
          }
-         if (name == "foodExhaustionLevel") {
-            this->food_exhaustion_level = std::forward<T>(value);
+         if (in_field_name == "foodExhaustionLevel") {
+            this->food_exhaustion_level = std::forward<T>(in_value);
             return;
          }
-         if (name == "foodSaturationLevel") {
-            this->food_saturation_level = std::forward<T>(value);
+         if (in_field_name == "foodSaturationLevel") {
+            this->food_saturation_level = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int16_t>) {
-         if (name == "Air") {
-            this->air = std::forward<T>(value);
+         if (in_field_name == "Air") {
+            this->air = std::forward<T>(in_value);
             return;
          }
-         if (name == "DeathTime") {
-            this->death_time = std::forward<T>(value);
+         if (in_field_name == "DeathTime") {
+            this->death_time = std::forward<T>(in_value);
             return;
          }
-         if (name == "Fire") {
-            this->fire = std::forward<T>(value);
+         if (in_field_name == "Fire") {
+            this->fire = std::forward<T>(in_value);
             return;
          }
-         if (name == "HurtTime") {
-            this->hurt_time = std::forward<T>(value);
+         if (in_field_name == "HurtTime") {
+            this->hurt_time = std::forward<T>(in_value);
             return;
          }
-         if (name == "SleepTimer") {
-            this->sleep_timer = std::forward<T>(value);
+         if (in_field_name == "SleepTimer") {
+            this->sleep_timer = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
-         if (name == "DataVersion") {
-            this->data_version = std::forward<T>(value);
+         if (in_field_name == "DataVersion") {
+            this->data_version = std::forward<T>(in_value);
             return;
          }
-         if (name == "HurtByTimestamp") {
-            this->hurt_by_timestamp = std::forward<T>(value);
+         if (in_field_name == "HurtByTimestamp") {
+            this->hurt_by_timestamp = std::forward<T>(in_value);
             return;
          }
-         if (name == "PortalCooldown") {
-            this->portal_cooldown = std::forward<T>(value);
+         if (in_field_name == "PortalCooldown") {
+            this->portal_cooldown = std::forward<T>(in_value);
             return;
          }
-         if (name == "Score") {
-            this->score = std::forward<T>(value);
+         if (in_field_name == "Score") {
+            this->score = std::forward<T>(in_value);
             return;
          }
-         if (name == "SelectedItemSlot") {
-            this->selected_item_slot = std::forward<T>(value);
+         if (in_field_name == "SelectedItemSlot") {
+            this->selected_item_slot = std::forward<T>(in_value);
             return;
          }
-         if (name == "SpawnX") {
-            this->spawn_x = std::forward<T>(value);
+         if (in_field_name == "SpawnX") {
+            this->spawn_x = std::forward<T>(in_value);
             return;
          }
-         if (name == "SpawnY") {
-            this->spawn_y = std::forward<T>(value);
+         if (in_field_name == "SpawnY") {
+            this->spawn_y = std::forward<T>(in_value);
             return;
          }
-         if (name == "SpawnZ") {
-            this->spawn_z = std::forward<T>(value);
+         if (in_field_name == "SpawnZ") {
+            this->spawn_z = std::forward<T>(in_value);
             return;
          }
-         if (name == "XpLevel") {
-            this->xp_level = std::forward<T>(value);
+         if (in_field_name == "XpLevel") {
+            this->xp_level = std::forward<T>(in_value);
             return;
          }
-         if (name == "XpSeed") {
-            this->xp_seed = std::forward<T>(value);
+         if (in_field_name == "XpSeed") {
+            this->xp_seed = std::forward<T>(in_value);
             return;
          }
-         if (name == "XpTotal") {
-            this->xp_total = std::forward<T>(value);
+         if (in_field_name == "XpTotal") {
+            this->xp_total = std::forward<T>(in_value);
             return;
          }
-         if (name == "foodLevel") {
-            this->food_level = std::forward<T>(value);
+         if (in_field_name == "foodLevel") {
+            this->food_level = std::forward<T>(in_value);
             return;
          }
-         if (name == "foodTickTimer") {
-            this->food_tick_timer = std::forward<T>(value);
+         if (in_field_name == "foodTickTimer") {
+            this->food_tick_timer = std::forward<T>(in_value);
             return;
          }
-         if (name == "playerGameType") {
-            this->player_game_type = std::forward<T>(value);
+         if (in_field_name == "playerGameType") {
+            this->player_game_type = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
-         if (name == "FallFlying") {
-            this->fall_flying = std::forward<T>(value);
+         if (in_field_name == "FallFlying") {
+            this->fall_flying = std::forward<T>(in_value);
             return;
          }
-         if (name == "Invulnerable") {
-            this->invulnerable = std::forward<T>(value);
+         if (in_field_name == "Invulnerable") {
+            this->invulnerable = std::forward<T>(in_value);
             return;
          }
-         if (name == "OnGround") {
-            this->on_ground = std::forward<T>(value);
+         if (in_field_name == "OnGround") {
+            this->on_ground = std::forward<T>(in_value);
             return;
          }
-         if (name == "SpawnForced") {
-            this->spawn_forced = std::forward<T>(value);
+         if (in_field_name == "SpawnForced") {
+            this->spawn_forced = std::forward<T>(in_value);
             return;
          }
-         if (name == "seenCredits") {
-            this->seen_credits = std::forward<T>(value);
+         if (in_field_name == "seenCredits") {
+            this->seen_credits = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::string>) {
-         if (name == "Dimension") {
-            this->dimension = std::forward<T>(value);
+         if (in_field_name == "Dimension") {
+            this->dimension = std::forward<T>(in_value);
             return;
          }
-         if (name == "SpawnDimension") {
-            this->spawn_dimension = std::forward<T>(value);
+         if (in_field_name == "SpawnDimension") {
+            this->spawn_dimension = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<Attribute>>) {
-         if (name == "Attributes") {
-            this->attributes = std::forward<T>(value);
+         if (in_field_name == "Attributes") {
+            this->attributes = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<InventoryElement>>) {
-         if (name == "Inventory") {
-            this->inventory = std::forward<T>(value);
+         if (in_field_name == "Inventory") {
+            this->inventory = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<double>>) {
-         if (name == "Motion") {
-            this->motion = std::forward<T>(value);
+         if (in_field_name == "Motion") {
+            this->motion = std::forward<T>(in_value);
             return;
          }
-         if (name == "Pos") {
-            this->pos = std::forward<T>(value);
+         if (in_field_name == "Pos") {
+            this->pos = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<float>>) {
-         if (name == "Rotation") {
-            this->rotation = std::forward<T>(value);
+         if (in_field_name == "Rotation") {
+            this->rotation = std::forward<T>(in_value);
             return;
          }
          return;
       }
       if constexpr (std::is_same_v<TDc, std::vector<std::int32_t>>) {
-         if (name == "UUID") {
-            this->uuid = std::forward<T>(value);
+         if (in_field_name == "UUID") {
+            this->uuid = std::forward<T>(in_value);
             return;
          }
          return;
@@ -503,7 +511,7 @@ class Player {
    std::int8_t seen_credits{};
    Player() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
-   void serialize(std::ostream &out, std::string_view name) const;
+   void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;
    static Player deserialize_no_header(minecpp::nbt::Reader &r);
    static Player deserialize(std::istream &in);
 };

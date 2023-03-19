@@ -15,7 +15,8 @@ class StaticQueue
    mb::size m_back{};
 
  public:
-   void push(T &&el)
+   template<typename TItem>
+   void push(TItem &&el)
    {
       m_mutex.lock();
       auto next_front = (m_front + 1) % N;
@@ -25,7 +26,7 @@ class StaticQueue
          next_front = (m_front + 1) % N;
       }
 
-      m_data[m_front] = std::forward<T>(el);
+      m_data[m_front] = std::forward<TItem>(el);
       m_front         = next_front;
       m_mutex.unlock();
    }

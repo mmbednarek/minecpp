@@ -4,7 +4,7 @@
 
 namespace minecpp::entity::component {
 
-void Abilities::serialize_to_proto(proto::entity::v1::Entity *entity) const {}
+void Abilities::serialize_to_proto(proto::entity::v1::Entity * /*entity*/) const {}
 
 void Abilities::on_attached(game::Entity &entity)
 {

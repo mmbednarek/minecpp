@@ -1,7 +1,6 @@
 #include <boost/endian/conversion.hpp>
 #include <fmt/core.h>
 #include <minecpp/region/File.h>
-#include <minecpp/util/Format.h>
 
 namespace minecpp::region {
 
@@ -12,8 +11,6 @@ RegionFile::RegionFile(std::fstream &s) :
 
 mb::result<std::vector<uint8_t>, LoadError> RegionFile::load_chunk(int x, int z) noexcept
 {
-   //   int off_x = x >= 0 ? x % 32 : -(x % 32);
-   //   int off_z = z >= 0 ? z % 32 : -(z % 32);
    int off_x = x & 31;
    int off_z = z & 31;
 
@@ -44,6 +41,7 @@ mb::result<std::vector<uint8_t>, LoadError> RegionFile::load_chunk(int x, int z)
    if (m_stream.gcount() != data_size) {
       return LoadError::CorruptedData;
    }
+
    return data;
 }
 
@@ -75,17 +73,14 @@ WriteError RegionFile::write_data(mb::i32 x, mb::i32 z, const mb::view<char> dat
 
    m_stream.seekg(offset << 12u, std::ios::beg);
 
-   mb::u32 size = data.size();
-   size         = boost::endian::native_to_big(size);
+   auto size = static_cast<mb::u32>(data.size());
+   size      = boost::endian::native_to_big(size);
    m_stream.write((char *) &size, sizeof(mb::u32));
 
    mb::u8 compression = 2;
    m_stream.write((char *) &compression, sizeof(mb::u8));
+   m_stream.write(data.data(), static_cast<int>(data.size()));
 
-   m_stream.write(data.data(), data.size());
-   //   for (std::size_t i = 0; i < max_size - data.size(); ++i) {
-   //      m_stream.put(0x00); // fill the rest with zeros
-   //   }
    return WriteError::Ok;
 }
 

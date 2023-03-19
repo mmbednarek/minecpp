@@ -3,7 +3,7 @@ project(minecpp)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Wno-unknown-pragmas")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Werror -Wno-unknown-pragmas")
 
 option(USE_LOCAL_GPRC "Compile using local gRPC and Protobuf libraries" ON)
 
@@ -46,11 +46,17 @@ if (${FDB_API_VERSION})
 endif ()
 
 FetchContent_Declare(
-        yaml
+        yaml-cpp
         GIT_REPOSITORY https://github.com/jbeder/yaml-cpp
         GIT_TAG yaml-cpp-0.7.0
 )
-FetchContent_MakeAvailable(yaml)
+FetchContent_MakeAvailable(yaml-cpp)
+
+# Disable warnings for yaml-cpp
+target_compile_options(yaml-cpp PUBLIC -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+target_compile_options(yaml-cpp-read PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+target_compile_options(yaml-cpp-parse PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
 
 FetchContent_Declare(
         libmb
@@ -62,7 +68,7 @@ FetchContent_MakeAvailable(libmb)
 FetchContent_Declare(
         libmb_codegen
         GIT_REPOSITORY https://github.com/mmbednarek/codegen
-        GIT_TAG codegen-0.0.30
+        GIT_TAG codegen-0.0.32
 )
 FetchContent_MakeAvailable(libmb_codegen)
 

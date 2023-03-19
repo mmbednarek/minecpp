@@ -38,6 +38,15 @@ class BaseVector
       return *this;                                                                    \
    }
 
+#define MCC_MATH_DECLARE_VEC_BINARY_OP_FUNC(name, transform_cb)                            \
+   [[nodiscard]] constexpr SelfType name(const SelfType &other) const                      \
+   {                                                                                       \
+      SelfType output{};                                                                   \
+      std::transform(m_storage, m_storage + Count, other.m_storage, output.m_storage,      \
+                     [](ValueType lhs, ValueType rhs) { return transform_cb(lhs, rhs); }); \
+      return output;                                                                       \
+   }
+
 #define MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(method_name, func_name) \
    [[nodiscard]] constexpr SelfType method_name() const                 \
    {                                                                    \
@@ -150,4 +159,6 @@ class BaseVector
    MCC_MATH_DECLARE_CAST_FUNC                                               \
    MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR                                      \
    MCC_MATH_DECLARE_VEC_LENGTH_METHOD                                       \
-   MCC_MATH_DECLARE_VEC_NORMALIZE_METHOD
+   MCC_MATH_DECLARE_VEC_NORMALIZE_METHOD                                    \
+   MCC_MATH_DECLARE_VEC_BINARY_OP_FUNC(min, std::min<ValueType>)            \
+   MCC_MATH_DECLARE_VEC_BINARY_OP_FUNC(max, std::max<ValueType>)

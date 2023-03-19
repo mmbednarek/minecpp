@@ -33,7 +33,7 @@ class TightArray
          pack          = 0;
          mb::u32 shift = 0;
          for (mb::u32 j{1}; j < items_per_pack; ++j) {
-            pack |= static_cast<mb::u64>(*at & bit_mask) << shift;
+            pack |= (static_cast<mb::u64>(*at) & bit_mask) << shift;
             ++at;
 
             if (at == end) {
@@ -47,7 +47,7 @@ class TightArray
             break;
          }
 
-         pack |= static_cast<mb::u64>(*at & bit_mask) << shift;
+         pack |= (static_cast<mb::u64>(*at) & bit_mask) << shift;
          ++at;
       }
    }
@@ -77,7 +77,7 @@ class TightArray
       auto offset = (i % items_per_pack) * CBits;
 
       auto full_pack = m_data[pack];
-      full_pack &= ~(bit_mask << offset);
+      full_pack &= static_cast<raw_value_type>(~(bit_mask << offset));
       full_pack |= (static_cast<std::uint64_t>(value) & bit_mask) << offset;
       m_data[pack] = full_pack;
    }

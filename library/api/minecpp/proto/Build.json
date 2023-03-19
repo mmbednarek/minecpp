@@ -1,6 +1,9 @@
 {
   "name": "minecpp_api_proto",
   "include_path": "minecpp/proto",
+  "compiler_flags": [
+    "-Wno-sign-conversion"
+  ],
   "dependencies": {
     "public": [
       "grpc++",

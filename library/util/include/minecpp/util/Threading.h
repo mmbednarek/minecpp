@@ -1,6 +1,5 @@
 #pragma once
 #ifdef unix
-#define _GNU_SOURCE
 #include <pthread.h>
 #endif
 

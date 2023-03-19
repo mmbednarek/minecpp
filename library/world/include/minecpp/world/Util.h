@@ -4,6 +4,6 @@
 
 namespace minecpp::world {
 
-int calculate_ref_count(const std::vector<std::int64_t> &data, const std::vector<std::uint32_t> &palette);
+int calculate_ref_count(const std::vector<std::uint64_t> &data, const std::vector<std::uint32_t> &palette);
 
 }

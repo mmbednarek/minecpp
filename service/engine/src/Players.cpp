@@ -24,8 +24,9 @@ mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::str
    entity::factory::Player player_factory(id, name);
    auto player_entity = player_factory.create_entity(m_spawn_position.to_vec3(), m_entity_system);
 
-   auto player_data = MB_TRY(load_player_data(w, id));
-   auto player      = game::player::Player::from_nbt(player_data, name);
+   auto player_data = load_player_data(w, id);
+   MB_VERIFY(player_data);
+   auto player = game::player::Player::from_nbt(*player_data, name);
    player.set_entity_id(player_entity.id());
    m_player_entity_map[player_entity.id()] = id;
 

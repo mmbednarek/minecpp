@@ -40,7 +40,7 @@ mb::result<DiscoveryResponse> Client::resolve(std::string_view service_name)
    }
 
    DiscoveryResponse result{.modified = true};
-   result.endpoints.reserve(response.endpoints_size());
+   result.endpoints.reserve(static_cast<std::size_t>(response.endpoints_size()));
    std::transform(
            response.endpoints().begin(), response.endpoints().end(), std::back_inserter(result.endpoints),
            [](const proto_discovery_v1::Endpoint &endpoint) { return Endpoint::from_proto(endpoint); });

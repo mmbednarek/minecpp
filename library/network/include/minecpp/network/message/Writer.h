@@ -13,13 +13,13 @@ int len_varint(int value);
 class Writer
 {
  public:
-   explicit Writer();
+   Writer() = default;
 
-   void write_byte(uint8_t value);
-   void write_short(int16_t value);
-   void write_long(uint64_t value);
-   void write_varint(uint32_t value);
-   void write_varlong(uint64_t value);
+   void write_byte(std::uint8_t value);
+   void write_short(std::int16_t value);
+   void write_long(std::uint64_t value);
+   void write_varint(std::uint32_t value);
+   void write_varlong(std::uint64_t value);
    void write_string(std::string_view s);
    void write_uuid_str(boost::uuids::uuid id);
    void write_uuid(boost::uuids::uuid id);
@@ -37,19 +37,19 @@ class Writer
    template<typename I>
    void write_big_endian_array(I *data, std::size_t size);
 
-   size_t peek_size();
+   std::size_t peek_size();
 
    [[nodiscard]] std::ostream &raw_stream();
 
  private:
-   std::stringstream stream;
+   std::stringstream m_stream;
 };
 
 template<typename T>
 void Writer::write_big_endian(T value)
 {
    value = boost::endian::native_to_big(value);
-   stream.write((char *) &value, sizeof(T));
+   m_stream.write((char *) &value, sizeof(T));
 }
 
 template<typename I>
@@ -64,7 +64,7 @@ void Writer::write_big_endian_array(std::vector<I> vec)
 template<typename I>
 void Writer::write_big_endian_array(I *data, std::size_t size)
 {
-   write_varint(size);
+   write_varint(static_cast<std::uint32_t>(size));
    for (std::size_t i = 0; i < size; ++i) {
       write_big_endian(data[i]);
    }

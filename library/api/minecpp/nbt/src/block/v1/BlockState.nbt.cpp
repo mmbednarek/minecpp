@@ -4,7 +4,7 @@ namespace minecpp::nbt::block::v1 {
 
 void BlockState::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Byte, "BlocksMovement");
-   w.write_byte_content(blocks_movement);
+   w.write_byte_content(static_cast<std::uint8_t>(blocks_movement));
    w.write_header(minecpp::nbt::TagId::Int, "Luminance");
    w.write_int_content(luminance);
    w.write_header(minecpp::nbt::TagId::Int, "Opacity");
@@ -14,25 +14,25 @@ void BlockState::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void BlockState::serialize(std::ostream &out, std::string_view name) const {
-   minecpp::nbt::Writer w(out);
-   w.begin_compound(name);
+void BlockState::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+   minecpp::nbt::Writer w(out_stream);
+   w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
 BlockState BlockState::deserialize_no_header(minecpp::nbt::Reader &r) {
    BlockState res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
       switch (tagid) {
       case minecpp::nbt::TagId::Byte:
-         res.__xx_put(name, r.read_byte());
+         res.set_property(in_field_name, r.read_byte());
          return;
       case minecpp::nbt::TagId::Int:
-         res.__xx_put(name, r.read_int());
+         res.set_property(in_field_name, r.read_int());
          return;
       case minecpp::nbt::TagId::Compound:
-         if (name == "SolidFaces") {
-            res.__xx_put(name, common::v1::FaceMask::deserialize_no_header(r));
+         if (in_field_name == "SolidFaces") {
+            res.set_property(in_field_name, common::v1::FaceMask::deserialize_no_header(r));
             return;
          }
          break;

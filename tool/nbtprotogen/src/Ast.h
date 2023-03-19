@@ -12,7 +12,7 @@ struct Location
 
    Location() = default;
 
-   explicit Location(Lex::Token t) :
+   explicit Location(const Lex::Token &t) :
        line(t.line),
        col(t.col)
    {

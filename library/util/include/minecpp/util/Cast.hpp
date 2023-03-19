@@ -1,8 +1,22 @@
-//
-// Created by ego on 3/19/23.
-//
+#pragma once
 
-#ifndef MINECPP_CAST_HPP
-#define MINECPP_CAST_HPP
+#include <utility>
 
-#endif//MINECPP_CAST_HPP
+namespace minecpp::util {
+
+template<typename TTargetType, typename TSourceType>
+TTargetType unsafe_cast(TSourceType&& value) {
+   using SourceType = std::decay_t<TSourceType>;
+
+   union {
+      SourceType source;
+      TTargetType target;
+   };
+
+   static_assert(sizeof(TTargetType) == sizeof(SourceType), "invalid size");
+
+   source = std::forward<TSourceType>(value);
+   return target;
+}
+
+}

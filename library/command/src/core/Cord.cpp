@@ -2,7 +2,7 @@
 
 namespace minecpp::command::core {
 
-bool Cord::is_flag(std::string_view name) const
+bool Cord::is_flag(std::string_view /*name*/) const
 {
    return false;
 }
@@ -26,4 +26,5 @@ ObjectType Cord::return_type(RuntimeContext & /*ctx*/) const
 {
    return command_return_type;
 }
+
 }// namespace minecpp::command::core
