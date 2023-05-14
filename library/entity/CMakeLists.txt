@@ -19,6 +19,7 @@ target_link_libraries(minecpp_entity
         minecpp_random
         minecpp_repository
         minecpp_math
+        minecpp_world
         minecpp_utils
 )
 

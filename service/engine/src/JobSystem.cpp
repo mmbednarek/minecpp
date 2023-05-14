@@ -1,6 +1,7 @@
 #include "JobSystem.h"
 #include "minecpp/util/Threading.h"
 
+#include <cassert>
 #include <fmt/format.h>
 #include <utility>
 

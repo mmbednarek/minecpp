@@ -176,17 +176,28 @@ struct AnimateHandDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 AnimateHandDefaultTypeInternal _AnimateHand_default_instance_;
-PROTOBUF_CONSTEXPR LoadInitialChunks::LoadInitialChunks(
+PROTOBUF_CONSTEXPR PreInitialChunks::PreInitialChunks(
     ::_pbi::ConstantInitialized) {}
-struct LoadInitialChunksDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR LoadInitialChunksDefaultTypeInternal()
+struct PreInitialChunksDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PreInitialChunksDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~LoadInitialChunksDefaultTypeInternal() {}
+  ~PreInitialChunksDefaultTypeInternal() {}
   union {
-    LoadInitialChunks _instance;
+    PreInitialChunks _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 LoadInitialChunksDefaultTypeInternal _LoadInitialChunks_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PreInitialChunksDefaultTypeInternal _PreInitialChunks_default_instance_;
+PROTOBUF_CONSTEXPR PostInitialChunks::PostInitialChunks(
+    ::_pbi::ConstantInitialized) {}
+struct PostInitialChunksDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR PostInitialChunksDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~PostInitialChunksDefaultTypeInternal() {}
+  union {
+    PostInitialChunks _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PostInitialChunksDefaultTypeInternal _PostInitialChunks_default_instance_;
 PROTOBUF_CONSTEXPR BlockPlacement::BlockPlacement(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.position_)*/nullptr
@@ -320,7 +331,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 }  // namespace event
 }  // namespace proto
 }  // namespace minecpp
-static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[21];
+static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[22];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto = nullptr;
 
@@ -412,7 +423,13 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbo
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::AnimateHand, _impl_.hand_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::LoadInitialChunks, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::PreInitialChunks, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::serverbound::v1::PostInitialChunks, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
@@ -505,16 +522,17 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 62, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::PlayerDigging)},
   { 72, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::UpdatePing)},
   { 79, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::AnimateHand)},
-  { 86, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::LoadInitialChunks)},
-  { 92, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::BlockPlacement)},
-  { 104, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::UseItem)},
-  { 112, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem)},
-  { 121, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::DropInventoryItem)},
-  { 128, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::SetCarriedItem)},
-  { 136, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeHeldItem)},
-  { 143, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::IssueCommand)},
-  { 150, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::Interact)},
-  { 161, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::RequestRespawn)},
+  { 86, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::PreInitialChunks)},
+  { 92, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::PostInitialChunks)},
+  { 98, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::BlockPlacement)},
+  { 110, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::UseItem)},
+  { 118, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeInventoryItem)},
+  { 127, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::DropInventoryItem)},
+  { 134, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::SetCarriedItem)},
+  { 142, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::ChangeHeldItem)},
+  { 149, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::IssueCommand)},
+  { 156, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::Interact)},
+  { 167, -1, -1, sizeof(::minecpp::proto::event::serverbound::v1::RequestRespawn)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -529,7 +547,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::minecpp::proto::event::serverbound::v1::_PlayerDigging_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_UpdatePing_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_AnimateHand_default_instance_._instance,
-  &::minecpp::proto::event::serverbound::v1::_LoadInitialChunks_default_instance_._instance,
+  &::minecpp::proto::event::serverbound::v1::_PreInitialChunks_default_instance_._instance,
+  &::minecpp::proto::event::serverbound::v1::_PostInitialChunks_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_BlockPlacement_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_UseItem_default_instance_._instance,
   &::minecpp::proto::event::serverbound::v1::_ChangeInventoryItem_default_instance_._instance,
@@ -569,29 +588,29 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_
   "mon.v1.BlockPosition\022+\n\004face\030\003 \001(\0162\035.min"
   "ecpp.proto.common.v1.Face\022\023\n\013sequence_id"
   "\030\004 \001(\005\"\032\n\nUpdatePing\022\014\n\004ping\030\001 \001(\005\"\033\n\013An"
-  "imateHand\022\014\n\004hand\030\001 \001(\005\"\023\n\021LoadInitialCh"
-  "unks\"\346\001\n\016BlockPlacement\022\014\n\004hand\030\001 \001(\005\0228\n"
-  "\010position\030\002 \001(\0132&.minecpp.proto.common.v"
-  "1.BlockPosition\022+\n\004face\030\003 \001(\0162\035.minecpp."
-  "proto.common.v1.Face\0224\n\tcrosshair\030\004 \001(\0132"
-  "!.minecpp.proto.common.v1.Vector3f\022\024\n\014in"
-  "side_block\030\005 \001(\010\022\023\n\013sequence_id\030\006 \001(\005\",\n"
-  "\007UseItem\022\014\n\004hand\030\001 \001(\005\022\023\n\013sequence_id\030\002 "
-  "\001(\005\"l\n\023ChangeInventoryItem\022\017\n\007slot_id\030\001 "
-  "\001(\005\0220\n\007item_id\030\002 \001(\0132\037.minecpp.proto.com"
-  "mon.v1.ItemId\022\022\n\nitem_count\030\003 \001(\005\"\'\n\021Dro"
-  "pInventoryItem\022\022\n\nfull_stack\030\001 \001(\010\"f\n\016Se"
-  "tCarriedItem\0228\n\017carried_item_id\030\001 \001(\0132\037."
-  "minecpp.proto.common.v1.ItemId\022\032\n\022carrie"
-  "d_item_count\030\002 \001(\005\"\036\n\016ChangeHeldItem\022\014\n\004"
-  "slot\030\001 \001(\005\"\037\n\014IssueCommand\022\017\n\007command\030\001 "
-  "\001(\t\"\341\001\n\010Interact\022\021\n\tentity_id\030\001 \001(\r\022B\n\020i"
-  "nteraction_type\030\002 \001(\0162(.minecpp.proto.co"
-  "mmon.v1.InteractionType\0223\n\010position\030\003 \001("
-  "\0132!.minecpp.proto.common.v1.Vector3f\0224\n\t"
-  "hand_type\030\004 \001(\0162!.minecpp.proto.common.v"
-  "1.HandType\022\023\n\013is_sneaking\030\005 \001(\010\"\020\n\016Reque"
-  "stRespawnb\006proto3"
+  "imateHand\022\014\n\004hand\030\001 \001(\005\"\022\n\020PreInitialChu"
+  "nks\"\023\n\021PostInitialChunks\"\346\001\n\016BlockPlacem"
+  "ent\022\014\n\004hand\030\001 \001(\005\0228\n\010position\030\002 \001(\0132&.mi"
+  "necpp.proto.common.v1.BlockPosition\022+\n\004f"
+  "ace\030\003 \001(\0162\035.minecpp.proto.common.v1.Face"
+  "\0224\n\tcrosshair\030\004 \001(\0132!.minecpp.proto.comm"
+  "on.v1.Vector3f\022\024\n\014inside_block\030\005 \001(\010\022\023\n\013"
+  "sequence_id\030\006 \001(\005\",\n\007UseItem\022\014\n\004hand\030\001 \001"
+  "(\005\022\023\n\013sequence_id\030\002 \001(\005\"l\n\023ChangeInvento"
+  "ryItem\022\017\n\007slot_id\030\001 \001(\005\0220\n\007item_id\030\002 \001(\013"
+  "2\037.minecpp.proto.common.v1.ItemId\022\022\n\nite"
+  "m_count\030\003 \001(\005\"\'\n\021DropInventoryItem\022\022\n\nfu"
+  "ll_stack\030\001 \001(\010\"f\n\016SetCarriedItem\0228\n\017carr"
+  "ied_item_id\030\001 \001(\0132\037.minecpp.proto.common"
+  ".v1.ItemId\022\032\n\022carried_item_count\030\002 \001(\005\"\036"
+  "\n\016ChangeHeldItem\022\014\n\004slot\030\001 \001(\005\"\037\n\014IssueC"
+  "ommand\022\017\n\007command\030\001 \001(\t\"\341\001\n\010Interact\022\021\n\t"
+  "entity_id\030\001 \001(\r\022B\n\020interaction_type\030\002 \001("
+  "\0162(.minecpp.proto.common.v1.InteractionT"
+  "ype\0223\n\010position\030\003 \001(\0132!.minecpp.proto.co"
+  "mmon.v1.Vector3f\0224\n\thand_type\030\004 \001(\0162!.mi"
+  "necpp.proto.common.v1.HandType\022\023\n\013is_sne"
+  "aking\030\005 \001(\010\"\020\n\016RequestRespawnb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps[4] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -601,9 +620,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto = {
-    false, false, 1977, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
+    false, false, 1997, descriptor_table_protodef_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
     "minecpp/proto/event/serverbound/v1/Serverbound.proto",
-    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps, 4, 21,
+    &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_deps, 4, 22,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto::offsets,
     file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto,
@@ -2938,31 +2957,31 @@ void AnimateHand::InternalSwap(AnimateHand* other) {
 
 // ===================================================================
 
-class LoadInitialChunks::_Internal {
+class PreInitialChunks::_Internal {
  public:
 };
 
-LoadInitialChunks::LoadInitialChunks(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+PreInitialChunks::PreInitialChunks(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
-  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.serverbound.v1.LoadInitialChunks)
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.serverbound.v1.PreInitialChunks)
 }
-LoadInitialChunks::LoadInitialChunks(const LoadInitialChunks& from)
+PreInitialChunks::PreInitialChunks(const PreInitialChunks& from)
   : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
-  LoadInitialChunks* const _this = this; (void)_this;
+  PreInitialChunks* const _this = this; (void)_this;
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.LoadInitialChunks)
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.PreInitialChunks)
 }
 
 
 
 
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData LoadInitialChunks::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PreInitialChunks::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*LoadInitialChunks::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PreInitialChunks::GetClassData() const { return &_class_data_; }
 
 
 
@@ -2970,10 +2989,50 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*LoadInitialChunks::GetClassDat
 
 
 
-::PROTOBUF_NAMESPACE_ID::Metadata LoadInitialChunks::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata PreInitialChunks::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[11]);
+}
+
+// ===================================================================
+
+class PostInitialChunks::_Internal {
+ public:
+};
+
+PostInitialChunks::PostInitialChunks(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase(arena, is_message_owned) {
+  // @@protoc_insertion_point(arena_constructor:minecpp.proto.event.serverbound.v1.PostInitialChunks)
+}
+PostInitialChunks::PostInitialChunks(const PostInitialChunks& from)
+  : ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase() {
+  PostInitialChunks* const _this = this; (void)_this;
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.serverbound.v1.PostInitialChunks)
+}
+
+
+
+
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData PostInitialChunks::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl,
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl,
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*PostInitialChunks::GetClassData() const { return &_class_data_; }
+
+
+
+
+
+
+
+::PROTOBUF_NAMESPACE_ID::Metadata PostInitialChunks::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[12]);
 }
 
 // ===================================================================
@@ -3329,7 +3388,7 @@ void BlockPlacement::InternalSwap(BlockPlacement* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata BlockPlacement::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[12]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[13]);
 }
 
 // ===================================================================
@@ -3540,7 +3599,7 @@ void UseItem::InternalSwap(UseItem* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata UseItem::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[13]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[14]);
 }
 
 // ===================================================================
@@ -3798,7 +3857,7 @@ void ChangeInventoryItem::InternalSwap(ChangeInventoryItem* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ChangeInventoryItem::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[14]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[15]);
 }
 
 // ===================================================================
@@ -3976,7 +4035,7 @@ void DropInventoryItem::InternalSwap(DropInventoryItem* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata DropInventoryItem::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[15]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[16]);
 }
 
 // ===================================================================
@@ -4206,7 +4265,7 @@ void SetCarriedItem::InternalSwap(SetCarriedItem* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SetCarriedItem::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[16]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[17]);
 }
 
 // ===================================================================
@@ -4384,7 +4443,7 @@ void ChangeHeldItem::InternalSwap(ChangeHeldItem* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ChangeHeldItem::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[17]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[18]);
 }
 
 // ===================================================================
@@ -4587,7 +4646,7 @@ void IssueCommand::InternalSwap(IssueCommand* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata IssueCommand::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[18]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[19]);
 }
 
 // ===================================================================
@@ -4899,7 +4958,7 @@ void Interact::InternalSwap(Interact* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Interact::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[19]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[20]);
 }
 
 // ===================================================================
@@ -4939,7 +4998,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*RequestRespawn::GetClassData()
 ::PROTOBUF_NAMESPACE_ID::Metadata RequestRespawn::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_getter, &descriptor_table_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto_once,
-      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[20]);
+      file_level_metadata_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto[21]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -4993,9 +5052,13 @@ template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::AnimateHa
 Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::AnimateHand >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::AnimateHand >(arena);
 }
-template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::LoadInitialChunks*
-Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::LoadInitialChunks >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::LoadInitialChunks >(arena);
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::PreInitialChunks*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::PreInitialChunks >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::PreInitialChunks >(arena);
+}
+template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::PostInitialChunks*
+Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::PostInitialChunks >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::minecpp::proto::event::serverbound::v1::PostInitialChunks >(arena);
 }
 template<> PROTOBUF_NOINLINE ::minecpp::proto::event::serverbound::v1::BlockPlacement*
 Arena::CreateMaybeMessage< ::minecpp::proto::event::serverbound::v1::BlockPlacement >(Arena* arena) {

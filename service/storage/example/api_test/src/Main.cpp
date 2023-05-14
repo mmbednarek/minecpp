@@ -1,3 +1,4 @@
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/service/storage/Storage.h>
 #include <minecpp/world/Chunk.h>
 #include <spdlog/spdlog.h>

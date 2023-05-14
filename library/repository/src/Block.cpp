@@ -1,6 +1,7 @@
 #include "minecpp/repository/Repository.h"
 #include <fstream>
 #include <minecpp/game/block/Block.h>
+#include <minecpp/game/Game.h>
 #include <minecpp/game/item/Item.h>
 #include <minecpp/nbt/repository/v1/Repository.nbt.h>
 #include <minecpp/repository/Block.h>

@@ -1,3 +1,4 @@
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/nbt/Parser.h>
 #include <minecpp/repository/State.h>
 #include <minecpp/util/Packed.h>
@@ -60,7 +61,7 @@ void Chunk::create_empty_section(int8_t sec)
 
 mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockStateId state)
 {
-   auto sec  = static_cast<std::int8_t>(position.y / 16);
+   auto sec  = static_cast<std::int8_t>(position.y() / 16);
    auto iter = m_sections.find(sec);
    if (iter == m_sections.end()) {
       create_empty_section(sec);
@@ -77,8 +78,8 @@ mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockSt
 
    if (block_state.solid_faces() & game::FaceMask::Top ||
        block_state.solid_faces() & game::FaceMask::Bottom || block_state.opacity() > 0) {
-      if (height_at(game::HeightType::LightBlocking, position) < position.y) {
-         set_height(game::HeightType::LightBlocking, position, position.y);
+      if (height_at(game::HeightType::LightBlocking, position) < position.y()) {
+         set_height(game::HeightType::LightBlocking, position, position.y());
       }
    }
 
@@ -87,7 +88,7 @@ mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockSt
 
 mb::result<game::BlockStateId> Chunk::get_block(const game::BlockPosition &position)
 {
-   auto section_id = static_cast<int8_t>(position.y / 16);
+   auto section_id = static_cast<int8_t>(position.y() / 16);
 
    auto it_section = m_sections.find(section_id);
    if (it_section == m_sections.end())
@@ -98,7 +99,7 @@ mb::result<game::BlockStateId> Chunk::get_block(const game::BlockPosition &posit
 
 mb::result<game::LightValue> Chunk::get_light(game::LightType type, const game::BlockPosition &position)
 {
-   auto section = section_from_y_level(position.y);
+   auto section = section_from_y_level(position.y());
    if (section.has_failed()) {
       return std::move(section.err());
    }
@@ -109,7 +110,7 @@ mb::result<game::LightValue> Chunk::get_light(game::LightType type, const game::
 mb::emptyres Chunk::set_light(game::LightType type, const game::BlockPosition &position,
                               game::LightValue value)
 {
-   auto section = section_from_y_level(position.y);
+   auto section = section_from_y_level(position.y());
    if (section.has_failed()) {
       return std::move(section.err());
    }

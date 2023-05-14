@@ -2,8 +2,9 @@
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
 #include <boost/geometry/index/rtree.hpp>
-#include <minecpp/game/Game.h>
+#include <minecpp/game/Types.hpp>
 #include <minecpp/math/Vector3.h>
+#include <optional>
 #include <shared_mutex>
 
 BOOST_GEOMETRY_REGISTER_POINT_3D(::minecpp::math::Vector3, double, boost::geometry::cs::cartesian,

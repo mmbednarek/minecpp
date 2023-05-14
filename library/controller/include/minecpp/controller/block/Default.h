@@ -1,6 +1,9 @@
 #ifndef MINECPP_DEFAULTCONTROLLER_H
 #define MINECPP_DEFAULTCONTROLLER_H
 #include <minecpp/game/IBlockController.hpp>
+#include <minecpp/game/property/Direction.h>
+#include <minecpp/game/property/Face.h>
+#include <minecpp/game/property/HalfPlacement.hpp>
 #include <optional>
 
 namespace minecpp::controller::block {

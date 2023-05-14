@@ -1,6 +1,6 @@
 #ifndef MINECPP_GAME_STATE_H
 #define MINECPP_GAME_STATE_H
-#include "Game.h"
+#include "Types.hpp"
 #include <algorithm>
 #include <string>
 #include <utility>

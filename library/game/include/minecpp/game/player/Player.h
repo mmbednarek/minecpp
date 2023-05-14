@@ -48,6 +48,7 @@ class Player
    game::Mode m_game_mode = game::Mode::Survival;
    bool m_is_alive{false};
    int m_ping{};
+   bool m_has_loaded_initial_chunks{false};
 
  public:
    Player(Id id, std::string_view name);
@@ -75,6 +76,16 @@ class Player
    [[nodiscard]] constexpr int ping() const
    {
       return m_ping;
+   }
+
+   [[nodiscard]] constexpr bool has_loaded_initial_chunks() const
+   {
+      return m_has_loaded_initial_chunks;
+   }
+
+   void set_has_loaded_initial_chunks(bool has_loaded_initial_chunks)
+   {
+      m_has_loaded_initial_chunks = has_loaded_initial_chunks;
    }
 
    constexpr void set_entity_id(EntityId entity_id)

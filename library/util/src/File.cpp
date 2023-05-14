@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <minecpp/util/Cast.hpp>
 #include <minecpp/util/Reader.h>
 

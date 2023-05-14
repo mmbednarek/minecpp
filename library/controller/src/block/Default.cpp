@@ -97,9 +97,9 @@ std::optional<game::Direction> Default::find_player_direction(game::IWorld &worl
    if (not player_entity.has_component<LocationComponent>())
       return std::nullopt;
 
-   const auto block_position  = position.to_vec3().flat() + math::Vector2{0.5, 0.5};
+   const auto block_position  = position.to_vector3().flat() + math::Vector2{0.5, 0.5};
    const auto player_position = player_entity.component<LocationComponent>().position().flat();
-   return game::Direction::from_vec2(block_position - player_position);
+   return game::Direction::from_vector2(block_position - player_position);
 }
 
 bool Default::verify_source_is_air(game::IWorld &world, game::BlockPosition pos)

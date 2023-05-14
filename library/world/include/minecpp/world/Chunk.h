@@ -4,7 +4,6 @@
 #include "Section.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
-#include <minecpp/game/Game.h>
 #include <minecpp/nbt/chunk/v1/Chunk.nbt.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/nbt/Tag.h>

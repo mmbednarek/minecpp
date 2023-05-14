@@ -72,14 +72,14 @@ class BaseVector
       return *this;                                                                                         \
    }
 
-#define MCC_MATH_DECLARE_EQUAL_OP                                                                       \
-   [[nodiscard]] bool operator==(const SelfType &other) const                                           \
-   {                                                                                                    \
-      return std::equal(m_storage, m_storage + Count, other.m_storage);                                 \
-   }                                                                                                    \
-   [[nodiscard]] bool operator!=(const SelfType &other) const                                           \
-   {                                                                                                    \
-      return std::equal(m_storage, m_storage + Count, other.m_storage, std::not_equal_to<ValueType>{}); \
+#define MCC_MATH_DECLARE_EQUAL_OP                                           \
+   [[nodiscard]] bool operator==(const SelfType &other) const               \
+   {                                                                        \
+      return std::equal(m_storage, m_storage + Count, other.m_storage);     \
+   }                                                                        \
+   [[nodiscard]] bool operator!=(const SelfType &other) const               \
+   {                                                                        \
+      return not std::equal(m_storage, m_storage + Count, other.m_storage); \
    }
 
 #define MCC_MATH_DECLARE_TRANSFORM_FUNC                                         \

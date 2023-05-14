@@ -185,10 +185,12 @@ mb::emptyres World::recalculate_light(game::LightType /*light_type*/, const game
    return mb::error("not implemented");
 }
 
-mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position)
+mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position,
+                                         bool is_initial)
 {
-   ACCESS_CHUNK_AT(position,
-                   [this, player_id](world::Chunk *chunk) { m_dispatcher.send_chunk(player_id, chunk); });
+   ACCESS_CHUNK_AT(position, [this, player_id, is_initial](world::Chunk *chunk) {
+      m_dispatcher.send_chunk(player_id, chunk, is_initial);
+   });
    return mb::ok;
 }
 
@@ -199,7 +201,7 @@ void World::tick(double delta_time)
 
 bool World::is_movement_blocked_at(const math::Vector3 &position)
 {
-   auto block_position = game::BlockPosition::from_vec3(position);
+   auto block_position = game::BlockPosition::from_vector3(position);
 
    auto block_state_id = this->get_block(block_position);
    if (block_state_id.has_failed())
@@ -241,7 +243,7 @@ void World::destroy_block(const game::BlockPosition &position)
    if (not item_id.ok())
       return;
 
-   auto item_position = position.to_vec3() + math::Vector3{0.5, 0.75, 0.5};
+   auto item_position = position.to_vector3() + math::Vector3{0.5, 0.75, 0.5};
    this->spawn<ItemFactory>(item_position, game::ItemSlot{*item_id, 1}, m_general_purpose_random);
 }
 

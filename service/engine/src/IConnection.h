@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/game/Game.h>
+#include <minecpp/game/Types.hpp>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <span>
 

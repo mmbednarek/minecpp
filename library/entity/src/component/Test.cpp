@@ -22,12 +22,10 @@ void Test::tick(game::IWorld & /*world*/, game::Entity &entity, double delta_tim
    spdlog::debug("Ticking entity {}, TPS={}", entity.id(), 1000.0 / delta_time);
 }
 
-void Test::on_position_change(game::IWorld & /*world*/, game::Entity &entity,
-                              const math::Vector3 &old_position, const math::Vector3 &new_position)
+void Test::on_position_change(game::IWorld & /*world*/, game::Entity & /*entity*/,
+                              const math::Vector3 & /*old_position*/, const math::Vector3 & /*new_position*/)
 {
    ++m_position_change_count;
-   spdlog::debug("Entity {} changing position from ({}) to ({}). This entity has changed position {} times.",
-                 entity.id(), old_position, new_position, m_position_change_count);
 }
 
 }// namespace minecpp::entity::component

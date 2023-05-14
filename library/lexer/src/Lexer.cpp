@@ -24,7 +24,7 @@ std::vector<Token> Lexer::lex()
          case '\\': m_state = State::StringEscape; continue;
          case '"':
             m_state = State::Normal;
-            m_result.push_back(Token{.type = TokenType::String, .value = m_identifier});
+            m_result.push_back(Token{.type = TokenType::String, .value = m_identifier, .line{}, .column{}});
             m_identifier.clear();
             continue;
          }
@@ -131,16 +131,14 @@ void Lexer::push_identifier()
    if (m_identifier.empty())
       return;
 
-   m_result.push_back(Token{
-           .type  = deduce_token_type(m_identifier),
-           .value = m_identifier,
-   });
+   m_result.push_back(
+           Token{.type = deduce_token_type(m_identifier), .value = m_identifier, .line{}, .column{}});
    m_identifier.clear();
 }
 
 void Lexer::push_special_token(TokenType type)
 {
-   m_result.push_back(Token{.type = type});
+   m_result.push_back(Token{.type = type, .value{}, .line{}, .column{}});
 }
 
 StringReader::StringReader(std::string_view data) :

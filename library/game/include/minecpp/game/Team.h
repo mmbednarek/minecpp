@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Game.h"
 #include <mb/enum.h>
 #include <minecpp/format/Format.h>
 

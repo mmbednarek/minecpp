@@ -4,6 +4,7 @@
   "dependencies": {
     "public": [
       "EnTT",
+      "libmb",
       "minecpp_api_proto",
       "minecpp_api_nbt",
       "minecpp_chat",

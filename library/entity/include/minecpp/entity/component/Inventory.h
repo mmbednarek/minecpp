@@ -1,7 +1,6 @@
 #pragma once
 #include <array>
 #include <minecpp/game/Entity.h>
-#include <minecpp/game/Game.h>
 #include <minecpp/game/IDispatcher.hpp>
 #include <minecpp/game/IWorld.hpp>
 

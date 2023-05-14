@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <minecpp/game/Game.h>
 #include <minecpp/game/State.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/State.h>

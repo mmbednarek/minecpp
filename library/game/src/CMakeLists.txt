@@ -4,13 +4,24 @@ set(MINECPP_GAME_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game)
 target_sources(minecpp_game PUBLIC
         # Source files
         ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/BlockPosition.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/BlockRange.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkPosition.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Game.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Light.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Rules.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/SectionPosition.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/SectionRange.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/World.cpp
 
         # Header files
         ${MINECPP_GAME_INCLUDE_DIR}/Abilities.h
-        ${MINECPP_GAME_INCLUDE_DIR}/Concepts.h
+        ${MINECPP_GAME_INCLUDE_DIR}/BlockPosition.h
+        ${MINECPP_GAME_INCLUDE_DIR}/BlockRange.h
+        ${MINECPP_GAME_INCLUDE_DIR}/ChunkPosition.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Concepts.hpp
+        ${MINECPP_GAME_INCLUDE_DIR}/Constants.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Delegate.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Entity.h
         ${MINECPP_GAME_INCLUDE_DIR}/Entt.hpp
@@ -22,14 +33,19 @@ target_sources(minecpp_game PUBLIC
         ${MINECPP_GAME_INCLUDE_DIR}/IEntitySystem.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/IItemController.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/IWorld.hpp
+        ${MINECPP_GAME_INCLUDE_DIR}/Light.h
         ${MINECPP_GAME_INCLUDE_DIR}/Mode.h
         ${MINECPP_GAME_INCLUDE_DIR}/Rules.h
+        ${MINECPP_GAME_INCLUDE_DIR}/SectionPosition.h
+        ${MINECPP_GAME_INCLUDE_DIR}/SectionRange.h
         ${MINECPP_GAME_INCLUDE_DIR}/State.h
         ${MINECPP_GAME_INCLUDE_DIR}/Team.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Types.hpp
 )
 
 # Subdirectories
 add_subdirectory("block")
 add_subdirectory("item")
 add_subdirectory("player")
+add_subdirectory("property")
 

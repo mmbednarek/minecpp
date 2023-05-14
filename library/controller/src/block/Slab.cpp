@@ -1,5 +1,6 @@
 #include "minecpp/repository/Block.h"
 #include <minecpp/controller/block/Slab.h>
+#include <minecpp/game/property/SlabType.h>
 #include <minecpp/world/BlockState.h>
 
 using minecpp::game::Face;

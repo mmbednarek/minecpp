@@ -84,12 +84,15 @@ extern InteractDefaultTypeInternal _Interact_default_instance_;
 class IssueCommand;
 struct IssueCommandDefaultTypeInternal;
 extern IssueCommandDefaultTypeInternal _IssueCommand_default_instance_;
-class LoadInitialChunks;
-struct LoadInitialChunksDefaultTypeInternal;
-extern LoadInitialChunksDefaultTypeInternal _LoadInitialChunks_default_instance_;
 class PlayerDigging;
 struct PlayerDiggingDefaultTypeInternal;
 extern PlayerDiggingDefaultTypeInternal _PlayerDigging_default_instance_;
+class PostInitialChunks;
+struct PostInitialChunksDefaultTypeInternal;
+extern PostInitialChunksDefaultTypeInternal _PostInitialChunks_default_instance_;
+class PreInitialChunks;
+struct PreInitialChunksDefaultTypeInternal;
+extern PreInitialChunksDefaultTypeInternal _PreInitialChunks_default_instance_;
 class RemovePlayer;
 struct RemovePlayerDefaultTypeInternal;
 extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
@@ -133,8 +136,9 @@ template<> ::minecpp::proto::event::serverbound::v1::DropInventoryItem* Arena::C
 template<> ::minecpp::proto::event::serverbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Event>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::Interact* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::Interact>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::IssueCommand* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::IssueCommand>(Arena*);
-template<> ::minecpp::proto::event::serverbound::v1::LoadInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::LoadInitialChunks>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::PlayerDigging* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PlayerDigging>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::PostInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PostInitialChunks>(Arena*);
+template<> ::minecpp::proto::event::serverbound::v1::PreInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::PreInitialChunks>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::RemovePlayer>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::RequestRespawn* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::RequestRespawn>(Arena*);
 template<> ::minecpp::proto::event::serverbound::v1::SetCarriedItem* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::v1::SetCarriedItem>(Arena*);
@@ -1934,23 +1938,23 @@ class AnimateHand final :
 };
 // -------------------------------------------------------------------
 
-class LoadInitialChunks final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.LoadInitialChunks) */ {
+class PreInitialChunks final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.PreInitialChunks) */ {
  public:
-  inline LoadInitialChunks() : LoadInitialChunks(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR LoadInitialChunks(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline PreInitialChunks() : PreInitialChunks(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR PreInitialChunks(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  LoadInitialChunks(const LoadInitialChunks& from);
-  LoadInitialChunks(LoadInitialChunks&& from) noexcept
-    : LoadInitialChunks() {
+  PreInitialChunks(const PreInitialChunks& from);
+  PreInitialChunks(PreInitialChunks&& from) noexcept
+    : PreInitialChunks() {
     *this = ::std::move(from);
   }
 
-  inline LoadInitialChunks& operator=(const LoadInitialChunks& from) {
+  inline PreInitialChunks& operator=(const PreInitialChunks& from) {
     CopyFrom(from);
     return *this;
   }
-  inline LoadInitialChunks& operator=(LoadInitialChunks&& from) noexcept {
+  inline PreInitialChunks& operator=(PreInitialChunks&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -1973,20 +1977,20 @@ class LoadInitialChunks final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const LoadInitialChunks& default_instance() {
+  static const PreInitialChunks& default_instance() {
     return *internal_default_instance();
   }
-  static inline const LoadInitialChunks* internal_default_instance() {
-    return reinterpret_cast<const LoadInitialChunks*>(
-               &_LoadInitialChunks_default_instance_);
+  static inline const PreInitialChunks* internal_default_instance() {
+    return reinterpret_cast<const PreInitialChunks*>(
+               &_PreInitialChunks_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     11;
 
-  friend void swap(LoadInitialChunks& a, LoadInitialChunks& b) {
+  friend void swap(PreInitialChunks& a, PreInitialChunks& b) {
     a.Swap(&b);
   }
-  inline void Swap(LoadInitialChunks* other) {
+  inline void Swap(PreInitialChunks* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -1999,7 +2003,7 @@ class LoadInitialChunks final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(LoadInitialChunks* other) {
+  void UnsafeArenaSwap(PreInitialChunks* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -2007,15 +2011,15 @@ class LoadInitialChunks final :
 
   // implements Message ----------------------------------------------
 
-  LoadInitialChunks* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<LoadInitialChunks>(arena);
+  PreInitialChunks* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PreInitialChunks>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const LoadInitialChunks& from) {
+  inline void CopyFrom(const PreInitialChunks& from) {
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
   }
   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const LoadInitialChunks& from) {
+  void MergeFrom(const PreInitialChunks& from) {
     ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
   }
   public:
@@ -2023,10 +2027,10 @@ class LoadInitialChunks final :
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.event.serverbound.v1.LoadInitialChunks";
+    return "minecpp.proto.event.serverbound.v1.PreInitialChunks";
   }
   protected:
-  explicit LoadInitialChunks(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit PreInitialChunks(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -2039,7 +2043,125 @@ class LoadInitialChunks final :
 
   // accessors -------------------------------------------------------
 
-  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.LoadInitialChunks)
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.PreInitialChunks)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fv1_2fServerbound_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PostInitialChunks final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.v1.PostInitialChunks) */ {
+ public:
+  inline PostInitialChunks() : PostInitialChunks(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR PostInitialChunks(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  PostInitialChunks(const PostInitialChunks& from);
+  PostInitialChunks(PostInitialChunks&& from) noexcept
+    : PostInitialChunks() {
+    *this = ::std::move(from);
+  }
+
+  inline PostInitialChunks& operator=(const PostInitialChunks& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PostInitialChunks& operator=(PostInitialChunks&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PostInitialChunks& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PostInitialChunks* internal_default_instance() {
+    return reinterpret_cast<const PostInitialChunks*>(
+               &_PostInitialChunks_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(PostInitialChunks& a, PostInitialChunks& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PostInitialChunks* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PostInitialChunks* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  PostInitialChunks* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PostInitialChunks>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const PostInitialChunks& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const PostInitialChunks& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.serverbound.v1.PostInitialChunks";
+  }
+  protected:
+  explicit PostInitialChunks(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.v1.PostInitialChunks)
  private:
   class _Internal;
 
@@ -2100,7 +2222,7 @@ class BlockPlacement final :
                &_BlockPlacement_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(BlockPlacement& a, BlockPlacement& b) {
     a.Swap(&b);
@@ -2321,7 +2443,7 @@ class UseItem final :
                &_UseItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(UseItem& a, UseItem& b) {
     a.Swap(&b);
@@ -2480,7 +2602,7 @@ class ChangeInventoryItem final :
                &_ChangeInventoryItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(ChangeInventoryItem& a, ChangeInventoryItem& b) {
     a.Swap(&b);
@@ -2659,7 +2781,7 @@ class DropInventoryItem final :
                &_DropInventoryItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(DropInventoryItem& a, DropInventoryItem& b) {
     a.Swap(&b);
@@ -2807,7 +2929,7 @@ class SetCarriedItem final :
                &_SetCarriedItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(SetCarriedItem& a, SetCarriedItem& b) {
     a.Swap(&b);
@@ -2975,7 +3097,7 @@ class ChangeHeldItem final :
                &_ChangeHeldItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(ChangeHeldItem& a, ChangeHeldItem& b) {
     a.Swap(&b);
@@ -3123,7 +3245,7 @@ class IssueCommand final :
                &_IssueCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   friend void swap(IssueCommand& a, IssueCommand& b) {
     a.Swap(&b);
@@ -3276,7 +3398,7 @@ class Interact final :
                &_Interact_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(Interact& a, Interact& b) {
     a.Swap(&b);
@@ -3476,7 +3598,7 @@ class RequestRespawn final :
                &_RequestRespawn_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   friend void swap(RequestRespawn& a, RequestRespawn& b) {
     a.Swap(&b);
@@ -4513,7 +4635,11 @@ inline void AnimateHand::set_hand(int32_t value) {
 
 // -------------------------------------------------------------------
 
-// LoadInitialChunks
+// PreInitialChunks
+
+// -------------------------------------------------------------------
+
+// PostInitialChunks
 
 // -------------------------------------------------------------------
 
@@ -5329,6 +5455,8 @@ inline void Interact::set_is_sneaking(bool value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

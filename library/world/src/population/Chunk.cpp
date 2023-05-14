@@ -1,3 +1,4 @@
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/random/JavaRandom.h>
 #include <minecpp/world/population/Chunk.h>
 #include <minecpp/world/population/Object.h>
@@ -60,7 +61,7 @@ void ChunkPlacements::put_object(Chunk &chunk, int id, game::BlockPosition posit
    auto obj    = ObjectRepository::the().get_object(static_cast<std::size_t>(id), object_seed);
    auto center = obj->center();
 
-   auto center_offset = position.z * 16 + position.x;
+   auto center_offset = position.z() * 16 + position.x();
    if (center_offset > 255) {
       return;
    }
@@ -69,7 +70,7 @@ void ChunkPlacements::put_object(Chunk &chunk, int id, game::BlockPosition posit
 
    for (int z = -center.y(); z < extent.z() - center.y(); ++z) {
       for (int x = -center.x(); x < extent.x() - center.x(); ++x) {
-         auto hash = chunk.pos().block_at(position.x + x, 0, position.z + z).as_long();
+         auto hash = chunk.pos().block_at(position.x() + x, 0, position.z() + z).as_long();
          if (m_placements.contains(hash)) {
             return;
          }
@@ -78,14 +79,14 @@ void ChunkPlacements::put_object(Chunk &chunk, int id, game::BlockPosition posit
 
    for (int z = -center.y(); z < extent.z() - center.y(); ++z) {
       for (int x = -center.x(); x < extent.x() - center.x(); ++x) {
-         m_placements[chunk.pos().block_at(position.x + x, 0, position.z + z).as_long()] =
+         m_placements[chunk.pos().block_at(position.x() + x, 0, position.z() + z).as_long()] =
                  Placement{.object_id   = id,
                            .object_seed = object_seed,
                            .x           = static_cast<short>(x + center.x()),
                            .z           = static_cast<short>(z + center.y()),
-                           .chunk_x     = static_cast<short>(position.x + x),
-                           .chunk_z     = static_cast<short>(position.z + z),
-                           .height      = static_cast<short>(position.y)};
+                           .chunk_x     = static_cast<short>(position.x() + x),
+                           .chunk_z     = static_cast<short>(position.z() + z),
+                           .height      = static_cast<short>(position.y())};
       }
    }
 }
@@ -118,18 +119,19 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
       auto obj = ObjectRepository::the().get_object(static_cast<mb::size>(placement.object_id),
                                                     placement.object_seed);
 
-      game::BlockPosition position{};
+      game::BlockPosition position{
+              placement.chunk_x + (pos.x() - chunk.pos().x()) * 16,
+              0,
+              placement.chunk_z + (pos.z() - chunk.pos().z()) * 16,
+      };
 
-      position.x = placement.chunk_x + (pos.x() - chunk.pos().x()) * 16;
-      position.z = placement.chunk_z + (pos.z() - chunk.pos().z()) * 16;
-
-      if (position.x < 0 || position.x >= 16 || position.z < 0 || position.z >= 16)
+      if (position.x() < 0 || position.x() >= 16 || position.z() < 0 || position.z() >= 16)
          continue;
 
       const auto height = obj->extent().y();
 
       for (int y = 0; y < height; ++y) {
-         position.y = placement.height + y;
+         position.set_y(placement.height + y);
          auto state = obj->block({placement.x, y, placement.z});
          if (state != 0) {
             chunk.set_block(position, static_cast<game::BlockStateId>(state));

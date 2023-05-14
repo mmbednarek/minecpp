@@ -107,14 +107,10 @@ nbt::ListContent Parser::read_list()
 {
    if (m_reader.token_type() == TokenType::RightSquareBracket) {
       m_reader.skip_next();
-      return nbt::ListContent{
-              .tag_id = nbt::TagId::End,
-      };
+      return nbt::ListContent{.tag_id = nbt::TagId::End, .elements{}};
    }
 
-   nbt::ListContent result{
-           .tag_id = tag_id_by_token_type(m_reader.token_type()),
-   };
+   nbt::ListContent result{.tag_id = tag_id_by_token_type(m_reader.token_type()), .elements{}};
 
    for (;;) {
       result.elements.emplace_back(read_content().content);

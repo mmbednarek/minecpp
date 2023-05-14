@@ -6,6 +6,7 @@
 #include <minecpp/container/Queue.h>
 #include <minecpp/grpc/Bidi.h>
 #include <minecpp/util/Pool.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::grpc::server {
 
@@ -63,6 +64,8 @@ class InternalStream
 
    void disconnect(void *tag)
    {
+      m_disconnect_handler();
+
       ::grpc::Status status{};
       m_stream.Finish(status, tag);
    }
@@ -70,6 +73,11 @@ class InternalStream
    void bind_read_callback(std::function<void(const read_type &msg)> func)
    {
       m_read_handler = std::move(func);
+   }
+
+   void bind_disconnect_callback(std::function<void()> func)
+   {
+      m_disconnect_handler = std::move(func);
    }
 
    [[nodiscard]] State state() const
@@ -125,6 +133,7 @@ class InternalStream
 
  private:
    std::function<void(const read_type &msg)> m_read_handler;
+   std::function<void()> m_disconnect_handler;
    container::Queue<std::tuple<write_type, void *>> m_write_queue;
    State m_state{State::Disconnected};
    std::mutex m_write_mutex;
@@ -169,6 +178,12 @@ class Stream
       read();
    }
 
+   template<typename TInstance, typename TCallback>
+   void bind_disconnect_callback(TInstance *instance, TCallback callback)
+   {
+      m_server->bind_disconnect_callback([instance, callback]() { std::invoke(callback, instance); });
+   }
+
  private:
    void read()
    {
@@ -204,7 +219,8 @@ class BidiServer
             return mb::ok;
          }
          if (!data_ok) {
-            return mb::error("cannot read message\n");
+            spdlog::error("couldn't read data");
+            continue;
          }
 
          auto event = static_cast<event_type *>(tag_ptr);

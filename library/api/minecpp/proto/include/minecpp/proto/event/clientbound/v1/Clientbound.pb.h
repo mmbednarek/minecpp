@@ -5485,6 +5485,7 @@ class ChunkData final :
 
   enum : int {
     kChunkFieldNumber = 1,
+    kIsInitialChunkFieldNumber = 2,
   };
   // .minecpp.proto.chunk.v1.Chunk chunk = 1;
   bool has_chunk() const;
@@ -5504,6 +5505,15 @@ class ChunkData final :
       ::minecpp::proto::chunk::v1::Chunk* chunk);
   ::minecpp::proto::chunk::v1::Chunk* unsafe_arena_release_chunk();
 
+  // bool is_initial_chunk = 2;
+  void clear_is_initial_chunk();
+  bool is_initial_chunk() const;
+  void set_is_initial_chunk(bool value);
+  private:
+  bool _internal_is_initial_chunk() const;
+  void _internal_set_is_initial_chunk(bool value);
+  public:
+
   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.ChunkData)
  private:
   class _Internal;
@@ -5513,6 +5523,7 @@ class ChunkData final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::minecpp::proto::chunk::v1::Chunk* chunk_;
+    bool is_initial_chunk_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -10644,6 +10655,26 @@ inline void ChunkData::set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk* c
   }
   _impl_.chunk_ = chunk;
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
+}
+
+// bool is_initial_chunk = 2;
+inline void ChunkData::clear_is_initial_chunk() {
+  _impl_.is_initial_chunk_ = false;
+}
+inline bool ChunkData::_internal_is_initial_chunk() const {
+  return _impl_.is_initial_chunk_;
+}
+inline bool ChunkData::is_initial_chunk() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkData.is_initial_chunk)
+  return _internal_is_initial_chunk();
+}
+inline void ChunkData::_internal_set_is_initial_chunk(bool value) {
+  
+  _impl_.is_initial_chunk_ = value;
+}
+inline void ChunkData::set_is_initial_chunk(bool value) {
+  _internal_set_is_initial_chunk(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.ChunkData.is_initial_chunk)
 }
 
 // -------------------------------------------------------------------

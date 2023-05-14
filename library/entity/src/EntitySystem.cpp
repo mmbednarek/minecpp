@@ -12,11 +12,14 @@
 #include <minecpp/entity/component/Trader.h>
 #include <minecpp/entity/component/UniqueId.h>
 #include <minecpp/entity/EntitySystem.h>
-#include <minecpp/game/Concepts.h>
+#include <minecpp/game/ChunkPosition.h>
+#include <minecpp/game/Concepts.hpp>
+#include <minecpp/world/IChunkSystem.h>
 
 namespace minecpp::entity {
 
-EntitySystem::EntitySystem() :
+EntitySystem::EntitySystem(world::IChunkSystem &chunk_system) :
+    m_chunk_system(chunk_system),
     m_storage(std::make_unique<EntitySpace>())
 {
    game::register_component<component::UniqueId>();
@@ -84,6 +87,14 @@ void EntitySystem::tick_entities(game::IWorld &world, double delta_time)
 {
    for (auto entity_id : m_registry.view<component::Ticker>()) {
       auto entity = this->entity(static_cast<game::EntityId>(entity_id));
+      if (entity.has_component<component::Location>()) {
+         // don't tick entity if chunk is empty
+         auto state = m_chunk_system.chunk_state_at(
+                 game::ChunkPosition::from_position(entity.component<component::Location>().position()));
+         if (state != world::ChunkState::COMPLETE)
+            continue;
+      }
+
       m_registry.get<component::Ticker>(entity_id).tick(world, entity, delta_time);
    }
 

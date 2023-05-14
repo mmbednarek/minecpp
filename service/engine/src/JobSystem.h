@@ -1,9 +1,9 @@
 #pragma once
 #include <atomic>
 #include <condition_variable>
+#include <functional>
 #include <memory>
 #include <minecpp/container/Queue.h>
-#include <minecpp/game/Game.h>
 #include <mutex>
 #include <vector>
 

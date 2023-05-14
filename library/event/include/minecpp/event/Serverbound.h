@@ -21,7 +21,8 @@ concept ServerboundVisitor =
            t.handle_player_digging(serverbound_v1::PlayerDigging(), game::PlayerId());
            t.handle_update_ping(serverbound_v1::UpdatePing(), game::PlayerId());
            t.handle_animate_hand(serverbound_v1::AnimateHand(), game::PlayerId());
-           t.handle_load_initial_chunks(serverbound_v1::LoadInitialChunks(), game::PlayerId());
+           t.handle_pre_initial_chunks(serverbound_v1::PreInitialChunks(), game::PlayerId());
+           t.handle_post_initial_chunks(serverbound_v1::PostInitialChunks(), game::PlayerId());
            t.handle_block_placement(serverbound_v1::BlockPlacement(), game::PlayerId());
            t.handle_change_inventory_item(serverbound_v1::ChangeInventoryItem(), game::PlayerId());
            t.handle_change_held_item(serverbound_v1::ChangeHeldItem(), game::PlayerId());
@@ -59,7 +60,8 @@ void visit_serverbound(const serverbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_SERVICEBOUND(PlayerDigging, handle_player_digging);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(UpdatePing, handle_update_ping);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(AnimateHand, handle_animate_hand);
-   MINECPP_EVENT_HANDLE_SERVICEBOUND(LoadInitialChunks, handle_load_initial_chunks);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(PreInitialChunks, handle_pre_initial_chunks);
+   MINECPP_EVENT_HANDLE_SERVICEBOUND(PostInitialChunks, handle_post_initial_chunks);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(BlockPlacement, handle_block_placement);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(ChangeInventoryItem, handle_change_inventory_item);
    MINECPP_EVENT_HANDLE_SERVICEBOUND(ChangeHeldItem, handle_change_held_item);

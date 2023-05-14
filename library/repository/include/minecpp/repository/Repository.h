@@ -2,7 +2,7 @@
 #define MINECPP_REPOSITORY_H
 #include <mb/int.h>
 #include <mb/result.h>
-#include <minecpp/game/Game.h>
+#include <minecpp/game/Types.hpp>
 #include <minecpp/nbt/repository/v1/Codec.nbt.h>
 #include <string>
 #include <unordered_map>

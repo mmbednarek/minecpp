@@ -128,7 +128,7 @@ void Lexer::push_identifier()
 
 void Lexer::push_special_token(TokenType type)
 {
-   m_result.push_back(Token{.type = type});
+   m_result.push_back(Token{.type = type, .value{}});
 }
 
 StringReader::StringReader(std::string_view data) :

@@ -4,7 +4,7 @@
 #include <fmt/core.h>
 #include <memory>
 #include <minecpp/format/Format.h>
-#include <minecpp/game/Game.h>
+#include <minecpp/game/BlockPosition.h>
 #include <minecpp/util/Uuid.h>
 #include <string>
 #include <utility>
@@ -247,7 +247,7 @@ struct BlockPositionObject final : public Object
 
    std::string to_string() override
    {
-      return fmt::format("({}, {}, {})", value.x, value.y, value.z);
+      return fmt::format("({}, {}, {})", value.x(), value.y(), value.z());
    }
 };
 

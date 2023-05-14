@@ -1,3 +1,6 @@
+#include <minecpp/game/ChunkPosition.h>
+#include <minecpp/game/property/Direction.h>
+#include <minecpp/game/property/Face.h>
 #include <minecpp/world/BlockState.h>
 #include <minecpp/world/Generator.h>
 #include <minecpp/world/LightSystem.h>

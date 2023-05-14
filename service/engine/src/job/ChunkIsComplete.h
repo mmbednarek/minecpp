@@ -1,6 +1,6 @@
 #pragma once
 #include "../JobSystem.h"
-#include <minecpp/game/Game.h>
+#include <minecpp/game/ChunkPosition.h>
 
 namespace minecpp::service::engine {
 class ChunkSystem;

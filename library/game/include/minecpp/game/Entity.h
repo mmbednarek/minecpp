@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Concepts.h"
+#include "Concepts.hpp"
 #include "Entt.hpp"
-#include "Game.h"
+#include "Types.hpp"
 #include <minecpp/math/Vector3.h>
 
 namespace minecpp::game {

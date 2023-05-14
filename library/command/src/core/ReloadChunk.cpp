@@ -1,5 +1,6 @@
 #include <minecpp/command/core/ReloadChunk.h>
 #include <minecpp/command/RuntimeContext.h>
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::command::core {
@@ -28,7 +29,7 @@ Object::Ptr ReloadChunk::run(RuntimeContext &ctx, CommandInput & /*input*/) cons
    if (world == nullptr)
       return make_error(command_name, "command is not invoked within a world");
 
-   auto res = world->send_chunk_to_player(*player_id, player_position->chunk_position());
+   auto res = world->send_chunk_to_player(*player_id, player_position->chunk_position(), false);
    if (res.has_failed())
       return make_error(command_name, "could not send chunk to the player: {}", res.err()->msg());
 

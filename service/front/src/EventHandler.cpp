@@ -266,7 +266,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       }
 
       spdlog::info("Issuing loading initial chunks");
-      m_stream->send(proto::event::serverbound::v1::LoadInitialChunks{}, player_id);
+      m_stream->send(proto::event::serverbound::v1::PreInitialChunks{}, player_id);
    }
 }
 
@@ -432,6 +432,17 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
       }
 
       send(conn, chunk_data);
+
+      if (msg.is_initial_chunk()) {
+         ++conn->initial_chunk_count;
+
+
+         if (conn->initial_chunk_count > 32) {
+            assert(m_stream);
+            m_stream->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
+            conn->initial_chunk_count = 0;
+         }
+      }
    }
 }
 

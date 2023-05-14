@@ -46,7 +46,8 @@ class World : public minecpp::game::IWorld
    mb::emptyres apply_slice(game::ISectionSlice &slice) override;
    game::ILightSystem &light_system() override;
    mb::emptyres recalculate_light(game::LightType light_type, const game::BlockPosition &pos) override;
-   mb::emptyres send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position) override;
+   mb::emptyres send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position,
+                                     bool is_initial) override;
    void tick(double delta_time);
    bool is_movement_blocked_at(const math::Vector3 &position) override;
    void kill_entity(game::EntityId id) override;

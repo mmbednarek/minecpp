@@ -111,63 +111,65 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    m_command_manager.register_command_as<command::core::Format>("white", format::Color::White, false);
    m_command_manager.register_command_as<command::core::Format>("white-bold", format::Color::White, true);
 
-   for (auto wood_type : game::g_wood_types) {
+   for (auto wood_type_value : game::WoodType::Values) {
+      game::WoodType wood_type{wood_type_value};
+
       if (auto wood_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_wood", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_wood", wood_type.to_string()));
           wood_id.ok()) {
          m_block_manager.register_controller<controller::block::Wood>(*wood_id);
       } else {
-         spdlog::error("no such block id minecraft:{}_wood", game::to_string(wood_type));
+         spdlog::error("no such block id minecraft:{}_wood", wood_type.to_string());
       }
 
       if (auto log_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_log", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_log", wood_type.to_string()));
           log_id.ok()) {
          m_block_manager.register_controller<controller::block::Wood>(*log_id);
       } else {
-         spdlog::error("no such block id minecraft:{}_log", game::to_string(wood_type));
+         spdlog::error("no such block id minecraft:{}_log", wood_type.to_string());
       }
 
       if (auto log_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:stripped_{}_log", game::to_string(wood_type)));
+                  fmt::format("minecraft:stripped_{}_log", wood_type.to_string()));
           log_id.ok()) {
          m_block_manager.register_controller<controller::block::Wood>(*log_id);
       } else {
-         spdlog::error("no such block id minecraft:stripped_{}_log", game::to_string(wood_type));
+         spdlog::error("no such block id minecraft:stripped_{}_log", wood_type.to_string());
       }
 
       if (auto door_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_door", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_door", wood_type.to_string()));
           door_id.ok()) {
          m_block_manager.register_controller<controller::block::Door>(*door_id);
       } else {
-         spdlog::error("no such block id minecraft:{}_door", game::to_string(wood_type));
+         spdlog::error("no such block id minecraft:{}_door", wood_type.to_string());
       }
 
       if (auto fence_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_fence", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_fence", wood_type.to_string()));
           fence_id.ok()) {
          m_block_manager.register_controller<controller::block::Fence>(*fence_id);
       } else {
-         spdlog::error("no such block id minecraft:{}_fence", game::to_string(wood_type));
+         spdlog::error("no such block id minecraft:{}_fence", wood_type.to_string());
       }
 
       if (auto stairs_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_stairs", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_stairs", wood_type.to_string()));
           stairs_id.ok()) {
          m_block_manager.register_controller<controller::block::Stairs>(*stairs_id);
       } else {
-         spdlog::error("no such block id minecraft:{}_stairs", game::to_string(wood_type));
+         spdlog::error("no such block id minecraft:{}_stairs", wood_type.to_string());
       }
 
       if (auto slab_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_slab", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_slab", wood_type.to_string()));
           slab_id.ok()) {
          m_block_manager.register_controller<controller::block::Slab>(*slab_id);
       }
 
       if (auto trapdoor_id = repository::Block::the().find_id_by_tag(
-                  fmt::format("minecraft:{}_trapdoor", game::to_string(wood_type)));
+                  fmt::format("minecraft:{}_trapdoor", wood_type.to_string()));
           trapdoor_id.ok()) {
          m_block_manager.register_controller<controller::block::TrapDoor>(*trapdoor_id);
       }
@@ -326,6 +328,16 @@ void EventHandler::handle_accept_player(const serverbound_v1::AcceptPlayer &even
 void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPosition &event,
                                               game::PlayerId player_id)
 {
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("couldn't get player: {}", player.err()->msg());
+      return;
+   }
+
+   // to set position player needs to load initial chunks first
+   if (not player->has_loaded_initial_chunks())
+      return;
+
    auto entity = this->player_entity(player_id);
    if (entity.has_failed()) {
       spdlog::warn("player entity is invalid: {}", entity.err()->msg());
@@ -343,6 +355,16 @@ void EventHandler::handle_set_player_position(const serverbound_v1::SetPlayerPos
 void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRotation &event,
                                               game::PlayerId player_id)
 {
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("couldn't get player: {}", player.err()->msg());
+      return;
+   }
+
+   // to set position player needs to load initial chunks first
+   if (not player->has_loaded_initial_chunks())
+      return;
+
    auto entity = this->player_entity(player_id);
    if (entity.has_failed()) {
       spdlog::warn("player entity is invalid: {}", entity.err()->msg());
@@ -360,6 +382,16 @@ void EventHandler::handle_set_player_rotation(const serverbound_v1::SetPlayerRot
 void EventHandler::handle_set_player_position_rotation(const serverbound_v1::SetPlayerPositionRotation &event,
                                                        game::PlayerId player_id)
 {
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("couldn't get player: {}", player.err()->msg());
+      return;
+   }
+
+   // to set position player needs to load initial chunks first
+   if (not player->has_loaded_initial_chunks())
+      return;
+
    auto entity = this->player_entity(player_id);
    if (entity.has_failed()) {
       spdlog::warn("player entity is invalid: {}", entity.err()->msg());
@@ -368,7 +400,6 @@ void EventHandler::handle_set_player_position_rotation(const serverbound_v1::Set
 
    if (not entity->has_component<LocationComponent>())
       return;
-
 
    auto player_position = math::Vector3::from_proto(event.position());
    auto &location       = entity->component<LocationComponent>();
@@ -497,10 +528,10 @@ void EventHandler::handle_animate_hand(const serverbound_v1::AnimateHand &event,
            event.hand() == 0 ? game::EntityAnimation::SwingMainArm : game::EntityAnimation::SwingOffHand);
 }
 
-void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks & /*event*/,
-                                              game::PlayerId player_id)
+void EventHandler::handle_pre_initial_chunks(const serverbound_v1::PreInitialChunks & /*event*/,
+                                             game::PlayerId player_id)
 {
-   spdlog::info("loading initial chunks!");
+   spdlog::info("pre initial chunks!");
    auto entity = this->player_entity(player_id);
    if (entity.has_failed()) {
       spdlog::warn("player entity is invalid: {}", entity.err()->msg());
@@ -516,13 +547,35 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
       spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
    }
+}
+
+void EventHandler::handle_post_initial_chunks(const serverbound_v1::PostInitialChunks &event,
+                                              game::PlayerId player_id)
+{
+   spdlog::info("post initial chunks!");
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed()) {
+      spdlog::warn("couldn't get player: {}", player.err()->msg());
+      return;
+   }
+
+   player->set_has_loaded_initial_chunks(true);
+
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+   assert(entity->has_component<PlayerComponent>());
+   assert(entity->has_component<LocationComponent>());
+   assert(entity->has_component<RotationComponent>());
+
+   entity->component<PlayerComponent>().init_visible_entities(
+           m_dispatcher, m_entity_system, entity->component<LocationComponent>().position());
 
    entity->component<InventoryComponent>().synchronize_inventory(m_dispatcher);
 
    m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
-
-   entity->component<PlayerComponent>().init_visible_entities(
-           m_dispatcher, m_entity_system, entity->component<LocationComponent>().position());
 
    m_dispatcher.synchronise_player_position_and_rotation(player_id,
                                                          entity->component<LocationComponent>().position(),
@@ -530,10 +583,6 @@ void EventHandler::handle_load_initial_chunks(const serverbound_v1::LoadInitialC
 
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(),
                                    entity->component<entity::component::Rotation>().pitch_degrees());
-
-   if (entity->has_component<TeamComponent>()) {
-      entity->component<TeamComponent>().send_team_equipment(m_dispatcher, player_id);
-   }
 }
 
 void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &event,
@@ -634,7 +683,7 @@ void EventHandler::handle_issue_command(const serverbound_v1::IssueCommand &even
    m_command_context.set_variable("entity_id", std::make_shared<command::IntObject>(entity->id()));
 
    auto player_pos =
-           game::BlockPosition::from_vec3(entity->component<entity::component::Location>().position());
+           game::BlockPosition::from_vector3(entity->component<entity::component::Location>().position());
    m_command_context.set_variable("here", std::make_shared<command::BlockPositionObject>(player_pos));
 
    auto res = m_command_manager.evaluate(m_command_context, event.command());
