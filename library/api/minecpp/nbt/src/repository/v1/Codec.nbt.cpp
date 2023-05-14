@@ -2,8 +2,7 @@
 
 namespace minecpp::nbt::repository::v1 {
 
-void DimensionTypeDescription::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void DimensionTypeDescription::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Byte, "piglin_safe");
    w.write_byte_content(static_cast<std::uint8_t>(piglin_safe));
    w.write_header(minecpp::nbt::TagId::Byte, "has_raids");
@@ -45,34 +44,43 @@ void DimensionTypeDescription::serialize_no_header(minecpp::nbt::Writer &w) cons
    w.end_compound();
 }
 
-void DimensionTypeDescription::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void DimensionTypeDescription::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-DimensionTypeDescription DimensionTypeDescription::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+DimensionTypeDescription DimensionTypeDescription::deserialize_no_header(minecpp::nbt::Reader &r) {
    DimensionTypeDescription res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
-              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
-              case minecpp::nbt::TagId::Long: res.set_property(in_field_name, r.read_long()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Float: res.set_property(in_field_name, r.read_float32()); return;
-              case minecpp::nbt::TagId::Double: res.set_property(in_field_name, r.read_float64()); return;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Byte:
+         res.set_property(in_field_name, r.read_byte());
+         return;
+      case minecpp::nbt::TagId::Int:
+         res.set_property(in_field_name, r.read_int());
+         return;
+      case minecpp::nbt::TagId::Long:
+         res.set_property(in_field_name, r.read_long());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Float:
+         res.set_property(in_field_name, r.read_float32());
+         return;
+      case minecpp::nbt::TagId::Double:
+         res.set_property(in_field_name, r.read_float64());
+         return;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-DimensionTypeDescription DimensionTypeDescription::deserialize(std::istream &in)
-{
+DimensionTypeDescription DimensionTypeDescription::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -81,8 +89,7 @@ DimensionTypeDescription DimensionTypeDescription::deserialize(std::istream &in)
    return DimensionTypeDescription::deserialize_no_header(r);
 }
 
-void DimensionTypeEntry::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void DimensionTypeEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "name");
    w.write_string_content(name);
    w.write_header(minecpp::nbt::TagId::Int, "id");
@@ -92,36 +99,37 @@ void DimensionTypeEntry::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void DimensionTypeEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void DimensionTypeEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-DimensionTypeEntry DimensionTypeEntry::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+DimensionTypeEntry DimensionTypeEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    DimensionTypeEntry res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "element") {
-                    res.set_property(in_field_name, DimensionTypeDescription::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Int:
+         res.set_property(in_field_name, r.read_int());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "element") {
+            res.set_property(in_field_name, DimensionTypeDescription::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-DimensionTypeEntry DimensionTypeEntry::deserialize(std::istream &in)
-{
+DimensionTypeEntry DimensionTypeEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -130,61 +138,63 @@ DimensionTypeEntry DimensionTypeEntry::deserialize(std::istream &in)
    return DimensionTypeEntry::deserialize_no_header(r);
 }
 
-void DimensionTypes::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void DimensionTypes::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "type");
    w.write_string_content(type);
    w.write_header(minecpp::nbt::TagId::List, "value");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, value.size());
-   std::for_each(value.begin(), value.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(value.begin(), value.end(), [&w](const auto &value) {
+      value.serialize_no_header(w);
+   });
    w.end_compound();
 }
 
-void DimensionTypes::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void DimensionTypes::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-DimensionTypes DimensionTypes::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+DimensionTypes DimensionTypes::deserialize_no_header(minecpp::nbt::Reader &r) {
    DimensionTypes res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::List: {
-                 auto list_info0 = r.peek_list();
-                 if (list_info0.size > 0) {
-                    switch (list_info0.tagid) {
-                    case minecpp::nbt::TagId::Compound: {
-                       if (in_field_name == "value") {
-                          std::vector<DimensionTypeEntry> ls(list_info0.size);
-                          std::generate(ls.begin(), ls.end(),
-                                        [&r]() { return DimensionTypeEntry::deserialize_no_header(r); });
-                          res.set_property(in_field_name, ls);
-                          return;
-                       }
-                       break;
-                    }
-                    default: break;
-                    }
-                    for (mb::size i = 0; i < list_info0.size; ++i) {
-                       r.skip_payload(list_info0.tagid);
-                    }
-                 }
-                 return;
-              }
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::List: {
+         auto list_info0 = r.peek_list();
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Compound: {
+               if (in_field_name == "value") {
+                  std::vector<DimensionTypeEntry> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return DimensionTypeEntry::deserialize_no_header(r);
+                  });
+                  res.set_property(in_field_name, ls);
+                  return;
+               }
+               break;
+            }
+            default: 
+               break;
+            }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
+         }
+         return;
+      }
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-DimensionTypes DimensionTypes::deserialize(std::istream &in)
-{
+DimensionTypes DimensionTypes::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -193,8 +203,7 @@ DimensionTypes DimensionTypes::deserialize(std::istream &in)
    return DimensionTypes::deserialize_no_header(r);
 }
 
-void BiomeMusic::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeMusic::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Byte, "replace_current_music");
    w.write_byte_content(static_cast<std::uint8_t>(replace_current_music));
    w.write_header(minecpp::nbt::TagId::String, "sound");
@@ -206,31 +215,34 @@ void BiomeMusic::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeMusic::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeMusic::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeMusic BiomeMusic::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeMusic BiomeMusic::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeMusic res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
-              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Byte:
+         res.set_property(in_field_name, r.read_byte());
+         return;
+      case minecpp::nbt::TagId::Int:
+         res.set_property(in_field_name, r.read_int());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeMusic BiomeMusic::deserialize(std::istream &in)
-{
+BiomeMusic BiomeMusic::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -239,8 +251,7 @@ BiomeMusic BiomeMusic::deserialize(std::istream &in)
    return BiomeMusic::deserialize_no_header(r);
 }
 
-void BiomeAdditionsSound::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeAdditionsSound::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "sound");
    w.write_string_content(sound);
    w.write_header(minecpp::nbt::TagId::Double, "tick_chance");
@@ -248,30 +259,31 @@ void BiomeAdditionsSound::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeAdditionsSound::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeAdditionsSound::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeAdditionsSound BiomeAdditionsSound::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeAdditionsSound BiomeAdditionsSound::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeAdditionsSound res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Double: res.set_property(in_field_name, r.read_float64()); return;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Double:
+         res.set_property(in_field_name, r.read_float64());
+         return;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeAdditionsSound BiomeAdditionsSound::deserialize(std::istream &in)
-{
+BiomeAdditionsSound BiomeAdditionsSound::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -280,8 +292,7 @@ BiomeAdditionsSound BiomeAdditionsSound::deserialize(std::istream &in)
    return BiomeAdditionsSound::deserialize_no_header(r);
 }
 
-void BiomeMoodSound::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeMoodSound::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "sound");
    w.write_string_content(sound);
    w.write_header(minecpp::nbt::TagId::Double, "tick_delay");
@@ -293,30 +304,31 @@ void BiomeMoodSound::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeMoodSound::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeMoodSound::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeMoodSound BiomeMoodSound::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeMoodSound BiomeMoodSound::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeMoodSound res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Double: res.set_property(in_field_name, r.read_float64()); return;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Double:
+         res.set_property(in_field_name, r.read_float64());
+         return;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeMoodSound BiomeMoodSound::deserialize(std::istream &in)
-{
+BiomeMoodSound BiomeMoodSound::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -325,36 +337,34 @@ BiomeMoodSound BiomeMoodSound::deserialize(std::istream &in)
    return BiomeMoodSound::deserialize_no_header(r);
 }
 
-void BiomeParticleOptions::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeParticleOptions::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "type");
    w.write_string_content(type);
    w.end_compound();
 }
 
-void BiomeParticleOptions::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeParticleOptions::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeParticleOptions BiomeParticleOptions::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeParticleOptions BiomeParticleOptions::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeParticleOptions res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeParticleOptions BiomeParticleOptions::deserialize(std::istream &in)
-{
+BiomeParticleOptions BiomeParticleOptions::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -363,8 +373,7 @@ BiomeParticleOptions BiomeParticleOptions::deserialize(std::istream &in)
    return BiomeParticleOptions::deserialize_no_header(r);
 }
 
-void BiomeParticle::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeParticle::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Float, "probability");
    w.write_float_content(probability);
    w.write_header(minecpp::nbt::TagId::Compound, "type");
@@ -372,35 +381,34 @@ void BiomeParticle::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeParticle::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeParticle::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeParticle BiomeParticle::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeParticle BiomeParticle::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeParticle res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Float: res.set_property(in_field_name, r.read_float32()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "type") {
-                    res.set_property(in_field_name, BiomeParticleOptions::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Float:
+         res.set_property(in_field_name, r.read_float32());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "type") {
+            res.set_property(in_field_name, BiomeParticleOptions::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeParticle BiomeParticle::deserialize(std::istream &in)
-{
+BiomeParticle BiomeParticle::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -409,8 +417,7 @@ BiomeParticle BiomeParticle::deserialize(std::istream &in)
    return BiomeParticle::deserialize_no_header(r);
 }
 
-void BiomeEffects::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeEffects::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Int, "sky_color");
    w.write_int_content(sky_color);
    w.write_header(minecpp::nbt::TagId::Int, "water_fog_color");
@@ -454,48 +461,49 @@ void BiomeEffects::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeEffects::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeEffects::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeEffects BiomeEffects::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeEffects BiomeEffects::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeEffects res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "music") {
-                    res.set_property(in_field_name, BiomeMusic::deserialize_no_header(r));
-                    return;
-                 }
-                 if (in_field_name == "additions_sound") {
-                    res.set_property(in_field_name, BiomeAdditionsSound::deserialize_no_header(r));
-                    return;
-                 }
-                 if (in_field_name == "mood_sound") {
-                    res.set_property(in_field_name, BiomeMoodSound::deserialize_no_header(r));
-                    return;
-                 }
-                 if (in_field_name == "particle") {
-                    res.set_property(in_field_name, BiomeParticle::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Int:
+         res.set_property(in_field_name, r.read_int());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "music") {
+            res.set_property(in_field_name, BiomeMusic::deserialize_no_header(r));
+            return;
+         }
+         if (in_field_name == "additions_sound") {
+            res.set_property(in_field_name, BiomeAdditionsSound::deserialize_no_header(r));
+            return;
+         }
+         if (in_field_name == "mood_sound") {
+            res.set_property(in_field_name, BiomeMoodSound::deserialize_no_header(r));
+            return;
+         }
+         if (in_field_name == "particle") {
+            res.set_property(in_field_name, BiomeParticle::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeEffects BiomeEffects::deserialize(std::istream &in)
-{
+BiomeEffects BiomeEffects::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -504,8 +512,7 @@ BiomeEffects BiomeEffects::deserialize(std::istream &in)
    return BiomeEffects::deserialize_no_header(r);
 }
 
-void BiomeDescription::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeDescription::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "precipitation");
    w.write_string_content(precipitation);
    w.write_header(minecpp::nbt::TagId::Float, "depth");
@@ -527,36 +534,37 @@ void BiomeDescription::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeDescription::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeDescription::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeDescription BiomeDescription::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeDescription BiomeDescription::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeDescription res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Float: res.set_property(in_field_name, r.read_float32()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "effects") {
-                    res.set_property(in_field_name, BiomeEffects::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Float:
+         res.set_property(in_field_name, r.read_float32());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "effects") {
+            res.set_property(in_field_name, BiomeEffects::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeDescription BiomeDescription::deserialize(std::istream &in)
-{
+BiomeDescription BiomeDescription::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -565,8 +573,7 @@ BiomeDescription BiomeDescription::deserialize(std::istream &in)
    return BiomeDescription::deserialize_no_header(r);
 }
 
-void BiomeEntry::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void BiomeEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "name");
    w.write_string_content(name);
    w.write_header(minecpp::nbt::TagId::Int, "id");
@@ -576,36 +583,37 @@ void BiomeEntry::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void BiomeEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void BiomeEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-BiomeEntry BiomeEntry::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+BiomeEntry BiomeEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    BiomeEntry res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "element") {
-                    res.set_property(in_field_name, BiomeDescription::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Int:
+         res.set_property(in_field_name, r.read_int());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "element") {
+            res.set_property(in_field_name, BiomeDescription::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-BiomeEntry BiomeEntry::deserialize(std::istream &in)
-{
+BiomeEntry BiomeEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -614,61 +622,63 @@ BiomeEntry BiomeEntry::deserialize(std::istream &in)
    return BiomeEntry::deserialize_no_header(r);
 }
 
-void Biomes::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void Biomes::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "type");
    w.write_string_content(type);
    w.write_header(minecpp::nbt::TagId::List, "value");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, value.size());
-   std::for_each(value.begin(), value.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(value.begin(), value.end(), [&w](const auto &value) {
+      value.serialize_no_header(w);
+   });
    w.end_compound();
 }
 
-void Biomes::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void Biomes::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Biomes Biomes::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+Biomes Biomes::deserialize_no_header(minecpp::nbt::Reader &r) {
    Biomes res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::List: {
-                 auto list_info0 = r.peek_list();
-                 if (list_info0.size > 0) {
-                    switch (list_info0.tagid) {
-                    case minecpp::nbt::TagId::Compound: {
-                       if (in_field_name == "value") {
-                          std::vector<BiomeEntry> ls(list_info0.size);
-                          std::generate(ls.begin(), ls.end(),
-                                        [&r]() { return BiomeEntry::deserialize_no_header(r); });
-                          res.set_property(in_field_name, ls);
-                          return;
-                       }
-                       break;
-                    }
-                    default: break;
-                    }
-                    for (mb::size i = 0; i < list_info0.size; ++i) {
-                       r.skip_payload(list_info0.tagid);
-                    }
-                 }
-                 return;
-              }
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::List: {
+         auto list_info0 = r.peek_list();
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Compound: {
+               if (in_field_name == "value") {
+                  std::vector<BiomeEntry> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return BiomeEntry::deserialize_no_header(r);
+                  });
+                  res.set_property(in_field_name, ls);
+                  return;
+               }
+               break;
+            }
+            default: 
+               break;
+            }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
+         }
+         return;
+      }
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-Biomes Biomes::deserialize(std::istream &in)
-{
+Biomes Biomes::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -677,8 +687,7 @@ Biomes Biomes::deserialize(std::istream &in)
    return Biomes::deserialize_no_header(r);
 }
 
-void ChatDecorationStyle::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void ChatDecorationStyle::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "color");
    w.write_string_content(color);
    w.write_header(minecpp::nbt::TagId::Byte, "italic");
@@ -688,30 +697,31 @@ void ChatDecorationStyle::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void ChatDecorationStyle::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void ChatDecorationStyle::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-ChatDecorationStyle ChatDecorationStyle::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+ChatDecorationStyle ChatDecorationStyle::deserialize_no_header(minecpp::nbt::Reader &r) {
    ChatDecorationStyle res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Byte:
+         res.set_property(in_field_name, r.read_byte());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-ChatDecorationStyle ChatDecorationStyle::deserialize(std::istream &in)
-{
+ChatDecorationStyle ChatDecorationStyle::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -720,12 +730,12 @@ ChatDecorationStyle ChatDecorationStyle::deserialize(std::istream &in)
    return ChatDecorationStyle::deserialize_no_header(r);
 }
 
-void ChatDetails::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void ChatDetails::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::List, "parameters");
    w.begin_list_no_header(minecpp::nbt::TagId::String, parameters.size());
-   std::for_each(parameters.begin(), parameters.end(),
-                 [&w](const auto &value) { w.write_string_content(value); });
+   std::for_each(parameters.begin(), parameters.end(), [&w](const auto &value) {
+      w.write_string_content(value);
+   });
    if (style.has_value()) {
       w.write_header(minecpp::nbt::TagId::Compound, "style");
       style->serialize_no_header(w);
@@ -735,53 +745,55 @@ void ChatDetails::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void ChatDetails::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void ChatDetails::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-ChatDetails ChatDetails::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+ChatDetails ChatDetails::deserialize_no_header(minecpp::nbt::Reader &r) {
    ChatDetails res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "style") {
-                    res.set_property(in_field_name, ChatDecorationStyle::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              case minecpp::nbt::TagId::List: {
-                 auto list_info0 = r.peek_list();
-                 if (list_info0.size > 0) {
-                    switch (list_info0.tagid) {
-                    case minecpp::nbt::TagId::String: {
-                       std::vector<std::string> ls(list_info0.size);
-                       std::generate(ls.begin(), ls.end(), [&r]() { return r.read_str(); });
-                       res.set_property(in_field_name, ls);
-                       return;
-                    }
-                    default: break;
-                    }
-                    for (mb::size i = 0; i < list_info0.size; ++i) {
-                       r.skip_payload(list_info0.tagid);
-                    }
-                 }
-                 return;
-              }
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "style") {
+            res.set_property(in_field_name, ChatDecorationStyle::deserialize_no_header(r));
+            return;
+         }
+         break;
+      case minecpp::nbt::TagId::List: {
+         auto list_info0 = r.peek_list();
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::String: {
+               std::vector<std::string> ls(list_info0.size);
+               std::generate(ls.begin(), ls.end(), [&r]() {
+                  return r.read_str();
+               });
+               res.set_property(in_field_name, ls);
+               return;
+            }
+            default: 
+               break;
+            }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
+         }
+         return;
+      }
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-ChatDetails ChatDetails::deserialize(std::istream &in)
-{
+ChatDetails ChatDetails::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -790,8 +802,7 @@ ChatDetails ChatDetails::deserialize(std::istream &in)
    return ChatDetails::deserialize_no_header(r);
 }
 
-void ChatTypeDescription::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void ChatTypeDescription::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Compound, "chat");
    chat.serialize_no_header(w);
    w.write_header(minecpp::nbt::TagId::Compound, "narration");
@@ -799,38 +810,35 @@ void ChatTypeDescription::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void ChatTypeDescription::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void ChatTypeDescription::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-ChatTypeDescription ChatTypeDescription::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+ChatTypeDescription ChatTypeDescription::deserialize_no_header(minecpp::nbt::Reader &r) {
    ChatTypeDescription res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "chat") {
-                    res.set_property(in_field_name, ChatDetails::deserialize_no_header(r));
-                    return;
-                 }
-                 if (in_field_name == "narration") {
-                    res.set_property(in_field_name, ChatDetails::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "chat") {
+            res.set_property(in_field_name, ChatDetails::deserialize_no_header(r));
+            return;
+         }
+         if (in_field_name == "narration") {
+            res.set_property(in_field_name, ChatDetails::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-ChatTypeDescription ChatTypeDescription::deserialize(std::istream &in)
-{
+ChatTypeDescription ChatTypeDescription::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -839,8 +847,7 @@ ChatTypeDescription ChatTypeDescription::deserialize(std::istream &in)
    return ChatTypeDescription::deserialize_no_header(r);
 }
 
-void ChatTypeEntry::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void ChatTypeEntry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "name");
    w.write_string_content(name);
    w.write_header(minecpp::nbt::TagId::Int, "id");
@@ -850,36 +857,37 @@ void ChatTypeEntry::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void ChatTypeEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void ChatTypeEntry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-ChatTypeEntry ChatTypeEntry::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+ChatTypeEntry ChatTypeEntry::deserialize_no_header(minecpp::nbt::Reader &r) {
    ChatTypeEntry res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "element") {
-                    res.set_property(in_field_name, ChatTypeDescription::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Int:
+         res.set_property(in_field_name, r.read_int());
+         return;
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "element") {
+            res.set_property(in_field_name, ChatTypeDescription::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-ChatTypeEntry ChatTypeEntry::deserialize(std::istream &in)
-{
+ChatTypeEntry ChatTypeEntry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -888,61 +896,63 @@ ChatTypeEntry ChatTypeEntry::deserialize(std::istream &in)
    return ChatTypeEntry::deserialize_no_header(r);
 }
 
-void ChatTypes::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void ChatTypes::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::String, "type");
    w.write_string_content(type);
    w.write_header(minecpp::nbt::TagId::List, "value");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, value.size());
-   std::for_each(value.begin(), value.end(), [&w](const auto &value) { value.serialize_no_header(w); });
+   std::for_each(value.begin(), value.end(), [&w](const auto &value) {
+      value.serialize_no_header(w);
+   });
    w.end_compound();
 }
 
-void ChatTypes::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void ChatTypes::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-ChatTypes ChatTypes::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+ChatTypes ChatTypes::deserialize_no_header(minecpp::nbt::Reader &r) {
    ChatTypes res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
-              case minecpp::nbt::TagId::List: {
-                 auto list_info0 = r.peek_list();
-                 if (list_info0.size > 0) {
-                    switch (list_info0.tagid) {
-                    case minecpp::nbt::TagId::Compound: {
-                       if (in_field_name == "value") {
-                          std::vector<ChatTypeEntry> ls(list_info0.size);
-                          std::generate(ls.begin(), ls.end(),
-                                        [&r]() { return ChatTypeEntry::deserialize_no_header(r); });
-                          res.set_property(in_field_name, ls);
-                          return;
-                       }
-                       break;
-                    }
-                    default: break;
-                    }
-                    for (mb::size i = 0; i < list_info0.size; ++i) {
-                       r.skip_payload(list_info0.tagid);
-                    }
-                 }
-                 return;
-              }
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::String:
+         res.set_property(in_field_name, r.read_str());
+         return;
+      case minecpp::nbt::TagId::List: {
+         auto list_info0 = r.peek_list();
+         if (list_info0.size > 0) {
+            switch (list_info0.tagid) {
+            case minecpp::nbt::TagId::Compound: {
+               if (in_field_name == "value") {
+                  std::vector<ChatTypeEntry> ls(list_info0.size);
+                  std::generate(ls.begin(), ls.end(), [&r]() {
+                     return ChatTypeEntry::deserialize_no_header(r);
+                  });
+                  res.set_property(in_field_name, ls);
+                  return;
+               }
+               break;
+            }
+            default: 
+               break;
+            }
+            for (mb::size i = 0; i < list_info0.size; ++i) {
+               r.skip_payload(list_info0.tagid);
+            }
+         }
+         return;
+      }
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-ChatTypes ChatTypes::deserialize(std::istream &in)
-{
+ChatTypes ChatTypes::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -951,8 +961,7 @@ ChatTypes ChatTypes::deserialize(std::istream &in)
    return ChatTypes::deserialize_no_header(r);
 }
 
-void Registry::serialize_no_header(minecpp::nbt::Writer &w) const
-{
+void Registry::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_header(minecpp::nbt::TagId::Compound, "minecraft:dimension_type");
    dimension_types.serialize_no_header(w);
    w.write_header(minecpp::nbt::TagId::Compound, "minecraft:worldgen/biome");
@@ -962,42 +971,39 @@ void Registry::serialize_no_header(minecpp::nbt::Writer &w) const
    w.end_compound();
 }
 
-void Registry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
-{
+void Registry::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Registry Registry::deserialize_no_header(minecpp::nbt::Reader &r)
-{
+Registry Registry::deserialize_no_header(minecpp::nbt::Reader &r) {
    Registry res;
-   r.read_compound(
-           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-              switch (tagid) {
-              case minecpp::nbt::TagId::Compound:
-                 if (in_field_name == "minecraft:dimension_type") {
-                    res.set_property(in_field_name, DimensionTypes::deserialize_no_header(r));
-                    return;
-                 }
-                 if (in_field_name == "minecraft:worldgen/biome") {
-                    res.set_property(in_field_name, Biomes::deserialize_no_header(r));
-                    return;
-                 }
-                 if (in_field_name == "minecraft:chat_type") {
-                    res.set_property(in_field_name, ChatTypes::deserialize_no_header(r));
-                    return;
-                 }
-                 break;
-              default: break;
-              }
-              r.skip_payload(tagid);
-           });
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+      switch (tagid) {
+      case minecpp::nbt::TagId::Compound:
+         if (in_field_name == "minecraft:dimension_type") {
+            res.set_property(in_field_name, DimensionTypes::deserialize_no_header(r));
+            return;
+         }
+         if (in_field_name == "minecraft:worldgen/biome") {
+            res.set_property(in_field_name, Biomes::deserialize_no_header(r));
+            return;
+         }
+         if (in_field_name == "minecraft:chat_type") {
+            res.set_property(in_field_name, ChatTypes::deserialize_no_header(r));
+            return;
+         }
+         break;
+      default: 
+         break;
+      }
+      r.skip_payload(tagid);
+   });
    return res;
 }
 
-Registry Registry::deserialize(std::istream &in)
-{
+Registry Registry::deserialize(std::istream &in) {
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -1006,4 +1012,4 @@ Registry Registry::deserialize(std::istream &in)
    return Registry::deserialize_no_header(r);
 }
 
-}// namespace minecpp::nbt::repository::v1
+}

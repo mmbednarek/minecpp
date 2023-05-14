@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::block::v1 {
 
-class EnumProperty
-{
+class EnumProperty {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (in_field_name == "Name") {
@@ -45,12 +43,10 @@ class EnumProperty
    static EnumProperty deserialize(std::istream &in);
 };
 
-class IntProperty
-{
+class IntProperty {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "MinValue") {
@@ -83,12 +79,10 @@ class IntProperty
    static IntProperty deserialize(std::istream &in);
 };
 
-class BoolProperty
-{
+class BoolProperty {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (in_field_name == "Name") {
@@ -108,12 +102,10 @@ class BoolProperty
    static BoolProperty deserialize(std::istream &in);
 };
 
-class Block
-{
+class Block {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::string>>) {
          if (in_field_name == "PropertyTags") {
@@ -133,5 +125,5 @@ class Block
    static Block deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::block::v1
+}
 #endif//MINECPP_NBT_BLOCK_V1_BLOCK_H

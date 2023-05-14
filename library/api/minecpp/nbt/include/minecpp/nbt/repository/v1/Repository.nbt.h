@@ -4,23 +4,21 @@
 #include <map>
 #include <mb/int.h>
 #include <mb/result.h>
+#include <minecpp/nbt/Reader.h>
+#include <minecpp/nbt/Writer.h>
 #include <minecpp/nbt/block/v1/Block.nbt.h>
 #include <minecpp/nbt/block/v1/BlockState.nbt.h>
 #include <minecpp/nbt/item/v1/Item.nbt.h>
-#include <minecpp/nbt/Reader.h>
-#include <minecpp/nbt/Writer.h>
 #include <optional>
 #include <string>
 #include <vector>
 
 namespace minecpp::nbt::repository::v1 {
 
-class BlockEntry
-{
+class BlockEntry {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::Block>) {
          if (in_field_name == "Block") {
@@ -56,12 +54,10 @@ class BlockEntry
    static BlockEntry deserialize(std::istream &in);
 };
 
-class ItemEntry
-{
+class ItemEntry {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, item::v1::Item>) {
          if (in_field_name == "Item") {
@@ -97,12 +93,10 @@ class ItemEntry
    static ItemEntry deserialize(std::istream &in);
 };
 
-class EnumPropertyEntry
-{
+class EnumPropertyEntry {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::EnumProperty>) {
          if (in_field_name == "Property") {
@@ -130,12 +124,10 @@ class EnumPropertyEntry
    static EnumPropertyEntry deserialize(std::istream &in);
 };
 
-class IntPropertyEntry
-{
+class IntPropertyEntry {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::IntProperty>) {
          if (in_field_name == "Property") {
@@ -163,12 +155,10 @@ class IntPropertyEntry
    static IntPropertyEntry deserialize(std::istream &in);
 };
 
-class BoolPropertyEntry
-{
+class BoolPropertyEntry {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::BoolProperty>) {
          if (in_field_name == "Property") {
@@ -196,12 +186,10 @@ class BoolPropertyEntry
    static BoolPropertyEntry deserialize(std::istream &in);
 };
 
-class BlockStateEntry
-{
+class BlockStateEntry {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, block::v1::BlockState>) {
          if (in_field_name == "State") {
@@ -237,12 +225,10 @@ class BlockStateEntry
    static BlockStateEntry deserialize(std::istream &in);
 };
 
-class Repository
-{
+class Repository {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<BlockEntry>>) {
          if (in_field_name == "Blocks") {
@@ -302,5 +288,5 @@ class Repository
    static Repository deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::repository::v1
+}
 #endif//MINECPP_NBT_REPOSITORY_V1_REPOSITORY_H

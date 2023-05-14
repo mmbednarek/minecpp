@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::common::v1 {
 
-class ChunkPosition
-{
+class ChunkPosition {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "x") {
@@ -42,12 +40,10 @@ class ChunkPosition
    static ChunkPosition deserialize(std::istream &in);
 };
 
-class BlockPosition
-{
+class BlockPosition {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "x") {
@@ -77,12 +73,10 @@ class BlockPosition
    static BlockPosition deserialize(std::istream &in);
 };
 
-class FaceMask
-{
+class FaceMask {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (in_field_name == "down") {
@@ -127,5 +121,5 @@ class FaceMask
    static FaceMask deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::common::v1
+}
 #endif//MINECPP_NBT_COMMON_V1_COMMON_H

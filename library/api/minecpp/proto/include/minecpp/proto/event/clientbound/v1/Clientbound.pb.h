@@ -19,46 +19,44 @@
 #error regenerate this file with a newer version of protoc.
 #endif
 
-#include <google/protobuf/any.pb.h>
+#include <google/protobuf/port_undef.inc>
+#include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/arena.h>
 #include <google/protobuf/arenastring.h>
-#include <google/protobuf/extension_set.h>// IWYU pragma: export
 #include <google/protobuf/generated_message_bases.h>
-#include <google/protobuf/generated_message_reflection.h>
 #include <google/protobuf/generated_message_util.h>
-#include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/message.h>
 #include <google/protobuf/metadata_lite.h>
-#include <google/protobuf/port_undef.inc>
-#include <google/protobuf/repeated_field.h>// IWYU pragma: export
+#include <google/protobuf/generated_message_reflection.h>
+#include <google/protobuf/message.h>
+#include <google/protobuf/repeated_field.h>  // IWYU pragma: export
+#include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
+#include <google/protobuf/any.pb.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/proto/common/v1/Vector.pb.h>
-#include <minecpp/proto/entity/v1/Entity.pb.h>
 #include <minecpp/proto/player/v1/Id.pb.h>
 #include <minecpp/proto/player/v1/Player.pb.h>
+#include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <minecpp/proto/chunk/v1/Chunk.pb.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto
 PROTOBUF_NAMESPACE_OPEN
-
 namespace internal {
 class AnyMetadata;
-}// namespace internal
-
+}  // namespace internal
 PROTOBUF_NAMESPACE_CLOSE
 
 // Internal implementation detail -- do not use these members.
-struct TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto
-{
-   static const uint32_t offsets[];
+struct TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto {
+  static const uint32_t offsets[];
 };
-
-extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
-        descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
-
-namespace minecpp { namespace proto { namespace event { namespace clientbound { namespace v1 {
+extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+namespace minecpp {
+namespace proto {
+namespace event {
+namespace clientbound {
+namespace v1 {
 class AcceptPlayer;
 struct AcceptPlayerDefaultTypeInternal;
 extern AcceptPlayerDefaultTypeInternal _AcceptPlayer_default_instance_;
@@ -179,9875 +177,7488 @@ extern UpdateBlockLightDefaultTypeInternal _UpdateBlockLight_default_instance_;
 class UpdatePlayerAbilities;
 struct UpdatePlayerAbilitiesDefaultTypeInternal;
 extern UpdatePlayerAbilitiesDefaultTypeInternal _UpdatePlayerAbilities_default_instance_;
-}}}}}// namespace minecpp::proto::event::clientbound::v1
-
+}  // namespace v1
+}  // namespace clientbound
+}  // namespace event
+}  // namespace proto
+}  // namespace minecpp
 PROTOBUF_NAMESPACE_OPEN
-template<>
-::minecpp::proto::event::clientbound::v1::AcceptPlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AcceptPlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::AcknowledgeBlockChange *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AcknowledgeBlockChange>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::AddPlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AddPlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::AnimateEntity *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AnimateEntity>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::Chat *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Chat>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::ChunkBlockLight *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::ChunkBlockLight>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::ChunkData *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::ChunkData>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::CollectItem *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::CollectItem>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::DenyPlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::DenyPlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::DisplayDeathScreen *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::DisplayDeathScreen>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::EntityList *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityList>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::EntityLook *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityLook>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::EntityMove *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityMove>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::Event *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Event>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::LoadTerrain *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::LoadTerrain>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::PlayerList *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::PlayerList>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::PlayerPositionRotation *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::PlayerPositionRotation>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientAllPlayers>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::RecipientExcluding *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientExcluding>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::RemoveEntity *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemoveEntity>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::RemovePlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemovePlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::Respawn *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Respawn>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SectionBlockLight *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SectionBlockLight>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetAbilities *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetAbilities>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetCenterChunk *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetCenterChunk>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetEntityEquipment *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetEntityEquipment>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetEntityVelocity *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetEntityVelocity>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetHealth *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetHealth>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetInventorySlot *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetInventorySlot>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SetSpawnPosition *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetSpawnPosition>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SpawnEntity *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SpawnEntity>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::SpawnPlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SpawnPlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::TeleportEntity *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::TeleportEntity>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::TransferPlayer *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::TransferPlayer>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::UnloadChunk *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UnloadChunk>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::UpdateBlock *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdateBlock>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::UpdateBlockLight *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdateBlockLight>(Arena *);
-template<>
-::minecpp::proto::event::clientbound::v1::UpdatePlayerAbilities *
-Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdatePlayerAbilities>(Arena *);
+template<> ::minecpp::proto::event::clientbound::v1::AcceptPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AcceptPlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::AcknowledgeBlockChange* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AcknowledgeBlockChange>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::AddPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AddPlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::AnimateEntity* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::AnimateEntity>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::Chat* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Chat>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::ChunkBlockLight>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::ChunkData* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::ChunkData>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::CollectItem* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::CollectItem>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::DenyPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::DenyPlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::DisplayDeathScreen* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::DisplayDeathScreen>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::EntityList* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityList>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::EntityLook* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityLook>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::EntityMove* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::EntityMove>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::Event* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Event>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::LoadTerrain* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::LoadTerrain>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::PlayerList* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::PlayerList>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::PlayerPositionRotation* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::PlayerPositionRotation>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientAllPlayers>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientExcluding>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::RemoveEntity* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemoveEntity>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RemovePlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::Respawn* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::Respawn>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SectionBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SectionBlockLight>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetAbilities* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetAbilities>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetCenterChunk* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetCenterChunk>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetEntityEquipment* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetEntityEquipment>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetEntityVelocity* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetEntityVelocity>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetHealth* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetHealth>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetInventorySlot* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetInventorySlot>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SetSpawnPosition* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SetSpawnPosition>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SpawnEntity* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SpawnEntity>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::SpawnPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::SpawnPlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::TeleportEntity* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::TeleportEntity>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::TransferPlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::TransferPlayer>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::UnloadChunk* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UnloadChunk>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::UpdateBlock* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdateBlock>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::UpdateBlockLight* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdateBlockLight>(Arena*);
+template<> ::minecpp::proto::event::clientbound::v1::UpdatePlayerAbilities* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::UpdatePlayerAbilities>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
-
-namespace minecpp { namespace proto { namespace event { namespace clientbound { namespace v1 {
+namespace minecpp {
+namespace proto {
+namespace event {
+namespace clientbound {
+namespace v1 {
 
 // ===================================================================
 
-class Event final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.Event) */
-{
+class Event final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.Event) */ {
  public:
-   inline Event() :
-       Event(nullptr)
-   {
-   }
+  inline Event() : Event(nullptr) {}
+  ~Event() override;
+  explicit PROTOBUF_CONSTEXPR Event(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~Event() override;
-   explicit PROTOBUF_CONSTEXPR Event(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  Event(const Event& from);
+  Event(Event&& from) noexcept
+    : Event() {
+    *this = ::std::move(from);
+  }
 
-   Event(const Event &from);
-
-   Event(Event &&from) noexcept :
-       Event()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline Event &operator=(const Event &from)
-   {
+  inline Event& operator=(const Event& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Event& operator=(Event&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline Event &operator=(Event &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Event& default_instance() {
+    return *internal_default_instance();
+  }
+  enum RecipientCase {
+    kSinglePlayer = 2,
+    kMultiplePlayers = 3,
+    kAllPlayers = 4,
+    kExcluding = 5,
+    RECIPIENT_NOT_SET = 0,
+  };
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
+  static inline const Event* internal_default_instance() {
+    return reinterpret_cast<const Event*>(
+               &_Event_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const Event &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   enum RecipientCase
-   {
-      kSinglePlayer     = 2,
-      kMultiplePlayers  = 3,
-      kAllPlayers       = 4,
-      kExcluding        = 5,
-      RECIPIENT_NOT_SET = 0,
-   };
-
-   static inline const Event *internal_default_instance()
-   {
-      return reinterpret_cast<const Event *>(&_Event_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 0;
-
-   friend void swap(Event &a, Event &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(Event *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(Event *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(Event& a, Event& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Event* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Event* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   Event *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<Event>(arena);
-   }
+  Event* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Event>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Event& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Event& from) {
+    Event::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const Event &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const Event &from)
-   {
-      Event::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Event* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.Event";
+  }
+  protected:
+  explicit Event(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPayloadFieldNumber = 1,
+    kSinglePlayerFieldNumber = 2,
+    kMultiplePlayersFieldNumber = 3,
+    kAllPlayersFieldNumber = 4,
+    kExcludingFieldNumber = 5,
+  };
+  // .google.protobuf.Any payload = 1;
+  bool has_payload() const;
+  private:
+  bool _internal_has_payload() const;
+  public:
+  void clear_payload();
+  const ::PROTOBUF_NAMESPACE_ID::Any& payload() const;
+  PROTOBUF_NODISCARD ::PROTOBUF_NAMESPACE_ID::Any* release_payload();
+  ::PROTOBUF_NAMESPACE_ID::Any* mutable_payload();
+  void set_allocated_payload(::PROTOBUF_NAMESPACE_ID::Any* payload);
+  private:
+  const ::PROTOBUF_NAMESPACE_ID::Any& _internal_payload() const;
+  ::PROTOBUF_NAMESPACE_ID::Any* _internal_mutable_payload();
+  public:
+  void unsafe_arena_set_allocated_payload(
+      ::PROTOBUF_NAMESPACE_ID::Any* payload);
+  ::PROTOBUF_NAMESPACE_ID::Any* unsafe_arena_release_payload();
+
+  // .minecpp.proto.event.clientbound.v1.RecipientSinglePlayer single_player = 2;
+  bool has_single_player() const;
+  private:
+  bool _internal_has_single_player() const;
+  public:
+  void clear_single_player();
+  const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer& single_player() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* release_single_player();
+  ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* mutable_single_player();
+  void set_allocated_single_player(::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* single_player);
+  private:
+  const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer& _internal_single_player() const;
+  ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* _internal_mutable_single_player();
+  public:
+  void unsafe_arena_set_allocated_single_player(
+      ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* single_player);
+  ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* unsafe_arena_release_single_player();
+
+  // .minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers multiple_players = 3;
+  bool has_multiple_players() const;
+  private:
+  bool _internal_has_multiple_players() const;
+  public:
+  void clear_multiple_players();
+  const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers& multiple_players() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* release_multiple_players();
+  ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* mutable_multiple_players();
+  void set_allocated_multiple_players(::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* multiple_players);
+  private:
+  const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers& _internal_multiple_players() const;
+  ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* _internal_mutable_multiple_players();
+  public:
+  void unsafe_arena_set_allocated_multiple_players(
+      ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* multiple_players);
+  ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* unsafe_arena_release_multiple_players();
+
+  // .minecpp.proto.event.clientbound.v1.RecipientAllPlayers all_players = 4;
+  bool has_all_players() const;
+  private:
+  bool _internal_has_all_players() const;
+  public:
+  void clear_all_players();
+  const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers& all_players() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* release_all_players();
+  ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* mutable_all_players();
+  void set_allocated_all_players(::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* all_players);
+  private:
+  const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers& _internal_all_players() const;
+  ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* _internal_mutable_all_players();
+  public:
+  void unsafe_arena_set_allocated_all_players(
+      ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* all_players);
+  ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* unsafe_arena_release_all_players();
+
+  // .minecpp.proto.event.clientbound.v1.RecipientExcluding excluding = 5;
+  bool has_excluding() const;
+  private:
+  bool _internal_has_excluding() const;
+  public:
+  void clear_excluding();
+  const ::minecpp::proto::event::clientbound::v1::RecipientExcluding& excluding() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientExcluding* release_excluding();
+  ::minecpp::proto::event::clientbound::v1::RecipientExcluding* mutable_excluding();
+  void set_allocated_excluding(::minecpp::proto::event::clientbound::v1::RecipientExcluding* excluding);
+  private:
+  const ::minecpp::proto::event::clientbound::v1::RecipientExcluding& _internal_excluding() const;
+  ::minecpp::proto::event::clientbound::v1::RecipientExcluding* _internal_mutable_excluding();
+  public:
+  void unsafe_arena_set_allocated_excluding(
+      ::minecpp::proto::event::clientbound::v1::RecipientExcluding* excluding);
+  ::minecpp::proto::event::clientbound::v1::RecipientExcluding* unsafe_arena_release_excluding();
+
+  void clear_recipient();
+  RecipientCase recipient_case() const;
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.Event)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
+  void set_has_single_player();
+  void set_has_multiple_players();
+  void set_has_all_players();
+  void set_has_excluding();
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
+  inline bool has_recipient() const;
+  inline void clear_has_recipient();
 
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::Any* payload_;
+    union RecipientUnion {
+      constexpr RecipientUnion() : _constinit_{} {}
+        ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized _constinit_;
+      ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* single_player_;
+      ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* multiple_players_;
+      ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* all_players_;
+      ::minecpp::proto::event::clientbound::v1::RecipientExcluding* excluding_;
+    } recipient_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    uint32_t _oneof_case_[1];
 
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(Event *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.Event";
-   }
-
- protected:
-   explicit Event(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPayloadFieldNumber         = 1,
-      kSinglePlayerFieldNumber    = 2,
-      kMultiplePlayersFieldNumber = 3,
-      kAllPlayersFieldNumber      = 4,
-      kExcludingFieldNumber       = 5,
-   };
-
-   // .google.protobuf.Any payload = 1;
-   bool has_payload() const;
-
- private:
-   bool _internal_has_payload() const;
-
- public:
-   void clear_payload();
-   const ::PROTOBUF_NAMESPACE_ID::Any &payload() const;
-   PROTOBUF_NODISCARD ::PROTOBUF_NAMESPACE_ID::Any *release_payload();
-   ::PROTOBUF_NAMESPACE_ID::Any *mutable_payload();
-   void set_allocated_payload(::PROTOBUF_NAMESPACE_ID::Any *payload);
-
- private:
-   const ::PROTOBUF_NAMESPACE_ID::Any &_internal_payload() const;
-   ::PROTOBUF_NAMESPACE_ID::Any *_internal_mutable_payload();
-
- public:
-   void unsafe_arena_set_allocated_payload(::PROTOBUF_NAMESPACE_ID::Any *payload);
-   ::PROTOBUF_NAMESPACE_ID::Any *unsafe_arena_release_payload();
-
-   // .minecpp.proto.event.clientbound.v1.RecipientSinglePlayer single_player = 2;
-   bool has_single_player() const;
-
- private:
-   bool _internal_has_single_player() const;
-
- public:
-   void clear_single_player();
-   const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer &single_player() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *
-   release_single_player();
-   ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *mutable_single_player();
-   void set_allocated_single_player(
-           ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *single_player);
-
- private:
-   const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer &_internal_single_player() const;
-   ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *_internal_mutable_single_player();
-
- public:
-   void unsafe_arena_set_allocated_single_player(
-           ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *single_player);
-   ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *unsafe_arena_release_single_player();
-
-   // .minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers multiple_players = 3;
-   bool has_multiple_players() const;
-
- private:
-   bool _internal_has_multiple_players() const;
-
- public:
-   void clear_multiple_players();
-   const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers &multiple_players() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *
-   release_multiple_players();
-   ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *mutable_multiple_players();
-   void set_allocated_multiple_players(
-           ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *multiple_players);
-
- private:
-   const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers &
-   _internal_multiple_players() const;
-   ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *_internal_mutable_multiple_players();
-
- public:
-   void unsafe_arena_set_allocated_multiple_players(
-           ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *multiple_players);
-   ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *
-   unsafe_arena_release_multiple_players();
-
-   // .minecpp.proto.event.clientbound.v1.RecipientAllPlayers all_players = 4;
-   bool has_all_players() const;
-
- private:
-   bool _internal_has_all_players() const;
-
- public:
-   void clear_all_players();
-   const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers &all_players() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *release_all_players();
-   ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *mutable_all_players();
-   void set_allocated_all_players(::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *all_players);
-
- private:
-   const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers &_internal_all_players() const;
-   ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *_internal_mutable_all_players();
-
- public:
-   void unsafe_arena_set_allocated_all_players(
-           ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *all_players);
-   ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *unsafe_arena_release_all_players();
-
-   // .minecpp.proto.event.clientbound.v1.RecipientExcluding excluding = 5;
-   bool has_excluding() const;
-
- private:
-   bool _internal_has_excluding() const;
-
- public:
-   void clear_excluding();
-   const ::minecpp::proto::event::clientbound::v1::RecipientExcluding &excluding() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::event::clientbound::v1::RecipientExcluding *release_excluding();
-   ::minecpp::proto::event::clientbound::v1::RecipientExcluding *mutable_excluding();
-   void set_allocated_excluding(::minecpp::proto::event::clientbound::v1::RecipientExcluding *excluding);
-
- private:
-   const ::minecpp::proto::event::clientbound::v1::RecipientExcluding &_internal_excluding() const;
-   ::minecpp::proto::event::clientbound::v1::RecipientExcluding *_internal_mutable_excluding();
-
- public:
-   void unsafe_arena_set_allocated_excluding(
-           ::minecpp::proto::event::clientbound::v1::RecipientExcluding *excluding);
-   ::minecpp::proto::event::clientbound::v1::RecipientExcluding *unsafe_arena_release_excluding();
-
-   void clear_recipient();
-   RecipientCase recipient_case() const;
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.Event)
- private:
-   class _Internal;
-   void set_has_single_player();
-   void set_has_multiple_players();
-   void set_has_all_players();
-   void set_has_excluding();
-
-   inline bool has_recipient() const;
-   inline void clear_has_recipient();
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::Any *payload_;
-
-      union RecipientUnion
-      {
-         constexpr RecipientUnion() :
-             _constinit_{}
-         {
-         }
-
-         ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized _constinit_;
-         ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *single_player_;
-         ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *multiple_players_;
-         ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *all_players_;
-         ::minecpp::proto::event::clientbound::v1::RecipientExcluding *excluding_;
-      } recipient_;
-
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-      uint32_t _oneof_case_[1];
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class RecipientSinglePlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer) */
-{
+class RecipientSinglePlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer) */ {
  public:
-   inline RecipientSinglePlayer() :
-       RecipientSinglePlayer(nullptr)
-   {
-   }
+  inline RecipientSinglePlayer() : RecipientSinglePlayer(nullptr) {}
+  ~RecipientSinglePlayer() override;
+  explicit PROTOBUF_CONSTEXPR RecipientSinglePlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~RecipientSinglePlayer() override;
-   explicit PROTOBUF_CONSTEXPR RecipientSinglePlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  RecipientSinglePlayer(const RecipientSinglePlayer& from);
+  RecipientSinglePlayer(RecipientSinglePlayer&& from) noexcept
+    : RecipientSinglePlayer() {
+    *this = ::std::move(from);
+  }
 
-   RecipientSinglePlayer(const RecipientSinglePlayer &from);
-
-   RecipientSinglePlayer(RecipientSinglePlayer &&from) noexcept :
-       RecipientSinglePlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline RecipientSinglePlayer &operator=(const RecipientSinglePlayer &from)
-   {
+  inline RecipientSinglePlayer& operator=(const RecipientSinglePlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RecipientSinglePlayer& operator=(RecipientSinglePlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline RecipientSinglePlayer &operator=(RecipientSinglePlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RecipientSinglePlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RecipientSinglePlayer* internal_default_instance() {
+    return reinterpret_cast<const RecipientSinglePlayer*>(
+               &_RecipientSinglePlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const RecipientSinglePlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const RecipientSinglePlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const RecipientSinglePlayer *>(&_RecipientSinglePlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 1;
-
-   friend void swap(RecipientSinglePlayer &a, RecipientSinglePlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(RecipientSinglePlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(RecipientSinglePlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(RecipientSinglePlayer& a, RecipientSinglePlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RecipientSinglePlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RecipientSinglePlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   RecipientSinglePlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<RecipientSinglePlayer>(arena);
-   }
+  RecipientSinglePlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RecipientSinglePlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RecipientSinglePlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RecipientSinglePlayer& from) {
+    RecipientSinglePlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const RecipientSinglePlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const RecipientSinglePlayer &from)
-   {
-      RecipientSinglePlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RecipientSinglePlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.RecipientSinglePlayer";
+  }
+  protected:
+  explicit RecipientSinglePlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(RecipientSinglePlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.RecipientSinglePlayer";
-   }
-
- protected:
-   explicit RecipientSinglePlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber = 1,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class RecipientMultiplePlayers final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers) */
-{
+class RecipientMultiplePlayers final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers) */ {
  public:
-   inline RecipientMultiplePlayers() :
-       RecipientMultiplePlayers(nullptr)
-   {
-   }
+  inline RecipientMultiplePlayers() : RecipientMultiplePlayers(nullptr) {}
+  ~RecipientMultiplePlayers() override;
+  explicit PROTOBUF_CONSTEXPR RecipientMultiplePlayers(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~RecipientMultiplePlayers() override;
-   explicit PROTOBUF_CONSTEXPR
-           RecipientMultiplePlayers(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  RecipientMultiplePlayers(const RecipientMultiplePlayers& from);
+  RecipientMultiplePlayers(RecipientMultiplePlayers&& from) noexcept
+    : RecipientMultiplePlayers() {
+    *this = ::std::move(from);
+  }
 
-   RecipientMultiplePlayers(const RecipientMultiplePlayers &from);
-
-   RecipientMultiplePlayers(RecipientMultiplePlayers &&from) noexcept :
-       RecipientMultiplePlayers()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline RecipientMultiplePlayers &operator=(const RecipientMultiplePlayers &from)
-   {
+  inline RecipientMultiplePlayers& operator=(const RecipientMultiplePlayers& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RecipientMultiplePlayers& operator=(RecipientMultiplePlayers&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline RecipientMultiplePlayers &operator=(RecipientMultiplePlayers &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RecipientMultiplePlayers& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RecipientMultiplePlayers* internal_default_instance() {
+    return reinterpret_cast<const RecipientMultiplePlayers*>(
+               &_RecipientMultiplePlayers_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const RecipientMultiplePlayers &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const RecipientMultiplePlayers *internal_default_instance()
-   {
-      return reinterpret_cast<const RecipientMultiplePlayers *>(&_RecipientMultiplePlayers_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 2;
-
-   friend void swap(RecipientMultiplePlayers &a, RecipientMultiplePlayers &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(RecipientMultiplePlayers *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(RecipientMultiplePlayers *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(RecipientMultiplePlayers& a, RecipientMultiplePlayers& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RecipientMultiplePlayers* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RecipientMultiplePlayers* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   RecipientMultiplePlayers *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<RecipientMultiplePlayers>(arena);
-   }
+  RecipientMultiplePlayers* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RecipientMultiplePlayers>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RecipientMultiplePlayers& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RecipientMultiplePlayers& from) {
+    RecipientMultiplePlayers::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const RecipientMultiplePlayers &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const RecipientMultiplePlayers &from)
-   {
-      RecipientMultiplePlayers::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RecipientMultiplePlayers* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers";
+  }
+  protected:
+  explicit RecipientMultiplePlayers(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdsFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.player.v1.PlayerId player_ids = 1;
+  int player_ids_size() const;
+  private:
+  int _internal_player_ids_size() const;
+  public:
+  void clear_player_ids();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_ids(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::PlayerId >*
+      mutable_player_ids();
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_ids(int index) const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_add_player_ids();
+  public:
+  const ::minecpp::proto::player::v1::PlayerId& player_ids(int index) const;
+  ::minecpp::proto::player::v1::PlayerId* add_player_ids();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::PlayerId >&
+      player_ids() const;
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(RecipientMultiplePlayers *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers";
-   }
-
- protected:
-   explicit RecipientMultiplePlayers(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdsFieldNumber = 1,
-   };
-
-   // repeated .minecpp.proto.player.v1.PlayerId player_ids = 1;
-   int player_ids_size() const;
-
- private:
-   int _internal_player_ids_size() const;
-
- public:
-   void clear_player_ids();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_ids(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::PlayerId> *mutable_player_ids();
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_ids(int index) const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_add_player_ids();
-
- public:
-   const ::minecpp::proto::player::v1::PlayerId &player_ids(int index) const;
-   ::minecpp::proto::player::v1::PlayerId *add_player_ids();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::PlayerId> &
-   player_ids() const;
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::PlayerId> player_ids_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::PlayerId > player_ids_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class RecipientAllPlayers final
-    : public ::PROTOBUF_NAMESPACE_ID::internal::
-              ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientAllPlayers) */
-{
+class RecipientAllPlayers final :
+    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientAllPlayers) */ {
  public:
-   inline RecipientAllPlayers() :
-       RecipientAllPlayers(nullptr)
-   {
-   }
+  inline RecipientAllPlayers() : RecipientAllPlayers(nullptr) {}
+  explicit PROTOBUF_CONSTEXPR RecipientAllPlayers(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   explicit PROTOBUF_CONSTEXPR RecipientAllPlayers(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  RecipientAllPlayers(const RecipientAllPlayers& from);
+  RecipientAllPlayers(RecipientAllPlayers&& from) noexcept
+    : RecipientAllPlayers() {
+    *this = ::std::move(from);
+  }
 
-   RecipientAllPlayers(const RecipientAllPlayers &from);
-
-   RecipientAllPlayers(RecipientAllPlayers &&from) noexcept :
-       RecipientAllPlayers()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline RecipientAllPlayers &operator=(const RecipientAllPlayers &from)
-   {
+  inline RecipientAllPlayers& operator=(const RecipientAllPlayers& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RecipientAllPlayers& operator=(RecipientAllPlayers&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline RecipientAllPlayers &operator=(RecipientAllPlayers &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RecipientAllPlayers& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RecipientAllPlayers* internal_default_instance() {
+    return reinterpret_cast<const RecipientAllPlayers*>(
+               &_RecipientAllPlayers_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const RecipientAllPlayers &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const RecipientAllPlayers *internal_default_instance()
-   {
-      return reinterpret_cast<const RecipientAllPlayers *>(&_RecipientAllPlayers_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 3;
-
-   friend void swap(RecipientAllPlayers &a, RecipientAllPlayers &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(RecipientAllPlayers *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(RecipientAllPlayers *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(RecipientAllPlayers& a, RecipientAllPlayers& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RecipientAllPlayers* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RecipientAllPlayers* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   RecipientAllPlayers *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<RecipientAllPlayers>(arena);
-   }
+  RecipientAllPlayers* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RecipientAllPlayers>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  inline void CopyFrom(const RecipientAllPlayers& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  void MergeFrom(const RecipientAllPlayers& from) {
+    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+  }
+  public:
 
-   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.RecipientAllPlayers";
+  }
+  protected:
+  explicit RecipientAllPlayers(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
 
-   inline void CopyFrom(const RecipientAllPlayers &from)
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
-   }
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
 
-   void MergeFrom(const RecipientAllPlayers &from)
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
-   }
+  // nested types ----------------------------------------------------
 
- public:
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientAllPlayers)
  private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  class _Internal;
 
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.RecipientAllPlayers";
-   }
-
- protected:
-   explicit RecipientAllPlayers(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientAllPlayers)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {};
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+  };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class RecipientExcluding final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientExcluding) */
-{
+class RecipientExcluding final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RecipientExcluding) */ {
  public:
-   inline RecipientExcluding() :
-       RecipientExcluding(nullptr)
-   {
-   }
+  inline RecipientExcluding() : RecipientExcluding(nullptr) {}
+  ~RecipientExcluding() override;
+  explicit PROTOBUF_CONSTEXPR RecipientExcluding(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~RecipientExcluding() override;
-   explicit PROTOBUF_CONSTEXPR RecipientExcluding(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  RecipientExcluding(const RecipientExcluding& from);
+  RecipientExcluding(RecipientExcluding&& from) noexcept
+    : RecipientExcluding() {
+    *this = ::std::move(from);
+  }
 
-   RecipientExcluding(const RecipientExcluding &from);
-
-   RecipientExcluding(RecipientExcluding &&from) noexcept :
-       RecipientExcluding()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline RecipientExcluding &operator=(const RecipientExcluding &from)
-   {
+  inline RecipientExcluding& operator=(const RecipientExcluding& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RecipientExcluding& operator=(RecipientExcluding&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline RecipientExcluding &operator=(RecipientExcluding &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RecipientExcluding& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RecipientExcluding* internal_default_instance() {
+    return reinterpret_cast<const RecipientExcluding*>(
+               &_RecipientExcluding_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const RecipientExcluding &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const RecipientExcluding *internal_default_instance()
-   {
-      return reinterpret_cast<const RecipientExcluding *>(&_RecipientExcluding_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 4;
-
-   friend void swap(RecipientExcluding &a, RecipientExcluding &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(RecipientExcluding *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(RecipientExcluding *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(RecipientExcluding& a, RecipientExcluding& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RecipientExcluding* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RecipientExcluding* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   RecipientExcluding *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<RecipientExcluding>(arena);
-   }
+  RecipientExcluding* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RecipientExcluding>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RecipientExcluding& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RecipientExcluding& from) {
+    RecipientExcluding::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const RecipientExcluding &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const RecipientExcluding &from)
-   {
-      RecipientExcluding::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RecipientExcluding* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.RecipientExcluding";
+  }
+  protected:
+  explicit RecipientExcluding(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientExcluding)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(RecipientExcluding *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.RecipientExcluding";
-   }
-
- protected:
-   explicit RecipientExcluding(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber = 1,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RecipientExcluding)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class AddPlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AddPlayer) */
-{
+class AddPlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AddPlayer) */ {
  public:
-   inline AddPlayer() :
-       AddPlayer(nullptr)
-   {
-   }
+  inline AddPlayer() : AddPlayer(nullptr) {}
+  ~AddPlayer() override;
+  explicit PROTOBUF_CONSTEXPR AddPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~AddPlayer() override;
-   explicit PROTOBUF_CONSTEXPR AddPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  AddPlayer(const AddPlayer& from);
+  AddPlayer(AddPlayer&& from) noexcept
+    : AddPlayer() {
+    *this = ::std::move(from);
+  }
 
-   AddPlayer(const AddPlayer &from);
-
-   AddPlayer(AddPlayer &&from) noexcept :
-       AddPlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline AddPlayer &operator=(const AddPlayer &from)
-   {
+  inline AddPlayer& operator=(const AddPlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AddPlayer& operator=(AddPlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline AddPlayer &operator=(AddPlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AddPlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AddPlayer* internal_default_instance() {
+    return reinterpret_cast<const AddPlayer*>(
+               &_AddPlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const AddPlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const AddPlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const AddPlayer *>(&_AddPlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 5;
-
-   friend void swap(AddPlayer &a, AddPlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(AddPlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(AddPlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(AddPlayer& a, AddPlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AddPlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AddPlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   AddPlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<AddPlayer>(arena);
-   }
+  AddPlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AddPlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AddPlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AddPlayer& from) {
+    AddPlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const AddPlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const AddPlayer &from)
-   {
-      AddPlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AddPlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.AddPlayer";
+  }
+  protected:
+  explicit AddPlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 2,
+    kPlayerIdFieldNumber = 1,
+    kGameModeFieldNumber = 3,
+    kPingFieldNumber = 4,
+  };
+  // string name = 2;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // .minecpp.proto.common.v1.GameMode game_mode = 3;
+  void clear_game_mode();
+  ::minecpp::proto::common::v1::GameMode game_mode() const;
+  void set_game_mode(::minecpp::proto::common::v1::GameMode value);
+  private:
+  ::minecpp::proto::common::v1::GameMode _internal_game_mode() const;
+  void _internal_set_game_mode(::minecpp::proto::common::v1::GameMode value);
+  public:
+
+  // uint32 ping = 4;
+  void clear_ping();
+  uint32_t ping() const;
+  void set_ping(uint32_t value);
+  private:
+  uint32_t _internal_ping() const;
+  void _internal_set_ping(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AddPlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(AddPlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.AddPlayer";
-   }
-
- protected:
-   explicit AddPlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kNameFieldNumber     = 2,
-      kPlayerIdFieldNumber = 1,
-      kGameModeFieldNumber = 3,
-      kPingFieldNumber     = 4,
-   };
-
-   // string name = 2;
-   void clear_name();
-   const std::string &name() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_name(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_name();
-   PROTOBUF_NODISCARD std::string *release_name();
-   void set_allocated_name(std::string *name);
-
- private:
-   const std::string &_internal_name() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string &value);
-   std::string *_internal_mutable_name();
-
- public:
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // .minecpp.proto.common.v1.GameMode game_mode = 3;
-   void clear_game_mode();
-   ::minecpp::proto::common::v1::GameMode game_mode() const;
-   void set_game_mode(::minecpp::proto::common::v1::GameMode value);
-
- private:
-   ::minecpp::proto::common::v1::GameMode _internal_game_mode() const;
-   void _internal_set_game_mode(::minecpp::proto::common::v1::GameMode value);
-
- public:
-   // uint32 ping = 4;
-   void clear_ping();
-   uint32_t ping() const;
-   void set_ping(uint32_t value);
-
- private:
-   uint32_t _internal_ping() const;
-   void _internal_set_ping(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AddPlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      int game_mode_;
-      uint32_t ping_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    int game_mode_;
+    uint32_t ping_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SpawnEntity final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SpawnEntity) */
-{
+class SpawnEntity final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SpawnEntity) */ {
  public:
-   inline SpawnEntity() :
-       SpawnEntity(nullptr)
-   {
-   }
+  inline SpawnEntity() : SpawnEntity(nullptr) {}
+  ~SpawnEntity() override;
+  explicit PROTOBUF_CONSTEXPR SpawnEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SpawnEntity() override;
-   explicit PROTOBUF_CONSTEXPR SpawnEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SpawnEntity(const SpawnEntity& from);
+  SpawnEntity(SpawnEntity&& from) noexcept
+    : SpawnEntity() {
+    *this = ::std::move(from);
+  }
 
-   SpawnEntity(const SpawnEntity &from);
-
-   SpawnEntity(SpawnEntity &&from) noexcept :
-       SpawnEntity()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SpawnEntity &operator=(const SpawnEntity &from)
-   {
+  inline SpawnEntity& operator=(const SpawnEntity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SpawnEntity& operator=(SpawnEntity&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SpawnEntity &operator=(SpawnEntity &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SpawnEntity& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SpawnEntity* internal_default_instance() {
+    return reinterpret_cast<const SpawnEntity*>(
+               &_SpawnEntity_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SpawnEntity &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SpawnEntity *internal_default_instance()
-   {
-      return reinterpret_cast<const SpawnEntity *>(&_SpawnEntity_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 6;
-
-   friend void swap(SpawnEntity &a, SpawnEntity &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SpawnEntity *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SpawnEntity *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SpawnEntity& a, SpawnEntity& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SpawnEntity* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SpawnEntity* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SpawnEntity *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SpawnEntity>(arena);
-   }
+  SpawnEntity* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SpawnEntity>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SpawnEntity& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SpawnEntity& from) {
+    SpawnEntity::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SpawnEntity &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SpawnEntity &from)
-   {
-      SpawnEntity::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SpawnEntity* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SpawnEntity";
+  }
+  protected:
+  explicit SpawnEntity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEntityFieldNumber = 1,
+  };
+  // .minecpp.proto.entity.v1.Entity entity = 1;
+  bool has_entity() const;
+  private:
+  bool _internal_has_entity() const;
+  public:
+  void clear_entity();
+  const ::minecpp::proto::entity::v1::Entity& entity() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Entity* release_entity();
+  ::minecpp::proto::entity::v1::Entity* mutable_entity();
+  void set_allocated_entity(::minecpp::proto::entity::v1::Entity* entity);
+  private:
+  const ::minecpp::proto::entity::v1::Entity& _internal_entity() const;
+  ::minecpp::proto::entity::v1::Entity* _internal_mutable_entity();
+  public:
+  void unsafe_arena_set_allocated_entity(
+      ::minecpp::proto::entity::v1::Entity* entity);
+  ::minecpp::proto::entity::v1::Entity* unsafe_arena_release_entity();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SpawnEntity)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SpawnEntity *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SpawnEntity";
-   }
-
- protected:
-   explicit SpawnEntity(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kEntityFieldNumber = 1,
-   };
-
-   // .minecpp.proto.entity.v1.Entity entity = 1;
-   bool has_entity() const;
-
- private:
-   bool _internal_has_entity() const;
-
- public:
-   void clear_entity();
-   const ::minecpp::proto::entity::v1::Entity &entity() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Entity *release_entity();
-   ::minecpp::proto::entity::v1::Entity *mutable_entity();
-   void set_allocated_entity(::minecpp::proto::entity::v1::Entity *entity);
-
- private:
-   const ::minecpp::proto::entity::v1::Entity &_internal_entity() const;
-   ::minecpp::proto::entity::v1::Entity *_internal_mutable_entity();
-
- public:
-   void unsafe_arena_set_allocated_entity(::minecpp::proto::entity::v1::Entity *entity);
-   ::minecpp::proto::entity::v1::Entity *unsafe_arena_release_entity();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SpawnEntity)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::entity::v1::Entity *entity_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::entity::v1::Entity* entity_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SpawnPlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SpawnPlayer) */
-{
+class SpawnPlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SpawnPlayer) */ {
  public:
-   inline SpawnPlayer() :
-       SpawnPlayer(nullptr)
-   {
-   }
+  inline SpawnPlayer() : SpawnPlayer(nullptr) {}
+  ~SpawnPlayer() override;
+  explicit PROTOBUF_CONSTEXPR SpawnPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SpawnPlayer() override;
-   explicit PROTOBUF_CONSTEXPR SpawnPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SpawnPlayer(const SpawnPlayer& from);
+  SpawnPlayer(SpawnPlayer&& from) noexcept
+    : SpawnPlayer() {
+    *this = ::std::move(from);
+  }
 
-   SpawnPlayer(const SpawnPlayer &from);
-
-   SpawnPlayer(SpawnPlayer &&from) noexcept :
-       SpawnPlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SpawnPlayer &operator=(const SpawnPlayer &from)
-   {
+  inline SpawnPlayer& operator=(const SpawnPlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SpawnPlayer& operator=(SpawnPlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SpawnPlayer &operator=(SpawnPlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SpawnPlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SpawnPlayer* internal_default_instance() {
+    return reinterpret_cast<const SpawnPlayer*>(
+               &_SpawnPlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    7;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SpawnPlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SpawnPlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const SpawnPlayer *>(&_SpawnPlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 7;
-
-   friend void swap(SpawnPlayer &a, SpawnPlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SpawnPlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SpawnPlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SpawnPlayer& a, SpawnPlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SpawnPlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SpawnPlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SpawnPlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SpawnPlayer>(arena);
-   }
+  SpawnPlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SpawnPlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SpawnPlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SpawnPlayer& from) {
+    SpawnPlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SpawnPlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SpawnPlayer &from)
-   {
-      SpawnPlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SpawnPlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SpawnPlayer";
+  }
+  protected:
+  explicit SpawnPlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kEntityFieldNumber = 2,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // .minecpp.proto.entity.v1.PlayerEntity entity = 2;
+  bool has_entity() const;
+  private:
+  bool _internal_has_entity() const;
+  public:
+  void clear_entity();
+  const ::minecpp::proto::entity::v1::PlayerEntity& entity() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::PlayerEntity* release_entity();
+  ::minecpp::proto::entity::v1::PlayerEntity* mutable_entity();
+  void set_allocated_entity(::minecpp::proto::entity::v1::PlayerEntity* entity);
+  private:
+  const ::minecpp::proto::entity::v1::PlayerEntity& _internal_entity() const;
+  ::minecpp::proto::entity::v1::PlayerEntity* _internal_mutable_entity();
+  public:
+  void unsafe_arena_set_allocated_entity(
+      ::minecpp::proto::entity::v1::PlayerEntity* entity);
+  ::minecpp::proto::entity::v1::PlayerEntity* unsafe_arena_release_entity();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SpawnPlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SpawnPlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SpawnPlayer";
-   }
-
- protected:
-   explicit SpawnPlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber = 1,
-      kEntityFieldNumber   = 2,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // .minecpp.proto.entity.v1.PlayerEntity entity = 2;
-   bool has_entity() const;
-
- private:
-   bool _internal_has_entity() const;
-
- public:
-   void clear_entity();
-   const ::minecpp::proto::entity::v1::PlayerEntity &entity() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::PlayerEntity *release_entity();
-   ::minecpp::proto::entity::v1::PlayerEntity *mutable_entity();
-   void set_allocated_entity(::minecpp::proto::entity::v1::PlayerEntity *entity);
-
- private:
-   const ::minecpp::proto::entity::v1::PlayerEntity &_internal_entity() const;
-   ::minecpp::proto::entity::v1::PlayerEntity *_internal_mutable_entity();
-
- public:
-   void unsafe_arena_set_allocated_entity(::minecpp::proto::entity::v1::PlayerEntity *entity);
-   ::minecpp::proto::entity::v1::PlayerEntity *unsafe_arena_release_entity();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SpawnPlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      ::minecpp::proto::entity::v1::PlayerEntity *entity_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    ::minecpp::proto::entity::v1::PlayerEntity* entity_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class EntityMove final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.EntityMove) */
-{
+class EntityMove final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.EntityMove) */ {
  public:
-   inline EntityMove() :
-       EntityMove(nullptr)
-   {
-   }
+  inline EntityMove() : EntityMove(nullptr) {}
+  ~EntityMove() override;
+  explicit PROTOBUF_CONSTEXPR EntityMove(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~EntityMove() override;
-   explicit PROTOBUF_CONSTEXPR EntityMove(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  EntityMove(const EntityMove& from);
+  EntityMove(EntityMove&& from) noexcept
+    : EntityMove() {
+    *this = ::std::move(from);
+  }
 
-   EntityMove(const EntityMove &from);
-
-   EntityMove(EntityMove &&from) noexcept :
-       EntityMove()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline EntityMove &operator=(const EntityMove &from)
-   {
+  inline EntityMove& operator=(const EntityMove& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline EntityMove& operator=(EntityMove&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline EntityMove &operator=(EntityMove &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const EntityMove& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const EntityMove* internal_default_instance() {
+    return reinterpret_cast<const EntityMove*>(
+               &_EntityMove_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const EntityMove &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const EntityMove *internal_default_instance()
-   {
-      return reinterpret_cast<const EntityMove *>(&_EntityMove_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 8;
-
-   friend void swap(EntityMove &a, EntityMove &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(EntityMove *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(EntityMove *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(EntityMove& a, EntityMove& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(EntityMove* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(EntityMove* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   EntityMove *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<EntityMove>(arena);
-   }
+  EntityMove* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<EntityMove>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const EntityMove& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const EntityMove& from) {
+    EntityMove::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const EntityMove &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const EntityMove &from)
-   {
-      EntityMove::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(EntityMove* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.EntityMove";
+  }
+  protected:
+  explicit EntityMove(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMovementFieldNumber = 2,
+    kRotationFieldNumber = 3,
+    kEntityIdFieldNumber = 1,
+    kIsOnGroundFieldNumber = 4,
+  };
+  // .minecpp.proto.common.v1.Vector3i movement = 2;
+  bool has_movement() const;
+  private:
+  bool _internal_has_movement() const;
+  public:
+  void clear_movement();
+  const ::minecpp::proto::common::v1::Vector3i& movement() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3i* release_movement();
+  ::minecpp::proto::common::v1::Vector3i* mutable_movement();
+  void set_allocated_movement(::minecpp::proto::common::v1::Vector3i* movement);
+  private:
+  const ::minecpp::proto::common::v1::Vector3i& _internal_movement() const;
+  ::minecpp::proto::common::v1::Vector3i* _internal_mutable_movement();
+  public:
+  void unsafe_arena_set_allocated_movement(
+      ::minecpp::proto::common::v1::Vector3i* movement);
+  ::minecpp::proto::common::v1::Vector3i* unsafe_arena_release_movement();
+
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
+  bool has_rotation() const;
+  private:
+  bool _internal_has_rotation() const;
+  public:
+  void clear_rotation();
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
+  private:
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
+  public:
+  void unsafe_arena_set_allocated_rotation(
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
+
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // bool is_on_ground = 4;
+  void clear_is_on_ground();
+  bool is_on_ground() const;
+  void set_is_on_ground(bool value);
+  private:
+  bool _internal_is_on_ground() const;
+  void _internal_set_is_on_ground(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.EntityMove)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(EntityMove *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.EntityMove";
-   }
-
- protected:
-   explicit EntityMove(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kMovementFieldNumber   = 2,
-      kRotationFieldNumber   = 3,
-      kEntityIdFieldNumber   = 1,
-      kIsOnGroundFieldNumber = 4,
-   };
-
-   // .minecpp.proto.common.v1.Vector3i movement = 2;
-   bool has_movement() const;
-
- private:
-   bool _internal_has_movement() const;
-
- public:
-   void clear_movement();
-   const ::minecpp::proto::common::v1::Vector3i &movement() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3i *release_movement();
-   ::minecpp::proto::common::v1::Vector3i *mutable_movement();
-   void set_allocated_movement(::minecpp::proto::common::v1::Vector3i *movement);
-
- private:
-   const ::minecpp::proto::common::v1::Vector3i &_internal_movement() const;
-   ::minecpp::proto::common::v1::Vector3i *_internal_mutable_movement();
-
- public:
-   void unsafe_arena_set_allocated_movement(::minecpp::proto::common::v1::Vector3i *movement);
-   ::minecpp::proto::common::v1::Vector3i *unsafe_arena_release_movement();
-
-   // .minecpp.proto.common.v1.Rotation rotation = 3;
-   bool has_rotation() const;
-
- private:
-   bool _internal_has_rotation() const;
-
- public:
-   void clear_rotation();
-   const ::minecpp::proto::common::v1::Rotation &rotation() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation *release_rotation();
-   ::minecpp::proto::common::v1::Rotation *mutable_rotation();
-   void set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-
- private:
-   const ::minecpp::proto::common::v1::Rotation &_internal_rotation() const;
-   ::minecpp::proto::common::v1::Rotation *_internal_mutable_rotation();
-
- public:
-   void unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-   ::minecpp::proto::common::v1::Rotation *unsafe_arena_release_rotation();
-
-   // uint32 entity_id = 1;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // bool is_on_ground = 4;
-   void clear_is_on_ground();
-   bool is_on_ground() const;
-   void set_is_on_ground(bool value);
-
- private:
-   bool _internal_is_on_ground() const;
-   void _internal_set_is_on_ground(bool value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.EntityMove)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::common::v1::Vector3i *movement_;
-      ::minecpp::proto::common::v1::Rotation *rotation_;
-      uint32_t entity_id_;
-      bool is_on_ground_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::Vector3i* movement_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
+    uint32_t entity_id_;
+    bool is_on_ground_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class EntityLook final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.EntityLook) */
-{
+class EntityLook final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.EntityLook) */ {
  public:
-   inline EntityLook() :
-       EntityLook(nullptr)
-   {
-   }
+  inline EntityLook() : EntityLook(nullptr) {}
+  ~EntityLook() override;
+  explicit PROTOBUF_CONSTEXPR EntityLook(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~EntityLook() override;
-   explicit PROTOBUF_CONSTEXPR EntityLook(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  EntityLook(const EntityLook& from);
+  EntityLook(EntityLook&& from) noexcept
+    : EntityLook() {
+    *this = ::std::move(from);
+  }
 
-   EntityLook(const EntityLook &from);
-
-   EntityLook(EntityLook &&from) noexcept :
-       EntityLook()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline EntityLook &operator=(const EntityLook &from)
-   {
+  inline EntityLook& operator=(const EntityLook& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline EntityLook& operator=(EntityLook&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline EntityLook &operator=(EntityLook &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const EntityLook& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const EntityLook* internal_default_instance() {
+    return reinterpret_cast<const EntityLook*>(
+               &_EntityLook_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const EntityLook &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const EntityLook *internal_default_instance()
-   {
-      return reinterpret_cast<const EntityLook *>(&_EntityLook_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 9;
-
-   friend void swap(EntityLook &a, EntityLook &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(EntityLook *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(EntityLook *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(EntityLook& a, EntityLook& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(EntityLook* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(EntityLook* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   EntityLook *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<EntityLook>(arena);
-   }
+  EntityLook* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<EntityLook>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const EntityLook& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const EntityLook& from) {
+    EntityLook::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const EntityLook &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const EntityLook &from)
-   {
-      EntityLook::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(EntityLook* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.EntityLook";
+  }
+  protected:
+  explicit EntityLook(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kRotationFieldNumber = 3,
+    kEntityIdFieldNumber = 2,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
+  bool has_rotation() const;
+  private:
+  bool _internal_has_rotation() const;
+  public:
+  void clear_rotation();
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
+  private:
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
+  public:
+  void unsafe_arena_set_allocated_rotation(
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
+
+  // uint32 entity_id = 2;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.EntityLook)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(EntityLook *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.EntityLook";
-   }
-
- protected:
-   explicit EntityLook(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber = 1,
-      kRotationFieldNumber = 3,
-      kEntityIdFieldNumber = 2,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // .minecpp.proto.common.v1.Rotation rotation = 3;
-   bool has_rotation() const;
-
- private:
-   bool _internal_has_rotation() const;
-
- public:
-   void clear_rotation();
-   const ::minecpp::proto::common::v1::Rotation &rotation() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation *release_rotation();
-   ::minecpp::proto::common::v1::Rotation *mutable_rotation();
-   void set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-
- private:
-   const ::minecpp::proto::common::v1::Rotation &_internal_rotation() const;
-   ::minecpp::proto::common::v1::Rotation *_internal_mutable_rotation();
-
- public:
-   void unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-   ::minecpp::proto::common::v1::Rotation *unsafe_arena_release_rotation();
-
-   // uint32 entity_id = 2;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.EntityLook)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      ::minecpp::proto::common::v1::Rotation *rotation_;
-      uint32_t entity_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
+    uint32_t entity_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class PlayerPositionRotation final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.PlayerPositionRotation) */
-{
+class PlayerPositionRotation final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.PlayerPositionRotation) */ {
  public:
-   inline PlayerPositionRotation() :
-       PlayerPositionRotation(nullptr)
-   {
-   }
+  inline PlayerPositionRotation() : PlayerPositionRotation(nullptr) {}
+  ~PlayerPositionRotation() override;
+  explicit PROTOBUF_CONSTEXPR PlayerPositionRotation(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~PlayerPositionRotation() override;
-   explicit PROTOBUF_CONSTEXPR PlayerPositionRotation(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  PlayerPositionRotation(const PlayerPositionRotation& from);
+  PlayerPositionRotation(PlayerPositionRotation&& from) noexcept
+    : PlayerPositionRotation() {
+    *this = ::std::move(from);
+  }
 
-   PlayerPositionRotation(const PlayerPositionRotation &from);
-
-   PlayerPositionRotation(PlayerPositionRotation &&from) noexcept :
-       PlayerPositionRotation()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline PlayerPositionRotation &operator=(const PlayerPositionRotation &from)
-   {
+  inline PlayerPositionRotation& operator=(const PlayerPositionRotation& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PlayerPositionRotation& operator=(PlayerPositionRotation&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline PlayerPositionRotation &operator=(PlayerPositionRotation &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PlayerPositionRotation& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PlayerPositionRotation* internal_default_instance() {
+    return reinterpret_cast<const PlayerPositionRotation*>(
+               &_PlayerPositionRotation_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const PlayerPositionRotation &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const PlayerPositionRotation *internal_default_instance()
-   {
-      return reinterpret_cast<const PlayerPositionRotation *>(&_PlayerPositionRotation_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 10;
-
-   friend void swap(PlayerPositionRotation &a, PlayerPositionRotation &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(PlayerPositionRotation *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(PlayerPositionRotation *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(PlayerPositionRotation& a, PlayerPositionRotation& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PlayerPositionRotation* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PlayerPositionRotation* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   PlayerPositionRotation *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<PlayerPositionRotation>(arena);
-   }
+  PlayerPositionRotation* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PlayerPositionRotation>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PlayerPositionRotation& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PlayerPositionRotation& from) {
+    PlayerPositionRotation::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const PlayerPositionRotation &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const PlayerPositionRotation &from)
-   {
-      PlayerPositionRotation::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PlayerPositionRotation* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.PlayerPositionRotation";
+  }
+  protected:
+  explicit PlayerPositionRotation(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 1,
+    kRotationFieldNumber = 2,
+  };
+  // .minecpp.proto.common.v1.Vector3 position = 1;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::Vector3& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3* release_position();
+  ::minecpp::proto::common::v1::Vector3* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::Vector3* position);
+  private:
+  const ::minecpp::proto::common::v1::Vector3& _internal_position() const;
+  ::minecpp::proto::common::v1::Vector3* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::Vector3* position);
+  ::minecpp::proto::common::v1::Vector3* unsafe_arena_release_position();
+
+  // .minecpp.proto.common.v1.Rotation rotation = 2;
+  bool has_rotation() const;
+  private:
+  bool _internal_has_rotation() const;
+  public:
+  void clear_rotation();
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
+  private:
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
+  public:
+  void unsafe_arena_set_allocated_rotation(
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.PlayerPositionRotation)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(PlayerPositionRotation *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.PlayerPositionRotation";
-   }
-
- protected:
-   explicit PlayerPositionRotation(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPositionFieldNumber = 1,
-      kRotationFieldNumber = 2,
-   };
-
-   // .minecpp.proto.common.v1.Vector3 position = 1;
-   bool has_position() const;
-
- private:
-   bool _internal_has_position() const;
-
- public:
-   void clear_position();
-   const ::minecpp::proto::common::v1::Vector3 &position() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3 *release_position();
-   ::minecpp::proto::common::v1::Vector3 *mutable_position();
-   void set_allocated_position(::minecpp::proto::common::v1::Vector3 *position);
-
- private:
-   const ::minecpp::proto::common::v1::Vector3 &_internal_position() const;
-   ::minecpp::proto::common::v1::Vector3 *_internal_mutable_position();
-
- public:
-   void unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::Vector3 *position);
-   ::minecpp::proto::common::v1::Vector3 *unsafe_arena_release_position();
-
-   // .minecpp.proto.common.v1.Rotation rotation = 2;
-   bool has_rotation() const;
-
- private:
-   bool _internal_has_rotation() const;
-
- public:
-   void clear_rotation();
-   const ::minecpp::proto::common::v1::Rotation &rotation() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation *release_rotation();
-   ::minecpp::proto::common::v1::Rotation *mutable_rotation();
-   void set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-
- private:
-   const ::minecpp::proto::common::v1::Rotation &_internal_rotation() const;
-   ::minecpp::proto::common::v1::Rotation *_internal_mutable_rotation();
-
- public:
-   void unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-   ::minecpp::proto::common::v1::Rotation *unsafe_arena_release_rotation();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.PlayerPositionRotation)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::common::v1::Vector3 *position_;
-      ::minecpp::proto::common::v1::Rotation *rotation_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::Vector3* position_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetSpawnPosition final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetSpawnPosition) */
-{
+class SetSpawnPosition final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetSpawnPosition) */ {
  public:
-   inline SetSpawnPosition() :
-       SetSpawnPosition(nullptr)
-   {
-   }
+  inline SetSpawnPosition() : SetSpawnPosition(nullptr) {}
+  ~SetSpawnPosition() override;
+  explicit PROTOBUF_CONSTEXPR SetSpawnPosition(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetSpawnPosition() override;
-   explicit PROTOBUF_CONSTEXPR SetSpawnPosition(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetSpawnPosition(const SetSpawnPosition& from);
+  SetSpawnPosition(SetSpawnPosition&& from) noexcept
+    : SetSpawnPosition() {
+    *this = ::std::move(from);
+  }
 
-   SetSpawnPosition(const SetSpawnPosition &from);
-
-   SetSpawnPosition(SetSpawnPosition &&from) noexcept :
-       SetSpawnPosition()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetSpawnPosition &operator=(const SetSpawnPosition &from)
-   {
+  inline SetSpawnPosition& operator=(const SetSpawnPosition& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetSpawnPosition& operator=(SetSpawnPosition&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetSpawnPosition &operator=(SetSpawnPosition &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetSpawnPosition& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetSpawnPosition* internal_default_instance() {
+    return reinterpret_cast<const SetSpawnPosition*>(
+               &_SetSpawnPosition_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetSpawnPosition &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetSpawnPosition *internal_default_instance()
-   {
-      return reinterpret_cast<const SetSpawnPosition *>(&_SetSpawnPosition_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 11;
-
-   friend void swap(SetSpawnPosition &a, SetSpawnPosition &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetSpawnPosition *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetSpawnPosition *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetSpawnPosition& a, SetSpawnPosition& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetSpawnPosition* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetSpawnPosition* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetSpawnPosition *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetSpawnPosition>(arena);
-   }
+  SetSpawnPosition* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetSpawnPosition>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetSpawnPosition& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetSpawnPosition& from) {
+    SetSpawnPosition::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetSpawnPosition &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetSpawnPosition &from)
-   {
-      SetSpawnPosition::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetSpawnPosition* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetSpawnPosition";
+  }
+  protected:
+  explicit SetSpawnPosition(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 1,
+    kAngleFieldNumber = 2,
+  };
+  // uint64 position = 1;
+  void clear_position();
+  uint64_t position() const;
+  void set_position(uint64_t value);
+  private:
+  uint64_t _internal_position() const;
+  void _internal_set_position(uint64_t value);
+  public:
+
+  // float angle = 2;
+  void clear_angle();
+  float angle() const;
+  void set_angle(float value);
+  private:
+  float _internal_angle() const;
+  void _internal_set_angle(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetSpawnPosition)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetSpawnPosition *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetSpawnPosition";
-   }
-
- protected:
-   explicit SetSpawnPosition(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPositionFieldNumber = 1,
-      kAngleFieldNumber    = 2,
-   };
-
-   // uint64 position = 1;
-   void clear_position();
-   uint64_t position() const;
-   void set_position(uint64_t value);
-
- private:
-   uint64_t _internal_position() const;
-   void _internal_set_position(uint64_t value);
-
- public:
-   // float angle = 2;
-   void clear_angle();
-   float angle() const;
-   void set_angle(float value);
-
- private:
-   float _internal_angle() const;
-   void _internal_set_angle(float value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetSpawnPosition)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      uint64_t position_;
-      float angle_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint64_t position_;
+    float angle_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class Chat final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.Chat) */
-{
+class Chat final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.Chat) */ {
  public:
-   inline Chat() :
-       Chat(nullptr)
-   {
-   }
+  inline Chat() : Chat(nullptr) {}
+  ~Chat() override;
+  explicit PROTOBUF_CONSTEXPR Chat(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~Chat() override;
-   explicit PROTOBUF_CONSTEXPR Chat(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  Chat(const Chat& from);
+  Chat(Chat&& from) noexcept
+    : Chat() {
+    *this = ::std::move(from);
+  }
 
-   Chat(const Chat &from);
-
-   Chat(Chat &&from) noexcept :
-       Chat()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline Chat &operator=(const Chat &from)
-   {
+  inline Chat& operator=(const Chat& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Chat& operator=(Chat&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline Chat &operator=(Chat &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Chat& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Chat* internal_default_instance() {
+    return reinterpret_cast<const Chat*>(
+               &_Chat_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const Chat &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const Chat *internal_default_instance()
-   {
-      return reinterpret_cast<const Chat *>(&_Chat_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 12;
-
-   friend void swap(Chat &a, Chat &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(Chat *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(Chat *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(Chat& a, Chat& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Chat* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Chat* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   Chat *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<Chat>(arena);
-   }
+  Chat* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Chat>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Chat& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Chat& from) {
+    Chat::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const Chat &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const Chat &from)
-   {
-      Chat::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Chat* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.Chat";
+  }
+  protected:
+  explicit Chat(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMessageFieldNumber = 1,
+    kTypeFieldNumber = 2,
+  };
+  // string message = 1;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // int32 type = 2;
+  void clear_type();
+  int32_t type() const;
+  void set_type(int32_t value);
+  private:
+  int32_t _internal_type() const;
+  void _internal_set_type(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.Chat)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(Chat *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.Chat";
-   }
-
- protected:
-   explicit Chat(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kMessageFieldNumber = 1,
-      kTypeFieldNumber    = 2,
-   };
-
-   // string message = 1;
-   void clear_message();
-   const std::string &message() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_message(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_message();
-   PROTOBUF_NODISCARD std::string *release_message();
-   void set_allocated_message(std::string *message);
-
- private:
-   const std::string &_internal_message() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string &value);
-   std::string *_internal_mutable_message();
-
- public:
-   // int32 type = 2;
-   void clear_type();
-   int32_t type() const;
-   void set_type(int32_t value);
-
- private:
-   int32_t _internal_type() const;
-   void _internal_set_type(int32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.Chat)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
-      int32_t type_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    int32_t type_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class RemovePlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RemovePlayer) */
-{
+class RemovePlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RemovePlayer) */ {
  public:
-   inline RemovePlayer() :
-       RemovePlayer(nullptr)
-   {
-   }
+  inline RemovePlayer() : RemovePlayer(nullptr) {}
+  ~RemovePlayer() override;
+  explicit PROTOBUF_CONSTEXPR RemovePlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~RemovePlayer() override;
-   explicit PROTOBUF_CONSTEXPR RemovePlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  RemovePlayer(const RemovePlayer& from);
+  RemovePlayer(RemovePlayer&& from) noexcept
+    : RemovePlayer() {
+    *this = ::std::move(from);
+  }
 
-   RemovePlayer(const RemovePlayer &from);
-
-   RemovePlayer(RemovePlayer &&from) noexcept :
-       RemovePlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline RemovePlayer &operator=(const RemovePlayer &from)
-   {
+  inline RemovePlayer& operator=(const RemovePlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RemovePlayer& operator=(RemovePlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline RemovePlayer &operator=(RemovePlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RemovePlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RemovePlayer* internal_default_instance() {
+    return reinterpret_cast<const RemovePlayer*>(
+               &_RemovePlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const RemovePlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const RemovePlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const RemovePlayer *>(&_RemovePlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 13;
-
-   friend void swap(RemovePlayer &a, RemovePlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(RemovePlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(RemovePlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(RemovePlayer& a, RemovePlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RemovePlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RemovePlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   RemovePlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<RemovePlayer>(arena);
-   }
+  RemovePlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RemovePlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RemovePlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RemovePlayer& from) {
+    RemovePlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const RemovePlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const RemovePlayer &from)
-   {
-      RemovePlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RemovePlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.RemovePlayer";
+  }
+  protected:
+  explicit RemovePlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kEntityIdFieldNumber = 2,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // uint32 entity_id = 2;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RemovePlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(RemovePlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.RemovePlayer";
-   }
-
- protected:
-   explicit RemovePlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber = 1,
-      kEntityIdFieldNumber = 2,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // uint32 entity_id = 2;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RemovePlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      uint32_t entity_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    uint32_t entity_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class UpdateBlock final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdateBlock) */
-{
+class UpdateBlock final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdateBlock) */ {
  public:
-   inline UpdateBlock() :
-       UpdateBlock(nullptr)
-   {
-   }
+  inline UpdateBlock() : UpdateBlock(nullptr) {}
+  ~UpdateBlock() override;
+  explicit PROTOBUF_CONSTEXPR UpdateBlock(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~UpdateBlock() override;
-   explicit PROTOBUF_CONSTEXPR UpdateBlock(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  UpdateBlock(const UpdateBlock& from);
+  UpdateBlock(UpdateBlock&& from) noexcept
+    : UpdateBlock() {
+    *this = ::std::move(from);
+  }
 
-   UpdateBlock(const UpdateBlock &from);
-
-   UpdateBlock(UpdateBlock &&from) noexcept :
-       UpdateBlock()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline UpdateBlock &operator=(const UpdateBlock &from)
-   {
+  inline UpdateBlock& operator=(const UpdateBlock& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdateBlock& operator=(UpdateBlock&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline UpdateBlock &operator=(UpdateBlock &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UpdateBlock& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UpdateBlock* internal_default_instance() {
+    return reinterpret_cast<const UpdateBlock*>(
+               &_UpdateBlock_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const UpdateBlock &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const UpdateBlock *internal_default_instance()
-   {
-      return reinterpret_cast<const UpdateBlock *>(&_UpdateBlock_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 14;
-
-   friend void swap(UpdateBlock &a, UpdateBlock &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(UpdateBlock *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(UpdateBlock *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(UpdateBlock& a, UpdateBlock& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UpdateBlock* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UpdateBlock* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   UpdateBlock *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<UpdateBlock>(arena);
-   }
+  UpdateBlock* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UpdateBlock>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UpdateBlock& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UpdateBlock& from) {
+    UpdateBlock::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const UpdateBlock &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const UpdateBlock &from)
-   {
-      UpdateBlock::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdateBlock* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.UpdateBlock";
+  }
+  protected:
+  explicit UpdateBlock(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBlockPositionFieldNumber = 1,
+    kStateFieldNumber = 2,
+  };
+  // uint64 block_position = 1;
+  void clear_block_position();
+  uint64_t block_position() const;
+  void set_block_position(uint64_t value);
+  private:
+  uint64_t _internal_block_position() const;
+  void _internal_set_block_position(uint64_t value);
+  public:
+
+  // uint32 state = 2;
+  void clear_state();
+  uint32_t state() const;
+  void set_state(uint32_t value);
+  private:
+  uint32_t _internal_state() const;
+  void _internal_set_state(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdateBlock)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(UpdateBlock *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.UpdateBlock";
-   }
-
- protected:
-   explicit UpdateBlock(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kBlockPositionFieldNumber = 1,
-      kStateFieldNumber         = 2,
-   };
-
-   // uint64 block_position = 1;
-   void clear_block_position();
-   uint64_t block_position() const;
-   void set_block_position(uint64_t value);
-
- private:
-   uint64_t _internal_block_position() const;
-   void _internal_set_block_position(uint64_t value);
-
- public:
-   // uint32 state = 2;
-   void clear_state();
-   uint32_t state() const;
-   void set_state(uint32_t value);
-
- private:
-   uint32_t _internal_state() const;
-   void _internal_set_state(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdateBlock)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      uint64_t block_position_;
-      uint32_t state_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint64_t block_position_;
+    uint32_t state_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class AnimateEntity final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AnimateEntity) */
-{
+class AnimateEntity final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AnimateEntity) */ {
  public:
-   inline AnimateEntity() :
-       AnimateEntity(nullptr)
-   {
-   }
+  inline AnimateEntity() : AnimateEntity(nullptr) {}
+  ~AnimateEntity() override;
+  explicit PROTOBUF_CONSTEXPR AnimateEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~AnimateEntity() override;
-   explicit PROTOBUF_CONSTEXPR AnimateEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  AnimateEntity(const AnimateEntity& from);
+  AnimateEntity(AnimateEntity&& from) noexcept
+    : AnimateEntity() {
+    *this = ::std::move(from);
+  }
 
-   AnimateEntity(const AnimateEntity &from);
-
-   AnimateEntity(AnimateEntity &&from) noexcept :
-       AnimateEntity()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline AnimateEntity &operator=(const AnimateEntity &from)
-   {
+  inline AnimateEntity& operator=(const AnimateEntity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AnimateEntity& operator=(AnimateEntity&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline AnimateEntity &operator=(AnimateEntity &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AnimateEntity& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AnimateEntity* internal_default_instance() {
+    return reinterpret_cast<const AnimateEntity*>(
+               &_AnimateEntity_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const AnimateEntity &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const AnimateEntity *internal_default_instance()
-   {
-      return reinterpret_cast<const AnimateEntity *>(&_AnimateEntity_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 15;
-
-   friend void swap(AnimateEntity &a, AnimateEntity &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(AnimateEntity *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(AnimateEntity *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(AnimateEntity& a, AnimateEntity& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AnimateEntity* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AnimateEntity* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   AnimateEntity *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<AnimateEntity>(arena);
-   }
+  AnimateEntity* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AnimateEntity>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AnimateEntity& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AnimateEntity& from) {
+    AnimateEntity::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const AnimateEntity &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const AnimateEntity &from)
-   {
-      AnimateEntity::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AnimateEntity* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.AnimateEntity";
+  }
+  protected:
+  explicit AnimateEntity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEntityIdFieldNumber = 1,
+    kAnimationFieldNumber = 2,
+  };
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // .minecpp.proto.common.v1.EntityAnimation animation = 2;
+  void clear_animation();
+  ::minecpp::proto::common::v1::EntityAnimation animation() const;
+  void set_animation(::minecpp::proto::common::v1::EntityAnimation value);
+  private:
+  ::minecpp::proto::common::v1::EntityAnimation _internal_animation() const;
+  void _internal_set_animation(::minecpp::proto::common::v1::EntityAnimation value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AnimateEntity)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(AnimateEntity *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.AnimateEntity";
-   }
-
- protected:
-   explicit AnimateEntity(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kEntityIdFieldNumber  = 1,
-      kAnimationFieldNumber = 2,
-   };
-
-   // uint32 entity_id = 1;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // .minecpp.proto.common.v1.EntityAnimation animation = 2;
-   void clear_animation();
-   ::minecpp::proto::common::v1::EntityAnimation animation() const;
-   void set_animation(::minecpp::proto::common::v1::EntityAnimation value);
-
- private:
-   ::minecpp::proto::common::v1::EntityAnimation _internal_animation() const;
-   void _internal_set_animation(::minecpp::proto::common::v1::EntityAnimation value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AnimateEntity)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      uint32_t entity_id_;
-      int animation_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint32_t entity_id_;
+    int animation_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class AcknowledgeBlockChange final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange) */
-{
+class AcknowledgeBlockChange final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange) */ {
  public:
-   inline AcknowledgeBlockChange() :
-       AcknowledgeBlockChange(nullptr)
-   {
-   }
+  inline AcknowledgeBlockChange() : AcknowledgeBlockChange(nullptr) {}
+  ~AcknowledgeBlockChange() override;
+  explicit PROTOBUF_CONSTEXPR AcknowledgeBlockChange(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~AcknowledgeBlockChange() override;
-   explicit PROTOBUF_CONSTEXPR AcknowledgeBlockChange(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  AcknowledgeBlockChange(const AcknowledgeBlockChange& from);
+  AcknowledgeBlockChange(AcknowledgeBlockChange&& from) noexcept
+    : AcknowledgeBlockChange() {
+    *this = ::std::move(from);
+  }
 
-   AcknowledgeBlockChange(const AcknowledgeBlockChange &from);
-
-   AcknowledgeBlockChange(AcknowledgeBlockChange &&from) noexcept :
-       AcknowledgeBlockChange()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline AcknowledgeBlockChange &operator=(const AcknowledgeBlockChange &from)
-   {
+  inline AcknowledgeBlockChange& operator=(const AcknowledgeBlockChange& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AcknowledgeBlockChange& operator=(AcknowledgeBlockChange&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline AcknowledgeBlockChange &operator=(AcknowledgeBlockChange &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AcknowledgeBlockChange& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AcknowledgeBlockChange* internal_default_instance() {
+    return reinterpret_cast<const AcknowledgeBlockChange*>(
+               &_AcknowledgeBlockChange_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const AcknowledgeBlockChange &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const AcknowledgeBlockChange *internal_default_instance()
-   {
-      return reinterpret_cast<const AcknowledgeBlockChange *>(&_AcknowledgeBlockChange_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 16;
-
-   friend void swap(AcknowledgeBlockChange &a, AcknowledgeBlockChange &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(AcknowledgeBlockChange *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(AcknowledgeBlockChange *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(AcknowledgeBlockChange& a, AcknowledgeBlockChange& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AcknowledgeBlockChange* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AcknowledgeBlockChange* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   AcknowledgeBlockChange *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<AcknowledgeBlockChange>(arena);
-   }
+  AcknowledgeBlockChange* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AcknowledgeBlockChange>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AcknowledgeBlockChange& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AcknowledgeBlockChange& from) {
+    AcknowledgeBlockChange::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const AcknowledgeBlockChange &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const AcknowledgeBlockChange &from)
-   {
-      AcknowledgeBlockChange::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AcknowledgeBlockChange* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange";
+  }
+  protected:
+  explicit AcknowledgeBlockChange(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSequenceIdFieldNumber = 1,
+  };
+  // int32 sequence_id = 1;
+  void clear_sequence_id();
+  int32_t sequence_id() const;
+  void set_sequence_id(int32_t value);
+  private:
+  int32_t _internal_sequence_id() const;
+  void _internal_set_sequence_id(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(AcknowledgeBlockChange *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange";
-   }
-
- protected:
-   explicit AcknowledgeBlockChange(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kSequenceIdFieldNumber = 1,
-   };
-
-   // int32 sequence_id = 1;
-   void clear_sequence_id();
-   int32_t sequence_id() const;
-   void set_sequence_id(int32_t value);
-
- private:
-   int32_t _internal_sequence_id() const;
-   void _internal_set_sequence_id(int32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      int32_t sequence_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t sequence_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class LoadTerrain final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.LoadTerrain) */
-{
+class LoadTerrain final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.LoadTerrain) */ {
  public:
-   inline LoadTerrain() :
-       LoadTerrain(nullptr)
-   {
-   }
+  inline LoadTerrain() : LoadTerrain(nullptr) {}
+  ~LoadTerrain() override;
+  explicit PROTOBUF_CONSTEXPR LoadTerrain(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~LoadTerrain() override;
-   explicit PROTOBUF_CONSTEXPR LoadTerrain(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  LoadTerrain(const LoadTerrain& from);
+  LoadTerrain(LoadTerrain&& from) noexcept
+    : LoadTerrain() {
+    *this = ::std::move(from);
+  }
 
-   LoadTerrain(const LoadTerrain &from);
-
-   LoadTerrain(LoadTerrain &&from) noexcept :
-       LoadTerrain()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline LoadTerrain &operator=(const LoadTerrain &from)
-   {
+  inline LoadTerrain& operator=(const LoadTerrain& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline LoadTerrain& operator=(LoadTerrain&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline LoadTerrain &operator=(LoadTerrain &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const LoadTerrain& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const LoadTerrain* internal_default_instance() {
+    return reinterpret_cast<const LoadTerrain*>(
+               &_LoadTerrain_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const LoadTerrain &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const LoadTerrain *internal_default_instance()
-   {
-      return reinterpret_cast<const LoadTerrain *>(&_LoadTerrain_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 17;
-
-   friend void swap(LoadTerrain &a, LoadTerrain &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(LoadTerrain *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(LoadTerrain *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(LoadTerrain& a, LoadTerrain& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(LoadTerrain* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(LoadTerrain* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   LoadTerrain *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<LoadTerrain>(arena);
-   }
+  LoadTerrain* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<LoadTerrain>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const LoadTerrain& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const LoadTerrain& from) {
+    LoadTerrain::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const LoadTerrain &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const LoadTerrain &from)
-   {
-      LoadTerrain::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(LoadTerrain* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.LoadTerrain";
+  }
+  protected:
+  explicit LoadTerrain(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCoordsFieldNumber = 2,
+    kCentralChunkFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.common.v1.ChunkPosition coords = 2;
+  int coords_size() const;
+  private:
+  int _internal_coords_size() const;
+  public:
+  void clear_coords();
+  ::minecpp::proto::common::v1::ChunkPosition* mutable_coords(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::ChunkPosition >*
+      mutable_coords();
+  private:
+  const ::minecpp::proto::common::v1::ChunkPosition& _internal_coords(int index) const;
+  ::minecpp::proto::common::v1::ChunkPosition* _internal_add_coords();
+  public:
+  const ::minecpp::proto::common::v1::ChunkPosition& coords(int index) const;
+  ::minecpp::proto::common::v1::ChunkPosition* add_coords();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::ChunkPosition >&
+      coords() const;
+
+  // .minecpp.proto.common.v1.ChunkPosition central_chunk = 1;
+  bool has_central_chunk() const;
+  private:
+  bool _internal_has_central_chunk() const;
+  public:
+  void clear_central_chunk();
+  const ::minecpp::proto::common::v1::ChunkPosition& central_chunk() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition* release_central_chunk();
+  ::minecpp::proto::common::v1::ChunkPosition* mutable_central_chunk();
+  void set_allocated_central_chunk(::minecpp::proto::common::v1::ChunkPosition* central_chunk);
+  private:
+  const ::minecpp::proto::common::v1::ChunkPosition& _internal_central_chunk() const;
+  ::minecpp::proto::common::v1::ChunkPosition* _internal_mutable_central_chunk();
+  public:
+  void unsafe_arena_set_allocated_central_chunk(
+      ::minecpp::proto::common::v1::ChunkPosition* central_chunk);
+  ::minecpp::proto::common::v1::ChunkPosition* unsafe_arena_release_central_chunk();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.LoadTerrain)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(LoadTerrain *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.LoadTerrain";
-   }
-
- protected:
-   explicit LoadTerrain(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kCoordsFieldNumber       = 2,
-      kCentralChunkFieldNumber = 1,
-   };
-
-   // repeated .minecpp.proto.common.v1.ChunkPosition coords = 2;
-   int coords_size() const;
-
- private:
-   int _internal_coords_size() const;
-
- public:
-   void clear_coords();
-   ::minecpp::proto::common::v1::ChunkPosition *mutable_coords(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::common::v1::ChunkPosition> *mutable_coords();
-
- private:
-   const ::minecpp::proto::common::v1::ChunkPosition &_internal_coords(int index) const;
-   ::minecpp::proto::common::v1::ChunkPosition *_internal_add_coords();
-
- public:
-   const ::minecpp::proto::common::v1::ChunkPosition &coords(int index) const;
-   ::minecpp::proto::common::v1::ChunkPosition *add_coords();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::common::v1::ChunkPosition> &
-   coords() const;
-
-   // .minecpp.proto.common.v1.ChunkPosition central_chunk = 1;
-   bool has_central_chunk() const;
-
- private:
-   bool _internal_has_central_chunk() const;
-
- public:
-   void clear_central_chunk();
-   const ::minecpp::proto::common::v1::ChunkPosition &central_chunk() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition *release_central_chunk();
-   ::minecpp::proto::common::v1::ChunkPosition *mutable_central_chunk();
-   void set_allocated_central_chunk(::minecpp::proto::common::v1::ChunkPosition *central_chunk);
-
- private:
-   const ::minecpp::proto::common::v1::ChunkPosition &_internal_central_chunk() const;
-   ::minecpp::proto::common::v1::ChunkPosition *_internal_mutable_central_chunk();
-
- public:
-   void unsafe_arena_set_allocated_central_chunk(::minecpp::proto::common::v1::ChunkPosition *central_chunk);
-   ::minecpp::proto::common::v1::ChunkPosition *unsafe_arena_release_central_chunk();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.LoadTerrain)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::common::v1::ChunkPosition> coords_;
-      ::minecpp::proto::common::v1::ChunkPosition *central_chunk_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::ChunkPosition > coords_;
+    ::minecpp::proto::common::v1::ChunkPosition* central_chunk_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class TransferPlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.TransferPlayer) */
-{
+class TransferPlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.TransferPlayer) */ {
  public:
-   inline TransferPlayer() :
-       TransferPlayer(nullptr)
-   {
-   }
+  inline TransferPlayer() : TransferPlayer(nullptr) {}
+  ~TransferPlayer() override;
+  explicit PROTOBUF_CONSTEXPR TransferPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~TransferPlayer() override;
-   explicit PROTOBUF_CONSTEXPR TransferPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  TransferPlayer(const TransferPlayer& from);
+  TransferPlayer(TransferPlayer&& from) noexcept
+    : TransferPlayer() {
+    *this = ::std::move(from);
+  }
 
-   TransferPlayer(const TransferPlayer &from);
-
-   TransferPlayer(TransferPlayer &&from) noexcept :
-       TransferPlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline TransferPlayer &operator=(const TransferPlayer &from)
-   {
+  inline TransferPlayer& operator=(const TransferPlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransferPlayer& operator=(TransferPlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline TransferPlayer &operator=(TransferPlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TransferPlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TransferPlayer* internal_default_instance() {
+    return reinterpret_cast<const TransferPlayer*>(
+               &_TransferPlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    18;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const TransferPlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const TransferPlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const TransferPlayer *>(&_TransferPlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 18;
-
-   friend void swap(TransferPlayer &a, TransferPlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(TransferPlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(TransferPlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(TransferPlayer& a, TransferPlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransferPlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransferPlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   TransferPlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<TransferPlayer>(arena);
-   }
+  TransferPlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TransferPlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TransferPlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TransferPlayer& from) {
+    TransferPlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const TransferPlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const TransferPlayer &from)
-   {
-      TransferPlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransferPlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.TransferPlayer";
+  }
+  protected:
+  explicit TransferPlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEngineInstanceIdFieldNumber = 2,
+  };
+  // uint64 engine_instance_id = 2;
+  void clear_engine_instance_id();
+  uint64_t engine_instance_id() const;
+  void set_engine_instance_id(uint64_t value);
+  private:
+  uint64_t _internal_engine_instance_id() const;
+  void _internal_set_engine_instance_id(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.TransferPlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(TransferPlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.TransferPlayer";
-   }
-
- protected:
-   explicit TransferPlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kEngineInstanceIdFieldNumber = 2,
-   };
-
-   // uint64 engine_instance_id = 2;
-   void clear_engine_instance_id();
-   uint64_t engine_instance_id() const;
-   void set_engine_instance_id(uint64_t value);
-
- private:
-   uint64_t _internal_engine_instance_id() const;
-   void _internal_set_engine_instance_id(uint64_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.TransferPlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      uint64_t engine_instance_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint64_t engine_instance_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class UpdatePlayerAbilities final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities) */
-{
+class UpdatePlayerAbilities final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities) */ {
  public:
-   inline UpdatePlayerAbilities() :
-       UpdatePlayerAbilities(nullptr)
-   {
-   }
+  inline UpdatePlayerAbilities() : UpdatePlayerAbilities(nullptr) {}
+  ~UpdatePlayerAbilities() override;
+  explicit PROTOBUF_CONSTEXPR UpdatePlayerAbilities(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~UpdatePlayerAbilities() override;
-   explicit PROTOBUF_CONSTEXPR UpdatePlayerAbilities(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  UpdatePlayerAbilities(const UpdatePlayerAbilities& from);
+  UpdatePlayerAbilities(UpdatePlayerAbilities&& from) noexcept
+    : UpdatePlayerAbilities() {
+    *this = ::std::move(from);
+  }
 
-   UpdatePlayerAbilities(const UpdatePlayerAbilities &from);
-
-   UpdatePlayerAbilities(UpdatePlayerAbilities &&from) noexcept :
-       UpdatePlayerAbilities()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline UpdatePlayerAbilities &operator=(const UpdatePlayerAbilities &from)
-   {
+  inline UpdatePlayerAbilities& operator=(const UpdatePlayerAbilities& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdatePlayerAbilities& operator=(UpdatePlayerAbilities&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline UpdatePlayerAbilities &operator=(UpdatePlayerAbilities &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UpdatePlayerAbilities& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UpdatePlayerAbilities* internal_default_instance() {
+    return reinterpret_cast<const UpdatePlayerAbilities*>(
+               &_UpdatePlayerAbilities_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const UpdatePlayerAbilities &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const UpdatePlayerAbilities *internal_default_instance()
-   {
-      return reinterpret_cast<const UpdatePlayerAbilities *>(&_UpdatePlayerAbilities_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 19;
-
-   friend void swap(UpdatePlayerAbilities &a, UpdatePlayerAbilities &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(UpdatePlayerAbilities *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(UpdatePlayerAbilities *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(UpdatePlayerAbilities& a, UpdatePlayerAbilities& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UpdatePlayerAbilities* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UpdatePlayerAbilities* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   UpdatePlayerAbilities *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<UpdatePlayerAbilities>(arena);
-   }
+  UpdatePlayerAbilities* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UpdatePlayerAbilities>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UpdatePlayerAbilities& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UpdatePlayerAbilities& from) {
+    UpdatePlayerAbilities::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const UpdatePlayerAbilities &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const UpdatePlayerAbilities &from)
-   {
-      UpdatePlayerAbilities::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdatePlayerAbilities* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities";
+  }
+  protected:
+  explicit UpdatePlayerAbilities(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kInvulnerableFieldNumber = 2,
+    kIsFlyingFieldNumber = 3,
+    kAllowFlyingFieldNumber = 4,
+    kCreativeModeFieldNumber = 5,
+    kWalkSpeedFieldNumber = 7,
+    kFlySpeedFieldNumber = 8,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // bool invulnerable = 2;
+  void clear_invulnerable();
+  bool invulnerable() const;
+  void set_invulnerable(bool value);
+  private:
+  bool _internal_invulnerable() const;
+  void _internal_set_invulnerable(bool value);
+  public:
+
+  // bool is_flying = 3;
+  void clear_is_flying();
+  bool is_flying() const;
+  void set_is_flying(bool value);
+  private:
+  bool _internal_is_flying() const;
+  void _internal_set_is_flying(bool value);
+  public:
+
+  // bool allow_flying = 4;
+  void clear_allow_flying();
+  bool allow_flying() const;
+  void set_allow_flying(bool value);
+  private:
+  bool _internal_allow_flying() const;
+  void _internal_set_allow_flying(bool value);
+  public:
+
+  // bool creative_mode = 5;
+  void clear_creative_mode();
+  bool creative_mode() const;
+  void set_creative_mode(bool value);
+  private:
+  bool _internal_creative_mode() const;
+  void _internal_set_creative_mode(bool value);
+  public:
+
+  // float walk_speed = 7;
+  void clear_walk_speed();
+  float walk_speed() const;
+  void set_walk_speed(float value);
+  private:
+  float _internal_walk_speed() const;
+  void _internal_set_walk_speed(float value);
+  public:
+
+  // float fly_speed = 8;
+  void clear_fly_speed();
+  float fly_speed() const;
+  void set_fly_speed(float value);
+  private:
+  float _internal_fly_speed() const;
+  void _internal_set_fly_speed(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(UpdatePlayerAbilities *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities";
-   }
-
- protected:
-   explicit UpdatePlayerAbilities(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber     = 1,
-      kInvulnerableFieldNumber = 2,
-      kIsFlyingFieldNumber     = 3,
-      kAllowFlyingFieldNumber  = 4,
-      kCreativeModeFieldNumber = 5,
-      kWalkSpeedFieldNumber    = 7,
-      kFlySpeedFieldNumber     = 8,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // bool invulnerable = 2;
-   void clear_invulnerable();
-   bool invulnerable() const;
-   void set_invulnerable(bool value);
-
- private:
-   bool _internal_invulnerable() const;
-   void _internal_set_invulnerable(bool value);
-
- public:
-   // bool is_flying = 3;
-   void clear_is_flying();
-   bool is_flying() const;
-   void set_is_flying(bool value);
-
- private:
-   bool _internal_is_flying() const;
-   void _internal_set_is_flying(bool value);
-
- public:
-   // bool allow_flying = 4;
-   void clear_allow_flying();
-   bool allow_flying() const;
-   void set_allow_flying(bool value);
-
- private:
-   bool _internal_allow_flying() const;
-   void _internal_set_allow_flying(bool value);
-
- public:
-   // bool creative_mode = 5;
-   void clear_creative_mode();
-   bool creative_mode() const;
-   void set_creative_mode(bool value);
-
- private:
-   bool _internal_creative_mode() const;
-   void _internal_set_creative_mode(bool value);
-
- public:
-   // float walk_speed = 7;
-   void clear_walk_speed();
-   float walk_speed() const;
-   void set_walk_speed(float value);
-
- private:
-   float _internal_walk_speed() const;
-   void _internal_set_walk_speed(float value);
-
- public:
-   // float fly_speed = 8;
-   void clear_fly_speed();
-   float fly_speed() const;
-   void set_fly_speed(float value);
-
- private:
-   float _internal_fly_speed() const;
-   void _internal_set_fly_speed(float value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      bool invulnerable_;
-      bool is_flying_;
-      bool allow_flying_;
-      bool creative_mode_;
-      float walk_speed_;
-      float fly_speed_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    bool invulnerable_;
+    bool is_flying_;
+    bool allow_flying_;
+    bool creative_mode_;
+    float walk_speed_;
+    float fly_speed_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class UnloadChunk final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UnloadChunk) */
-{
+class UnloadChunk final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UnloadChunk) */ {
  public:
-   inline UnloadChunk() :
-       UnloadChunk(nullptr)
-   {
-   }
+  inline UnloadChunk() : UnloadChunk(nullptr) {}
+  ~UnloadChunk() override;
+  explicit PROTOBUF_CONSTEXPR UnloadChunk(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~UnloadChunk() override;
-   explicit PROTOBUF_CONSTEXPR UnloadChunk(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  UnloadChunk(const UnloadChunk& from);
+  UnloadChunk(UnloadChunk&& from) noexcept
+    : UnloadChunk() {
+    *this = ::std::move(from);
+  }
 
-   UnloadChunk(const UnloadChunk &from);
-
-   UnloadChunk(UnloadChunk &&from) noexcept :
-       UnloadChunk()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline UnloadChunk &operator=(const UnloadChunk &from)
-   {
+  inline UnloadChunk& operator=(const UnloadChunk& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UnloadChunk& operator=(UnloadChunk&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline UnloadChunk &operator=(UnloadChunk &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UnloadChunk& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UnloadChunk* internal_default_instance() {
+    return reinterpret_cast<const UnloadChunk*>(
+               &_UnloadChunk_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    20;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const UnloadChunk &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const UnloadChunk *internal_default_instance()
-   {
-      return reinterpret_cast<const UnloadChunk *>(&_UnloadChunk_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 20;
-
-   friend void swap(UnloadChunk &a, UnloadChunk &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(UnloadChunk *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(UnloadChunk *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(UnloadChunk& a, UnloadChunk& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UnloadChunk* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UnloadChunk* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   UnloadChunk *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<UnloadChunk>(arena);
-   }
+  UnloadChunk* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UnloadChunk>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UnloadChunk& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UnloadChunk& from) {
+    UnloadChunk::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const UnloadChunk &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const UnloadChunk &from)
-   {
-      UnloadChunk::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UnloadChunk* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.UnloadChunk";
+  }
+  protected:
+  explicit UnloadChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPlayerIdFieldNumber = 1,
+    kChunkPositionFieldNumber = 2,
+  };
+  // .minecpp.proto.player.v1.PlayerId player_id = 1;
+  bool has_player_id() const;
+  private:
+  bool _internal_has_player_id() const;
+  public:
+  void clear_player_id();
+  const ::minecpp::proto::player::v1::PlayerId& player_id() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId* release_player_id();
+  ::minecpp::proto::player::v1::PlayerId* mutable_player_id();
+  void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id);
+  private:
+  const ::minecpp::proto::player::v1::PlayerId& _internal_player_id() const;
+  ::minecpp::proto::player::v1::PlayerId* _internal_mutable_player_id();
+  public:
+  void unsafe_arena_set_allocated_player_id(
+      ::minecpp::proto::player::v1::PlayerId* player_id);
+  ::minecpp::proto::player::v1::PlayerId* unsafe_arena_release_player_id();
+
+  // .minecpp.proto.common.v1.ChunkPosition chunk_position = 2;
+  bool has_chunk_position() const;
+  private:
+  bool _internal_has_chunk_position() const;
+  public:
+  void clear_chunk_position();
+  const ::minecpp::proto::common::v1::ChunkPosition& chunk_position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition* release_chunk_position();
+  ::minecpp::proto::common::v1::ChunkPosition* mutable_chunk_position();
+  void set_allocated_chunk_position(::minecpp::proto::common::v1::ChunkPosition* chunk_position);
+  private:
+  const ::minecpp::proto::common::v1::ChunkPosition& _internal_chunk_position() const;
+  ::minecpp::proto::common::v1::ChunkPosition* _internal_mutable_chunk_position();
+  public:
+  void unsafe_arena_set_allocated_chunk_position(
+      ::minecpp::proto::common::v1::ChunkPosition* chunk_position);
+  ::minecpp::proto::common::v1::ChunkPosition* unsafe_arena_release_chunk_position();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UnloadChunk)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(UnloadChunk *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.UnloadChunk";
-   }
-
- protected:
-   explicit UnloadChunk(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPlayerIdFieldNumber      = 1,
-      kChunkPositionFieldNumber = 2,
-   };
-
-   // .minecpp.proto.player.v1.PlayerId player_id = 1;
-   bool has_player_id() const;
-
- private:
-   bool _internal_has_player_id() const;
-
- public:
-   void clear_player_id();
-   const ::minecpp::proto::player::v1::PlayerId &player_id() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::PlayerId *release_player_id();
-   ::minecpp::proto::player::v1::PlayerId *mutable_player_id();
-   void set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-
- private:
-   const ::minecpp::proto::player::v1::PlayerId &_internal_player_id() const;
-   ::minecpp::proto::player::v1::PlayerId *_internal_mutable_player_id();
-
- public:
-   void unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id);
-   ::minecpp::proto::player::v1::PlayerId *unsafe_arena_release_player_id();
-
-   // .minecpp.proto.common.v1.ChunkPosition chunk_position = 2;
-   bool has_chunk_position() const;
-
- private:
-   bool _internal_has_chunk_position() const;
-
- public:
-   void clear_chunk_position();
-   const ::minecpp::proto::common::v1::ChunkPosition &chunk_position() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition *release_chunk_position();
-   ::minecpp::proto::common::v1::ChunkPosition *mutable_chunk_position();
-   void set_allocated_chunk_position(::minecpp::proto::common::v1::ChunkPosition *chunk_position);
-
- private:
-   const ::minecpp::proto::common::v1::ChunkPosition &_internal_chunk_position() const;
-   ::minecpp::proto::common::v1::ChunkPosition *_internal_mutable_chunk_position();
-
- public:
-   void
-   unsafe_arena_set_allocated_chunk_position(::minecpp::proto::common::v1::ChunkPosition *chunk_position);
-   ::minecpp::proto::common::v1::ChunkPosition *unsafe_arena_release_chunk_position();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UnloadChunk)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::PlayerId *player_id_;
-      ::minecpp::proto::common::v1::ChunkPosition *chunk_position_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::PlayerId* player_id_;
+    ::minecpp::proto::common::v1::ChunkPosition* chunk_position_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class PlayerList final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.PlayerList) */
-{
+class PlayerList final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.PlayerList) */ {
  public:
-   inline PlayerList() :
-       PlayerList(nullptr)
-   {
-   }
+  inline PlayerList() : PlayerList(nullptr) {}
+  ~PlayerList() override;
+  explicit PROTOBUF_CONSTEXPR PlayerList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~PlayerList() override;
-   explicit PROTOBUF_CONSTEXPR PlayerList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  PlayerList(const PlayerList& from);
+  PlayerList(PlayerList&& from) noexcept
+    : PlayerList() {
+    *this = ::std::move(from);
+  }
 
-   PlayerList(const PlayerList &from);
-
-   PlayerList(PlayerList &&from) noexcept :
-       PlayerList()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline PlayerList &operator=(const PlayerList &from)
-   {
+  inline PlayerList& operator=(const PlayerList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PlayerList& operator=(PlayerList&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline PlayerList &operator=(PlayerList &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const PlayerList& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const PlayerList* internal_default_instance() {
+    return reinterpret_cast<const PlayerList*>(
+               &_PlayerList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    21;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const PlayerList &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const PlayerList *internal_default_instance()
-   {
-      return reinterpret_cast<const PlayerList *>(&_PlayerList_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 21;
-
-   friend void swap(PlayerList &a, PlayerList &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(PlayerList *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(PlayerList *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(PlayerList& a, PlayerList& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PlayerList* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(PlayerList* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   PlayerList *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<PlayerList>(arena);
-   }
+  PlayerList* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<PlayerList>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const PlayerList& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const PlayerList& from) {
+    PlayerList::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const PlayerList &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const PlayerList &from)
-   {
-      PlayerList::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PlayerList* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.PlayerList";
+  }
+  protected:
+  explicit PlayerList(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kListFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.player.v1.Status list = 1;
+  int list_size() const;
+  private:
+  int _internal_list_size() const;
+  public:
+  void clear_list();
+  ::minecpp::proto::player::v1::Status* mutable_list(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::Status >*
+      mutable_list();
+  private:
+  const ::minecpp::proto::player::v1::Status& _internal_list(int index) const;
+  ::minecpp::proto::player::v1::Status* _internal_add_list();
+  public:
+  const ::minecpp::proto::player::v1::Status& list(int index) const;
+  ::minecpp::proto::player::v1::Status* add_list();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::Status >&
+      list() const;
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.PlayerList)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(PlayerList *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.PlayerList";
-   }
-
- protected:
-   explicit PlayerList(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kListFieldNumber = 1,
-   };
-
-   // repeated .minecpp.proto.player.v1.Status list = 1;
-   int list_size() const;
-
- private:
-   int _internal_list_size() const;
-
- public:
-   void clear_list();
-   ::minecpp::proto::player::v1::Status *mutable_list(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::Status> *mutable_list();
-
- private:
-   const ::minecpp::proto::player::v1::Status &_internal_list(int index) const;
-   ::minecpp::proto::player::v1::Status *_internal_add_list();
-
- public:
-   const ::minecpp::proto::player::v1::Status &list(int index) const;
-   ::minecpp::proto::player::v1::Status *add_list();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::Status> &list() const;
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.PlayerList)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::Status> list_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::Status > list_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class EntityList final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.EntityList) */
-{
+class EntityList final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.EntityList) */ {
  public:
-   inline EntityList() :
-       EntityList(nullptr)
-   {
-   }
+  inline EntityList() : EntityList(nullptr) {}
+  ~EntityList() override;
+  explicit PROTOBUF_CONSTEXPR EntityList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~EntityList() override;
-   explicit PROTOBUF_CONSTEXPR EntityList(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  EntityList(const EntityList& from);
+  EntityList(EntityList&& from) noexcept
+    : EntityList() {
+    *this = ::std::move(from);
+  }
 
-   EntityList(const EntityList &from);
-
-   EntityList(EntityList &&from) noexcept :
-       EntityList()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline EntityList &operator=(const EntityList &from)
-   {
+  inline EntityList& operator=(const EntityList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline EntityList& operator=(EntityList&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline EntityList &operator=(EntityList &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const EntityList& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const EntityList* internal_default_instance() {
+    return reinterpret_cast<const EntityList*>(
+               &_EntityList_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const EntityList &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const EntityList *internal_default_instance()
-   {
-      return reinterpret_cast<const EntityList *>(&_EntityList_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 22;
-
-   friend void swap(EntityList &a, EntityList &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(EntityList *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(EntityList *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(EntityList& a, EntityList& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(EntityList* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(EntityList* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   EntityList *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<EntityList>(arena);
-   }
+  EntityList* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<EntityList>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const EntityList& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const EntityList& from) {
+    EntityList::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const EntityList &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const EntityList &from)
-   {
-      EntityList::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(EntityList* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.EntityList";
+  }
+  protected:
+  explicit EntityList(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEntitiesFieldNumber = 1,
+    kPlayerEntitiesFieldNumber = 2,
+  };
+  // repeated .minecpp.proto.entity.v1.Entity entities = 1;
+  int entities_size() const;
+  private:
+  int _internal_entities_size() const;
+  public:
+  void clear_entities();
+  ::minecpp::proto::entity::v1::Entity* mutable_entities(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::Entity >*
+      mutable_entities();
+  private:
+  const ::minecpp::proto::entity::v1::Entity& _internal_entities(int index) const;
+  ::minecpp::proto::entity::v1::Entity* _internal_add_entities();
+  public:
+  const ::minecpp::proto::entity::v1::Entity& entities(int index) const;
+  ::minecpp::proto::entity::v1::Entity* add_entities();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::Entity >&
+      entities() const;
+
+  // repeated .minecpp.proto.entity.v1.PlayerEntity player_entities = 2;
+  int player_entities_size() const;
+  private:
+  int _internal_player_entities_size() const;
+  public:
+  void clear_player_entities();
+  ::minecpp::proto::entity::v1::PlayerEntity* mutable_player_entities(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::PlayerEntity >*
+      mutable_player_entities();
+  private:
+  const ::minecpp::proto::entity::v1::PlayerEntity& _internal_player_entities(int index) const;
+  ::minecpp::proto::entity::v1::PlayerEntity* _internal_add_player_entities();
+  public:
+  const ::minecpp::proto::entity::v1::PlayerEntity& player_entities(int index) const;
+  ::minecpp::proto::entity::v1::PlayerEntity* add_player_entities();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::PlayerEntity >&
+      player_entities() const;
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.EntityList)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(EntityList *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.EntityList";
-   }
-
- protected:
-   explicit EntityList(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kEntitiesFieldNumber       = 1,
-      kPlayerEntitiesFieldNumber = 2,
-   };
-
-   // repeated .minecpp.proto.entity.v1.Entity entities = 1;
-   int entities_size() const;
-
- private:
-   int _internal_entities_size() const;
-
- public:
-   void clear_entities();
-   ::minecpp::proto::entity::v1::Entity *mutable_entities(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::Entity> *mutable_entities();
-
- private:
-   const ::minecpp::proto::entity::v1::Entity &_internal_entities(int index) const;
-   ::minecpp::proto::entity::v1::Entity *_internal_add_entities();
-
- public:
-   const ::minecpp::proto::entity::v1::Entity &entities(int index) const;
-   ::minecpp::proto::entity::v1::Entity *add_entities();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::Entity> &entities() const;
-
-   // repeated .minecpp.proto.entity.v1.PlayerEntity player_entities = 2;
-   int player_entities_size() const;
-
- private:
-   int _internal_player_entities_size() const;
-
- public:
-   void clear_player_entities();
-   ::minecpp::proto::entity::v1::PlayerEntity *mutable_player_entities(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::PlayerEntity> *
-   mutable_player_entities();
-
- private:
-   const ::minecpp::proto::entity::v1::PlayerEntity &_internal_player_entities(int index) const;
-   ::minecpp::proto::entity::v1::PlayerEntity *_internal_add_player_entities();
-
- public:
-   const ::minecpp::proto::entity::v1::PlayerEntity &player_entities(int index) const;
-   ::minecpp::proto::entity::v1::PlayerEntity *add_player_entities();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::PlayerEntity> &
-   player_entities() const;
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.EntityList)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::Entity> entities_;
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::PlayerEntity> player_entities_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::Entity > entities_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::PlayerEntity > player_entities_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetEntityVelocity final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetEntityVelocity) */
-{
+class SetEntityVelocity final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetEntityVelocity) */ {
  public:
-   inline SetEntityVelocity() :
-       SetEntityVelocity(nullptr)
-   {
-   }
+  inline SetEntityVelocity() : SetEntityVelocity(nullptr) {}
+  ~SetEntityVelocity() override;
+  explicit PROTOBUF_CONSTEXPR SetEntityVelocity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetEntityVelocity() override;
-   explicit PROTOBUF_CONSTEXPR SetEntityVelocity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetEntityVelocity(const SetEntityVelocity& from);
+  SetEntityVelocity(SetEntityVelocity&& from) noexcept
+    : SetEntityVelocity() {
+    *this = ::std::move(from);
+  }
 
-   SetEntityVelocity(const SetEntityVelocity &from);
-
-   SetEntityVelocity(SetEntityVelocity &&from) noexcept :
-       SetEntityVelocity()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetEntityVelocity &operator=(const SetEntityVelocity &from)
-   {
+  inline SetEntityVelocity& operator=(const SetEntityVelocity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetEntityVelocity& operator=(SetEntityVelocity&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetEntityVelocity &operator=(SetEntityVelocity &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetEntityVelocity& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetEntityVelocity* internal_default_instance() {
+    return reinterpret_cast<const SetEntityVelocity*>(
+               &_SetEntityVelocity_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetEntityVelocity &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetEntityVelocity *internal_default_instance()
-   {
-      return reinterpret_cast<const SetEntityVelocity *>(&_SetEntityVelocity_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 23;
-
-   friend void swap(SetEntityVelocity &a, SetEntityVelocity &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetEntityVelocity *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetEntityVelocity *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetEntityVelocity& a, SetEntityVelocity& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetEntityVelocity* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetEntityVelocity* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetEntityVelocity *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetEntityVelocity>(arena);
-   }
+  SetEntityVelocity* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetEntityVelocity>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetEntityVelocity& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetEntityVelocity& from) {
+    SetEntityVelocity::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetEntityVelocity &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetEntityVelocity &from)
-   {
-      SetEntityVelocity::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetEntityVelocity* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetEntityVelocity";
+  }
+  protected:
+  explicit SetEntityVelocity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVelocityFieldNumber = 2,
+    kEntityIdFieldNumber = 1,
+  };
+  // .minecpp.proto.common.v1.Vector3i velocity = 2;
+  bool has_velocity() const;
+  private:
+  bool _internal_has_velocity() const;
+  public:
+  void clear_velocity();
+  const ::minecpp::proto::common::v1::Vector3i& velocity() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3i* release_velocity();
+  ::minecpp::proto::common::v1::Vector3i* mutable_velocity();
+  void set_allocated_velocity(::minecpp::proto::common::v1::Vector3i* velocity);
+  private:
+  const ::minecpp::proto::common::v1::Vector3i& _internal_velocity() const;
+  ::minecpp::proto::common::v1::Vector3i* _internal_mutable_velocity();
+  public:
+  void unsafe_arena_set_allocated_velocity(
+      ::minecpp::proto::common::v1::Vector3i* velocity);
+  ::minecpp::proto::common::v1::Vector3i* unsafe_arena_release_velocity();
+
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetEntityVelocity)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetEntityVelocity *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetEntityVelocity";
-   }
-
- protected:
-   explicit SetEntityVelocity(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kVelocityFieldNumber = 2,
-      kEntityIdFieldNumber = 1,
-   };
-
-   // .minecpp.proto.common.v1.Vector3i velocity = 2;
-   bool has_velocity() const;
-
- private:
-   bool _internal_has_velocity() const;
-
- public:
-   void clear_velocity();
-   const ::minecpp::proto::common::v1::Vector3i &velocity() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3i *release_velocity();
-   ::minecpp::proto::common::v1::Vector3i *mutable_velocity();
-   void set_allocated_velocity(::minecpp::proto::common::v1::Vector3i *velocity);
-
- private:
-   const ::minecpp::proto::common::v1::Vector3i &_internal_velocity() const;
-   ::minecpp::proto::common::v1::Vector3i *_internal_mutable_velocity();
-
- public:
-   void unsafe_arena_set_allocated_velocity(::minecpp::proto::common::v1::Vector3i *velocity);
-   ::minecpp::proto::common::v1::Vector3i *unsafe_arena_release_velocity();
-
-   // uint32 entity_id = 1;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetEntityVelocity)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::common::v1::Vector3i *velocity_;
-      uint32_t entity_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::Vector3i* velocity_;
+    uint32_t entity_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class AcceptPlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AcceptPlayer) */
-{
+class AcceptPlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.AcceptPlayer) */ {
  public:
-   inline AcceptPlayer() :
-       AcceptPlayer(nullptr)
-   {
-   }
+  inline AcceptPlayer() : AcceptPlayer(nullptr) {}
+  ~AcceptPlayer() override;
+  explicit PROTOBUF_CONSTEXPR AcceptPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~AcceptPlayer() override;
-   explicit PROTOBUF_CONSTEXPR AcceptPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  AcceptPlayer(const AcceptPlayer& from);
+  AcceptPlayer(AcceptPlayer&& from) noexcept
+    : AcceptPlayer() {
+    *this = ::std::move(from);
+  }
 
-   AcceptPlayer(const AcceptPlayer &from);
-
-   AcceptPlayer(AcceptPlayer &&from) noexcept :
-       AcceptPlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline AcceptPlayer &operator=(const AcceptPlayer &from)
-   {
+  inline AcceptPlayer& operator=(const AcceptPlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AcceptPlayer& operator=(AcceptPlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline AcceptPlayer &operator=(AcceptPlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const AcceptPlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const AcceptPlayer* internal_default_instance() {
+    return reinterpret_cast<const AcceptPlayer*>(
+               &_AcceptPlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const AcceptPlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const AcceptPlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const AcceptPlayer *>(&_AcceptPlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 24;
-
-   friend void swap(AcceptPlayer &a, AcceptPlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(AcceptPlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(AcceptPlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(AcceptPlayer& a, AcceptPlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AcceptPlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(AcceptPlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   AcceptPlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<AcceptPlayer>(arena);
-   }
+  AcceptPlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<AcceptPlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const AcceptPlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const AcceptPlayer& from) {
+    AcceptPlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const AcceptPlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const AcceptPlayer &from)
-   {
-      AcceptPlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AcceptPlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.AcceptPlayer";
+  }
+  protected:
+  explicit AcceptPlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kGameplayFieldNumber = 1,
+    kAbilitiesFieldNumber = 2,
+    kPlayerFieldNumber = 3,
+  };
+  // .minecpp.proto.common.v1.Gameplay gameplay = 1;
+  bool has_gameplay() const;
+  private:
+  bool _internal_has_gameplay() const;
+  public:
+  void clear_gameplay();
+  const ::minecpp::proto::common::v1::Gameplay& gameplay() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Gameplay* release_gameplay();
+  ::minecpp::proto::common::v1::Gameplay* mutable_gameplay();
+  void set_allocated_gameplay(::minecpp::proto::common::v1::Gameplay* gameplay);
+  private:
+  const ::minecpp::proto::common::v1::Gameplay& _internal_gameplay() const;
+  ::minecpp::proto::common::v1::Gameplay* _internal_mutable_gameplay();
+  public:
+  void unsafe_arena_set_allocated_gameplay(
+      ::minecpp::proto::common::v1::Gameplay* gameplay);
+  ::minecpp::proto::common::v1::Gameplay* unsafe_arena_release_gameplay();
+
+  // .minecpp.proto.entity.v1.Abilities abilities = 2;
+  bool has_abilities() const;
+  private:
+  bool _internal_has_abilities() const;
+  public:
+  void clear_abilities();
+  const ::minecpp::proto::entity::v1::Abilities& abilities() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Abilities* release_abilities();
+  ::minecpp::proto::entity::v1::Abilities* mutable_abilities();
+  void set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities);
+  private:
+  const ::minecpp::proto::entity::v1::Abilities& _internal_abilities() const;
+  ::minecpp::proto::entity::v1::Abilities* _internal_mutable_abilities();
+  public:
+  void unsafe_arena_set_allocated_abilities(
+      ::minecpp::proto::entity::v1::Abilities* abilities);
+  ::minecpp::proto::entity::v1::Abilities* unsafe_arena_release_abilities();
+
+  // .minecpp.proto.player.v1.Player player = 3;
+  bool has_player() const;
+  private:
+  bool _internal_has_player() const;
+  public:
+  void clear_player();
+  const ::minecpp::proto::player::v1::Player& player() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Player* release_player();
+  ::minecpp::proto::player::v1::Player* mutable_player();
+  void set_allocated_player(::minecpp::proto::player::v1::Player* player);
+  private:
+  const ::minecpp::proto::player::v1::Player& _internal_player() const;
+  ::minecpp::proto::player::v1::Player* _internal_mutable_player();
+  public:
+  void unsafe_arena_set_allocated_player(
+      ::minecpp::proto::player::v1::Player* player);
+  ::minecpp::proto::player::v1::Player* unsafe_arena_release_player();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AcceptPlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(AcceptPlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.AcceptPlayer";
-   }
-
- protected:
-   explicit AcceptPlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kGameplayFieldNumber  = 1,
-      kAbilitiesFieldNumber = 2,
-      kPlayerFieldNumber    = 3,
-   };
-
-   // .minecpp.proto.common.v1.Gameplay gameplay = 1;
-   bool has_gameplay() const;
-
- private:
-   bool _internal_has_gameplay() const;
-
- public:
-   void clear_gameplay();
-   const ::minecpp::proto::common::v1::Gameplay &gameplay() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Gameplay *release_gameplay();
-   ::minecpp::proto::common::v1::Gameplay *mutable_gameplay();
-   void set_allocated_gameplay(::minecpp::proto::common::v1::Gameplay *gameplay);
-
- private:
-   const ::minecpp::proto::common::v1::Gameplay &_internal_gameplay() const;
-   ::minecpp::proto::common::v1::Gameplay *_internal_mutable_gameplay();
-
- public:
-   void unsafe_arena_set_allocated_gameplay(::minecpp::proto::common::v1::Gameplay *gameplay);
-   ::minecpp::proto::common::v1::Gameplay *unsafe_arena_release_gameplay();
-
-   // .minecpp.proto.entity.v1.Abilities abilities = 2;
-   bool has_abilities() const;
-
- private:
-   bool _internal_has_abilities() const;
-
- public:
-   void clear_abilities();
-   const ::minecpp::proto::entity::v1::Abilities &abilities() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Abilities *release_abilities();
-   ::minecpp::proto::entity::v1::Abilities *mutable_abilities();
-   void set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities);
-
- private:
-   const ::minecpp::proto::entity::v1::Abilities &_internal_abilities() const;
-   ::minecpp::proto::entity::v1::Abilities *_internal_mutable_abilities();
-
- public:
-   void unsafe_arena_set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities);
-   ::minecpp::proto::entity::v1::Abilities *unsafe_arena_release_abilities();
-
-   // .minecpp.proto.player.v1.Player player = 3;
-   bool has_player() const;
-
- private:
-   bool _internal_has_player() const;
-
- public:
-   void clear_player();
-   const ::minecpp::proto::player::v1::Player &player() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Player *release_player();
-   ::minecpp::proto::player::v1::Player *mutable_player();
-   void set_allocated_player(::minecpp::proto::player::v1::Player *player);
-
- private:
-   const ::minecpp::proto::player::v1::Player &_internal_player() const;
-   ::minecpp::proto::player::v1::Player *_internal_mutable_player();
-
- public:
-   void unsafe_arena_set_allocated_player(::minecpp::proto::player::v1::Player *player);
-   ::minecpp::proto::player::v1::Player *unsafe_arena_release_player();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.AcceptPlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::common::v1::Gameplay *gameplay_;
-      ::minecpp::proto::entity::v1::Abilities *abilities_;
-      ::minecpp::proto::player::v1::Player *player_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::Gameplay* gameplay_;
+    ::minecpp::proto::entity::v1::Abilities* abilities_;
+    ::minecpp::proto::player::v1::Player* player_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class DenyPlayer final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.DenyPlayer) */
-{
+class DenyPlayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.DenyPlayer) */ {
  public:
-   inline DenyPlayer() :
-       DenyPlayer(nullptr)
-   {
-   }
+  inline DenyPlayer() : DenyPlayer(nullptr) {}
+  ~DenyPlayer() override;
+  explicit PROTOBUF_CONSTEXPR DenyPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~DenyPlayer() override;
-   explicit PROTOBUF_CONSTEXPR DenyPlayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  DenyPlayer(const DenyPlayer& from);
+  DenyPlayer(DenyPlayer&& from) noexcept
+    : DenyPlayer() {
+    *this = ::std::move(from);
+  }
 
-   DenyPlayer(const DenyPlayer &from);
-
-   DenyPlayer(DenyPlayer &&from) noexcept :
-       DenyPlayer()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline DenyPlayer &operator=(const DenyPlayer &from)
-   {
+  inline DenyPlayer& operator=(const DenyPlayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DenyPlayer& operator=(DenyPlayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline DenyPlayer &operator=(DenyPlayer &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DenyPlayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DenyPlayer* internal_default_instance() {
+    return reinterpret_cast<const DenyPlayer*>(
+               &_DenyPlayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const DenyPlayer &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const DenyPlayer *internal_default_instance()
-   {
-      return reinterpret_cast<const DenyPlayer *>(&_DenyPlayer_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 25;
-
-   friend void swap(DenyPlayer &a, DenyPlayer &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(DenyPlayer *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(DenyPlayer *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(DenyPlayer& a, DenyPlayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DenyPlayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DenyPlayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   DenyPlayer *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<DenyPlayer>(arena);
-   }
+  DenyPlayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DenyPlayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DenyPlayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const DenyPlayer& from) {
+    DenyPlayer::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const DenyPlayer &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const DenyPlayer &from)
-   {
-      DenyPlayer::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DenyPlayer* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.DenyPlayer";
+  }
+  protected:
+  explicit DenyPlayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDenialReasonFieldNumber = 1,
+  };
+  // string denial_reason = 1;
+  void clear_denial_reason();
+  const std::string& denial_reason() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_denial_reason(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_denial_reason();
+  PROTOBUF_NODISCARD std::string* release_denial_reason();
+  void set_allocated_denial_reason(std::string* denial_reason);
+  private:
+  const std::string& _internal_denial_reason() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_denial_reason(const std::string& value);
+  std::string* _internal_mutable_denial_reason();
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.DenyPlayer)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(DenyPlayer *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.DenyPlayer";
-   }
-
- protected:
-   explicit DenyPlayer(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kDenialReasonFieldNumber = 1,
-   };
-
-   // string denial_reason = 1;
-   void clear_denial_reason();
-   const std::string &denial_reason() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_denial_reason(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_denial_reason();
-   PROTOBUF_NODISCARD std::string *release_denial_reason();
-   void set_allocated_denial_reason(std::string *denial_reason);
-
- private:
-   const std::string &_internal_denial_reason() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_denial_reason(const std::string &value);
-   std::string *_internal_mutable_denial_reason();
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.DenyPlayer)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr denial_reason_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr denial_reason_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetInventorySlot final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetInventorySlot) */
-{
+class SetInventorySlot final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetInventorySlot) */ {
  public:
-   inline SetInventorySlot() :
-       SetInventorySlot(nullptr)
-   {
-   }
+  inline SetInventorySlot() : SetInventorySlot(nullptr) {}
+  ~SetInventorySlot() override;
+  explicit PROTOBUF_CONSTEXPR SetInventorySlot(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetInventorySlot() override;
-   explicit PROTOBUF_CONSTEXPR SetInventorySlot(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetInventorySlot(const SetInventorySlot& from);
+  SetInventorySlot(SetInventorySlot&& from) noexcept
+    : SetInventorySlot() {
+    *this = ::std::move(from);
+  }
 
-   SetInventorySlot(const SetInventorySlot &from);
-
-   SetInventorySlot(SetInventorySlot &&from) noexcept :
-       SetInventorySlot()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetInventorySlot &operator=(const SetInventorySlot &from)
-   {
+  inline SetInventorySlot& operator=(const SetInventorySlot& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetInventorySlot& operator=(SetInventorySlot&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetInventorySlot &operator=(SetInventorySlot &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetInventorySlot& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetInventorySlot* internal_default_instance() {
+    return reinterpret_cast<const SetInventorySlot*>(
+               &_SetInventorySlot_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetInventorySlot &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetInventorySlot *internal_default_instance()
-   {
-      return reinterpret_cast<const SetInventorySlot *>(&_SetInventorySlot_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 26;
-
-   friend void swap(SetInventorySlot &a, SetInventorySlot &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetInventorySlot *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetInventorySlot *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetInventorySlot& a, SetInventorySlot& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetInventorySlot* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetInventorySlot* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetInventorySlot *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetInventorySlot>(arena);
-   }
+  SetInventorySlot* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetInventorySlot>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetInventorySlot& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetInventorySlot& from) {
+    SetInventorySlot::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetInventorySlot &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetInventorySlot &from)
-   {
-      SetInventorySlot::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetInventorySlot* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetInventorySlot";
+  }
+  protected:
+  explicit SetInventorySlot(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSlotFieldNumber = 1,
+  };
+  // .minecpp.proto.player.v1.Slot slot = 1;
+  bool has_slot() const;
+  private:
+  bool _internal_has_slot() const;
+  public:
+  void clear_slot();
+  const ::minecpp::proto::player::v1::Slot& slot() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Slot* release_slot();
+  ::minecpp::proto::player::v1::Slot* mutable_slot();
+  void set_allocated_slot(::minecpp::proto::player::v1::Slot* slot);
+  private:
+  const ::minecpp::proto::player::v1::Slot& _internal_slot() const;
+  ::minecpp::proto::player::v1::Slot* _internal_mutable_slot();
+  public:
+  void unsafe_arena_set_allocated_slot(
+      ::minecpp::proto::player::v1::Slot* slot);
+  ::minecpp::proto::player::v1::Slot* unsafe_arena_release_slot();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetInventorySlot)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetInventorySlot *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetInventorySlot";
-   }
-
- protected:
-   explicit SetInventorySlot(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kSlotFieldNumber = 1,
-   };
-
-   // .minecpp.proto.player.v1.Slot slot = 1;
-   bool has_slot() const;
-
- private:
-   bool _internal_has_slot() const;
-
- public:
-   void clear_slot();
-   const ::minecpp::proto::player::v1::Slot &slot() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Slot *release_slot();
-   ::minecpp::proto::player::v1::Slot *mutable_slot();
-   void set_allocated_slot(::minecpp::proto::player::v1::Slot *slot);
-
- private:
-   const ::minecpp::proto::player::v1::Slot &_internal_slot() const;
-   ::minecpp::proto::player::v1::Slot *_internal_mutable_slot();
-
- public:
-   void unsafe_arena_set_allocated_slot(::minecpp::proto::player::v1::Slot *slot);
-   ::minecpp::proto::player::v1::Slot *unsafe_arena_release_slot();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetInventorySlot)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::Slot *slot_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::Slot* slot_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SectionBlockLight final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SectionBlockLight) */
-{
+class SectionBlockLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SectionBlockLight) */ {
  public:
-   inline SectionBlockLight() :
-       SectionBlockLight(nullptr)
-   {
-   }
+  inline SectionBlockLight() : SectionBlockLight(nullptr) {}
+  ~SectionBlockLight() override;
+  explicit PROTOBUF_CONSTEXPR SectionBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SectionBlockLight() override;
-   explicit PROTOBUF_CONSTEXPR SectionBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SectionBlockLight(const SectionBlockLight& from);
+  SectionBlockLight(SectionBlockLight&& from) noexcept
+    : SectionBlockLight() {
+    *this = ::std::move(from);
+  }
 
-   SectionBlockLight(const SectionBlockLight &from);
-
-   SectionBlockLight(SectionBlockLight &&from) noexcept :
-       SectionBlockLight()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SectionBlockLight &operator=(const SectionBlockLight &from)
-   {
+  inline SectionBlockLight& operator=(const SectionBlockLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SectionBlockLight& operator=(SectionBlockLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SectionBlockLight &operator=(SectionBlockLight &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SectionBlockLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SectionBlockLight* internal_default_instance() {
+    return reinterpret_cast<const SectionBlockLight*>(
+               &_SectionBlockLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    27;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SectionBlockLight &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SectionBlockLight *internal_default_instance()
-   {
-      return reinterpret_cast<const SectionBlockLight *>(&_SectionBlockLight_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 27;
-
-   friend void swap(SectionBlockLight &a, SectionBlockLight &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SectionBlockLight *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SectionBlockLight *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SectionBlockLight& a, SectionBlockLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SectionBlockLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SectionBlockLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SectionBlockLight *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SectionBlockLight>(arena);
-   }
+  SectionBlockLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SectionBlockLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SectionBlockLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SectionBlockLight& from) {
+    SectionBlockLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SectionBlockLight &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SectionBlockLight &from)
-   {
-      SectionBlockLight::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SectionBlockLight* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SectionBlockLight";
+  }
+  protected:
+  explicit SectionBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBlockLightFieldNumber = 2,
+    kYFieldNumber = 1,
+  };
+  // bytes block_light = 2;
+  void clear_block_light();
+  const std::string& block_light() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_block_light(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_block_light();
+  PROTOBUF_NODISCARD std::string* release_block_light();
+  void set_allocated_block_light(std::string* block_light);
+  private:
+  const std::string& _internal_block_light() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_block_light(const std::string& value);
+  std::string* _internal_mutable_block_light();
+  public:
+
+  // int32 y = 1;
+  void clear_y();
+  int32_t y() const;
+  void set_y(int32_t value);
+  private:
+  int32_t _internal_y() const;
+  void _internal_set_y(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SectionBlockLight)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SectionBlockLight *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SectionBlockLight";
-   }
-
- protected:
-   explicit SectionBlockLight(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kBlockLightFieldNumber = 2,
-      kYFieldNumber          = 1,
-   };
-
-   // bytes block_light = 2;
-   void clear_block_light();
-   const std::string &block_light() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_block_light(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_block_light();
-   PROTOBUF_NODISCARD std::string *release_block_light();
-   void set_allocated_block_light(std::string *block_light);
-
- private:
-   const std::string &_internal_block_light() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_block_light(const std::string &value);
-   std::string *_internal_mutable_block_light();
-
- public:
-   // int32 y = 1;
-   void clear_y();
-   int32_t y() const;
-   void set_y(int32_t value);
-
- private:
-   int32_t _internal_y() const;
-   void _internal_set_y(int32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SectionBlockLight)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr block_light_;
-      int32_t y_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr block_light_;
+    int32_t y_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class ChunkBlockLight final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.ChunkBlockLight) */
-{
+class ChunkBlockLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.ChunkBlockLight) */ {
  public:
-   inline ChunkBlockLight() :
-       ChunkBlockLight(nullptr)
-   {
-   }
+  inline ChunkBlockLight() : ChunkBlockLight(nullptr) {}
+  ~ChunkBlockLight() override;
+  explicit PROTOBUF_CONSTEXPR ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~ChunkBlockLight() override;
-   explicit PROTOBUF_CONSTEXPR ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  ChunkBlockLight(const ChunkBlockLight& from);
+  ChunkBlockLight(ChunkBlockLight&& from) noexcept
+    : ChunkBlockLight() {
+    *this = ::std::move(from);
+  }
 
-   ChunkBlockLight(const ChunkBlockLight &from);
-
-   ChunkBlockLight(ChunkBlockLight &&from) noexcept :
-       ChunkBlockLight()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline ChunkBlockLight &operator=(const ChunkBlockLight &from)
-   {
+  inline ChunkBlockLight& operator=(const ChunkBlockLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChunkBlockLight& operator=(ChunkBlockLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline ChunkBlockLight &operator=(ChunkBlockLight &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChunkBlockLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChunkBlockLight* internal_default_instance() {
+    return reinterpret_cast<const ChunkBlockLight*>(
+               &_ChunkBlockLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    28;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const ChunkBlockLight &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const ChunkBlockLight *internal_default_instance()
-   {
-      return reinterpret_cast<const ChunkBlockLight *>(&_ChunkBlockLight_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 28;
-
-   friend void swap(ChunkBlockLight &a, ChunkBlockLight &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(ChunkBlockLight *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(ChunkBlockLight *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(ChunkBlockLight& a, ChunkBlockLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChunkBlockLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChunkBlockLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   ChunkBlockLight *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<ChunkBlockLight>(arena);
-   }
+  ChunkBlockLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChunkBlockLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ChunkBlockLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ChunkBlockLight& from) {
+    ChunkBlockLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const ChunkBlockLight &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const ChunkBlockLight &from)
-   {
-      ChunkBlockLight::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ChunkBlockLight* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.ChunkBlockLight";
+  }
+  protected:
+  explicit ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSectionsFieldNumber = 2,
+    kPositionFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
+  int sections_size() const;
+  private:
+  int _internal_sections_size() const;
+  public:
+  void clear_sections();
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* mutable_sections(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >*
+      mutable_sections();
+  private:
+  const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& _internal_sections(int index) const;
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* _internal_add_sections();
+  public:
+  const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& sections(int index) const;
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* add_sections();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >&
+      sections() const;
+
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::ChunkPosition& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition* release_position();
+  ::minecpp::proto::common::v1::ChunkPosition* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::ChunkPosition* position);
+  private:
+  const ::minecpp::proto::common::v1::ChunkPosition& _internal_position() const;
+  ::minecpp::proto::common::v1::ChunkPosition* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::ChunkPosition* position);
+  ::minecpp::proto::common::v1::ChunkPosition* unsafe_arena_release_position();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(ChunkBlockLight *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.ChunkBlockLight";
-   }
-
- protected:
-   explicit ChunkBlockLight(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kSectionsFieldNumber = 2,
-      kPositionFieldNumber = 1,
-   };
-
-   // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
-   int sections_size() const;
-
- private:
-   int _internal_sections_size() const;
-
- public:
-   void clear_sections();
-   ::minecpp::proto::event::clientbound::v1::SectionBlockLight *mutable_sections(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::SectionBlockLight> *
-   mutable_sections();
-
- private:
-   const ::minecpp::proto::event::clientbound::v1::SectionBlockLight &_internal_sections(int index) const;
-   ::minecpp::proto::event::clientbound::v1::SectionBlockLight *_internal_add_sections();
-
- public:
-   const ::minecpp::proto::event::clientbound::v1::SectionBlockLight &sections(int index) const;
-   ::minecpp::proto::event::clientbound::v1::SectionBlockLight *add_sections();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<
-           ::minecpp::proto::event::clientbound::v1::SectionBlockLight> &
-   sections() const;
-
-   // .minecpp.proto.common.v1.ChunkPosition position = 1;
-   bool has_position() const;
-
- private:
-   bool _internal_has_position() const;
-
- public:
-   void clear_position();
-   const ::minecpp::proto::common::v1::ChunkPosition &position() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition *release_position();
-   ::minecpp::proto::common::v1::ChunkPosition *mutable_position();
-   void set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position);
-
- private:
-   const ::minecpp::proto::common::v1::ChunkPosition &_internal_position() const;
-   ::minecpp::proto::common::v1::ChunkPosition *_internal_mutable_position();
-
- public:
-   void unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position);
-   ::minecpp::proto::common::v1::ChunkPosition *unsafe_arena_release_position();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.ChunkBlockLight)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::SectionBlockLight>
-              sections_;
-      ::minecpp::proto::common::v1::ChunkPosition *position_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight > sections_;
+    ::minecpp::proto::common::v1::ChunkPosition* position_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class UpdateBlockLight final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdateBlockLight) */
-{
+class UpdateBlockLight final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.UpdateBlockLight) */ {
  public:
-   inline UpdateBlockLight() :
-       UpdateBlockLight(nullptr)
-   {
-   }
+  inline UpdateBlockLight() : UpdateBlockLight(nullptr) {}
+  ~UpdateBlockLight() override;
+  explicit PROTOBUF_CONSTEXPR UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~UpdateBlockLight() override;
-   explicit PROTOBUF_CONSTEXPR UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  UpdateBlockLight(const UpdateBlockLight& from);
+  UpdateBlockLight(UpdateBlockLight&& from) noexcept
+    : UpdateBlockLight() {
+    *this = ::std::move(from);
+  }
 
-   UpdateBlockLight(const UpdateBlockLight &from);
-
-   UpdateBlockLight(UpdateBlockLight &&from) noexcept :
-       UpdateBlockLight()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline UpdateBlockLight &operator=(const UpdateBlockLight &from)
-   {
+  inline UpdateBlockLight& operator=(const UpdateBlockLight& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdateBlockLight& operator=(UpdateBlockLight&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline UpdateBlockLight &operator=(UpdateBlockLight &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UpdateBlockLight& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UpdateBlockLight* internal_default_instance() {
+    return reinterpret_cast<const UpdateBlockLight*>(
+               &_UpdateBlockLight_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const UpdateBlockLight &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const UpdateBlockLight *internal_default_instance()
-   {
-      return reinterpret_cast<const UpdateBlockLight *>(&_UpdateBlockLight_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 29;
-
-   friend void swap(UpdateBlockLight &a, UpdateBlockLight &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(UpdateBlockLight *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(UpdateBlockLight *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(UpdateBlockLight& a, UpdateBlockLight& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UpdateBlockLight* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UpdateBlockLight* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   UpdateBlockLight *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<UpdateBlockLight>(arena);
-   }
+  UpdateBlockLight* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UpdateBlockLight>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UpdateBlockLight& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const UpdateBlockLight& from) {
+    UpdateBlockLight::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const UpdateBlockLight &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const UpdateBlockLight &from)
-   {
-      UpdateBlockLight::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdateBlockLight* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.UpdateBlockLight";
+  }
+  protected:
+  explicit UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBlockLightFieldNumber = 1,
+  };
+  // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
+  int block_light_size() const;
+  private:
+  int _internal_block_light_size() const;
+  public:
+  void clear_block_light();
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* mutable_block_light(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >*
+      mutable_block_light();
+  private:
+  const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& _internal_block_light(int index) const;
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* _internal_add_block_light();
+  public:
+  const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& block_light(int index) const;
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* add_block_light();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >&
+      block_light() const;
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(UpdateBlockLight *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.UpdateBlockLight";
-   }
-
- protected:
-   explicit UpdateBlockLight(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kBlockLightFieldNumber = 1,
-   };
-
-   // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
-   int block_light_size() const;
-
- private:
-   int _internal_block_light_size() const;
-
- public:
-   void clear_block_light();
-   ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *mutable_block_light(int index);
-   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::ChunkBlockLight> *
-   mutable_block_light();
-
- private:
-   const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight &_internal_block_light(int index) const;
-   ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *_internal_add_block_light();
-
- public:
-   const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight &block_light(int index) const;
-   ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *add_block_light();
-   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::ChunkBlockLight>
-           &block_light() const;
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.UpdateBlockLight)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::ChunkBlockLight>
-              block_light_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight > block_light_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class ChunkData final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.ChunkData) */
-{
+class ChunkData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.ChunkData) */ {
  public:
-   inline ChunkData() :
-       ChunkData(nullptr)
-   {
-   }
+  inline ChunkData() : ChunkData(nullptr) {}
+  ~ChunkData() override;
+  explicit PROTOBUF_CONSTEXPR ChunkData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~ChunkData() override;
-   explicit PROTOBUF_CONSTEXPR ChunkData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  ChunkData(const ChunkData& from);
+  ChunkData(ChunkData&& from) noexcept
+    : ChunkData() {
+    *this = ::std::move(from);
+  }
 
-   ChunkData(const ChunkData &from);
-
-   ChunkData(ChunkData &&from) noexcept :
-       ChunkData()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline ChunkData &operator=(const ChunkData &from)
-   {
+  inline ChunkData& operator=(const ChunkData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ChunkData& operator=(ChunkData&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline ChunkData &operator=(ChunkData &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const ChunkData& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const ChunkData* internal_default_instance() {
+    return reinterpret_cast<const ChunkData*>(
+               &_ChunkData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const ChunkData &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const ChunkData *internal_default_instance()
-   {
-      return reinterpret_cast<const ChunkData *>(&_ChunkData_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 30;
-
-   friend void swap(ChunkData &a, ChunkData &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(ChunkData *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(ChunkData *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(ChunkData& a, ChunkData& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ChunkData* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(ChunkData* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   ChunkData *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<ChunkData>(arena);
-   }
+  ChunkData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<ChunkData>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const ChunkData& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const ChunkData& from) {
+    ChunkData::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const ChunkData &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const ChunkData &from)
-   {
-      ChunkData::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ChunkData* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.ChunkData";
+  }
+  protected:
+  explicit ChunkData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kChunkFieldNumber = 1,
+    kIsInitialChunkFieldNumber = 2,
+  };
+  // .minecpp.proto.chunk.v1.Chunk chunk = 1;
+  bool has_chunk() const;
+  private:
+  bool _internal_has_chunk() const;
+  public:
+  void clear_chunk();
+  const ::minecpp::proto::chunk::v1::Chunk& chunk() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::chunk::v1::Chunk* release_chunk();
+  ::minecpp::proto::chunk::v1::Chunk* mutable_chunk();
+  void set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk* chunk);
+  private:
+  const ::minecpp::proto::chunk::v1::Chunk& _internal_chunk() const;
+  ::minecpp::proto::chunk::v1::Chunk* _internal_mutable_chunk();
+  public:
+  void unsafe_arena_set_allocated_chunk(
+      ::minecpp::proto::chunk::v1::Chunk* chunk);
+  ::minecpp::proto::chunk::v1::Chunk* unsafe_arena_release_chunk();
+
+  // bool is_initial_chunk = 2;
+  void clear_is_initial_chunk();
+  bool is_initial_chunk() const;
+  void set_is_initial_chunk(bool value);
+  private:
+  bool _internal_is_initial_chunk() const;
+  void _internal_set_is_initial_chunk(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.ChunkData)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(ChunkData *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.ChunkData";
-   }
-
- protected:
-   explicit ChunkData(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kChunkFieldNumber          = 1,
-      kIsInitialChunkFieldNumber = 2,
-   };
-
-   // .minecpp.proto.chunk.v1.Chunk chunk = 1;
-   bool has_chunk() const;
-
- private:
-   bool _internal_has_chunk() const;
-
- public:
-   void clear_chunk();
-   const ::minecpp::proto::chunk::v1::Chunk &chunk() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::chunk::v1::Chunk *release_chunk();
-   ::minecpp::proto::chunk::v1::Chunk *mutable_chunk();
-   void set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk *chunk);
-
- private:
-   const ::minecpp::proto::chunk::v1::Chunk &_internal_chunk() const;
-   ::minecpp::proto::chunk::v1::Chunk *_internal_mutable_chunk();
-
- public:
-   void unsafe_arena_set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk *chunk);
-   ::minecpp::proto::chunk::v1::Chunk *unsafe_arena_release_chunk();
-
-   // bool is_initial_chunk = 2;
-   void clear_is_initial_chunk();
-   bool is_initial_chunk() const;
-   void set_is_initial_chunk(bool value);
-
- private:
-   bool _internal_is_initial_chunk() const;
-   void _internal_set_is_initial_chunk(bool value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.ChunkData)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::chunk::v1::Chunk *chunk_;
-      bool is_initial_chunk_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::chunk::v1::Chunk* chunk_;
+    bool is_initial_chunk_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetCenterChunk final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetCenterChunk) */
-{
+class SetCenterChunk final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetCenterChunk) */ {
  public:
-   inline SetCenterChunk() :
-       SetCenterChunk(nullptr)
-   {
-   }
+  inline SetCenterChunk() : SetCenterChunk(nullptr) {}
+  ~SetCenterChunk() override;
+  explicit PROTOBUF_CONSTEXPR SetCenterChunk(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetCenterChunk() override;
-   explicit PROTOBUF_CONSTEXPR SetCenterChunk(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetCenterChunk(const SetCenterChunk& from);
+  SetCenterChunk(SetCenterChunk&& from) noexcept
+    : SetCenterChunk() {
+    *this = ::std::move(from);
+  }
 
-   SetCenterChunk(const SetCenterChunk &from);
-
-   SetCenterChunk(SetCenterChunk &&from) noexcept :
-       SetCenterChunk()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetCenterChunk &operator=(const SetCenterChunk &from)
-   {
+  inline SetCenterChunk& operator=(const SetCenterChunk& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetCenterChunk& operator=(SetCenterChunk&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetCenterChunk &operator=(SetCenterChunk &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetCenterChunk& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetCenterChunk* internal_default_instance() {
+    return reinterpret_cast<const SetCenterChunk*>(
+               &_SetCenterChunk_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetCenterChunk &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetCenterChunk *internal_default_instance()
-   {
-      return reinterpret_cast<const SetCenterChunk *>(&_SetCenterChunk_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 31;
-
-   friend void swap(SetCenterChunk &a, SetCenterChunk &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetCenterChunk *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetCenterChunk *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetCenterChunk& a, SetCenterChunk& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetCenterChunk* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetCenterChunk* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetCenterChunk *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetCenterChunk>(arena);
-   }
+  SetCenterChunk* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetCenterChunk>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetCenterChunk& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetCenterChunk& from) {
+    SetCenterChunk::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetCenterChunk &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetCenterChunk &from)
-   {
-      SetCenterChunk::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetCenterChunk* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetCenterChunk";
+  }
+  protected:
+  explicit SetCenterChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 1,
+  };
+  // .minecpp.proto.common.v1.ChunkPosition position = 1;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::ChunkPosition& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition* release_position();
+  ::minecpp::proto::common::v1::ChunkPosition* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::ChunkPosition* position);
+  private:
+  const ::minecpp::proto::common::v1::ChunkPosition& _internal_position() const;
+  ::minecpp::proto::common::v1::ChunkPosition* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::ChunkPosition* position);
+  ::minecpp::proto::common::v1::ChunkPosition* unsafe_arena_release_position();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetCenterChunk)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetCenterChunk *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetCenterChunk";
-   }
-
- protected:
-   explicit SetCenterChunk(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPositionFieldNumber = 1,
-   };
-
-   // .minecpp.proto.common.v1.ChunkPosition position = 1;
-   bool has_position() const;
-
- private:
-   bool _internal_has_position() const;
-
- public:
-   void clear_position();
-   const ::minecpp::proto::common::v1::ChunkPosition &position() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::ChunkPosition *release_position();
-   ::minecpp::proto::common::v1::ChunkPosition *mutable_position();
-   void set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position);
-
- private:
-   const ::minecpp::proto::common::v1::ChunkPosition &_internal_position() const;
-   ::minecpp::proto::common::v1::ChunkPosition *_internal_mutable_position();
-
- public:
-   void unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position);
-   ::minecpp::proto::common::v1::ChunkPosition *unsafe_arena_release_position();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetCenterChunk)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::common::v1::ChunkPosition *position_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::ChunkPosition* position_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetEntityEquipment final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetEntityEquipment) */
-{
+class SetEntityEquipment final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetEntityEquipment) */ {
  public:
-   inline SetEntityEquipment() :
-       SetEntityEquipment(nullptr)
-   {
-   }
+  inline SetEntityEquipment() : SetEntityEquipment(nullptr) {}
+  ~SetEntityEquipment() override;
+  explicit PROTOBUF_CONSTEXPR SetEntityEquipment(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetEntityEquipment() override;
-   explicit PROTOBUF_CONSTEXPR SetEntityEquipment(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetEntityEquipment(const SetEntityEquipment& from);
+  SetEntityEquipment(SetEntityEquipment&& from) noexcept
+    : SetEntityEquipment() {
+    *this = ::std::move(from);
+  }
 
-   SetEntityEquipment(const SetEntityEquipment &from);
-
-   SetEntityEquipment(SetEntityEquipment &&from) noexcept :
-       SetEntityEquipment()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetEntityEquipment &operator=(const SetEntityEquipment &from)
-   {
+  inline SetEntityEquipment& operator=(const SetEntityEquipment& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetEntityEquipment& operator=(SetEntityEquipment&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetEntityEquipment &operator=(SetEntityEquipment &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetEntityEquipment& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetEntityEquipment* internal_default_instance() {
+    return reinterpret_cast<const SetEntityEquipment*>(
+               &_SetEntityEquipment_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetEntityEquipment &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetEntityEquipment *internal_default_instance()
-   {
-      return reinterpret_cast<const SetEntityEquipment *>(&_SetEntityEquipment_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 32;
-
-   friend void swap(SetEntityEquipment &a, SetEntityEquipment &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetEntityEquipment *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetEntityEquipment *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetEntityEquipment& a, SetEntityEquipment& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetEntityEquipment* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetEntityEquipment* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetEntityEquipment *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetEntityEquipment>(arena);
-   }
+  SetEntityEquipment* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetEntityEquipment>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetEntityEquipment& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetEntityEquipment& from) {
+    SetEntityEquipment::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetEntityEquipment &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetEntityEquipment &from)
-   {
-      SetEntityEquipment::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetEntityEquipment* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetEntityEquipment";
+  }
+  protected:
+  explicit SetEntityEquipment(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kItemFieldNumber = 3,
+    kEntityIdFieldNumber = 1,
+    kEquipmentSlotFieldNumber = 2,
+  };
+  // .minecpp.proto.player.v1.Slot item = 3;
+  bool has_item() const;
+  private:
+  bool _internal_has_item() const;
+  public:
+  void clear_item();
+  const ::minecpp::proto::player::v1::Slot& item() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Slot* release_item();
+  ::minecpp::proto::player::v1::Slot* mutable_item();
+  void set_allocated_item(::minecpp::proto::player::v1::Slot* item);
+  private:
+  const ::minecpp::proto::player::v1::Slot& _internal_item() const;
+  ::minecpp::proto::player::v1::Slot* _internal_mutable_item();
+  public:
+  void unsafe_arena_set_allocated_item(
+      ::minecpp::proto::player::v1::Slot* item);
+  ::minecpp::proto::player::v1::Slot* unsafe_arena_release_item();
+
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // .minecpp.proto.entity.v1.EquipmentSlot equipment_slot = 2;
+  void clear_equipment_slot();
+  ::minecpp::proto::entity::v1::EquipmentSlot equipment_slot() const;
+  void set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value);
+  private:
+  ::minecpp::proto::entity::v1::EquipmentSlot _internal_equipment_slot() const;
+  void _internal_set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetEntityEquipment)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetEntityEquipment *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetEntityEquipment";
-   }
-
- protected:
-   explicit SetEntityEquipment(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kItemFieldNumber          = 3,
-      kEntityIdFieldNumber      = 1,
-      kEquipmentSlotFieldNumber = 2,
-   };
-
-   // .minecpp.proto.player.v1.Slot item = 3;
-   bool has_item() const;
-
- private:
-   bool _internal_has_item() const;
-
- public:
-   void clear_item();
-   const ::minecpp::proto::player::v1::Slot &item() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::player::v1::Slot *release_item();
-   ::minecpp::proto::player::v1::Slot *mutable_item();
-   void set_allocated_item(::minecpp::proto::player::v1::Slot *item);
-
- private:
-   const ::minecpp::proto::player::v1::Slot &_internal_item() const;
-   ::minecpp::proto::player::v1::Slot *_internal_mutable_item();
-
- public:
-   void unsafe_arena_set_allocated_item(::minecpp::proto::player::v1::Slot *item);
-   ::minecpp::proto::player::v1::Slot *unsafe_arena_release_item();
-
-   // uint32 entity_id = 1;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // .minecpp.proto.entity.v1.EquipmentSlot equipment_slot = 2;
-   void clear_equipment_slot();
-   ::minecpp::proto::entity::v1::EquipmentSlot equipment_slot() const;
-   void set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value);
-
- private:
-   ::minecpp::proto::entity::v1::EquipmentSlot _internal_equipment_slot() const;
-   void _internal_set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetEntityEquipment)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::player::v1::Slot *item_;
-      uint32_t entity_id_;
-      int equipment_slot_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::player::v1::Slot* item_;
+    uint32_t entity_id_;
+    int equipment_slot_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetHealth final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetHealth) */
-{
+class SetHealth final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetHealth) */ {
  public:
-   inline SetHealth() :
-       SetHealth(nullptr)
-   {
-   }
+  inline SetHealth() : SetHealth(nullptr) {}
+  ~SetHealth() override;
+  explicit PROTOBUF_CONSTEXPR SetHealth(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetHealth() override;
-   explicit PROTOBUF_CONSTEXPR SetHealth(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetHealth(const SetHealth& from);
+  SetHealth(SetHealth&& from) noexcept
+    : SetHealth() {
+    *this = ::std::move(from);
+  }
 
-   SetHealth(const SetHealth &from);
-
-   SetHealth(SetHealth &&from) noexcept :
-       SetHealth()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetHealth &operator=(const SetHealth &from)
-   {
+  inline SetHealth& operator=(const SetHealth& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetHealth& operator=(SetHealth&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetHealth &operator=(SetHealth &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetHealth& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetHealth* internal_default_instance() {
+    return reinterpret_cast<const SetHealth*>(
+               &_SetHealth_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetHealth &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetHealth *internal_default_instance()
-   {
-      return reinterpret_cast<const SetHealth *>(&_SetHealth_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 33;
-
-   friend void swap(SetHealth &a, SetHealth &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetHealth *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetHealth *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetHealth& a, SetHealth& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetHealth* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetHealth* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetHealth *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetHealth>(arena);
-   }
+  SetHealth* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetHealth>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetHealth& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetHealth& from) {
+    SetHealth::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetHealth &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetHealth &from)
-   {
-      SetHealth::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetHealth* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetHealth";
+  }
+  protected:
+  explicit SetHealth(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kHealthFieldNumber = 1,
+    kFoodFieldNumber = 2,
+    kFoodSaturationFieldNumber = 3,
+  };
+  // float health = 1;
+  void clear_health();
+  float health() const;
+  void set_health(float value);
+  private:
+  float _internal_health() const;
+  void _internal_set_health(float value);
+  public:
+
+  // int32 food = 2;
+  void clear_food();
+  int32_t food() const;
+  void set_food(int32_t value);
+  private:
+  int32_t _internal_food() const;
+  void _internal_set_food(int32_t value);
+  public:
+
+  // float food_saturation = 3;
+  void clear_food_saturation();
+  float food_saturation() const;
+  void set_food_saturation(float value);
+  private:
+  float _internal_food_saturation() const;
+  void _internal_set_food_saturation(float value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetHealth)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetHealth *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetHealth";
-   }
-
- protected:
-   explicit SetHealth(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kHealthFieldNumber         = 1,
-      kFoodFieldNumber           = 2,
-      kFoodSaturationFieldNumber = 3,
-   };
-
-   // float health = 1;
-   void clear_health();
-   float health() const;
-   void set_health(float value);
-
- private:
-   float _internal_health() const;
-   void _internal_set_health(float value);
-
- public:
-   // int32 food = 2;
-   void clear_food();
-   int32_t food() const;
-   void set_food(int32_t value);
-
- private:
-   int32_t _internal_food() const;
-   void _internal_set_food(int32_t value);
-
- public:
-   // float food_saturation = 3;
-   void clear_food_saturation();
-   float food_saturation() const;
-   void set_food_saturation(float value);
-
- private:
-   float _internal_food_saturation() const;
-   void _internal_set_food_saturation(float value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetHealth)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      float health_;
-      int32_t food_;
-      float food_saturation_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    float health_;
+    int32_t food_;
+    float food_saturation_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class CollectItem final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.CollectItem) */
-{
+class CollectItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.CollectItem) */ {
  public:
-   inline CollectItem() :
-       CollectItem(nullptr)
-   {
-   }
+  inline CollectItem() : CollectItem(nullptr) {}
+  ~CollectItem() override;
+  explicit PROTOBUF_CONSTEXPR CollectItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~CollectItem() override;
-   explicit PROTOBUF_CONSTEXPR CollectItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  CollectItem(const CollectItem& from);
+  CollectItem(CollectItem&& from) noexcept
+    : CollectItem() {
+    *this = ::std::move(from);
+  }
 
-   CollectItem(const CollectItem &from);
-
-   CollectItem(CollectItem &&from) noexcept :
-       CollectItem()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline CollectItem &operator=(const CollectItem &from)
-   {
+  inline CollectItem& operator=(const CollectItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CollectItem& operator=(CollectItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline CollectItem &operator=(CollectItem &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CollectItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CollectItem* internal_default_instance() {
+    return reinterpret_cast<const CollectItem*>(
+               &_CollectItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    34;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const CollectItem &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const CollectItem *internal_default_instance()
-   {
-      return reinterpret_cast<const CollectItem *>(&_CollectItem_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 34;
-
-   friend void swap(CollectItem &a, CollectItem &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(CollectItem *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(CollectItem *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(CollectItem& a, CollectItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CollectItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CollectItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   CollectItem *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<CollectItem>(arena);
-   }
+  CollectItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CollectItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CollectItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CollectItem& from) {
+    CollectItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const CollectItem &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const CollectItem &from)
-   {
-      CollectItem::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CollectItem* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.CollectItem";
+  }
+  protected:
+  explicit CollectItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kCollectedEntityIdFieldNumber = 1,
+    kCollectorEntityIdFieldNumber = 2,
+    kCountFieldNumber = 3,
+  };
+  // uint32 collected_entity_id = 1;
+  void clear_collected_entity_id();
+  uint32_t collected_entity_id() const;
+  void set_collected_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_collected_entity_id() const;
+  void _internal_set_collected_entity_id(uint32_t value);
+  public:
+
+  // uint32 collector_entity_id = 2;
+  void clear_collector_entity_id();
+  uint32_t collector_entity_id() const;
+  void set_collector_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_collector_entity_id() const;
+  void _internal_set_collector_entity_id(uint32_t value);
+  public:
+
+  // uint32 count = 3;
+  void clear_count();
+  uint32_t count() const;
+  void set_count(uint32_t value);
+  private:
+  uint32_t _internal_count() const;
+  void _internal_set_count(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.CollectItem)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(CollectItem *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.CollectItem";
-   }
-
- protected:
-   explicit CollectItem(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kCollectedEntityIdFieldNumber = 1,
-      kCollectorEntityIdFieldNumber = 2,
-      kCountFieldNumber             = 3,
-   };
-
-   // uint32 collected_entity_id = 1;
-   void clear_collected_entity_id();
-   uint32_t collected_entity_id() const;
-   void set_collected_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_collected_entity_id() const;
-   void _internal_set_collected_entity_id(uint32_t value);
-
- public:
-   // uint32 collector_entity_id = 2;
-   void clear_collector_entity_id();
-   uint32_t collector_entity_id() const;
-   void set_collector_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_collector_entity_id() const;
-   void _internal_set_collector_entity_id(uint32_t value);
-
- public:
-   // uint32 count = 3;
-   void clear_count();
-   uint32_t count() const;
-   void set_count(uint32_t value);
-
- private:
-   uint32_t _internal_count() const;
-   void _internal_set_count(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.CollectItem)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      uint32_t collected_entity_id_;
-      uint32_t collector_entity_id_;
-      uint32_t count_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint32_t collected_entity_id_;
+    uint32_t collector_entity_id_;
+    uint32_t count_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class RemoveEntity final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RemoveEntity) */
-{
+class RemoveEntity final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.RemoveEntity) */ {
  public:
-   inline RemoveEntity() :
-       RemoveEntity(nullptr)
-   {
-   }
+  inline RemoveEntity() : RemoveEntity(nullptr) {}
+  ~RemoveEntity() override;
+  explicit PROTOBUF_CONSTEXPR RemoveEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~RemoveEntity() override;
-   explicit PROTOBUF_CONSTEXPR RemoveEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  RemoveEntity(const RemoveEntity& from);
+  RemoveEntity(RemoveEntity&& from) noexcept
+    : RemoveEntity() {
+    *this = ::std::move(from);
+  }
 
-   RemoveEntity(const RemoveEntity &from);
-
-   RemoveEntity(RemoveEntity &&from) noexcept :
-       RemoveEntity()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline RemoveEntity &operator=(const RemoveEntity &from)
-   {
+  inline RemoveEntity& operator=(const RemoveEntity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RemoveEntity& operator=(RemoveEntity&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline RemoveEntity &operator=(RemoveEntity &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RemoveEntity& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RemoveEntity* internal_default_instance() {
+    return reinterpret_cast<const RemoveEntity*>(
+               &_RemoveEntity_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const RemoveEntity &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const RemoveEntity *internal_default_instance()
-   {
-      return reinterpret_cast<const RemoveEntity *>(&_RemoveEntity_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 35;
-
-   friend void swap(RemoveEntity &a, RemoveEntity &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(RemoveEntity *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(RemoveEntity *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(RemoveEntity& a, RemoveEntity& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RemoveEntity* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RemoveEntity* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   RemoveEntity *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<RemoveEntity>(arena);
-   }
+  RemoveEntity* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RemoveEntity>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RemoveEntity& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RemoveEntity& from) {
+    RemoveEntity::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const RemoveEntity &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const RemoveEntity &from)
-   {
-      RemoveEntity::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RemoveEntity* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.RemoveEntity";
+  }
+  protected:
+  explicit RemoveEntity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kEntityIdFieldNumber = 1,
+  };
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RemoveEntity)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(RemoveEntity *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.RemoveEntity";
-   }
-
- protected:
-   explicit RemoveEntity(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kEntityIdFieldNumber = 1,
-   };
-
-   // uint32 entity_id = 1;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.RemoveEntity)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      uint32_t entity_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint32_t entity_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class TeleportEntity final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.TeleportEntity) */
-{
+class TeleportEntity final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.TeleportEntity) */ {
  public:
-   inline TeleportEntity() :
-       TeleportEntity(nullptr)
-   {
-   }
+  inline TeleportEntity() : TeleportEntity(nullptr) {}
+  ~TeleportEntity() override;
+  explicit PROTOBUF_CONSTEXPR TeleportEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~TeleportEntity() override;
-   explicit PROTOBUF_CONSTEXPR TeleportEntity(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  TeleportEntity(const TeleportEntity& from);
+  TeleportEntity(TeleportEntity&& from) noexcept
+    : TeleportEntity() {
+    *this = ::std::move(from);
+  }
 
-   TeleportEntity(const TeleportEntity &from);
-
-   TeleportEntity(TeleportEntity &&from) noexcept :
-       TeleportEntity()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline TeleportEntity &operator=(const TeleportEntity &from)
-   {
+  inline TeleportEntity& operator=(const TeleportEntity& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TeleportEntity& operator=(TeleportEntity&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline TeleportEntity &operator=(TeleportEntity &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TeleportEntity& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TeleportEntity* internal_default_instance() {
+    return reinterpret_cast<const TeleportEntity*>(
+               &_TeleportEntity_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    36;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const TeleportEntity &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const TeleportEntity *internal_default_instance()
-   {
-      return reinterpret_cast<const TeleportEntity *>(&_TeleportEntity_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 36;
-
-   friend void swap(TeleportEntity &a, TeleportEntity &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(TeleportEntity *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(TeleportEntity *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(TeleportEntity& a, TeleportEntity& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TeleportEntity* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TeleportEntity* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   TeleportEntity *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<TeleportEntity>(arena);
-   }
+  TeleportEntity* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TeleportEntity>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TeleportEntity& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TeleportEntity& from) {
+    TeleportEntity::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const TeleportEntity &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const TeleportEntity &from)
-   {
-      TeleportEntity::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TeleportEntity* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.TeleportEntity";
+  }
+  protected:
+  explicit TeleportEntity(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPositionFieldNumber = 2,
+    kRotationFieldNumber = 3,
+    kEntityIdFieldNumber = 1,
+    kIsOnGroundFieldNumber = 4,
+  };
+  // .minecpp.proto.common.v1.Vector3 position = 2;
+  bool has_position() const;
+  private:
+  bool _internal_has_position() const;
+  public:
+  void clear_position();
+  const ::minecpp::proto::common::v1::Vector3& position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3* release_position();
+  ::minecpp::proto::common::v1::Vector3* mutable_position();
+  void set_allocated_position(::minecpp::proto::common::v1::Vector3* position);
+  private:
+  const ::minecpp::proto::common::v1::Vector3& _internal_position() const;
+  ::minecpp::proto::common::v1::Vector3* _internal_mutable_position();
+  public:
+  void unsafe_arena_set_allocated_position(
+      ::minecpp::proto::common::v1::Vector3* position);
+  ::minecpp::proto::common::v1::Vector3* unsafe_arena_release_position();
+
+  // .minecpp.proto.common.v1.Rotation rotation = 3;
+  bool has_rotation() const;
+  private:
+  bool _internal_has_rotation() const;
+  public:
+  void clear_rotation();
+  const ::minecpp::proto::common::v1::Rotation& rotation() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation* release_rotation();
+  ::minecpp::proto::common::v1::Rotation* mutable_rotation();
+  void set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation);
+  private:
+  const ::minecpp::proto::common::v1::Rotation& _internal_rotation() const;
+  ::minecpp::proto::common::v1::Rotation* _internal_mutable_rotation();
+  public:
+  void unsafe_arena_set_allocated_rotation(
+      ::minecpp::proto::common::v1::Rotation* rotation);
+  ::minecpp::proto::common::v1::Rotation* unsafe_arena_release_rotation();
+
+  // uint32 entity_id = 1;
+  void clear_entity_id();
+  uint32_t entity_id() const;
+  void set_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_entity_id() const;
+  void _internal_set_entity_id(uint32_t value);
+  public:
+
+  // bool is_on_ground = 4;
+  void clear_is_on_ground();
+  bool is_on_ground() const;
+  void set_is_on_ground(bool value);
+  private:
+  bool _internal_is_on_ground() const;
+  void _internal_set_is_on_ground(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.TeleportEntity)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(TeleportEntity *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.TeleportEntity";
-   }
-
- protected:
-   explicit TeleportEntity(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kPositionFieldNumber   = 2,
-      kRotationFieldNumber   = 3,
-      kEntityIdFieldNumber   = 1,
-      kIsOnGroundFieldNumber = 4,
-   };
-
-   // .minecpp.proto.common.v1.Vector3 position = 2;
-   bool has_position() const;
-
- private:
-   bool _internal_has_position() const;
-
- public:
-   void clear_position();
-   const ::minecpp::proto::common::v1::Vector3 &position() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3 *release_position();
-   ::minecpp::proto::common::v1::Vector3 *mutable_position();
-   void set_allocated_position(::minecpp::proto::common::v1::Vector3 *position);
-
- private:
-   const ::minecpp::proto::common::v1::Vector3 &_internal_position() const;
-   ::minecpp::proto::common::v1::Vector3 *_internal_mutable_position();
-
- public:
-   void unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::Vector3 *position);
-   ::minecpp::proto::common::v1::Vector3 *unsafe_arena_release_position();
-
-   // .minecpp.proto.common.v1.Rotation rotation = 3;
-   bool has_rotation() const;
-
- private:
-   bool _internal_has_rotation() const;
-
- public:
-   void clear_rotation();
-   const ::minecpp::proto::common::v1::Rotation &rotation() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Rotation *release_rotation();
-   ::minecpp::proto::common::v1::Rotation *mutable_rotation();
-   void set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-
- private:
-   const ::minecpp::proto::common::v1::Rotation &_internal_rotation() const;
-   ::minecpp::proto::common::v1::Rotation *_internal_mutable_rotation();
-
- public:
-   void unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation);
-   ::minecpp::proto::common::v1::Rotation *unsafe_arena_release_rotation();
-
-   // uint32 entity_id = 1;
-   void clear_entity_id();
-   uint32_t entity_id() const;
-   void set_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_entity_id() const;
-   void _internal_set_entity_id(uint32_t value);
-
- public:
-   // bool is_on_ground = 4;
-   void clear_is_on_ground();
-   bool is_on_ground() const;
-   void set_is_on_ground(bool value);
-
- private:
-   bool _internal_is_on_ground() const;
-   void _internal_set_is_on_ground(bool value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.TeleportEntity)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::common::v1::Vector3 *position_;
-      ::minecpp::proto::common::v1::Rotation *rotation_;
-      uint32_t entity_id_;
-      bool is_on_ground_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::common::v1::Vector3* position_;
+    ::minecpp::proto::common::v1::Rotation* rotation_;
+    uint32_t entity_id_;
+    bool is_on_ground_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class DisplayDeathScreen final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.DisplayDeathScreen) */
-{
+class DisplayDeathScreen final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.DisplayDeathScreen) */ {
  public:
-   inline DisplayDeathScreen() :
-       DisplayDeathScreen(nullptr)
-   {
-   }
+  inline DisplayDeathScreen() : DisplayDeathScreen(nullptr) {}
+  ~DisplayDeathScreen() override;
+  explicit PROTOBUF_CONSTEXPR DisplayDeathScreen(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~DisplayDeathScreen() override;
-   explicit PROTOBUF_CONSTEXPR DisplayDeathScreen(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  DisplayDeathScreen(const DisplayDeathScreen& from);
+  DisplayDeathScreen(DisplayDeathScreen&& from) noexcept
+    : DisplayDeathScreen() {
+    *this = ::std::move(from);
+  }
 
-   DisplayDeathScreen(const DisplayDeathScreen &from);
-
-   DisplayDeathScreen(DisplayDeathScreen &&from) noexcept :
-       DisplayDeathScreen()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline DisplayDeathScreen &operator=(const DisplayDeathScreen &from)
-   {
+  inline DisplayDeathScreen& operator=(const DisplayDeathScreen& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DisplayDeathScreen& operator=(DisplayDeathScreen&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline DisplayDeathScreen &operator=(DisplayDeathScreen &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DisplayDeathScreen& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DisplayDeathScreen* internal_default_instance() {
+    return reinterpret_cast<const DisplayDeathScreen*>(
+               &_DisplayDeathScreen_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    37;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const DisplayDeathScreen &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const DisplayDeathScreen *internal_default_instance()
-   {
-      return reinterpret_cast<const DisplayDeathScreen *>(&_DisplayDeathScreen_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 37;
-
-   friend void swap(DisplayDeathScreen &a, DisplayDeathScreen &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(DisplayDeathScreen *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(DisplayDeathScreen *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(DisplayDeathScreen& a, DisplayDeathScreen& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DisplayDeathScreen* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DisplayDeathScreen* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   DisplayDeathScreen *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<DisplayDeathScreen>(arena);
-   }
+  DisplayDeathScreen* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DisplayDeathScreen>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DisplayDeathScreen& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const DisplayDeathScreen& from) {
+    DisplayDeathScreen::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const DisplayDeathScreen &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const DisplayDeathScreen &from)
-   {
-      DisplayDeathScreen::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DisplayDeathScreen* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.DisplayDeathScreen";
+  }
+  protected:
+  explicit DisplayDeathScreen(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDeathMessageFieldNumber = 3,
+    kVictimEntityIdFieldNumber = 1,
+    kKillerEntityIdFieldNumber = 2,
+  };
+  // string death_message = 3;
+  void clear_death_message();
+  const std::string& death_message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_death_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_death_message();
+  PROTOBUF_NODISCARD std::string* release_death_message();
+  void set_allocated_death_message(std::string* death_message);
+  private:
+  const std::string& _internal_death_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_death_message(const std::string& value);
+  std::string* _internal_mutable_death_message();
+  public:
+
+  // uint32 victim_entity_id = 1;
+  void clear_victim_entity_id();
+  uint32_t victim_entity_id() const;
+  void set_victim_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_victim_entity_id() const;
+  void _internal_set_victim_entity_id(uint32_t value);
+  public:
+
+  // uint32 killer_entity_id = 2;
+  void clear_killer_entity_id();
+  uint32_t killer_entity_id() const;
+  void set_killer_entity_id(uint32_t value);
+  private:
+  uint32_t _internal_killer_entity_id() const;
+  void _internal_set_killer_entity_id(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(DisplayDeathScreen *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.DisplayDeathScreen";
-   }
-
- protected:
-   explicit DisplayDeathScreen(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kDeathMessageFieldNumber   = 3,
-      kVictimEntityIdFieldNumber = 1,
-      kKillerEntityIdFieldNumber = 2,
-   };
-
-   // string death_message = 3;
-   void clear_death_message();
-   const std::string &death_message() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_death_message(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_death_message();
-   PROTOBUF_NODISCARD std::string *release_death_message();
-   void set_allocated_death_message(std::string *death_message);
-
- private:
-   const std::string &_internal_death_message() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_death_message(const std::string &value);
-   std::string *_internal_mutable_death_message();
-
- public:
-   // uint32 victim_entity_id = 1;
-   void clear_victim_entity_id();
-   uint32_t victim_entity_id() const;
-   void set_victim_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_victim_entity_id() const;
-   void _internal_set_victim_entity_id(uint32_t value);
-
- public:
-   // uint32 killer_entity_id = 2;
-   void clear_killer_entity_id();
-   uint32_t killer_entity_id() const;
-   void set_killer_entity_id(uint32_t value);
-
- private:
-   uint32_t _internal_killer_entity_id() const;
-   void _internal_set_killer_entity_id(uint32_t value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.DisplayDeathScreen)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr death_message_;
-      uint32_t victim_entity_id_;
-      uint32_t killer_entity_id_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr death_message_;
+    uint32_t victim_entity_id_;
+    uint32_t killer_entity_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class Respawn final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.Respawn) */
-{
+class Respawn final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.Respawn) */ {
  public:
-   inline Respawn() :
-       Respawn(nullptr)
-   {
-   }
+  inline Respawn() : Respawn(nullptr) {}
+  ~Respawn() override;
+  explicit PROTOBUF_CONSTEXPR Respawn(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~Respawn() override;
-   explicit PROTOBUF_CONSTEXPR Respawn(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  Respawn(const Respawn& from);
+  Respawn(Respawn&& from) noexcept
+    : Respawn() {
+    *this = ::std::move(from);
+  }
 
-   Respawn(const Respawn &from);
-
-   Respawn(Respawn &&from) noexcept :
-       Respawn()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline Respawn &operator=(const Respawn &from)
-   {
+  inline Respawn& operator=(const Respawn& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Respawn& operator=(Respawn&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline Respawn &operator=(Respawn &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Respawn& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Respawn* internal_default_instance() {
+    return reinterpret_cast<const Respawn*>(
+               &_Respawn_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    38;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const Respawn &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const Respawn *internal_default_instance()
-   {
-      return reinterpret_cast<const Respawn *>(&_Respawn_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 38;
-
-   friend void swap(Respawn &a, Respawn &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(Respawn *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(Respawn *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(Respawn& a, Respawn& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Respawn* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Respawn* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   Respawn *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<Respawn>(arena);
-   }
+  Respawn* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Respawn>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Respawn& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const Respawn& from) {
+    Respawn::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const Respawn &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const Respawn &from)
-   {
-      Respawn::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Respawn* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.Respawn";
+  }
+  protected:
+  explicit Respawn(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDimensionTypeFieldNumber = 1,
+    kDimensionNameFieldNumber = 2,
+    kDeathDimensionFieldNumber = 10,
+    kDeathPositionFieldNumber = 11,
+    kHashedSeedFieldNumber = 3,
+    kGameModeFieldNumber = 4,
+    kPreviousGameModeFieldNumber = 5,
+    kIsDebugFieldNumber = 6,
+    kIsFlatFieldNumber = 7,
+    kCopyMetadataFieldNumber = 8,
+    kHasDeathLocationFieldNumber = 9,
+  };
+  // string dimension_type = 1;
+  void clear_dimension_type();
+  const std::string& dimension_type() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_dimension_type(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_dimension_type();
+  PROTOBUF_NODISCARD std::string* release_dimension_type();
+  void set_allocated_dimension_type(std::string* dimension_type);
+  private:
+  const std::string& _internal_dimension_type() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_dimension_type(const std::string& value);
+  std::string* _internal_mutable_dimension_type();
+  public:
+
+  // string dimension_name = 2;
+  void clear_dimension_name();
+  const std::string& dimension_name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_dimension_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_dimension_name();
+  PROTOBUF_NODISCARD std::string* release_dimension_name();
+  void set_allocated_dimension_name(std::string* dimension_name);
+  private:
+  const std::string& _internal_dimension_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_dimension_name(const std::string& value);
+  std::string* _internal_mutable_dimension_name();
+  public:
+
+  // string death_dimension = 10;
+  void clear_death_dimension();
+  const std::string& death_dimension() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_death_dimension(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_death_dimension();
+  PROTOBUF_NODISCARD std::string* release_death_dimension();
+  void set_allocated_death_dimension(std::string* death_dimension);
+  private:
+  const std::string& _internal_death_dimension() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_death_dimension(const std::string& value);
+  std::string* _internal_mutable_death_dimension();
+  public:
+
+  // .minecpp.proto.common.v1.Vector3 death_position = 11;
+  bool has_death_position() const;
+  private:
+  bool _internal_has_death_position() const;
+  public:
+  void clear_death_position();
+  const ::minecpp::proto::common::v1::Vector3& death_position() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3* release_death_position();
+  ::minecpp::proto::common::v1::Vector3* mutable_death_position();
+  void set_allocated_death_position(::minecpp::proto::common::v1::Vector3* death_position);
+  private:
+  const ::minecpp::proto::common::v1::Vector3& _internal_death_position() const;
+  ::minecpp::proto::common::v1::Vector3* _internal_mutable_death_position();
+  public:
+  void unsafe_arena_set_allocated_death_position(
+      ::minecpp::proto::common::v1::Vector3* death_position);
+  ::minecpp::proto::common::v1::Vector3* unsafe_arena_release_death_position();
+
+  // int64 hashed_seed = 3;
+  void clear_hashed_seed();
+  int64_t hashed_seed() const;
+  void set_hashed_seed(int64_t value);
+  private:
+  int64_t _internal_hashed_seed() const;
+  void _internal_set_hashed_seed(int64_t value);
+  public:
+
+  // .minecpp.proto.common.v1.GameMode game_mode = 4;
+  void clear_game_mode();
+  ::minecpp::proto::common::v1::GameMode game_mode() const;
+  void set_game_mode(::minecpp::proto::common::v1::GameMode value);
+  private:
+  ::minecpp::proto::common::v1::GameMode _internal_game_mode() const;
+  void _internal_set_game_mode(::minecpp::proto::common::v1::GameMode value);
+  public:
+
+  // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+  bool has_previous_game_mode() const;
+  private:
+  bool _internal_has_previous_game_mode() const;
+  public:
+  void clear_previous_game_mode();
+  ::minecpp::proto::common::v1::GameMode previous_game_mode() const;
+  void set_previous_game_mode(::minecpp::proto::common::v1::GameMode value);
+  private:
+  ::minecpp::proto::common::v1::GameMode _internal_previous_game_mode() const;
+  void _internal_set_previous_game_mode(::minecpp::proto::common::v1::GameMode value);
+  public:
+
+  // bool is_debug = 6;
+  void clear_is_debug();
+  bool is_debug() const;
+  void set_is_debug(bool value);
+  private:
+  bool _internal_is_debug() const;
+  void _internal_set_is_debug(bool value);
+  public:
+
+  // bool is_flat = 7;
+  void clear_is_flat();
+  bool is_flat() const;
+  void set_is_flat(bool value);
+  private:
+  bool _internal_is_flat() const;
+  void _internal_set_is_flat(bool value);
+  public:
+
+  // bool copy_metadata = 8;
+  void clear_copy_metadata();
+  bool copy_metadata() const;
+  void set_copy_metadata(bool value);
+  private:
+  bool _internal_copy_metadata() const;
+  void _internal_set_copy_metadata(bool value);
+  public:
+
+  // bool has_death_location = 9;
+  void clear_has_death_location();
+  bool has_death_location() const;
+  void set_has_death_location(bool value);
+  private:
+  bool _internal_has_death_location() const;
+  void _internal_set_has_death_location(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.Respawn)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(Respawn *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.Respawn";
-   }
-
- protected:
-   explicit Respawn(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kDimensionTypeFieldNumber    = 1,
-      kDimensionNameFieldNumber    = 2,
-      kDeathDimensionFieldNumber   = 10,
-      kDeathPositionFieldNumber    = 11,
-      kHashedSeedFieldNumber       = 3,
-      kGameModeFieldNumber         = 4,
-      kPreviousGameModeFieldNumber = 5,
-      kIsDebugFieldNumber          = 6,
-      kIsFlatFieldNumber           = 7,
-      kCopyMetadataFieldNumber     = 8,
-      kHasDeathLocationFieldNumber = 9,
-   };
-
-   // string dimension_type = 1;
-   void clear_dimension_type();
-   const std::string &dimension_type() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_dimension_type(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_dimension_type();
-   PROTOBUF_NODISCARD std::string *release_dimension_type();
-   void set_allocated_dimension_type(std::string *dimension_type);
-
- private:
-   const std::string &_internal_dimension_type() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_dimension_type(const std::string &value);
-   std::string *_internal_mutable_dimension_type();
-
- public:
-   // string dimension_name = 2;
-   void clear_dimension_name();
-   const std::string &dimension_name() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_dimension_name(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_dimension_name();
-   PROTOBUF_NODISCARD std::string *release_dimension_name();
-   void set_allocated_dimension_name(std::string *dimension_name);
-
- private:
-   const std::string &_internal_dimension_name() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_dimension_name(const std::string &value);
-   std::string *_internal_mutable_dimension_name();
-
- public:
-   // string death_dimension = 10;
-   void clear_death_dimension();
-   const std::string &death_dimension() const;
-   template<typename ArgT0 = const std::string &, typename... ArgT>
-   void set_death_dimension(ArgT0 &&arg0, ArgT... args);
-   std::string *mutable_death_dimension();
-   PROTOBUF_NODISCARD std::string *release_death_dimension();
-   void set_allocated_death_dimension(std::string *death_dimension);
-
- private:
-   const std::string &_internal_death_dimension() const;
-   inline PROTOBUF_ALWAYS_INLINE void _internal_set_death_dimension(const std::string &value);
-   std::string *_internal_mutable_death_dimension();
-
- public:
-   // .minecpp.proto.common.v1.Vector3 death_position = 11;
-   bool has_death_position() const;
-
- private:
-   bool _internal_has_death_position() const;
-
- public:
-   void clear_death_position();
-   const ::minecpp::proto::common::v1::Vector3 &death_position() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::common::v1::Vector3 *release_death_position();
-   ::minecpp::proto::common::v1::Vector3 *mutable_death_position();
-   void set_allocated_death_position(::minecpp::proto::common::v1::Vector3 *death_position);
-
- private:
-   const ::minecpp::proto::common::v1::Vector3 &_internal_death_position() const;
-   ::minecpp::proto::common::v1::Vector3 *_internal_mutable_death_position();
-
- public:
-   void unsafe_arena_set_allocated_death_position(::minecpp::proto::common::v1::Vector3 *death_position);
-   ::minecpp::proto::common::v1::Vector3 *unsafe_arena_release_death_position();
-
-   // int64 hashed_seed = 3;
-   void clear_hashed_seed();
-   int64_t hashed_seed() const;
-   void set_hashed_seed(int64_t value);
-
- private:
-   int64_t _internal_hashed_seed() const;
-   void _internal_set_hashed_seed(int64_t value);
-
- public:
-   // .minecpp.proto.common.v1.GameMode game_mode = 4;
-   void clear_game_mode();
-   ::minecpp::proto::common::v1::GameMode game_mode() const;
-   void set_game_mode(::minecpp::proto::common::v1::GameMode value);
-
- private:
-   ::minecpp::proto::common::v1::GameMode _internal_game_mode() const;
-   void _internal_set_game_mode(::minecpp::proto::common::v1::GameMode value);
-
- public:
-   // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
-   bool has_previous_game_mode() const;
-
- private:
-   bool _internal_has_previous_game_mode() const;
-
- public:
-   void clear_previous_game_mode();
-   ::minecpp::proto::common::v1::GameMode previous_game_mode() const;
-   void set_previous_game_mode(::minecpp::proto::common::v1::GameMode value);
-
- private:
-   ::minecpp::proto::common::v1::GameMode _internal_previous_game_mode() const;
-   void _internal_set_previous_game_mode(::minecpp::proto::common::v1::GameMode value);
-
- public:
-   // bool is_debug = 6;
-   void clear_is_debug();
-   bool is_debug() const;
-   void set_is_debug(bool value);
-
- private:
-   bool _internal_is_debug() const;
-   void _internal_set_is_debug(bool value);
-
- public:
-   // bool is_flat = 7;
-   void clear_is_flat();
-   bool is_flat() const;
-   void set_is_flat(bool value);
-
- private:
-   bool _internal_is_flat() const;
-   void _internal_set_is_flat(bool value);
-
- public:
-   // bool copy_metadata = 8;
-   void clear_copy_metadata();
-   bool copy_metadata() const;
-   void set_copy_metadata(bool value);
-
- private:
-   bool _internal_copy_metadata() const;
-   void _internal_set_copy_metadata(bool value);
-
- public:
-   // bool has_death_location = 9;
-   void clear_has_death_location();
-   bool has_death_location() const;
-   void set_has_death_location(bool value);
-
- private:
-   bool _internal_has_death_location() const;
-   void _internal_set_has_death_location(bool value);
-
- public:
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.Respawn)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dimension_type_;
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dimension_name_;
-      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr death_dimension_;
-      ::minecpp::proto::common::v1::Vector3 *death_position_;
-      int64_t hashed_seed_;
-      int game_mode_;
-      int previous_game_mode_;
-      bool is_debug_;
-      bool is_flat_;
-      bool copy_metadata_;
-      bool has_death_location_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dimension_type_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dimension_name_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr death_dimension_;
+    ::minecpp::proto::common::v1::Vector3* death_position_;
+    int64_t hashed_seed_;
+    int game_mode_;
+    int previous_game_mode_;
+    bool is_debug_;
+    bool is_flat_;
+    bool copy_metadata_;
+    bool has_death_location_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // -------------------------------------------------------------------
 
-class SetAbilities final
-    : public ::PROTOBUF_NAMESPACE_ID::
-              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetAbilities) */
-{
+class SetAbilities final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.v1.SetAbilities) */ {
  public:
-   inline SetAbilities() :
-       SetAbilities(nullptr)
-   {
-   }
+  inline SetAbilities() : SetAbilities(nullptr) {}
+  ~SetAbilities() override;
+  explicit PROTOBUF_CONSTEXPR SetAbilities(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-   ~SetAbilities() override;
-   explicit PROTOBUF_CONSTEXPR SetAbilities(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  SetAbilities(const SetAbilities& from);
+  SetAbilities(SetAbilities&& from) noexcept
+    : SetAbilities() {
+    *this = ::std::move(from);
+  }
 
-   SetAbilities(const SetAbilities &from);
-
-   SetAbilities(SetAbilities &&from) noexcept :
-       SetAbilities()
-   {
-      *this = ::std::move(from);
-   }
-
-   inline SetAbilities &operator=(const SetAbilities &from)
-   {
+  inline SetAbilities& operator=(const SetAbilities& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetAbilities& operator=(SetAbilities&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
       CopyFrom(from);
-      return *this;
-   }
+    }
+    return *this;
+  }
 
-   inline SetAbilities &operator=(SetAbilities &&from) noexcept
-   {
-      if (this == &from)
-         return *this;
-      if (GetOwningArena() == from.GetOwningArena()
-#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-          && GetOwningArena() != nullptr
-#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
-      ) {
-         InternalSwap(&from);
-      } else {
-         CopyFrom(from);
-      }
-      return *this;
-   }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetAbilities& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetAbilities* internal_default_instance() {
+    return reinterpret_cast<const SetAbilities*>(
+               &_SetAbilities_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
 
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
-   {
-      return GetDescriptor();
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
-   {
-      return default_instance().GetMetadata().descriptor;
-   }
-
-   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
-   {
-      return default_instance().GetMetadata().reflection;
-   }
-
-   static const SetAbilities &default_instance()
-   {
-      return *internal_default_instance();
-   }
-
-   static inline const SetAbilities *internal_default_instance()
-   {
-      return reinterpret_cast<const SetAbilities *>(&_SetAbilities_default_instance_);
-   }
-
-   static constexpr int kIndexInFileMessages = 39;
-
-   friend void swap(SetAbilities &a, SetAbilities &b)
-   {
-      a.Swap(&b);
-   }
-
-   inline void Swap(SetAbilities *other)
-   {
-      if (other == this)
-         return;
-#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
-#else // PROTOBUF_FORCE_COPY_IN_SWAP
-      if (GetOwningArena() == other->GetOwningArena()) {
-#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
-         InternalSwap(other);
-      } else {
-         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-      }
-   }
-
-   void UnsafeArenaSwap(SetAbilities *other)
-   {
-      if (other == this)
-         return;
-      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+  friend void swap(SetAbilities& a, SetAbilities& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetAbilities* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
       InternalSwap(other);
-   }
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetAbilities* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
 
-   // implements Message ----------------------------------------------
+  // implements Message ----------------------------------------------
 
-   SetAbilities *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
-   {
-      return CreateMaybeMessage<SetAbilities>(arena);
-   }
+  SetAbilities* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetAbilities>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetAbilities& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SetAbilities& from) {
+    SetAbilities::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
 
-   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-   void CopyFrom(const SetAbilities &from);
-   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
 
-   void MergeFrom(const SetAbilities &from)
-   {
-      SetAbilities::MergeImpl(*this, from);
-   }
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetAbilities* other);
 
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "minecpp.proto.event.clientbound.v1.SetAbilities";
+  }
+  protected:
+  explicit SetAbilities(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAbilitiesFieldNumber = 1,
+  };
+  // .minecpp.proto.entity.v1.Abilities abilities = 1;
+  bool has_abilities() const;
+  private:
+  bool _internal_has_abilities() const;
+  public:
+  void clear_abilities();
+  const ::minecpp::proto::entity::v1::Abilities& abilities() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Abilities* release_abilities();
+  ::minecpp::proto::entity::v1::Abilities* mutable_abilities();
+  void set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities);
+  private:
+  const ::minecpp::proto::entity::v1::Abilities& _internal_abilities() const;
+  ::minecpp::proto::entity::v1::Abilities* _internal_mutable_abilities();
+  public:
+  void unsafe_arena_set_allocated_abilities(
+      ::minecpp::proto::entity::v1::Abilities* abilities);
+  ::minecpp::proto::entity::v1::Abilities* unsafe_arena_release_abilities();
+
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetAbilities)
  private:
-   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
-                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
+  class _Internal;
 
- public:
-   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-   bool IsInitialized() const final;
-
-   size_t ByteSizeLong() const final;
-   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
-   uint8_t *_InternalSerialize(uint8_t *target,
-                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
-
-   int GetCachedSize() const final
-   {
-      return _impl_._cached_size_.Get();
-   }
-
- private:
-   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
-   void SharedDtor();
-   void SetCachedSize(int size) const final;
-   void InternalSwap(SetAbilities *other);
-
- private:
-   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-
-   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
-   {
-      return "minecpp.proto.event.clientbound.v1.SetAbilities";
-   }
-
- protected:
-   explicit SetAbilities(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
-
- public:
-   static const ClassData _class_data_;
-   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
-
-   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-   // nested types ----------------------------------------------------
-
-   // accessors -------------------------------------------------------
-
-   enum : int
-   {
-      kAbilitiesFieldNumber = 1,
-   };
-
-   // .minecpp.proto.entity.v1.Abilities abilities = 1;
-   bool has_abilities() const;
-
- private:
-   bool _internal_has_abilities() const;
-
- public:
-   void clear_abilities();
-   const ::minecpp::proto::entity::v1::Abilities &abilities() const;
-   PROTOBUF_NODISCARD ::minecpp::proto::entity::v1::Abilities *release_abilities();
-   ::minecpp::proto::entity::v1::Abilities *mutable_abilities();
-   void set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities);
-
- private:
-   const ::minecpp::proto::entity::v1::Abilities &_internal_abilities() const;
-   ::minecpp::proto::entity::v1::Abilities *_internal_mutable_abilities();
-
- public:
-   void unsafe_arena_set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities);
-   ::minecpp::proto::entity::v1::Abilities *unsafe_arena_release_abilities();
-
-   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.v1.SetAbilities)
- private:
-   class _Internal;
-
-   template<typename T>
-   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-   typedef void InternalArenaConstructable_;
-   typedef void DestructorSkippable_;
-
-   struct Impl_
-   {
-      ::minecpp::proto::entity::v1::Abilities *abilities_;
-      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-   };
-
-   union
-   {
-      Impl_ _impl_;
-   };
-   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::minecpp::proto::entity::v1::Abilities* abilities_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
 };
-
 // ===================================================================
 
 
 // ===================================================================
 
 #ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstrict-aliasing"
-#endif// __GNUC__
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#endif  // __GNUC__
 // Event
 
 // .google.protobuf.Any payload = 1;
-inline bool Event::_internal_has_payload() const
-{
-   return this != internal_default_instance() && _impl_.payload_ != nullptr;
+inline bool Event::_internal_has_payload() const {
+  return this != internal_default_instance() && _impl_.payload_ != nullptr;
 }
-
-inline bool Event::has_payload() const
-{
-   return _internal_has_payload();
+inline bool Event::has_payload() const {
+  return _internal_has_payload();
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::Any &Event::_internal_payload() const
-{
-   const ::PROTOBUF_NAMESPACE_ID::Any *p = _impl_.payload_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Any &>(
-                                 ::PROTOBUF_NAMESPACE_ID::_Any_default_instance_);
+inline const ::PROTOBUF_NAMESPACE_ID::Any& Event::_internal_payload() const {
+  const ::PROTOBUF_NAMESPACE_ID::Any* p = _impl_.payload_;
+  return p != nullptr ? *p : reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Any&>(
+      ::PROTOBUF_NAMESPACE_ID::_Any_default_instance_);
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::Any &Event::payload() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.payload)
-   return _internal_payload();
+inline const ::PROTOBUF_NAMESPACE_ID::Any& Event::payload() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.payload)
+  return _internal_payload();
 }
-
-inline void Event::unsafe_arena_set_allocated_payload(::PROTOBUF_NAMESPACE_ID::Any *payload)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.payload_);
-   }
-   _impl_.payload_ = payload;
-   if (payload) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.payload)
+inline void Event::unsafe_arena_set_allocated_payload(
+    ::PROTOBUF_NAMESPACE_ID::Any* payload) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.payload_);
+  }
+  _impl_.payload_ = payload;
+  if (payload) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.payload)
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::Any *Event::release_payload()
-{
-
-   ::PROTOBUF_NAMESPACE_ID::Any *temp = _impl_.payload_;
-   _impl_.payload_                    = nullptr;
+inline ::PROTOBUF_NAMESPACE_ID::Any* Event::release_payload() {
+  
+  ::PROTOBUF_NAMESPACE_ID::Any* temp = _impl_.payload_;
+  _impl_.payload_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::Any *Event::unsafe_arena_release_payload()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.payload)
-
-   ::PROTOBUF_NAMESPACE_ID::Any *temp = _impl_.payload_;
-   _impl_.payload_                    = nullptr;
-   return temp;
+inline ::PROTOBUF_NAMESPACE_ID::Any* Event::unsafe_arena_release_payload() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.payload)
+  
+  ::PROTOBUF_NAMESPACE_ID::Any* temp = _impl_.payload_;
+  _impl_.payload_ = nullptr;
+  return temp;
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::Any *Event::_internal_mutable_payload()
-{
-
-   if (_impl_.payload_ == nullptr) {
-      auto *p         = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Any>(GetArenaForAllocation());
-      _impl_.payload_ = p;
-   }
-   return _impl_.payload_;
+inline ::PROTOBUF_NAMESPACE_ID::Any* Event::_internal_mutable_payload() {
+  
+  if (_impl_.payload_ == nullptr) {
+    auto* p = CreateMaybeMessage<::PROTOBUF_NAMESPACE_ID::Any>(GetArenaForAllocation());
+    _impl_.payload_ = p;
+  }
+  return _impl_.payload_;
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::Any *Event::mutable_payload()
-{
-   ::PROTOBUF_NAMESPACE_ID::Any *_msg = _internal_mutable_payload();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.payload)
-   return _msg;
+inline ::PROTOBUF_NAMESPACE_ID::Any* Event::mutable_payload() {
+  ::PROTOBUF_NAMESPACE_ID::Any* _msg = _internal_mutable_payload();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.payload)
+  return _msg;
 }
-
-inline void Event::set_allocated_payload(::PROTOBUF_NAMESPACE_ID::Any *payload)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.payload_);
-   }
-   if (payload) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(payload));
-      if (message_arena != submessage_arena) {
-         payload =
-                 ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, payload, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.payload_ = payload;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Event.payload)
+inline void Event::set_allocated_payload(::PROTOBUF_NAMESPACE_ID::Any* payload) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.payload_);
+  }
+  if (payload) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(payload));
+    if (message_arena != submessage_arena) {
+      payload = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, payload, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.payload_ = payload;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Event.payload)
 }
 
 // .minecpp.proto.event.clientbound.v1.RecipientSinglePlayer single_player = 2;
-inline bool Event::_internal_has_single_player() const
-{
-   return recipient_case() == kSinglePlayer;
+inline bool Event::_internal_has_single_player() const {
+  return recipient_case() == kSinglePlayer;
 }
-
-inline bool Event::has_single_player() const
-{
-   return _internal_has_single_player();
+inline bool Event::has_single_player() const {
+  return _internal_has_single_player();
 }
-
-inline void Event::set_has_single_player()
-{
-   _impl_._oneof_case_[0] = kSinglePlayer;
+inline void Event::set_has_single_player() {
+  _impl_._oneof_case_[0] = kSinglePlayer;
 }
-
-inline void Event::clear_single_player()
-{
-   if (_internal_has_single_player()) {
-      if (GetArenaForAllocation() == nullptr) {
-         delete _impl_.recipient_.single_player_;
-      }
-      clear_has_recipient();
-   }
+inline void Event::clear_single_player() {
+  if (_internal_has_single_player()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.recipient_.single_player_;
+    }
+    clear_has_recipient();
+  }
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *Event::release_single_player()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.single_player)
-   if (_internal_has_single_player()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *temp =
-              _impl_.recipient_.single_player_;
-      if (GetArenaForAllocation() != nullptr) {
-         temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-      }
-      _impl_.recipient_.single_player_ = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
+inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Event::release_single_player() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.single_player)
+  if (_internal_has_single_player()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* temp = _impl_.recipient_.single_player_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.recipient_.single_player_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer &
-Event::_internal_single_player() const
-{
-   return _internal_has_single_player()
-                  ? *_impl_.recipient_.single_player_
-                  : reinterpret_cast<::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer &>(
-                            ::minecpp::proto::event::clientbound::v1::
-                                    _RecipientSinglePlayer_default_instance_);
+inline const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer& Event::_internal_single_player() const {
+  return _internal_has_single_player()
+      ? *_impl_.recipient_.single_player_
+      : reinterpret_cast< ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer&>(::minecpp::proto::event::clientbound::v1::_RecipientSinglePlayer_default_instance_);
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer &Event::single_player() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.single_player)
-   return _internal_single_player();
+inline const ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer& Event::single_player() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.single_player)
+  return _internal_single_player();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *
-Event::unsafe_arena_release_single_player()
-{
-   // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.single_player)
-   if (_internal_has_single_player()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *temp =
-              _impl_.recipient_.single_player_;
-      _impl_.recipient_.single_player_ = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
+inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Event::unsafe_arena_release_single_player() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.single_player)
+  if (_internal_has_single_player()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* temp = _impl_.recipient_.single_player_;
+    _impl_.recipient_.single_player_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
 }
-
-inline void Event::unsafe_arena_set_allocated_single_player(
-        ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *single_player)
-{
-   clear_recipient();
-   if (single_player) {
-      set_has_single_player();
-      _impl_.recipient_.single_player_ = single_player;
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.single_player)
+inline void Event::unsafe_arena_set_allocated_single_player(::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* single_player) {
+  clear_recipient();
+  if (single_player) {
+    set_has_single_player();
+    _impl_.recipient_.single_player_ = single_player;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.single_player)
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *
-Event::_internal_mutable_single_player()
-{
-   if (!_internal_has_single_player()) {
-      clear_recipient();
-      set_has_single_player();
-      _impl_.recipient_.single_player_ =
-              CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer>(
-                      GetArenaForAllocation());
-   }
-   return _impl_.recipient_.single_player_;
+inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Event::_internal_mutable_single_player() {
+  if (!_internal_has_single_player()) {
+    clear_recipient();
+    set_has_single_player();
+    _impl_.recipient_.single_player_ = CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer >(GetArenaForAllocation());
+  }
+  return _impl_.recipient_.single_player_;
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *Event::mutable_single_player()
-{
-   ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer *_msg = _internal_mutable_single_player();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.single_player)
-   return _msg;
+inline ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* Event::mutable_single_player() {
+  ::minecpp::proto::event::clientbound::v1::RecipientSinglePlayer* _msg = _internal_mutable_single_player();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.single_player)
+  return _msg;
 }
 
 // .minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers multiple_players = 3;
-inline bool Event::_internal_has_multiple_players() const
-{
-   return recipient_case() == kMultiplePlayers;
+inline bool Event::_internal_has_multiple_players() const {
+  return recipient_case() == kMultiplePlayers;
 }
-
-inline bool Event::has_multiple_players() const
-{
-   return _internal_has_multiple_players();
+inline bool Event::has_multiple_players() const {
+  return _internal_has_multiple_players();
 }
-
-inline void Event::set_has_multiple_players()
-{
-   _impl_._oneof_case_[0] = kMultiplePlayers;
+inline void Event::set_has_multiple_players() {
+  _impl_._oneof_case_[0] = kMultiplePlayers;
 }
-
-inline void Event::clear_multiple_players()
-{
-   if (_internal_has_multiple_players()) {
-      if (GetArenaForAllocation() == nullptr) {
-         delete _impl_.recipient_.multiple_players_;
-      }
-      clear_has_recipient();
-   }
+inline void Event::clear_multiple_players() {
+  if (_internal_has_multiple_players()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.recipient_.multiple_players_;
+    }
+    clear_has_recipient();
+  }
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *Event::release_multiple_players()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.multiple_players)
-   if (_internal_has_multiple_players()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *temp =
-              _impl_.recipient_.multiple_players_;
-      if (GetArenaForAllocation() != nullptr) {
-         temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-      }
-      _impl_.recipient_.multiple_players_ = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
+inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Event::release_multiple_players() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.multiple_players)
+  if (_internal_has_multiple_players()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* temp = _impl_.recipient_.multiple_players_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.recipient_.multiple_players_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers &
-Event::_internal_multiple_players() const
-{
-   return _internal_has_multiple_players()
-                  ? *_impl_.recipient_.multiple_players_
-                  : reinterpret_cast<::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers &>(
-                            ::minecpp::proto::event::clientbound::v1::
-                                    _RecipientMultiplePlayers_default_instance_);
+inline const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers& Event::_internal_multiple_players() const {
+  return _internal_has_multiple_players()
+      ? *_impl_.recipient_.multiple_players_
+      : reinterpret_cast< ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers&>(::minecpp::proto::event::clientbound::v1::_RecipientMultiplePlayers_default_instance_);
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers &
-Event::multiple_players() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.multiple_players)
-   return _internal_multiple_players();
+inline const ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers& Event::multiple_players() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.multiple_players)
+  return _internal_multiple_players();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *
-Event::unsafe_arena_release_multiple_players()
-{
-   // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.multiple_players)
-   if (_internal_has_multiple_players()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *temp =
-              _impl_.recipient_.multiple_players_;
-      _impl_.recipient_.multiple_players_ = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
+inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Event::unsafe_arena_release_multiple_players() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.multiple_players)
+  if (_internal_has_multiple_players()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* temp = _impl_.recipient_.multiple_players_;
+    _impl_.recipient_.multiple_players_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
 }
-
-inline void Event::unsafe_arena_set_allocated_multiple_players(
-        ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *multiple_players)
-{
-   clear_recipient();
-   if (multiple_players) {
-      set_has_multiple_players();
-      _impl_.recipient_.multiple_players_ = multiple_players;
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.multiple_players)
+inline void Event::unsafe_arena_set_allocated_multiple_players(::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* multiple_players) {
+  clear_recipient();
+  if (multiple_players) {
+    set_has_multiple_players();
+    _impl_.recipient_.multiple_players_ = multiple_players;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.multiple_players)
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *
-Event::_internal_mutable_multiple_players()
-{
-   if (!_internal_has_multiple_players()) {
-      clear_recipient();
-      set_has_multiple_players();
-      _impl_.recipient_.multiple_players_ =
-              CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers>(
-                      GetArenaForAllocation());
-   }
-   return _impl_.recipient_.multiple_players_;
+inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Event::_internal_mutable_multiple_players() {
+  if (!_internal_has_multiple_players()) {
+    clear_recipient();
+    set_has_multiple_players();
+    _impl_.recipient_.multiple_players_ = CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers >(GetArenaForAllocation());
+  }
+  return _impl_.recipient_.multiple_players_;
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *Event::mutable_multiple_players()
-{
-   ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers *_msg =
-           _internal_mutable_multiple_players();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.multiple_players)
-   return _msg;
+inline ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* Event::mutable_multiple_players() {
+  ::minecpp::proto::event::clientbound::v1::RecipientMultiplePlayers* _msg = _internal_mutable_multiple_players();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.multiple_players)
+  return _msg;
 }
 
 // .minecpp.proto.event.clientbound.v1.RecipientAllPlayers all_players = 4;
-inline bool Event::_internal_has_all_players() const
-{
-   return recipient_case() == kAllPlayers;
+inline bool Event::_internal_has_all_players() const {
+  return recipient_case() == kAllPlayers;
 }
-
-inline bool Event::has_all_players() const
-{
-   return _internal_has_all_players();
+inline bool Event::has_all_players() const {
+  return _internal_has_all_players();
 }
-
-inline void Event::set_has_all_players()
-{
-   _impl_._oneof_case_[0] = kAllPlayers;
+inline void Event::set_has_all_players() {
+  _impl_._oneof_case_[0] = kAllPlayers;
 }
-
-inline void Event::clear_all_players()
-{
-   if (_internal_has_all_players()) {
-      if (GetArenaForAllocation() == nullptr) {
-         delete _impl_.recipient_.all_players_;
-      }
-      clear_has_recipient();
-   }
+inline void Event::clear_all_players() {
+  if (_internal_has_all_players()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.recipient_.all_players_;
+    }
+    clear_has_recipient();
+  }
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *Event::release_all_players()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.all_players)
-   if (_internal_has_all_players()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *temp = _impl_.recipient_.all_players_;
-      if (GetArenaForAllocation() != nullptr) {
-         temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-      }
-      _impl_.recipient_.all_players_ = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
+inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* Event::release_all_players() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.all_players)
+  if (_internal_has_all_players()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* temp = _impl_.recipient_.all_players_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.recipient_.all_players_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers &
-Event::_internal_all_players() const
-{
-   return _internal_has_all_players()
-                  ? *_impl_.recipient_.all_players_
-                  : reinterpret_cast<::minecpp::proto::event::clientbound::v1::RecipientAllPlayers &>(
-                            ::minecpp::proto::event::clientbound::v1::_RecipientAllPlayers_default_instance_);
+inline const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers& Event::_internal_all_players() const {
+  return _internal_has_all_players()
+      ? *_impl_.recipient_.all_players_
+      : reinterpret_cast< ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers&>(::minecpp::proto::event::clientbound::v1::_RecipientAllPlayers_default_instance_);
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers &Event::all_players() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.all_players)
-   return _internal_all_players();
+inline const ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers& Event::all_players() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.all_players)
+  return _internal_all_players();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *
-Event::unsafe_arena_release_all_players()
-{
-   // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.all_players)
-   if (_internal_has_all_players()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *temp = _impl_.recipient_.all_players_;
-      _impl_.recipient_.all_players_                                      = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
+inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* Event::unsafe_arena_release_all_players() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.all_players)
+  if (_internal_has_all_players()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* temp = _impl_.recipient_.all_players_;
+    _impl_.recipient_.all_players_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
 }
-
-inline void Event::unsafe_arena_set_allocated_all_players(
-        ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *all_players)
-{
-   clear_recipient();
-   if (all_players) {
-      set_has_all_players();
-      _impl_.recipient_.all_players_ = all_players;
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.all_players)
+inline void Event::unsafe_arena_set_allocated_all_players(::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* all_players) {
+  clear_recipient();
+  if (all_players) {
+    set_has_all_players();
+    _impl_.recipient_.all_players_ = all_players;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.all_players)
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *Event::_internal_mutable_all_players()
-{
-   if (!_internal_has_all_players()) {
-      clear_recipient();
-      set_has_all_players();
-      _impl_.recipient_.all_players_ =
-              CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientAllPlayers>(
-                      GetArenaForAllocation());
-   }
-   return _impl_.recipient_.all_players_;
+inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* Event::_internal_mutable_all_players() {
+  if (!_internal_has_all_players()) {
+    clear_recipient();
+    set_has_all_players();
+    _impl_.recipient_.all_players_ = CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers >(GetArenaForAllocation());
+  }
+  return _impl_.recipient_.all_players_;
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *Event::mutable_all_players()
-{
-   ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers *_msg = _internal_mutable_all_players();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.all_players)
-   return _msg;
+inline ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* Event::mutable_all_players() {
+  ::minecpp::proto::event::clientbound::v1::RecipientAllPlayers* _msg = _internal_mutable_all_players();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.all_players)
+  return _msg;
 }
 
 // .minecpp.proto.event.clientbound.v1.RecipientExcluding excluding = 5;
-inline bool Event::_internal_has_excluding() const
-{
-   return recipient_case() == kExcluding;
+inline bool Event::_internal_has_excluding() const {
+  return recipient_case() == kExcluding;
+}
+inline bool Event::has_excluding() const {
+  return _internal_has_excluding();
+}
+inline void Event::set_has_excluding() {
+  _impl_._oneof_case_[0] = kExcluding;
+}
+inline void Event::clear_excluding() {
+  if (_internal_has_excluding()) {
+    if (GetArenaForAllocation() == nullptr) {
+      delete _impl_.recipient_.excluding_;
+    }
+    clear_has_recipient();
+  }
+}
+inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Event::release_excluding() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.excluding)
+  if (_internal_has_excluding()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientExcluding* temp = _impl_.recipient_.excluding_;
+    if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+    }
+    _impl_.recipient_.excluding_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline const ::minecpp::proto::event::clientbound::v1::RecipientExcluding& Event::_internal_excluding() const {
+  return _internal_has_excluding()
+      ? *_impl_.recipient_.excluding_
+      : reinterpret_cast< ::minecpp::proto::event::clientbound::v1::RecipientExcluding&>(::minecpp::proto::event::clientbound::v1::_RecipientExcluding_default_instance_);
+}
+inline const ::minecpp::proto::event::clientbound::v1::RecipientExcluding& Event::excluding() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.excluding)
+  return _internal_excluding();
+}
+inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Event::unsafe_arena_release_excluding() {
+  // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.excluding)
+  if (_internal_has_excluding()) {
+    clear_has_recipient();
+    ::minecpp::proto::event::clientbound::v1::RecipientExcluding* temp = _impl_.recipient_.excluding_;
+    _impl_.recipient_.excluding_ = nullptr;
+    return temp;
+  } else {
+    return nullptr;
+  }
+}
+inline void Event::unsafe_arena_set_allocated_excluding(::minecpp::proto::event::clientbound::v1::RecipientExcluding* excluding) {
+  clear_recipient();
+  if (excluding) {
+    set_has_excluding();
+    _impl_.recipient_.excluding_ = excluding;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.excluding)
+}
+inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Event::_internal_mutable_excluding() {
+  if (!_internal_has_excluding()) {
+    clear_recipient();
+    set_has_excluding();
+    _impl_.recipient_.excluding_ = CreateMaybeMessage< ::minecpp::proto::event::clientbound::v1::RecipientExcluding >(GetArenaForAllocation());
+  }
+  return _impl_.recipient_.excluding_;
+}
+inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding* Event::mutable_excluding() {
+  ::minecpp::proto::event::clientbound::v1::RecipientExcluding* _msg = _internal_mutable_excluding();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.excluding)
+  return _msg;
 }
 
-inline bool Event::has_excluding() const
-{
-   return _internal_has_excluding();
+inline bool Event::has_recipient() const {
+  return recipient_case() != RECIPIENT_NOT_SET;
 }
-
-inline void Event::set_has_excluding()
-{
-   _impl_._oneof_case_[0] = kExcluding;
+inline void Event::clear_has_recipient() {
+  _impl_._oneof_case_[0] = RECIPIENT_NOT_SET;
 }
-
-inline void Event::clear_excluding()
-{
-   if (_internal_has_excluding()) {
-      if (GetArenaForAllocation() == nullptr) {
-         delete _impl_.recipient_.excluding_;
-      }
-      clear_has_recipient();
-   }
+inline Event::RecipientCase Event::recipient_case() const {
+  return Event::RecipientCase(_impl_._oneof_case_[0]);
 }
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding *Event::release_excluding()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Event.excluding)
-   if (_internal_has_excluding()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientExcluding *temp = _impl_.recipient_.excluding_;
-      if (GetArenaForAllocation() != nullptr) {
-         temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-      }
-      _impl_.recipient_.excluding_ = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
-}
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientExcluding &Event::_internal_excluding() const
-{
-   return _internal_has_excluding()
-                  ? *_impl_.recipient_.excluding_
-                  : reinterpret_cast<::minecpp::proto::event::clientbound::v1::RecipientExcluding &>(
-                            ::minecpp::proto::event::clientbound::v1::_RecipientExcluding_default_instance_);
-}
-
-inline const ::minecpp::proto::event::clientbound::v1::RecipientExcluding &Event::excluding() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Event.excluding)
-   return _internal_excluding();
-}
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding *Event::unsafe_arena_release_excluding()
-{
-   // @@protoc_insertion_point(field_unsafe_arena_release:minecpp.proto.event.clientbound.v1.Event.excluding)
-   if (_internal_has_excluding()) {
-      clear_has_recipient();
-      ::minecpp::proto::event::clientbound::v1::RecipientExcluding *temp = _impl_.recipient_.excluding_;
-      _impl_.recipient_.excluding_                                       = nullptr;
-      return temp;
-   } else {
-      return nullptr;
-   }
-}
-
-inline void Event::unsafe_arena_set_allocated_excluding(
-        ::minecpp::proto::event::clientbound::v1::RecipientExcluding *excluding)
-{
-   clear_recipient();
-   if (excluding) {
-      set_has_excluding();
-      _impl_.recipient_.excluding_ = excluding;
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Event.excluding)
-}
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding *Event::_internal_mutable_excluding()
-{
-   if (!_internal_has_excluding()) {
-      clear_recipient();
-      set_has_excluding();
-      _impl_.recipient_.excluding_ =
-              CreateMaybeMessage<::minecpp::proto::event::clientbound::v1::RecipientExcluding>(
-                      GetArenaForAllocation());
-   }
-   return _impl_.recipient_.excluding_;
-}
-
-inline ::minecpp::proto::event::clientbound::v1::RecipientExcluding *Event::mutable_excluding()
-{
-   ::minecpp::proto::event::clientbound::v1::RecipientExcluding *_msg = _internal_mutable_excluding();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Event.excluding)
-   return _msg;
-}
-
-inline bool Event::has_recipient() const
-{
-   return recipient_case() != RECIPIENT_NOT_SET;
-}
-
-inline void Event::clear_has_recipient()
-{
-   _impl_._oneof_case_[0] = RECIPIENT_NOT_SET;
-}
-
-inline Event::RecipientCase Event::recipient_case() const
-{
-   return Event::RecipientCase(_impl_._oneof_case_[0]);
-}
-
 // -------------------------------------------------------------------
 
 // RecipientSinglePlayer
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool RecipientSinglePlayer::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool RecipientSinglePlayer::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool RecipientSinglePlayer::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool RecipientSinglePlayer::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RecipientSinglePlayer::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& RecipientSinglePlayer::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RecipientSinglePlayer::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& RecipientSinglePlayer::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
+  return _internal_player_id();
 }
-
-inline void
-RecipientSinglePlayer::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
+inline void RecipientSinglePlayer::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientSinglePlayer::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientSinglePlayer::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientSinglePlayer::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientSinglePlayer::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientSinglePlayer::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientSinglePlayer::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientSinglePlayer::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientSinglePlayer::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
+  return _msg;
 }
-
-inline void RecipientSinglePlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
+inline void RecipientSinglePlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.RecipientSinglePlayer.player_id)
 }
 
 // -------------------------------------------------------------------
@@ -10055,58 +7666,40 @@ inline void RecipientSinglePlayer::set_allocated_player_id(::minecpp::proto::pla
 // RecipientMultiplePlayers
 
 // repeated .minecpp.proto.player.v1.PlayerId player_ids = 1;
-inline int RecipientMultiplePlayers::_internal_player_ids_size() const
-{
-   return _impl_.player_ids_.size();
+inline int RecipientMultiplePlayers::_internal_player_ids_size() const {
+  return _impl_.player_ids_.size();
 }
-
-inline int RecipientMultiplePlayers::player_ids_size() const
-{
-   return _internal_player_ids_size();
+inline int RecipientMultiplePlayers::player_ids_size() const {
+  return _internal_player_ids_size();
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientMultiplePlayers::mutable_player_ids(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
-   return _impl_.player_ids_.Mutable(index);
+inline ::minecpp::proto::player::v1::PlayerId* RecipientMultiplePlayers::mutable_player_ids(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
+  return _impl_.player_ids_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::PlayerId> *
-RecipientMultiplePlayers::mutable_player_ids()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
-   return &_impl_.player_ids_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::PlayerId >*
+RecipientMultiplePlayers::mutable_player_ids() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
+  return &_impl_.player_ids_;
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &
-RecipientMultiplePlayers::_internal_player_ids(int index) const
-{
-   return _impl_.player_ids_.Get(index);
+inline const ::minecpp::proto::player::v1::PlayerId& RecipientMultiplePlayers::_internal_player_ids(int index) const {
+  return _impl_.player_ids_.Get(index);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RecipientMultiplePlayers::player_ids(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
-   return _internal_player_ids(index);
+inline const ::minecpp::proto::player::v1::PlayerId& RecipientMultiplePlayers::player_ids(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
+  return _internal_player_ids(index);
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientMultiplePlayers::_internal_add_player_ids()
-{
-   return _impl_.player_ids_.Add();
+inline ::minecpp::proto::player::v1::PlayerId* RecipientMultiplePlayers::_internal_add_player_ids() {
+  return _impl_.player_ids_.Add();
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientMultiplePlayers::add_player_ids()
-{
-   ::minecpp::proto::player::v1::PlayerId *_add = _internal_add_player_ids();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
-   return _add;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientMultiplePlayers::add_player_ids() {
+  ::minecpp::proto::player::v1::PlayerId* _add = _internal_add_player_ids();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::PlayerId> &
-RecipientMultiplePlayers::player_ids() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
-   return _impl_.player_ids_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::PlayerId >&
+RecipientMultiplePlayers::player_ids() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.RecipientMultiplePlayers.player_ids)
+  return _impl_.player_ids_;
 }
 
 // -------------------------------------------------------------------
@@ -10118,108 +7711,88 @@ RecipientMultiplePlayers::player_ids() const
 // RecipientExcluding
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool RecipientExcluding::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool RecipientExcluding::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool RecipientExcluding::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool RecipientExcluding::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RecipientExcluding::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& RecipientExcluding::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RecipientExcluding::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& RecipientExcluding::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
+  return _internal_player_id();
 }
-
-inline void
-RecipientExcluding::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
+inline void RecipientExcluding::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientExcluding::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientExcluding::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientExcluding::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientExcluding::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientExcluding::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientExcluding::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RecipientExcluding::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* RecipientExcluding::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
+  return _msg;
 }
-
-inline void RecipientExcluding::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
+inline void RecipientExcluding::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.RecipientExcluding.player_id)
 }
 
 // -------------------------------------------------------------------
@@ -10227,230 +7800,178 @@ inline void RecipientExcluding::set_allocated_player_id(::minecpp::proto::player
 // AddPlayer
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool AddPlayer::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool AddPlayer::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool AddPlayer::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool AddPlayer::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &AddPlayer::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& AddPlayer::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &AddPlayer::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& AddPlayer::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
+  return _internal_player_id();
 }
-
-inline void AddPlayer::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
+inline void AddPlayer::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *AddPlayer::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* AddPlayer::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *AddPlayer::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* AddPlayer::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *AddPlayer::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* AddPlayer::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *AddPlayer::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* AddPlayer::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
+  return _msg;
 }
-
-inline void AddPlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
+inline void AddPlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AddPlayer.player_id)
 }
 
 // string name = 2;
-inline void AddPlayer::clear_name()
-{
-   _impl_.name_.ClearToEmpty();
+inline void AddPlayer::clear_name() {
+  _impl_.name_.ClearToEmpty();
 }
-
-inline const std::string &AddPlayer::name() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.name)
-   return _internal_name();
+inline const std::string& AddPlayer::name() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.name)
+  return _internal_name();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void AddPlayer::set_name(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AddPlayer.name)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AddPlayer::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AddPlayer.name)
 }
-
-inline std::string *AddPlayer::mutable_name()
-{
-   std::string *_s = _internal_mutable_name();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AddPlayer.name)
-   return _s;
+inline std::string* AddPlayer::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AddPlayer.name)
+  return _s;
 }
-
-inline const std::string &AddPlayer::_internal_name() const
-{
-   return _impl_.name_.Get();
+inline const std::string& AddPlayer::_internal_name() const {
+  return _impl_.name_.Get();
 }
-
-inline void AddPlayer::_internal_set_name(const std::string &value)
-{
-
-   _impl_.name_.Set(value, GetArenaForAllocation());
+inline void AddPlayer::_internal_set_name(const std::string& value) {
+  
+  _impl_.name_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *AddPlayer::_internal_mutable_name()
-{
-
-   return _impl_.name_.Mutable(GetArenaForAllocation());
+inline std::string* AddPlayer::_internal_mutable_name() {
+  
+  return _impl_.name_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *AddPlayer::release_name()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AddPlayer.name)
-   return _impl_.name_.Release();
+inline std::string* AddPlayer::release_name() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AddPlayer.name)
+  return _impl_.name_.Release();
 }
-
-inline void AddPlayer::set_allocated_name(std::string *name)
-{
-   if (name != nullptr) {
-
-   } else {
-   }
-   _impl_.name_.SetAllocated(name, GetArenaForAllocation());
+inline void AddPlayer::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.name_.SetAllocated(name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.name_.IsDefault()) {
-      _impl_.name_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-      // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AddPlayer.name)
+  if (_impl_.name_.IsDefault()) {
+    _impl_.name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AddPlayer.name)
 }
 
 // .minecpp.proto.common.v1.GameMode game_mode = 3;
-inline void AddPlayer::clear_game_mode()
-{
-   _impl_.game_mode_ = 0;
+inline void AddPlayer::clear_game_mode() {
+  _impl_.game_mode_ = 0;
 }
-
-inline ::minecpp::proto::common::v1::GameMode AddPlayer::_internal_game_mode() const
-{
-   return static_cast<::minecpp::proto::common::v1::GameMode>(_impl_.game_mode_);
+inline ::minecpp::proto::common::v1::GameMode AddPlayer::_internal_game_mode() const {
+  return static_cast< ::minecpp::proto::common::v1::GameMode >(_impl_.game_mode_);
 }
-
-inline ::minecpp::proto::common::v1::GameMode AddPlayer::game_mode() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.game_mode)
-   return _internal_game_mode();
+inline ::minecpp::proto::common::v1::GameMode AddPlayer::game_mode() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.game_mode)
+  return _internal_game_mode();
 }
-
-inline void AddPlayer::_internal_set_game_mode(::minecpp::proto::common::v1::GameMode value)
-{
-
-   _impl_.game_mode_ = value;
+inline void AddPlayer::_internal_set_game_mode(::minecpp::proto::common::v1::GameMode value) {
+  
+  _impl_.game_mode_ = value;
 }
-
-inline void AddPlayer::set_game_mode(::minecpp::proto::common::v1::GameMode value)
-{
-   _internal_set_game_mode(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AddPlayer.game_mode)
+inline void AddPlayer::set_game_mode(::minecpp::proto::common::v1::GameMode value) {
+  _internal_set_game_mode(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AddPlayer.game_mode)
 }
 
 // uint32 ping = 4;
-inline void AddPlayer::clear_ping()
-{
-   _impl_.ping_ = 0u;
+inline void AddPlayer::clear_ping() {
+  _impl_.ping_ = 0u;
 }
-
-inline uint32_t AddPlayer::_internal_ping() const
-{
-   return _impl_.ping_;
+inline uint32_t AddPlayer::_internal_ping() const {
+  return _impl_.ping_;
 }
-
-inline uint32_t AddPlayer::ping() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.ping)
-   return _internal_ping();
+inline uint32_t AddPlayer::ping() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AddPlayer.ping)
+  return _internal_ping();
 }
-
-inline void AddPlayer::_internal_set_ping(uint32_t value)
-{
-
-   _impl_.ping_ = value;
+inline void AddPlayer::_internal_set_ping(uint32_t value) {
+  
+  _impl_.ping_ = value;
 }
-
-inline void AddPlayer::set_ping(uint32_t value)
-{
-   _internal_set_ping(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AddPlayer.ping)
+inline void AddPlayer::set_ping(uint32_t value) {
+  _internal_set_ping(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AddPlayer.ping)
 }
 
 // -------------------------------------------------------------------
@@ -10458,106 +7979,88 @@ inline void AddPlayer::set_ping(uint32_t value)
 // SpawnEntity
 
 // .minecpp.proto.entity.v1.Entity entity = 1;
-inline bool SpawnEntity::_internal_has_entity() const
-{
-   return this != internal_default_instance() && _impl_.entity_ != nullptr;
+inline bool SpawnEntity::_internal_has_entity() const {
+  return this != internal_default_instance() && _impl_.entity_ != nullptr;
 }
-
-inline bool SpawnEntity::has_entity() const
-{
-   return _internal_has_entity();
+inline bool SpawnEntity::has_entity() const {
+  return _internal_has_entity();
 }
-
-inline const ::minecpp::proto::entity::v1::Entity &SpawnEntity::_internal_entity() const
-{
-   const ::minecpp::proto::entity::v1::Entity *p = _impl_.entity_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::entity::v1::Entity &>(
-                                 ::minecpp::proto::entity::v1::_Entity_default_instance_);
+inline const ::minecpp::proto::entity::v1::Entity& SpawnEntity::_internal_entity() const {
+  const ::minecpp::proto::entity::v1::Entity* p = _impl_.entity_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Entity&>(
+      ::minecpp::proto::entity::v1::_Entity_default_instance_);
 }
-
-inline const ::minecpp::proto::entity::v1::Entity &SpawnEntity::entity() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
-   return _internal_entity();
+inline const ::minecpp::proto::entity::v1::Entity& SpawnEntity::entity() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
+  return _internal_entity();
 }
-
-inline void SpawnEntity::unsafe_arena_set_allocated_entity(::minecpp::proto::entity::v1::Entity *entity)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.entity_);
-   }
-   _impl_.entity_ = entity;
-   if (entity) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
+inline void SpawnEntity::unsafe_arena_set_allocated_entity(
+    ::minecpp::proto::entity::v1::Entity* entity) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.entity_);
+  }
+  _impl_.entity_ = entity;
+  if (entity) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
 }
-
-inline ::minecpp::proto::entity::v1::Entity *SpawnEntity::release_entity()
-{
-
-   ::minecpp::proto::entity::v1::Entity *temp = _impl_.entity_;
-   _impl_.entity_                             = nullptr;
+inline ::minecpp::proto::entity::v1::Entity* SpawnEntity::release_entity() {
+  
+  ::minecpp::proto::entity::v1::Entity* temp = _impl_.entity_;
+  _impl_.entity_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::Entity *SpawnEntity::unsafe_arena_release_entity()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
-
-   ::minecpp::proto::entity::v1::Entity *temp = _impl_.entity_;
-   _impl_.entity_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::entity::v1::Entity* SpawnEntity::unsafe_arena_release_entity() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
+  
+  ::minecpp::proto::entity::v1::Entity* temp = _impl_.entity_;
+  _impl_.entity_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::Entity *SpawnEntity::_internal_mutable_entity()
-{
-
-   if (_impl_.entity_ == nullptr) {
-      auto *p        = CreateMaybeMessage<::minecpp::proto::entity::v1::Entity>(GetArenaForAllocation());
-      _impl_.entity_ = p;
-   }
-   return _impl_.entity_;
+inline ::minecpp::proto::entity::v1::Entity* SpawnEntity::_internal_mutable_entity() {
+  
+  if (_impl_.entity_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Entity>(GetArenaForAllocation());
+    _impl_.entity_ = p;
+  }
+  return _impl_.entity_;
 }
-
-inline ::minecpp::proto::entity::v1::Entity *SpawnEntity::mutable_entity()
-{
-   ::minecpp::proto::entity::v1::Entity *_msg = _internal_mutable_entity();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
-   return _msg;
+inline ::minecpp::proto::entity::v1::Entity* SpawnEntity::mutable_entity() {
+  ::minecpp::proto::entity::v1::Entity* _msg = _internal_mutable_entity();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
+  return _msg;
 }
-
-inline void SpawnEntity::set_allocated_entity(::minecpp::proto::entity::v1::Entity *entity)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.entity_);
-   }
-   if (entity) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(entity));
-      if (message_arena != submessage_arena) {
-         entity = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, entity, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.entity_ = entity;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
+inline void SpawnEntity::set_allocated_entity(::minecpp::proto::entity::v1::Entity* entity) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.entity_);
+  }
+  if (entity) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(entity));
+    if (message_arena != submessage_arena) {
+      entity = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, entity, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.entity_ = entity;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnEntity.entity)
 }
 
 // -------------------------------------------------------------------
@@ -10565,211 +8068,173 @@ inline void SpawnEntity::set_allocated_entity(::minecpp::proto::entity::v1::Enti
 // SpawnPlayer
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool SpawnPlayer::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool SpawnPlayer::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool SpawnPlayer::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool SpawnPlayer::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &SpawnPlayer::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& SpawnPlayer::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &SpawnPlayer::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& SpawnPlayer::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
+  return _internal_player_id();
 }
-
-inline void
-SpawnPlayer::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
+inline void SpawnPlayer::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *SpawnPlayer::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* SpawnPlayer::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *SpawnPlayer::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* SpawnPlayer::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *SpawnPlayer::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* SpawnPlayer::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *SpawnPlayer::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* SpawnPlayer::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
+  return _msg;
 }
-
-inline void SpawnPlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
+inline void SpawnPlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.player_id)
 }
 
 // .minecpp.proto.entity.v1.PlayerEntity entity = 2;
-inline bool SpawnPlayer::_internal_has_entity() const
-{
-   return this != internal_default_instance() && _impl_.entity_ != nullptr;
+inline bool SpawnPlayer::_internal_has_entity() const {
+  return this != internal_default_instance() && _impl_.entity_ != nullptr;
 }
-
-inline bool SpawnPlayer::has_entity() const
-{
-   return _internal_has_entity();
+inline bool SpawnPlayer::has_entity() const {
+  return _internal_has_entity();
 }
-
-inline const ::minecpp::proto::entity::v1::PlayerEntity &SpawnPlayer::_internal_entity() const
-{
-   const ::minecpp::proto::entity::v1::PlayerEntity *p = _impl_.entity_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::entity::v1::PlayerEntity &>(
-                                 ::minecpp::proto::entity::v1::_PlayerEntity_default_instance_);
+inline const ::minecpp::proto::entity::v1::PlayerEntity& SpawnPlayer::_internal_entity() const {
+  const ::minecpp::proto::entity::v1::PlayerEntity* p = _impl_.entity_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::PlayerEntity&>(
+      ::minecpp::proto::entity::v1::_PlayerEntity_default_instance_);
 }
-
-inline const ::minecpp::proto::entity::v1::PlayerEntity &SpawnPlayer::entity() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
-   return _internal_entity();
+inline const ::minecpp::proto::entity::v1::PlayerEntity& SpawnPlayer::entity() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
+  return _internal_entity();
 }
-
-inline void SpawnPlayer::unsafe_arena_set_allocated_entity(::minecpp::proto::entity::v1::PlayerEntity *entity)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.entity_);
-   }
-   _impl_.entity_ = entity;
-   if (entity) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
+inline void SpawnPlayer::unsafe_arena_set_allocated_entity(
+    ::minecpp::proto::entity::v1::PlayerEntity* entity) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.entity_);
+  }
+  _impl_.entity_ = entity;
+  if (entity) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *SpawnPlayer::release_entity()
-{
-
-   ::minecpp::proto::entity::v1::PlayerEntity *temp = _impl_.entity_;
-   _impl_.entity_                                   = nullptr;
+inline ::minecpp::proto::entity::v1::PlayerEntity* SpawnPlayer::release_entity() {
+  
+  ::minecpp::proto::entity::v1::PlayerEntity* temp = _impl_.entity_;
+  _impl_.entity_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *SpawnPlayer::unsafe_arena_release_entity()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
-
-   ::minecpp::proto::entity::v1::PlayerEntity *temp = _impl_.entity_;
-   _impl_.entity_                                   = nullptr;
-   return temp;
+inline ::minecpp::proto::entity::v1::PlayerEntity* SpawnPlayer::unsafe_arena_release_entity() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
+  
+  ::minecpp::proto::entity::v1::PlayerEntity* temp = _impl_.entity_;
+  _impl_.entity_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *SpawnPlayer::_internal_mutable_entity()
-{
-
-   if (_impl_.entity_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::entity::v1::PlayerEntity>(GetArenaForAllocation());
-      _impl_.entity_ = p;
-   }
-   return _impl_.entity_;
+inline ::minecpp::proto::entity::v1::PlayerEntity* SpawnPlayer::_internal_mutable_entity() {
+  
+  if (_impl_.entity_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::PlayerEntity>(GetArenaForAllocation());
+    _impl_.entity_ = p;
+  }
+  return _impl_.entity_;
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *SpawnPlayer::mutable_entity()
-{
-   ::minecpp::proto::entity::v1::PlayerEntity *_msg = _internal_mutable_entity();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
-   return _msg;
+inline ::minecpp::proto::entity::v1::PlayerEntity* SpawnPlayer::mutable_entity() {
+  ::minecpp::proto::entity::v1::PlayerEntity* _msg = _internal_mutable_entity();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
+  return _msg;
 }
-
-inline void SpawnPlayer::set_allocated_entity(::minecpp::proto::entity::v1::PlayerEntity *entity)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.entity_);
-   }
-   if (entity) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(entity));
-      if (message_arena != submessage_arena) {
-         entity = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, entity, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.entity_ = entity;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
+inline void SpawnPlayer::set_allocated_entity(::minecpp::proto::entity::v1::PlayerEntity* entity) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.entity_);
+  }
+  if (entity) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(entity));
+    if (message_arena != submessage_arena) {
+      entity = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, entity, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.entity_ = entity;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SpawnPlayer.entity)
 }
 
 // -------------------------------------------------------------------
@@ -10777,269 +8242,213 @@ inline void SpawnPlayer::set_allocated_entity(::minecpp::proto::entity::v1::Play
 // EntityMove
 
 // uint32 entity_id = 1;
-inline void EntityMove::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void EntityMove::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t EntityMove::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t EntityMove::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t EntityMove::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.entity_id)
-   return _internal_entity_id();
+inline uint32_t EntityMove::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.entity_id)
+  return _internal_entity_id();
 }
-
-inline void EntityMove::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void EntityMove::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void EntityMove::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityMove.entity_id)
+inline void EntityMove::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityMove.entity_id)
 }
 
 // .minecpp.proto.common.v1.Vector3i movement = 2;
-inline bool EntityMove::_internal_has_movement() const
-{
-   return this != internal_default_instance() && _impl_.movement_ != nullptr;
+inline bool EntityMove::_internal_has_movement() const {
+  return this != internal_default_instance() && _impl_.movement_ != nullptr;
 }
-
-inline bool EntityMove::has_movement() const
-{
-   return _internal_has_movement();
+inline bool EntityMove::has_movement() const {
+  return _internal_has_movement();
 }
-
-inline const ::minecpp::proto::common::v1::Vector3i &EntityMove::_internal_movement() const
-{
-   const ::minecpp::proto::common::v1::Vector3i *p = _impl_.movement_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3i &>(
-                                 ::minecpp::proto::common::v1::_Vector3i_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3i& EntityMove::_internal_movement() const {
+  const ::minecpp::proto::common::v1::Vector3i* p = _impl_.movement_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3i&>(
+      ::minecpp::proto::common::v1::_Vector3i_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Vector3i &EntityMove::movement() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.movement)
-   return _internal_movement();
+inline const ::minecpp::proto::common::v1::Vector3i& EntityMove::movement() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.movement)
+  return _internal_movement();
 }
-
-inline void EntityMove::unsafe_arena_set_allocated_movement(::minecpp::proto::common::v1::Vector3i *movement)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.movement_);
-   }
-   _impl_.movement_ = movement;
-   if (movement) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.movement)
+inline void EntityMove::unsafe_arena_set_allocated_movement(
+    ::minecpp::proto::common::v1::Vector3i* movement) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.movement_);
+  }
+  _impl_.movement_ = movement;
+  if (movement) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.movement)
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *EntityMove::release_movement()
-{
-
-   ::minecpp::proto::common::v1::Vector3i *temp = _impl_.movement_;
-   _impl_.movement_                             = nullptr;
+inline ::minecpp::proto::common::v1::Vector3i* EntityMove::release_movement() {
+  
+  ::minecpp::proto::common::v1::Vector3i* temp = _impl_.movement_;
+  _impl_.movement_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *EntityMove::unsafe_arena_release_movement()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityMove.movement)
-
-   ::minecpp::proto::common::v1::Vector3i *temp = _impl_.movement_;
-   _impl_.movement_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Vector3i* EntityMove::unsafe_arena_release_movement() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityMove.movement)
+  
+  ::minecpp::proto::common::v1::Vector3i* temp = _impl_.movement_;
+  _impl_.movement_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *EntityMove::_internal_mutable_movement()
-{
-
-   if (_impl_.movement_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3i>(GetArenaForAllocation());
-      _impl_.movement_ = p;
-   }
-   return _impl_.movement_;
+inline ::minecpp::proto::common::v1::Vector3i* EntityMove::_internal_mutable_movement() {
+  
+  if (_impl_.movement_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3i>(GetArenaForAllocation());
+    _impl_.movement_ = p;
+  }
+  return _impl_.movement_;
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *EntityMove::mutable_movement()
-{
-   ::minecpp::proto::common::v1::Vector3i *_msg = _internal_mutable_movement();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityMove.movement)
-   return _msg;
+inline ::minecpp::proto::common::v1::Vector3i* EntityMove::mutable_movement() {
+  ::minecpp::proto::common::v1::Vector3i* _msg = _internal_mutable_movement();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityMove.movement)
+  return _msg;
 }
-
-inline void EntityMove::set_allocated_movement(::minecpp::proto::common::v1::Vector3i *movement)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.movement_);
-   }
-   if (movement) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(movement));
-      if (message_arena != submessage_arena) {
-         movement = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, movement,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.movement_ = movement;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.movement)
+inline void EntityMove::set_allocated_movement(::minecpp::proto::common::v1::Vector3i* movement) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.movement_);
+  }
+  if (movement) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(movement));
+    if (message_arena != submessage_arena) {
+      movement = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, movement, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.movement_ = movement;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.movement)
 }
 
 // .minecpp.proto.common.v1.Rotation rotation = 3;
-inline bool EntityMove::_internal_has_rotation() const
-{
-   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
+inline bool EntityMove::_internal_has_rotation() const {
+  return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
-
-inline bool EntityMove::has_rotation() const
-{
-   return _internal_has_rotation();
+inline bool EntityMove::has_rotation() const {
+  return _internal_has_rotation();
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &EntityMove::_internal_rotation() const
-{
-   const ::minecpp::proto::common::v1::Rotation *p = _impl_.rotation_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation &>(
-                                 ::minecpp::proto::common::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& EntityMove::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &EntityMove::rotation() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
-   return _internal_rotation();
+inline const ::minecpp::proto::common::v1::Rotation& EntityMove::rotation() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
+  return _internal_rotation();
 }
-
-inline void EntityMove::unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   _impl_.rotation_ = rotation;
-   if (rotation) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
+inline void EntityMove::unsafe_arena_set_allocated_rotation(
+    ::minecpp::proto::common::v1::Rotation* rotation) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  _impl_.rotation_ = rotation;
+  if (rotation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityMove::release_rotation()
-{
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::release_rotation() {
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityMove::unsafe_arena_release_rotation()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::unsafe_arena_release_rotation() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityMove::_internal_mutable_rotation()
-{
-
-   if (_impl_.rotation_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
-      _impl_.rotation_ = p;
-   }
-   return _impl_.rotation_;
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::_internal_mutable_rotation() {
+  
+  if (_impl_.rotation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
+    _impl_.rotation_ = p;
+  }
+  return _impl_.rotation_;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityMove::mutable_rotation()
-{
-   ::minecpp::proto::common::v1::Rotation *_msg = _internal_mutable_rotation();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
-   return _msg;
+inline ::minecpp::proto::common::v1::Rotation* EntityMove::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
+  return _msg;
 }
-
-inline void EntityMove::set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   if (rotation) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(rotation));
-      if (message_arena != submessage_arena) {
-         rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, rotation,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.rotation_ = rotation;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
+inline void EntityMove::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  if (rotation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rotation));
+    if (message_arena != submessage_arena) {
+      rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, rotation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.rotation_ = rotation;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityMove.rotation)
 }
 
 // bool is_on_ground = 4;
-inline void EntityMove::clear_is_on_ground()
-{
-   _impl_.is_on_ground_ = false;
+inline void EntityMove::clear_is_on_ground() {
+  _impl_.is_on_ground_ = false;
 }
-
-inline bool EntityMove::_internal_is_on_ground() const
-{
-   return _impl_.is_on_ground_;
+inline bool EntityMove::_internal_is_on_ground() const {
+  return _impl_.is_on_ground_;
 }
-
-inline bool EntityMove::is_on_ground() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.is_on_ground)
-   return _internal_is_on_ground();
+inline bool EntityMove::is_on_ground() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityMove.is_on_ground)
+  return _internal_is_on_ground();
 }
-
-inline void EntityMove::_internal_set_is_on_ground(bool value)
-{
-
-   _impl_.is_on_ground_ = value;
+inline void EntityMove::_internal_set_is_on_ground(bool value) {
+  
+  _impl_.is_on_ground_ = value;
 }
-
-inline void EntityMove::set_is_on_ground(bool value)
-{
-   _internal_set_is_on_ground(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityMove.is_on_ground)
+inline void EntityMove::set_is_on_ground(bool value) {
+  _internal_set_is_on_ground(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityMove.is_on_ground)
 }
 
 // -------------------------------------------------------------------
@@ -11047,241 +8456,193 @@ inline void EntityMove::set_is_on_ground(bool value)
 // EntityLook
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool EntityLook::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool EntityLook::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool EntityLook::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool EntityLook::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &EntityLook::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& EntityLook::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &EntityLook::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& EntityLook::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
+  return _internal_player_id();
 }
-
-inline void
-EntityLook::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
+inline void EntityLook::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *EntityLook::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* EntityLook::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *EntityLook::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* EntityLook::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *EntityLook::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* EntityLook::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *EntityLook::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* EntityLook::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
+  return _msg;
 }
-
-inline void EntityLook::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
+inline void EntityLook::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.player_id)
 }
 
 // uint32 entity_id = 2;
-inline void EntityLook::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void EntityLook::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t EntityLook::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t EntityLook::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t EntityLook::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.entity_id)
-   return _internal_entity_id();
+inline uint32_t EntityLook::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.entity_id)
+  return _internal_entity_id();
 }
-
-inline void EntityLook::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void EntityLook::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void EntityLook::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityLook.entity_id)
+inline void EntityLook::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.EntityLook.entity_id)
 }
 
 // .minecpp.proto.common.v1.Rotation rotation = 3;
-inline bool EntityLook::_internal_has_rotation() const
-{
-   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
+inline bool EntityLook::_internal_has_rotation() const {
+  return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
-
-inline bool EntityLook::has_rotation() const
-{
-   return _internal_has_rotation();
+inline bool EntityLook::has_rotation() const {
+  return _internal_has_rotation();
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &EntityLook::_internal_rotation() const
-{
-   const ::minecpp::proto::common::v1::Rotation *p = _impl_.rotation_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation &>(
-                                 ::minecpp::proto::common::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& EntityLook::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &EntityLook::rotation() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
-   return _internal_rotation();
+inline const ::minecpp::proto::common::v1::Rotation& EntityLook::rotation() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
+  return _internal_rotation();
 }
-
-inline void EntityLook::unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   _impl_.rotation_ = rotation;
-   if (rotation) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
+inline void EntityLook::unsafe_arena_set_allocated_rotation(
+    ::minecpp::proto::common::v1::Rotation* rotation) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  _impl_.rotation_ = rotation;
+  if (rotation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityLook::release_rotation()
-{
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::release_rotation() {
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityLook::unsafe_arena_release_rotation()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::unsafe_arena_release_rotation() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityLook::_internal_mutable_rotation()
-{
-
-   if (_impl_.rotation_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
-      _impl_.rotation_ = p;
-   }
-   return _impl_.rotation_;
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::_internal_mutable_rotation() {
+  
+  if (_impl_.rotation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
+    _impl_.rotation_ = p;
+  }
+  return _impl_.rotation_;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *EntityLook::mutable_rotation()
-{
-   ::minecpp::proto::common::v1::Rotation *_msg = _internal_mutable_rotation();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
-   return _msg;
+inline ::minecpp::proto::common::v1::Rotation* EntityLook::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
+  return _msg;
 }
-
-inline void EntityLook::set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   if (rotation) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(rotation));
-      if (message_arena != submessage_arena) {
-         rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, rotation,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.rotation_ = rotation;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
+inline void EntityLook::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  if (rotation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rotation));
+    if (message_arena != submessage_arena) {
+      rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, rotation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.rotation_ = rotation;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.EntityLook.rotation)
 }
 
 // -------------------------------------------------------------------
@@ -11289,213 +8650,173 @@ inline void EntityLook::set_allocated_rotation(::minecpp::proto::common::v1::Rot
 // PlayerPositionRotation
 
 // .minecpp.proto.common.v1.Vector3 position = 1;
-inline bool PlayerPositionRotation::_internal_has_position() const
-{
-   return this != internal_default_instance() && _impl_.position_ != nullptr;
+inline bool PlayerPositionRotation::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
-
-inline bool PlayerPositionRotation::has_position() const
-{
-   return _internal_has_position();
+inline bool PlayerPositionRotation::has_position() const {
+  return _internal_has_position();
 }
-
-inline const ::minecpp::proto::common::v1::Vector3 &PlayerPositionRotation::_internal_position() const
-{
-   const ::minecpp::proto::common::v1::Vector3 *p = _impl_.position_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3 &>(
-                                 ::minecpp::proto::common::v1::_Vector3_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3& PlayerPositionRotation::_internal_position() const {
+  const ::minecpp::proto::common::v1::Vector3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3&>(
+      ::minecpp::proto::common::v1::_Vector3_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Vector3 &PlayerPositionRotation::position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
-   return _internal_position();
+inline const ::minecpp::proto::common::v1::Vector3& PlayerPositionRotation::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
+  return _internal_position();
 }
-
-inline void
-PlayerPositionRotation::unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::Vector3 *position)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   _impl_.position_ = position;
-   if (position) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
+inline void PlayerPositionRotation::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::Vector3* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *PlayerPositionRotation::release_position()
-{
-
-   ::minecpp::proto::common::v1::Vector3 *temp = _impl_.position_;
-   _impl_.position_                            = nullptr;
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::release_position() {
+  
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *PlayerPositionRotation::unsafe_arena_release_position()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
-
-   ::minecpp::proto::common::v1::Vector3 *temp = _impl_.position_;
-   _impl_.position_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
+  
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *PlayerPositionRotation::_internal_mutable_position()
-{
-
-   if (_impl_.position_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
-      _impl_.position_ = p;
-   }
-   return _impl_.position_;
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *PlayerPositionRotation::mutable_position()
-{
-   ::minecpp::proto::common::v1::Vector3 *_msg = _internal_mutable_position();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
-   return _msg;
+inline ::minecpp::proto::common::v1::Vector3* PlayerPositionRotation::mutable_position() {
+  ::minecpp::proto::common::v1::Vector3* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
+  return _msg;
 }
-
-inline void PlayerPositionRotation::set_allocated_position(::minecpp::proto::common::v1::Vector3 *position)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   if (position) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(position));
-      if (message_arena != submessage_arena) {
-         position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, position,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.position_ = position;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
+inline void PlayerPositionRotation::set_allocated_position(::minecpp::proto::common::v1::Vector3* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.position)
 }
 
 // .minecpp.proto.common.v1.Rotation rotation = 2;
-inline bool PlayerPositionRotation::_internal_has_rotation() const
-{
-   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
+inline bool PlayerPositionRotation::_internal_has_rotation() const {
+  return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
-
-inline bool PlayerPositionRotation::has_rotation() const
-{
-   return _internal_has_rotation();
+inline bool PlayerPositionRotation::has_rotation() const {
+  return _internal_has_rotation();
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &PlayerPositionRotation::_internal_rotation() const
-{
-   const ::minecpp::proto::common::v1::Rotation *p = _impl_.rotation_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation &>(
-                                 ::minecpp::proto::common::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& PlayerPositionRotation::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &PlayerPositionRotation::rotation() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
-   return _internal_rotation();
+inline const ::minecpp::proto::common::v1::Rotation& PlayerPositionRotation::rotation() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
+  return _internal_rotation();
 }
-
-inline void
-PlayerPositionRotation::unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   _impl_.rotation_ = rotation;
-   if (rotation) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
+inline void PlayerPositionRotation::unsafe_arena_set_allocated_rotation(
+    ::minecpp::proto::common::v1::Rotation* rotation) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  _impl_.rotation_ = rotation;
+  if (rotation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
 }
-
-inline ::minecpp::proto::common::v1::Rotation *PlayerPositionRotation::release_rotation()
-{
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::release_rotation() {
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *PlayerPositionRotation::unsafe_arena_release_rotation()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::unsafe_arena_release_rotation() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *PlayerPositionRotation::_internal_mutable_rotation()
-{
-
-   if (_impl_.rotation_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
-      _impl_.rotation_ = p;
-   }
-   return _impl_.rotation_;
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::_internal_mutable_rotation() {
+  
+  if (_impl_.rotation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
+    _impl_.rotation_ = p;
+  }
+  return _impl_.rotation_;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *PlayerPositionRotation::mutable_rotation()
-{
-   ::minecpp::proto::common::v1::Rotation *_msg = _internal_mutable_rotation();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
-   return _msg;
+inline ::minecpp::proto::common::v1::Rotation* PlayerPositionRotation::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
+  return _msg;
 }
-
-inline void PlayerPositionRotation::set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   if (rotation) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(rotation));
-      if (message_arena != submessage_arena) {
-         rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, rotation,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.rotation_ = rotation;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
+inline void PlayerPositionRotation::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  if (rotation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rotation));
+    if (message_arena != submessage_arena) {
+      rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, rotation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.rotation_ = rotation;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.PlayerPositionRotation.rotation)
 }
 
 // -------------------------------------------------------------------
@@ -11503,61 +8824,43 @@ inline void PlayerPositionRotation::set_allocated_rotation(::minecpp::proto::com
 // SetSpawnPosition
 
 // uint64 position = 1;
-inline void SetSpawnPosition::clear_position()
-{
-   _impl_.position_ = uint64_t{0u};
+inline void SetSpawnPosition::clear_position() {
+  _impl_.position_ = uint64_t{0u};
 }
-
-inline uint64_t SetSpawnPosition::_internal_position() const
-{
-   return _impl_.position_;
+inline uint64_t SetSpawnPosition::_internal_position() const {
+  return _impl_.position_;
 }
-
-inline uint64_t SetSpawnPosition::position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetSpawnPosition.position)
-   return _internal_position();
+inline uint64_t SetSpawnPosition::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetSpawnPosition.position)
+  return _internal_position();
 }
-
-inline void SetSpawnPosition::_internal_set_position(uint64_t value)
-{
-
-   _impl_.position_ = value;
+inline void SetSpawnPosition::_internal_set_position(uint64_t value) {
+  
+  _impl_.position_ = value;
 }
-
-inline void SetSpawnPosition::set_position(uint64_t value)
-{
-   _internal_set_position(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetSpawnPosition.position)
+inline void SetSpawnPosition::set_position(uint64_t value) {
+  _internal_set_position(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetSpawnPosition.position)
 }
 
 // float angle = 2;
-inline void SetSpawnPosition::clear_angle()
-{
-   _impl_.angle_ = 0;
+inline void SetSpawnPosition::clear_angle() {
+  _impl_.angle_ = 0;
 }
-
-inline float SetSpawnPosition::_internal_angle() const
-{
-   return _impl_.angle_;
+inline float SetSpawnPosition::_internal_angle() const {
+  return _impl_.angle_;
 }
-
-inline float SetSpawnPosition::angle() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetSpawnPosition.angle)
-   return _internal_angle();
+inline float SetSpawnPosition::angle() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetSpawnPosition.angle)
+  return _internal_angle();
 }
-
-inline void SetSpawnPosition::_internal_set_angle(float value)
-{
-
-   _impl_.angle_ = value;
+inline void SetSpawnPosition::_internal_set_angle(float value) {
+  
+  _impl_.angle_ = value;
 }
-
-inline void SetSpawnPosition::set_angle(float value)
-{
-   _internal_set_angle(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetSpawnPosition.angle)
+inline void SetSpawnPosition::set_angle(float value) {
+  _internal_set_angle(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetSpawnPosition.angle)
 }
 
 // -------------------------------------------------------------------
@@ -11565,97 +8868,73 @@ inline void SetSpawnPosition::set_angle(float value)
 // Chat
 
 // string message = 1;
-inline void Chat::clear_message()
-{
-   _impl_.message_.ClearToEmpty();
+inline void Chat::clear_message() {
+  _impl_.message_.ClearToEmpty();
 }
-
-inline const std::string &Chat::message() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Chat.message)
-   return _internal_message();
+inline const std::string& Chat::message() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Chat.message)
+  return _internal_message();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void Chat::set_message(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Chat.message)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Chat::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Chat.message)
 }
-
-inline std::string *Chat::mutable_message()
-{
-   std::string *_s = _internal_mutable_message();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Chat.message)
-   return _s;
+inline std::string* Chat::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Chat.message)
+  return _s;
 }
-
-inline const std::string &Chat::_internal_message() const
-{
-   return _impl_.message_.Get();
+inline const std::string& Chat::_internal_message() const {
+  return _impl_.message_.Get();
 }
-
-inline void Chat::_internal_set_message(const std::string &value)
-{
-
-   _impl_.message_.Set(value, GetArenaForAllocation());
+inline void Chat::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *Chat::_internal_mutable_message()
-{
-
-   return _impl_.message_.Mutable(GetArenaForAllocation());
+inline std::string* Chat::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *Chat::release_message()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Chat.message)
-   return _impl_.message_.Release();
+inline std::string* Chat::release_message() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Chat.message)
+  return _impl_.message_.Release();
 }
-
-inline void Chat::set_allocated_message(std::string *message)
-{
-   if (message != nullptr) {
-
-   } else {
-   }
-   _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+inline void Chat::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.message_.IsDefault()) {
-      _impl_.message_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-      // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Chat.message)
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Chat.message)
 }
 
 // int32 type = 2;
-inline void Chat::clear_type()
-{
-   _impl_.type_ = 0;
+inline void Chat::clear_type() {
+  _impl_.type_ = 0;
 }
-
-inline int32_t Chat::_internal_type() const
-{
-   return _impl_.type_;
+inline int32_t Chat::_internal_type() const {
+  return _impl_.type_;
 }
-
-inline int32_t Chat::type() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Chat.type)
-   return _internal_type();
+inline int32_t Chat::type() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Chat.type)
+  return _internal_type();
 }
-
-inline void Chat::_internal_set_type(int32_t value)
-{
-
-   _impl_.type_ = value;
+inline void Chat::_internal_set_type(int32_t value) {
+  
+  _impl_.type_ = value;
 }
-
-inline void Chat::set_type(int32_t value)
-{
-   _internal_set_type(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Chat.type)
+inline void Chat::set_type(int32_t value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Chat.type)
 }
 
 // -------------------------------------------------------------------
@@ -11663,137 +8942,108 @@ inline void Chat::set_type(int32_t value)
 // RemovePlayer
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool RemovePlayer::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool RemovePlayer::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool RemovePlayer::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool RemovePlayer::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RemovePlayer::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& RemovePlayer::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &RemovePlayer::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& RemovePlayer::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
+  return _internal_player_id();
 }
-
-inline void
-RemovePlayer::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
+inline void RemovePlayer::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RemovePlayer::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* RemovePlayer::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RemovePlayer::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* RemovePlayer::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RemovePlayer::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* RemovePlayer::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *RemovePlayer::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* RemovePlayer::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
+  return _msg;
 }
-
-inline void RemovePlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
+inline void RemovePlayer::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.RemovePlayer.player_id)
 }
 
 // uint32 entity_id = 2;
-inline void RemovePlayer::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void RemovePlayer::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t RemovePlayer::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t RemovePlayer::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t RemovePlayer::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RemovePlayer.entity_id)
-   return _internal_entity_id();
+inline uint32_t RemovePlayer::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RemovePlayer.entity_id)
+  return _internal_entity_id();
 }
-
-inline void RemovePlayer::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void RemovePlayer::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void RemovePlayer::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.RemovePlayer.entity_id)
+inline void RemovePlayer::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.RemovePlayer.entity_id)
 }
 
 // -------------------------------------------------------------------
@@ -11801,61 +9051,43 @@ inline void RemovePlayer::set_entity_id(uint32_t value)
 // UpdateBlock
 
 // uint64 block_position = 1;
-inline void UpdateBlock::clear_block_position()
-{
-   _impl_.block_position_ = uint64_t{0u};
+inline void UpdateBlock::clear_block_position() {
+  _impl_.block_position_ = uint64_t{0u};
 }
-
-inline uint64_t UpdateBlock::_internal_block_position() const
-{
-   return _impl_.block_position_;
+inline uint64_t UpdateBlock::_internal_block_position() const {
+  return _impl_.block_position_;
 }
-
-inline uint64_t UpdateBlock::block_position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlock.block_position)
-   return _internal_block_position();
+inline uint64_t UpdateBlock::block_position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlock.block_position)
+  return _internal_block_position();
 }
-
-inline void UpdateBlock::_internal_set_block_position(uint64_t value)
-{
-
-   _impl_.block_position_ = value;
+inline void UpdateBlock::_internal_set_block_position(uint64_t value) {
+  
+  _impl_.block_position_ = value;
 }
-
-inline void UpdateBlock::set_block_position(uint64_t value)
-{
-   _internal_set_block_position(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdateBlock.block_position)
+inline void UpdateBlock::set_block_position(uint64_t value) {
+  _internal_set_block_position(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdateBlock.block_position)
 }
 
 // uint32 state = 2;
-inline void UpdateBlock::clear_state()
-{
-   _impl_.state_ = 0u;
+inline void UpdateBlock::clear_state() {
+  _impl_.state_ = 0u;
 }
-
-inline uint32_t UpdateBlock::_internal_state() const
-{
-   return _impl_.state_;
+inline uint32_t UpdateBlock::_internal_state() const {
+  return _impl_.state_;
 }
-
-inline uint32_t UpdateBlock::state() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlock.state)
-   return _internal_state();
+inline uint32_t UpdateBlock::state() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlock.state)
+  return _internal_state();
 }
-
-inline void UpdateBlock::_internal_set_state(uint32_t value)
-{
-
-   _impl_.state_ = value;
+inline void UpdateBlock::_internal_set_state(uint32_t value) {
+  
+  _impl_.state_ = value;
 }
-
-inline void UpdateBlock::set_state(uint32_t value)
-{
-   _internal_set_state(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdateBlock.state)
+inline void UpdateBlock::set_state(uint32_t value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdateBlock.state)
 }
 
 // -------------------------------------------------------------------
@@ -11863,61 +9095,43 @@ inline void UpdateBlock::set_state(uint32_t value)
 // AnimateEntity
 
 // uint32 entity_id = 1;
-inline void AnimateEntity::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void AnimateEntity::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t AnimateEntity::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t AnimateEntity::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t AnimateEntity::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AnimateEntity.entity_id)
-   return _internal_entity_id();
+inline uint32_t AnimateEntity::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AnimateEntity.entity_id)
+  return _internal_entity_id();
 }
-
-inline void AnimateEntity::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void AnimateEntity::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void AnimateEntity::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AnimateEntity.entity_id)
+inline void AnimateEntity::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AnimateEntity.entity_id)
 }
 
 // .minecpp.proto.common.v1.EntityAnimation animation = 2;
-inline void AnimateEntity::clear_animation()
-{
-   _impl_.animation_ = 0;
+inline void AnimateEntity::clear_animation() {
+  _impl_.animation_ = 0;
 }
-
-inline ::minecpp::proto::common::v1::EntityAnimation AnimateEntity::_internal_animation() const
-{
-   return static_cast<::minecpp::proto::common::v1::EntityAnimation>(_impl_.animation_);
+inline ::minecpp::proto::common::v1::EntityAnimation AnimateEntity::_internal_animation() const {
+  return static_cast< ::minecpp::proto::common::v1::EntityAnimation >(_impl_.animation_);
 }
-
-inline ::minecpp::proto::common::v1::EntityAnimation AnimateEntity::animation() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AnimateEntity.animation)
-   return _internal_animation();
+inline ::minecpp::proto::common::v1::EntityAnimation AnimateEntity::animation() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AnimateEntity.animation)
+  return _internal_animation();
 }
-
-inline void AnimateEntity::_internal_set_animation(::minecpp::proto::common::v1::EntityAnimation value)
-{
-
-   _impl_.animation_ = value;
+inline void AnimateEntity::_internal_set_animation(::minecpp::proto::common::v1::EntityAnimation value) {
+  
+  _impl_.animation_ = value;
 }
-
-inline void AnimateEntity::set_animation(::minecpp::proto::common::v1::EntityAnimation value)
-{
-   _internal_set_animation(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AnimateEntity.animation)
+inline void AnimateEntity::set_animation(::minecpp::proto::common::v1::EntityAnimation value) {
+  _internal_set_animation(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AnimateEntity.animation)
 }
 
 // -------------------------------------------------------------------
@@ -11925,32 +9139,23 @@ inline void AnimateEntity::set_animation(::minecpp::proto::common::v1::EntityAni
 // AcknowledgeBlockChange
 
 // int32 sequence_id = 1;
-inline void AcknowledgeBlockChange::clear_sequence_id()
-{
-   _impl_.sequence_id_ = 0;
+inline void AcknowledgeBlockChange::clear_sequence_id() {
+  _impl_.sequence_id_ = 0;
 }
-
-inline int32_t AcknowledgeBlockChange::_internal_sequence_id() const
-{
-   return _impl_.sequence_id_;
+inline int32_t AcknowledgeBlockChange::_internal_sequence_id() const {
+  return _impl_.sequence_id_;
 }
-
-inline int32_t AcknowledgeBlockChange::sequence_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange.sequence_id)
-   return _internal_sequence_id();
+inline int32_t AcknowledgeBlockChange::sequence_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange.sequence_id)
+  return _internal_sequence_id();
 }
-
-inline void AcknowledgeBlockChange::_internal_set_sequence_id(int32_t value)
-{
-
-   _impl_.sequence_id_ = value;
+inline void AcknowledgeBlockChange::_internal_set_sequence_id(int32_t value) {
+  
+  _impl_.sequence_id_ = value;
 }
-
-inline void AcknowledgeBlockChange::set_sequence_id(int32_t value)
-{
-   _internal_set_sequence_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange.sequence_id)
+inline void AcknowledgeBlockChange::set_sequence_id(int32_t value) {
+  _internal_set_sequence_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.AcknowledgeBlockChange.sequence_id)
 }
 
 // -------------------------------------------------------------------
@@ -11958,163 +9163,125 @@ inline void AcknowledgeBlockChange::set_sequence_id(int32_t value)
 // LoadTerrain
 
 // .minecpp.proto.common.v1.ChunkPosition central_chunk = 1;
-inline bool LoadTerrain::_internal_has_central_chunk() const
-{
-   return this != internal_default_instance() && _impl_.central_chunk_ != nullptr;
+inline bool LoadTerrain::_internal_has_central_chunk() const {
+  return this != internal_default_instance() && _impl_.central_chunk_ != nullptr;
 }
-
-inline bool LoadTerrain::has_central_chunk() const
-{
-   return _internal_has_central_chunk();
+inline bool LoadTerrain::has_central_chunk() const {
+  return _internal_has_central_chunk();
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &LoadTerrain::_internal_central_chunk() const
-{
-   const ::minecpp::proto::common::v1::ChunkPosition *p = _impl_.central_chunk_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition &>(
-                                 ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
+inline const ::minecpp::proto::common::v1::ChunkPosition& LoadTerrain::_internal_central_chunk() const {
+  const ::minecpp::proto::common::v1::ChunkPosition* p = _impl_.central_chunk_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition&>(
+      ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &LoadTerrain::central_chunk() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
-   return _internal_central_chunk();
+inline const ::minecpp::proto::common::v1::ChunkPosition& LoadTerrain::central_chunk() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
+  return _internal_central_chunk();
 }
-
 inline void LoadTerrain::unsafe_arena_set_allocated_central_chunk(
-        ::minecpp::proto::common::v1::ChunkPosition *central_chunk)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.central_chunk_);
-   }
-   _impl_.central_chunk_ = central_chunk;
-   if (central_chunk) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
+    ::minecpp::proto::common::v1::ChunkPosition* central_chunk) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.central_chunk_);
+  }
+  _impl_.central_chunk_ = central_chunk;
+  if (central_chunk) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::release_central_chunk()
-{
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.central_chunk_;
-   _impl_.central_chunk_                             = nullptr;
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::release_central_chunk() {
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.central_chunk_;
+  _impl_.central_chunk_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::unsafe_arena_release_central_chunk()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.central_chunk_;
-   _impl_.central_chunk_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::unsafe_arena_release_central_chunk() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.central_chunk_;
+  _impl_.central_chunk_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::_internal_mutable_central_chunk()
-{
-
-   if (_impl_.central_chunk_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
-      _impl_.central_chunk_ = p;
-   }
-   return _impl_.central_chunk_;
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::_internal_mutable_central_chunk() {
+  
+  if (_impl_.central_chunk_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
+    _impl_.central_chunk_ = p;
+  }
+  return _impl_.central_chunk_;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::mutable_central_chunk()
-{
-   ::minecpp::proto::common::v1::ChunkPosition *_msg = _internal_mutable_central_chunk();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
-   return _msg;
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::mutable_central_chunk() {
+  ::minecpp::proto::common::v1::ChunkPosition* _msg = _internal_mutable_central_chunk();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
+  return _msg;
 }
-
-inline void
-LoadTerrain::set_allocated_central_chunk(::minecpp::proto::common::v1::ChunkPosition *central_chunk)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.central_chunk_);
-   }
-   if (central_chunk) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(central_chunk));
-      if (message_arena != submessage_arena) {
-         central_chunk = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, central_chunk,
-                                                                            submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.central_chunk_ = central_chunk;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
+inline void LoadTerrain::set_allocated_central_chunk(::minecpp::proto::common::v1::ChunkPosition* central_chunk) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.central_chunk_);
+  }
+  if (central_chunk) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(central_chunk));
+    if (message_arena != submessage_arena) {
+      central_chunk = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, central_chunk, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.central_chunk_ = central_chunk;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.LoadTerrain.central_chunk)
 }
 
 // repeated .minecpp.proto.common.v1.ChunkPosition coords = 2;
-inline int LoadTerrain::_internal_coords_size() const
-{
-   return _impl_.coords_.size();
+inline int LoadTerrain::_internal_coords_size() const {
+  return _impl_.coords_.size();
 }
-
-inline int LoadTerrain::coords_size() const
-{
-   return _internal_coords_size();
+inline int LoadTerrain::coords_size() const {
+  return _internal_coords_size();
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::mutable_coords(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
-   return _impl_.coords_.Mutable(index);
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::mutable_coords(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
+  return _impl_.coords_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::common::v1::ChunkPosition> *
-LoadTerrain::mutable_coords()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
-   return &_impl_.coords_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::ChunkPosition >*
+LoadTerrain::mutable_coords() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
+  return &_impl_.coords_;
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &LoadTerrain::_internal_coords(int index) const
-{
-   return _impl_.coords_.Get(index);
+inline const ::minecpp::proto::common::v1::ChunkPosition& LoadTerrain::_internal_coords(int index) const {
+  return _impl_.coords_.Get(index);
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &LoadTerrain::coords(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
-   return _internal_coords(index);
+inline const ::minecpp::proto::common::v1::ChunkPosition& LoadTerrain::coords(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
+  return _internal_coords(index);
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::_internal_add_coords()
-{
-   return _impl_.coords_.Add();
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::_internal_add_coords() {
+  return _impl_.coords_.Add();
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *LoadTerrain::add_coords()
-{
-   ::minecpp::proto::common::v1::ChunkPosition *_add = _internal_add_coords();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
-   return _add;
+inline ::minecpp::proto::common::v1::ChunkPosition* LoadTerrain::add_coords() {
+  ::minecpp::proto::common::v1::ChunkPosition* _add = _internal_add_coords();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::common::v1::ChunkPosition> &
-LoadTerrain::coords() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
-   return _impl_.coords_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::common::v1::ChunkPosition >&
+LoadTerrain::coords() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.LoadTerrain.coords)
+  return _impl_.coords_;
 }
 
 // -------------------------------------------------------------------
@@ -12122,32 +9289,23 @@ LoadTerrain::coords() const
 // TransferPlayer
 
 // uint64 engine_instance_id = 2;
-inline void TransferPlayer::clear_engine_instance_id()
-{
-   _impl_.engine_instance_id_ = uint64_t{0u};
+inline void TransferPlayer::clear_engine_instance_id() {
+  _impl_.engine_instance_id_ = uint64_t{0u};
 }
-
-inline uint64_t TransferPlayer::_internal_engine_instance_id() const
-{
-   return _impl_.engine_instance_id_;
+inline uint64_t TransferPlayer::_internal_engine_instance_id() const {
+  return _impl_.engine_instance_id_;
 }
-
-inline uint64_t TransferPlayer::engine_instance_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TransferPlayer.engine_instance_id)
-   return _internal_engine_instance_id();
+inline uint64_t TransferPlayer::engine_instance_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TransferPlayer.engine_instance_id)
+  return _internal_engine_instance_id();
 }
-
-inline void TransferPlayer::_internal_set_engine_instance_id(uint64_t value)
-{
-
-   _impl_.engine_instance_id_ = value;
+inline void TransferPlayer::_internal_set_engine_instance_id(uint64_t value) {
+  
+  _impl_.engine_instance_id_ = value;
 }
-
-inline void TransferPlayer::set_engine_instance_id(uint64_t value)
-{
-   _internal_set_engine_instance_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.TransferPlayer.engine_instance_id)
+inline void TransferPlayer::set_engine_instance_id(uint64_t value) {
+  _internal_set_engine_instance_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.TransferPlayer.engine_instance_id)
 }
 
 // -------------------------------------------------------------------
@@ -12155,282 +9313,208 @@ inline void TransferPlayer::set_engine_instance_id(uint64_t value)
 // UpdatePlayerAbilities
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool UpdatePlayerAbilities::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool UpdatePlayerAbilities::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool UpdatePlayerAbilities::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool UpdatePlayerAbilities::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &UpdatePlayerAbilities::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& UpdatePlayerAbilities::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &UpdatePlayerAbilities::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& UpdatePlayerAbilities::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
+  return _internal_player_id();
 }
-
-inline void
-UpdatePlayerAbilities::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
+inline void UpdatePlayerAbilities::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UpdatePlayerAbilities::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* UpdatePlayerAbilities::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UpdatePlayerAbilities::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* UpdatePlayerAbilities::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UpdatePlayerAbilities::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* UpdatePlayerAbilities::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UpdatePlayerAbilities::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* UpdatePlayerAbilities::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
+  return _msg;
 }
-
-inline void UpdatePlayerAbilities::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
+inline void UpdatePlayerAbilities::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.player_id)
 }
 
 // bool invulnerable = 2;
-inline void UpdatePlayerAbilities::clear_invulnerable()
-{
-   _impl_.invulnerable_ = false;
+inline void UpdatePlayerAbilities::clear_invulnerable() {
+  _impl_.invulnerable_ = false;
 }
-
-inline bool UpdatePlayerAbilities::_internal_invulnerable() const
-{
-   return _impl_.invulnerable_;
+inline bool UpdatePlayerAbilities::_internal_invulnerable() const {
+  return _impl_.invulnerable_;
 }
-
-inline bool UpdatePlayerAbilities::invulnerable() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.invulnerable)
-   return _internal_invulnerable();
+inline bool UpdatePlayerAbilities::invulnerable() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.invulnerable)
+  return _internal_invulnerable();
 }
-
-inline void UpdatePlayerAbilities::_internal_set_invulnerable(bool value)
-{
-
-   _impl_.invulnerable_ = value;
+inline void UpdatePlayerAbilities::_internal_set_invulnerable(bool value) {
+  
+  _impl_.invulnerable_ = value;
 }
-
-inline void UpdatePlayerAbilities::set_invulnerable(bool value)
-{
-   _internal_set_invulnerable(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.invulnerable)
+inline void UpdatePlayerAbilities::set_invulnerable(bool value) {
+  _internal_set_invulnerable(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.invulnerable)
 }
 
 // bool is_flying = 3;
-inline void UpdatePlayerAbilities::clear_is_flying()
-{
-   _impl_.is_flying_ = false;
+inline void UpdatePlayerAbilities::clear_is_flying() {
+  _impl_.is_flying_ = false;
 }
-
-inline bool UpdatePlayerAbilities::_internal_is_flying() const
-{
-   return _impl_.is_flying_;
+inline bool UpdatePlayerAbilities::_internal_is_flying() const {
+  return _impl_.is_flying_;
 }
-
-inline bool UpdatePlayerAbilities::is_flying() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.is_flying)
-   return _internal_is_flying();
+inline bool UpdatePlayerAbilities::is_flying() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.is_flying)
+  return _internal_is_flying();
 }
-
-inline void UpdatePlayerAbilities::_internal_set_is_flying(bool value)
-{
-
-   _impl_.is_flying_ = value;
+inline void UpdatePlayerAbilities::_internal_set_is_flying(bool value) {
+  
+  _impl_.is_flying_ = value;
 }
-
-inline void UpdatePlayerAbilities::set_is_flying(bool value)
-{
-   _internal_set_is_flying(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.is_flying)
+inline void UpdatePlayerAbilities::set_is_flying(bool value) {
+  _internal_set_is_flying(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.is_flying)
 }
 
 // bool allow_flying = 4;
-inline void UpdatePlayerAbilities::clear_allow_flying()
-{
-   _impl_.allow_flying_ = false;
+inline void UpdatePlayerAbilities::clear_allow_flying() {
+  _impl_.allow_flying_ = false;
 }
-
-inline bool UpdatePlayerAbilities::_internal_allow_flying() const
-{
-   return _impl_.allow_flying_;
+inline bool UpdatePlayerAbilities::_internal_allow_flying() const {
+  return _impl_.allow_flying_;
 }
-
-inline bool UpdatePlayerAbilities::allow_flying() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.allow_flying)
-   return _internal_allow_flying();
+inline bool UpdatePlayerAbilities::allow_flying() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.allow_flying)
+  return _internal_allow_flying();
 }
-
-inline void UpdatePlayerAbilities::_internal_set_allow_flying(bool value)
-{
-
-   _impl_.allow_flying_ = value;
+inline void UpdatePlayerAbilities::_internal_set_allow_flying(bool value) {
+  
+  _impl_.allow_flying_ = value;
 }
-
-inline void UpdatePlayerAbilities::set_allow_flying(bool value)
-{
-   _internal_set_allow_flying(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.allow_flying)
+inline void UpdatePlayerAbilities::set_allow_flying(bool value) {
+  _internal_set_allow_flying(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.allow_flying)
 }
 
 // bool creative_mode = 5;
-inline void UpdatePlayerAbilities::clear_creative_mode()
-{
-   _impl_.creative_mode_ = false;
+inline void UpdatePlayerAbilities::clear_creative_mode() {
+  _impl_.creative_mode_ = false;
 }
-
-inline bool UpdatePlayerAbilities::_internal_creative_mode() const
-{
-   return _impl_.creative_mode_;
+inline bool UpdatePlayerAbilities::_internal_creative_mode() const {
+  return _impl_.creative_mode_;
 }
-
-inline bool UpdatePlayerAbilities::creative_mode() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.creative_mode)
-   return _internal_creative_mode();
+inline bool UpdatePlayerAbilities::creative_mode() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.creative_mode)
+  return _internal_creative_mode();
 }
-
-inline void UpdatePlayerAbilities::_internal_set_creative_mode(bool value)
-{
-
-   _impl_.creative_mode_ = value;
+inline void UpdatePlayerAbilities::_internal_set_creative_mode(bool value) {
+  
+  _impl_.creative_mode_ = value;
 }
-
-inline void UpdatePlayerAbilities::set_creative_mode(bool value)
-{
-   _internal_set_creative_mode(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.creative_mode)
+inline void UpdatePlayerAbilities::set_creative_mode(bool value) {
+  _internal_set_creative_mode(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.creative_mode)
 }
 
 // float walk_speed = 7;
-inline void UpdatePlayerAbilities::clear_walk_speed()
-{
-   _impl_.walk_speed_ = 0;
+inline void UpdatePlayerAbilities::clear_walk_speed() {
+  _impl_.walk_speed_ = 0;
 }
-
-inline float UpdatePlayerAbilities::_internal_walk_speed() const
-{
-   return _impl_.walk_speed_;
+inline float UpdatePlayerAbilities::_internal_walk_speed() const {
+  return _impl_.walk_speed_;
 }
-
-inline float UpdatePlayerAbilities::walk_speed() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.walk_speed)
-   return _internal_walk_speed();
+inline float UpdatePlayerAbilities::walk_speed() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.walk_speed)
+  return _internal_walk_speed();
 }
-
-inline void UpdatePlayerAbilities::_internal_set_walk_speed(float value)
-{
-
-   _impl_.walk_speed_ = value;
+inline void UpdatePlayerAbilities::_internal_set_walk_speed(float value) {
+  
+  _impl_.walk_speed_ = value;
 }
-
-inline void UpdatePlayerAbilities::set_walk_speed(float value)
-{
-   _internal_set_walk_speed(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.walk_speed)
+inline void UpdatePlayerAbilities::set_walk_speed(float value) {
+  _internal_set_walk_speed(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.walk_speed)
 }
 
 // float fly_speed = 8;
-inline void UpdatePlayerAbilities::clear_fly_speed()
-{
-   _impl_.fly_speed_ = 0;
+inline void UpdatePlayerAbilities::clear_fly_speed() {
+  _impl_.fly_speed_ = 0;
 }
-
-inline float UpdatePlayerAbilities::_internal_fly_speed() const
-{
-   return _impl_.fly_speed_;
+inline float UpdatePlayerAbilities::_internal_fly_speed() const {
+  return _impl_.fly_speed_;
 }
-
-inline float UpdatePlayerAbilities::fly_speed() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.fly_speed)
-   return _internal_fly_speed();
+inline float UpdatePlayerAbilities::fly_speed() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.fly_speed)
+  return _internal_fly_speed();
 }
-
-inline void UpdatePlayerAbilities::_internal_set_fly_speed(float value)
-{
-
-   _impl_.fly_speed_ = value;
+inline void UpdatePlayerAbilities::_internal_set_fly_speed(float value) {
+  
+  _impl_.fly_speed_ = value;
 }
-
-inline void UpdatePlayerAbilities::set_fly_speed(float value)
-{
-   _internal_set_fly_speed(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.fly_speed)
+inline void UpdatePlayerAbilities::set_fly_speed(float value) {
+  _internal_set_fly_speed(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.UpdatePlayerAbilities.fly_speed)
 }
 
 // -------------------------------------------------------------------
@@ -12438,214 +9522,173 @@ inline void UpdatePlayerAbilities::set_fly_speed(float value)
 // UnloadChunk
 
 // .minecpp.proto.player.v1.PlayerId player_id = 1;
-inline bool UnloadChunk::_internal_has_player_id() const
-{
-   return this != internal_default_instance() && _impl_.player_id_ != nullptr;
+inline bool UnloadChunk::_internal_has_player_id() const {
+  return this != internal_default_instance() && _impl_.player_id_ != nullptr;
 }
-
-inline bool UnloadChunk::has_player_id() const
-{
-   return _internal_has_player_id();
+inline bool UnloadChunk::has_player_id() const {
+  return _internal_has_player_id();
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &UnloadChunk::_internal_player_id() const
-{
-   const ::minecpp::proto::player::v1::PlayerId *p = _impl_.player_id_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId &>(
-                                 ::minecpp::proto::player::v1::_PlayerId_default_instance_);
+inline const ::minecpp::proto::player::v1::PlayerId& UnloadChunk::_internal_player_id() const {
+  const ::minecpp::proto::player::v1::PlayerId* p = _impl_.player_id_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::PlayerId&>(
+      ::minecpp::proto::player::v1::_PlayerId_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::PlayerId &UnloadChunk::player_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
-   return _internal_player_id();
+inline const ::minecpp::proto::player::v1::PlayerId& UnloadChunk::player_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
+  return _internal_player_id();
 }
-
-inline void
-UnloadChunk::unsafe_arena_set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   _impl_.player_id_ = player_id;
-   if (player_id) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
+inline void UnloadChunk::unsafe_arena_set_allocated_player_id(
+    ::minecpp::proto::player::v1::PlayerId* player_id) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  _impl_.player_id_ = player_id;
+  if (player_id) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UnloadChunk::release_player_id()
-{
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
+inline ::minecpp::proto::player::v1::PlayerId* UnloadChunk::release_player_id() {
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UnloadChunk::unsafe_arena_release_player_id()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
-
-   ::minecpp::proto::player::v1::PlayerId *temp = _impl_.player_id_;
-   _impl_.player_id_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::PlayerId* UnloadChunk::unsafe_arena_release_player_id() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
+  
+  ::minecpp::proto::player::v1::PlayerId* temp = _impl_.player_id_;
+  _impl_.player_id_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UnloadChunk::_internal_mutable_player_id()
-{
-
-   if (_impl_.player_id_ == nullptr) {
-      auto *p           = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
-      _impl_.player_id_ = p;
-   }
-   return _impl_.player_id_;
+inline ::minecpp::proto::player::v1::PlayerId* UnloadChunk::_internal_mutable_player_id() {
+  
+  if (_impl_.player_id_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::PlayerId>(GetArenaForAllocation());
+    _impl_.player_id_ = p;
+  }
+  return _impl_.player_id_;
 }
-
-inline ::minecpp::proto::player::v1::PlayerId *UnloadChunk::mutable_player_id()
-{
-   ::minecpp::proto::player::v1::PlayerId *_msg = _internal_mutable_player_id();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
-   return _msg;
+inline ::minecpp::proto::player::v1::PlayerId* UnloadChunk::mutable_player_id() {
+  ::minecpp::proto::player::v1::PlayerId* _msg = _internal_mutable_player_id();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
+  return _msg;
 }
-
-inline void UnloadChunk::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId *player_id)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_id_);
-   }
-   if (player_id) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player_id));
-      if (message_arena != submessage_arena) {
-         player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player_id,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_id_ = player_id;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
+inline void UnloadChunk::set_allocated_player_id(::minecpp::proto::player::v1::PlayerId* player_id) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_id_);
+  }
+  if (player_id) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player_id));
+    if (message_arena != submessage_arena) {
+      player_id = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player_id, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_id_ = player_id;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.player_id)
 }
 
 // .minecpp.proto.common.v1.ChunkPosition chunk_position = 2;
-inline bool UnloadChunk::_internal_has_chunk_position() const
-{
-   return this != internal_default_instance() && _impl_.chunk_position_ != nullptr;
+inline bool UnloadChunk::_internal_has_chunk_position() const {
+  return this != internal_default_instance() && _impl_.chunk_position_ != nullptr;
 }
-
-inline bool UnloadChunk::has_chunk_position() const
-{
-   return _internal_has_chunk_position();
+inline bool UnloadChunk::has_chunk_position() const {
+  return _internal_has_chunk_position();
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &UnloadChunk::_internal_chunk_position() const
-{
-   const ::minecpp::proto::common::v1::ChunkPosition *p = _impl_.chunk_position_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition &>(
-                                 ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
+inline const ::minecpp::proto::common::v1::ChunkPosition& UnloadChunk::_internal_chunk_position() const {
+  const ::minecpp::proto::common::v1::ChunkPosition* p = _impl_.chunk_position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition&>(
+      ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &UnloadChunk::chunk_position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
-   return _internal_chunk_position();
+inline const ::minecpp::proto::common::v1::ChunkPosition& UnloadChunk::chunk_position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
+  return _internal_chunk_position();
 }
-
 inline void UnloadChunk::unsafe_arena_set_allocated_chunk_position(
-        ::minecpp::proto::common::v1::ChunkPosition *chunk_position)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.chunk_position_);
-   }
-   _impl_.chunk_position_ = chunk_position;
-   if (chunk_position) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
+    ::minecpp::proto::common::v1::ChunkPosition* chunk_position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.chunk_position_);
+  }
+  _impl_.chunk_position_ = chunk_position;
+  if (chunk_position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *UnloadChunk::release_chunk_position()
-{
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.chunk_position_;
-   _impl_.chunk_position_                            = nullptr;
+inline ::minecpp::proto::common::v1::ChunkPosition* UnloadChunk::release_chunk_position() {
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.chunk_position_;
+  _impl_.chunk_position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *UnloadChunk::unsafe_arena_release_chunk_position()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.chunk_position_;
-   _impl_.chunk_position_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::ChunkPosition* UnloadChunk::unsafe_arena_release_chunk_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.chunk_position_;
+  _impl_.chunk_position_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *UnloadChunk::_internal_mutable_chunk_position()
-{
-
-   if (_impl_.chunk_position_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
-      _impl_.chunk_position_ = p;
-   }
-   return _impl_.chunk_position_;
+inline ::minecpp::proto::common::v1::ChunkPosition* UnloadChunk::_internal_mutable_chunk_position() {
+  
+  if (_impl_.chunk_position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
+    _impl_.chunk_position_ = p;
+  }
+  return _impl_.chunk_position_;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *UnloadChunk::mutable_chunk_position()
-{
-   ::minecpp::proto::common::v1::ChunkPosition *_msg = _internal_mutable_chunk_position();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
-   return _msg;
+inline ::minecpp::proto::common::v1::ChunkPosition* UnloadChunk::mutable_chunk_position() {
+  ::minecpp::proto::common::v1::ChunkPosition* _msg = _internal_mutable_chunk_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
+  return _msg;
 }
-
-inline void
-UnloadChunk::set_allocated_chunk_position(::minecpp::proto::common::v1::ChunkPosition *chunk_position)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.chunk_position_);
-   }
-   if (chunk_position) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(chunk_position));
-      if (message_arena != submessage_arena) {
-         chunk_position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, chunk_position,
-                                                                             submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.chunk_position_ = chunk_position;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
+inline void UnloadChunk::set_allocated_chunk_position(::minecpp::proto::common::v1::ChunkPosition* chunk_position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.chunk_position_);
+  }
+  if (chunk_position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(chunk_position));
+    if (message_arena != submessage_arena) {
+      chunk_position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, chunk_position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.chunk_position_ = chunk_position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.UnloadChunk.chunk_position)
 }
 
 // -------------------------------------------------------------------
@@ -12653,57 +9696,40 @@ UnloadChunk::set_allocated_chunk_position(::minecpp::proto::common::v1::ChunkPos
 // PlayerList
 
 // repeated .minecpp.proto.player.v1.Status list = 1;
-inline int PlayerList::_internal_list_size() const
-{
-   return _impl_.list_.size();
+inline int PlayerList::_internal_list_size() const {
+  return _impl_.list_.size();
 }
-
-inline int PlayerList::list_size() const
-{
-   return _internal_list_size();
+inline int PlayerList::list_size() const {
+  return _internal_list_size();
 }
-
-inline ::minecpp::proto::player::v1::Status *PlayerList::mutable_list(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerList.list)
-   return _impl_.list_.Mutable(index);
+inline ::minecpp::proto::player::v1::Status* PlayerList::mutable_list(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.PlayerList.list)
+  return _impl_.list_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::Status> *
-PlayerList::mutable_list()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.PlayerList.list)
-   return &_impl_.list_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::Status >*
+PlayerList::mutable_list() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.PlayerList.list)
+  return &_impl_.list_;
 }
-
-inline const ::minecpp::proto::player::v1::Status &PlayerList::_internal_list(int index) const
-{
-   return _impl_.list_.Get(index);
+inline const ::minecpp::proto::player::v1::Status& PlayerList::_internal_list(int index) const {
+  return _impl_.list_.Get(index);
 }
-
-inline const ::minecpp::proto::player::v1::Status &PlayerList::list(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerList.list)
-   return _internal_list(index);
+inline const ::minecpp::proto::player::v1::Status& PlayerList::list(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.PlayerList.list)
+  return _internal_list(index);
 }
-
-inline ::minecpp::proto::player::v1::Status *PlayerList::_internal_add_list()
-{
-   return _impl_.list_.Add();
+inline ::minecpp::proto::player::v1::Status* PlayerList::_internal_add_list() {
+  return _impl_.list_.Add();
 }
-
-inline ::minecpp::proto::player::v1::Status *PlayerList::add_list()
-{
-   ::minecpp::proto::player::v1::Status *_add = _internal_add_list();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.PlayerList.list)
-   return _add;
+inline ::minecpp::proto::player::v1::Status* PlayerList::add_list() {
+  ::minecpp::proto::player::v1::Status* _add = _internal_add_list();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.PlayerList.list)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::player::v1::Status> &
-PlayerList::list() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.PlayerList.list)
-   return _impl_.list_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::player::v1::Status >&
+PlayerList::list() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.PlayerList.list)
+  return _impl_.list_;
 }
 
 // -------------------------------------------------------------------
@@ -12711,112 +9737,77 @@ PlayerList::list() const
 // EntityList
 
 // repeated .minecpp.proto.entity.v1.Entity entities = 1;
-inline int EntityList::_internal_entities_size() const
-{
-   return _impl_.entities_.size();
+inline int EntityList::_internal_entities_size() const {
+  return _impl_.entities_.size();
 }
-
-inline int EntityList::entities_size() const
-{
-   return _internal_entities_size();
+inline int EntityList::entities_size() const {
+  return _internal_entities_size();
 }
-
-inline ::minecpp::proto::entity::v1::Entity *EntityList::mutable_entities(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityList.entities)
-   return _impl_.entities_.Mutable(index);
+inline ::minecpp::proto::entity::v1::Entity* EntityList::mutable_entities(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityList.entities)
+  return _impl_.entities_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::Entity> *
-EntityList::mutable_entities()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.EntityList.entities)
-   return &_impl_.entities_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::Entity >*
+EntityList::mutable_entities() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.EntityList.entities)
+  return &_impl_.entities_;
 }
-
-inline const ::minecpp::proto::entity::v1::Entity &EntityList::_internal_entities(int index) const
-{
-   return _impl_.entities_.Get(index);
+inline const ::minecpp::proto::entity::v1::Entity& EntityList::_internal_entities(int index) const {
+  return _impl_.entities_.Get(index);
 }
-
-inline const ::minecpp::proto::entity::v1::Entity &EntityList::entities(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityList.entities)
-   return _internal_entities(index);
+inline const ::minecpp::proto::entity::v1::Entity& EntityList::entities(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityList.entities)
+  return _internal_entities(index);
 }
-
-inline ::minecpp::proto::entity::v1::Entity *EntityList::_internal_add_entities()
-{
-   return _impl_.entities_.Add();
+inline ::minecpp::proto::entity::v1::Entity* EntityList::_internal_add_entities() {
+  return _impl_.entities_.Add();
 }
-
-inline ::minecpp::proto::entity::v1::Entity *EntityList::add_entities()
-{
-   ::minecpp::proto::entity::v1::Entity *_add = _internal_add_entities();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.EntityList.entities)
-   return _add;
+inline ::minecpp::proto::entity::v1::Entity* EntityList::add_entities() {
+  ::minecpp::proto::entity::v1::Entity* _add = _internal_add_entities();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.EntityList.entities)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::Entity> &
-EntityList::entities() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.EntityList.entities)
-   return _impl_.entities_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::Entity >&
+EntityList::entities() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.EntityList.entities)
+  return _impl_.entities_;
 }
 
 // repeated .minecpp.proto.entity.v1.PlayerEntity player_entities = 2;
-inline int EntityList::_internal_player_entities_size() const
-{
-   return _impl_.player_entities_.size();
+inline int EntityList::_internal_player_entities_size() const {
+  return _impl_.player_entities_.size();
 }
-
-inline int EntityList::player_entities_size() const
-{
-   return _internal_player_entities_size();
+inline int EntityList::player_entities_size() const {
+  return _internal_player_entities_size();
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *EntityList::mutable_player_entities(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
-   return _impl_.player_entities_.Mutable(index);
+inline ::minecpp::proto::entity::v1::PlayerEntity* EntityList::mutable_player_entities(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
+  return _impl_.player_entities_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::PlayerEntity> *
-EntityList::mutable_player_entities()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
-   return &_impl_.player_entities_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::PlayerEntity >*
+EntityList::mutable_player_entities() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
+  return &_impl_.player_entities_;
 }
-
-inline const ::minecpp::proto::entity::v1::PlayerEntity &
-EntityList::_internal_player_entities(int index) const
-{
-   return _impl_.player_entities_.Get(index);
+inline const ::minecpp::proto::entity::v1::PlayerEntity& EntityList::_internal_player_entities(int index) const {
+  return _impl_.player_entities_.Get(index);
 }
-
-inline const ::minecpp::proto::entity::v1::PlayerEntity &EntityList::player_entities(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
-   return _internal_player_entities(index);
+inline const ::minecpp::proto::entity::v1::PlayerEntity& EntityList::player_entities(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
+  return _internal_player_entities(index);
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *EntityList::_internal_add_player_entities()
-{
-   return _impl_.player_entities_.Add();
+inline ::minecpp::proto::entity::v1::PlayerEntity* EntityList::_internal_add_player_entities() {
+  return _impl_.player_entities_.Add();
 }
-
-inline ::minecpp::proto::entity::v1::PlayerEntity *EntityList::add_player_entities()
-{
-   ::minecpp::proto::entity::v1::PlayerEntity *_add = _internal_add_player_entities();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
-   return _add;
+inline ::minecpp::proto::entity::v1::PlayerEntity* EntityList::add_player_entities() {
+  ::minecpp::proto::entity::v1::PlayerEntity* _add = _internal_add_player_entities();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::entity::v1::PlayerEntity> &
-EntityList::player_entities() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
-   return _impl_.player_entities_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::entity::v1::PlayerEntity >&
+EntityList::player_entities() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.EntityList.player_entities)
+  return _impl_.player_entities_;
 }
 
 // -------------------------------------------------------------------
@@ -12824,137 +9815,108 @@ EntityList::player_entities() const
 // SetEntityVelocity
 
 // uint32 entity_id = 1;
-inline void SetEntityVelocity::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void SetEntityVelocity::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t SetEntityVelocity::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t SetEntityVelocity::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t SetEntityVelocity::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityVelocity.entity_id)
-   return _internal_entity_id();
+inline uint32_t SetEntityVelocity::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityVelocity.entity_id)
+  return _internal_entity_id();
 }
-
-inline void SetEntityVelocity::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void SetEntityVelocity::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void SetEntityVelocity::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetEntityVelocity.entity_id)
+inline void SetEntityVelocity::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetEntityVelocity.entity_id)
 }
 
 // .minecpp.proto.common.v1.Vector3i velocity = 2;
-inline bool SetEntityVelocity::_internal_has_velocity() const
-{
-   return this != internal_default_instance() && _impl_.velocity_ != nullptr;
+inline bool SetEntityVelocity::_internal_has_velocity() const {
+  return this != internal_default_instance() && _impl_.velocity_ != nullptr;
 }
-
-inline bool SetEntityVelocity::has_velocity() const
-{
-   return _internal_has_velocity();
+inline bool SetEntityVelocity::has_velocity() const {
+  return _internal_has_velocity();
 }
-
-inline const ::minecpp::proto::common::v1::Vector3i &SetEntityVelocity::_internal_velocity() const
-{
-   const ::minecpp::proto::common::v1::Vector3i *p = _impl_.velocity_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3i &>(
-                                 ::minecpp::proto::common::v1::_Vector3i_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3i& SetEntityVelocity::_internal_velocity() const {
+  const ::minecpp::proto::common::v1::Vector3i* p = _impl_.velocity_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3i&>(
+      ::minecpp::proto::common::v1::_Vector3i_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Vector3i &SetEntityVelocity::velocity() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
-   return _internal_velocity();
+inline const ::minecpp::proto::common::v1::Vector3i& SetEntityVelocity::velocity() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
+  return _internal_velocity();
 }
-
-inline void
-SetEntityVelocity::unsafe_arena_set_allocated_velocity(::minecpp::proto::common::v1::Vector3i *velocity)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.velocity_);
-   }
-   _impl_.velocity_ = velocity;
-   if (velocity) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
+inline void SetEntityVelocity::unsafe_arena_set_allocated_velocity(
+    ::minecpp::proto::common::v1::Vector3i* velocity) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.velocity_);
+  }
+  _impl_.velocity_ = velocity;
+  if (velocity) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *SetEntityVelocity::release_velocity()
-{
-
-   ::minecpp::proto::common::v1::Vector3i *temp = _impl_.velocity_;
-   _impl_.velocity_                             = nullptr;
+inline ::minecpp::proto::common::v1::Vector3i* SetEntityVelocity::release_velocity() {
+  
+  ::minecpp::proto::common::v1::Vector3i* temp = _impl_.velocity_;
+  _impl_.velocity_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *SetEntityVelocity::unsafe_arena_release_velocity()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
-
-   ::minecpp::proto::common::v1::Vector3i *temp = _impl_.velocity_;
-   _impl_.velocity_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Vector3i* SetEntityVelocity::unsafe_arena_release_velocity() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
+  
+  ::minecpp::proto::common::v1::Vector3i* temp = _impl_.velocity_;
+  _impl_.velocity_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *SetEntityVelocity::_internal_mutable_velocity()
-{
-
-   if (_impl_.velocity_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3i>(GetArenaForAllocation());
-      _impl_.velocity_ = p;
-   }
-   return _impl_.velocity_;
+inline ::minecpp::proto::common::v1::Vector3i* SetEntityVelocity::_internal_mutable_velocity() {
+  
+  if (_impl_.velocity_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3i>(GetArenaForAllocation());
+    _impl_.velocity_ = p;
+  }
+  return _impl_.velocity_;
 }
-
-inline ::minecpp::proto::common::v1::Vector3i *SetEntityVelocity::mutable_velocity()
-{
-   ::minecpp::proto::common::v1::Vector3i *_msg = _internal_mutable_velocity();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
-   return _msg;
+inline ::minecpp::proto::common::v1::Vector3i* SetEntityVelocity::mutable_velocity() {
+  ::minecpp::proto::common::v1::Vector3i* _msg = _internal_mutable_velocity();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
+  return _msg;
 }
-
-inline void SetEntityVelocity::set_allocated_velocity(::minecpp::proto::common::v1::Vector3i *velocity)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.velocity_);
-   }
-   if (velocity) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(velocity));
-      if (message_arena != submessage_arena) {
-         velocity = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, velocity,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.velocity_ = velocity;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
+inline void SetEntityVelocity::set_allocated_velocity(::minecpp::proto::common::v1::Vector3i* velocity) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.velocity_);
+  }
+  if (velocity) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(velocity));
+    if (message_arena != submessage_arena) {
+      velocity = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, velocity, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.velocity_ = velocity;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityVelocity.velocity)
 }
 
 // -------------------------------------------------------------------
@@ -12962,316 +9924,258 @@ inline void SetEntityVelocity::set_allocated_velocity(::minecpp::proto::common::
 // AcceptPlayer
 
 // .minecpp.proto.common.v1.Gameplay gameplay = 1;
-inline bool AcceptPlayer::_internal_has_gameplay() const
-{
-   return this != internal_default_instance() && _impl_.gameplay_ != nullptr;
+inline bool AcceptPlayer::_internal_has_gameplay() const {
+  return this != internal_default_instance() && _impl_.gameplay_ != nullptr;
 }
-
-inline bool AcceptPlayer::has_gameplay() const
-{
-   return _internal_has_gameplay();
+inline bool AcceptPlayer::has_gameplay() const {
+  return _internal_has_gameplay();
 }
-
-inline const ::minecpp::proto::common::v1::Gameplay &AcceptPlayer::_internal_gameplay() const
-{
-   const ::minecpp::proto::common::v1::Gameplay *p = _impl_.gameplay_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Gameplay &>(
-                                 ::minecpp::proto::common::v1::_Gameplay_default_instance_);
+inline const ::minecpp::proto::common::v1::Gameplay& AcceptPlayer::_internal_gameplay() const {
+  const ::minecpp::proto::common::v1::Gameplay* p = _impl_.gameplay_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Gameplay&>(
+      ::minecpp::proto::common::v1::_Gameplay_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Gameplay &AcceptPlayer::gameplay() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
-   return _internal_gameplay();
+inline const ::minecpp::proto::common::v1::Gameplay& AcceptPlayer::gameplay() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
+  return _internal_gameplay();
 }
-
-inline void
-AcceptPlayer::unsafe_arena_set_allocated_gameplay(::minecpp::proto::common::v1::Gameplay *gameplay)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.gameplay_);
-   }
-   _impl_.gameplay_ = gameplay;
-   if (gameplay) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
+inline void AcceptPlayer::unsafe_arena_set_allocated_gameplay(
+    ::minecpp::proto::common::v1::Gameplay* gameplay) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.gameplay_);
+  }
+  _impl_.gameplay_ = gameplay;
+  if (gameplay) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
 }
-
-inline ::minecpp::proto::common::v1::Gameplay *AcceptPlayer::release_gameplay()
-{
-
-   ::minecpp::proto::common::v1::Gameplay *temp = _impl_.gameplay_;
-   _impl_.gameplay_                             = nullptr;
+inline ::minecpp::proto::common::v1::Gameplay* AcceptPlayer::release_gameplay() {
+  
+  ::minecpp::proto::common::v1::Gameplay* temp = _impl_.gameplay_;
+  _impl_.gameplay_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Gameplay *AcceptPlayer::unsafe_arena_release_gameplay()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
-
-   ::minecpp::proto::common::v1::Gameplay *temp = _impl_.gameplay_;
-   _impl_.gameplay_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Gameplay* AcceptPlayer::unsafe_arena_release_gameplay() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
+  
+  ::minecpp::proto::common::v1::Gameplay* temp = _impl_.gameplay_;
+  _impl_.gameplay_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Gameplay *AcceptPlayer::_internal_mutable_gameplay()
-{
-
-   if (_impl_.gameplay_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Gameplay>(GetArenaForAllocation());
-      _impl_.gameplay_ = p;
-   }
-   return _impl_.gameplay_;
+inline ::minecpp::proto::common::v1::Gameplay* AcceptPlayer::_internal_mutable_gameplay() {
+  
+  if (_impl_.gameplay_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Gameplay>(GetArenaForAllocation());
+    _impl_.gameplay_ = p;
+  }
+  return _impl_.gameplay_;
 }
-
-inline ::minecpp::proto::common::v1::Gameplay *AcceptPlayer::mutable_gameplay()
-{
-   ::minecpp::proto::common::v1::Gameplay *_msg = _internal_mutable_gameplay();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
-   return _msg;
+inline ::minecpp::proto::common::v1::Gameplay* AcceptPlayer::mutable_gameplay() {
+  ::minecpp::proto::common::v1::Gameplay* _msg = _internal_mutable_gameplay();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
+  return _msg;
 }
-
-inline void AcceptPlayer::set_allocated_gameplay(::minecpp::proto::common::v1::Gameplay *gameplay)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.gameplay_);
-   }
-   if (gameplay) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(gameplay));
-      if (message_arena != submessage_arena) {
-         gameplay = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, gameplay,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.gameplay_ = gameplay;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
+inline void AcceptPlayer::set_allocated_gameplay(::minecpp::proto::common::v1::Gameplay* gameplay) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.gameplay_);
+  }
+  if (gameplay) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(gameplay));
+    if (message_arena != submessage_arena) {
+      gameplay = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, gameplay, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.gameplay_ = gameplay;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.gameplay)
 }
 
 // .minecpp.proto.entity.v1.Abilities abilities = 2;
-inline bool AcceptPlayer::_internal_has_abilities() const
-{
-   return this != internal_default_instance() && _impl_.abilities_ != nullptr;
+inline bool AcceptPlayer::_internal_has_abilities() const {
+  return this != internal_default_instance() && _impl_.abilities_ != nullptr;
 }
-
-inline bool AcceptPlayer::has_abilities() const
-{
-   return _internal_has_abilities();
+inline bool AcceptPlayer::has_abilities() const {
+  return _internal_has_abilities();
 }
-
-inline const ::minecpp::proto::entity::v1::Abilities &AcceptPlayer::_internal_abilities() const
-{
-   const ::minecpp::proto::entity::v1::Abilities *p = _impl_.abilities_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::entity::v1::Abilities &>(
-                                 ::minecpp::proto::entity::v1::_Abilities_default_instance_);
+inline const ::minecpp::proto::entity::v1::Abilities& AcceptPlayer::_internal_abilities() const {
+  const ::minecpp::proto::entity::v1::Abilities* p = _impl_.abilities_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Abilities&>(
+      ::minecpp::proto::entity::v1::_Abilities_default_instance_);
 }
-
-inline const ::minecpp::proto::entity::v1::Abilities &AcceptPlayer::abilities() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
-   return _internal_abilities();
+inline const ::minecpp::proto::entity::v1::Abilities& AcceptPlayer::abilities() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
+  return _internal_abilities();
 }
-
-inline void
-AcceptPlayer::unsafe_arena_set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.abilities_);
-   }
-   _impl_.abilities_ = abilities;
-   if (abilities) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
+inline void AcceptPlayer::unsafe_arena_set_allocated_abilities(
+    ::minecpp::proto::entity::v1::Abilities* abilities) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  _impl_.abilities_ = abilities;
+  if (abilities) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *AcceptPlayer::release_abilities()
-{
-
-   ::minecpp::proto::entity::v1::Abilities *temp = _impl_.abilities_;
-   _impl_.abilities_                             = nullptr;
+inline ::minecpp::proto::entity::v1::Abilities* AcceptPlayer::release_abilities() {
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *AcceptPlayer::unsafe_arena_release_abilities()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
-
-   ::minecpp::proto::entity::v1::Abilities *temp = _impl_.abilities_;
-   _impl_.abilities_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::entity::v1::Abilities* AcceptPlayer::unsafe_arena_release_abilities() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *AcceptPlayer::_internal_mutable_abilities()
-{
-
-   if (_impl_.abilities_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(GetArenaForAllocation());
-      _impl_.abilities_ = p;
-   }
-   return _impl_.abilities_;
+inline ::minecpp::proto::entity::v1::Abilities* AcceptPlayer::_internal_mutable_abilities() {
+  
+  if (_impl_.abilities_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(GetArenaForAllocation());
+    _impl_.abilities_ = p;
+  }
+  return _impl_.abilities_;
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *AcceptPlayer::mutable_abilities()
-{
-   ::minecpp::proto::entity::v1::Abilities *_msg = _internal_mutable_abilities();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
-   return _msg;
+inline ::minecpp::proto::entity::v1::Abilities* AcceptPlayer::mutable_abilities() {
+  ::minecpp::proto::entity::v1::Abilities* _msg = _internal_mutable_abilities();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
+  return _msg;
 }
-
-inline void AcceptPlayer::set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.abilities_);
-   }
-   if (abilities) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(abilities));
-      if (message_arena != submessage_arena) {
-         abilities = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, abilities,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.abilities_ = abilities;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
+inline void AcceptPlayer::set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  if (abilities) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(abilities));
+    if (message_arena != submessage_arena) {
+      abilities = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, abilities, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.abilities_ = abilities;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.abilities)
 }
 
 // .minecpp.proto.player.v1.Player player = 3;
-inline bool AcceptPlayer::_internal_has_player() const
-{
-   return this != internal_default_instance() && _impl_.player_ != nullptr;
+inline bool AcceptPlayer::_internal_has_player() const {
+  return this != internal_default_instance() && _impl_.player_ != nullptr;
 }
-
-inline bool AcceptPlayer::has_player() const
-{
-   return _internal_has_player();
+inline bool AcceptPlayer::has_player() const {
+  return _internal_has_player();
 }
-
-inline const ::minecpp::proto::player::v1::Player &AcceptPlayer::_internal_player() const
-{
-   const ::minecpp::proto::player::v1::Player *p = _impl_.player_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::Player &>(
-                                 ::minecpp::proto::player::v1::_Player_default_instance_);
+inline const ::minecpp::proto::player::v1::Player& AcceptPlayer::_internal_player() const {
+  const ::minecpp::proto::player::v1::Player* p = _impl_.player_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::Player&>(
+      ::minecpp::proto::player::v1::_Player_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::Player &AcceptPlayer::player() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
-   return _internal_player();
+inline const ::minecpp::proto::player::v1::Player& AcceptPlayer::player() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+  return _internal_player();
 }
-
-inline void AcceptPlayer::unsafe_arena_set_allocated_player(::minecpp::proto::player::v1::Player *player)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_);
-   }
-   _impl_.player_ = player;
-   if (player) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+inline void AcceptPlayer::unsafe_arena_set_allocated_player(
+    ::minecpp::proto::player::v1::Player* player) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_);
+  }
+  _impl_.player_ = player;
+  if (player) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
 }
-
-inline ::minecpp::proto::player::v1::Player *AcceptPlayer::release_player()
-{
-
-   ::minecpp::proto::player::v1::Player *temp = _impl_.player_;
-   _impl_.player_                             = nullptr;
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::release_player() {
+  
+  ::minecpp::proto::player::v1::Player* temp = _impl_.player_;
+  _impl_.player_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::Player *AcceptPlayer::unsafe_arena_release_player()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
-
-   ::minecpp::proto::player::v1::Player *temp = _impl_.player_;
-   _impl_.player_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::unsafe_arena_release_player() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+  
+  ::minecpp::proto::player::v1::Player* temp = _impl_.player_;
+  _impl_.player_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::Player *AcceptPlayer::_internal_mutable_player()
-{
-
-   if (_impl_.player_ == nullptr) {
-      auto *p        = CreateMaybeMessage<::minecpp::proto::player::v1::Player>(GetArenaForAllocation());
-      _impl_.player_ = p;
-   }
-   return _impl_.player_;
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::_internal_mutable_player() {
+  
+  if (_impl_.player_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::Player>(GetArenaForAllocation());
+    _impl_.player_ = p;
+  }
+  return _impl_.player_;
 }
-
-inline ::minecpp::proto::player::v1::Player *AcceptPlayer::mutable_player()
-{
-   ::minecpp::proto::player::v1::Player *_msg = _internal_mutable_player();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
-   return _msg;
+inline ::minecpp::proto::player::v1::Player* AcceptPlayer::mutable_player() {
+  ::minecpp::proto::player::v1::Player* _msg = _internal_mutable_player();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+  return _msg;
 }
-
-inline void AcceptPlayer::set_allocated_player(::minecpp::proto::player::v1::Player *player)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.player_);
-   }
-   if (player) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(player));
-      if (message_arena != submessage_arena) {
-         player = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, player, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.player_ = player;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
+inline void AcceptPlayer::set_allocated_player(::minecpp::proto::player::v1::Player* player) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.player_);
+  }
+  if (player) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(player));
+    if (message_arena != submessage_arena) {
+      player = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, player, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.player_ = player;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.AcceptPlayer.player)
 }
 
 // -------------------------------------------------------------------
@@ -13279,68 +10183,53 @@ inline void AcceptPlayer::set_allocated_player(::minecpp::proto::player::v1::Pla
 // DenyPlayer
 
 // string denial_reason = 1;
-inline void DenyPlayer::clear_denial_reason()
-{
-   _impl_.denial_reason_.ClearToEmpty();
+inline void DenyPlayer::clear_denial_reason() {
+  _impl_.denial_reason_.ClearToEmpty();
 }
-
-inline const std::string &DenyPlayer::denial_reason() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
-   return _internal_denial_reason();
+inline const std::string& DenyPlayer::denial_reason() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
+  return _internal_denial_reason();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void DenyPlayer::set_denial_reason(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.denial_reason_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void DenyPlayer::set_denial_reason(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.denial_reason_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
 }
-
-inline std::string *DenyPlayer::mutable_denial_reason()
-{
-   std::string *_s = _internal_mutable_denial_reason();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
-   return _s;
+inline std::string* DenyPlayer::mutable_denial_reason() {
+  std::string* _s = _internal_mutable_denial_reason();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
+  return _s;
 }
-
-inline const std::string &DenyPlayer::_internal_denial_reason() const
-{
-   return _impl_.denial_reason_.Get();
+inline const std::string& DenyPlayer::_internal_denial_reason() const {
+  return _impl_.denial_reason_.Get();
 }
-
-inline void DenyPlayer::_internal_set_denial_reason(const std::string &value)
-{
-
-   _impl_.denial_reason_.Set(value, GetArenaForAllocation());
+inline void DenyPlayer::_internal_set_denial_reason(const std::string& value) {
+  
+  _impl_.denial_reason_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *DenyPlayer::_internal_mutable_denial_reason()
-{
-
-   return _impl_.denial_reason_.Mutable(GetArenaForAllocation());
+inline std::string* DenyPlayer::_internal_mutable_denial_reason() {
+  
+  return _impl_.denial_reason_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *DenyPlayer::release_denial_reason()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
-   return _impl_.denial_reason_.Release();
+inline std::string* DenyPlayer::release_denial_reason() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
+  return _impl_.denial_reason_.Release();
 }
-
-inline void DenyPlayer::set_allocated_denial_reason(std::string *denial_reason)
-{
-   if (denial_reason != nullptr) {
-
-   } else {
-   }
-   _impl_.denial_reason_.SetAllocated(denial_reason, GetArenaForAllocation());
+inline void DenyPlayer::set_allocated_denial_reason(std::string* denial_reason) {
+  if (denial_reason != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.denial_reason_.SetAllocated(denial_reason, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.denial_reason_.IsDefault()) {
-      _impl_.denial_reason_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
+  if (_impl_.denial_reason_.IsDefault()) {
+    _impl_.denial_reason_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.DenyPlayer.denial_reason)
 }
 
 // -------------------------------------------------------------------
@@ -13348,106 +10237,88 @@ inline void DenyPlayer::set_allocated_denial_reason(std::string *denial_reason)
 // SetInventorySlot
 
 // .minecpp.proto.player.v1.Slot slot = 1;
-inline bool SetInventorySlot::_internal_has_slot() const
-{
-   return this != internal_default_instance() && _impl_.slot_ != nullptr;
+inline bool SetInventorySlot::_internal_has_slot() const {
+  return this != internal_default_instance() && _impl_.slot_ != nullptr;
 }
-
-inline bool SetInventorySlot::has_slot() const
-{
-   return _internal_has_slot();
+inline bool SetInventorySlot::has_slot() const {
+  return _internal_has_slot();
 }
-
-inline const ::minecpp::proto::player::v1::Slot &SetInventorySlot::_internal_slot() const
-{
-   const ::minecpp::proto::player::v1::Slot *p = _impl_.slot_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::Slot &>(
-                                 ::minecpp::proto::player::v1::_Slot_default_instance_);
+inline const ::minecpp::proto::player::v1::Slot& SetInventorySlot::_internal_slot() const {
+  const ::minecpp::proto::player::v1::Slot* p = _impl_.slot_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::Slot&>(
+      ::minecpp::proto::player::v1::_Slot_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::Slot &SetInventorySlot::slot() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
-   return _internal_slot();
+inline const ::minecpp::proto::player::v1::Slot& SetInventorySlot::slot() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+  return _internal_slot();
 }
-
-inline void SetInventorySlot::unsafe_arena_set_allocated_slot(::minecpp::proto::player::v1::Slot *slot)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.slot_);
-   }
-   _impl_.slot_ = slot;
-   if (slot) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+inline void SetInventorySlot::unsafe_arena_set_allocated_slot(
+    ::minecpp::proto::player::v1::Slot* slot) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.slot_);
+  }
+  _impl_.slot_ = slot;
+  if (slot) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetInventorySlot::release_slot()
-{
-
-   ::minecpp::proto::player::v1::Slot *temp = _impl_.slot_;
-   _impl_.slot_                             = nullptr;
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::release_slot() {
+  
+  ::minecpp::proto::player::v1::Slot* temp = _impl_.slot_;
+  _impl_.slot_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetInventorySlot::unsafe_arena_release_slot()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
-
-   ::minecpp::proto::player::v1::Slot *temp = _impl_.slot_;
-   _impl_.slot_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::unsafe_arena_release_slot() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+  
+  ::minecpp::proto::player::v1::Slot* temp = _impl_.slot_;
+  _impl_.slot_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetInventorySlot::_internal_mutable_slot()
-{
-
-   if (_impl_.slot_ == nullptr) {
-      auto *p      = CreateMaybeMessage<::minecpp::proto::player::v1::Slot>(GetArenaForAllocation());
-      _impl_.slot_ = p;
-   }
-   return _impl_.slot_;
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::_internal_mutable_slot() {
+  
+  if (_impl_.slot_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::Slot>(GetArenaForAllocation());
+    _impl_.slot_ = p;
+  }
+  return _impl_.slot_;
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetInventorySlot::mutable_slot()
-{
-   ::minecpp::proto::player::v1::Slot *_msg = _internal_mutable_slot();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
-   return _msg;
+inline ::minecpp::proto::player::v1::Slot* SetInventorySlot::mutable_slot() {
+  ::minecpp::proto::player::v1::Slot* _msg = _internal_mutable_slot();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+  return _msg;
 }
-
-inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::player::v1::Slot *slot)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.slot_);
-   }
-   if (slot) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(slot));
-      if (message_arena != submessage_arena) {
-         slot = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, slot, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.slot_ = slot;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
+inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::player::v1::Slot* slot) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.slot_);
+  }
+  if (slot) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(slot));
+    if (message_arena != submessage_arena) {
+      slot = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, slot, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.slot_ = slot;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetInventorySlot.slot)
 }
 
 // -------------------------------------------------------------------
@@ -13455,97 +10326,73 @@ inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::player::v1::S
 // SectionBlockLight
 
 // int32 y = 1;
-inline void SectionBlockLight::clear_y()
-{
-   _impl_.y_ = 0;
+inline void SectionBlockLight::clear_y() {
+  _impl_.y_ = 0;
 }
-
-inline int32_t SectionBlockLight::_internal_y() const
-{
-   return _impl_.y_;
+inline int32_t SectionBlockLight::_internal_y() const {
+  return _impl_.y_;
 }
-
-inline int32_t SectionBlockLight::y() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SectionBlockLight.y)
-   return _internal_y();
+inline int32_t SectionBlockLight::y() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SectionBlockLight.y)
+  return _internal_y();
 }
-
-inline void SectionBlockLight::_internal_set_y(int32_t value)
-{
-
-   _impl_.y_ = value;
+inline void SectionBlockLight::_internal_set_y(int32_t value) {
+  
+  _impl_.y_ = value;
 }
-
-inline void SectionBlockLight::set_y(int32_t value)
-{
-   _internal_set_y(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SectionBlockLight.y)
+inline void SectionBlockLight::set_y(int32_t value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SectionBlockLight.y)
 }
 
 // bytes block_light = 2;
-inline void SectionBlockLight::clear_block_light()
-{
-   _impl_.block_light_.ClearToEmpty();
+inline void SectionBlockLight::clear_block_light() {
+  _impl_.block_light_.ClearToEmpty();
 }
-
-inline const std::string &SectionBlockLight::block_light() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
-   return _internal_block_light();
+inline const std::string& SectionBlockLight::block_light() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  return _internal_block_light();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void SectionBlockLight::set_block_light(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.block_light_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SectionBlockLight::set_block_light(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.block_light_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
 }
-
-inline std::string *SectionBlockLight::mutable_block_light()
-{
-   std::string *_s = _internal_mutable_block_light();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
-   return _s;
+inline std::string* SectionBlockLight::mutable_block_light() {
+  std::string* _s = _internal_mutable_block_light();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  return _s;
 }
-
-inline const std::string &SectionBlockLight::_internal_block_light() const
-{
-   return _impl_.block_light_.Get();
+inline const std::string& SectionBlockLight::_internal_block_light() const {
+  return _impl_.block_light_.Get();
 }
-
-inline void SectionBlockLight::_internal_set_block_light(const std::string &value)
-{
-
-   _impl_.block_light_.Set(value, GetArenaForAllocation());
+inline void SectionBlockLight::_internal_set_block_light(const std::string& value) {
+  
+  _impl_.block_light_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *SectionBlockLight::_internal_mutable_block_light()
-{
-
-   return _impl_.block_light_.Mutable(GetArenaForAllocation());
+inline std::string* SectionBlockLight::_internal_mutable_block_light() {
+  
+  return _impl_.block_light_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *SectionBlockLight::release_block_light()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
-   return _impl_.block_light_.Release();
+inline std::string* SectionBlockLight::release_block_light() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  return _impl_.block_light_.Release();
 }
-
-inline void SectionBlockLight::set_allocated_block_light(std::string *block_light)
-{
-   if (block_light != nullptr) {
-
-   } else {
-   }
-   _impl_.block_light_.SetAllocated(block_light, GetArenaForAllocation());
+inline void SectionBlockLight::set_allocated_block_light(std::string* block_light) {
+  if (block_light != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.block_light_.SetAllocated(block_light, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.block_light_.IsDefault()) {
-      _impl_.block_light_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
+  if (_impl_.block_light_.IsDefault()) {
+    _impl_.block_light_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SectionBlockLight.block_light)
 }
 
 // -------------------------------------------------------------------
@@ -13553,171 +10400,128 @@ inline void SectionBlockLight::set_allocated_block_light(std::string *block_ligh
 // ChunkBlockLight
 
 // .minecpp.proto.common.v1.ChunkPosition position = 1;
-inline bool ChunkBlockLight::_internal_has_position() const
-{
-   return this != internal_default_instance() && _impl_.position_ != nullptr;
+inline bool ChunkBlockLight::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
-
-inline bool ChunkBlockLight::has_position() const
-{
-   return _internal_has_position();
+inline bool ChunkBlockLight::has_position() const {
+  return _internal_has_position();
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &ChunkBlockLight::_internal_position() const
-{
-   const ::minecpp::proto::common::v1::ChunkPosition *p = _impl_.position_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition &>(
-                                 ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
+inline const ::minecpp::proto::common::v1::ChunkPosition& ChunkBlockLight::_internal_position() const {
+  const ::minecpp::proto::common::v1::ChunkPosition* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition&>(
+      ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &ChunkBlockLight::position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
-   return _internal_position();
+inline const ::minecpp::proto::common::v1::ChunkPosition& ChunkBlockLight::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+  return _internal_position();
 }
-
-inline void
-ChunkBlockLight::unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   _impl_.position_ = position;
-   if (position) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+inline void ChunkBlockLight::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::ChunkPosition* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *ChunkBlockLight::release_position()
-{
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.position_;
-   _impl_.position_                                  = nullptr;
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::release_position() {
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *ChunkBlockLight::unsafe_arena_release_position()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.position_;
-   _impl_.position_                                  = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *ChunkBlockLight::_internal_mutable_position()
-{
-
-   if (_impl_.position_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
-      _impl_.position_ = p;
-   }
-   return _impl_.position_;
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *ChunkBlockLight::mutable_position()
-{
-   ::minecpp::proto::common::v1::ChunkPosition *_msg = _internal_mutable_position();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
-   return _msg;
+inline ::minecpp::proto::common::v1::ChunkPosition* ChunkBlockLight::mutable_position() {
+  ::minecpp::proto::common::v1::ChunkPosition* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+  return _msg;
 }
-
-inline void ChunkBlockLight::set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   if (position) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(position));
-      if (message_arena != submessage_arena) {
-         position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, position,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.position_ = position;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
+inline void ChunkBlockLight::set_allocated_position(::minecpp::proto::common::v1::ChunkPosition* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.ChunkBlockLight.position)
 }
 
 // repeated .minecpp.proto.event.clientbound.v1.SectionBlockLight sections = 2;
-inline int ChunkBlockLight::_internal_sections_size() const
-{
-   return _impl_.sections_.size();
+inline int ChunkBlockLight::_internal_sections_size() const {
+  return _impl_.sections_.size();
 }
-
-inline int ChunkBlockLight::sections_size() const
-{
-   return _internal_sections_size();
+inline int ChunkBlockLight::sections_size() const {
+  return _internal_sections_size();
 }
-
-inline void ChunkBlockLight::clear_sections()
-{
-   _impl_.sections_.Clear();
+inline void ChunkBlockLight::clear_sections() {
+  _impl_.sections_.Clear();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight *
-ChunkBlockLight::mutable_sections(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
-   return _impl_.sections_.Mutable(index);
+inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight* ChunkBlockLight::mutable_sections(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _impl_.sections_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::SectionBlockLight>
-        *ChunkBlockLight::mutable_sections()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
-   return &_impl_.sections_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >*
+ChunkBlockLight::mutable_sections() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return &_impl_.sections_;
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::SectionBlockLight &
-ChunkBlockLight::_internal_sections(int index) const
-{
-   return _impl_.sections_.Get(index);
+inline const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& ChunkBlockLight::_internal_sections(int index) const {
+  return _impl_.sections_.Get(index);
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::SectionBlockLight &
-ChunkBlockLight::sections(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
-   return _internal_sections(index);
+inline const ::minecpp::proto::event::clientbound::v1::SectionBlockLight& ChunkBlockLight::sections(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _internal_sections(index);
 }
-
-inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight *ChunkBlockLight::_internal_add_sections()
-{
-   return _impl_.sections_.Add();
+inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight* ChunkBlockLight::_internal_add_sections() {
+  return _impl_.sections_.Add();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight *ChunkBlockLight::add_sections()
-{
-   ::minecpp::proto::event::clientbound::v1::SectionBlockLight *_add = _internal_add_sections();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
-   return _add;
+inline ::minecpp::proto::event::clientbound::v1::SectionBlockLight* ChunkBlockLight::add_sections() {
+  ::minecpp::proto::event::clientbound::v1::SectionBlockLight* _add = _internal_add_sections();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<
-        ::minecpp::proto::event::clientbound::v1::SectionBlockLight> &
-ChunkBlockLight::sections() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
-   return _impl_.sections_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::SectionBlockLight >&
+ChunkBlockLight::sections() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.ChunkBlockLight.sections)
+  return _impl_.sections_;
 }
 
 // -------------------------------------------------------------------
@@ -13725,67 +10529,43 @@ ChunkBlockLight::sections() const
 // UpdateBlockLight
 
 // repeated .minecpp.proto.event.clientbound.v1.ChunkBlockLight block_light = 1;
-inline int UpdateBlockLight::_internal_block_light_size() const
-{
-   return _impl_.block_light_.size();
+inline int UpdateBlockLight::_internal_block_light_size() const {
+  return _impl_.block_light_.size();
 }
-
-inline int UpdateBlockLight::block_light_size() const
-{
-   return _internal_block_light_size();
+inline int UpdateBlockLight::block_light_size() const {
+  return _internal_block_light_size();
 }
-
-inline void UpdateBlockLight::clear_block_light()
-{
-   _impl_.block_light_.Clear();
+inline void UpdateBlockLight::clear_block_light() {
+  _impl_.block_light_.Clear();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *
-UpdateBlockLight::mutable_block_light(int index)
-{
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
-   return _impl_.block_light_.Mutable(index);
+inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* UpdateBlockLight::mutable_block_light(int index) {
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _impl_.block_light_.Mutable(index);
 }
-
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::event::clientbound::v1::ChunkBlockLight> *
-UpdateBlockLight::mutable_block_light()
-{
-   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
-   return &_impl_.block_light_;
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >*
+UpdateBlockLight::mutable_block_light() {
+  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return &_impl_.block_light_;
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight &
-UpdateBlockLight::_internal_block_light(int index) const
-{
-   return _impl_.block_light_.Get(index);
+inline const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& UpdateBlockLight::_internal_block_light(int index) const {
+  return _impl_.block_light_.Get(index);
 }
-
-inline const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight &
-UpdateBlockLight::block_light(int index) const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
-   return _internal_block_light(index);
+inline const ::minecpp::proto::event::clientbound::v1::ChunkBlockLight& UpdateBlockLight::block_light(int index) const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _internal_block_light(index);
 }
-
-inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *
-UpdateBlockLight::_internal_add_block_light()
-{
-   return _impl_.block_light_.Add();
+inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* UpdateBlockLight::_internal_add_block_light() {
+  return _impl_.block_light_.Add();
 }
-
-inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *UpdateBlockLight::add_block_light()
-{
-   ::minecpp::proto::event::clientbound::v1::ChunkBlockLight *_add = _internal_add_block_light();
-   // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
-   return _add;
+inline ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* UpdateBlockLight::add_block_light() {
+  ::minecpp::proto::event::clientbound::v1::ChunkBlockLight* _add = _internal_add_block_light();
+  // @@protoc_insertion_point(field_add:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _add;
 }
-
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<
-        ::minecpp::proto::event::clientbound::v1::ChunkBlockLight> &
-UpdateBlockLight::block_light() const
-{
-   // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
-   return _impl_.block_light_;
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::event::clientbound::v1::ChunkBlockLight >&
+UpdateBlockLight::block_light() const {
+  // @@protoc_insertion_point(field_list:minecpp.proto.event.clientbound.v1.UpdateBlockLight.block_light)
+  return _impl_.block_light_;
 }
 
 // -------------------------------------------------------------------
@@ -13793,135 +10573,108 @@ UpdateBlockLight::block_light() const
 // ChunkData
 
 // .minecpp.proto.chunk.v1.Chunk chunk = 1;
-inline bool ChunkData::_internal_has_chunk() const
-{
-   return this != internal_default_instance() && _impl_.chunk_ != nullptr;
+inline bool ChunkData::_internal_has_chunk() const {
+  return this != internal_default_instance() && _impl_.chunk_ != nullptr;
 }
-
-inline bool ChunkData::has_chunk() const
-{
-   return _internal_has_chunk();
+inline bool ChunkData::has_chunk() const {
+  return _internal_has_chunk();
 }
-
-inline const ::minecpp::proto::chunk::v1::Chunk &ChunkData::_internal_chunk() const
-{
-   const ::minecpp::proto::chunk::v1::Chunk *p = _impl_.chunk_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::chunk::v1::Chunk &>(
-                                 ::minecpp::proto::chunk::v1::_Chunk_default_instance_);
+inline const ::minecpp::proto::chunk::v1::Chunk& ChunkData::_internal_chunk() const {
+  const ::minecpp::proto::chunk::v1::Chunk* p = _impl_.chunk_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::chunk::v1::Chunk&>(
+      ::minecpp::proto::chunk::v1::_Chunk_default_instance_);
 }
-
-inline const ::minecpp::proto::chunk::v1::Chunk &ChunkData::chunk() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
-   return _internal_chunk();
+inline const ::minecpp::proto::chunk::v1::Chunk& ChunkData::chunk() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
+  return _internal_chunk();
 }
-
-inline void ChunkData::unsafe_arena_set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk *chunk)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.chunk_);
-   }
-   _impl_.chunk_ = chunk;
-   if (chunk) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
+inline void ChunkData::unsafe_arena_set_allocated_chunk(
+    ::minecpp::proto::chunk::v1::Chunk* chunk) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.chunk_);
+  }
+  _impl_.chunk_ = chunk;
+  if (chunk) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
 }
-
-inline ::minecpp::proto::chunk::v1::Chunk *ChunkData::release_chunk()
-{
-
-   ::minecpp::proto::chunk::v1::Chunk *temp = _impl_.chunk_;
-   _impl_.chunk_                            = nullptr;
+inline ::minecpp::proto::chunk::v1::Chunk* ChunkData::release_chunk() {
+  
+  ::minecpp::proto::chunk::v1::Chunk* temp = _impl_.chunk_;
+  _impl_.chunk_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::chunk::v1::Chunk *ChunkData::unsafe_arena_release_chunk()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
-
-   ::minecpp::proto::chunk::v1::Chunk *temp = _impl_.chunk_;
-   _impl_.chunk_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::chunk::v1::Chunk* ChunkData::unsafe_arena_release_chunk() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
+  
+  ::minecpp::proto::chunk::v1::Chunk* temp = _impl_.chunk_;
+  _impl_.chunk_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::chunk::v1::Chunk *ChunkData::_internal_mutable_chunk()
-{
-
-   if (_impl_.chunk_ == nullptr) {
-      auto *p       = CreateMaybeMessage<::minecpp::proto::chunk::v1::Chunk>(GetArenaForAllocation());
-      _impl_.chunk_ = p;
-   }
-   return _impl_.chunk_;
+inline ::minecpp::proto::chunk::v1::Chunk* ChunkData::_internal_mutable_chunk() {
+  
+  if (_impl_.chunk_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::chunk::v1::Chunk>(GetArenaForAllocation());
+    _impl_.chunk_ = p;
+  }
+  return _impl_.chunk_;
 }
-
-inline ::minecpp::proto::chunk::v1::Chunk *ChunkData::mutable_chunk()
-{
-   ::minecpp::proto::chunk::v1::Chunk *_msg = _internal_mutable_chunk();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
-   return _msg;
+inline ::minecpp::proto::chunk::v1::Chunk* ChunkData::mutable_chunk() {
+  ::minecpp::proto::chunk::v1::Chunk* _msg = _internal_mutable_chunk();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
+  return _msg;
 }
-
-inline void ChunkData::set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk *chunk)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.chunk_);
-   }
-   if (chunk) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(chunk));
-      if (message_arena != submessage_arena) {
-         chunk = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, chunk, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.chunk_ = chunk;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
+inline void ChunkData::set_allocated_chunk(::minecpp::proto::chunk::v1::Chunk* chunk) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.chunk_);
+  }
+  if (chunk) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(chunk));
+    if (message_arena != submessage_arena) {
+      chunk = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, chunk, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.chunk_ = chunk;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.ChunkData.chunk)
 }
 
 // bool is_initial_chunk = 2;
-inline void ChunkData::clear_is_initial_chunk()
-{
-   _impl_.is_initial_chunk_ = false;
+inline void ChunkData::clear_is_initial_chunk() {
+  _impl_.is_initial_chunk_ = false;
 }
-
-inline bool ChunkData::_internal_is_initial_chunk() const
-{
-   return _impl_.is_initial_chunk_;
+inline bool ChunkData::_internal_is_initial_chunk() const {
+  return _impl_.is_initial_chunk_;
 }
-
-inline bool ChunkData::is_initial_chunk() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkData.is_initial_chunk)
-   return _internal_is_initial_chunk();
+inline bool ChunkData::is_initial_chunk() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.ChunkData.is_initial_chunk)
+  return _internal_is_initial_chunk();
 }
-
-inline void ChunkData::_internal_set_is_initial_chunk(bool value)
-{
-
-   _impl_.is_initial_chunk_ = value;
+inline void ChunkData::_internal_set_is_initial_chunk(bool value) {
+  
+  _impl_.is_initial_chunk_ = value;
 }
-
-inline void ChunkData::set_is_initial_chunk(bool value)
-{
-   _internal_set_is_initial_chunk(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.ChunkData.is_initial_chunk)
+inline void ChunkData::set_is_initial_chunk(bool value) {
+  _internal_set_is_initial_chunk(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.ChunkData.is_initial_chunk)
 }
 
 // -------------------------------------------------------------------
@@ -13929,108 +10682,88 @@ inline void ChunkData::set_is_initial_chunk(bool value)
 // SetCenterChunk
 
 // .minecpp.proto.common.v1.ChunkPosition position = 1;
-inline bool SetCenterChunk::_internal_has_position() const
-{
-   return this != internal_default_instance() && _impl_.position_ != nullptr;
+inline bool SetCenterChunk::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
-
-inline bool SetCenterChunk::has_position() const
-{
-   return _internal_has_position();
+inline bool SetCenterChunk::has_position() const {
+  return _internal_has_position();
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &SetCenterChunk::_internal_position() const
-{
-   const ::minecpp::proto::common::v1::ChunkPosition *p = _impl_.position_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition &>(
-                                 ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
+inline const ::minecpp::proto::common::v1::ChunkPosition& SetCenterChunk::_internal_position() const {
+  const ::minecpp::proto::common::v1::ChunkPosition* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::ChunkPosition&>(
+      ::minecpp::proto::common::v1::_ChunkPosition_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::ChunkPosition &SetCenterChunk::position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
-   return _internal_position();
+inline const ::minecpp::proto::common::v1::ChunkPosition& SetCenterChunk::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
+  return _internal_position();
 }
-
-inline void
-SetCenterChunk::unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   _impl_.position_ = position;
-   if (position) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
+inline void SetCenterChunk::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::ChunkPosition* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *SetCenterChunk::release_position()
-{
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.position_;
-   _impl_.position_                                  = nullptr;
+inline ::minecpp::proto::common::v1::ChunkPosition* SetCenterChunk::release_position() {
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *SetCenterChunk::unsafe_arena_release_position()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
-
-   ::minecpp::proto::common::v1::ChunkPosition *temp = _impl_.position_;
-   _impl_.position_                                  = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::ChunkPosition* SetCenterChunk::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
+  
+  ::minecpp::proto::common::v1::ChunkPosition* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *SetCenterChunk::_internal_mutable_position()
-{
-
-   if (_impl_.position_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
-      _impl_.position_ = p;
-   }
-   return _impl_.position_;
+inline ::minecpp::proto::common::v1::ChunkPosition* SetCenterChunk::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::ChunkPosition>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
 }
-
-inline ::minecpp::proto::common::v1::ChunkPosition *SetCenterChunk::mutable_position()
-{
-   ::minecpp::proto::common::v1::ChunkPosition *_msg = _internal_mutable_position();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
-   return _msg;
+inline ::minecpp::proto::common::v1::ChunkPosition* SetCenterChunk::mutable_position() {
+  ::minecpp::proto::common::v1::ChunkPosition* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
+  return _msg;
 }
-
-inline void SetCenterChunk::set_allocated_position(::minecpp::proto::common::v1::ChunkPosition *position)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   if (position) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(position));
-      if (message_arena != submessage_arena) {
-         position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, position,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.position_ = position;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
+inline void SetCenterChunk::set_allocated_position(::minecpp::proto::common::v1::ChunkPosition* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetCenterChunk.position)
 }
 
 // -------------------------------------------------------------------
@@ -14038,165 +10771,128 @@ inline void SetCenterChunk::set_allocated_position(::minecpp::proto::common::v1:
 // SetEntityEquipment
 
 // uint32 entity_id = 1;
-inline void SetEntityEquipment::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void SetEntityEquipment::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t SetEntityEquipment::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t SetEntityEquipment::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t SetEntityEquipment::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityEquipment.entity_id)
-   return _internal_entity_id();
+inline uint32_t SetEntityEquipment::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityEquipment.entity_id)
+  return _internal_entity_id();
 }
-
-inline void SetEntityEquipment::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void SetEntityEquipment::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void SetEntityEquipment::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetEntityEquipment.entity_id)
+inline void SetEntityEquipment::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetEntityEquipment.entity_id)
 }
 
 // .minecpp.proto.entity.v1.EquipmentSlot equipment_slot = 2;
-inline void SetEntityEquipment::clear_equipment_slot()
-{
-   _impl_.equipment_slot_ = 0;
+inline void SetEntityEquipment::clear_equipment_slot() {
+  _impl_.equipment_slot_ = 0;
 }
-
-inline ::minecpp::proto::entity::v1::EquipmentSlot SetEntityEquipment::_internal_equipment_slot() const
-{
-   return static_cast<::minecpp::proto::entity::v1::EquipmentSlot>(_impl_.equipment_slot_);
+inline ::minecpp::proto::entity::v1::EquipmentSlot SetEntityEquipment::_internal_equipment_slot() const {
+  return static_cast< ::minecpp::proto::entity::v1::EquipmentSlot >(_impl_.equipment_slot_);
 }
-
-inline ::minecpp::proto::entity::v1::EquipmentSlot SetEntityEquipment::equipment_slot() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityEquipment.equipment_slot)
-   return _internal_equipment_slot();
+inline ::minecpp::proto::entity::v1::EquipmentSlot SetEntityEquipment::equipment_slot() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityEquipment.equipment_slot)
+  return _internal_equipment_slot();
 }
-
-inline void
-SetEntityEquipment::_internal_set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value)
-{
-
-   _impl_.equipment_slot_ = value;
+inline void SetEntityEquipment::_internal_set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value) {
+  
+  _impl_.equipment_slot_ = value;
 }
-
-inline void SetEntityEquipment::set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value)
-{
-   _internal_set_equipment_slot(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetEntityEquipment.equipment_slot)
+inline void SetEntityEquipment::set_equipment_slot(::minecpp::proto::entity::v1::EquipmentSlot value) {
+  _internal_set_equipment_slot(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetEntityEquipment.equipment_slot)
 }
 
 // .minecpp.proto.player.v1.Slot item = 3;
-inline bool SetEntityEquipment::_internal_has_item() const
-{
-   return this != internal_default_instance() && _impl_.item_ != nullptr;
+inline bool SetEntityEquipment::_internal_has_item() const {
+  return this != internal_default_instance() && _impl_.item_ != nullptr;
 }
-
-inline bool SetEntityEquipment::has_item() const
-{
-   return _internal_has_item();
+inline bool SetEntityEquipment::has_item() const {
+  return _internal_has_item();
 }
-
-inline const ::minecpp::proto::player::v1::Slot &SetEntityEquipment::_internal_item() const
-{
-   const ::minecpp::proto::player::v1::Slot *p = _impl_.item_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::player::v1::Slot &>(
-                                 ::minecpp::proto::player::v1::_Slot_default_instance_);
+inline const ::minecpp::proto::player::v1::Slot& SetEntityEquipment::_internal_item() const {
+  const ::minecpp::proto::player::v1::Slot* p = _impl_.item_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::v1::Slot&>(
+      ::minecpp::proto::player::v1::_Slot_default_instance_);
 }
-
-inline const ::minecpp::proto::player::v1::Slot &SetEntityEquipment::item() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
-   return _internal_item();
+inline const ::minecpp::proto::player::v1::Slot& SetEntityEquipment::item() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
+  return _internal_item();
 }
-
-inline void SetEntityEquipment::unsafe_arena_set_allocated_item(::minecpp::proto::player::v1::Slot *item)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.item_);
-   }
-   _impl_.item_ = item;
-   if (item) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
+inline void SetEntityEquipment::unsafe_arena_set_allocated_item(
+    ::minecpp::proto::player::v1::Slot* item) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.item_);
+  }
+  _impl_.item_ = item;
+  if (item) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetEntityEquipment::release_item()
-{
-
-   ::minecpp::proto::player::v1::Slot *temp = _impl_.item_;
-   _impl_.item_                             = nullptr;
+inline ::minecpp::proto::player::v1::Slot* SetEntityEquipment::release_item() {
+  
+  ::minecpp::proto::player::v1::Slot* temp = _impl_.item_;
+  _impl_.item_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetEntityEquipment::unsafe_arena_release_item()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
-
-   ::minecpp::proto::player::v1::Slot *temp = _impl_.item_;
-   _impl_.item_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::player::v1::Slot* SetEntityEquipment::unsafe_arena_release_item() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
+  
+  ::minecpp::proto::player::v1::Slot* temp = _impl_.item_;
+  _impl_.item_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetEntityEquipment::_internal_mutable_item()
-{
-
-   if (_impl_.item_ == nullptr) {
-      auto *p      = CreateMaybeMessage<::minecpp::proto::player::v1::Slot>(GetArenaForAllocation());
-      _impl_.item_ = p;
-   }
-   return _impl_.item_;
+inline ::minecpp::proto::player::v1::Slot* SetEntityEquipment::_internal_mutable_item() {
+  
+  if (_impl_.item_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::player::v1::Slot>(GetArenaForAllocation());
+    _impl_.item_ = p;
+  }
+  return _impl_.item_;
 }
-
-inline ::minecpp::proto::player::v1::Slot *SetEntityEquipment::mutable_item()
-{
-   ::minecpp::proto::player::v1::Slot *_msg = _internal_mutable_item();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
-   return _msg;
+inline ::minecpp::proto::player::v1::Slot* SetEntityEquipment::mutable_item() {
+  ::minecpp::proto::player::v1::Slot* _msg = _internal_mutable_item();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
+  return _msg;
 }
-
-inline void SetEntityEquipment::set_allocated_item(::minecpp::proto::player::v1::Slot *item)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.item_);
-   }
-   if (item) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(item));
-      if (message_arena != submessage_arena) {
-         item = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, item, submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.item_ = item;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
+inline void SetEntityEquipment::set_allocated_item(::minecpp::proto::player::v1::Slot* item) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.item_);
+  }
+  if (item) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(item));
+    if (message_arena != submessage_arena) {
+      item = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, item, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.item_ = item;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetEntityEquipment.item)
 }
 
 // -------------------------------------------------------------------
@@ -14204,90 +10900,63 @@ inline void SetEntityEquipment::set_allocated_item(::minecpp::proto::player::v1:
 // SetHealth
 
 // float health = 1;
-inline void SetHealth::clear_health()
-{
-   _impl_.health_ = 0;
+inline void SetHealth::clear_health() {
+  _impl_.health_ = 0;
 }
-
-inline float SetHealth::_internal_health() const
-{
-   return _impl_.health_;
+inline float SetHealth::_internal_health() const {
+  return _impl_.health_;
 }
-
-inline float SetHealth::health() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetHealth.health)
-   return _internal_health();
+inline float SetHealth::health() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetHealth.health)
+  return _internal_health();
 }
-
-inline void SetHealth::_internal_set_health(float value)
-{
-
-   _impl_.health_ = value;
+inline void SetHealth::_internal_set_health(float value) {
+  
+  _impl_.health_ = value;
 }
-
-inline void SetHealth::set_health(float value)
-{
-   _internal_set_health(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetHealth.health)
+inline void SetHealth::set_health(float value) {
+  _internal_set_health(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetHealth.health)
 }
 
 // int32 food = 2;
-inline void SetHealth::clear_food()
-{
-   _impl_.food_ = 0;
+inline void SetHealth::clear_food() {
+  _impl_.food_ = 0;
 }
-
-inline int32_t SetHealth::_internal_food() const
-{
-   return _impl_.food_;
+inline int32_t SetHealth::_internal_food() const {
+  return _impl_.food_;
 }
-
-inline int32_t SetHealth::food() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetHealth.food)
-   return _internal_food();
+inline int32_t SetHealth::food() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetHealth.food)
+  return _internal_food();
 }
-
-inline void SetHealth::_internal_set_food(int32_t value)
-{
-
-   _impl_.food_ = value;
+inline void SetHealth::_internal_set_food(int32_t value) {
+  
+  _impl_.food_ = value;
 }
-
-inline void SetHealth::set_food(int32_t value)
-{
-   _internal_set_food(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetHealth.food)
+inline void SetHealth::set_food(int32_t value) {
+  _internal_set_food(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetHealth.food)
 }
 
 // float food_saturation = 3;
-inline void SetHealth::clear_food_saturation()
-{
-   _impl_.food_saturation_ = 0;
+inline void SetHealth::clear_food_saturation() {
+  _impl_.food_saturation_ = 0;
 }
-
-inline float SetHealth::_internal_food_saturation() const
-{
-   return _impl_.food_saturation_;
+inline float SetHealth::_internal_food_saturation() const {
+  return _impl_.food_saturation_;
 }
-
-inline float SetHealth::food_saturation() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetHealth.food_saturation)
-   return _internal_food_saturation();
+inline float SetHealth::food_saturation() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetHealth.food_saturation)
+  return _internal_food_saturation();
 }
-
-inline void SetHealth::_internal_set_food_saturation(float value)
-{
-
-   _impl_.food_saturation_ = value;
+inline void SetHealth::_internal_set_food_saturation(float value) {
+  
+  _impl_.food_saturation_ = value;
 }
-
-inline void SetHealth::set_food_saturation(float value)
-{
-   _internal_set_food_saturation(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetHealth.food_saturation)
+inline void SetHealth::set_food_saturation(float value) {
+  _internal_set_food_saturation(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.SetHealth.food_saturation)
 }
 
 // -------------------------------------------------------------------
@@ -14295,90 +10964,63 @@ inline void SetHealth::set_food_saturation(float value)
 // CollectItem
 
 // uint32 collected_entity_id = 1;
-inline void CollectItem::clear_collected_entity_id()
-{
-   _impl_.collected_entity_id_ = 0u;
+inline void CollectItem::clear_collected_entity_id() {
+  _impl_.collected_entity_id_ = 0u;
 }
-
-inline uint32_t CollectItem::_internal_collected_entity_id() const
-{
-   return _impl_.collected_entity_id_;
+inline uint32_t CollectItem::_internal_collected_entity_id() const {
+  return _impl_.collected_entity_id_;
 }
-
-inline uint32_t CollectItem::collected_entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.CollectItem.collected_entity_id)
-   return _internal_collected_entity_id();
+inline uint32_t CollectItem::collected_entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.CollectItem.collected_entity_id)
+  return _internal_collected_entity_id();
 }
-
-inline void CollectItem::_internal_set_collected_entity_id(uint32_t value)
-{
-
-   _impl_.collected_entity_id_ = value;
+inline void CollectItem::_internal_set_collected_entity_id(uint32_t value) {
+  
+  _impl_.collected_entity_id_ = value;
 }
-
-inline void CollectItem::set_collected_entity_id(uint32_t value)
-{
-   _internal_set_collected_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.CollectItem.collected_entity_id)
+inline void CollectItem::set_collected_entity_id(uint32_t value) {
+  _internal_set_collected_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.CollectItem.collected_entity_id)
 }
 
 // uint32 collector_entity_id = 2;
-inline void CollectItem::clear_collector_entity_id()
-{
-   _impl_.collector_entity_id_ = 0u;
+inline void CollectItem::clear_collector_entity_id() {
+  _impl_.collector_entity_id_ = 0u;
 }
-
-inline uint32_t CollectItem::_internal_collector_entity_id() const
-{
-   return _impl_.collector_entity_id_;
+inline uint32_t CollectItem::_internal_collector_entity_id() const {
+  return _impl_.collector_entity_id_;
 }
-
-inline uint32_t CollectItem::collector_entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.CollectItem.collector_entity_id)
-   return _internal_collector_entity_id();
+inline uint32_t CollectItem::collector_entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.CollectItem.collector_entity_id)
+  return _internal_collector_entity_id();
 }
-
-inline void CollectItem::_internal_set_collector_entity_id(uint32_t value)
-{
-
-   _impl_.collector_entity_id_ = value;
+inline void CollectItem::_internal_set_collector_entity_id(uint32_t value) {
+  
+  _impl_.collector_entity_id_ = value;
 }
-
-inline void CollectItem::set_collector_entity_id(uint32_t value)
-{
-   _internal_set_collector_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.CollectItem.collector_entity_id)
+inline void CollectItem::set_collector_entity_id(uint32_t value) {
+  _internal_set_collector_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.CollectItem.collector_entity_id)
 }
 
 // uint32 count = 3;
-inline void CollectItem::clear_count()
-{
-   _impl_.count_ = 0u;
+inline void CollectItem::clear_count() {
+  _impl_.count_ = 0u;
 }
-
-inline uint32_t CollectItem::_internal_count() const
-{
-   return _impl_.count_;
+inline uint32_t CollectItem::_internal_count() const {
+  return _impl_.count_;
 }
-
-inline uint32_t CollectItem::count() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.CollectItem.count)
-   return _internal_count();
+inline uint32_t CollectItem::count() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.CollectItem.count)
+  return _internal_count();
 }
-
-inline void CollectItem::_internal_set_count(uint32_t value)
-{
-
-   _impl_.count_ = value;
+inline void CollectItem::_internal_set_count(uint32_t value) {
+  
+  _impl_.count_ = value;
 }
-
-inline void CollectItem::set_count(uint32_t value)
-{
-   _internal_set_count(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.CollectItem.count)
+inline void CollectItem::set_count(uint32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.CollectItem.count)
 }
 
 // -------------------------------------------------------------------
@@ -14386,32 +11028,23 @@ inline void CollectItem::set_count(uint32_t value)
 // RemoveEntity
 
 // uint32 entity_id = 1;
-inline void RemoveEntity::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void RemoveEntity::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t RemoveEntity::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t RemoveEntity::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t RemoveEntity::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RemoveEntity.entity_id)
-   return _internal_entity_id();
+inline uint32_t RemoveEntity::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.RemoveEntity.entity_id)
+  return _internal_entity_id();
 }
-
-inline void RemoveEntity::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void RemoveEntity::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void RemoveEntity::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.RemoveEntity.entity_id)
+inline void RemoveEntity::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.RemoveEntity.entity_id)
 }
 
 // -------------------------------------------------------------------
@@ -14419,271 +11052,213 @@ inline void RemoveEntity::set_entity_id(uint32_t value)
 // TeleportEntity
 
 // uint32 entity_id = 1;
-inline void TeleportEntity::clear_entity_id()
-{
-   _impl_.entity_id_ = 0u;
+inline void TeleportEntity::clear_entity_id() {
+  _impl_.entity_id_ = 0u;
 }
-
-inline uint32_t TeleportEntity::_internal_entity_id() const
-{
-   return _impl_.entity_id_;
+inline uint32_t TeleportEntity::_internal_entity_id() const {
+  return _impl_.entity_id_;
 }
-
-inline uint32_t TeleportEntity::entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.entity_id)
-   return _internal_entity_id();
+inline uint32_t TeleportEntity::entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.entity_id)
+  return _internal_entity_id();
 }
-
-inline void TeleportEntity::_internal_set_entity_id(uint32_t value)
-{
-
-   _impl_.entity_id_ = value;
+inline void TeleportEntity::_internal_set_entity_id(uint32_t value) {
+  
+  _impl_.entity_id_ = value;
 }
-
-inline void TeleportEntity::set_entity_id(uint32_t value)
-{
-   _internal_set_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.TeleportEntity.entity_id)
+inline void TeleportEntity::set_entity_id(uint32_t value) {
+  _internal_set_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.TeleportEntity.entity_id)
 }
 
 // .minecpp.proto.common.v1.Vector3 position = 2;
-inline bool TeleportEntity::_internal_has_position() const
-{
-   return this != internal_default_instance() && _impl_.position_ != nullptr;
+inline bool TeleportEntity::_internal_has_position() const {
+  return this != internal_default_instance() && _impl_.position_ != nullptr;
 }
-
-inline bool TeleportEntity::has_position() const
-{
-   return _internal_has_position();
+inline bool TeleportEntity::has_position() const {
+  return _internal_has_position();
 }
-
-inline const ::minecpp::proto::common::v1::Vector3 &TeleportEntity::_internal_position() const
-{
-   const ::minecpp::proto::common::v1::Vector3 *p = _impl_.position_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3 &>(
-                                 ::minecpp::proto::common::v1::_Vector3_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3& TeleportEntity::_internal_position() const {
+  const ::minecpp::proto::common::v1::Vector3* p = _impl_.position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3&>(
+      ::minecpp::proto::common::v1::_Vector3_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Vector3 &TeleportEntity::position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
-   return _internal_position();
+inline const ::minecpp::proto::common::v1::Vector3& TeleportEntity::position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
+  return _internal_position();
 }
-
-inline void
-TeleportEntity::unsafe_arena_set_allocated_position(::minecpp::proto::common::v1::Vector3 *position)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   _impl_.position_ = position;
-   if (position) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
+inline void TeleportEntity::unsafe_arena_set_allocated_position(
+    ::minecpp::proto::common::v1::Vector3* position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  _impl_.position_ = position;
+  if (position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *TeleportEntity::release_position()
-{
-
-   ::minecpp::proto::common::v1::Vector3 *temp = _impl_.position_;
-   _impl_.position_                            = nullptr;
+inline ::minecpp::proto::common::v1::Vector3* TeleportEntity::release_position() {
+  
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *TeleportEntity::unsafe_arena_release_position()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
-
-   ::minecpp::proto::common::v1::Vector3 *temp = _impl_.position_;
-   _impl_.position_                            = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Vector3* TeleportEntity::unsafe_arena_release_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
+  
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.position_;
+  _impl_.position_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *TeleportEntity::_internal_mutable_position()
-{
-
-   if (_impl_.position_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
-      _impl_.position_ = p;
-   }
-   return _impl_.position_;
+inline ::minecpp::proto::common::v1::Vector3* TeleportEntity::_internal_mutable_position() {
+  
+  if (_impl_.position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
+    _impl_.position_ = p;
+  }
+  return _impl_.position_;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *TeleportEntity::mutable_position()
-{
-   ::minecpp::proto::common::v1::Vector3 *_msg = _internal_mutable_position();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
-   return _msg;
+inline ::minecpp::proto::common::v1::Vector3* TeleportEntity::mutable_position() {
+  ::minecpp::proto::common::v1::Vector3* _msg = _internal_mutable_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
+  return _msg;
 }
-
-inline void TeleportEntity::set_allocated_position(::minecpp::proto::common::v1::Vector3 *position)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.position_);
-   }
-   if (position) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(position));
-      if (message_arena != submessage_arena) {
-         position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, position,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.position_ = position;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
+inline void TeleportEntity::set_allocated_position(::minecpp::proto::common::v1::Vector3* position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.position_);
+  }
+  if (position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(position));
+    if (message_arena != submessage_arena) {
+      position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.position_ = position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.position)
 }
 
 // .minecpp.proto.common.v1.Rotation rotation = 3;
-inline bool TeleportEntity::_internal_has_rotation() const
-{
-   return this != internal_default_instance() && _impl_.rotation_ != nullptr;
+inline bool TeleportEntity::_internal_has_rotation() const {
+  return this != internal_default_instance() && _impl_.rotation_ != nullptr;
 }
-
-inline bool TeleportEntity::has_rotation() const
-{
-   return _internal_has_rotation();
+inline bool TeleportEntity::has_rotation() const {
+  return _internal_has_rotation();
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &TeleportEntity::_internal_rotation() const
-{
-   const ::minecpp::proto::common::v1::Rotation *p = _impl_.rotation_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation &>(
-                                 ::minecpp::proto::common::v1::_Rotation_default_instance_);
+inline const ::minecpp::proto::common::v1::Rotation& TeleportEntity::_internal_rotation() const {
+  const ::minecpp::proto::common::v1::Rotation* p = _impl_.rotation_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Rotation&>(
+      ::minecpp::proto::common::v1::_Rotation_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Rotation &TeleportEntity::rotation() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
-   return _internal_rotation();
+inline const ::minecpp::proto::common::v1::Rotation& TeleportEntity::rotation() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
+  return _internal_rotation();
 }
-
-inline void
-TeleportEntity::unsafe_arena_set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   _impl_.rotation_ = rotation;
-   if (rotation) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
+inline void TeleportEntity::unsafe_arena_set_allocated_rotation(
+    ::minecpp::proto::common::v1::Rotation* rotation) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  _impl_.rotation_ = rotation;
+  if (rotation) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
 }
-
-inline ::minecpp::proto::common::v1::Rotation *TeleportEntity::release_rotation()
-{
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
+inline ::minecpp::proto::common::v1::Rotation* TeleportEntity::release_rotation() {
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *TeleportEntity::unsafe_arena_release_rotation()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
-
-   ::minecpp::proto::common::v1::Rotation *temp = _impl_.rotation_;
-   _impl_.rotation_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Rotation* TeleportEntity::unsafe_arena_release_rotation() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
+  
+  ::minecpp::proto::common::v1::Rotation* temp = _impl_.rotation_;
+  _impl_.rotation_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *TeleportEntity::_internal_mutable_rotation()
-{
-
-   if (_impl_.rotation_ == nullptr) {
-      auto *p          = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
-      _impl_.rotation_ = p;
-   }
-   return _impl_.rotation_;
+inline ::minecpp::proto::common::v1::Rotation* TeleportEntity::_internal_mutable_rotation() {
+  
+  if (_impl_.rotation_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Rotation>(GetArenaForAllocation());
+    _impl_.rotation_ = p;
+  }
+  return _impl_.rotation_;
 }
-
-inline ::minecpp::proto::common::v1::Rotation *TeleportEntity::mutable_rotation()
-{
-   ::minecpp::proto::common::v1::Rotation *_msg = _internal_mutable_rotation();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
-   return _msg;
+inline ::minecpp::proto::common::v1::Rotation* TeleportEntity::mutable_rotation() {
+  ::minecpp::proto::common::v1::Rotation* _msg = _internal_mutable_rotation();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
+  return _msg;
 }
-
-inline void TeleportEntity::set_allocated_rotation(::minecpp::proto::common::v1::Rotation *rotation)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.rotation_);
-   }
-   if (rotation) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(rotation));
-      if (message_arena != submessage_arena) {
-         rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, rotation,
-                                                                       submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.rotation_ = rotation;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
+inline void TeleportEntity::set_allocated_rotation(::minecpp::proto::common::v1::Rotation* rotation) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.rotation_);
+  }
+  if (rotation) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(rotation));
+    if (message_arena != submessage_arena) {
+      rotation = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, rotation, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.rotation_ = rotation;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.TeleportEntity.rotation)
 }
 
 // bool is_on_ground = 4;
-inline void TeleportEntity::clear_is_on_ground()
-{
-   _impl_.is_on_ground_ = false;
+inline void TeleportEntity::clear_is_on_ground() {
+  _impl_.is_on_ground_ = false;
 }
-
-inline bool TeleportEntity::_internal_is_on_ground() const
-{
-   return _impl_.is_on_ground_;
+inline bool TeleportEntity::_internal_is_on_ground() const {
+  return _impl_.is_on_ground_;
 }
-
-inline bool TeleportEntity::is_on_ground() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.is_on_ground)
-   return _internal_is_on_ground();
+inline bool TeleportEntity::is_on_ground() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.TeleportEntity.is_on_ground)
+  return _internal_is_on_ground();
 }
-
-inline void TeleportEntity::_internal_set_is_on_ground(bool value)
-{
-
-   _impl_.is_on_ground_ = value;
+inline void TeleportEntity::_internal_set_is_on_ground(bool value) {
+  
+  _impl_.is_on_ground_ = value;
 }
-
-inline void TeleportEntity::set_is_on_ground(bool value)
-{
-   _internal_set_is_on_ground(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.TeleportEntity.is_on_ground)
+inline void TeleportEntity::set_is_on_ground(bool value) {
+  _internal_set_is_on_ground(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.TeleportEntity.is_on_ground)
 }
 
 // -------------------------------------------------------------------
@@ -14691,126 +11266,93 @@ inline void TeleportEntity::set_is_on_ground(bool value)
 // DisplayDeathScreen
 
 // uint32 victim_entity_id = 1;
-inline void DisplayDeathScreen::clear_victim_entity_id()
-{
-   _impl_.victim_entity_id_ = 0u;
+inline void DisplayDeathScreen::clear_victim_entity_id() {
+  _impl_.victim_entity_id_ = 0u;
 }
-
-inline uint32_t DisplayDeathScreen::_internal_victim_entity_id() const
-{
-   return _impl_.victim_entity_id_;
+inline uint32_t DisplayDeathScreen::_internal_victim_entity_id() const {
+  return _impl_.victim_entity_id_;
 }
-
-inline uint32_t DisplayDeathScreen::victim_entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.victim_entity_id)
-   return _internal_victim_entity_id();
+inline uint32_t DisplayDeathScreen::victim_entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.victim_entity_id)
+  return _internal_victim_entity_id();
 }
-
-inline void DisplayDeathScreen::_internal_set_victim_entity_id(uint32_t value)
-{
-
-   _impl_.victim_entity_id_ = value;
+inline void DisplayDeathScreen::_internal_set_victim_entity_id(uint32_t value) {
+  
+  _impl_.victim_entity_id_ = value;
 }
-
-inline void DisplayDeathScreen::set_victim_entity_id(uint32_t value)
-{
-   _internal_set_victim_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.victim_entity_id)
+inline void DisplayDeathScreen::set_victim_entity_id(uint32_t value) {
+  _internal_set_victim_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.victim_entity_id)
 }
 
 // uint32 killer_entity_id = 2;
-inline void DisplayDeathScreen::clear_killer_entity_id()
-{
-   _impl_.killer_entity_id_ = 0u;
+inline void DisplayDeathScreen::clear_killer_entity_id() {
+  _impl_.killer_entity_id_ = 0u;
 }
-
-inline uint32_t DisplayDeathScreen::_internal_killer_entity_id() const
-{
-   return _impl_.killer_entity_id_;
+inline uint32_t DisplayDeathScreen::_internal_killer_entity_id() const {
+  return _impl_.killer_entity_id_;
 }
-
-inline uint32_t DisplayDeathScreen::killer_entity_id() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.killer_entity_id)
-   return _internal_killer_entity_id();
+inline uint32_t DisplayDeathScreen::killer_entity_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.killer_entity_id)
+  return _internal_killer_entity_id();
 }
-
-inline void DisplayDeathScreen::_internal_set_killer_entity_id(uint32_t value)
-{
-
-   _impl_.killer_entity_id_ = value;
+inline void DisplayDeathScreen::_internal_set_killer_entity_id(uint32_t value) {
+  
+  _impl_.killer_entity_id_ = value;
 }
-
-inline void DisplayDeathScreen::set_killer_entity_id(uint32_t value)
-{
-   _internal_set_killer_entity_id(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.killer_entity_id)
+inline void DisplayDeathScreen::set_killer_entity_id(uint32_t value) {
+  _internal_set_killer_entity_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.killer_entity_id)
 }
 
 // string death_message = 3;
-inline void DisplayDeathScreen::clear_death_message()
-{
-   _impl_.death_message_.ClearToEmpty();
+inline void DisplayDeathScreen::clear_death_message() {
+  _impl_.death_message_.ClearToEmpty();
 }
-
-inline const std::string &DisplayDeathScreen::death_message() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
-   return _internal_death_message();
+inline const std::string& DisplayDeathScreen::death_message() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
+  return _internal_death_message();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void DisplayDeathScreen::set_death_message(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.death_message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void DisplayDeathScreen::set_death_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.death_message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
 }
-
-inline std::string *DisplayDeathScreen::mutable_death_message()
-{
-   std::string *_s = _internal_mutable_death_message();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
-   return _s;
+inline std::string* DisplayDeathScreen::mutable_death_message() {
+  std::string* _s = _internal_mutable_death_message();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
+  return _s;
 }
-
-inline const std::string &DisplayDeathScreen::_internal_death_message() const
-{
-   return _impl_.death_message_.Get();
+inline const std::string& DisplayDeathScreen::_internal_death_message() const {
+  return _impl_.death_message_.Get();
 }
-
-inline void DisplayDeathScreen::_internal_set_death_message(const std::string &value)
-{
-
-   _impl_.death_message_.Set(value, GetArenaForAllocation());
+inline void DisplayDeathScreen::_internal_set_death_message(const std::string& value) {
+  
+  _impl_.death_message_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *DisplayDeathScreen::_internal_mutable_death_message()
-{
-
-   return _impl_.death_message_.Mutable(GetArenaForAllocation());
+inline std::string* DisplayDeathScreen::_internal_mutable_death_message() {
+  
+  return _impl_.death_message_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *DisplayDeathScreen::release_death_message()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
-   return _impl_.death_message_.Release();
+inline std::string* DisplayDeathScreen::release_death_message() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
+  return _impl_.death_message_.Release();
 }
-
-inline void DisplayDeathScreen::set_allocated_death_message(std::string *death_message)
-{
-   if (death_message != nullptr) {
-
-   } else {
-   }
-   _impl_.death_message_.SetAllocated(death_message, GetArenaForAllocation());
+inline void DisplayDeathScreen::set_allocated_death_message(std::string* death_message) {
+  if (death_message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.death_message_.SetAllocated(death_message, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.death_message_.IsDefault()) {
-      _impl_.death_message_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
+  if (_impl_.death_message_.IsDefault()) {
+    _impl_.death_message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.DisplayDeathScreen.death_message)
 }
 
 // -------------------------------------------------------------------
@@ -14818,518 +11360,386 @@ inline void DisplayDeathScreen::set_allocated_death_message(std::string *death_m
 // Respawn
 
 // string dimension_type = 1;
-inline void Respawn::clear_dimension_type()
-{
-   _impl_.dimension_type_.ClearToEmpty();
+inline void Respawn::clear_dimension_type() {
+  _impl_.dimension_type_.ClearToEmpty();
 }
-
-inline const std::string &Respawn::dimension_type() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
-   return _internal_dimension_type();
+inline const std::string& Respawn::dimension_type() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
+  return _internal_dimension_type();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void Respawn::set_dimension_type(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.dimension_type_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Respawn::set_dimension_type(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.dimension_type_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
 }
-
-inline std::string *Respawn::mutable_dimension_type()
-{
-   std::string *_s = _internal_mutable_dimension_type();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
-   return _s;
+inline std::string* Respawn::mutable_dimension_type() {
+  std::string* _s = _internal_mutable_dimension_type();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
+  return _s;
 }
-
-inline const std::string &Respawn::_internal_dimension_type() const
-{
-   return _impl_.dimension_type_.Get();
+inline const std::string& Respawn::_internal_dimension_type() const {
+  return _impl_.dimension_type_.Get();
 }
-
-inline void Respawn::_internal_set_dimension_type(const std::string &value)
-{
-
-   _impl_.dimension_type_.Set(value, GetArenaForAllocation());
+inline void Respawn::_internal_set_dimension_type(const std::string& value) {
+  
+  _impl_.dimension_type_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *Respawn::_internal_mutable_dimension_type()
-{
-
-   return _impl_.dimension_type_.Mutable(GetArenaForAllocation());
+inline std::string* Respawn::_internal_mutable_dimension_type() {
+  
+  return _impl_.dimension_type_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *Respawn::release_dimension_type()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
-   return _impl_.dimension_type_.Release();
+inline std::string* Respawn::release_dimension_type() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
+  return _impl_.dimension_type_.Release();
 }
-
-inline void Respawn::set_allocated_dimension_type(std::string *dimension_type)
-{
-   if (dimension_type != nullptr) {
-
-   } else {
-   }
-   _impl_.dimension_type_.SetAllocated(dimension_type, GetArenaForAllocation());
+inline void Respawn::set_allocated_dimension_type(std::string* dimension_type) {
+  if (dimension_type != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.dimension_type_.SetAllocated(dimension_type, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.dimension_type_.IsDefault()) {
-      _impl_.dimension_type_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
+  if (_impl_.dimension_type_.IsDefault()) {
+    _impl_.dimension_type_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.dimension_type)
 }
 
 // string dimension_name = 2;
-inline void Respawn::clear_dimension_name()
-{
-   _impl_.dimension_name_.ClearToEmpty();
+inline void Respawn::clear_dimension_name() {
+  _impl_.dimension_name_.ClearToEmpty();
 }
-
-inline const std::string &Respawn::dimension_name() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
-   return _internal_dimension_name();
+inline const std::string& Respawn::dimension_name() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
+  return _internal_dimension_name();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void Respawn::set_dimension_name(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.dimension_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Respawn::set_dimension_name(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.dimension_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
 }
-
-inline std::string *Respawn::mutable_dimension_name()
-{
-   std::string *_s = _internal_mutable_dimension_name();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
-   return _s;
+inline std::string* Respawn::mutable_dimension_name() {
+  std::string* _s = _internal_mutable_dimension_name();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
+  return _s;
 }
-
-inline const std::string &Respawn::_internal_dimension_name() const
-{
-   return _impl_.dimension_name_.Get();
+inline const std::string& Respawn::_internal_dimension_name() const {
+  return _impl_.dimension_name_.Get();
 }
-
-inline void Respawn::_internal_set_dimension_name(const std::string &value)
-{
-
-   _impl_.dimension_name_.Set(value, GetArenaForAllocation());
+inline void Respawn::_internal_set_dimension_name(const std::string& value) {
+  
+  _impl_.dimension_name_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *Respawn::_internal_mutable_dimension_name()
-{
-
-   return _impl_.dimension_name_.Mutable(GetArenaForAllocation());
+inline std::string* Respawn::_internal_mutable_dimension_name() {
+  
+  return _impl_.dimension_name_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *Respawn::release_dimension_name()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
-   return _impl_.dimension_name_.Release();
+inline std::string* Respawn::release_dimension_name() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
+  return _impl_.dimension_name_.Release();
 }
-
-inline void Respawn::set_allocated_dimension_name(std::string *dimension_name)
-{
-   if (dimension_name != nullptr) {
-
-   } else {
-   }
-   _impl_.dimension_name_.SetAllocated(dimension_name, GetArenaForAllocation());
+inline void Respawn::set_allocated_dimension_name(std::string* dimension_name) {
+  if (dimension_name != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.dimension_name_.SetAllocated(dimension_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.dimension_name_.IsDefault()) {
-      _impl_.dimension_name_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
+  if (_impl_.dimension_name_.IsDefault()) {
+    _impl_.dimension_name_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.dimension_name)
 }
 
 // int64 hashed_seed = 3;
-inline void Respawn::clear_hashed_seed()
-{
-   _impl_.hashed_seed_ = int64_t{0};
+inline void Respawn::clear_hashed_seed() {
+  _impl_.hashed_seed_ = int64_t{0};
 }
-
-inline int64_t Respawn::_internal_hashed_seed() const
-{
-   return _impl_.hashed_seed_;
+inline int64_t Respawn::_internal_hashed_seed() const {
+  return _impl_.hashed_seed_;
 }
-
-inline int64_t Respawn::hashed_seed() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.hashed_seed)
-   return _internal_hashed_seed();
+inline int64_t Respawn::hashed_seed() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.hashed_seed)
+  return _internal_hashed_seed();
 }
-
-inline void Respawn::_internal_set_hashed_seed(int64_t value)
-{
-
-   _impl_.hashed_seed_ = value;
+inline void Respawn::_internal_set_hashed_seed(int64_t value) {
+  
+  _impl_.hashed_seed_ = value;
 }
-
-inline void Respawn::set_hashed_seed(int64_t value)
-{
-   _internal_set_hashed_seed(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.hashed_seed)
+inline void Respawn::set_hashed_seed(int64_t value) {
+  _internal_set_hashed_seed(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.hashed_seed)
 }
 
 // .minecpp.proto.common.v1.GameMode game_mode = 4;
-inline void Respawn::clear_game_mode()
-{
-   _impl_.game_mode_ = 0;
+inline void Respawn::clear_game_mode() {
+  _impl_.game_mode_ = 0;
 }
-
-inline ::minecpp::proto::common::v1::GameMode Respawn::_internal_game_mode() const
-{
-   return static_cast<::minecpp::proto::common::v1::GameMode>(_impl_.game_mode_);
+inline ::minecpp::proto::common::v1::GameMode Respawn::_internal_game_mode() const {
+  return static_cast< ::minecpp::proto::common::v1::GameMode >(_impl_.game_mode_);
 }
-
-inline ::minecpp::proto::common::v1::GameMode Respawn::game_mode() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.game_mode)
-   return _internal_game_mode();
+inline ::minecpp::proto::common::v1::GameMode Respawn::game_mode() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.game_mode)
+  return _internal_game_mode();
 }
-
-inline void Respawn::_internal_set_game_mode(::minecpp::proto::common::v1::GameMode value)
-{
-
-   _impl_.game_mode_ = value;
+inline void Respawn::_internal_set_game_mode(::minecpp::proto::common::v1::GameMode value) {
+  
+  _impl_.game_mode_ = value;
 }
-
-inline void Respawn::set_game_mode(::minecpp::proto::common::v1::GameMode value)
-{
-   _internal_set_game_mode(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.game_mode)
+inline void Respawn::set_game_mode(::minecpp::proto::common::v1::GameMode value) {
+  _internal_set_game_mode(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.game_mode)
 }
 
 // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
-inline bool Respawn::_internal_has_previous_game_mode() const
-{
-   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
-   return value;
+inline bool Respawn::_internal_has_previous_game_mode() const {
+  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
+  return value;
 }
-
-inline bool Respawn::has_previous_game_mode() const
-{
-   return _internal_has_previous_game_mode();
+inline bool Respawn::has_previous_game_mode() const {
+  return _internal_has_previous_game_mode();
 }
-
-inline void Respawn::clear_previous_game_mode()
-{
-   _impl_.previous_game_mode_ = 0;
-   _impl_._has_bits_[0] &= ~0x00000001u;
+inline void Respawn::clear_previous_game_mode() {
+  _impl_.previous_game_mode_ = 0;
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-
-inline ::minecpp::proto::common::v1::GameMode Respawn::_internal_previous_game_mode() const
-{
-   return static_cast<::minecpp::proto::common::v1::GameMode>(_impl_.previous_game_mode_);
+inline ::minecpp::proto::common::v1::GameMode Respawn::_internal_previous_game_mode() const {
+  return static_cast< ::minecpp::proto::common::v1::GameMode >(_impl_.previous_game_mode_);
 }
-
-inline ::minecpp::proto::common::v1::GameMode Respawn::previous_game_mode() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.previous_game_mode)
-   return _internal_previous_game_mode();
+inline ::minecpp::proto::common::v1::GameMode Respawn::previous_game_mode() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.previous_game_mode)
+  return _internal_previous_game_mode();
 }
-
-inline void Respawn::_internal_set_previous_game_mode(::minecpp::proto::common::v1::GameMode value)
-{
-   _impl_._has_bits_[0] |= 0x00000001u;
-   _impl_.previous_game_mode_ = value;
+inline void Respawn::_internal_set_previous_game_mode(::minecpp::proto::common::v1::GameMode value) {
+  _impl_._has_bits_[0] |= 0x00000001u;
+  _impl_.previous_game_mode_ = value;
 }
-
-inline void Respawn::set_previous_game_mode(::minecpp::proto::common::v1::GameMode value)
-{
-   _internal_set_previous_game_mode(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.previous_game_mode)
+inline void Respawn::set_previous_game_mode(::minecpp::proto::common::v1::GameMode value) {
+  _internal_set_previous_game_mode(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.previous_game_mode)
 }
 
 // bool is_debug = 6;
-inline void Respawn::clear_is_debug()
-{
-   _impl_.is_debug_ = false;
+inline void Respawn::clear_is_debug() {
+  _impl_.is_debug_ = false;
 }
-
-inline bool Respawn::_internal_is_debug() const
-{
-   return _impl_.is_debug_;
+inline bool Respawn::_internal_is_debug() const {
+  return _impl_.is_debug_;
 }
-
-inline bool Respawn::is_debug() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.is_debug)
-   return _internal_is_debug();
+inline bool Respawn::is_debug() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.is_debug)
+  return _internal_is_debug();
 }
-
-inline void Respawn::_internal_set_is_debug(bool value)
-{
-
-   _impl_.is_debug_ = value;
+inline void Respawn::_internal_set_is_debug(bool value) {
+  
+  _impl_.is_debug_ = value;
 }
-
-inline void Respawn::set_is_debug(bool value)
-{
-   _internal_set_is_debug(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.is_debug)
+inline void Respawn::set_is_debug(bool value) {
+  _internal_set_is_debug(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.is_debug)
 }
 
 // bool is_flat = 7;
-inline void Respawn::clear_is_flat()
-{
-   _impl_.is_flat_ = false;
+inline void Respawn::clear_is_flat() {
+  _impl_.is_flat_ = false;
 }
-
-inline bool Respawn::_internal_is_flat() const
-{
-   return _impl_.is_flat_;
+inline bool Respawn::_internal_is_flat() const {
+  return _impl_.is_flat_;
 }
-
-inline bool Respawn::is_flat() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.is_flat)
-   return _internal_is_flat();
+inline bool Respawn::is_flat() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.is_flat)
+  return _internal_is_flat();
 }
-
-inline void Respawn::_internal_set_is_flat(bool value)
-{
-
-   _impl_.is_flat_ = value;
+inline void Respawn::_internal_set_is_flat(bool value) {
+  
+  _impl_.is_flat_ = value;
 }
-
-inline void Respawn::set_is_flat(bool value)
-{
-   _internal_set_is_flat(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.is_flat)
+inline void Respawn::set_is_flat(bool value) {
+  _internal_set_is_flat(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.is_flat)
 }
 
 // bool copy_metadata = 8;
-inline void Respawn::clear_copy_metadata()
-{
-   _impl_.copy_metadata_ = false;
+inline void Respawn::clear_copy_metadata() {
+  _impl_.copy_metadata_ = false;
 }
-
-inline bool Respawn::_internal_copy_metadata() const
-{
-   return _impl_.copy_metadata_;
+inline bool Respawn::_internal_copy_metadata() const {
+  return _impl_.copy_metadata_;
 }
-
-inline bool Respawn::copy_metadata() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.copy_metadata)
-   return _internal_copy_metadata();
+inline bool Respawn::copy_metadata() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.copy_metadata)
+  return _internal_copy_metadata();
 }
-
-inline void Respawn::_internal_set_copy_metadata(bool value)
-{
-
-   _impl_.copy_metadata_ = value;
+inline void Respawn::_internal_set_copy_metadata(bool value) {
+  
+  _impl_.copy_metadata_ = value;
 }
-
-inline void Respawn::set_copy_metadata(bool value)
-{
-   _internal_set_copy_metadata(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.copy_metadata)
+inline void Respawn::set_copy_metadata(bool value) {
+  _internal_set_copy_metadata(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.copy_metadata)
 }
 
 // bool has_death_location = 9;
-inline void Respawn::clear_has_death_location()
-{
-   _impl_.has_death_location_ = false;
+inline void Respawn::clear_has_death_location() {
+  _impl_.has_death_location_ = false;
 }
-
-inline bool Respawn::_internal_has_death_location() const
-{
-   return _impl_.has_death_location_;
+inline bool Respawn::_internal_has_death_location() const {
+  return _impl_.has_death_location_;
 }
-
-inline bool Respawn::has_death_location() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.has_death_location)
-   return _internal_has_death_location();
+inline bool Respawn::has_death_location() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.has_death_location)
+  return _internal_has_death_location();
 }
-
-inline void Respawn::_internal_set_has_death_location(bool value)
-{
-
-   _impl_.has_death_location_ = value;
+inline void Respawn::_internal_set_has_death_location(bool value) {
+  
+  _impl_.has_death_location_ = value;
 }
-
-inline void Respawn::set_has_death_location(bool value)
-{
-   _internal_set_has_death_location(value);
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.has_death_location)
+inline void Respawn::set_has_death_location(bool value) {
+  _internal_set_has_death_location(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.has_death_location)
 }
 
 // string death_dimension = 10;
-inline void Respawn::clear_death_dimension()
-{
-   _impl_.death_dimension_.ClearToEmpty();
+inline void Respawn::clear_death_dimension() {
+  _impl_.death_dimension_.ClearToEmpty();
 }
-
-inline const std::string &Respawn::death_dimension() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
-   return _internal_death_dimension();
+inline const std::string& Respawn::death_dimension() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
+  return _internal_death_dimension();
 }
-
-template<typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE void Respawn::set_death_dimension(ArgT0 &&arg0, ArgT... args)
-{
-
-   _impl_.death_dimension_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void Respawn::set_death_dimension(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.death_dimension_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
 }
-
-inline std::string *Respawn::mutable_death_dimension()
-{
-   std::string *_s = _internal_mutable_death_dimension();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
-   return _s;
+inline std::string* Respawn::mutable_death_dimension() {
+  std::string* _s = _internal_mutable_death_dimension();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
+  return _s;
 }
-
-inline const std::string &Respawn::_internal_death_dimension() const
-{
-   return _impl_.death_dimension_.Get();
+inline const std::string& Respawn::_internal_death_dimension() const {
+  return _impl_.death_dimension_.Get();
 }
-
-inline void Respawn::_internal_set_death_dimension(const std::string &value)
-{
-
-   _impl_.death_dimension_.Set(value, GetArenaForAllocation());
+inline void Respawn::_internal_set_death_dimension(const std::string& value) {
+  
+  _impl_.death_dimension_.Set(value, GetArenaForAllocation());
 }
-
-inline std::string *Respawn::_internal_mutable_death_dimension()
-{
-
-   return _impl_.death_dimension_.Mutable(GetArenaForAllocation());
+inline std::string* Respawn::_internal_mutable_death_dimension() {
+  
+  return _impl_.death_dimension_.Mutable(GetArenaForAllocation());
 }
-
-inline std::string *Respawn::release_death_dimension()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
-   return _impl_.death_dimension_.Release();
+inline std::string* Respawn::release_death_dimension() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
+  return _impl_.death_dimension_.Release();
 }
-
-inline void Respawn::set_allocated_death_dimension(std::string *death_dimension)
-{
-   if (death_dimension != nullptr) {
-
-   } else {
-   }
-   _impl_.death_dimension_.SetAllocated(death_dimension, GetArenaForAllocation());
+inline void Respawn::set_allocated_death_dimension(std::string* death_dimension) {
+  if (death_dimension != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.death_dimension_.SetAllocated(death_dimension, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   if (_impl_.death_dimension_.IsDefault()) {
-      _impl_.death_dimension_.Set("", GetArenaForAllocation());
-   }
-#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
+  if (_impl_.death_dimension_.IsDefault()) {
+    _impl_.death_dimension_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_dimension)
 }
 
 // .minecpp.proto.common.v1.Vector3 death_position = 11;
-inline bool Respawn::_internal_has_death_position() const
-{
-   return this != internal_default_instance() && _impl_.death_position_ != nullptr;
+inline bool Respawn::_internal_has_death_position() const {
+  return this != internal_default_instance() && _impl_.death_position_ != nullptr;
 }
-
-inline bool Respawn::has_death_position() const
-{
-   return _internal_has_death_position();
+inline bool Respawn::has_death_position() const {
+  return _internal_has_death_position();
 }
-
-inline const ::minecpp::proto::common::v1::Vector3 &Respawn::_internal_death_position() const
-{
-   const ::minecpp::proto::common::v1::Vector3 *p = _impl_.death_position_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3 &>(
-                                 ::minecpp::proto::common::v1::_Vector3_default_instance_);
+inline const ::minecpp::proto::common::v1::Vector3& Respawn::_internal_death_position() const {
+  const ::minecpp::proto::common::v1::Vector3* p = _impl_.death_position_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::v1::Vector3&>(
+      ::minecpp::proto::common::v1::_Vector3_default_instance_);
 }
-
-inline const ::minecpp::proto::common::v1::Vector3 &Respawn::death_position() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.death_position)
-   return _internal_death_position();
+inline const ::minecpp::proto::common::v1::Vector3& Respawn::death_position() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.Respawn.death_position)
+  return _internal_death_position();
 }
-
-inline void
-Respawn::unsafe_arena_set_allocated_death_position(::minecpp::proto::common::v1::Vector3 *death_position)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.death_position_);
-   }
-   _impl_.death_position_ = death_position;
-   if (death_position) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_position)
+inline void Respawn::unsafe_arena_set_allocated_death_position(
+    ::minecpp::proto::common::v1::Vector3* death_position) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.death_position_);
+  }
+  _impl_.death_position_ = death_position;
+  if (death_position) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_position)
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *Respawn::release_death_position()
-{
-
-   ::minecpp::proto::common::v1::Vector3 *temp = _impl_.death_position_;
-   _impl_.death_position_                      = nullptr;
+inline ::minecpp::proto::common::v1::Vector3* Respawn::release_death_position() {
+  
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.death_position_;
+  _impl_.death_position_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *Respawn::unsafe_arena_release_death_position()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.death_position)
-
-   ::minecpp::proto::common::v1::Vector3 *temp = _impl_.death_position_;
-   _impl_.death_position_                      = nullptr;
-   return temp;
+inline ::minecpp::proto::common::v1::Vector3* Respawn::unsafe_arena_release_death_position() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.Respawn.death_position)
+  
+  ::minecpp::proto::common::v1::Vector3* temp = _impl_.death_position_;
+  _impl_.death_position_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *Respawn::_internal_mutable_death_position()
-{
-
-   if (_impl_.death_position_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
-      _impl_.death_position_ = p;
-   }
-   return _impl_.death_position_;
+inline ::minecpp::proto::common::v1::Vector3* Respawn::_internal_mutable_death_position() {
+  
+  if (_impl_.death_position_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::v1::Vector3>(GetArenaForAllocation());
+    _impl_.death_position_ = p;
+  }
+  return _impl_.death_position_;
 }
-
-inline ::minecpp::proto::common::v1::Vector3 *Respawn::mutable_death_position()
-{
-   ::minecpp::proto::common::v1::Vector3 *_msg = _internal_mutable_death_position();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.death_position)
-   return _msg;
+inline ::minecpp::proto::common::v1::Vector3* Respawn::mutable_death_position() {
+  ::minecpp::proto::common::v1::Vector3* _msg = _internal_mutable_death_position();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.Respawn.death_position)
+  return _msg;
 }
-
-inline void Respawn::set_allocated_death_position(::minecpp::proto::common::v1::Vector3 *death_position)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.death_position_);
-   }
-   if (death_position) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(death_position));
-      if (message_arena != submessage_arena) {
-         death_position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, death_position,
-                                                                             submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.death_position_ = death_position;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_position)
+inline void Respawn::set_allocated_death_position(::minecpp::proto::common::v1::Vector3* death_position) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.death_position_);
+  }
+  if (death_position) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(death_position));
+    if (message_arena != submessage_arena) {
+      death_position = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, death_position, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.death_position_ = death_position;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.Respawn.death_position)
 }
 
 // -------------------------------------------------------------------
@@ -15337,113 +11747,93 @@ inline void Respawn::set_allocated_death_position(::minecpp::proto::common::v1::
 // SetAbilities
 
 // .minecpp.proto.entity.v1.Abilities abilities = 1;
-inline bool SetAbilities::_internal_has_abilities() const
-{
-   return this != internal_default_instance() && _impl_.abilities_ != nullptr;
+inline bool SetAbilities::_internal_has_abilities() const {
+  return this != internal_default_instance() && _impl_.abilities_ != nullptr;
 }
-
-inline bool SetAbilities::has_abilities() const
-{
-   return _internal_has_abilities();
+inline bool SetAbilities::has_abilities() const {
+  return _internal_has_abilities();
 }
-
-inline const ::minecpp::proto::entity::v1::Abilities &SetAbilities::_internal_abilities() const
-{
-   const ::minecpp::proto::entity::v1::Abilities *p = _impl_.abilities_;
-   return p != nullptr ? *p
-                       : reinterpret_cast<const ::minecpp::proto::entity::v1::Abilities &>(
-                                 ::minecpp::proto::entity::v1::_Abilities_default_instance_);
+inline const ::minecpp::proto::entity::v1::Abilities& SetAbilities::_internal_abilities() const {
+  const ::minecpp::proto::entity::v1::Abilities* p = _impl_.abilities_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::entity::v1::Abilities&>(
+      ::minecpp::proto::entity::v1::_Abilities_default_instance_);
 }
-
-inline const ::minecpp::proto::entity::v1::Abilities &SetAbilities::abilities() const
-{
-   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
-   return _internal_abilities();
+inline const ::minecpp::proto::entity::v1::Abilities& SetAbilities::abilities() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+  return _internal_abilities();
 }
-
-inline void
-SetAbilities::unsafe_arena_set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities)
-{
-   if (GetArenaForAllocation() == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.abilities_);
-   }
-   _impl_.abilities_ = abilities;
-   if (abilities) {
-
-   } else {
-   }
-   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+inline void SetAbilities::unsafe_arena_set_allocated_abilities(
+    ::minecpp::proto::entity::v1::Abilities* abilities) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  _impl_.abilities_ = abilities;
+  if (abilities) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *SetAbilities::release_abilities()
-{
-
-   ::minecpp::proto::entity::v1::Abilities *temp = _impl_.abilities_;
-   _impl_.abilities_                             = nullptr;
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::release_abilities() {
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
-   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   if (GetArenaForAllocation() == nullptr) {
-      delete old;
-   }
-#else // PROTOBUF_FORCE_COPY_IN_RELEASE
-   if (GetArenaForAllocation() != nullptr) {
-      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-   }
-#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
-   return temp;
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *SetAbilities::unsafe_arena_release_abilities()
-{
-   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
-
-   ::minecpp::proto::entity::v1::Abilities *temp = _impl_.abilities_;
-   _impl_.abilities_                             = nullptr;
-   return temp;
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::unsafe_arena_release_abilities() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+  
+  ::minecpp::proto::entity::v1::Abilities* temp = _impl_.abilities_;
+  _impl_.abilities_ = nullptr;
+  return temp;
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *SetAbilities::_internal_mutable_abilities()
-{
-
-   if (_impl_.abilities_ == nullptr) {
-      auto *p = CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(GetArenaForAllocation());
-      _impl_.abilities_ = p;
-   }
-   return _impl_.abilities_;
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::_internal_mutable_abilities() {
+  
+  if (_impl_.abilities_ == nullptr) {
+    auto* p = CreateMaybeMessage<::minecpp::proto::entity::v1::Abilities>(GetArenaForAllocation());
+    _impl_.abilities_ = p;
+  }
+  return _impl_.abilities_;
 }
-
-inline ::minecpp::proto::entity::v1::Abilities *SetAbilities::mutable_abilities()
-{
-   ::minecpp::proto::entity::v1::Abilities *_msg = _internal_mutable_abilities();
-   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
-   return _msg;
+inline ::minecpp::proto::entity::v1::Abilities* SetAbilities::mutable_abilities() {
+  ::minecpp::proto::entity::v1::Abilities* _msg = _internal_mutable_abilities();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+  return _msg;
 }
-
-inline void SetAbilities::set_allocated_abilities(::minecpp::proto::entity::v1::Abilities *abilities)
-{
-   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
-   if (message_arena == nullptr) {
-      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.abilities_);
-   }
-   if (abilities) {
-      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
-              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                      reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(abilities));
-      if (message_arena != submessage_arena) {
-         abilities = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, abilities,
-                                                                        submessage_arena);
-      }
-
-   } else {
-   }
-   _impl_.abilities_ = abilities;
-   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
+inline void SetAbilities::set_allocated_abilities(::minecpp::proto::entity::v1::Abilities* abilities) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.abilities_);
+  }
+  if (abilities) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(abilities));
+    if (message_arena != submessage_arena) {
+      abilities = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, abilities, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.abilities_ = abilities;
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.v1.SetAbilities.abilities)
 }
 
 #ifdef __GNUC__
-#pragma GCC diagnostic pop
-#endif// __GNUC__
+  #pragma GCC diagnostic pop
+#endif  // __GNUC__
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -15525,9 +11915,13 @@ inline void SetAbilities::set_allocated_abilities(::minecpp::proto::entity::v1::
 
 // @@protoc_insertion_point(namespace_scope)
 
-}}}}}// namespace minecpp::proto::event::clientbound::v1
+}  // namespace v1
+}  // namespace clientbound
+}  // namespace event
+}  // namespace proto
+}  // namespace minecpp
 
 // @@protoc_insertion_point(global_scope)
 
 #include <google/protobuf/port_undef.inc>
-#endif// GOOGLE_PROTOBUF_INCLUDED_GOOGLE_PROTOBUF_INCLUDED_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto
+#endif  // GOOGLE_PROTOBUF_INCLUDED_GOOGLE_PROTOBUF_INCLUDED_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto

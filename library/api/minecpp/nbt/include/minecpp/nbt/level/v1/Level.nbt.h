@@ -12,12 +12,10 @@
 
 namespace minecpp::nbt::level::v1 {
 
-class Memories
-{
+class Memories {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "no_empty") {
@@ -37,12 +35,10 @@ class Memories
    static Memories deserialize(std::istream &in);
 };
 
-class Brain
-{
+class Brain {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Memories>) {
          if (in_field_name == "memories") {
@@ -62,12 +58,10 @@ class Brain
    static Brain deserialize(std::istream &in);
 };
 
-class Abilities
-{
+class Abilities {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, float>) {
          if (in_field_name == "flySpeed") {
@@ -120,12 +114,10 @@ class Abilities
    static Abilities deserialize(std::istream &in);
 };
 
-class RecipeBook
-{
+class RecipeBook {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (in_field_name == "isBlastingFurnaceFilteringCraftable") {
@@ -180,12 +172,10 @@ class RecipeBook
    static RecipeBook deserialize(std::istream &in);
 };
 
-class Version
-{
+class Version {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "Id") {
@@ -221,12 +211,10 @@ class Version
    static Version deserialize(std::istream &in);
 };
 
-class BiomeSource
-{
+class BiomeSource {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int64_t>) {
          if (in_field_name == "seed") {
@@ -267,12 +255,10 @@ class BiomeSource
    static BiomeSource deserialize(std::istream &in);
 };
 
-class Generator
-{
+class Generator {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, BiomeSource>) {
          if (in_field_name == "biome_source") {
@@ -313,12 +299,10 @@ class Generator
    static Generator deserialize(std::istream &in);
 };
 
-class DimentionData
-{
+class DimentionData {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Generator>) {
          if (in_field_name == "generator") {
@@ -346,12 +330,10 @@ class DimentionData
    static DimentionData deserialize(std::istream &in);
 };
 
-class Dimentions
-{
+class Dimentions {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, DimentionData>) {
          if (in_field_name == "minecraft:overworld") {
@@ -381,12 +363,10 @@ class Dimentions
    static Dimentions deserialize(std::istream &in);
 };
 
-class WorldGen
-{
+class WorldGen {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Dimentions>) {
          if (in_field_name == "dimensions") {
@@ -427,12 +407,10 @@ class WorldGen
    static WorldGen deserialize(std::istream &in);
 };
 
-class DataPacks
-{
+class DataPacks {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::int64_t>>) {
          if (in_field_name == "Disabled") {
@@ -452,12 +430,10 @@ class DataPacks
    static DataPacks deserialize(std::istream &in);
 };
 
-class DragonFight
-{
+class DragonFight {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (in_field_name == "DragonKilled") {
@@ -482,12 +458,10 @@ class DragonFight
    static DragonFight deserialize(std::istream &in);
 };
 
-class CustomBossEvents
-{
+class CustomBossEvents {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "no_empty") {
@@ -507,12 +481,10 @@ class CustomBossEvents
    static CustomBossEvents deserialize(std::istream &in);
 };
 
-class Player
-{
+class Player {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Abilities>) {
          if (in_field_name == "abilities") {
@@ -711,12 +683,10 @@ class Player
    static Player deserialize(std::istream &in);
 };
 
-class GameRules
-{
+class GameRules {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (in_field_name == "announceAdvancements") {
@@ -896,12 +866,10 @@ class GameRules
    static GameRules deserialize(std::istream &in);
 };
 
-class LevelData
-{
+class LevelData {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, CustomBossEvents>) {
          if (in_field_name == "CustomBossEvents") {
@@ -1144,12 +1112,10 @@ class LevelData
    static LevelData deserialize(std::istream &in);
 };
 
-class Level
-{
+class Level {
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value)
-   {
+   void set_property(const std::string &in_field_name, T &&in_value) {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, LevelData>) {
          if (in_field_name == "Data") {
@@ -1169,5 +1135,5 @@ class Level
    static Level deserialize(std::istream &in);
 };
 
-}// namespace minecpp::nbt::level::v1
+}
 #endif//MINECPP_NBT_LEVEL_V1_LEVEL_H
