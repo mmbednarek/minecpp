@@ -1,7 +1,6 @@
 #ifndef MINECPP_GAME_BLOCK_BLOCK_H
 #define MINECPP_GAME_BLOCK_BLOCK_H
 #include "Material.h"
-#include <minecpp/game/Game.h>
 #include <minecpp/game/State.h>
 #include <optional>
 #include <string_view>

@@ -2,12 +2,46 @@
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Player.h>
 #include <minecpp/game/player/Id.h>
+#include <minecpp/world/IChunkSystem.h>
 
 using minecpp::entity::EntitySystem;
 
+class MockChunkSystem : public minecpp::world::IChunkSystem
+{
+ public:
+   minecpp::world::Chunk *create_empty_chunk_at(const minecpp::game::ChunkPosition & /*position*/) override
+   {
+      return nullptr;
+   }
+
+   minecpp::world::Chunk *
+   create_chunk_with_terrain_at(const minecpp::game::ChunkPosition & /*position*/) override
+   {
+      return nullptr;
+   }
+
+   minecpp::world::Chunk *chunk_at(const minecpp::game::ChunkPosition & /*position*/) override
+   {
+      return nullptr;
+   }
+
+   minecpp::world::ChunkState chunk_state_at(const minecpp::game::ChunkPosition & /*position*/) override
+   {
+      return minecpp::world::EMPTY;
+   }
+
+   void set_chunk_state_at(const minecpp::game::ChunkPosition & /*position*/,
+                           minecpp::world::ChunkState /*state*/) override
+   {
+   }
+
+   void save_chunk_at(const minecpp::game::ChunkPosition & /*position*/) override {}
+};
+
 TEST(Entity, EntitySystem_Nearest)
 {
-   EntitySystem system;
+   MockChunkSystem chunk_system;
+   EntitySystem system(chunk_system);
 
    auto id1 = system.create_spatial_entity({4, 5, 6}, {0.6, 1.8, 0.6});
    auto id2 = system.create_spatial_entity({-14, -15, -16}, {0.6, 1.8, 0.6});
@@ -31,7 +65,8 @@ TEST(Entity, EntitySystem_Nearest)
 
 TEST(Entity, ProtoSerialize)
 {
-   EntitySystem system;
+   MockChunkSystem chunk_system;
+   EntitySystem system(chunk_system);
    auto entity = system.create_spatial_entity({4, 5, 6}, {1, 1, 1});
 
    minecpp::proto::entity::v1::Entity proto_entity;
@@ -48,7 +83,8 @@ TEST(Entity, ProtoSerialize)
 
 TEST(Entity, ProtoPlayerSerialize)
 {
-   EntitySystem system;
+   MockChunkSystem chunk_system;
+   EntitySystem system(chunk_system);
    minecpp::entity::factory::Player player(minecpp::game::player::read_id_from_nbt({1, 2, 3, 4}), "test");
    auto entity = player.create_entity({4, 5, 6}, system);
 

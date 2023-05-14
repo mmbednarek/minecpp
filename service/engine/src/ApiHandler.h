@@ -1,6 +1,5 @@
 #pragma once
 #include "IConnection.h"
-#include <minecpp/game/Game.h>
 #include <minecpp/grpc/server/Bidi.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>

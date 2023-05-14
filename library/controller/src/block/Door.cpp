@@ -1,4 +1,6 @@
 #include <minecpp/controller/block/Door.h>
+#include <minecpp/game/property/Half.hpp>
+#include <minecpp/game/property/Side.hpp>
 #include <minecpp/repository/Block.h>
 #include <minecpp/world/BlockState.h>
 

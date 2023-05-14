@@ -1,5 +1,4 @@
 #pragma once
-#include <minecpp/game/Game.h>
 #include <minecpp/service/storage/Storage.h>
 #include <minecpp/util/Pool.h>
 #include <minecpp/world/Chunk.h>

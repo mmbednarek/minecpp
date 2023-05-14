@@ -3,6 +3,8 @@
 #include <cassert>
 #include <mb/int.h>
 #include <memory>
+#include <minecpp/math/Vector2.h>
+#include <minecpp/math/Vector3.h>
 #include <tuple>
 #include <vector>
 

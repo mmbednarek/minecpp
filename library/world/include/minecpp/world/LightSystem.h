@@ -1,6 +1,5 @@
 #pragma once
 #include "Chunk.h"
-#include <minecpp/game/Game.h>
 #include <minecpp/game/IBlockController.hpp>
 #include <minecpp/game/IWorld.hpp>
 #include <queue>

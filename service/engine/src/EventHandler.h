@@ -47,7 +47,8 @@ class EventHandler
    void handle_player_digging(const serverbound_v1::PlayerDigging &event, game::PlayerId player_id);
    void handle_update_ping(const serverbound_v1::UpdatePing &event, game::PlayerId player_id);
    void handle_animate_hand(const serverbound_v1::AnimateHand &event, game::PlayerId player_id);
-   void handle_load_initial_chunks(const serverbound_v1::LoadInitialChunks &event, game::PlayerId player_id);
+   void handle_pre_initial_chunks(const serverbound_v1::PreInitialChunks &event, game::PlayerId player_id);
+   void handle_post_initial_chunks(const serverbound_v1::PostInitialChunks &event, game::PlayerId player_id);
    void handle_block_placement(const serverbound_v1::BlockPlacement &event, game::PlayerId player_id);
    void handle_change_inventory_item(const serverbound_v1::ChangeInventoryItem &event,
                                      game::PlayerId player_id);

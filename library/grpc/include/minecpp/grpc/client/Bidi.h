@@ -38,6 +38,7 @@ class InternalStream
    enum class State
    {
       Disconnected,
+      Disconnecting,
       Connected,
    };
 
@@ -69,18 +70,27 @@ class InternalStream
 
    void read(read_type *message, void *tag)
    {
+      assert(m_state == State::Connected);
       m_stream->Read(message, tag);
    }
 
    void disconnect(void *tag)
    {
+      m_state = State::Disconnecting;
+
       ::grpc::Status status;
       m_stream->Finish(&status, tag);
+      assert(status.ok());
    }
 
    void bind_read_callback(std::function<void(const read_type &msg)> func)
    {
       m_read_handler = std::move(func);
+   }
+
+   void bind_disconnect_callback(std::function<void()> func)
+   {
+      m_disconnect_handler = std::move(func);
    }
 
    void on_connected()
@@ -121,6 +131,11 @@ class InternalStream
       if (m_disconnect_handler) {
          m_disconnect_handler();
       }
+   }
+
+   [[nodiscard]] bool is_connected() const
+   {
+      return m_state == State::Connected;
    }
 
  private:
@@ -176,6 +191,12 @@ class Stream
       m_stream->bind_read_callback(
               [instance, callback](const read_type &msg) { std::invoke(callback, instance, msg); });
       read();
+   }
+
+   template<typename TInstance, typename TCallback>
+   void bind_disconnect_callback(TInstance *instance, TCallback callback)
+   {
+      m_stream->bind_disconnect_callback([instance, callback]() { std::invoke(callback, instance); });
    }
 
  private:
@@ -260,7 +281,9 @@ class ConnectionManager
 
             auto msg        = m_read_pool.template construct();
             auto read_event = m_event_pool.template construct(EventType::Read, event->stream, msg);
-            event->stream->read(msg, read_event);
+            if (event->stream->is_connected()) {
+               event->stream->read(msg, read_event);
+            }
 
             m_read_pool.free(event->read_ptr);
             m_event_pool.free(event);
@@ -309,12 +332,18 @@ class ConnectionManager
       bool queue_ok, data_ok;
 
       std::lock_guard<std::mutex> lock(m_next_lock);
+
+      if (m_is_disconnected)
+         return GetNextError::BrokenSocket;
+
       queue_ok = m_queue.Next(&tag_ptr, &data_ok);
 
       if (!queue_ok) {
+         m_is_disconnected = true;
          return GetNextError::Shutdown;
       }
       if (!data_ok) {
+         m_is_disconnected = true;
          return GetNextError::BrokenSocket;
       }
 
@@ -329,6 +358,7 @@ class ConnectionManager
    std::vector<std::future<mb::result<mb::empty>>> m_workers;
    util::AtomicPool<CompletionEvent<InternalStream<ConnectionManager>>> m_event_pool;
    util::AtomicPool<TRead> m_read_pool;
+   std::atomic_bool m_is_disconnected{false};
 };
 
 }// namespace minecpp::grpc::client

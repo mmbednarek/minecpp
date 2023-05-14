@@ -70,6 +70,7 @@ class Connection
    void free_byte(mb::u8 *byte);
 
    std::string user_name;
+   std::atomic_int initial_chunk_count{};
 
  private:
    std::optional<ConnectionId> m_id;

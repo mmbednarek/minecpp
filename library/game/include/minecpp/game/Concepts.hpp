@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entt.hpp"
-#include "Game.h"
+#include <minecpp/math/Vector3.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 
 namespace minecpp::game {

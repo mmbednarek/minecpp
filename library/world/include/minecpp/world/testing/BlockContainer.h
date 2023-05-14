@@ -1,6 +1,6 @@
 #pragma once
 #include <minecpp/container/BasicBuffer.h>
-#include <minecpp/game/Game.h>
+#include <minecpp/game/BlockRange.h>
 #include <minecpp/game/IBlockController.hpp>
 
 namespace minecpp::world::testing {

@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/game/Game.h>
+#include <minecpp/game/Types.hpp>
 #include <span>
 
 namespace minecpp::event {

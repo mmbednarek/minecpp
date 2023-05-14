@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include <minecpp/game/Game.h>
 #include <minecpp/grpc/client/Bidi.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <minecpp/proto/service/storage/v1/Storage.grpc.pb.h>

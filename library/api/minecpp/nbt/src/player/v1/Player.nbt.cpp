@@ -2,7 +2,8 @@
 
 namespace minecpp::nbt::player::v1 {
 
-void Attribute::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Attribute::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Double, "Base");
    w.write_double_content(base);
    w.write_header(minecpp::nbt::TagId::String, "Name");
@@ -10,31 +11,30 @@ void Attribute::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Attribute::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Attribute::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Attribute Attribute::deserialize_no_header(minecpp::nbt::Reader &r) {
+Attribute Attribute::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Attribute res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-      switch (tagid) {
-      case minecpp::nbt::TagId::String:
-         res.set_property(in_field_name, r.read_str());
-         return;
-      case minecpp::nbt::TagId::Double:
-         res.set_property(in_field_name, r.read_float64());
-         return;
-      default: 
-         break;
-      }
-      r.skip_payload(tagid);
-   });
+   r.read_compound(
+           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+              switch (tagid) {
+              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
+              case minecpp::nbt::TagId::Double: res.set_property(in_field_name, r.read_float64()); return;
+              default: break;
+              }
+              r.skip_payload(tagid);
+           });
    return res;
 }
 
-Attribute Attribute::deserialize(std::istream &in) {
+Attribute Attribute::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -43,34 +43,36 @@ Attribute Attribute::deserialize(std::istream &in) {
    return Attribute::deserialize_no_header(r);
 }
 
-void Memories::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Memories::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Int, "no_empty");
    w.write_int_content(no_empty);
    w.end_compound();
 }
 
-void Memories::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Memories::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Memories Memories::deserialize_no_header(minecpp::nbt::Reader &r) {
+Memories Memories::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Memories res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-      switch (tagid) {
-      case minecpp::nbt::TagId::Int:
-         res.set_property(in_field_name, r.read_int());
-         return;
-      default: 
-         break;
-      }
-      r.skip_payload(tagid);
-   });
+   r.read_compound(
+           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+              switch (tagid) {
+              case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
+              default: break;
+              }
+              r.skip_payload(tagid);
+           });
    return res;
 }
 
-Memories Memories::deserialize(std::istream &in) {
+Memories Memories::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -79,37 +81,41 @@ Memories Memories::deserialize(std::istream &in) {
    return Memories::deserialize_no_header(r);
 }
 
-void Brain::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Brain::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Compound, "memories");
    memories.serialize_no_header(w);
    w.end_compound();
 }
 
-void Brain::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Brain::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Brain Brain::deserialize_no_header(minecpp::nbt::Reader &r) {
+Brain Brain::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Brain res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-      switch (tagid) {
-      case minecpp::nbt::TagId::Compound:
-         if (in_field_name == "memories") {
-            res.set_property(in_field_name, Memories::deserialize_no_header(r));
-            return;
-         }
-         break;
-      default: 
-         break;
-      }
-      r.skip_payload(tagid);
-   });
+   r.read_compound(
+           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+              switch (tagid) {
+              case minecpp::nbt::TagId::Compound:
+                 if (in_field_name == "memories") {
+                    res.set_property(in_field_name, Memories::deserialize_no_header(r));
+                    return;
+                 }
+                 break;
+              default: break;
+              }
+              r.skip_payload(tagid);
+           });
    return res;
 }
 
-Brain Brain::deserialize(std::istream &in) {
+Brain Brain::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -118,7 +124,8 @@ Brain Brain::deserialize(std::istream &in) {
    return Brain::deserialize_no_header(r);
 }
 
-void InventoryElement::serialize_no_header(minecpp::nbt::Writer &w) const {
+void InventoryElement::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Byte, "Count");
    w.write_byte_content(static_cast<std::uint8_t>(count));
    w.write_header(minecpp::nbt::TagId::Byte, "Slot");
@@ -128,31 +135,30 @@ void InventoryElement::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void InventoryElement::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void InventoryElement::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-InventoryElement InventoryElement::deserialize_no_header(minecpp::nbt::Reader &r) {
+InventoryElement InventoryElement::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    InventoryElement res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-      switch (tagid) {
-      case minecpp::nbt::TagId::Byte:
-         res.set_property(in_field_name, r.read_byte());
-         return;
-      case minecpp::nbt::TagId::String:
-         res.set_property(in_field_name, r.read_str());
-         return;
-      default: 
-         break;
-      }
-      r.skip_payload(tagid);
-   });
+   r.read_compound(
+           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+              switch (tagid) {
+              case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
+              case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
+              default: break;
+              }
+              r.skip_payload(tagid);
+           });
    return res;
 }
 
-InventoryElement InventoryElement::deserialize(std::istream &in) {
+InventoryElement InventoryElement::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -161,7 +167,8 @@ InventoryElement InventoryElement::deserialize(std::istream &in) {
    return InventoryElement::deserialize_no_header(r);
 }
 
-void Abilities::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Abilities::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Float, "flySpeed");
    w.write_float_content(fly_speed);
    w.write_header(minecpp::nbt::TagId::Byte, "flying");
@@ -179,31 +186,30 @@ void Abilities::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Abilities::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Abilities::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Abilities Abilities::deserialize_no_header(minecpp::nbt::Reader &r) {
+Abilities Abilities::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Abilities res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-      switch (tagid) {
-      case minecpp::nbt::TagId::Byte:
-         res.set_property(in_field_name, r.read_byte());
-         return;
-      case minecpp::nbt::TagId::Float:
-         res.set_property(in_field_name, r.read_float32());
-         return;
-      default: 
-         break;
-      }
-      r.skip_payload(tagid);
-   });
+   r.read_compound(
+           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+              switch (tagid) {
+              case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
+              case minecpp::nbt::TagId::Float: res.set_property(in_field_name, r.read_float32()); return;
+              default: break;
+              }
+              r.skip_payload(tagid);
+           });
    return res;
 }
 
-Abilities Abilities::deserialize(std::istream &in) {
+Abilities Abilities::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -212,7 +218,8 @@ Abilities Abilities::deserialize(std::istream &in) {
    return Abilities::deserialize_no_header(r);
 }
 
-void RecipeBook::serialize_no_header(minecpp::nbt::Writer &w) const {
+void RecipeBook::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Byte, "isBlastingFurnaceFilteringCraftable");
    w.write_byte_content(static_cast<std::uint8_t>(is_blasting_furnace_filtering_craftable));
    w.write_header(minecpp::nbt::TagId::Byte, "isBlastingFurnaceGuiOpen");
@@ -231,60 +238,55 @@ void RecipeBook::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_byte_content(static_cast<std::uint8_t>(is_smoker_gui_open));
    w.write_header(minecpp::nbt::TagId::List, "recipes");
    w.begin_list_no_header(minecpp::nbt::TagId::String, recipes.size());
-   std::for_each(recipes.begin(), recipes.end(), [&w](const auto &value) {
-      w.write_string_content(value);
-   });
+   std::for_each(recipes.begin(), recipes.end(), [&w](const auto &value) { w.write_string_content(value); });
    w.write_header(minecpp::nbt::TagId::List, "toBeDisplayed");
    w.begin_list_no_header(minecpp::nbt::TagId::String, to_be_displayed.size());
-   std::for_each(to_be_displayed.begin(), to_be_displayed.end(), [&w](const auto &value) {
-      w.write_string_content(value);
-   });
+   std::for_each(to_be_displayed.begin(), to_be_displayed.end(),
+                 [&w](const auto &value) { w.write_string_content(value); });
    w.end_compound();
 }
 
-void RecipeBook::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void RecipeBook::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-RecipeBook RecipeBook::deserialize_no_header(minecpp::nbt::Reader &r) {
+RecipeBook RecipeBook::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    RecipeBook res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
-      switch (tagid) {
-      case minecpp::nbt::TagId::Byte:
-         res.set_property(in_field_name, r.read_byte());
-         return;
-      case minecpp::nbt::TagId::List: {
-         auto list_info0 = r.peek_list();
-         if (list_info0.size > 0) {
-            switch (list_info0.tagid) {
-            case minecpp::nbt::TagId::String: {
-               std::vector<std::string> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return r.read_str();
-               });
-               res.set_property(in_field_name, ls);
-               return;
-            }
-            default: 
-               break;
-            }
-            for (mb::size i = 0; i < list_info0.size; ++i) {
-               r.skip_payload(list_info0.tagid);
-            }
-         }
-         return;
-      }
-      default: 
-         break;
-      }
-      r.skip_payload(tagid);
-   });
+   r.read_compound(
+           [&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+              switch (tagid) {
+              case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
+              case minecpp::nbt::TagId::List: {
+                 auto list_info0 = r.peek_list();
+                 if (list_info0.size > 0) {
+                    switch (list_info0.tagid) {
+                    case minecpp::nbt::TagId::String: {
+                       std::vector<std::string> ls(list_info0.size);
+                       std::generate(ls.begin(), ls.end(), [&r]() { return r.read_str(); });
+                       res.set_property(in_field_name, ls);
+                       return;
+                    }
+                    default: break;
+                    }
+                    for (mb::size i = 0; i < list_info0.size; ++i) {
+                       r.skip_payload(list_info0.tagid);
+                    }
+                 }
+                 return;
+              }
+              default: break;
+              }
+              r.skip_payload(tagid);
+           });
    return res;
 }
 
-RecipeBook RecipeBook::deserialize(std::istream &in) {
+RecipeBook RecipeBook::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -293,16 +295,16 @@ RecipeBook RecipeBook::deserialize(std::istream &in) {
    return RecipeBook::deserialize_no_header(r);
 }
 
-void Player::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Player::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::Float, "AbsorptionAmount");
    w.write_float_content(absorption_amount);
    w.write_header(minecpp::nbt::TagId::Short, "Air");
    w.write_short_content(air);
    w.write_header(minecpp::nbt::TagId::List, "Attributes");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, attributes.size());
-   std::for_each(attributes.begin(), attributes.end(), [&w](const auto &value) {
-      value.serialize_no_header(w);
-   });
+   std::for_each(attributes.begin(), attributes.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Compound, "Brain");
    brain.serialize_no_header(w);
    w.write_header(minecpp::nbt::TagId::Int, "DataVersion");
@@ -325,30 +327,23 @@ void Player::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.write_short_content(hurt_time);
    w.write_header(minecpp::nbt::TagId::List, "Inventory");
    w.begin_list_no_header(minecpp::nbt::TagId::Compound, inventory.size());
-   std::for_each(inventory.begin(), inventory.end(), [&w](const auto &value) {
-      value.serialize_no_header(w);
-   });
+   std::for_each(inventory.begin(), inventory.end(),
+                 [&w](const auto &value) { value.serialize_no_header(w); });
    w.write_header(minecpp::nbt::TagId::Byte, "Invulnerable");
    w.write_byte_content(static_cast<std::uint8_t>(invulnerable));
    w.write_header(minecpp::nbt::TagId::List, "Motion");
    w.begin_list_no_header(minecpp::nbt::TagId::Double, motion.size());
-   std::for_each(motion.begin(), motion.end(), [&w](const auto &value) {
-      w.write_double_content(value);
-   });
+   std::for_each(motion.begin(), motion.end(), [&w](const auto &value) { w.write_double_content(value); });
    w.write_header(minecpp::nbt::TagId::Byte, "OnGround");
    w.write_byte_content(static_cast<std::uint8_t>(on_ground));
    w.write_header(minecpp::nbt::TagId::Int, "PortalCooldown");
    w.write_int_content(portal_cooldown);
    w.write_header(minecpp::nbt::TagId::List, "Pos");
    w.begin_list_no_header(minecpp::nbt::TagId::Double, pos.size());
-   std::for_each(pos.begin(), pos.end(), [&w](const auto &value) {
-      w.write_double_content(value);
-   });
+   std::for_each(pos.begin(), pos.end(), [&w](const auto &value) { w.write_double_content(value); });
    w.write_header(minecpp::nbt::TagId::List, "Rotation");
    w.begin_list_no_header(minecpp::nbt::TagId::Float, rotation.size());
-   std::for_each(rotation.begin(), rotation.end(), [&w](const auto &value) {
-      w.write_float_content(value);
-   });
+   std::for_each(rotation.begin(), rotation.end(), [&w](const auto &value) { w.write_float_content(value); });
    w.write_header(minecpp::nbt::TagId::Int, "Score");
    w.write_int_content(score);
    w.write_header(minecpp::nbt::TagId::Int, "SelectedItemSlot");
@@ -396,34 +391,25 @@ void Player::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Player::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Player::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    serialize_no_header(w);
 }
 
-Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
+Player Player::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Player res;
-   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid, const std::string &in_field_name) {
+   r.read_compound([&res](minecpp::nbt::Reader &r, minecpp::nbt::TagId tagid,
+                          const std::string &in_field_name) {
       switch (tagid) {
-      case minecpp::nbt::TagId::Byte:
-         res.set_property(in_field_name, r.read_byte());
-         return;
-      case minecpp::nbt::TagId::Short:
-         res.set_property(in_field_name, r.read_short());
-         return;
-      case minecpp::nbt::TagId::Int:
-         res.set_property(in_field_name, r.read_int());
-         return;
-      case minecpp::nbt::TagId::String:
-         res.set_property(in_field_name, r.read_str());
-         return;
-      case minecpp::nbt::TagId::Float:
-         res.set_property(in_field_name, r.read_float32());
-         return;
-      case minecpp::nbt::TagId::IntArray:
-         res.set_property(in_field_name, r.read_int_vec());
-         return;
+      case minecpp::nbt::TagId::Byte: res.set_property(in_field_name, r.read_byte()); return;
+      case minecpp::nbt::TagId::Short: res.set_property(in_field_name, r.read_short()); return;
+      case minecpp::nbt::TagId::Int: res.set_property(in_field_name, r.read_int()); return;
+      case minecpp::nbt::TagId::String: res.set_property(in_field_name, r.read_str()); return;
+      case minecpp::nbt::TagId::Float: res.set_property(in_field_name, r.read_float32()); return;
+      case minecpp::nbt::TagId::IntArray: res.set_property(in_field_name, r.read_int_vec()); return;
       case minecpp::nbt::TagId::Compound:
          if (in_field_name == "Brain") {
             res.set_property(in_field_name, Brain::deserialize_no_header(r));
@@ -444,41 +430,33 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
             switch (list_info0.tagid) {
             case minecpp::nbt::TagId::Float: {
                std::vector<float> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return r.read_float32();
-               });
+               std::generate(ls.begin(), ls.end(), [&r]() { return r.read_float32(); });
                res.set_property(in_field_name, ls);
                return;
             }
             case minecpp::nbt::TagId::Double: {
                std::vector<double> ls(list_info0.size);
-               std::generate(ls.begin(), ls.end(), [&r]() {
-                  return r.read_float64();
-               });
+               std::generate(ls.begin(), ls.end(), [&r]() { return r.read_float64(); });
                res.set_property(in_field_name, ls);
                return;
             }
             case minecpp::nbt::TagId::Compound: {
                if (in_field_name == "Attributes") {
                   std::vector<Attribute> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() {
-                     return Attribute::deserialize_no_header(r);
-                  });
+                  std::generate(ls.begin(), ls.end(), [&r]() { return Attribute::deserialize_no_header(r); });
                   res.set_property(in_field_name, ls);
                   return;
                }
                if (in_field_name == "Inventory") {
                   std::vector<InventoryElement> ls(list_info0.size);
-                  std::generate(ls.begin(), ls.end(), [&r]() {
-                     return InventoryElement::deserialize_no_header(r);
-                  });
+                  std::generate(ls.begin(), ls.end(),
+                                [&r]() { return InventoryElement::deserialize_no_header(r); });
                   res.set_property(in_field_name, ls);
                   return;
                }
                break;
             }
-            default: 
-               break;
+            default: break;
             }
             for (mb::size i = 0; i < list_info0.size; ++i) {
                r.skip_payload(list_info0.tagid);
@@ -486,15 +464,15 @@ Player Player::deserialize_no_header(minecpp::nbt::Reader &r) {
          }
          return;
       }
-      default: 
-         break;
+      default: break;
       }
       r.skip_payload(tagid);
    });
    return res;
 }
 
-Player Player::deserialize(std::istream &in) {
+Player Player::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -503,4 +481,4 @@ Player Player::deserialize(std::istream &in) {
    return Player::deserialize_no_header(r);
 }
 
-}
+}// namespace minecpp::nbt::player::v1

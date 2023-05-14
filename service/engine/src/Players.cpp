@@ -22,7 +22,7 @@ PlayerManager::PlayerManager(entity::EntitySystem &entity_system, game::BlockPos
 mb::result<mb::empty> PlayerManager::join_player(game::IWorld &w, const std::string &name, game::PlayerId id)
 {
    entity::factory::Player player_factory(id, name);
-   auto player_entity = player_factory.create_entity(m_spawn_position.to_vec3(), m_entity_system);
+   auto player_entity = player_factory.create_entity(m_spawn_position.to_vector3(), m_entity_system);
 
    auto player_data = load_player_data(w, id);
    MB_VERIFY(player_data);
@@ -44,7 +44,7 @@ mb::result<game::Entity> PlayerManager::respawn_player(game::IWorld &world, cons
    if (player.has_failed())
       return std::move(player.err());
 
-   m_entity_system.attach_entity(world, player->entity_id(), m_spawn_position.to_vec3(), {0.6, 1.8, 0.6});
+   m_entity_system.attach_entity(world, player->entity_id(), m_spawn_position.to_vector3(), {0.6, 1.8, 0.6});
    m_player_entity_map[player->entity_id()] = player_id;
 
    return m_entity_system.entity(player->entity_id());
@@ -55,8 +55,7 @@ mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(gam
 {
    minecpp::nbt::player::v1::Player data;
 
-   math::Vector3 pos{static_cast<double>(m_spawn_position.x), static_cast<double>(m_spawn_position.y),
-                     static_cast<double>(m_spawn_position.z)};
+   auto pos = m_spawn_position.to_vector3();
 
    data.uuid = game::player::write_id_to_nbt(id);
    data.pos.resize(3);

@@ -25,7 +25,7 @@ Object::Ptr Teleport::run(RuntimeContext &ctx, CommandInput &input) const
    if (not position.has_value())
       return make_error(command_name, "invalid argument");
 
-   entity->component<LocationComponent>().teleport_player(*ctx.world(), *entity, position->to_vec3());
+   entity->component<LocationComponent>().teleport_player(*ctx.world(), *entity, position->to_vector3());
 
    auto info = std::make_shared<FormattedString>();
    info->bold(format::Color::Green, "INFO ");

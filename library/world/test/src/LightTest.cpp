@@ -72,7 +72,7 @@ TEST_F(WorldLightTest, LightTest_Range)
    };
    int count{};
    for (auto pos : range) {
-      fmt::print("pos: {}, {}, {}\n", pos.x, pos.y, pos.z);
+      fmt::print("pos: {}, {}, {}\n", pos.x(), pos.y(), pos.z());
       ++count;
    }
    ASSERT_EQ(count, 27);

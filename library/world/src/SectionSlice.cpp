@@ -52,7 +52,7 @@ mb::result<game::BlockStateId> SectionSlice::get_block(const game::BlockPosition
    return sec->second.get_block(pos);
 }
 
-world::Section &SectionSlice::operator[](game::ChunkSectionPosition position)
+world::Section &SectionSlice::operator[](game::SectionPosition position)
 {
    if (not m_sections.contains(position.hash())) {
       m_sections.emplace(position.hash(), position.y());
@@ -70,7 +70,7 @@ SectionSlice SectionSlice::from_proto(const proto::chunk::v1::SectionSlice &slic
 {
    std::unordered_map<mb::u64, Section> sections{};
    for (auto &sec : slice.sections()) {
-      sections.emplace(game::ChunkSectionPosition::from_proto(sec.position()).hash(),
+      sections.emplace(game::SectionPosition::from_proto(sec.position()).hash(),
                        Section::from_proto(sec.section()));
    }
    return {game::SectionRange::from_proto(slice.range()), std::move(sections)};
@@ -87,6 +87,11 @@ proto::chunk::v1::SectionSlice SectionSlice::to_proto()
       result.mutable_sections()->Add(std::move(section_with_position));
    }
    return result;
+}
+
+game::SectionRange SectionSlice::range() const
+{
+   return m_range;
 }
 
 }// namespace minecpp::world

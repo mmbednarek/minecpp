@@ -1,6 +1,6 @@
 #pragma once
 #include <boost/uuid/uuid_io.hpp>
-#include <minecpp/game/Game.h>
+#include <minecpp/game/Types.hpp>
 #include <minecpp/proto/player/v1/Player.pb.h>
 
 namespace minecpp::game::player {

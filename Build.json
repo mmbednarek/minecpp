@@ -23,7 +23,6 @@
     "world"
   ],
   "services": [
-    "discovery",
     "engine",
     "front",
     "storage"
@@ -31,7 +30,6 @@
   "tools": [
     "chunk_extractor",
     "chunk_viewer",
-    "discocli",
     "nbt_viewer",
     "nbtprotogen",
     "nbtscheme",

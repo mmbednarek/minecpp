@@ -1,7 +1,7 @@
 #pragma once
 #include "Location.h"
 #include "Ticker.h"
-#include <minecpp/game/Game.h>
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/game/IWorld.hpp>
 
 namespace minecpp::entity::component {

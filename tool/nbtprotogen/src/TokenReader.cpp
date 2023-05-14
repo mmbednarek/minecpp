@@ -7,18 +7,18 @@ using minecpp::tool::nbt_idl::Error;
 using minecpp::tool::nbt_idl::ErrorType;
 
 TokenReader::TokenReader(std::vector<Token> elements) :
-    elements(std::move(elements))
+    m_elements(std::move(elements))
 {
 }
 
 Token TokenReader::next()
 {
-   if (at >= elements.size()) {
+   if (m_at >= m_elements.size()) {
       return Token{
               .tt = TokenType::Eof,
       };
    }
-   return elements[at++];
+   return m_elements[m_at++];
 }
 
 Token TokenReader::expect(TokenType t)
@@ -32,9 +32,10 @@ Token TokenReader::expect(TokenType t)
 
 void TokenReader::back()
 {
-   --at;
-   if (at < 0)
-      at = 0;
+   if (m_at == 0)
+      return;
+
+   --m_at;
 }
 
 }// namespace Lex

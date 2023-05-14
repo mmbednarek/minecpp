@@ -59,7 +59,10 @@ message AnimateHand {
   int32 hand = 1;
 }
 
-message LoadInitialChunks {
+message PreInitialChunks {
+}
+
+message PostInitialChunks  {
 }
 
 message BlockPlacement {

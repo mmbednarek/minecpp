@@ -7,15 +7,16 @@ namespace Lex {
 
 class TokenReader
 {
-   std::vector<Token> elements;
-   std::size_t at = 0;
-
  public:
    explicit TokenReader(std::vector<Token> elements);
 
    Token next();
    Token expect(TokenType t);
    void back();
+
+ private:
+   std::vector<Token> m_elements;
+   std::size_t m_at{};
 };
 
 }// namespace Lex

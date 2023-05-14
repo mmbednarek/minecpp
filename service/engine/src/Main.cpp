@@ -75,7 +75,7 @@ auto main() -> int
    ChunkSystem chunk_system(job_system, storage_client, config.gameplay_world_seed);
    storage_handler.add_handler(&chunk_system);
 
-   minecpp::entity::EntitySystem entity_system;
+   minecpp::entity::EntitySystem entity_system(chunk_system);
    PlayerManager players(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
                                          config.gameplay_spawn_point_z});
 

@@ -21,6 +21,7 @@ class Connection
        m_stream{std::move(stream)}
    {
       m_stream.bind_read_callback(this, &Connection::on_read);
+      m_stream.bind_disconnect_callback(this, &Connection::on_disconnect);
    }
 
    void on_read(const TestMessage &msg)
@@ -34,6 +35,11 @@ class Connection
 
          ++m_index;
       }
+   }
+
+   void on_disconnect()
+   {
+      spdlog::info("disconnected");
    }
 
  private:

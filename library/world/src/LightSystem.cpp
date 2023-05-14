@@ -1,3 +1,4 @@
+#include <minecpp/game/property/Face.h>
 #include <minecpp/repository/State.h>
 #include <minecpp/world/BlockState.h>
 #include <minecpp/world/LightSystem.h>

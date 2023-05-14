@@ -13,6 +13,7 @@ add_subdirectory("src")
 target_link_libraries(minecpp_game
         LINK_PUBLIC
         EnTT
+        libmb
         minecpp_api_proto
         minecpp_api_nbt
         minecpp_chat

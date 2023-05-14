@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Game.h"
 #include "IWorld.hpp"
 
 namespace minecpp::game {

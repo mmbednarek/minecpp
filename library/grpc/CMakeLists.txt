@@ -11,6 +11,7 @@ target_link_libraries(minecpp_grpc
         INTERFACE
         minecpp_container
         minecpp_utils
+        spdlog
         gpr
         grpc
         grpc++

@@ -1,5 +1,6 @@
-#include "minecpp/game/Game.h"
 #include <gtest/gtest.h>
+#include <minecpp/game/BlockPosition.h>
+#include <minecpp/game/ChunkPosition.h>
 
 void test_position(int x, int y, int z)
 {
@@ -7,9 +8,9 @@ void test_position(int x, int y, int z)
    auto encoded = p.as_long();
    minecpp::game::BlockPosition decoded(encoded);
 
-   EXPECT_EQ(p.x, decoded.x);
-   EXPECT_EQ(p.y, decoded.y);
-   EXPECT_EQ(p.z, decoded.z);
+   EXPECT_EQ(p.x(), decoded.x());
+   EXPECT_EQ(p.y(), decoded.y());
+   EXPECT_EQ(p.z(), decoded.z());
 }
 
 TEST(Block, Position)

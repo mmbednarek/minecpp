@@ -1,20 +1,25 @@
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/util/Loop.h>
 #include <minecpp/world/population/Population.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::world::population {
 
-constexpr std::uint64_t chunk_seed_coef1 = 0x2b8a12ba85c7;
-constexpr std::uint64_t chunk_seed_coef2 = 0x1e3ca454fe3e7;
-constexpr std::uint64_t chunk_seed_coef3 = 0x9adacb410e23;
-constexpr std::uint64_t chunk_seed_coef4 = 0xf84606d2fff5;
+constexpr std::uint64_t g_chunk_seed_coef_1 = 0x2b8a12ba85c7;
+constexpr std::uint64_t g_chunk_seed_coef_2 = 0x1e3ca454fe3e7;
+constexpr std::uint64_t g_chunk_seed_coef_3 = 0x9adacb410e23;
+constexpr std::uint64_t g_chunk_seed_coef_4 = 0xf84606d2fff5;
 
-constexpr std::uint64_t make_chunk_seed(std::uint64_t seed, game::ChunkPosition pos)
+namespace {
+
+std::uint64_t make_chunk_seed(std::uint64_t seed, game::ChunkPosition pos)
 {
-   return seed * (chunk_seed_coef1 * static_cast<std::uint64_t>(pos.x()) +
-                  chunk_seed_coef2 * static_cast<std::uint64_t>(pos.z()) + chunk_seed_coef3) +
-          chunk_seed_coef4;
+   return seed * (g_chunk_seed_coef_1 * static_cast<std::uint64_t>(pos.x()) +
+                  g_chunk_seed_coef_2 * static_cast<std::uint64_t>(pos.z()) + g_chunk_seed_coef_3) +
+          g_chunk_seed_coef_4;
 }
+
+}// namespace
 
 Population::Population(IChunkSystem &chunks, std::uint64_t seed) :
     m_chunk_system(chunks),

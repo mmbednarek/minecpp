@@ -38,16 +38,16 @@ Object::Ptr Spawn::run(RuntimeContext &ctx, CommandInput &input) const
       if (not team.has_value())
          return make_error(command_name, "no such team");
 
-      world->spawn<TotemFactory>(position->to_vec3(), *team, 0.0f, 0.0f);
+      world->spawn<TotemFactory>(position->to_vector3(), *team, 0.0f, 0.0f);
    } else if (name == "trader") {
-      world->spawn<TraderFactory>(position->to_vec3(), 0.0f, 0.0f);
+      world->spawn<TraderFactory>(position->to_vector3(), 0.0f, 0.0f);
    } else {
       return make_error(command_name, "invalid entity name");
    }
 
    auto info = std::make_shared<FormattedString>();
    info->bold(Color::Green, "INFO ");
-   info->text(Color::White, fmt::format("spawning {} at {}", *name, position->to_vec3()));
+   info->text(Color::White, fmt::format("spawning {} at {}", *name, position->to_vector3()));
    return info;
 }
 

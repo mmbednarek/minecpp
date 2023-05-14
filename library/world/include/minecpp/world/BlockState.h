@@ -1,5 +1,4 @@
 #pragma once
-#include <minecpp/game/Game.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/State.h>
 #include <optional>

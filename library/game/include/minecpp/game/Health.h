@@ -1,5 +1,7 @@
 #pragma once
-#include "Game.h"
+#include <mb/enum.h>
+#include <minecpp/game/Types.hpp>
+#include <minecpp/math/Vector3.h>
 
 namespace minecpp::game {
 

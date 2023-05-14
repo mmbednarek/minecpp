@@ -12,10 +12,12 @@
 
 namespace minecpp::nbt::item::v1 {
 
-class Item {
+class Item
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "MaxItemStack") {
@@ -51,5 +53,5 @@ class Item {
    static Item deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt::item::v1
 #endif//MINECPP_NBT_ITEM_V1_ITEM_H

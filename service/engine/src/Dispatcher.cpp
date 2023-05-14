@@ -6,6 +6,7 @@
 #include <minecpp/entity/component/Location.h>
 #include <minecpp/entity/component/Player.h>
 #include <minecpp/entity/EntitySystem.h>
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <minecpp/util/Uuid.h>
@@ -130,7 +131,7 @@ void Dispatcher::update_block(minecpp::game::BlockPosition block, game::BlockSta
    update_block.set_block_position(block.as_long());
    update_block.set_state(state);
 
-   this->send_to_players_in_view_distance(block.to_vec3(), update_block);
+   this->send_to_players_in_view_distance(block.to_vector3(), update_block);
 }
 
 void Dispatcher::animate_entity(game::EntityId entity_id, const math::Vector3 &position,
@@ -280,10 +281,11 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
    m_events.send_to_all(update_block_light);
 }
 
-void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk)
+void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool is_initial)
 {
    clientbound_v1::ChunkData chunk_data;
    *chunk_data.mutable_chunk() = chunk->to_proto();
+   chunk_data.set_is_initial_chunk(is_initial);
 
    m_events.send_to(chunk_data, player_id);
 }

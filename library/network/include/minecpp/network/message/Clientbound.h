@@ -1,11 +1,12 @@
 #pragma once
-#include "minecpp/game/Game.h"
 #include "Writer.h"
 #include <boost/uuid/uuid.hpp>
 #include <cstdint>
 #include <map>
 #include <mb/int.h>
 #include <minecpp/chat/Chat.h>
+#include <minecpp/game/ChunkPosition.h>
+#include <minecpp/math/Vector3.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <string_view>
 

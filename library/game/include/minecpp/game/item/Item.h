@@ -1,6 +1,6 @@
 #pragma once
-#include "../Game.h"
 #include <cstdint>
+#include <minecpp/game/Types.hpp>
 #include <string>
 #include <string_view>
 #include <vector>

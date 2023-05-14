@@ -71,7 +71,7 @@ class Dispatcher : public minecpp::game::IDispatcher
                            int count) override;
    void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
 
-   void send_chunk(game::PlayerId player_id, world::Chunk *chunk);
+   void send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool is_initial);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
    void synchronise_player_position_and_rotation(game::PlayerId player_id, math::Vector3 position,
                                                  math::Rotation rotation) override;

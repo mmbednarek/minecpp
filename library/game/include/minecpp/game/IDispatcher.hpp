@@ -1,10 +1,10 @@
 #pragma once
-#include "Game.h"
 #include "item/Item.h"
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/Abilities.h>
+#include <minecpp/game/Game.h>
 #include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
 #include <span>
@@ -14,6 +14,9 @@
 namespace minecpp::game {
 
 class ISectionSlice;
+class BlockPosition;
+class ChunkPosition;
+class SectionRange;
 
 using boost::uuids::uuid;
 

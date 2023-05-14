@@ -27,6 +27,7 @@ class Connection
        m_stream{std::move(stream)}
    {
       m_stream.bind_read_callback(this, &Connection::on_read);
+      m_stream.bind_disconnect_callback(this, &Connection::on_disconnected);
    }
 
    void on_read(const TestMessage &msg)
@@ -38,8 +39,16 @@ class Connection
          text_msg.set_value(fmt::format("hello from client {}", m_value));
          m_stream.write(text_msg);
 
+         if (m_value == 99) {
+            m_stream.disconnect();
+         }
          ++m_value;
       }
+   }
+
+   void on_disconnected()
+   {
+      spdlog::info("disconnected");
    }
 
  private:

@@ -1,7 +1,9 @@
 #pragma once
 #include "File.h"
 #include <minecpp/chat/Chat.h>
+#include <minecpp/game/Game.h>
 #include <minecpp/game/Hand.h>
+#include <minecpp/game/property/Face.h>
 #include <string>
 
 namespace minecpp::network::message {

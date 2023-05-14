@@ -2,6 +2,7 @@
 
 #include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Location.h>
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/game/IEntitySystem.hpp>
 #include <minecpp/world/BlockState.h>
 
@@ -70,7 +71,7 @@ void ChangeBlock::run()
    }
 
    if (not target_state.does_block_movement()) {
-      const auto real_position = m_position.to_vec3();
+      const auto real_position = m_position.to_vector3();
       auto entities_above      = m_world.entity_system().list_entities_intersecting_with(
               real_position - math::Vector3{0.5, 0.5, 0.5}, real_position + math::Vector3{1.5, 1.5, 1.5});
 

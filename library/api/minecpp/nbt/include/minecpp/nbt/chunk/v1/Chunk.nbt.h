@@ -12,10 +12,12 @@
 
 namespace minecpp::nbt::chunk::v1 {
 
-class ArmorItem {
+class ArmorItem
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "no_empty") {
@@ -35,10 +37,12 @@ class ArmorItem {
    static ArmorItem deserialize(std::istream &in);
 };
 
-class Attribute {
+class Attribute
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
          if (in_field_name == "Base") {
@@ -66,10 +70,12 @@ class Attribute {
    static Attribute deserialize(std::istream &in);
 };
 
-class Memories {
+class Memories
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "no_empty") {
@@ -89,10 +95,12 @@ class Memories {
    static Memories deserialize(std::istream &in);
 };
 
-class Brain {
+class Brain
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Memories>) {
          if (in_field_name == "memories") {
@@ -112,10 +120,12 @@ class Brain {
    static Brain deserialize(std::istream &in);
 };
 
-class HandItem {
+class HandItem
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "no_empty") {
@@ -135,10 +145,12 @@ class HandItem {
    static HandItem deserialize(std::istream &in);
 };
 
-class Entity {
+class Entity
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Brain>) {
          if (in_field_name == "Brain") {
@@ -331,10 +343,12 @@ class Entity {
    static Entity deserialize(std::istream &in);
 };
 
-class Heightmaps {
+class Heightmaps
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::int64_t>>) {
          if (in_field_name == "MOTION_BLOCKING") {
@@ -379,10 +393,12 @@ class Heightmaps {
    static Heightmaps deserialize(std::istream &in);
 };
 
-class PaletteItem {
+class PaletteItem
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, minecpp::nbt::CompoundContent>) {
          if (in_field_name == "Properties") {
@@ -410,10 +426,12 @@ class PaletteItem {
    static PaletteItem deserialize(std::istream &in);
 };
 
-class Section {
+class Section
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (in_field_name == "Y") {
@@ -462,10 +480,12 @@ class Section {
    static Section deserialize(std::istream &in);
 };
 
-class Start {
+class Start
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::string>) {
          if (in_field_name == "id") {
@@ -485,10 +505,12 @@ class Start {
    static Start deserialize(std::istream &in);
 };
 
-class Structures {
+class Structures
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::map<std::string, Start>>) {
          if (in_field_name == "Starts") {
@@ -508,10 +530,12 @@ class Structures {
    static Structures deserialize(std::istream &in);
 };
 
-class CarvingMasks {
+class CarvingMasks
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::vector<std::uint8_t>>) {
          if (in_field_name == "AIR") {
@@ -536,10 +560,12 @@ class CarvingMasks {
    static CarvingMasks deserialize(std::istream &in);
 };
 
-class Level {
+class Level
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, CarvingMasks>) {
          if (in_field_name == "CarvingMasks") {
@@ -654,10 +680,12 @@ class Level {
    static Level deserialize(std::istream &in);
 };
 
-class Chunk {
+class Chunk
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Level>) {
          if (in_field_name == "Level") {
@@ -685,5 +713,5 @@ class Chunk {
    static Chunk deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt::chunk::v1
 #endif//MINECPP_NBT_CHUNK_V1_CHUNK_H

@@ -3,7 +3,7 @@
 #include "Server.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/uuid/name_generator.hpp>
-#include <minecpp/game/Game.h>
+#include <minecpp/game/BlockPosition.h>
 #include <minecpp/network/message/Clientbound.h>
 #include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
 #include <minecpp/util/Time.h>

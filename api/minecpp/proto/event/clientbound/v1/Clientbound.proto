@@ -165,6 +165,7 @@ message UpdateBlockLight {
 
 message ChunkData {
   chunk.v1.Chunk chunk = 1;
+  bool is_initial_chunk = 2;
 }
 
 message SetCenterChunk {

@@ -4,7 +4,6 @@
 #include "IResponder.h"
 #include "IStorage.h"
 #include <map>
-#include <minecpp/game/Game.h>
 
 namespace minecpp::service::storage {
 

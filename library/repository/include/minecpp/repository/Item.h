@@ -1,7 +1,6 @@
 #ifndef MINECPP_ITEM_H
 #define MINECPP_ITEM_H
 #include "Repository.h"
-#include <minecpp/game/Game.h>
 #include <minecpp/game/item/Item.h>
 
 namespace minecpp::repository {

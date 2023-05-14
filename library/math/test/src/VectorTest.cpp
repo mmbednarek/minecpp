@@ -2,6 +2,27 @@
 #include <minecpp/math/Vector2.h>
 #include <minecpp/math/Vector3.h>
 
+TEST(MathTest, Vector2_Equal)
+{
+   using minecpp::math::Vector2;
+   Vector2 vec1{3, 4};
+   Vector2 vec2{3, 6};
+   Vector2 vec3{4, 4};
+   Vector2 vec4{5, 6};
+
+   Vector2 vec5{3, 4};
+
+   EXPECT_TRUE(vec1 != vec2);
+   EXPECT_TRUE(vec1 != vec3);
+   EXPECT_TRUE(vec1 != vec4);
+   EXPECT_TRUE(vec1 == vec5);
+
+   EXPECT_FALSE(vec1 == vec2);
+   EXPECT_FALSE(vec1 == vec3);
+   EXPECT_FALSE(vec1 == vec4);
+   EXPECT_FALSE(vec1 != vec5);
+}
+
 TEST(MathTest, Math_Vector2)
 {
    using minecpp::math::Vector2;
@@ -82,6 +103,34 @@ TEST(MathTest, Math_Vector2)
    vec_cp = vec1;
    vec_cp /= 2;
    EXPECT_EQ(vec_cp, expected_div_val);
+}
+
+TEST(MathTest, Vector3_Equal)
+{
+   using minecpp::math::Vector3;
+   Vector3 vec1{3, 4, 5};
+   Vector3 vec2{3, 6, 5};
+   Vector3 vec3{4, 4, 5};
+   Vector3 vec4{5, 6, 5};
+   Vector3 vec5{3, 4, 6};
+   Vector3 vec6{4, 6, 6};
+
+   Vector3 vec7{3, 4, 5};
+
+   EXPECT_TRUE(vec1 != vec2);
+   EXPECT_TRUE(vec1 != vec3);
+   EXPECT_TRUE(vec1 != vec4);
+   EXPECT_TRUE(vec1 != vec4);
+   EXPECT_TRUE(vec1 != vec5);
+   EXPECT_TRUE(vec1 != vec6);
+   EXPECT_TRUE(vec1 == vec7);
+
+   EXPECT_FALSE(vec1 == vec2);
+   EXPECT_FALSE(vec1 == vec3);
+   EXPECT_FALSE(vec1 == vec4);
+   EXPECT_FALSE(vec1 == vec5);
+   EXPECT_FALSE(vec1 == vec6);
+   EXPECT_FALSE(vec1 != vec7);
 }
 
 TEST(MathTest, Math_Vector3)

@@ -2,10 +2,16 @@
 
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/Entt.hpp>
-#include <minecpp/game/Game.h>
 #include <minecpp/game/IEntitySystem.hpp>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <optional>
 #include <shared_mutex>
+
+namespace minecpp::world {
+
+class IChunkSystem;
+
+}
 
 namespace minecpp::entity {
 
@@ -14,7 +20,7 @@ class EntitySpace;
 class EntitySystem final : public game::IEntitySystem
 {
  public:
-   EntitySystem();
+   EntitySystem(world::IChunkSystem &chunk_system);
    ~EntitySystem() override;
 
    game::Entity create_spatial_entity(math::Vector3 position, math::Vector3 extent) override;
@@ -35,6 +41,7 @@ class EntitySystem final : public game::IEntitySystem
 
  private:
    std::mutex m_kill_mtx;
+   world::IChunkSystem &m_chunk_system;
    entt::registry m_registry;
    std::unique_ptr<EntitySpace> m_storage;
    std::vector<game::EntityId> m_pending_kills;

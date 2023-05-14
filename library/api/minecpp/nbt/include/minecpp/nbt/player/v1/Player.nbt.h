@@ -12,10 +12,12 @@
 
 namespace minecpp::nbt::player::v1 {
 
-class Attribute {
+class Attribute
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, double>) {
          if (in_field_name == "Base") {
@@ -43,10 +45,12 @@ class Attribute {
    static Attribute deserialize(std::istream &in);
 };
 
-class Memories {
+class Memories
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int32_t>) {
          if (in_field_name == "no_empty") {
@@ -66,10 +70,12 @@ class Memories {
    static Memories deserialize(std::istream &in);
 };
 
-class Brain {
+class Brain
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Memories>) {
          if (in_field_name == "memories") {
@@ -89,10 +95,12 @@ class Brain {
    static Brain deserialize(std::istream &in);
 };
 
-class InventoryElement {
+class InventoryElement
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (in_field_name == "Count") {
@@ -125,10 +133,12 @@ class InventoryElement {
    static InventoryElement deserialize(std::istream &in);
 };
 
-class Abilities {
+class Abilities
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, float>) {
          if (in_field_name == "flySpeed") {
@@ -181,10 +191,12 @@ class Abilities {
    static Abilities deserialize(std::istream &in);
 };
 
-class RecipeBook {
+class RecipeBook
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, std::int8_t>) {
          if (in_field_name == "isBlastingFurnaceFilteringCraftable") {
@@ -252,10 +264,12 @@ class RecipeBook {
    static RecipeBook deserialize(std::istream &in);
 };
 
-class Player {
+class Player
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, Abilities>) {
          if (in_field_name == "abilities") {
@@ -516,5 +530,5 @@ class Player {
    static Player deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt::player::v1
 #endif//MINECPP_NBT_PLAYER_V1_PLAYER_H

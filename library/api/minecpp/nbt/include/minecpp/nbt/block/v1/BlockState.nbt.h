@@ -4,19 +4,21 @@
 #include <map>
 #include <mb/int.h>
 #include <mb/result.h>
+#include <minecpp/nbt/common/v1/Common.nbt.h>
 #include <minecpp/nbt/Reader.h>
 #include <minecpp/nbt/Writer.h>
-#include <minecpp/nbt/common/v1/Common.nbt.h>
 #include <optional>
 #include <string>
 #include <vector>
 
 namespace minecpp::nbt::block::v1 {
 
-class BlockState {
+class BlockState
+{
 
    template<typename T>
-   void set_property(const std::string &in_field_name, T &&in_value) {
+   void set_property(const std::string &in_field_name, T &&in_value)
+   {
       using TDc = typename std::decay<T>::type;
       if constexpr (std::is_same_v<TDc, common::v1::FaceMask>) {
          if (in_field_name == "SolidFaces") {
@@ -57,5 +59,5 @@ class BlockState {
    static BlockState deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt::block::v1
 #endif//MINECPP_NBT_BLOCK_V1_BLOCKSTATE_H

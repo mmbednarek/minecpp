@@ -1,7 +1,7 @@
 #pragma once
 #include "Section.h"
-#include <minecpp/game/Game.h>
 #include <minecpp/game/IWorld.hpp>
+#include <minecpp/game/SectionRange.h>
 #include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <unordered_map>
 
@@ -18,12 +18,9 @@ class SectionSlice : public game::ISectionSlice
                           game::LightValue value) override;
    mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state) override;
    mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos) override;
-   world::Section &operator[](game::ChunkSectionPosition position) override;
+   world::Section &operator[](game::SectionPosition position) override;
 
-   [[nodiscard]] constexpr game::SectionRange range() const
-   {
-      return m_range;
-   }
+   [[nodiscard]] game::SectionRange range() const;
 
    [[nodiscard]] static SectionSlice from_proto(const proto::chunk::v1::SectionSlice &slice);
    [[nodiscard]] proto::chunk::v1::SectionSlice to_proto();

@@ -2,6 +2,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <functional>
 #include <mb/result.h>
+#include <minecpp/game/BlockPosition.h>
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Provider.hpp>

@@ -1,7 +1,7 @@
 #pragma once
-#include "Game.h"
 #include "Health.h"
 #include "IDispatcher.hpp"
+#include "Light.h"
 #include <mb/result.h>
 #include <minecpp/game/player/Provider.hpp>
 
@@ -31,7 +31,7 @@ class ISection
 class ISectionSlice : public IBlockContainer
 {
  public:
-   virtual ISection &operator[](game::ChunkSectionPosition position) = 0;
+   virtual ISection &operator[](game::SectionPosition position) = 0;
 };
 
 class ILightSystem
@@ -57,7 +57,8 @@ class IWorld : public IBlockContainer
    virtual mb::result<std::unique_ptr<ISectionSlice>> get_slice(game::SectionRange range)             = 0;
    virtual mb::emptyres apply_slice(ISectionSlice &slice)                                             = 0;
    virtual ILightSystem &light_system()                                                               = 0;
-   virtual mb::emptyres send_chunk_to_player(PlayerId player_id, const ChunkPosition &position)       = 0;
+   virtual mb::emptyres send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position,
+                                             bool is_initial)                                         = 0;
    virtual bool is_movement_blocked_at(const math::Vector3 &position)                                 = 0;
    virtual void kill_entity(game::EntityId id)                                                        = 0;
    virtual void apply_damage_or_kill_entity(game::EntityId id, const game::Damage &damage)            = 0;

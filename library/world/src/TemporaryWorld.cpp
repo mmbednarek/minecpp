@@ -1,3 +1,4 @@
+#include <minecpp/game/ChunkPosition.h>
 #include <minecpp/world/TemporaryWorld.h>
 
 namespace minecpp::world {

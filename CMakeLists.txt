@@ -53,10 +53,19 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(yaml-cpp)
 
 # Disable warnings for yaml-cpp
-target_compile_options(yaml-cpp PUBLIC -Wno-conversion -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
-target_compile_options(yaml-cpp-read PRIVATE -Wno-conversion -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
-target_compile_options(yaml-cpp-parse PRIVATE -Wno-conversion -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
-target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-conversion -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  target_compile_options(yaml-cpp PUBLIC -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+  target_compile_options(yaml-cpp-read PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+  target_compile_options(yaml-cpp-parse PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+  target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(yaml-cpp PUBLIC -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+  target_compile_options(yaml-cpp-read PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+  target_compile_options(yaml-cpp-parse PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+  target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+else()
+  message(FATAL_ERROR "Unsupported compiler")
+endif()
 
 FetchContent_Declare(
         libmb
