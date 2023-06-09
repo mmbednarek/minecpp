@@ -1,4 +1,4 @@
-FROM minecpp/build-base:latest
+FROM minecpp/core:latest
 
 ENV REPOSITORY_FILENAME=/root/minecpp_data/repository.bin
 

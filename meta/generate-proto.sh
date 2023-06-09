@@ -1,20 +1,8 @@
 #!/usr/bin/env bash
 
-function contains_grpc_service() {
-  grep "service" $1 &>/dev/null
-}
-
 proto_sources=$(find . -path "./api/minecpp/proto/*.proto")
 
-grpc_sources=()
-for proto_source in $proto_sources; do
-  if contains_grpc_service $proto_source; then
-    grpc_sources+=($proto_source)
-  fi
-done
-
 protoc --proto_path=./api --cpp_out=library/api $proto_sources
-protoc --proto_path=./api --grpc_out=library/api --plugin=protoc-gen-grpc=$(which grpc_cpp_plugin) ${grpc_sources[@]}
 
 # replace header include
 for source in $(find . -path "./library/api/minecpp/proto/*.pb.cc"); do

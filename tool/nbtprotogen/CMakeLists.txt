@@ -5,7 +5,10 @@ set(MINECPP_NBTPROTOGEN_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_protonbt)
 
 # Public include headers
-target_include_directories(minecpp_protonbt PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_protonbt
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/nbtprotogen
+)
 
 # Source subdirectory
 add_subdirectory("src")

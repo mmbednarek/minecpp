@@ -1,5 +1,7 @@
+#include "minecpp/container/BasicBuffer.hpp"
 #include <minecpp/game/ChunkPosition.h>
 #include <minecpp/service/storage/Storage.h>
+#include <spdlog/spdlog.h>
 
 namespace minecpp::service::storage {
 
@@ -8,7 +10,7 @@ void StorageClient::subscribe_chunk(game::ChunkPosition position)
    proto::service::storage::v1::Request request;
    *request.mutable_chunk_subscription()->mutable_position() = position.to_proto();
 
-   access_available_connection([&request](Stream *stream) { stream->send(request); });
+   this->send(request);
 }
 
 void StorageClient::push_chunk(const world::Chunk *chunk)
@@ -19,65 +21,77 @@ void StorageClient::push_chunk(const world::Chunk *chunk)
    proto::service::storage::v1::Request request;
    *request.mutable_chunk_data()->mutable_chunk_data() = chunk->to_proto();
 
-   access_available_connection([&request](Stream *stream) { stream->send(request); });
+   this->send(request);
 }
 
-void StorageClient::on_connected(RawStream stream)
+Stream::Stream(stream::Client &client, const network::Endpoint &endpoint) :
+    m_peer(client.create_peer(endpoint))
 {
-   // Send client ID information
-   proto::service::storage::v1::Request request;
-   request.mutable_set_client_id()->mutable_client_id()->set_value(m_client_id);
-   stream.write(request);
-
-   // Add stream to stream list
-   {
-      std::lock_guard lock{m_mutex};
-      m_streams.push_back(std::make_unique<Stream>(m_handler, std::move(stream)));
-   }
-   m_condition.notify_one();
-}
-
-Stream::Stream(IResponseHandler *handler, RawStream stream) :
-    m_handler(handler),
-    m_stream(std::move(stream))
-{
-   m_stream.bind_read_callback(this, &Stream::on_read);
 }
 
 void Stream::send(const Request &req)
 {
-   m_stream.write(req);
+   container::Buffer buffer(static_cast<std::size_t>(req.ByteSizeLong()));
+   req.SerializeToArray(buffer.data(), static_cast<int>(buffer.size()));
+   m_peer->send_reliable_message(buffer.as_view());
 }
 
-void Stream::on_read(const Response &response)
+bool Stream::is_connected() const
 {
-   if (m_handler == nullptr)
-      return;
-
-   switch (response.message_case()) {
-   case Response::kChunkData: m_handler->handle_chunk_data(response.chunk_data()); break;
-   case Response::kEmptyChunk: m_handler->handle_empty_chunk(response.empty_chunk()); break;
-   default: break;
-   }
+   return m_peer->is_connected();
 }
 
-StorageClient::StorageClient(ClientId client_id, IResponseHandler *handler,
-                             const std::vector<std::string> &addresses) :
+StorageClient::StorageClient(ClientId client_id, IResponseHandler &handler) :
     m_client_id(client_id),
-    m_handler(handler),
-    m_manager(&StorageService::Stub::AsyncJoin, addresses, this, &StorageClient::on_connected, 8)
+    m_handler(handler)
 {
+   m_client.on_connected.connect<&StorageClient::on_connected>(this);
+   m_client.on_received.connect<&StorageClient::on_received_message>(this);
+   m_client.on_disconnected.connect<&StorageClient::on_disconnected>(this);
 }
 
-void StorageClient::wait()
+void StorageClient::connect(const network::Endpoint &address)
 {
-   m_manager.wait();
+   m_streams.emplace_back(m_client, address);
+   this->tick();
 }
 
-void StorageClient::await_connection()
+bool StorageClient::send(const Request &request)
 {
-   std::unique_lock lock{m_mutex};
-   m_condition.wait(lock, [this] { return not m_streams.empty(); });
+   m_streams.front().send(request);
+   return false;
+}
+
+void StorageClient::tick()
+{
+   m_client.tick();
+}
+
+void StorageClient::on_connected(std::shared_ptr<stream::Peer> peer)
+{
+   spdlog::info("established connection to storage server at {}", peer->id());
+
+   proto::service::storage::v1::Request request;
+   request.mutable_set_client_id()->mutable_client_id()->set_value(m_client_id);
+
+   container::Buffer buffer(static_cast<std::size_t>(request.ByteSizeLong()));
+   request.SerializeToArray(buffer.data(), static_cast<int>(buffer.size()));
+   peer->send_reliable_message(buffer.as_view());
+}
+
+void StorageClient::on_received_message(std::shared_ptr<stream::Peer> /*peer*/,
+                                        minecpp::container::BufferView message)
+{
+   proto::service::storage::v1::Response response;
+   response.ParseFromArray(message.data(), static_cast<int>(message.size()));
+
+   m_handler.handle_response(std::move(response));
+}
+
+void StorageClient::on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect)
+{
+   spdlog::info("lost connection to server {}", peer->hostname());
+   *try_reconnect = true;
 }
 
 }// namespace minecpp::service::storage

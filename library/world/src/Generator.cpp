@@ -66,7 +66,7 @@ void Generator::generate_light(game::ChunkPosition position)
       for (int z = 0; z < 16; ++z) {
          auto height = chunk->height_at(game::HeightType::LightBlocking, {x, 0, z});
          for (int y = height + 1; y < 256; ++y) {
-            chunk->set_light(game::LightType::Sky, {x, y, z}, 15);
+            chunk->set_light_value_at(game::LightType::Sky, {x, y, z}, 15);
          }
       }
    }
@@ -97,7 +97,7 @@ void Generator::generate_light(game::ChunkPosition position)
 
          for (int y = min_y; y <= max_y; ++y) {
             auto block_pos_2 = position.block_at(x, y, z);
-            auto block_state = m_temporary_world.get_block(block_pos_2);
+            auto block_state = m_temporary_world.block_at(block_pos_2);
             if (block_state.has_failed())
                continue;
 

@@ -89,13 +89,13 @@ void LoginHandler::handle_encryption_response(const std::shared_ptr<Connection> 
       // OK idk
    }
 
-   auto encryption_key = m_private_key->decrypt_message(secret);
+   auto encryption_key = m_private_key->decrypt_message(secret.as_view());
    if (not encryption_key.ok()) {
       LoginHandler::reject(conn, "Failed to establish encryption");
       return;
    }
 
-   conn->set_encryption(std::move(*encryption_key));
+   conn->set_encryption(encryption_key->as_view());
 
    accept_connection(conn);
 }

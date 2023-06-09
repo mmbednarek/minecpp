@@ -1,0 +1,9 @@
+{
+  "name": "minecpp_signal",
+  "header_only": true,
+  "dependencies": {
+    "interface": [
+      "EnTT"
+    ]
+  }
+}

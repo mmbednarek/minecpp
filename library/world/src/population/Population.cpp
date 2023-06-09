@@ -49,15 +49,15 @@ void Population::populate_chunk(game::ChunkPosition pos)
 
 ChunkPlacements &Population::load_chunk_placements(Chunk &chunk)
 {
-   auto placement_ptr = std::make_unique<ChunkPlacements>(chunk, make_chunk_seed(m_seed, chunk.pos()));
+   auto placement_ptr = std::make_unique<ChunkPlacements>(chunk, make_chunk_seed(m_seed, chunk.position()));
    auto &placement    = *placement_ptr;
-   m_cache.emplace(chunk.pos().hash(), std::move(placement_ptr));
+   m_cache.emplace(chunk.position().hash(), std::move(placement_ptr));
    return placement;
 }
 
 ChunkPlacements &Population::get_chunk_placements_by_chunk(Chunk &chunk)
 {
-   auto iter = m_cache.find(chunk.pos().hash());
+   auto iter = m_cache.find(chunk.position().hash());
    if (iter != m_cache.end()) {
       return *iter->second;
    }

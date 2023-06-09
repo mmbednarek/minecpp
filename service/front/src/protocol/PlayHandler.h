@@ -1,8 +1,9 @@
 #pragma once
 #include "Handler.h"
-#include <grpcpp/channel.h>
+
+#include "minecpp/network/message/Io.h"
+
 #include <memory>
-#include <minecpp/network/message/Io.h>
 
 namespace minecpp::service::front {
 class Service;

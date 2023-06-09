@@ -1,6 +1,7 @@
 server:
   bind_address: "0.0.0.0"
   bind_port: 7000
+worker_count: 16
 storage:
   endpoints:
     - "storage:7000"

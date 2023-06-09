@@ -8,42 +8,42 @@ TemporaryWorld::TemporaryWorld(IChunkSystem &chunk_system) :
 {
 }
 
-mb::result<game::LightValue> TemporaryWorld::get_light(game::LightType light_type,
-                                                       const game::BlockPosition &pos)
+mb::result<game::LightValue> TemporaryWorld::light_value_at(game::LightType light_type,
+                                                            const game::BlockPosition &pos)
 {
    auto chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {
       return mb::error("no such chunk");
    }
-   return chunk->get_light(light_type, pos);
+   return chunk->light_value_at(light_type, pos);
 }
 
-mb::emptyres TemporaryWorld::set_light(game::LightType light_type, const game::BlockPosition &pos,
-                                       game::LightValue value)
+mb::emptyres TemporaryWorld::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
+                                                game::LightValue value)
 {
    auto chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {
       return mb::error("no such chunk");
    }
-   return chunk->set_light(light_type, pos, value);
+   return chunk->set_light_value_at(light_type, pos, value);
 }
 
-mb::result<mb::empty> TemporaryWorld::set_block(const game::BlockPosition &pos, game::BlockStateId state)
+mb::result<mb::empty> TemporaryWorld::set_block_at(const game::BlockPosition &pos, game::BlockStateId state)
 {
    auto chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {
       return mb::error("no such chunk");
    }
-   return chunk->set_block(pos, state);
+   return chunk->set_block_at(pos, state);
 }
 
-mb::result<game::BlockStateId> TemporaryWorld::get_block(const game::BlockPosition &pos)
+mb::result<game::BlockStateId> TemporaryWorld::block_at(const game::BlockPosition &pos)
 {
    auto chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {
       return mb::error("no such chunk");
    }
-   return chunk->get_block(pos);
+   return chunk->block_at(pos);
 }
 
 mb::result<int> TemporaryWorld::height_at(game::HeightType type, const game::BlockPosition &pos)

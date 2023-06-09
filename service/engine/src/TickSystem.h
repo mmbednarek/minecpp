@@ -1,4 +1,8 @@
 #pragma once
+
+#include "ApiHandler.h"
+#include "minecpp/service/storage/Storage.h"
+
 #include <atomic>
 #include <thread>
 
@@ -9,16 +13,17 @@ class World;
 class TickSystem
 {
  public:
-   explicit TickSystem(World &world);
+   explicit TickSystem(World &world, ApiHandler &api_handler, storage::StorageClient &m_client);
 
    void run_tick(double delta_time);
-   void worker_routine();
+   void loop();
 
  private:
    World &m_world;
    std::atomic_bool m_running{true};
-   std::thread m_tick_thread;
-   double m_delta_sum{};
+   ApiHandler &m_api_handler;
+   storage::StorageClient &m_storage_client;
+   int m_last_tps{200};
 };
 
 }// namespace minecpp::service::engine

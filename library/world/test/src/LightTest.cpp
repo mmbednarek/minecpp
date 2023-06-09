@@ -72,7 +72,7 @@ TEST_F(WorldLightTest, LightTest_Range)
    };
    int count{};
    for (auto pos : range) {
-      fmt::print("pos: {}, {}, {}\n", pos.x(), pos.y(), pos.z());
+      fmt::print("position: {}, {}, {}\n", pos.x(), pos.y(), pos.z());
       ++count;
    }
    ASSERT_EQ(count, 27);
@@ -113,7 +113,7 @@ TEST_F(WorldLightTest, LightTest_BoxWithAHole)
            { 2,  2,  2}
    };
    container.put_box(box_range, DEFAULT_BLOCK_STATE(Stone));
-   container.set_block({2, 0, 0}, DEFAULT_BLOCK_STATE(Air));
+   container.set_block_at({2, 0, 0}, DEFAULT_BLOCK_STATE(Air));
 
    /*
    world::StructureHelper helper{container};

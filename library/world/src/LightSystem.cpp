@@ -37,7 +37,7 @@ mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::Bl
 
       auto neighbour_pos = position.neighbour_at(face);
 
-      auto light_value = m_container.get_light(light_type, neighbour_pos);
+      auto light_value = m_container.light_value_at(light_type, neighbour_pos);
       if (light_value.has_failed())
          continue;
 
@@ -59,7 +59,7 @@ mb::emptyres LightSystem::recalculate_light(game::LightType light_type, game::Bl
 
 mb::emptyres LightSystem::reset_light(game::LightType light_type, game::BlockPosition position)
 {
-   auto light_value = m_container.get_light(light_type, position);
+   auto light_value = m_container.light_value_at(light_type, position);
    if (light_value.has_failed())
       return std::move(light_value.err());
 
@@ -95,16 +95,16 @@ mb::emptyres LightSystem::flood_light(game::LightType light_type, std::queue<Lig
       auto node = queue.front();
       queue.pop();
 
-      auto source_value = m_container.get_light(light_type, node.position);
+      auto source_value = m_container.light_value_at(light_type, node.position);
       if (source_value.has_failed())
          continue;
 
       if (node.type == LightSpreadNodeType::Darken) {
          if (node.value != *source_value)
             continue;
-         m_container.set_light(light_type, node.position, 0);
+         m_container.set_light_value_at(light_type, node.position, 0);
       } else if (node.value > *source_value) {
-         m_container.set_light(light_type, node.position, node.value);
+         m_container.set_light_value_at(light_type, node.position, node.value);
       } else {
          continue;
       }
@@ -120,7 +120,7 @@ game::LightValue LightSystem::get_propagated_value(game::BlockPosition source, g
                                                    game::LightValue source_value)
 {
    auto destination        = source.neighbour_at(direction);
-   auto dst_block_state_id = m_container.get_block(destination);
+   auto dst_block_state_id = m_container.block_at(destination);
    if (dst_block_state_id.has_failed()) {
       spdlog::debug("light-system: cannot get destination block");
       return 0;
@@ -139,7 +139,7 @@ void LightSystem::propagate_value(game::LightType light_type, game::BlockPositio
                                   game::LightValue source_value, LightSpreadNodeType type,
                                   std::queue<LightSpreadNode> &queue)
 {
-   auto source_block_state_id = m_container.get_block(source);
+   auto source_block_state_id = m_container.block_at(source);
    if (source_block_state_id.has_failed())
       return;
 
@@ -158,7 +158,7 @@ void LightSystem::propagate_value(game::LightType light_type, game::BlockPositio
          continue;
 
       auto neighbour      = source.neighbour_at(face);
-      auto original_value = m_container.get_light(light_type, neighbour);
+      auto original_value = m_container.light_value_at(light_type, neighbour);
       if (original_value.has_failed())
          continue;
 

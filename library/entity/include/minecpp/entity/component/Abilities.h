@@ -13,6 +13,7 @@ class Abilities
 
    void serialize_to_proto(proto::entity::v1::Entity *entity) const;
    void set_is_flying_enabled(game::IWorld &world, bool enabled);
+   void set_can_instantly_destroy_blocks(game::IWorld &world, bool enabled);
 
    [[nodiscard]] const game::Abilities &abilities() const;
 

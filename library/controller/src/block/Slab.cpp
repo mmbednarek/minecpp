@@ -12,7 +12,7 @@ bool Slab::on_player_place_block(game::IWorld &world, game::PlayerId /*player_id
                                  game::BlockPosition position, Face face,
                                  const math::Vector3f &crosshair_position)
 {
-   auto block_state_id = world.get_block(position);
+   auto block_state_id = world.block_at(position);
    if (block_state_id.has_failed())
       return false;
 
@@ -20,7 +20,7 @@ bool Slab::on_player_place_block(game::IWorld &world, game::PlayerId /*player_id
       world::BlockState state(*block_state_id);
       if (state.block_id() == block_id && state.get<game::SlabType>("type") != game::SlabType::Double) {
          state.set<game::SlabType>("type", game::SlabType::Double);
-         return world.set_block(position, state.block_state_id()).ok();
+         return world.set_block_at(position, state.block_state_id()).ok();
       }
    }
 
@@ -31,7 +31,7 @@ bool Slab::on_player_place_block(game::IWorld &world, game::PlayerId /*player_id
    new_state.set<game::SlabType>(
            "type", game::SlabType::from_half_placement(deduce_half_placement(face, crosshair_position.y())));
    new_state.set("waterlogged", neighbour_block_type == SourceBlockType::Water);
-   return world.set_block(neighbour_position, new_state.block_state_id()).ok();
+   return world.set_block_at(neighbour_position, new_state.block_state_id()).ok();
 }
 
 }// namespace minecpp::controller::block

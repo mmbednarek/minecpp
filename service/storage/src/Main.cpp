@@ -1,17 +1,20 @@
 #include "fdb/Storage.h"
+#include "RequestThreadPool.h"
 #include "Server.h"
 #include "Service.h"
+
 #include <mb/core.h>
 #include <spdlog/spdlog.h>
 
 namespace fdb = minecpp::service::storage::fdb;
 
+using minecpp::service::storage::RequestThreadPool;
 using minecpp::service::storage::Server;
 using minecpp::service::storage::Service;
 
 int main()
 {
-   auto listen           = mb::getenv("LISTEN").unwrap("0.0.0.0:8080");
+   auto port             = mb::getenv("PORT").unwrap("8080");
    auto clusterfile_path = mb::getenv("CLUSTERFILE_PATH").unwrap("clusterfile");
 
    auto storage = fdb::Storage::create(clusterfile_path);
@@ -19,12 +22,18 @@ int main()
       return EXIT_FAILURE;
    }
 
-   Server server(listen);
+   Server server(static_cast<minecpp::network::Port>(std::stoi(port)));
    Service service(server, *storage);
-   server.set_handler(&service);
+   RequestThreadPool request_pool{service, 8};
 
-   spdlog::info("starting gRPC server on address {}", listen);
-   server.wait();
+   server.set_handler(&request_pool);
+
+   spdlog::info("starting server on port {}", port);
+
+   for (;;) {
+      using namespace std::chrono_literals;
+      server.tick();
+   }
 
    return EXIT_SUCCESS;
 }

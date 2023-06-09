@@ -1,0 +1,10 @@
+{
+  "name": "minecpp_stream_example_server",
+  "dependencies": {
+    "private": [
+      "minecpp_utils",
+      "minecpp_stream",
+      "spdlog"
+    ]
+  }
+}

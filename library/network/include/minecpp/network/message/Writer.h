@@ -1,7 +1,9 @@
 #pragma once
+
+#include "minecpp/container/BasicBuffer.hpp"
+
 #include <boost/endian/conversion.hpp>
 #include <boost/uuid/uuid.hpp>
-#include <minecpp/container/BasicBuffer.h>
 #include <sstream>
 #include <tuple>
 #include <vector>
@@ -28,7 +30,7 @@ class Writer
    void write_bytes(const char *data, std::size_t size);
    void write_from(Writer &other);
 
-   std::tuple<uint8_t *, size_t> buff(std::size_t comp_thres);
+   container::Buffer buff(std::size_t comp_thres);
 
    template<typename T>
    void write_big_endian(T value);

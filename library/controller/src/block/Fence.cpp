@@ -19,7 +19,7 @@ bool is_fence_block(game::BlockStateId state_id)
 
 bool is_fence_at_pos(game::IWorld &world, game::BlockPosition pos)
 {
-   auto state = world.get_block(pos);
+   auto state = world.block_at(pos);
    if (state.has_failed())
       return false;
    return is_fence_block(*state);
@@ -50,7 +50,7 @@ bool Fence::on_player_place_block(game::IWorld &world, game::PlayerId, int block
            std::make_pair("east", util::to_string(east)), std::make_pair("west", util::to_string(west)),
            std::make_pair("north", util::to_string(north)), std::make_pair("south", util::to_string(south)));
 
-   return world.set_block(pos, state).ok();
+   return world.set_block_at(pos, state).ok();
 }
 
 std::optional<game::BlockStateId> Fence::on_neighbour_change(game::IWorld &,

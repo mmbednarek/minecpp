@@ -8,8 +8,9 @@ namespace minecpp::service::front {
 
 constexpr int g_keep_alive_count = 800;
 
-TickManager::TickManager(Server &server) :
-    server(server)
+TickManager::TickManager(Server &server, engine::Client &client) :
+    m_server(server),
+    m_client(client)
 {
 }
 
@@ -26,6 +27,8 @@ TickManager::TickManager(Server &server) :
          keep_alive();
       }
 
+      m_client.tick();
+
       auto duration = util::now_milis() / start_time;
       if (duration < 5) {
          std::this_thread::sleep_for(10ms);
@@ -35,7 +38,7 @@ TickManager::TickManager(Server &server) :
 
 void TickManager::keep_alive()
 {
-   server.for_each_connection([](const std::shared_ptr<Connection> &conn) {
+   m_server.for_each_connection([](const std::shared_ptr<Connection> &conn) {
       if (!conn)
          return;
 

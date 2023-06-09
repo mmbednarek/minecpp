@@ -11,15 +11,12 @@ namespace minecpp::service::front {
 
 namespace clientbound_v1 = proto::event::clientbound::v1;
 
-class EventHandler
+class EventHandler : public engine::IVisitor
 {
  public:
    explicit EventHandler(Server &server, nbt::repository::v1::Registry &registry);
 
-   constexpr void set_stream(engine::IStream *stream)
-   {
-      m_stream = stream;
-   }
+   void set_client(engine::Client *client);
 
    void handle_add_player(const clientbound_v1::AddPlayer &msg, const event::RecipientList &recipient_list);
    void handle_spawn_player(const clientbound_v1::SpawnPlayer &spawn,
@@ -75,6 +72,7 @@ class EventHandler
                                const event::RecipientList &recipient_list);
    void handle_set_abilities(const clientbound_v1::SetAbilities &msg,
                              const event::RecipientList &recipient_list);
+   void visit_event(const proto::event::clientbound::v1::Event &event) override;
 
    template<typename T>
    void send_message_to_all_players(const T &msg)
@@ -126,7 +124,7 @@ class EventHandler
 
  private:
    Server &m_server;
-   engine::IStream *m_stream = nullptr;
+   engine::Client *m_client{};
    nbt::repository::v1::Registry &m_registry;
    std::unique_ptr<std::future<bool>> m_player_list{};
 };

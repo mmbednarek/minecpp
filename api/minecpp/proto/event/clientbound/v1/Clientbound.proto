@@ -212,7 +212,7 @@ message Respawn {
   string dimension_name = 2;
   int64 hashed_seed = 3;
   common.v1.GameMode game_mode = 4;
-  optional common.v1.GameMode previous_game_mode = 5;
+  common.v1.GameMode previous_game_mode = 5;
   bool is_debug = 6;
   bool is_flat = 7;
   bool copy_metadata = 8;

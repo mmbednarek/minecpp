@@ -24,10 +24,10 @@ class EventManager
    void send_to_all_excluding(const Message &message, game::PlayerId player_id);
 
    [[nodiscard]] IConnection *client(ConnectionId id);
-   void add_client(std::unique_ptr<IConnection> stream);
+   void add_client(ConnectionId id, std::unique_ptr<IConnection> stream);
+   void remove_client(ConnectionId id);
 
  private:
-   ConnectionId m_top_connection_id{};
    std::map<ConnectionId, std::unique_ptr<IConnection>> m_queues;
    std::mutex m_queue_mutex;
 };

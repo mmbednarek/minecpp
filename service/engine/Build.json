@@ -7,7 +7,6 @@
       "minecpp_event",
       "minecpp_engine_api",
       "minecpp_entity",
-      "minecpp_grpc",
       "minecpp_utils",
       "minecpp_game",
       "minecpp_api_proto",
@@ -18,13 +17,12 @@
       "minecpp_repository",
       "minecpp_command",
       "minecpp_storage_api",
+      "minecpp_stream",
       "minecpp_lexer",
       "yaml-cpp",
-      "grpc++",
       "Boost::system",
       "spdlog",
-      "libmb",
-      "gpr"
+      "libmb"
     ]
   }
 }

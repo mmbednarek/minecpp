@@ -275,10 +275,7 @@ const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fv1_2f
   "hunkData\0221\n\nchunk_data\030\001 \001(\0132\035.minecpp.p"
   "roto.chunk.v1.Chunk\"S\n\021ChunkSubscription"
   "\022>\n\nclient_ids\030\001 \003(\0132*.minecpp.proto.ser"
-  "vice.storage.v1.ClientId2s\n\016StorageServi"
-  "ce\022a\n\004Join\022).minecpp.proto.service.stora"
-  "ge.v1.Request\032*.minecpp.proto.service.st"
-  "orage.v1.Response(\0010\001b\006proto3"
+  "vice.storage.v1.ClientIdb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto_deps[2] = {
   &::descriptor_table_minecpp_2fproto_2fchunk_2fv1_2fChunk_2eproto,
@@ -286,7 +283,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fs
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto = {
-    false, false, 1229, descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto,
+    false, false, 1112, descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto,
     "minecpp/proto/service/storage/v1/Storage.proto",
     &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto_deps, 2, 9,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fstorage_2fv1_2fStorage_2eproto::offsets,

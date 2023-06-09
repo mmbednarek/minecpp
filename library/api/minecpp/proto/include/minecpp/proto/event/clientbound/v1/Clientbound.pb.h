@@ -6940,11 +6940,7 @@ class Respawn final :
   void _internal_set_game_mode(::minecpp::proto::common::v1::GameMode value);
   public:
 
-  // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
-  bool has_previous_game_mode() const;
-  private:
-  bool _internal_has_previous_game_mode() const;
-  public:
+  // .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
   void clear_previous_game_mode();
   ::minecpp::proto::common::v1::GameMode previous_game_mode() const;
   void set_previous_game_mode(::minecpp::proto::common::v1::GameMode value);
@@ -6997,8 +6993,6 @@ class Respawn final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dimension_type_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr dimension_name_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr death_dimension_;
@@ -7010,6 +7004,7 @@ class Respawn final :
     bool is_flat_;
     bool copy_metadata_;
     bool has_death_location_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto;
@@ -11499,17 +11494,9 @@ inline void Respawn::set_game_mode(::minecpp::proto::common::v1::GameMode value)
   // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.v1.Respawn.game_mode)
 }
 
-// optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
-inline bool Respawn::_internal_has_previous_game_mode() const {
-  bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool Respawn::has_previous_game_mode() const {
-  return _internal_has_previous_game_mode();
-}
+// .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
 inline void Respawn::clear_previous_game_mode() {
   _impl_.previous_game_mode_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000001u;
 }
 inline ::minecpp::proto::common::v1::GameMode Respawn::_internal_previous_game_mode() const {
   return static_cast< ::minecpp::proto::common::v1::GameMode >(_impl_.previous_game_mode_);
@@ -11519,7 +11506,7 @@ inline ::minecpp::proto::common::v1::GameMode Respawn::previous_game_mode() cons
   return _internal_previous_game_mode();
 }
 inline void Respawn::_internal_set_previous_game_mode(::minecpp::proto::common::v1::GameMode value) {
-  _impl_._has_bits_[0] |= 0x00000001u;
+  
   _impl_.previous_game_mode_ = value;
 }
 inline void Respawn::set_previous_game_mode(::minecpp::proto::common::v1::GameMode value) {

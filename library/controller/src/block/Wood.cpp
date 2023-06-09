@@ -31,6 +31,6 @@ bool Wood::on_player_place_block(game::IWorld &world, game::PlayerId /*player_id
    auto block = repository::Block::the().get_by_id(block_id);
    auto state = repository::encode_block_by_tag(block->tag(), std::make_pair("axis", face_to_axis(face)));
 
-   return world.set_block(neighbour_position, state).ok();
+   return world.set_block_at(neighbour_position, state).ok();
 }
 }// namespace minecpp::controller::block

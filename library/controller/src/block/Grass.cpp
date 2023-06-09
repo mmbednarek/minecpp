@@ -12,7 +12,7 @@ bool Grass::on_player_place_block(game::IWorld &world, game::PlayerId /*player_i
    world::BlockState state(block_id, 0);
    state.set("snowy", false);
 
-   return world.set_block(neighbour_position, state.block_state_id()).ok();
+   return world.set_block_at(neighbour_position, state.block_state_id()).ok();
 }
 
 }// namespace minecpp::controller::block

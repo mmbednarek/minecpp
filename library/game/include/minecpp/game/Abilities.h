@@ -9,7 +9,7 @@ struct Abilities
    bool flying        = false;
    bool instant_build = true;
    bool invulnerable  = false;
-   bool may_build     = true;
+   bool may_build     = false;
    bool may_fly       = false;
    float walk_speed   = 0.1f;
 

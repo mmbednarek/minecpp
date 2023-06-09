@@ -39,7 +39,7 @@ void Service::subscribe_chunk(ConnectionId connection_id, game::ChunkPosition po
    spdlog::info("sending chunk {} {} to client", position.x(), position.z());
 }
 
-void Service::handle_request(ConnectionId connection_id, const proto::service::storage::v1::Request &request)
+void Service::handle_request(ConnectionId connection_id, proto::service::storage::v1::Request request)
 {
    using proto::service::storage::v1::Request;
 

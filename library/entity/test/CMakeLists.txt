@@ -5,7 +5,10 @@ set(MINECPP_ENTITY_TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_entity_test)
 
 # Public include headers
-target_include_directories(minecpp_entity_test PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_entity_test
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/entity_test
+)
 
 # Source subdirectory
 add_subdirectory("src")

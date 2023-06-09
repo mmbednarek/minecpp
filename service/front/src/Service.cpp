@@ -35,7 +35,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
 {
    using namespace minecpp::network::message;
 
-   assert(m_stream != nullptr);
+   assert(m_client != nullptr);
 
    conn->set_state(protocol::State::Play);
    conn->set_uuid(id);
@@ -48,7 +48,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
 
 void Service::on_player_disconnect(uuid /*engine_id*/, game::PlayerId player_id)
 {
-   assert(m_stream != nullptr);
+   assert(m_client != nullptr);
 
    proto::event::serverbound::v1::RemovePlayer remove_player{};
    this->send(remove_player, player_id);
@@ -234,15 +234,15 @@ void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
 
 void Service::send(const google::protobuf::Message &message, game::PlayerId id)
 {
-   if (m_stream == nullptr)
+   if (m_client == nullptr)
       throw std::runtime_error("no available engine connection");
 
-   m_stream->send(message, id);
+   m_client->send(message, id);
 }
 
-void Service::set_stream(engine::IStream *stream)
+void Service::set_client(engine::Client *client)
 {
-   m_stream = stream;
+   m_client = client;
 }
 
 const char command_list[]{

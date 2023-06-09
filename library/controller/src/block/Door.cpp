@@ -46,7 +46,7 @@ bool Door::on_player_place_block(IWorld &world, PlayerId player_id, BlockId bloc
    lower_state.set<Side>("hinge", hinge_side);
    lower_state.set<Direction>("facing", door_direction);
 
-   if (world.set_block(lower_pos, lower_state.block_state_id()).has_failed())
+   if (world.set_block_at(lower_pos, lower_state.block_state_id()).has_failed())
       return false;
 
    BlockState upper_state{block_id, 0};
@@ -54,7 +54,7 @@ bool Door::on_player_place_block(IWorld &world, PlayerId player_id, BlockId bloc
    upper_state.set<Side>("hinge", hinge_side);
    upper_state.set<Direction>("facing", door_direction);
 
-   return world.set_block(upper_pos, upper_state.block_state_id()).ok();
+   return world.set_block_at(upper_pos, upper_state.block_state_id()).ok();
 }
 
 std::optional<BlockStateId> Door::on_neighbour_change(IWorld & /*world*/, BlockStateId block_state_id,
@@ -93,12 +93,12 @@ bool Door::on_player_action(IWorld &world, PlayerId /*player_id*/, BlockStateId 
 
    state.set("open", not(*open));
 
-   return world.set_block(position, state.block_state_id()).ok();
+   return world.set_block_at(position, state.block_state_id()).ok();
 }
 
 bool check_side(IWorld &world, BlockPosition pos, Direction dir, Side side, BlockId door_id)
 {
-   auto block = world.get_block(pos.neighbour_at(dir.turn(side).to_face()));
+   auto block = world.block_at(pos.neighbour_at(dir.turn(side).to_face()));
    if (block.has_failed())
       return false;
 

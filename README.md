@@ -1,6 +1,6 @@
-# MineCPP (Fiber)
+# MineCPP
 
-Fiber is a scalable server backend for Minecraft Java Edition written in C++.
+MineCPP is a scalable server backend for Minecraft Java Edition written in C++.
 The currently supported version of Minecraft is **1.19.3**.
 The main goal of the server is to be horizontally scalable. The server requires
 a decided init balancer called "front" as well as a separate chunk database. (called chunk storage)
@@ -26,12 +26,13 @@ The build system is `cmake` the C++ standard is 20. The following dependencies a
 + **gtest**
 + **boost:**
     - iostreams
+    - asio
     - system
     - program options
 + **flex**
 + **google benchmark**
 + **protobuf**
-+ **gRPC** _(may be provided with fetch content with cmake option **-DUSE_LOCAL_GPRC=OFF**)_
++ **enet**
 + **yaml-cpp** _(provided through cmake fetch content)_
 + **mb** _(provided through cmake fetch content)_
 + **mb-codegen** _(provided through cmake fetch content)_

@@ -13,7 +13,7 @@ services:
     volumes:
       - '.:/config'
     environment:
-      LISTEN: 0.0.0.0:7000
+      PORT: 7000
       CLUSTERFILE_PATH: "/config/clusterfile-docker"
     command: bash -c "/config/docker/init_database.sh && /usr/bin/minecpp_storage"
     depends_on:

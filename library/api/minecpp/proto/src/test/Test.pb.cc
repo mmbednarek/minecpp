@@ -63,13 +63,11 @@ static const ::_pb::Message* const file_default_instances[] = {
 const char descriptor_table_protodef_minecpp_2fproto_2ftest_2fTest_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\035minecpp/proto/test/Test.proto\022\022minecpp"
   ".proto.test\"\034\n\013TestMessage\022\r\n\005value\030\001 \001("
-  "\t2b\n\013TestService\022S\n\013StartStream\022\037.minecp"
-  "p.proto.test.TestMessage\032\037.minecpp.proto"
-  ".test.TestMessage(\0010\001b\006proto3"
+  "\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2ftest_2fTest_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2ftest_2fTest_2eproto = {
-    false, false, 189, descriptor_table_protodef_minecpp_2fproto_2ftest_2fTest_2eproto,
+    false, false, 89, descriptor_table_protodef_minecpp_2fproto_2ftest_2fTest_2eproto,
     "minecpp/proto/test/Test.proto",
     &descriptor_table_minecpp_2fproto_2ftest_2fTest_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2ftest_2fTest_2eproto::offsets,

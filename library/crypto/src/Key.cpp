@@ -27,7 +27,7 @@ PrivateKey::~PrivateKey()
    }
 }
 
-Result<container::Buffer> PrivateKey::decrypt_message(const container::Buffer &buff)
+Result<container::Buffer> PrivateKey::decrypt_message(const container::BufferView &buff)
 {
    auto *ctx = EVP_PKEY_CTX_new(m_rsa_key, nullptr);
 
@@ -56,7 +56,7 @@ Result<container::Buffer> PrivateKey::decrypt_message(const container::Buffer &b
    return {std::move(output)};
 }
 
-Result<container::Buffer> PrivateKey::encrypt_message(const container::Buffer &buff)
+Result<container::Buffer> PrivateKey::encrypt_message(const container::BufferView &buff)
 {
    auto *ctx = EVP_PKEY_CTX_new(m_rsa_key, nullptr);
 

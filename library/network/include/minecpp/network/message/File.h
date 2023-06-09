@@ -1,7 +1,7 @@
 #pragma once
 #include <boost/endian/conversion.hpp>
 #include <iostream>
-#include <minecpp/container/BasicBuffer.h>
+#include <minecpp/container/BasicBuffer.hpp>
 #include <minecpp/game/item/Item.h>
 #include <minecpp/game/item/Recipe.h>
 #include <minecpp/nbt/Tag.h>

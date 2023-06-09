@@ -18,7 +18,7 @@ class Service : public IHandler
    void push_chunk_data(ConnectionId connection_id, const proto::chunk::v1::Chunk &position);
    void set_client_id(ConnectionId connection_id, ClientId client_id);
 
-   void handle_request(ConnectionId id, const proto::service::storage::v1::Request &request) override;
+   void handle_request(ConnectionId id, proto::service::storage::v1::Request request) override;
 
  private:
    std::optional<ClientId> get_client_id(ConnectionId connection_id);

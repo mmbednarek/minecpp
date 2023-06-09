@@ -5,7 +5,10 @@ set(MINECPP_CONTROLLER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(minecpp_controller STATIC)
 
 # Public include headers
-target_include_directories(minecpp_controller PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_controller
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/controller
+)
 
 # Source subdirectory
 add_subdirectory("src")

@@ -31,7 +31,7 @@ Placement ChunkPlacements::get_placement(int x, int z)
 void ChunkPlacements::prepare_chunk(Chunk &chunk)
 {
    random::JavaRandom rand(m_seed);
-   auto chunk_pos = chunk.pos();
+   auto chunk_pos = chunk.position();
 
    for (int z = 0; z < 16; ++z) {
       for (int x = 0; x < 16; ++x) {
@@ -70,7 +70,7 @@ void ChunkPlacements::put_object(Chunk &chunk, int id, game::BlockPosition posit
 
    for (int z = -center.y(); z < extent.z() - center.y(); ++z) {
       for (int x = -center.x(); x < extent.x() - center.x(); ++x) {
-         auto hash = chunk.pos().block_at(position.x() + x, 0, position.z() + z).as_long();
+         auto hash = chunk.position().block_at(position.x() + x, 0, position.z() + z).as_long();
          if (m_placements.contains(hash)) {
             return;
          }
@@ -79,7 +79,7 @@ void ChunkPlacements::put_object(Chunk &chunk, int id, game::BlockPosition posit
 
    for (int z = -center.y(); z < extent.z() - center.y(); ++z) {
       for (int x = -center.x(); x < extent.x() - center.x(); ++x) {
-         m_placements[chunk.pos().block_at(position.x() + x, 0, position.z() + z).as_long()] =
+         m_placements[chunk.position().block_at(position.x() + x, 0, position.z() + z).as_long()] =
                  Placement{.object_id   = id,
                            .object_seed = object_seed,
                            .x           = static_cast<short>(x + center.x()),
@@ -106,8 +106,9 @@ void ChunkPlacements::populate_chunk(Chunk &chunk)
       for (int y = 0; y < height; ++y) {
          auto state = obj->block({placement.x, y, placement.z});
          if (state != 0) {
-            chunk.set_block(game::BlockPosition{placement.chunk_x, placement.height + y, placement.chunk_z},
-                            static_cast<game::BlockStateId>(state));
+            chunk.set_block_at(
+                    game::BlockPosition{placement.chunk_x, placement.height + y, placement.chunk_z},
+                    static_cast<game::BlockStateId>(state));
          }
       }
    }
@@ -120,9 +121,9 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
                                                     placement.object_seed);
 
       game::BlockPosition position{
-              placement.chunk_x + (pos.x() - chunk.pos().x()) * 16,
+              placement.chunk_x + (pos.x() - chunk.position().x()) * 16,
               0,
-              placement.chunk_z + (pos.z() - chunk.pos().z()) * 16,
+              placement.chunk_z + (pos.z() - chunk.position().z()) * 16,
       };
 
       if (position.x() < 0 || position.x() >= 16 || position.z() < 0 || position.z() >= 16)
@@ -134,7 +135,7 @@ void ChunkPlacements::populate_neighbour(Chunk &chunk, game::ChunkPosition pos)
          position.set_y(placement.height + y);
          auto state = obj->block({placement.x, y, placement.z});
          if (state != 0) {
-            chunk.set_block(position, static_cast<game::BlockStateId>(state));
+            chunk.set_block_at(position, static_cast<game::BlockStateId>(state));
          }
       }
    }

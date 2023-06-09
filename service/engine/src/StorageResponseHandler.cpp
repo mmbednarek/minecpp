@@ -1,30 +1,24 @@
 #include "StorageResponseHandler.h"
+#include "ChunkSystem.h"
+#include "job/HandleStorageMessage.h"
+#include "JobSystem.h"
 
 namespace minecpp::service::engine {
 
-void StorageResponseHandler::handle_chunk_data(const storage::ResponseChunkData &chunk)
+StorageResponseHandler::StorageResponseHandler(JobSystem &job_system) :
+    m_job_system(job_system)
 {
-   for (auto *handler : m_handlers) {
-      if (handler == nullptr)
-         continue;
-
-      handler->handle_chunk_data(chunk);
-   }
 }
 
-void StorageResponseHandler::handle_empty_chunk(const storage::ResponseEmptyChunk &chunk)
+void StorageResponseHandler::set_chunk_system(ChunkSystem *chunk_system)
 {
-   for (auto *handler : m_handlers) {
-      if (handler == nullptr)
-         continue;
-
-      handler->handle_empty_chunk(chunk);
-   }
+   m_chunk_system = chunk_system;
 }
 
-void StorageResponseHandler::add_handler(storage::IResponseHandler *handler)
+void StorageResponseHandler::handle_response(storage::Response response)
 {
-   m_handlers.emplace_back(handler);
+   assert(m_chunk_system);
+   m_job_system.create_job<job::HandleStorageMessage>(*m_chunk_system, std::move(response));
 }
 
 }// namespace minecpp::service::engine

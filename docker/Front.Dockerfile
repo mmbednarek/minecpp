@@ -1,4 +1,4 @@
-FROM minecpp/build-base:latest
+FROM minecpp/core:latest
 
 ENV REGISTRY_FILE=/root/minecpp_data/registry.bin
 RUN mkdir /root/minecpp_data

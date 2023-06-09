@@ -34,7 +34,7 @@ bool Default::on_player_place_block(game::IWorld &world, game::PlayerId, int blo
       target_state_id = repository::StateManager::the().block_base_state(block_id);
    }
 
-   return world.set_block(neighbour_position, target_state_id).ok();
+   return world.set_block_at(neighbour_position, target_state_id).ok();
 }
 
 std::optional<game::BlockStateId> Default::on_neighbour_change(game::IWorld &, game::BlockStateId,
@@ -56,7 +56,7 @@ std::optional<Default::SourceBlockType> Default::get_source_block_type(game::IWo
 {
    const auto &block_ids = repository::BlockIds::the();
 
-   auto source_block_state = world.get_block(pos);
+   auto source_block_state = world.block_at(pos);
    if (source_block_state.has_failed()) {
       return std::nullopt;
    }

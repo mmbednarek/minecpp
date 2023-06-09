@@ -562,9 +562,7 @@ struct DisplayDeathScreenDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DisplayDeathScreenDefaultTypeInternal _DisplayDeathScreen_default_instance_;
 PROTOBUF_CONSTEXPR Respawn::Respawn(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_._has_bits_)*/{}
-  , /*decltype(_impl_._cached_size_)*/{}
-  , /*decltype(_impl_.dimension_type_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_.dimension_type_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.dimension_name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.death_dimension_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.death_position_)*/nullptr
@@ -574,7 +572,8 @@ PROTOBUF_CONSTEXPR Respawn::Respawn(
   , /*decltype(_impl_.is_debug_)*/false
   , /*decltype(_impl_.is_flat_)*/false
   , /*decltype(_impl_.copy_metadata_)*/false
-  , /*decltype(_impl_.has_death_location_)*/false} {}
+  , /*decltype(_impl_.has_death_location_)*/false
+  , /*decltype(_impl_._cached_size_)*/{}} {}
 struct RespawnDefaultTypeInternal {
   PROTOBUF_CONSTEXPR RespawnDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -918,7 +917,7 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbo
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _impl_.victim_entity_id_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _impl_.killer_entity_id_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen, _impl_.death_message_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_._has_bits_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -935,17 +934,6 @@ const uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbo
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.has_death_location_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.death_dimension_),
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::Respawn, _impl_.death_position_),
-  ~0u,
-  ~0u,
-  ~0u,
-  ~0u,
-  0,
-  ~0u,
-  ~0u,
-  ~0u,
-  ~0u,
-  ~0u,
-  ~0u,
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::v1::SetAbilities, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -993,8 +981,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 285, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::RemoveEntity)},
   { 292, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::TeleportEntity)},
   { 302, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::DisplayDeathScreen)},
-  { 311, 328, -1, sizeof(::minecpp::proto::event::clientbound::v1::Respawn)},
-  { 339, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::SetAbilities)},
+  { 311, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::Respawn)},
+  { 328, -1, -1, sizeof(::minecpp::proto::event::clientbound::v1::SetAbilities)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1148,19 +1136,18 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_
   "Rotation\022\024\n\014is_on_ground\030\004 \001(\010\"_\n\022Displa"
   "yDeathScreen\022\030\n\020victim_entity_id\030\001 \001(\r\022\030"
   "\n\020killer_entity_id\030\002 \001(\r\022\025\n\rdeath_messag"
-  "e\030\003 \001(\t\"\210\003\n\007Respawn\022\026\n\016dimension_type\030\001 "
+  "e\030\003 \001(\t\"\354\002\n\007Respawn\022\026\n\016dimension_type\030\001 "
   "\001(\t\022\026\n\016dimension_name\030\002 \001(\t\022\023\n\013hashed_se"
   "ed\030\003 \001(\003\0224\n\tgame_mode\030\004 \001(\0162!.minecpp.pr"
-  "oto.common.v1.GameMode\022B\n\022previous_game_"
+  "oto.common.v1.GameMode\022=\n\022previous_game_"
   "mode\030\005 \001(\0162!.minecpp.proto.common.v1.Gam"
-  "eModeH\000\210\001\001\022\020\n\010is_debug\030\006 \001(\010\022\017\n\007is_flat\030"
-  "\007 \001(\010\022\025\n\rcopy_metadata\030\010 \001(\010\022\032\n\022has_deat"
-  "h_location\030\t \001(\010\022\027\n\017death_dimension\030\n \001("
-  "\t\0228\n\016death_position\030\013 \001(\0132 .minecpp.prot"
-  "o.common.v1.Vector3B\025\n\023_previous_game_mo"
-  "de\"E\n\014SetAbilities\0225\n\tabilities\030\001 \001(\0132\"."
-  "minecpp.proto.entity.v1.Abilitiesb\006proto"
-  "3"
+  "eMode\022\020\n\010is_debug\030\006 \001(\010\022\017\n\007is_flat\030\007 \001(\010"
+  "\022\025\n\rcopy_metadata\030\010 \001(\010\022\032\n\022has_death_loc"
+  "ation\030\t \001(\010\022\027\n\017death_dimension\030\n \001(\t\0228\n\016"
+  "death_position\030\013 \001(\0132 .minecpp.proto.com"
+  "mon.v1.Vector3\"E\n\014SetAbilities\0225\n\tabilit"
+  "ies\030\001 \001(\0132\".minecpp.proto.entity.v1.Abil"
+  "itiesb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps[7] = {
   &::descriptor_table_google_2fprotobuf_2fany_2eproto,
@@ -1173,7 +1160,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fe
 };
 static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto = {
-    false, false, 4761, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
+    false, false, 4733, descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto,
     "minecpp/proto/event/clientbound/v1/Clientbound.proto",
     &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_once, descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto_deps, 7, 40,
     schemas, file_default_instances, TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fv1_2fClientbound_2eproto::offsets,
@@ -10132,10 +10119,6 @@ void DisplayDeathScreen::InternalSwap(DisplayDeathScreen* other) {
 
 class Respawn::_Internal {
  public:
-  using HasBits = decltype(std::declval<Respawn>()._impl_._has_bits_);
-  static void set_has_previous_game_mode(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
   static const ::minecpp::proto::common::v1::Vector3& death_position(const Respawn* msg);
 };
 
@@ -10159,9 +10142,7 @@ Respawn::Respawn(const Respawn& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   Respawn* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){from._impl_._has_bits_}
-    , /*decltype(_impl_._cached_size_)*/{}
-    , decltype(_impl_.dimension_type_){}
+      decltype(_impl_.dimension_type_){}
     , decltype(_impl_.dimension_name_){}
     , decltype(_impl_.death_dimension_){}
     , decltype(_impl_.death_position_){nullptr}
@@ -10171,7 +10152,8 @@ Respawn::Respawn(const Respawn& from)
     , decltype(_impl_.is_debug_){}
     , decltype(_impl_.is_flat_){}
     , decltype(_impl_.copy_metadata_){}
-    , decltype(_impl_.has_death_location_){}};
+    , decltype(_impl_.has_death_location_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   _impl_.dimension_type_.InitDefault();
@@ -10212,9 +10194,7 @@ inline void Respawn::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_._has_bits_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-    , decltype(_impl_.dimension_type_){}
+      decltype(_impl_.dimension_type_){}
     , decltype(_impl_.dimension_name_){}
     , decltype(_impl_.death_dimension_){}
     , decltype(_impl_.death_position_){nullptr}
@@ -10225,6 +10205,7 @@ inline void Respawn::SharedCtor(
     , decltype(_impl_.is_flat_){false}
     , decltype(_impl_.copy_metadata_){false}
     , decltype(_impl_.has_death_location_){false}
+    , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.dimension_type_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
@@ -10275,19 +10256,13 @@ void Respawn::Clear() {
   }
   _impl_.death_position_ = nullptr;
   ::memset(&_impl_.hashed_seed_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.game_mode_) -
-      reinterpret_cast<char*>(&_impl_.hashed_seed_)) + sizeof(_impl_.game_mode_));
-  _impl_.previous_game_mode_ = 0;
-  ::memset(&_impl_.is_debug_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.has_death_location_) -
-      reinterpret_cast<char*>(&_impl_.is_debug_)) + sizeof(_impl_.has_death_location_));
-  _impl_._has_bits_.Clear();
+      reinterpret_cast<char*>(&_impl_.hashed_seed_)) + sizeof(_impl_.has_death_location_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* Respawn::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
@@ -10329,7 +10304,7 @@ const char* Respawn::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
         } else
           goto handle_unusual;
         continue;
-      // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+      // .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -10404,7 +10379,6 @@ const char* Respawn::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
     CHK_(ptr != nullptr);
   }  // while
 message_done:
-  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -10451,8 +10425,8 @@ uint8_t* Respawn::_InternalSerialize(
       4, this->_internal_game_mode(), target);
   }
 
-  // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
-  if (_internal_has_previous_game_mode()) {
+  // .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+  if (this->_internal_previous_game_mode() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
       5, this->_internal_previous_game_mode(), target);
@@ -10554,9 +10528,8 @@ size_t Respawn::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_game_mode());
   }
 
-  // optional .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
-  cached_has_bits = _impl_._has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
+  // .minecpp.proto.common.v1.GameMode previous_game_mode = 5;
+  if (this->_internal_previous_game_mode() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_previous_game_mode());
   }
@@ -10618,7 +10591,7 @@ void Respawn::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
   if (from._internal_game_mode() != 0) {
     _this->_internal_set_game_mode(from._internal_game_mode());
   }
-  if (from._internal_has_previous_game_mode()) {
+  if (from._internal_previous_game_mode() != 0) {
     _this->_internal_set_previous_game_mode(from._internal_previous_game_mode());
   }
   if (from._internal_is_debug() != 0) {
@@ -10652,7 +10625,6 @@ void Respawn::InternalSwap(Respawn* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.dimension_type_, lhs_arena,
       &other->_impl_.dimension_type_, rhs_arena

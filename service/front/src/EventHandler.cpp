@@ -1,11 +1,14 @@
 #include "EventHandler.h"
+
+#include "minecpp/game/Abilities.h"
+#include "minecpp/game/player/Player.h"
+#include "minecpp/network/message/Clientbound.h"
+#include "minecpp/proto/event/serverbound/v1/Serverbound.pb.h"
+#include "minecpp/repository/Repository.h"
+#include "minecpp/service/engine/Api.h"
+#include "minecpp/util/Uuid.h"
+
 #include <boost/uuid/uuid_io.hpp>
-#include <minecpp/game/Abilities.h>
-#include <minecpp/game/player/Player.h>
-#include <minecpp/network/message/Clientbound.h>
-#include <minecpp/repository/Repository.h>
-#include <minecpp/util/Time.h>
-#include <minecpp/util/Uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::front {
@@ -260,13 +263,13 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                    .furnace_filtering_craftable = msg.player().recipe_book().furnace_filtering_craftable(),
            });
 
-      if (m_stream == nullptr) {
+      if (m_client == nullptr) {
          spdlog::error("Player stream is null!");
          return;
       }
 
       spdlog::info("Issuing loading initial chunks");
-      m_stream->send(proto::event::serverbound::v1::PreInitialChunks{}, player_id);
+      m_client->send(proto::event::serverbound::v1::PreInitialChunks{}, player_id);
    }
 }
 
@@ -433,14 +436,13 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
 
       send(conn, chunk_data);
 
-      if (msg.is_initial_chunk()) {
+      if (msg.is_initial_chunk() && conn->initial_chunk_count >= 0) {
          ++conn->initial_chunk_count;
 
-
          if (conn->initial_chunk_count > 32) {
-            assert(m_stream);
-            m_stream->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
-            conn->initial_chunk_count = 0;
+            assert(m_client);
+            m_client->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
+            conn->initial_chunk_count = -1;
          }
       }
    }
@@ -561,7 +563,8 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
    send_message(spawn_entity, recipient_list);
 
    for (const auto &meta : entity.metadata()) {
-      if (meta.has_slot()) {
+      switch (meta.value_case()) {
+      case proto::entity::v1::Metadata::kSlot: {
          network::message::EntityMetadataSlot slot{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),
@@ -569,16 +572,18 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
                  .count     = static_cast<int>(meta.slot().count()),
          };
          send_message(slot, recipient_list);
-         continue;
+         break;
       }
-      if (meta.has_byte()) {
+      case proto::entity::v1::Metadata::kByte: {
          network::message::EntityMetadataByte byte_meta{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),
                  .value     = static_cast<uint8_t>(meta.byte()),
          };
          send_message(byte_meta, recipient_list);
-         continue;
+         break;
+      }
+      default: break;
       }
    }
 }
@@ -675,6 +680,16 @@ void EventHandler::handle_set_abilities(const clientbound_v1::SetAbilities &msg,
    };
 
    send_message(player_abilities, recipient_list);
+}
+
+void EventHandler::set_client(engine::Client *client)
+{
+   m_client = client;
+}
+
+void EventHandler::visit_event(const proto::event::clientbound::v1::Event &event)
+{
+   event::visit_clientbound(event, *this);
 }
 
 }// namespace minecpp::service::front

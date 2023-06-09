@@ -5,7 +5,10 @@ set(MINECPP_SNBT_PARSER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_tool_snbt_parser)
 
 # Public include headers
-target_include_directories(minecpp_tool_snbt_parser PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_tool_snbt_parser
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/snbt_parser
+)
 
 # Source subdirectory
 add_subdirectory("src")

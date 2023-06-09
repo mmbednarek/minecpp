@@ -22,7 +22,7 @@ void ChangeBlock::run()
    auto chunk = m_chunk_system.chunk_at(m_position.chunk_position());
    assert(chunk);// job-system guarantees the chunk is present.
 
-   auto source_state_id = chunk->get_block(m_position);
+   auto source_state_id = chunk->block_at(m_position);
    assert(source_state_id.ok());
 
    if (*source_state_id == m_target_state_id)
@@ -46,7 +46,7 @@ void ChangeBlock::run()
       m_world.light_system().reset_light(game::LightType::Block, m_position);
    }
 
-   chunk->set_block(m_position, m_target_state_id);
+   chunk->set_block_at(m_position, m_target_state_id);
 
    /*
     The reverse situation here. If there are some new opaque faces recalculate light.

@@ -11,25 +11,31 @@ using minecpp::world::Chunk;
 class Handler : public IResponseHandler
 {
  public:
-   void handle_chunk_data(const ResponseChunkData &proto_chunk) override
+   void handle_response(minecpp::service::storage::Response response) override
    {
-      auto chunk = Chunk::from_proto(proto_chunk.chunk_data());
-      spdlog::info("obtained chunk data {}, {}", chunk.pos().x(), chunk.pos().z());
-      spdlog::info("block at 1 2 3: {}", *chunk.get_block({1, 2, 3}));
+      switch (response.message_case()) {
+      case minecpp::proto::service::storage::v1::Response::kChunkData:
+         Handler::handle_chunk_data(response.chunk_data());
+         break;
+      default: break;
+      }
    }
 
-   void handle_empty_chunk(const minecpp::service::storage::ResponseEmptyChunk & /*chunk*/) override {}
+   static void handle_chunk_data(const ResponseChunkData &proto_chunk)
+   {
+      auto chunk = Chunk::from_proto(proto_chunk.chunk_data());
+      spdlog::info("obtained chunk data {}, {}", chunk->position().x(), chunk->position().z());
+      spdlog::info("block at 1 2 3: {}", *chunk->block_at({1, 2, 3}));
+   }
 };
 
 int main()
 {
    Handler handler;
 
-   StorageClient client{0, &handler, {"127.0.0.1:7000"}};
+   StorageClient client{0, handler};
 
    client.subscribe_chunk({1, 2});
-
-   client.wait();
 
    spdlog::info("exiting");
 }

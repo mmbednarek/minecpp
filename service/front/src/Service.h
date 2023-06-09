@@ -2,15 +2,13 @@
 #include "Config.h"
 #include "Connection.h"
 #include "protocol/PlayHandler.h"
+
+#include "minecpp/game/player/Id.h"
+#include "minecpp/network/message/Serverbound.h"
+#include "minecpp/proto/chunk/v1/Chunk.pb.h"
+#include "minecpp/service/engine/Api.h"
+
 #include <boost/random.hpp>
-#include <grpcpp/channel.h>
-#include <grpcpp/client_context.h>
-#include <minecpp/game/player/Id.h>
-#include <minecpp/network/message/Serverbound.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
-#include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
-#include <minecpp/proto/service/engine/v1/Engine.grpc.pb.h>
-#include <minecpp/service/engine/Api.h>
 
 namespace minecpp::service::front {
 
@@ -39,7 +37,7 @@ class Service
 
    void init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name);
    void on_player_disconnect(uuid engine_id, game::PlayerId player_id);
-   void set_stream(engine::IStream *stream);
+   void set_client(engine::Client *stream);
    void send(const ::google::protobuf::Message &message, game::PlayerId id);
 
    void on_message(uuid engine_id, game::PlayerId player_id,
@@ -66,7 +64,7 @@ class Service
    void on_message(uuid engine_id, game::PlayerId player_id, minecpp::network::message::ClientCommand msg);
 
  private:
-   engine::IStream *m_stream{};
+   engine::Client *m_client{};
 };
 
 }// namespace minecpp::service::front

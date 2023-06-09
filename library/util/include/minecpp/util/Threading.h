@@ -1,15 +1,15 @@
 #pragma once
-#ifdef unix
-#include <pthread.h>
-#endif
+
+#include <array>
 
 namespace minecpp::util {
 
-inline void label_thread(const char *thread_name)
+enum class ThreadType : int
 {
-#ifdef unix
-   pthread_setname_np(pthread_self(), thread_name);
-#endif
-}
+   TickThread   = 0,
+   WorkerThread = 1,
+};
+
+void set_debug_thread_info(ThreadType type, std::size_t index);
 
 }// namespace minecpp::util

@@ -19,37 +19,39 @@
 #error regenerate this file with a newer version of protoc.
 #endif
 
-#include <google/protobuf/port_undef.inc>
-#include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/arena.h>
 #include <google/protobuf/arenastring.h>
+#include <google/protobuf/extension_set.h>// IWYU pragma: export
 #include <google/protobuf/generated_message_bases.h>
-#include <google/protobuf/generated_message_util.h>
-#include <google/protobuf/metadata_lite.h>
 #include <google/protobuf/generated_message_reflection.h>
+#include <google/protobuf/generated_message_util.h>
+#include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/message.h>
-#include <google/protobuf/repeated_field.h>  // IWYU pragma: export
-#include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/metadata_lite.h>
+#include <google/protobuf/port_undef.inc>
+#include <google/protobuf/repeated_field.h>// IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto
 PROTOBUF_NAMESPACE_OPEN
+
 namespace internal {
 class AnyMetadata;
-}  // namespace internal
+}// namespace internal
+
 PROTOBUF_NAMESPACE_CLOSE
 
 // Internal implementation detail -- do not use these members.
-struct TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto {
-  static const uint32_t offsets[];
+struct TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto
+{
+   static const uint32_t offsets[];
 };
-extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
-namespace minecpp {
-namespace proto {
-namespace service {
-namespace discovery {
-namespace v1 {
+
+extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
+        descriptor_table_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
+
+namespace minecpp { namespace proto { namespace service { namespace discovery { namespace v1 {
 class DiscoveryRequest;
 struct DiscoveryRequestDefaultTypeInternal;
 extern DiscoveryRequestDefaultTypeInternal _DiscoveryRequest_default_instance_;
@@ -65,890 +67,1166 @@ extern EndpointDefaultTypeInternal _Endpoint_default_instance_;
 class RegisterRequest;
 struct RegisterRequestDefaultTypeInternal;
 extern RegisterRequestDefaultTypeInternal _RegisterRequest_default_instance_;
-}  // namespace v1
-}  // namespace discovery
-}  // namespace service
-}  // namespace proto
-}  // namespace minecpp
+}}}}}// namespace minecpp::proto::service::discovery::v1
+
 PROTOBUF_NAMESPACE_OPEN
-template<> ::minecpp::proto::service::discovery::v1::DiscoveryRequest* Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::DiscoveryRequest>(Arena*);
-template<> ::minecpp::proto::service::discovery::v1::DiscoveryResponse* Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::DiscoveryResponse>(Arena*);
-template<> ::minecpp::proto::service::discovery::v1::EmptyResult* Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::EmptyResult>(Arena*);
-template<> ::minecpp::proto::service::discovery::v1::Endpoint* Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::Endpoint>(Arena*);
-template<> ::minecpp::proto::service::discovery::v1::RegisterRequest* Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::RegisterRequest>(Arena*);
+template<>
+::minecpp::proto::service::discovery::v1::DiscoveryRequest *
+Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::DiscoveryRequest>(Arena *);
+template<>
+::minecpp::proto::service::discovery::v1::DiscoveryResponse *
+Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::DiscoveryResponse>(Arena *);
+template<>
+::minecpp::proto::service::discovery::v1::EmptyResult *
+Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::EmptyResult>(Arena *);
+template<>
+::minecpp::proto::service::discovery::v1::Endpoint *
+Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::Endpoint>(Arena *);
+template<>
+::minecpp::proto::service::discovery::v1::RegisterRequest *
+Arena::CreateMaybeMessage<::minecpp::proto::service::discovery::v1::RegisterRequest>(Arena *);
 PROTOBUF_NAMESPACE_CLOSE
-namespace minecpp {
-namespace proto {
-namespace service {
-namespace discovery {
-namespace v1 {
+
+namespace minecpp { namespace proto { namespace service { namespace discovery { namespace v1 {
 
 // ===================================================================
 
-class DiscoveryRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.DiscoveryRequest) */ {
+class DiscoveryRequest final
+    : public ::PROTOBUF_NAMESPACE_ID::
+              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.DiscoveryRequest) */
+{
  public:
-  inline DiscoveryRequest() : DiscoveryRequest(nullptr) {}
-  ~DiscoveryRequest() override;
-  explicit PROTOBUF_CONSTEXPR DiscoveryRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+   inline DiscoveryRequest() :
+       DiscoveryRequest(nullptr)
+   {
+   }
 
-  DiscoveryRequest(const DiscoveryRequest& from);
-  DiscoveryRequest(DiscoveryRequest&& from) noexcept
-    : DiscoveryRequest() {
-    *this = ::std::move(from);
-  }
+   ~DiscoveryRequest() override;
+   explicit PROTOBUF_CONSTEXPR DiscoveryRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  inline DiscoveryRequest& operator=(const DiscoveryRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline DiscoveryRequest& operator=(DiscoveryRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
+   DiscoveryRequest(const DiscoveryRequest &from);
+
+   DiscoveryRequest(DiscoveryRequest &&from) noexcept :
+       DiscoveryRequest()
+   {
+      *this = ::std::move(from);
+   }
+
+   inline DiscoveryRequest &operator=(const DiscoveryRequest &from)
+   {
       CopyFrom(from);
-    }
-    return *this;
-  }
+      return *this;
+   }
 
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const DiscoveryRequest& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const DiscoveryRequest* internal_default_instance() {
-    return reinterpret_cast<const DiscoveryRequest*>(
-               &_DiscoveryRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    0;
+   inline DiscoveryRequest &operator=(DiscoveryRequest &&from) noexcept
+   {
+      if (this == &from)
+         return *this;
+      if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+          && GetOwningArena() != nullptr
+#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
+      ) {
+         InternalSwap(&from);
+      } else {
+         CopyFrom(from);
+      }
+      return *this;
+   }
 
-  friend void swap(DiscoveryRequest& a, DiscoveryRequest& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(DiscoveryRequest* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+   {
+      return GetDescriptor();
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+   {
+      return default_instance().GetMetadata().descriptor;
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+   {
+      return default_instance().GetMetadata().reflection;
+   }
+
+   static const DiscoveryRequest &default_instance()
+   {
+      return *internal_default_instance();
+   }
+
+   static inline const DiscoveryRequest *internal_default_instance()
+   {
+      return reinterpret_cast<const DiscoveryRequest *>(&_DiscoveryRequest_default_instance_);
+   }
+
+   static constexpr int kIndexInFileMessages = 0;
+
+   friend void swap(DiscoveryRequest &a, DiscoveryRequest &b)
+   {
+      a.Swap(&b);
+   }
+
+   inline void Swap(DiscoveryRequest *other)
+   {
+      if (other == this)
+         return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
+#else // PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() == other->GetOwningArena()) {
+#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
+         InternalSwap(other);
+      } else {
+         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      }
+   }
+
+   void UnsafeArenaSwap(DiscoveryRequest *other)
+   {
+      if (other == this)
+         return;
+      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
       InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(DiscoveryRequest* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
+   }
 
-  // implements Message ----------------------------------------------
+   // implements Message ----------------------------------------------
 
-  DiscoveryRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<DiscoveryRequest>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const DiscoveryRequest& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const DiscoveryRequest& from) {
-    DiscoveryRequest::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
+   DiscoveryRequest *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+   {
+      return CreateMaybeMessage<DiscoveryRequest>(arena);
+   }
 
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+   void CopyFrom(const DiscoveryRequest &from);
+   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
 
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(DiscoveryRequest* other);
+   void MergeFrom(const DiscoveryRequest &from)
+   {
+      DiscoveryRequest::MergeImpl(*this, from);
+   }
 
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.service.discovery.v1.DiscoveryRequest";
-  }
-  protected:
-  explicit DiscoveryRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kServiceNameFieldNumber = 2,
-    kResourceVersionFieldNumber = 1,
-  };
-  // string service_name = 2;
-  void clear_service_name();
-  const std::string& service_name() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_service_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_service_name();
-  PROTOBUF_NODISCARD std::string* release_service_name();
-  void set_allocated_service_name(std::string* service_name);
-  private:
-  const std::string& _internal_service_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_service_name(const std::string& value);
-  std::string* _internal_mutable_service_name();
-  public:
-
-  // uint64 resource_version = 1;
-  void clear_resource_version();
-  uint64_t resource_version() const;
-  void set_resource_version(uint64_t value);
-  private:
-  uint64_t _internal_resource_version() const;
-  void _internal_set_resource_version(uint64_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.DiscoveryRequest)
  private:
-  class _Internal;
+   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
+                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr service_name_;
-    uint64_t resource_version_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
+ public:
+   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+   bool IsInitialized() const final;
+
+   size_t ByteSizeLong() const final;
+   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
+   uint8_t *_InternalSerialize(uint8_t *target,
+                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+
+   int GetCachedSize() const final
+   {
+      return _impl_._cached_size_.Get();
+   }
+
+ private:
+   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
+   void SharedDtor();
+   void SetCachedSize(int size) const final;
+   void InternalSwap(DiscoveryRequest *other);
+
+ private:
+   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+
+   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+   {
+      return "minecpp.proto.service.discovery.v1.DiscoveryRequest";
+   }
+
+ protected:
+   explicit DiscoveryRequest(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
+
+ public:
+   static const ClassData _class_data_;
+   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+   // nested types ----------------------------------------------------
+
+   // accessors -------------------------------------------------------
+
+   enum : int
+   {
+      kServiceNameFieldNumber     = 2,
+      kResourceVersionFieldNumber = 1,
+   };
+
+   // string service_name = 2;
+   void clear_service_name();
+   const std::string &service_name() const;
+   template<typename ArgT0 = const std::string &, typename... ArgT>
+   void set_service_name(ArgT0 &&arg0, ArgT... args);
+   std::string *mutable_service_name();
+   PROTOBUF_NODISCARD std::string *release_service_name();
+   void set_allocated_service_name(std::string *service_name);
+
+ private:
+   const std::string &_internal_service_name() const;
+   inline PROTOBUF_ALWAYS_INLINE void _internal_set_service_name(const std::string &value);
+   std::string *_internal_mutable_service_name();
+
+ public:
+   // uint64 resource_version = 1;
+   void clear_resource_version();
+   uint64_t resource_version() const;
+   void set_resource_version(uint64_t value);
+
+ private:
+   uint64_t _internal_resource_version() const;
+   void _internal_set_resource_version(uint64_t value);
+
+ public:
+   // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.DiscoveryRequest)
+ private:
+   class _Internal;
+
+   template<typename T>
+   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+   typedef void InternalArenaConstructable_;
+   typedef void DestructorSkippable_;
+
+   struct Impl_
+   {
+      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr service_name_;
+      uint64_t resource_version_;
+      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+   };
+
+   union
+   {
+      Impl_ _impl_;
+   };
+   friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
 };
+
 // -------------------------------------------------------------------
 
-class DiscoveryResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.DiscoveryResponse) */ {
+class DiscoveryResponse final
+    : public ::PROTOBUF_NAMESPACE_ID::
+              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.DiscoveryResponse) */
+{
  public:
-  inline DiscoveryResponse() : DiscoveryResponse(nullptr) {}
-  ~DiscoveryResponse() override;
-  explicit PROTOBUF_CONSTEXPR DiscoveryResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+   inline DiscoveryResponse() :
+       DiscoveryResponse(nullptr)
+   {
+   }
 
-  DiscoveryResponse(const DiscoveryResponse& from);
-  DiscoveryResponse(DiscoveryResponse&& from) noexcept
-    : DiscoveryResponse() {
-    *this = ::std::move(from);
-  }
+   ~DiscoveryResponse() override;
+   explicit PROTOBUF_CONSTEXPR DiscoveryResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  inline DiscoveryResponse& operator=(const DiscoveryResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline DiscoveryResponse& operator=(DiscoveryResponse&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
+   DiscoveryResponse(const DiscoveryResponse &from);
+
+   DiscoveryResponse(DiscoveryResponse &&from) noexcept :
+       DiscoveryResponse()
+   {
+      *this = ::std::move(from);
+   }
+
+   inline DiscoveryResponse &operator=(const DiscoveryResponse &from)
+   {
       CopyFrom(from);
-    }
-    return *this;
-  }
+      return *this;
+   }
 
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const DiscoveryResponse& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const DiscoveryResponse* internal_default_instance() {
-    return reinterpret_cast<const DiscoveryResponse*>(
-               &_DiscoveryResponse_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    1;
+   inline DiscoveryResponse &operator=(DiscoveryResponse &&from) noexcept
+   {
+      if (this == &from)
+         return *this;
+      if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+          && GetOwningArena() != nullptr
+#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
+      ) {
+         InternalSwap(&from);
+      } else {
+         CopyFrom(from);
+      }
+      return *this;
+   }
 
-  friend void swap(DiscoveryResponse& a, DiscoveryResponse& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(DiscoveryResponse* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+   {
+      return GetDescriptor();
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+   {
+      return default_instance().GetMetadata().descriptor;
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+   {
+      return default_instance().GetMetadata().reflection;
+   }
+
+   static const DiscoveryResponse &default_instance()
+   {
+      return *internal_default_instance();
+   }
+
+   static inline const DiscoveryResponse *internal_default_instance()
+   {
+      return reinterpret_cast<const DiscoveryResponse *>(&_DiscoveryResponse_default_instance_);
+   }
+
+   static constexpr int kIndexInFileMessages = 1;
+
+   friend void swap(DiscoveryResponse &a, DiscoveryResponse &b)
+   {
+      a.Swap(&b);
+   }
+
+   inline void Swap(DiscoveryResponse *other)
+   {
+      if (other == this)
+         return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
+#else // PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() == other->GetOwningArena()) {
+#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
+         InternalSwap(other);
+      } else {
+         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      }
+   }
+
+   void UnsafeArenaSwap(DiscoveryResponse *other)
+   {
+      if (other == this)
+         return;
+      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
       InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(DiscoveryResponse* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
+   }
 
-  // implements Message ----------------------------------------------
+   // implements Message ----------------------------------------------
 
-  DiscoveryResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<DiscoveryResponse>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const DiscoveryResponse& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const DiscoveryResponse& from) {
-    DiscoveryResponse::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
+   DiscoveryResponse *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+   {
+      return CreateMaybeMessage<DiscoveryResponse>(arena);
+   }
 
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+   void CopyFrom(const DiscoveryResponse &from);
+   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
 
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(DiscoveryResponse* other);
+   void MergeFrom(const DiscoveryResponse &from)
+   {
+      DiscoveryResponse::MergeImpl(*this, from);
+   }
 
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.service.discovery.v1.DiscoveryResponse";
-  }
-  protected:
-  explicit DiscoveryResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kEndpointsFieldNumber = 2,
-    kResourceVersionFieldNumber = 1,
-  };
-  // repeated .minecpp.proto.service.discovery.v1.Endpoint endpoints = 2;
-  int endpoints_size() const;
-  private:
-  int _internal_endpoints_size() const;
-  public:
-  void clear_endpoints();
-  ::minecpp::proto::service::discovery::v1::Endpoint* mutable_endpoints(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::service::discovery::v1::Endpoint >*
-      mutable_endpoints();
-  private:
-  const ::minecpp::proto::service::discovery::v1::Endpoint& _internal_endpoints(int index) const;
-  ::minecpp::proto::service::discovery::v1::Endpoint* _internal_add_endpoints();
-  public:
-  const ::minecpp::proto::service::discovery::v1::Endpoint& endpoints(int index) const;
-  ::minecpp::proto::service::discovery::v1::Endpoint* add_endpoints();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::service::discovery::v1::Endpoint >&
-      endpoints() const;
-
-  // uint64 resource_version = 1;
-  void clear_resource_version();
-  uint64_t resource_version() const;
-  void set_resource_version(uint64_t value);
-  private:
-  uint64_t _internal_resource_version() const;
-  void _internal_set_resource_version(uint64_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.DiscoveryResponse)
  private:
-  class _Internal;
+   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
+                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::service::discovery::v1::Endpoint > endpoints_;
-    uint64_t resource_version_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
+ public:
+   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+   bool IsInitialized() const final;
+
+   size_t ByteSizeLong() const final;
+   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
+   uint8_t *_InternalSerialize(uint8_t *target,
+                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+
+   int GetCachedSize() const final
+   {
+      return _impl_._cached_size_.Get();
+   }
+
+ private:
+   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
+   void SharedDtor();
+   void SetCachedSize(int size) const final;
+   void InternalSwap(DiscoveryResponse *other);
+
+ private:
+   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+
+   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+   {
+      return "minecpp.proto.service.discovery.v1.DiscoveryResponse";
+   }
+
+ protected:
+   explicit DiscoveryResponse(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
+
+ public:
+   static const ClassData _class_data_;
+   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+   // nested types ----------------------------------------------------
+
+   // accessors -------------------------------------------------------
+
+   enum : int
+   {
+      kEndpointsFieldNumber       = 2,
+      kResourceVersionFieldNumber = 1,
+   };
+
+   // repeated .minecpp.proto.service.discovery.v1.Endpoint endpoints = 2;
+   int endpoints_size() const;
+
+ private:
+   int _internal_endpoints_size() const;
+
+ public:
+   void clear_endpoints();
+   ::minecpp::proto::service::discovery::v1::Endpoint *mutable_endpoints(int index);
+   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::service::discovery::v1::Endpoint> *
+   mutable_endpoints();
+
+ private:
+   const ::minecpp::proto::service::discovery::v1::Endpoint &_internal_endpoints(int index) const;
+   ::minecpp::proto::service::discovery::v1::Endpoint *_internal_add_endpoints();
+
+ public:
+   const ::minecpp::proto::service::discovery::v1::Endpoint &endpoints(int index) const;
+   ::minecpp::proto::service::discovery::v1::Endpoint *add_endpoints();
+   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::service::discovery::v1::Endpoint> &
+   endpoints() const;
+
+   // uint64 resource_version = 1;
+   void clear_resource_version();
+   uint64_t resource_version() const;
+   void set_resource_version(uint64_t value);
+
+ private:
+   uint64_t _internal_resource_version() const;
+   void _internal_set_resource_version(uint64_t value);
+
+ public:
+   // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.DiscoveryResponse)
+ private:
+   class _Internal;
+
+   template<typename T>
+   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+   typedef void InternalArenaConstructable_;
+   typedef void DestructorSkippable_;
+
+   struct Impl_
+   {
+      ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::service::discovery::v1::Endpoint>
+              endpoints_;
+      uint64_t resource_version_;
+      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+   };
+
+   union
+   {
+      Impl_ _impl_;
+   };
+   friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
 };
+
 // -------------------------------------------------------------------
 
-class Endpoint final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.Endpoint) */ {
+class Endpoint final
+    : public ::PROTOBUF_NAMESPACE_ID::
+              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.Endpoint) */
+{
  public:
-  inline Endpoint() : Endpoint(nullptr) {}
-  ~Endpoint() override;
-  explicit PROTOBUF_CONSTEXPR Endpoint(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+   inline Endpoint() :
+       Endpoint(nullptr)
+   {
+   }
 
-  Endpoint(const Endpoint& from);
-  Endpoint(Endpoint&& from) noexcept
-    : Endpoint() {
-    *this = ::std::move(from);
-  }
+   ~Endpoint() override;
+   explicit PROTOBUF_CONSTEXPR Endpoint(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  inline Endpoint& operator=(const Endpoint& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline Endpoint& operator=(Endpoint&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
+   Endpoint(const Endpoint &from);
+
+   Endpoint(Endpoint &&from) noexcept :
+       Endpoint()
+   {
+      *this = ::std::move(from);
+   }
+
+   inline Endpoint &operator=(const Endpoint &from)
+   {
       CopyFrom(from);
-    }
-    return *this;
-  }
+      return *this;
+   }
 
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const Endpoint& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const Endpoint* internal_default_instance() {
-    return reinterpret_cast<const Endpoint*>(
-               &_Endpoint_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    2;
+   inline Endpoint &operator=(Endpoint &&from) noexcept
+   {
+      if (this == &from)
+         return *this;
+      if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+          && GetOwningArena() != nullptr
+#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
+      ) {
+         InternalSwap(&from);
+      } else {
+         CopyFrom(from);
+      }
+      return *this;
+   }
 
-  friend void swap(Endpoint& a, Endpoint& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(Endpoint* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+   {
+      return GetDescriptor();
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+   {
+      return default_instance().GetMetadata().descriptor;
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+   {
+      return default_instance().GetMetadata().reflection;
+   }
+
+   static const Endpoint &default_instance()
+   {
+      return *internal_default_instance();
+   }
+
+   static inline const Endpoint *internal_default_instance()
+   {
+      return reinterpret_cast<const Endpoint *>(&_Endpoint_default_instance_);
+   }
+
+   static constexpr int kIndexInFileMessages = 2;
+
+   friend void swap(Endpoint &a, Endpoint &b)
+   {
+      a.Swap(&b);
+   }
+
+   inline void Swap(Endpoint *other)
+   {
+      if (other == this)
+         return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
+#else // PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() == other->GetOwningArena()) {
+#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
+         InternalSwap(other);
+      } else {
+         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      }
+   }
+
+   void UnsafeArenaSwap(Endpoint *other)
+   {
+      if (other == this)
+         return;
+      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
       InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(Endpoint* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
+   }
 
-  // implements Message ----------------------------------------------
+   // implements Message ----------------------------------------------
 
-  Endpoint* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Endpoint>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Endpoint& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const Endpoint& from) {
-    Endpoint::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
+   Endpoint *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+   {
+      return CreateMaybeMessage<Endpoint>(arena);
+   }
 
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+   void CopyFrom(const Endpoint &from);
+   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
 
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(Endpoint* other);
+   void MergeFrom(const Endpoint &from)
+   {
+      Endpoint::MergeImpl(*this, from);
+   }
 
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.service.discovery.v1.Endpoint";
-  }
-  protected:
-  explicit Endpoint(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kAddressFieldNumber = 1,
-    kPortFieldNumber = 2,
-  };
-  // string address = 1;
-  void clear_address();
-  const std::string& address() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_address(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_address();
-  PROTOBUF_NODISCARD std::string* release_address();
-  void set_allocated_address(std::string* address);
-  private:
-  const std::string& _internal_address() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
-  std::string* _internal_mutable_address();
-  public:
-
-  // uint32 port = 2;
-  void clear_port();
-  uint32_t port() const;
-  void set_port(uint32_t value);
-  private:
-  uint32_t _internal_port() const;
-  void _internal_set_port(uint32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.Endpoint)
  private:
-  class _Internal;
+   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
+                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
-    uint32_t port_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
+ public:
+   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+   bool IsInitialized() const final;
+
+   size_t ByteSizeLong() const final;
+   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
+   uint8_t *_InternalSerialize(uint8_t *target,
+                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+
+   int GetCachedSize() const final
+   {
+      return _impl_._cached_size_.Get();
+   }
+
+ private:
+   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
+   void SharedDtor();
+   void SetCachedSize(int size) const final;
+   void InternalSwap(Endpoint *other);
+
+ private:
+   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+
+   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+   {
+      return "minecpp.proto.service.discovery.v1.Endpoint";
+   }
+
+ protected:
+   explicit Endpoint(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
+
+ public:
+   static const ClassData _class_data_;
+   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+   // nested types ----------------------------------------------------
+
+   // accessors -------------------------------------------------------
+
+   enum : int
+   {
+      kAddressFieldNumber = 1,
+      kPortFieldNumber    = 2,
+   };
+
+   // string address = 1;
+   void clear_address();
+   const std::string &address() const;
+   template<typename ArgT0 = const std::string &, typename... ArgT>
+   void set_address(ArgT0 &&arg0, ArgT... args);
+   std::string *mutable_address();
+   PROTOBUF_NODISCARD std::string *release_address();
+   void set_allocated_address(std::string *address);
+
+ private:
+   const std::string &_internal_address() const;
+   inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string &value);
+   std::string *_internal_mutable_address();
+
+ public:
+   // uint32 port = 2;
+   void clear_port();
+   uint32_t port() const;
+   void set_port(uint32_t value);
+
+ private:
+   uint32_t _internal_port() const;
+   void _internal_set_port(uint32_t value);
+
+ public:
+   // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.Endpoint)
+ private:
+   class _Internal;
+
+   template<typename T>
+   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+   typedef void InternalArenaConstructable_;
+   typedef void DestructorSkippable_;
+
+   struct Impl_
+   {
+      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+      uint32_t port_;
+      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+   };
+
+   union
+   {
+      Impl_ _impl_;
+   };
+   friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
 };
+
 // -------------------------------------------------------------------
 
-class RegisterRequest final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.RegisterRequest) */ {
+class RegisterRequest final
+    : public ::PROTOBUF_NAMESPACE_ID::
+              Message /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.RegisterRequest) */
+{
  public:
-  inline RegisterRequest() : RegisterRequest(nullptr) {}
-  ~RegisterRequest() override;
-  explicit PROTOBUF_CONSTEXPR RegisterRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+   inline RegisterRequest() :
+       RegisterRequest(nullptr)
+   {
+   }
 
-  RegisterRequest(const RegisterRequest& from);
-  RegisterRequest(RegisterRequest&& from) noexcept
-    : RegisterRequest() {
-    *this = ::std::move(from);
-  }
+   ~RegisterRequest() override;
+   explicit PROTOBUF_CONSTEXPR RegisterRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  inline RegisterRequest& operator=(const RegisterRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RegisterRequest& operator=(RegisterRequest&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
+   RegisterRequest(const RegisterRequest &from);
+
+   RegisterRequest(RegisterRequest &&from) noexcept :
+       RegisterRequest()
+   {
+      *this = ::std::move(from);
+   }
+
+   inline RegisterRequest &operator=(const RegisterRequest &from)
+   {
       CopyFrom(from);
-    }
-    return *this;
-  }
+      return *this;
+   }
 
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const RegisterRequest& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const RegisterRequest* internal_default_instance() {
-    return reinterpret_cast<const RegisterRequest*>(
-               &_RegisterRequest_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    3;
+   inline RegisterRequest &operator=(RegisterRequest &&from) noexcept
+   {
+      if (this == &from)
+         return *this;
+      if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+          && GetOwningArena() != nullptr
+#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
+      ) {
+         InternalSwap(&from);
+      } else {
+         CopyFrom(from);
+      }
+      return *this;
+   }
 
-  friend void swap(RegisterRequest& a, RegisterRequest& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(RegisterRequest* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+   {
+      return GetDescriptor();
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+   {
+      return default_instance().GetMetadata().descriptor;
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+   {
+      return default_instance().GetMetadata().reflection;
+   }
+
+   static const RegisterRequest &default_instance()
+   {
+      return *internal_default_instance();
+   }
+
+   static inline const RegisterRequest *internal_default_instance()
+   {
+      return reinterpret_cast<const RegisterRequest *>(&_RegisterRequest_default_instance_);
+   }
+
+   static constexpr int kIndexInFileMessages = 3;
+
+   friend void swap(RegisterRequest &a, RegisterRequest &b)
+   {
+      a.Swap(&b);
+   }
+
+   inline void Swap(RegisterRequest *other)
+   {
+      if (other == this)
+         return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
+#else // PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() == other->GetOwningArena()) {
+#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
+         InternalSwap(other);
+      } else {
+         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      }
+   }
+
+   void UnsafeArenaSwap(RegisterRequest *other)
+   {
+      if (other == this)
+         return;
+      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
       InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(RegisterRequest* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
+   }
 
-  // implements Message ----------------------------------------------
+   // implements Message ----------------------------------------------
 
-  RegisterRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<RegisterRequest>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const RegisterRequest& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const RegisterRequest& from) {
-    RegisterRequest::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
+   RegisterRequest *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+   {
+      return CreateMaybeMessage<RegisterRequest>(arena);
+   }
 
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+   void CopyFrom(const RegisterRequest &from);
+   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
 
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(RegisterRequest* other);
+   void MergeFrom(const RegisterRequest &from)
+   {
+      RegisterRequest::MergeImpl(*this, from);
+   }
 
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.service.discovery.v1.RegisterRequest";
-  }
-  protected:
-  explicit RegisterRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kServiceNameFieldNumber = 1,
-    kEndpointFieldNumber = 2,
-  };
-  // string service_name = 1;
-  void clear_service_name();
-  const std::string& service_name() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_service_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_service_name();
-  PROTOBUF_NODISCARD std::string* release_service_name();
-  void set_allocated_service_name(std::string* service_name);
-  private:
-  const std::string& _internal_service_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_service_name(const std::string& value);
-  std::string* _internal_mutable_service_name();
-  public:
-
-  // .minecpp.proto.service.discovery.v1.Endpoint endpoint = 2;
-  bool has_endpoint() const;
-  private:
-  bool _internal_has_endpoint() const;
-  public:
-  void clear_endpoint();
-  const ::minecpp::proto::service::discovery::v1::Endpoint& endpoint() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::service::discovery::v1::Endpoint* release_endpoint();
-  ::minecpp::proto::service::discovery::v1::Endpoint* mutable_endpoint();
-  void set_allocated_endpoint(::minecpp::proto::service::discovery::v1::Endpoint* endpoint);
-  private:
-  const ::minecpp::proto::service::discovery::v1::Endpoint& _internal_endpoint() const;
-  ::minecpp::proto::service::discovery::v1::Endpoint* _internal_mutable_endpoint();
-  public:
-  void unsafe_arena_set_allocated_endpoint(
-      ::minecpp::proto::service::discovery::v1::Endpoint* endpoint);
-  ::minecpp::proto::service::discovery::v1::Endpoint* unsafe_arena_release_endpoint();
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.RegisterRequest)
  private:
-  class _Internal;
+   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message &to_msg,
+                         const ::PROTOBUF_NAMESPACE_ID::Message &from_msg);
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr service_name_;
-    ::minecpp::proto::service::discovery::v1::Endpoint* endpoint_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
+ public:
+   PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+   bool IsInitialized() const final;
+
+   size_t ByteSizeLong() const final;
+   const char *_InternalParse(const char *ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext *ctx) final;
+   uint8_t *_InternalSerialize(uint8_t *target,
+                               ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream *stream) const final;
+
+   int GetCachedSize() const final
+   {
+      return _impl_._cached_size_.Get();
+   }
+
+ private:
+   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned);
+   void SharedDtor();
+   void SetCachedSize(int size) const final;
+   void InternalSwap(RegisterRequest *other);
+
+ private:
+   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+
+   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+   {
+      return "minecpp.proto.service.discovery.v1.RegisterRequest";
+   }
+
+ protected:
+   explicit RegisterRequest(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
+
+ public:
+   static const ClassData _class_data_;
+   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+   // nested types ----------------------------------------------------
+
+   // accessors -------------------------------------------------------
+
+   enum : int
+   {
+      kServiceNameFieldNumber = 1,
+      kEndpointFieldNumber    = 2,
+   };
+
+   // string service_name = 1;
+   void clear_service_name();
+   const std::string &service_name() const;
+   template<typename ArgT0 = const std::string &, typename... ArgT>
+   void set_service_name(ArgT0 &&arg0, ArgT... args);
+   std::string *mutable_service_name();
+   PROTOBUF_NODISCARD std::string *release_service_name();
+   void set_allocated_service_name(std::string *service_name);
+
+ private:
+   const std::string &_internal_service_name() const;
+   inline PROTOBUF_ALWAYS_INLINE void _internal_set_service_name(const std::string &value);
+   std::string *_internal_mutable_service_name();
+
+ public:
+   // .minecpp.proto.service.discovery.v1.Endpoint endpoint = 2;
+   bool has_endpoint() const;
+
+ private:
+   bool _internal_has_endpoint() const;
+
+ public:
+   void clear_endpoint();
+   const ::minecpp::proto::service::discovery::v1::Endpoint &endpoint() const;
+   PROTOBUF_NODISCARD ::minecpp::proto::service::discovery::v1::Endpoint *release_endpoint();
+   ::minecpp::proto::service::discovery::v1::Endpoint *mutable_endpoint();
+   void set_allocated_endpoint(::minecpp::proto::service::discovery::v1::Endpoint *endpoint);
+
+ private:
+   const ::minecpp::proto::service::discovery::v1::Endpoint &_internal_endpoint() const;
+   ::minecpp::proto::service::discovery::v1::Endpoint *_internal_mutable_endpoint();
+
+ public:
+   void unsafe_arena_set_allocated_endpoint(::minecpp::proto::service::discovery::v1::Endpoint *endpoint);
+   ::minecpp::proto::service::discovery::v1::Endpoint *unsafe_arena_release_endpoint();
+
+   // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.RegisterRequest)
+ private:
+   class _Internal;
+
+   template<typename T>
+   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+   typedef void InternalArenaConstructable_;
+   typedef void DestructorSkippable_;
+
+   struct Impl_
+   {
+      ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr service_name_;
+      ::minecpp::proto::service::discovery::v1::Endpoint *endpoint_;
+      mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+   };
+
+   union
+   {
+      Impl_ _impl_;
+   };
+   friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
 };
+
 // -------------------------------------------------------------------
 
-class EmptyResult final :
-    public ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.EmptyResult) */ {
+class EmptyResult final
+    : public ::PROTOBUF_NAMESPACE_ID::internal::
+              ZeroFieldsBase /* @@protoc_insertion_point(class_definition:minecpp.proto.service.discovery.v1.EmptyResult) */
+{
  public:
-  inline EmptyResult() : EmptyResult(nullptr) {}
-  explicit PROTOBUF_CONSTEXPR EmptyResult(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+   inline EmptyResult() :
+       EmptyResult(nullptr)
+   {
+   }
 
-  EmptyResult(const EmptyResult& from);
-  EmptyResult(EmptyResult&& from) noexcept
-    : EmptyResult() {
-    *this = ::std::move(from);
-  }
+   explicit PROTOBUF_CONSTEXPR EmptyResult(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  inline EmptyResult& operator=(const EmptyResult& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline EmptyResult& operator=(EmptyResult&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
+   EmptyResult(const EmptyResult &from);
+
+   EmptyResult(EmptyResult &&from) noexcept :
+       EmptyResult()
+   {
+      *this = ::std::move(from);
+   }
+
+   inline EmptyResult &operator=(const EmptyResult &from)
+   {
       CopyFrom(from);
-    }
-    return *this;
-  }
+      return *this;
+   }
 
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const EmptyResult& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const EmptyResult* internal_default_instance() {
-    return reinterpret_cast<const EmptyResult*>(
-               &_EmptyResult_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    4;
+   inline EmptyResult &operator=(EmptyResult &&from) noexcept
+   {
+      if (this == &from)
+         return *this;
+      if (GetOwningArena() == from.GetOwningArena()
+#ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+          && GetOwningArena() != nullptr
+#endif// !PROTOBUF_FORCE_COPY_IN_MOVE
+      ) {
+         InternalSwap(&from);
+      } else {
+         CopyFrom(from);
+      }
+      return *this;
+   }
 
-  friend void swap(EmptyResult& a, EmptyResult& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(EmptyResult* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *descriptor()
+   {
+      return GetDescriptor();
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Descriptor *GetDescriptor()
+   {
+      return default_instance().GetMetadata().descriptor;
+   }
+
+   static const ::PROTOBUF_NAMESPACE_ID::Reflection *GetReflection()
+   {
+      return default_instance().GetMetadata().reflection;
+   }
+
+   static const EmptyResult &default_instance()
+   {
+      return *internal_default_instance();
+   }
+
+   static inline const EmptyResult *internal_default_instance()
+   {
+      return reinterpret_cast<const EmptyResult *>(&_EmptyResult_default_instance_);
+   }
+
+   static constexpr int kIndexInFileMessages = 4;
+
+   friend void swap(EmptyResult &a, EmptyResult &b)
+   {
+      a.Swap(&b);
+   }
+
+   inline void Swap(EmptyResult *other)
+   {
+      if (other == this)
+         return;
+#ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() != nullptr && GetOwningArena() == other->GetOwningArena()) {
+#else // PROTOBUF_FORCE_COPY_IN_SWAP
+      if (GetOwningArena() == other->GetOwningArena()) {
+#endif// !PROTOBUF_FORCE_COPY_IN_SWAP
+         InternalSwap(other);
+      } else {
+         ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+      }
+   }
+
+   void UnsafeArenaSwap(EmptyResult *other)
+   {
+      if (other == this)
+         return;
+      GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
       InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(EmptyResult* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
+   }
 
-  // implements Message ----------------------------------------------
+   // implements Message ----------------------------------------------
 
-  EmptyResult* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<EmptyResult>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
-  inline void CopyFrom(const EmptyResult& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
-  void MergeFrom(const EmptyResult& from) {
-    ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
-  }
-  public:
+   EmptyResult *New(::PROTOBUF_NAMESPACE_ID::Arena *arena = nullptr) const final
+   {
+      return CreateMaybeMessage<EmptyResult>(arena);
+   }
 
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "minecpp.proto.service.discovery.v1.EmptyResult";
-  }
-  protected:
-  explicit EmptyResult(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
+   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyFrom;
 
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+   inline void CopyFrom(const EmptyResult &from)
+   {
+      ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::CopyImpl(*this, from);
+   }
 
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+   using ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeFrom;
 
-  // nested types ----------------------------------------------------
+   void MergeFrom(const EmptyResult &from)
+   {
+      ::PROTOBUF_NAMESPACE_ID::internal::ZeroFieldsBase::MergeImpl(*this, from);
+   }
 
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.EmptyResult)
+ public:
  private:
-  class _Internal;
+   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
 
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-  };
-  friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
+   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName()
+   {
+      return "minecpp.proto.service.discovery.v1.EmptyResult";
+   }
+
+ protected:
+   explicit EmptyResult(::PROTOBUF_NAMESPACE_ID::Arena *arena, bool is_message_owned = false);
+
+ public:
+   static const ClassData _class_data_;
+   const ::PROTOBUF_NAMESPACE_ID::Message::ClassData *GetClassData() const final;
+
+   ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+   // nested types ----------------------------------------------------
+
+   // accessors -------------------------------------------------------
+
+   // @@protoc_insertion_point(class_scope:minecpp.proto.service.discovery.v1.EmptyResult)
+ private:
+   class _Internal;
+
+   template<typename T>
+   friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+   typedef void InternalArenaConstructable_;
+   typedef void DestructorSkippable_;
+
+   struct Impl_
+   {};
+   friend struct ::TableStruct_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto;
 };
+
 // ===================================================================
 
 
 // ===================================================================
 
 #ifdef __GNUC__
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wstrict-aliasing"
-#endif  // __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+#endif// __GNUC__
 // DiscoveryRequest
 
 // uint64 resource_version = 1;
-inline void DiscoveryRequest::clear_resource_version() {
-  _impl_.resource_version_ = uint64_t{0u};
+inline void DiscoveryRequest::clear_resource_version()
+{
+   _impl_.resource_version_ = uint64_t{0u};
 }
-inline uint64_t DiscoveryRequest::_internal_resource_version() const {
-  return _impl_.resource_version_;
+
+inline uint64_t DiscoveryRequest::_internal_resource_version() const
+{
+   return _impl_.resource_version_;
 }
-inline uint64_t DiscoveryRequest::resource_version() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryRequest.resource_version)
-  return _internal_resource_version();
+
+inline uint64_t DiscoveryRequest::resource_version() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryRequest.resource_version)
+   return _internal_resource_version();
 }
-inline void DiscoveryRequest::_internal_set_resource_version(uint64_t value) {
-  
-  _impl_.resource_version_ = value;
+
+inline void DiscoveryRequest::_internal_set_resource_version(uint64_t value)
+{
+
+   _impl_.resource_version_ = value;
 }
-inline void DiscoveryRequest::set_resource_version(uint64_t value) {
-  _internal_set_resource_version(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.DiscoveryRequest.resource_version)
+
+inline void DiscoveryRequest::set_resource_version(uint64_t value)
+{
+   _internal_set_resource_version(value);
+   // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.DiscoveryRequest.resource_version)
 }
 
 // string service_name = 2;
-inline void DiscoveryRequest::clear_service_name() {
-  _impl_.service_name_.ClearToEmpty();
+inline void DiscoveryRequest::clear_service_name()
+{
+   _impl_.service_name_.ClearToEmpty();
 }
-inline const std::string& DiscoveryRequest::service_name() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
-  return _internal_service_name();
+
+inline const std::string &DiscoveryRequest::service_name() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
+   return _internal_service_name();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void DiscoveryRequest::set_service_name(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.service_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
+
+template<typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE void DiscoveryRequest::set_service_name(ArgT0 &&arg0, ArgT... args)
+{
+
+   _impl_.service_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+   // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
 }
-inline std::string* DiscoveryRequest::mutable_service_name() {
-  std::string* _s = _internal_mutable_service_name();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
-  return _s;
+
+inline std::string *DiscoveryRequest::mutable_service_name()
+{
+   std::string *_s = _internal_mutable_service_name();
+   // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
+   return _s;
 }
-inline const std::string& DiscoveryRequest::_internal_service_name() const {
-  return _impl_.service_name_.Get();
+
+inline const std::string &DiscoveryRequest::_internal_service_name() const
+{
+   return _impl_.service_name_.Get();
 }
-inline void DiscoveryRequest::_internal_set_service_name(const std::string& value) {
-  
-  _impl_.service_name_.Set(value, GetArenaForAllocation());
+
+inline void DiscoveryRequest::_internal_set_service_name(const std::string &value)
+{
+
+   _impl_.service_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* DiscoveryRequest::_internal_mutable_service_name() {
-  
-  return _impl_.service_name_.Mutable(GetArenaForAllocation());
+
+inline std::string *DiscoveryRequest::_internal_mutable_service_name()
+{
+
+   return _impl_.service_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* DiscoveryRequest::release_service_name() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
-  return _impl_.service_name_.Release();
+
+inline std::string *DiscoveryRequest::release_service_name()
+{
+   // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
+   return _impl_.service_name_.Release();
 }
-inline void DiscoveryRequest::set_allocated_service_name(std::string* service_name) {
-  if (service_name != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.service_name_.SetAllocated(service_name, GetArenaForAllocation());
+
+inline void DiscoveryRequest::set_allocated_service_name(std::string *service_name)
+{
+   if (service_name != nullptr) {
+
+   } else {
+   }
+   _impl_.service_name_.SetAllocated(service_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.service_name_.IsDefault()) {
-    _impl_.service_name_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
+   if (_impl_.service_name_.IsDefault()) {
+      _impl_.service_name_.Set("", GetArenaForAllocation());
+   }
+#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
+   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.DiscoveryRequest.service_name)
 }
 
 // -------------------------------------------------------------------
@@ -956,63 +1234,92 @@ inline void DiscoveryRequest::set_allocated_service_name(std::string* service_na
 // DiscoveryResponse
 
 // uint64 resource_version = 1;
-inline void DiscoveryResponse::clear_resource_version() {
-  _impl_.resource_version_ = uint64_t{0u};
+inline void DiscoveryResponse::clear_resource_version()
+{
+   _impl_.resource_version_ = uint64_t{0u};
 }
-inline uint64_t DiscoveryResponse::_internal_resource_version() const {
-  return _impl_.resource_version_;
+
+inline uint64_t DiscoveryResponse::_internal_resource_version() const
+{
+   return _impl_.resource_version_;
 }
-inline uint64_t DiscoveryResponse::resource_version() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryResponse.resource_version)
-  return _internal_resource_version();
+
+inline uint64_t DiscoveryResponse::resource_version() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryResponse.resource_version)
+   return _internal_resource_version();
 }
-inline void DiscoveryResponse::_internal_set_resource_version(uint64_t value) {
-  
-  _impl_.resource_version_ = value;
+
+inline void DiscoveryResponse::_internal_set_resource_version(uint64_t value)
+{
+
+   _impl_.resource_version_ = value;
 }
-inline void DiscoveryResponse::set_resource_version(uint64_t value) {
-  _internal_set_resource_version(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.DiscoveryResponse.resource_version)
+
+inline void DiscoveryResponse::set_resource_version(uint64_t value)
+{
+   _internal_set_resource_version(value);
+   // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.DiscoveryResponse.resource_version)
 }
 
 // repeated .minecpp.proto.service.discovery.v1.Endpoint endpoints = 2;
-inline int DiscoveryResponse::_internal_endpoints_size() const {
-  return _impl_.endpoints_.size();
+inline int DiscoveryResponse::_internal_endpoints_size() const
+{
+   return _impl_.endpoints_.size();
 }
-inline int DiscoveryResponse::endpoints_size() const {
-  return _internal_endpoints_size();
+
+inline int DiscoveryResponse::endpoints_size() const
+{
+   return _internal_endpoints_size();
 }
-inline void DiscoveryResponse::clear_endpoints() {
-  _impl_.endpoints_.Clear();
+
+inline void DiscoveryResponse::clear_endpoints()
+{
+   _impl_.endpoints_.Clear();
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* DiscoveryResponse::mutable_endpoints(int index) {
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
-  return _impl_.endpoints_.Mutable(index);
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *DiscoveryResponse::mutable_endpoints(int index)
+{
+   // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
+   return _impl_.endpoints_.Mutable(index);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::service::discovery::v1::Endpoint >*
-DiscoveryResponse::mutable_endpoints() {
-  // @@protoc_insertion_point(field_mutable_list:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
-  return &_impl_.endpoints_;
+
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::service::discovery::v1::Endpoint> *
+DiscoveryResponse::mutable_endpoints()
+{
+   // @@protoc_insertion_point(field_mutable_list:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
+   return &_impl_.endpoints_;
 }
-inline const ::minecpp::proto::service::discovery::v1::Endpoint& DiscoveryResponse::_internal_endpoints(int index) const {
-  return _impl_.endpoints_.Get(index);
+
+inline const ::minecpp::proto::service::discovery::v1::Endpoint &
+DiscoveryResponse::_internal_endpoints(int index) const
+{
+   return _impl_.endpoints_.Get(index);
 }
-inline const ::minecpp::proto::service::discovery::v1::Endpoint& DiscoveryResponse::endpoints(int index) const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
-  return _internal_endpoints(index);
+
+inline const ::minecpp::proto::service::discovery::v1::Endpoint &DiscoveryResponse::endpoints(int index) const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
+   return _internal_endpoints(index);
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* DiscoveryResponse::_internal_add_endpoints() {
-  return _impl_.endpoints_.Add();
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *DiscoveryResponse::_internal_add_endpoints()
+{
+   return _impl_.endpoints_.Add();
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* DiscoveryResponse::add_endpoints() {
-  ::minecpp::proto::service::discovery::v1::Endpoint* _add = _internal_add_endpoints();
-  // @@protoc_insertion_point(field_add:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
-  return _add;
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *DiscoveryResponse::add_endpoints()
+{
+   ::minecpp::proto::service::discovery::v1::Endpoint *_add = _internal_add_endpoints();
+   // @@protoc_insertion_point(field_add:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
+   return _add;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::minecpp::proto::service::discovery::v1::Endpoint >&
-DiscoveryResponse::endpoints() const {
-  // @@protoc_insertion_point(field_list:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
-  return _impl_.endpoints_;
+
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<::minecpp::proto::service::discovery::v1::Endpoint> &
+DiscoveryResponse::endpoints() const
+{
+   // @@protoc_insertion_point(field_list:minecpp.proto.service.discovery.v1.DiscoveryResponse.endpoints)
+   return _impl_.endpoints_;
 }
 
 // -------------------------------------------------------------------
@@ -1020,73 +1327,97 @@ DiscoveryResponse::endpoints() const {
 // Endpoint
 
 // string address = 1;
-inline void Endpoint::clear_address() {
-  _impl_.address_.ClearToEmpty();
+inline void Endpoint::clear_address()
+{
+   _impl_.address_.ClearToEmpty();
 }
-inline const std::string& Endpoint::address() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.Endpoint.address)
-  return _internal_address();
+
+inline const std::string &Endpoint::address() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.Endpoint.address)
+   return _internal_address();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void Endpoint::set_address(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.Endpoint.address)
+
+template<typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE void Endpoint::set_address(ArgT0 &&arg0, ArgT... args)
+{
+
+   _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+   // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.Endpoint.address)
 }
-inline std::string* Endpoint::mutable_address() {
-  std::string* _s = _internal_mutable_address();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.Endpoint.address)
-  return _s;
+
+inline std::string *Endpoint::mutable_address()
+{
+   std::string *_s = _internal_mutable_address();
+   // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.Endpoint.address)
+   return _s;
 }
-inline const std::string& Endpoint::_internal_address() const {
-  return _impl_.address_.Get();
+
+inline const std::string &Endpoint::_internal_address() const
+{
+   return _impl_.address_.Get();
 }
-inline void Endpoint::_internal_set_address(const std::string& value) {
-  
-  _impl_.address_.Set(value, GetArenaForAllocation());
+
+inline void Endpoint::_internal_set_address(const std::string &value)
+{
+
+   _impl_.address_.Set(value, GetArenaForAllocation());
 }
-inline std::string* Endpoint::_internal_mutable_address() {
-  
-  return _impl_.address_.Mutable(GetArenaForAllocation());
+
+inline std::string *Endpoint::_internal_mutable_address()
+{
+
+   return _impl_.address_.Mutable(GetArenaForAllocation());
 }
-inline std::string* Endpoint::release_address() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.Endpoint.address)
-  return _impl_.address_.Release();
+
+inline std::string *Endpoint::release_address()
+{
+   // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.Endpoint.address)
+   return _impl_.address_.Release();
 }
-inline void Endpoint::set_allocated_address(std::string* address) {
-  if (address != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+
+inline void Endpoint::set_allocated_address(std::string *address)
+{
+   if (address != nullptr) {
+
+   } else {
+   }
+   _impl_.address_.SetAllocated(address, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.address_.IsDefault()) {
-    _impl_.address_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.Endpoint.address)
+   if (_impl_.address_.IsDefault()) {
+      _impl_.address_.Set("", GetArenaForAllocation());
+   }
+#endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING \
+        // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.Endpoint.address)
 }
 
 // uint32 port = 2;
-inline void Endpoint::clear_port() {
-  _impl_.port_ = 0u;
+inline void Endpoint::clear_port()
+{
+   _impl_.port_ = 0u;
 }
-inline uint32_t Endpoint::_internal_port() const {
-  return _impl_.port_;
+
+inline uint32_t Endpoint::_internal_port() const
+{
+   return _impl_.port_;
 }
-inline uint32_t Endpoint::port() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.Endpoint.port)
-  return _internal_port();
+
+inline uint32_t Endpoint::port() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.Endpoint.port)
+   return _internal_port();
 }
-inline void Endpoint::_internal_set_port(uint32_t value) {
-  
-  _impl_.port_ = value;
+
+inline void Endpoint::_internal_set_port(uint32_t value)
+{
+
+   _impl_.port_ = value;
 }
-inline void Endpoint::set_port(uint32_t value) {
-  _internal_set_port(value);
-  // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.Endpoint.port)
+
+inline void Endpoint::set_port(uint32_t value)
+{
+   _internal_set_port(value);
+   // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.Endpoint.port)
 }
 
 // -------------------------------------------------------------------
@@ -1094,143 +1425,182 @@ inline void Endpoint::set_port(uint32_t value) {
 // RegisterRequest
 
 // string service_name = 1;
-inline void RegisterRequest::clear_service_name() {
-  _impl_.service_name_.ClearToEmpty();
+inline void RegisterRequest::clear_service_name()
+{
+   _impl_.service_name_.ClearToEmpty();
 }
-inline const std::string& RegisterRequest::service_name() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
-  return _internal_service_name();
+
+inline const std::string &RegisterRequest::service_name() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
+   return _internal_service_name();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void RegisterRequest::set_service_name(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.service_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
+
+template<typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE void RegisterRequest::set_service_name(ArgT0 &&arg0, ArgT... args)
+{
+
+   _impl_.service_name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+   // @@protoc_insertion_point(field_set:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
 }
-inline std::string* RegisterRequest::mutable_service_name() {
-  std::string* _s = _internal_mutable_service_name();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
-  return _s;
+
+inline std::string *RegisterRequest::mutable_service_name()
+{
+   std::string *_s = _internal_mutable_service_name();
+   // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
+   return _s;
 }
-inline const std::string& RegisterRequest::_internal_service_name() const {
-  return _impl_.service_name_.Get();
+
+inline const std::string &RegisterRequest::_internal_service_name() const
+{
+   return _impl_.service_name_.Get();
 }
-inline void RegisterRequest::_internal_set_service_name(const std::string& value) {
-  
-  _impl_.service_name_.Set(value, GetArenaForAllocation());
+
+inline void RegisterRequest::_internal_set_service_name(const std::string &value)
+{
+
+   _impl_.service_name_.Set(value, GetArenaForAllocation());
 }
-inline std::string* RegisterRequest::_internal_mutable_service_name() {
-  
-  return _impl_.service_name_.Mutable(GetArenaForAllocation());
+
+inline std::string *RegisterRequest::_internal_mutable_service_name()
+{
+
+   return _impl_.service_name_.Mutable(GetArenaForAllocation());
 }
-inline std::string* RegisterRequest::release_service_name() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
-  return _impl_.service_name_.Release();
+
+inline std::string *RegisterRequest::release_service_name()
+{
+   // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
+   return _impl_.service_name_.Release();
 }
-inline void RegisterRequest::set_allocated_service_name(std::string* service_name) {
-  if (service_name != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.service_name_.SetAllocated(service_name, GetArenaForAllocation());
+
+inline void RegisterRequest::set_allocated_service_name(std::string *service_name)
+{
+   if (service_name != nullptr) {
+
+   } else {
+   }
+   _impl_.service_name_.SetAllocated(service_name, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.service_name_.IsDefault()) {
-    _impl_.service_name_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
+   if (_impl_.service_name_.IsDefault()) {
+      _impl_.service_name_.Set("", GetArenaForAllocation());
+   }
+#endif// PROTOBUF_FORCE_COPY_DEFAULT_STRING
+   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.RegisterRequest.service_name)
 }
 
 // .minecpp.proto.service.discovery.v1.Endpoint endpoint = 2;
-inline bool RegisterRequest::_internal_has_endpoint() const {
-  return this != internal_default_instance() && _impl_.endpoint_ != nullptr;
+inline bool RegisterRequest::_internal_has_endpoint() const
+{
+   return this != internal_default_instance() && _impl_.endpoint_ != nullptr;
 }
-inline bool RegisterRequest::has_endpoint() const {
-  return _internal_has_endpoint();
+
+inline bool RegisterRequest::has_endpoint() const
+{
+   return _internal_has_endpoint();
 }
-inline void RegisterRequest::clear_endpoint() {
-  if (GetArenaForAllocation() == nullptr && _impl_.endpoint_ != nullptr) {
-    delete _impl_.endpoint_;
-  }
-  _impl_.endpoint_ = nullptr;
+
+inline void RegisterRequest::clear_endpoint()
+{
+   if (GetArenaForAllocation() == nullptr && _impl_.endpoint_ != nullptr) {
+      delete _impl_.endpoint_;
+   }
+   _impl_.endpoint_ = nullptr;
 }
-inline const ::minecpp::proto::service::discovery::v1::Endpoint& RegisterRequest::_internal_endpoint() const {
-  const ::minecpp::proto::service::discovery::v1::Endpoint* p = _impl_.endpoint_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::service::discovery::v1::Endpoint&>(
-      ::minecpp::proto::service::discovery::v1::_Endpoint_default_instance_);
+
+inline const ::minecpp::proto::service::discovery::v1::Endpoint &RegisterRequest::_internal_endpoint() const
+{
+   const ::minecpp::proto::service::discovery::v1::Endpoint *p = _impl_.endpoint_;
+   return p != nullptr ? *p
+                       : reinterpret_cast<const ::minecpp::proto::service::discovery::v1::Endpoint &>(
+                                 ::minecpp::proto::service::discovery::v1::_Endpoint_default_instance_);
 }
-inline const ::minecpp::proto::service::discovery::v1::Endpoint& RegisterRequest::endpoint() const {
-  // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
-  return _internal_endpoint();
+
+inline const ::minecpp::proto::service::discovery::v1::Endpoint &RegisterRequest::endpoint() const
+{
+   // @@protoc_insertion_point(field_get:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
+   return _internal_endpoint();
 }
+
 inline void RegisterRequest::unsafe_arena_set_allocated_endpoint(
-    ::minecpp::proto::service::discovery::v1::Endpoint* endpoint) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.endpoint_);
-  }
-  _impl_.endpoint_ = endpoint;
-  if (endpoint) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
+        ::minecpp::proto::service::discovery::v1::Endpoint *endpoint)
+{
+   if (GetArenaForAllocation() == nullptr) {
+      delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(_impl_.endpoint_);
+   }
+   _impl_.endpoint_ = endpoint;
+   if (endpoint) {
+
+   } else {
+   }
+   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* RegisterRequest::release_endpoint() {
-  
-  ::minecpp::proto::service::discovery::v1::Endpoint* temp = _impl_.endpoint_;
-  _impl_.endpoint_ = nullptr;
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *RegisterRequest::release_endpoint()
+{
+
+   ::minecpp::proto::service::discovery::v1::Endpoint *temp = _impl_.endpoint_;
+   _impl_.endpoint_                                         = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
+   auto *old = reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite *>(temp);
+   temp      = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+   if (GetArenaForAllocation() == nullptr) {
+      delete old;
+   }
+#else // PROTOBUF_FORCE_COPY_IN_RELEASE
+   if (GetArenaForAllocation() != nullptr) {
+      temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+   }
+#endif// !PROTOBUF_FORCE_COPY_IN_RELEASE
+   return temp;
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* RegisterRequest::unsafe_arena_release_endpoint() {
-  // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
-  
-  ::minecpp::proto::service::discovery::v1::Endpoint* temp = _impl_.endpoint_;
-  _impl_.endpoint_ = nullptr;
-  return temp;
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *RegisterRequest::unsafe_arena_release_endpoint()
+{
+   // @@protoc_insertion_point(field_release:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
+
+   ::minecpp::proto::service::discovery::v1::Endpoint *temp = _impl_.endpoint_;
+   _impl_.endpoint_                                         = nullptr;
+   return temp;
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* RegisterRequest::_internal_mutable_endpoint() {
-  
-  if (_impl_.endpoint_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::service::discovery::v1::Endpoint>(GetArenaForAllocation());
-    _impl_.endpoint_ = p;
-  }
-  return _impl_.endpoint_;
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *RegisterRequest::_internal_mutable_endpoint()
+{
+
+   if (_impl_.endpoint_ == nullptr) {
+      auto *p =
+              CreateMaybeMessage<::minecpp::proto::service::discovery::v1::Endpoint>(GetArenaForAllocation());
+      _impl_.endpoint_ = p;
+   }
+   return _impl_.endpoint_;
 }
-inline ::minecpp::proto::service::discovery::v1::Endpoint* RegisterRequest::mutable_endpoint() {
-  ::minecpp::proto::service::discovery::v1::Endpoint* _msg = _internal_mutable_endpoint();
-  // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
-  return _msg;
+
+inline ::minecpp::proto::service::discovery::v1::Endpoint *RegisterRequest::mutable_endpoint()
+{
+   ::minecpp::proto::service::discovery::v1::Endpoint *_msg = _internal_mutable_endpoint();
+   // @@protoc_insertion_point(field_mutable:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
+   return _msg;
 }
-inline void RegisterRequest::set_allocated_endpoint(::minecpp::proto::service::discovery::v1::Endpoint* endpoint) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete _impl_.endpoint_;
-  }
-  if (endpoint) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(endpoint);
-    if (message_arena != submessage_arena) {
-      endpoint = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, endpoint, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  _impl_.endpoint_ = endpoint;
-  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
+
+inline void
+RegisterRequest::set_allocated_endpoint(::minecpp::proto::service::discovery::v1::Endpoint *endpoint)
+{
+   ::PROTOBUF_NAMESPACE_ID::Arena *message_arena = GetArenaForAllocation();
+   if (message_arena == nullptr) {
+      delete _impl_.endpoint_;
+   }
+   if (endpoint) {
+      ::PROTOBUF_NAMESPACE_ID::Arena *submessage_arena =
+              ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(endpoint);
+      if (message_arena != submessage_arena) {
+         endpoint = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(message_arena, endpoint,
+                                                                       submessage_arena);
+      }
+
+   } else {
+   }
+   _impl_.endpoint_ = endpoint;
+   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.discovery.v1.RegisterRequest.endpoint)
 }
 
 // -------------------------------------------------------------------
@@ -1238,8 +1608,8 @@ inline void RegisterRequest::set_allocated_endpoint(::minecpp::proto::service::d
 // EmptyResult
 
 #ifdef __GNUC__
-  #pragma GCC diagnostic pop
-#endif  // __GNUC__
+#pragma GCC diagnostic pop
+#endif// __GNUC__
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -1251,13 +1621,9 @@ inline void RegisterRequest::set_allocated_endpoint(::minecpp::proto::service::d
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace v1
-}  // namespace discovery
-}  // namespace service
-}  // namespace proto
-}  // namespace minecpp
+}}}}}// namespace minecpp::proto::service::discovery::v1
 
 // @@protoc_insertion_point(global_scope)
 
 #include <google/protobuf/port_undef.inc>
-#endif  // GOOGLE_PROTOBUF_INCLUDED_GOOGLE_PROTOBUF_INCLUDED_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto
+#endif// GOOGLE_PROTOBUF_INCLUDED_GOOGLE_PROTOBUF_INCLUDED_minecpp_2fproto_2fservice_2fdiscovery_2fv1_2fDiscovery_2eproto

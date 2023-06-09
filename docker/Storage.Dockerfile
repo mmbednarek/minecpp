@@ -1,4 +1,4 @@
-FROM minecpp/build-base:latest
+FROM minecpp/core:latest
 
 WORKDIR /root/minecpp/build-docker
 RUN cmake --build . -j $(nproc) --target minecpp_storage
