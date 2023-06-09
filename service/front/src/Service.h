@@ -9,8 +9,6 @@
 #include "minecpp/service/engine/Api.h"
 
 #include <boost/random.hpp>
-#include <grpcpp/channel.h>
-#include <grpcpp/client_context.h>
 
 namespace minecpp::service::front {
 

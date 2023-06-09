@@ -3,12 +3,12 @@
 target_sources(minecpp_storage
     # Source files
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/RequestThreadPool.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/RequestThreadPool.h
         ${CMAKE_CURRENT_SOURCE_DIR}/IHandler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/IResponder.h
         ${CMAKE_CURRENT_SOURCE_DIR}/IStorage.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/RequestThreadPool.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/RequestThreadPool.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Server.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Server.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Service.cpp

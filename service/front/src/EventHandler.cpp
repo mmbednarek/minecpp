@@ -564,7 +564,8 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
    send_message(spawn_entity, recipient_list);
 
    for (const auto &meta : entity.metadata()) {
-      if (meta.has_slot()) {
+      switch (meta.value_case()) {
+      case proto::entity::v1::Metadata::kSlot:  {
          network::message::EntityMetadataSlot slot{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),
@@ -572,16 +573,18 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
                  .count     = static_cast<int>(meta.slot().count()),
          };
          send_message(slot, recipient_list);
-         continue;
+         break;
       }
-      if (meta.has_byte()) {
+      case proto::entity::v1::Metadata::kByte: {
          network::message::EntityMetadataByte byte_meta{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),
                  .value     = static_cast<uint8_t>(meta.byte()),
          };
          send_message(byte_meta, recipient_list);
-         continue;
+         break;
+      }
+      default: break;
       }
    }
 }

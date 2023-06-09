@@ -15,8 +15,6 @@
       "minecpp_world",
       "yaml-cpp",
       "Boost::system",
-      "grpc",
-      "grpc++",
       "spdlog",
       "libmb"
     ]

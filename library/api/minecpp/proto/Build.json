@@ -6,7 +6,7 @@
   ],
   "dependencies": {
     "public": [
-      "protobuf"
+      "${Protobuf_LIBRARIES}"
     ]
   }
 }

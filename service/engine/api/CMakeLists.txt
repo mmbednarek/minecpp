@@ -20,7 +20,6 @@ target_link_libraries(minecpp_engine_api
         minecpp_api_proto
         minecpp_event
         minecpp_game
-        grpc++
         libmb
         fmt
         spdlog

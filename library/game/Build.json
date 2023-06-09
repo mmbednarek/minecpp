@@ -15,9 +15,7 @@
     "private": [
       "minecpp_nbt",
       "minecpp_random",
-      "spdlog",
-      "${Protobuf_LIBRARIES}",
-      "grpc++"
+      "spdlog"
     ]
   }
 }

@@ -20,11 +20,9 @@
       "minecpp_stream",
       "minecpp_lexer",
       "yaml-cpp",
-      "grpc++",
       "Boost::system",
       "spdlog",
-      "libmb",
-      "gpr"
+      "libmb"
     ]
   }
 }

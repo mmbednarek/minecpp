@@ -28,8 +28,6 @@ target_link_libraries(minecpp_front
         minecpp_world
         yaml-cpp
         Boost::system
-        grpc
-        grpc++
         spdlog
         libmb
 )

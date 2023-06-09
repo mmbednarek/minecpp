@@ -27,8 +27,6 @@ target_link_libraries(minecpp_game
         minecpp_nbt
         minecpp_random
         spdlog
-        ${Protobuf_LIBRARIES}
-        grpc++
 )
 
 add_subdirectory("test")

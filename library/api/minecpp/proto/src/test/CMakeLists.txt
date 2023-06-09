@@ -8,7 +8,6 @@ target_sources(minecpp_api_proto
 
     # Header files
     PUBLIC
-        ${MINECPP_API_MINECPP_PROTO_TEST_INCLUDE_DIR}/Test.grpc.pb.h
         ${MINECPP_API_MINECPP_PROTO_TEST_INCLUDE_DIR}/Test.pb.h
 )
 

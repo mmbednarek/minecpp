@@ -12,9 +12,8 @@ using minecpp::proto::event::clientbound::v1::Event;
 
 namespace minecpp::service::engine {
 
-Connection::Connection(ApiHandler &handler, std::shared_ptr<stream::Peer> peer) :
-    m_peer{std::move(peer)},
-    m_handler{handler}
+Connection::Connection(std::shared_ptr<stream::Peer> peer) :
+    m_peer{std::move(peer)}
 {
 }
 
@@ -77,7 +76,7 @@ ApiHandler::ApiHandler(EventHandler &event_handler, EventManager &event_manager,
 void ApiHandler::on_connected(std::shared_ptr<stream::Peer> peer)
 {
    spdlog::info("recevied inbound connection from client id={}", peer->id());
-   m_event_manager.add_client(peer->id(), std::make_unique<Connection>(*this, std::move(peer)));
+   m_event_manager.add_client(peer->id(), std::make_unique<Connection>(std::move(peer)));
 }
 
 void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, container::BufferView message)

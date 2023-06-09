@@ -1,11 +1,7 @@
-FROM minecpp/grpc:latest
+FROM minecpp/ubuntu:latest
 
 # Copy the source code
 COPY . /root/minecpp
-
-# Install JQ that is nessecary to reconfigure the build system
-RUN apt update -y
-RUN apt install -y jq dnsutils
 
 # Generate protos for C++
 WORKDIR /root/minecpp

@@ -7,8 +7,7 @@
     ],
     "private": [
       "Boost::iostreams",
-      "fmt",
-      "grpc++"
+      "fmt"
     ]
   }
 }

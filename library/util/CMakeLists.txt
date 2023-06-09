@@ -19,7 +19,6 @@ target_link_libraries(minecpp_utils
         LINK_PRIVATE
         Boost::iostreams
         fmt
-        grpc++
 )
 
 add_subdirectory("test")

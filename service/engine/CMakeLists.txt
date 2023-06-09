@@ -32,11 +32,9 @@ target_link_libraries(minecpp_engine
         minecpp_stream
         minecpp_lexer
         yaml-cpp
-        grpc++
         Boost::system
         spdlog
         libmb
-        gpr
 )
 
 add_subdirectory("api")

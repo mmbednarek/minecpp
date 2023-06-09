@@ -9,7 +9,6 @@
       "minecpp_api_proto",
       "minecpp_event",
       "minecpp_game",
-      "grpc++",
       "libmb",
       "fmt",
       "spdlog"
