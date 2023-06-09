@@ -1,7 +1,7 @@
 #include "Client.h"
 
-#include <enet/enet.h>
 #include <boost/endian.hpp>
+#include <enet/enet.h>
 
 namespace minecpp::stream {
 
@@ -33,7 +33,7 @@ std::shared_ptr<Peer> Client::create_peer(const network::Endpoint &endpoint)
 
 std::shared_ptr<Peer> Client::new_connection_to_shared_ptr(_ENetPeer *raw_peer)
 {
-   Peer *peer = static_cast<Peer*>(raw_peer->data);
+   Peer *peer = static_cast<Peer *>(raw_peer->data);
    peer->set_is_connected(true);
    return this->peer_at(peer->id());
 }

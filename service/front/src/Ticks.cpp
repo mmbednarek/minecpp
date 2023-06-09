@@ -46,11 +46,9 @@ void TickManager::keep_alive()
          return;
       }
 
-      send(conn,
-         minecpp::network::message::KeepAlive{
-            .time = static_cast<std::uint32_t>(minecpp::util::now_milis()),
-         }
-      );
+      send(conn, minecpp::network::message::KeepAlive{
+                         .time = static_cast<std::uint32_t>(minecpp::util::now_milis()),
+                 });
    });
 }
 

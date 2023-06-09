@@ -34,7 +34,8 @@ class Connection : public IConnection
 class ApiHandler
 {
  public:
-   ApiHandler(EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system, std::uint16_t port);
+   ApiHandler(EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system,
+              std::uint16_t port);
 
    ApiHandler(const ApiHandler &)                = delete;
    ApiHandler &operator=(const ApiHandler &)     = delete;

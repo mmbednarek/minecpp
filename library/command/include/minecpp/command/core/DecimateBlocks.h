@@ -16,4 +16,3 @@ class DecimateBlocks : public Command
 };
 
 }// namespace minecpp::command::core
-

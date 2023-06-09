@@ -12,10 +12,10 @@ using world::BlockState;
 
 bool Foliage::on_player_place_block(IWorld &world, game::PlayerId /*player_id*/, game::BlockId block_id,
                                     game::BlockPosition position, game::Face face,
-                                    const math::Vector3f &/*crosshair_position*/)
+                                    const math::Vector3f & /*crosshair_position*/)
 {
    auto target_position = position.neighbour_at(face);
-   auto base_position       = target_position.neighbour_at(Face::Bottom);
+   auto base_position   = target_position.neighbour_at(Face::Bottom);
 
    auto base_block_state_id = world.block_at(base_position);
    if (base_block_state_id.has_failed())

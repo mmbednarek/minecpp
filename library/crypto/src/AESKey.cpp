@@ -113,7 +113,8 @@ Result<mb::empty> AESKey::finalize()
    return mb::ok;
 }
 
-EmptyResult AESKey::encrypt_update_buffer(const container::BufferView &in_buffer, container::BufferView out_buffer)
+EmptyResult AESKey::encrypt_update_buffer(const container::BufferView &in_buffer,
+                                          container::BufferView out_buffer)
 {
    int data_size = static_cast<int>(out_buffer.size());
    if (not EVP_EncryptUpdate(m_encrypt_ctx, out_buffer.data(), &data_size, in_buffer.data(),
@@ -123,7 +124,8 @@ EmptyResult AESKey::encrypt_update_buffer(const container::BufferView &in_buffer
    return mb::ok;
 }
 
-EmptyResult AESKey::decrypt_update_buffer(const container::BufferView &in_buffer, container::BufferView out_buffer)
+EmptyResult AESKey::decrypt_update_buffer(const container::BufferView &in_buffer,
+                                          container::BufferView out_buffer)
 {
    int data_size = static_cast<int>(out_buffer.size());
    if (not EVP_DecryptUpdate(m_decrypt_ctx, out_buffer.data(), &data_size, in_buffer.data(),

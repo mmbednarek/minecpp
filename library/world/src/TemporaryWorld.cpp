@@ -19,7 +19,7 @@ mb::result<game::LightValue> TemporaryWorld::light_value_at(game::LightType ligh
 }
 
 mb::emptyres TemporaryWorld::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
-                                       game::LightValue value)
+                                                game::LightValue value)
 {
    auto chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {

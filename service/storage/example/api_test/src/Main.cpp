@@ -13,7 +13,7 @@ class Handler : public IResponseHandler
  public:
    void handle_response(minecpp::service::storage::Response response) override
    {
-      switch(response.message_case()) {
+      switch (response.message_case()) {
       case minecpp::proto::service::storage::v1::Response::kChunkData:
          Handler::handle_chunk_data(response.chunk_data());
          break;

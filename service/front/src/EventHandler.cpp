@@ -436,14 +436,13 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
 
       send(conn, chunk_data);
 
-      if (msg.is_initial_chunk()) {
+      if (msg.is_initial_chunk() && conn->initial_chunk_count >= 0) {
          ++conn->initial_chunk_count;
-
 
          if (conn->initial_chunk_count > 32) {
             assert(m_client);
             m_client->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
-            conn->initial_chunk_count = 0;
+            conn->initial_chunk_count = -1;
          }
       }
    }
@@ -565,7 +564,7 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
 
    for (const auto &meta : entity.metadata()) {
       switch (meta.value_case()) {
-      case proto::entity::v1::Metadata::kSlot:  {
+      case proto::entity::v1::Metadata::kSlot: {
          network::message::EntityMetadataSlot slot{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),

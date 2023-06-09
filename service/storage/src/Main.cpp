@@ -8,9 +8,9 @@
 
 namespace fdb = minecpp::service::storage::fdb;
 
+using minecpp::service::storage::RequestThreadPool;
 using minecpp::service::storage::Server;
 using minecpp::service::storage::Service;
-using minecpp::service::storage::RequestThreadPool;
 
 int main()
 {

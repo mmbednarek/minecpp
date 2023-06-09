@@ -5,7 +5,8 @@
 
 using minecpp::container::Buffer;
 
-TEST(BufferTest, BasicAllocation) {
+TEST(BufferTest, BasicAllocation)
+{
    Buffer buffer(128);
    std::fill(buffer.data(), buffer.data() + 128, 10);
 }

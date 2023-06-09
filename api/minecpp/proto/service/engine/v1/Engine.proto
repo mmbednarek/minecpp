@@ -1,9 +1,0 @@
-syntax = "proto3";
-package minecpp.proto.service.engine.v1;
-
-import "minecpp/proto/event/clientbound/v1/Clientbound.proto";
-import "minecpp/proto/event/serverbound/v1/Serverbound.proto";
-
-service EngineService {
-  rpc Join(stream event.serverbound.v1.Event) returns (stream event.clientbound.v1.Event);
-}

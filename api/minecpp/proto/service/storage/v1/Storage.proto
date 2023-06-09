@@ -4,10 +4,6 @@ package minecpp.proto.service.storage.v1;
 import "minecpp/proto/common/v1/Common.proto";
 import "minecpp/proto/chunk/v1/Chunk.proto";
 
-service StorageService {
-  rpc Join(stream Request) returns (stream Response);
-}
-
 message ClientId {
   uint64 value = 1;
 }

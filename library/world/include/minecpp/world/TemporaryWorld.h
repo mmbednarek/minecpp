@@ -12,7 +12,7 @@ class TemporaryWorld : public game::IBlockContainer
    mb::result<game::LightValue> light_value_at(game::LightType light_type,
                                                const game::BlockPosition &pos) override;
    mb::emptyres set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
-                          game::LightValue value) override;
+                                   game::LightValue value) override;
    mb::result<mb::empty> set_block_at(const game::BlockPosition &pos, game::BlockStateId state) override;
    mb::result<game::BlockStateId> block_at(const game::BlockPosition &pos) override;
 

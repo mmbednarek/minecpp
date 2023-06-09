@@ -18,7 +18,7 @@ mb::result<game::LightValue> BlockContainer::light_value_at(game::LightType ligh
 }
 
 mb::emptyres BlockContainer::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
-                                       game::LightValue value)
+                                                game::LightValue value)
 {
    if (not m_range.contains(pos)) {
       return mb::error("not in range");

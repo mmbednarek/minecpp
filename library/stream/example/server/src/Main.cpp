@@ -30,9 +30,11 @@ class ExampleServer
       m_send_thread.emplace(&ExampleServer::send_routine, this, peer);
    }
 
-   void on_received_message(std::shared_ptr<minecpp::stream::Peer> peer, minecpp::container::BufferView message)
+   void on_received_message(std::shared_ptr<minecpp::stream::Peer> peer,
+                            minecpp::container::BufferView message)
    {
-      spdlog::info("received message from peer: {} (id={}), message: {}", peer->hostname(), peer->id(), message.to_string());
+      spdlog::info("received message from peer: {} (id={}), message: {}", peer->hostname(), peer->id(),
+                   message.to_string());
    }
 
    void on_disconnected(std::shared_ptr<minecpp::stream::Peer> peer, bool *try_reconnect)
@@ -40,7 +42,7 @@ class ExampleServer
       spdlog::info("disconnected peer: {} (id={})", peer->hostname(), peer->id());
 
       m_message_count = 0;
-      *try_reconnect = false;
+      *try_reconnect  = false;
    }
 
    void send_message(minecpp::stream::Peer &peer)

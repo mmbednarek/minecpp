@@ -71,7 +71,8 @@ std::shared_ptr<Peer> Host::peer_at(std::size_t id)
    return it->second;
 }
 
-void Host::flush() {
+void Host::flush()
+{
    enet_host_flush(m_host);
 }
 

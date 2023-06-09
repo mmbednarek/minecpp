@@ -30,7 +30,7 @@ struct Configuration
    bool debug_logger{};
    int worker_count{};
 
-           void read_from_yaml_file(const std::string &file_name)
+   void read_from_yaml_file(const std::string &file_name)
    {
       auto yaml_cfg             = YAML::LoadFile(file_name);
       this->server_bind_address = yaml_cfg["server"]["bind_address"].as<std::string>("0.0.0.0");

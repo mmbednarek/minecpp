@@ -20,7 +20,7 @@ Peer::Peer(Host &host, ENetPeer *peer, bool is_client) :
 
 void Peer::send_reliable_message(const container::BufferView &message)
 {
-  ENetPacket *packet = enet_packet_create(message.data(), message.size(), ENET_PACKET_FLAG_RELIABLE);
+   ENetPacket *packet = enet_packet_create(message.data(), message.size(), ENET_PACKET_FLAG_RELIABLE);
 
    auto lk = m_host.lock();
    enet_peer_send(m_peer, 0, packet);

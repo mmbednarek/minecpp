@@ -834,10 +834,8 @@ bool EventHandler::should_destroy_block(game::Entity &entity, game::PlayerDiggin
    if (entity.component<AbilitiesComponent>().abilities().may_build) {
       switch (state) {
       case game::PlayerDiggingState::FinishedDigging:
-      case game::PlayerDiggingState::Digging:
-         return true;
-      default:
-         return false;
+      case game::PlayerDiggingState::Digging: return true;
+      default: return false;
       }
    }
    return state == game::PlayerDiggingState::FinishedDigging;

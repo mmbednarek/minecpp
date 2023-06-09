@@ -86,7 +86,7 @@ mb::result<game::LightValue> Chunk::light_value_at(game::LightType type, const g
 }
 
 mb::emptyres Chunk::set_light_value_at(game::LightType type, const game::BlockPosition &position,
-                              game::LightValue value)
+                                       game::LightValue value)
 {
    auto section = section_from_y_level(position.y());
    if (section.has_failed()) {

@@ -43,7 +43,7 @@ class World : public minecpp::game::IWorld
    mb::result<game::LightValue> light_value_at(game::LightType light_type,
                                                const game::BlockPosition &pos) override;
    mb::emptyres set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
-                          game::LightValue level) override;
+                                   game::LightValue level) override;
    mb::result<std::unique_ptr<game::ISectionSlice>> get_slice(game::SectionRange range) override;
    mb::emptyres apply_slice(game::ISectionSlice &slice) override;
    game::ILightSystem &light_system() override;

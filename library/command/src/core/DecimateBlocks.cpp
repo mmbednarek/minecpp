@@ -47,7 +47,7 @@ Object::Ptr DecimateBlocks::run(RuntimeContext &ctx, CommandInput &input) const
 
    ctx.out().write(info);
 
-//   return info;
+   //   return info;
    return nullptr;
 }
 

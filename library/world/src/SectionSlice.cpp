@@ -17,7 +17,7 @@ mb::result<game::LightValue> SectionSlice::light_value_at(game::LightType light_
 }
 
 mb::emptyres SectionSlice::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
-                                     game::LightValue value)
+                                              game::LightValue value)
 {
    auto chunk_section_pos = pos.chunk_section_position();
    auto sec               = m_sections.find(chunk_section_pos.hash());

@@ -62,8 +62,7 @@ minecpp::game::IDispatcher &World::dispatcher()
 mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
    for (auto const &position : refs) {
-      ACCESS_CHUNK_AT(position,
-                      [player_id](world::Chunk *chunk) { chunk->add_player_reference(player_id); });
+      ACCESS_CHUNK_AT(position, [player_id](world::Chunk *chunk) { chunk->add_player_reference(player_id); });
 
       // TODO: Send reference to storage
    }
