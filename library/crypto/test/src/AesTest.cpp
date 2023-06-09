@@ -12,7 +12,7 @@ TEST(MinecppCrypto, AES_ProvidedKey)
    auto iv = Buffer::from_string("BBBBBBBBBBBBBBBBB");
    key.truncate(16);
 
-   minecpp::crypto::AESKey aes(key, iv);
+   minecpp::crypto::AESKey aes(key.as_view(), iv.as_view());
    ASSERT_TRUE(aes.initialise().ok());
 
    std::string original_message_1{"secret message 1"};
@@ -46,7 +46,7 @@ TEST(MinecppCrypto, AES_DecryptByByte)
    auto iv = Buffer::from_string("BBBBBBBBBBBBBBBBB");
    key.truncate(16);
 
-   minecpp::crypto::AESKey aes(key, iv);
+   minecpp::crypto::AESKey aes(key.as_view(), iv.as_view());
    ASSERT_TRUE(aes.initialise().ok());
 
    std::string original_message_1{"secret message 1"};

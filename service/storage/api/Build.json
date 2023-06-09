@@ -2,11 +2,13 @@
   "name": "minecpp_storage_api",
   "include_path": "minecpp/service/storage",
   "dependencies": {
+    "public": [
+      "minecpp_stream",
+      "minecpp_network"
+    ],
     "private": [
       "minecpp_utils",
-      "minecpp_game",
-      "minecpp_grpc",
-      "minecpp_network"
+      "minecpp_game"
     ]
   }
 }

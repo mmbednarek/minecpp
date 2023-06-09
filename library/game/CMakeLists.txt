@@ -5,7 +5,10 @@ set(MINECPP_GAME_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(minecpp_game STATIC)
 
 # Public include headers
-target_include_directories(minecpp_game PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_game
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/game
+)
 
 # Source subdirectory
 add_subdirectory("src")
@@ -19,6 +22,7 @@ target_link_libraries(minecpp_game
         minecpp_chat
         minecpp_math
         minecpp_utils
+        minecpp_signal
         LINK_PRIVATE
         minecpp_nbt
         minecpp_random

@@ -5,7 +5,10 @@ set(MINECPP_NETWORK_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(minecpp_network STATIC)
 
 # Public include headers
-target_include_directories(minecpp_network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_network
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/network
+)
 
 # Source subdirectory
 add_subdirectory("src")
@@ -13,6 +16,7 @@ add_subdirectory("src")
 target_link_libraries(minecpp_network
         LINK_PUBLIC
         minecpp_world
+        minecpp_container
         LINK_PRIVATE
         minecpp_container
         minecpp_nbt

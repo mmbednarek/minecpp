@@ -96,7 +96,7 @@ static void write_buff_size(std::uint8_t *buff, std::size_t size)
    }
 }
 
-std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres)
+container::Buffer Writer::buff(std::size_t comp_thres)
 {
    m_stream.seekg(0, std::ios::end);
    auto buff_size = static_cast<std::size_t>(m_stream.tellg());
@@ -107,12 +107,14 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres)
          // put zero after size to indicate not compressed
          int total_size_num_bytes = len_varint(static_cast<int>(buff_size + 1));
          auto header_size         = static_cast<std::size_t>(total_size_num_bytes) + 1;
-         auto buff                = new uint8_t[header_size + buff_size];
-         write_buff_size(buff, buff_size + 1);
-         buff[total_size_num_bytes] = 0;
+
+         container::Buffer buffer(header_size + buff_size);
+         write_buff_size(buffer.data(), buff_size + 1);
+
+         buffer.data()[total_size_num_bytes] = 0;
          m_stream.seekg(0, std::ios::beg);
-         m_stream.read((char *) buff + header_size, static_cast<int>(buff_size));
-         return std::make_tuple(buff, buff_size + header_size);
+         m_stream.read((char *) buffer.data() + header_size, static_cast<int>(buff_size));
+         return buffer;
       }
 
       // reached compression threshold
@@ -129,14 +131,14 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres)
 
       auto header_size = total_size_num_bytes + decompressed_size_num_bytes;
 
-      auto buff = new uint8_t[header_size + compressed.size()];
+      container::Buffer buffer(header_size + compressed.size());
 
-      write_buff_size(buff, total_size);
-      write_buff_size(buff + total_size_num_bytes, buff_size);
+      write_buff_size(buffer.data(), total_size);
+      write_buff_size(buffer.data() + total_size_num_bytes, buff_size);
 
-      std::memcpy(buff + header_size, compressed.data(), compressed.size());
+      std::memcpy(buffer.data() + header_size, compressed.data(), compressed.size());
 
-      return {buff, header_size + compressed.size()};
+      return buffer;
    }
 
    // no compression, no encryption
@@ -144,13 +146,13 @@ std::tuple<uint8_t *, size_t> Writer::buff(std::size_t comp_thres)
 
    auto header_size = static_cast<std::size_t>(len_varint(static_cast<int>(buff_size)));
 
-   auto buff = new uint8_t[header_size + buff_size];
-   write_buff_size(buff, buff_size);
+   container::Buffer buffer(header_size + buff_size);
+   write_buff_size(buffer.data(), buff_size);
 
    m_stream.seekg(0, std::ios::beg);
-   m_stream.read((char *) buff + header_size, static_cast<int>(buff_size));
+   m_stream.read((char *) buffer.data() + header_size, static_cast<int>(buff_size));
 
-   return {buff, buff_size + header_size};
+   return buffer;
 }
 
 std::ostream &Writer::raw_stream()

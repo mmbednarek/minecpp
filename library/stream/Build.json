@@ -1,0 +1,17 @@
+{
+  "name": "minecpp_stream",
+  "examples": [
+    "client",
+    "server"
+  ],
+  "dependencies": {
+    "public": [
+      "minecpp_signal",
+      "minecpp_container",
+      "minecpp_network"
+    ],
+    "private": [
+      "enet"
+    ]
+  }
+}

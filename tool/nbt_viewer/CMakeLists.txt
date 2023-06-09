@@ -5,7 +5,10 @@ set(MINECPP_NBT_VIEWER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_nbt_viewer)
 
 # Public include headers
-target_include_directories(minecpp_nbt_viewer PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_nbt_viewer
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/nbt_viewer
+)
 
 # Source subdirectory
 add_subdirectory("src")

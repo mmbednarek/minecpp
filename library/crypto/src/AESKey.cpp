@@ -2,9 +2,9 @@
 
 namespace minecpp::crypto {
 
-AESKey::AESKey(container::Buffer key, container::Buffer iv) :
-    m_key(std::move(key)),
-    m_iv(std::move(iv)),
+AESKey::AESKey(container::BufferView key, container::BufferView iv) :
+    m_key(key),
+    m_iv(iv),
     m_encrypt_ctx(EVP_CIPHER_CTX_new()),
     m_decrypt_ctx(EVP_CIPHER_CTX_new())
 {
@@ -113,7 +113,7 @@ Result<mb::empty> AESKey::finalize()
    return mb::ok;
 }
 
-EmptyResult AESKey::encrypt_update_buffer(const container::Buffer &in_buffer, container::Buffer &out_buffer)
+EmptyResult AESKey::encrypt_update_buffer(const container::BufferView &in_buffer, container::BufferView out_buffer)
 {
    int data_size = static_cast<int>(out_buffer.size());
    if (not EVP_EncryptUpdate(m_encrypt_ctx, out_buffer.data(), &data_size, in_buffer.data(),
@@ -123,7 +123,7 @@ EmptyResult AESKey::encrypt_update_buffer(const container::Buffer &in_buffer, co
    return mb::ok;
 }
 
-EmptyResult AESKey::decrypt_update_buffer(const container::Buffer &in_buffer, container::Buffer &out_buffer)
+EmptyResult AESKey::decrypt_update_buffer(const container::BufferView &in_buffer, container::BufferView out_buffer)
 {
    int data_size = static_cast<int>(out_buffer.size());
    if (not EVP_DecryptUpdate(m_decrypt_ctx, out_buffer.data(), &data_size, in_buffer.data(),

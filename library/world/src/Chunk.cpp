@@ -12,41 +12,19 @@ namespace minecpp::world {
 
 namespace nbt_chunk_v1 = minecpp::nbt::chunk::v1;
 
-inline int expected_data_version = 2230;
-
 Chunk::Chunk()
 {
    std::fill(m_biomes.begin(), m_biomes.end(), 1);
 }
 
 Chunk::Chunk(int x, int z, const std::array<short, 256> &height_map) :
-    m_pos_x(x),
-    m_pos_z(z),
-    m_full(false)
+    m_position{x, z},
+    m_is_full(false)
 {
    m_motion_blocking_height = {height_map.begin(), height_map.end()};
    m_world_surface_height   = {height_map.begin(), height_map.end()};
    m_light_blocking_height  = {height_map.begin(), height_map.end()};
    std::fill(m_biomes.begin(), m_biomes.end(), 1);
-}
-
-void Chunk::as_proto(minecpp::proto::chunk::v1::Chunk *chunk)
-{
-   *chunk->mutable_position() = pos().to_proto();
-   chunk->set_full(m_full);
-   if (m_full) {
-      *chunk->mutable_biomes() = {m_biomes.begin(), m_biomes.end()};
-   }
-   *chunk->mutable_hm_motion_blocking() = {m_motion_blocking_height.raw().begin(),
-                                           m_motion_blocking_height.raw().end()};
-   *chunk->mutable_hm_world_surface()   = {m_world_surface_height.raw().begin(),
-                                           m_world_surface_height.raw().end()};
-
-   for (auto const &sec : m_sections) {
-      auto *out_sec = chunk->add_sections();
-      *out_sec      = sec.second.to_proto();
-      out_sec->set_y(sec.first);
-   }
 }
 
 constexpr uint32_t coord_to_offset(int x, int y, int z)
@@ -59,7 +37,7 @@ void Chunk::create_empty_section(int8_t sec)
    m_sections.emplace(sec, Section{sec});
 }
 
-mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockStateId state)
+mb::emptyres Chunk::set_block_at(const game::BlockPosition &position, game::BlockStateId state)
 {
    auto sec  = static_cast<std::int8_t>(position.y() / 16);
    auto iter = m_sections.find(sec);
@@ -86,7 +64,7 @@ mb::emptyres Chunk::set_block(const game::BlockPosition &position, game::BlockSt
    return mb::ok;
 }
 
-mb::result<game::BlockStateId> Chunk::get_block(const game::BlockPosition &position)
+mb::result<game::BlockStateId> Chunk::block_at(const game::BlockPosition &position)
 {
    auto section_id = static_cast<int8_t>(position.y() / 16);
 
@@ -97,7 +75,7 @@ mb::result<game::BlockStateId> Chunk::get_block(const game::BlockPosition &posit
    return it_section->second.get_block(position);
 }
 
-mb::result<game::LightValue> Chunk::get_light(game::LightType type, const game::BlockPosition &position)
+mb::result<game::LightValue> Chunk::light_value_at(game::LightType type, const game::BlockPosition &position)
 {
    auto section = section_from_y_level(position.y());
    if (section.has_failed()) {
@@ -107,7 +85,7 @@ mb::result<game::LightValue> Chunk::get_light(game::LightType type, const game::
    return section->get_light(type, position);
 }
 
-mb::emptyres Chunk::set_light(game::LightType type, const game::BlockPosition &position,
+mb::emptyres Chunk::set_light_value_at(game::LightType type, const game::BlockPosition &position,
                               game::LightValue value)
 {
    auto section = section_from_y_level(position.y());
@@ -119,33 +97,21 @@ mb::emptyres Chunk::set_light(game::LightType type, const game::BlockPosition &p
    return mb::ok;
 }
 
-bool Chunk::add_ref(uuid engine_id, game::PlayerId player_id)
+bool Chunk::add_player_reference(game::PlayerId player_id)
 {
-   m_references.insert(player_id);
-
-   if (!m_engine_lock.is_nil()) {
-      if (m_engine_lock != engine_id) {
-         return false;
-      }
-   }
-   m_engine_lock = engine_id;
+   std::unique_lock lk{m_player_references_mutex};
+   m_player_references.insert(player_id);
    return true;
 }
 
-void Chunk::free_ref(game::PlayerId player_id)
+void Chunk::remove_player_reference(game::PlayerId player_id)
 {
-   if (m_references.find(player_id) == m_references.end()) {
-      return;
-   }
-   m_references.erase(player_id);
-   if (m_references.empty()) {
-      m_engine_lock = {};
-   }
-}
+   std::unique_lock lk{m_player_references_mutex};
 
-uuid Chunk::get_lock() const
-{
-   return m_engine_lock;
+   if (m_player_references.find(player_id) == m_player_references.end())
+      return;
+
+   m_player_references.erase(player_id);
 }
 
 int Chunk::height_at(int x, int z)
@@ -173,17 +139,16 @@ std::array<short, 256> Chunk::get_height_map()
    return result;
 }
 
-game::ChunkPosition Chunk::pos() const
+game::ChunkPosition Chunk::position() const
 {
-   return {m_pos_x, m_pos_z};
+   return m_position;
 }
 
 mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) noexcept
 {
    auto out                      = std::make_unique<Chunk>();
-   out->m_full                   = chunk.level.status == "full";
-   out->m_pos_x                  = chunk.level.x_pos;
-   out->m_pos_z                  = chunk.level.z_pos;
+   out->m_is_full                = chunk.level.status == "full";
+   out->m_position               = {chunk.level.x_pos, chunk.level.z_pos};
    out->m_motion_blocking_height = HeightContainer::from_raw(chunk.level.heightmaps.motion_blocking.begin(),
                                                              chunk.level.heightmaps.motion_blocking.end());
    out->m_world_surface_height   = HeightContainer::from_raw(chunk.level.heightmaps.world_surface.begin(),
@@ -200,9 +165,9 @@ mb::result<std::unique_ptr<Chunk>> Chunk::from_nbt(nbt_chunk_v1::Chunk &chunk) n
 nbt_chunk_v1::Chunk Chunk::to_nbt() noexcept
 {
    nbt_chunk_v1::Chunk result;
-   result.level.status      = m_full ? "full" : "features";
-   result.level.x_pos       = m_pos_x;
-   result.level.z_pos       = m_pos_z;
+   result.level.status      = m_is_full ? "full" : "features";
+   result.level.x_pos       = m_position.x();
+   result.level.z_pos       = m_position.z();
    result.level.last_update = static_cast<mb::i64>(minecpp::util::now());
 
    result.level.heightmaps.motion_blocking.resize(m_motion_blocking_height.raw().size());
@@ -248,8 +213,8 @@ HeightContainer &Chunk::height_by_type(game::HeightType type)
    case game::HeightTypeValues::WorldSurface: return m_world_surface_height;
    case game::HeightTypeValues::LightBlocking: return m_light_blocking_height;
    }
+
    assert(false && "not reachable");
-   return m_world_surface_height;
 }
 
 const HeightContainer &Chunk::height_by_type(game::HeightType type) const
@@ -259,16 +224,16 @@ const HeightContainer &Chunk::height_by_type(game::HeightType type) const
    case game::HeightTypeValues::WorldSurface: return m_world_surface_height;
    case game::HeightTypeValues::LightBlocking: return m_light_blocking_height;
    }
+
    assert(false && "not reachable");
-   return m_world_surface_height;
 }
 
 minecpp::proto::chunk::v1::Chunk Chunk::to_proto() const
 {
    minecpp::proto::chunk::v1::Chunk chunk;
-   *chunk.mutable_position() = pos().to_proto();
-   chunk.set_full(m_full);
-   if (m_full) {
+   *chunk.mutable_position() = position().to_proto();
+   chunk.set_full(m_is_full);
+   if (m_is_full) {
       *chunk.mutable_biomes() = {m_biomes.begin(), m_biomes.end()};
    }
    *chunk.mutable_hm_motion_blocking() = {m_motion_blocking_height.raw().begin(),
@@ -285,20 +250,19 @@ minecpp::proto::chunk::v1::Chunk Chunk::to_proto() const
    return chunk;
 }
 
-Chunk Chunk::from_proto(const minecpp::proto::chunk::v1::Chunk &proto_chunk)
+std::unique_ptr<Chunk> Chunk::from_proto(const minecpp::proto::chunk::v1::Chunk &proto_chunk)
 {
-   Chunk chunk;
-   chunk.read_from_proto(proto_chunk);
+   auto chunk = std::make_unique<Chunk>();
+   chunk->read_from_proto(proto_chunk);
    return chunk;
 }
 
 void Chunk::read_from_proto(const proto::chunk::v1::Chunk &proto_chunk)
 {
-   m_pos_x = proto_chunk.position().x();
-   m_pos_z = proto_chunk.position().z();
+   m_position = game::ChunkPosition::from_proto(proto_chunk.position());
 
    if (not proto_chunk.biomes().empty()) {
-      m_full = true;
+      m_is_full = true;
       std::copy(proto_chunk.biomes().begin(), proto_chunk.biomes().end(), m_biomes.begin());
    }
 

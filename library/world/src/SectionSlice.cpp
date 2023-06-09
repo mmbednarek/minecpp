@@ -4,8 +4,8 @@
 
 namespace minecpp::world {
 
-mb::result<game::LightValue> SectionSlice::get_light(game::LightType light_type,
-                                                     const game::BlockPosition &pos)
+mb::result<game::LightValue> SectionSlice::light_value_at(game::LightType light_type,
+                                                          const game::BlockPosition &pos)
 {
    auto chunk_section_pos = pos.chunk_section_position();
    auto sec               = m_sections.find(chunk_section_pos.hash());
@@ -16,7 +16,7 @@ mb::result<game::LightValue> SectionSlice::get_light(game::LightType light_type,
    return sec->second.get_light(light_type, pos);
 }
 
-mb::emptyres SectionSlice::set_light(game::LightType light_type, const game::BlockPosition &pos,
+mb::emptyres SectionSlice::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
                                      game::LightValue value)
 {
    auto chunk_section_pos = pos.chunk_section_position();
@@ -29,7 +29,7 @@ mb::emptyres SectionSlice::set_light(game::LightType light_type, const game::Blo
    return mb::ok;
 }
 
-mb::result<mb::empty> SectionSlice::set_block(const game::BlockPosition &pos, game::BlockStateId state)
+mb::result<mb::empty> SectionSlice::set_block_at(const game::BlockPosition &pos, game::BlockStateId state)
 {
    auto chunk_section_pos = pos.chunk_section_position();
    auto sec               = m_sections.find(chunk_section_pos.hash());
@@ -41,7 +41,7 @@ mb::result<mb::empty> SectionSlice::set_block(const game::BlockPosition &pos, ga
    return mb::ok;
 }
 
-mb::result<game::BlockStateId> SectionSlice::get_block(const game::BlockPosition &pos)
+mb::result<game::BlockStateId> SectionSlice::block_at(const game::BlockPosition &pos)
 {
    auto chunk_section_pos = pos.chunk_section_position();
    auto sec               = m_sections.find(chunk_section_pos.hash());

@@ -1,51 +1,58 @@
 #pragma once
+
 #include "IConnection.h"
-#include <minecpp/grpc/server/Bidi.h>
-#include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
-#include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
-#include <minecpp/proto/service/engine/v1/Engine.grpc.pb.h>
+#include "JobSystem.h"
+
+#include "minecpp/proto/event/clientbound/v1/Clientbound.pb.h"
+#include "minecpp/proto/event/serverbound/v1/Serverbound.pb.h"
+#include "minecpp/stream/Server.h"
+
 #include <string>
 
 namespace minecpp::service::engine {
 
 class EventHandler;
 class EventManager;
-
-MINECPP_DECLARE_BIDI_SERVER(EngineServer, minecpp::proto::service::engine::v1::EngineService::AsyncService,
-                            Join, minecpp::proto::event::clientbound::v1::Event,
-                            minecpp::proto::event::serverbound::v1::Event)
-
-using BidiStream = grpc::server::Stream<EngineServer>;
+class ApiHandler;
 
 class Connection : public IConnection
 {
  public:
-   explicit Connection(EventHandler &event_handler, BidiStream stream);
+   explicit Connection(ApiHandler &handler, std::shared_ptr<stream::Peer> peer);
 
-   void on_read(const proto::event::serverbound::v1::Event &event);
    void send_to_many(const google::protobuf::Message &message, std::span<game::PlayerId> player_ids) override;
-
    void send_to_player(const google::protobuf::Message &message, game::PlayerId player_id) override;
    void send_to_all(const google::protobuf::Message &message) override;
    void send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id) override;
 
  private:
-   EventHandler &m_event_handler;
-   BidiStream m_stream;
+   void send(const proto::event::clientbound::v1::Event &event);
+
+   std::shared_ptr<stream::Peer> m_peer;
+   ApiHandler &m_handler;
 };
 
 class ApiHandler
 {
  public:
-   ApiHandler(EventHandler &event_handler, EventManager &event_manager, const std::string &address);
+   ApiHandler(EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system, std::uint16_t port);
 
-   void on_connected(BidiStream stream);
-   mb::emptyres wait();
+   ApiHandler(const ApiHandler &)                = delete;
+   ApiHandler &operator=(const ApiHandler &)     = delete;
+   ApiHandler(ApiHandler &&) noexcept            = delete;
+   ApiHandler &operator=(ApiHandler &&) noexcept = delete;
+
+   void tick();
 
  private:
+   void on_connected(std::shared_ptr<stream::Peer> peer);
+   void on_received_message(std::shared_ptr<stream::Peer> peer, container::BufferView message);
+   void on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect);
+
    EventHandler &m_event_handler;
    EventManager &m_event_manager;
-   EngineServer m_server;
+   stream::Server m_server;
+   JobSystem &m_job_system;
 };
 
 }// namespace minecpp::service::engine

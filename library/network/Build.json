@@ -3,7 +3,8 @@
   "has_test": true,
   "dependencies": {
     "public": [
-      "minecpp_world"
+      "minecpp_world",
+      "minecpp_container"
     ],
     "private": [
       "minecpp_container",

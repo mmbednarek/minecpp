@@ -1,6 +1,9 @@
 #include "ChunkSystem.h"
 #include "job/GenerateChunk.h"
 #include "JobSystem.h"
+
+#include "minecpp/service/storage/Storage.h"
+
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine {
@@ -14,6 +17,8 @@ ChunkSystem::ChunkSystem(JobSystem &job_system, storage::StorageClient &storage_
 
 world::Chunk *ChunkSystem::chunk_at(const game::ChunkPosition &position)
 {
+   std::shared_lock lk{m_chunk_mutex};
+
    auto find_result = m_chunks.find(position.hash());
    if (find_result == m_chunks.end())
       return nullptr;
@@ -23,6 +28,8 @@ world::Chunk *ChunkSystem::chunk_at(const game::ChunkPosition &position)
 
 SubscriptionState ChunkSystem::subscription_state(const game::ChunkPosition &position)
 {
+   std::shared_lock lk{m_chunk_mutex};
+
    auto find_result = m_chunks.find(position.hash());
    if (find_result == m_chunks.end())
       return SubscriptionState::Unsubscribed;
@@ -38,8 +45,12 @@ void ChunkSystem::handle_chunk_data(const storage::ResponseChunkData &chunk)
 {
    auto *new_chunk = m_chunk_pool.construct();
    new_chunk->read_from_proto(chunk.chunk_data());
-   m_chunks.emplace(game::ChunkPosition::from_proto(chunk.chunk_data().position()).hash(),
-                    ChunkMeta{SubscriptionState::Subscribed, world::ChunkState::COMPLETE, new_chunk});
+
+   {
+      std::unique_lock lk{m_chunk_mutex};
+      m_chunks.emplace(game::ChunkPosition::from_proto(chunk.chunk_data().position()).hash(),
+                       ChunkMeta{SubscriptionState::Subscribed, world::ChunkState::COMPLETE, new_chunk});
+   }
 
    m_job_system.process_awaiting_tickets();
 }
@@ -54,13 +65,18 @@ void ChunkSystem::handle_empty_chunk(const storage::ResponseEmptyChunk &chunk)
 world::Chunk *ChunkSystem::create_empty_chunk_at(const game::ChunkPosition &position)
 {
    auto *new_chunk = m_chunk_pool.construct(position.x(), position.z(), std::array<short, 256>{});
-   m_chunks.emplace(position.hash(),
-                    ChunkMeta{SubscriptionState::Subscribed, world::ChunkState::EMPTY, new_chunk});
+   {
+      std::unique_lock lk{m_chunk_mutex};
+      m_chunks.emplace(position.hash(),
+                       ChunkMeta{SubscriptionState::Subscribed, world::ChunkState::EMPTY, new_chunk});
+   }
    return new_chunk;
 }
 
 world::ChunkState ChunkSystem::chunk_state_at(const game::ChunkPosition &position)
 {
+   std::shared_lock lk{m_chunk_mutex};
+
    auto find_result = m_chunks.find(position.hash());
    if (find_result == m_chunks.end())
       return world::ChunkState::ABSENT;
@@ -69,6 +85,8 @@ world::ChunkState ChunkSystem::chunk_state_at(const game::ChunkPosition &positio
 
 void ChunkSystem::set_chunk_state_at(const game::ChunkPosition &position, world::ChunkState state)
 {
+   std::shared_lock lk{m_chunk_mutex};
+
    auto find_result = m_chunks.find(position.hash());
    if (find_result == m_chunks.end())
       return;

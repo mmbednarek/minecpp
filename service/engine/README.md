@@ -11,14 +11,14 @@ If it's not present we need to create a remove block job with a condition that t
 
 ```c++
 
-void set_block(BlockPosition position, BlockState state)
+void set_block_at(BlockPosition position, BlockState state)
 {
   if (m_chunk_system.is_loaded(position)) {
-    return m_chunk_system.set_block(position, state);
+    return m_chunk_system.set_block_at(position, state);
   }
 
   m_job_system.when<ChunkIsLoaded>(position).invoke([this, position, state]() {
-    m_chunk_system.set_block(position, state);
+    m_chunk_system.set_block_at(position, state);
   });
 }
 ```

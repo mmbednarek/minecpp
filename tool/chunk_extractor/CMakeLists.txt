@@ -5,7 +5,10 @@ set(MINECPP_CHUNK_EXTRACTOR_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_chunk_extractor)
 
 # Public include headers
-target_include_directories(minecpp_chunk_extractor PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_chunk_extractor
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/chunk_extractor
+)
 
 # Source subdirectory
 add_subdirectory("src")

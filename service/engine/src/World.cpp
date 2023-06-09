@@ -40,7 +40,7 @@ void when_chunk_is_complete(ChunkSystem &chunk_system, JobSystem &job_system,
 #define ACCESS_CHUNK_AT(position, ...) \
    when_chunk_is_complete(m_chunk_system, m_job_system, position, __VA_ARGS__)
 
-World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
+World::World(ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
              PlayerManager &player_manager, entity::EntitySystem &entity_system,
              controller::BlockManager &block_controller) :
     m_chunk_system(chunk_system),
@@ -49,7 +49,6 @@ World::World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, D
     m_player_manager(player_manager),
     m_entity_system(entity_system),
     m_block_controller(block_controller),
-    m_engine_id(engine_id),
     m_light_system(*this),
     m_general_purpose_random(2356)
 {
@@ -64,7 +63,7 @@ mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game
 {
    for (auto const &position : refs) {
       ACCESS_CHUNK_AT(position,
-                      [this, player_id](world::Chunk *chunk) { chunk->add_ref(m_engine_id, player_id); });
+                      [player_id](world::Chunk *chunk) { chunk->add_player_reference(player_id); });
 
       // TODO: Send reference to storage
    }
@@ -74,7 +73,8 @@ mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game
 mb::result<mb::empty> World::free_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
    for (auto const &position : refs) {
-      ACCESS_CHUNK_AT(position, [player_id](world::Chunk *chunk) { chunk->free_ref(player_id); });
+      ACCESS_CHUNK_AT(position,
+                      [player_id](world::Chunk *chunk) { chunk->remove_player_reference(player_id); });
 
       // TODO: Send reference removal to storage
    }
@@ -98,7 +98,7 @@ mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos,
    return mb::ok;
 }
 
-mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::BlockStateId state)
+mb::result<mb::empty> World::set_block_at(const game::BlockPosition &pos, game::BlockStateId state)
 {
    if (auto res = set_block_no_notify(pos, state); res.has_failed()) {
       return std::move(res.err());
@@ -108,13 +108,13 @@ mb::result<mb::empty> World::set_block(const game::BlockPosition &pos, game::Blo
    return mb::ok;
 }
 
-mb::result<game::BlockStateId> World::get_block(const game::BlockPosition &pos)
+mb::result<game::BlockStateId> World::block_at(const game::BlockPosition &pos)
 {
    auto *chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {
       return mb::error("chunk is not loaded");
    }
-   return chunk->get_block(pos);
+   return chunk->block_at(pos);
 }
 
 game::player::Provider &World::players()
@@ -132,7 +132,7 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
    for (Face face : game::Face::Values) {
       auto neighbour_pos = position.neighbour_at(face);
 
-      auto old_neighbour_state = get_block(neighbour_pos);
+      auto old_neighbour_state = block_at(neighbour_pos);
       if (old_neighbour_state.has_failed())
          continue;
 
@@ -147,20 +147,20 @@ void World::notify_neighbours(game::BlockPosition position, game::BlockStateId s
    }
 }
 
-mb::result<game::LightValue> World::get_light(game::LightType light_type, const game::BlockPosition &pos)
+mb::result<game::LightValue> World::light_value_at(game::LightType light_type, const game::BlockPosition &pos)
 {
    auto *chunk = m_chunk_system.chunk_at(pos.chunk_position());
    if (chunk == nullptr) {
       return mb::error("chunk is not loaded");
    }
-   return chunk->get_light(light_type, pos);
+   return chunk->light_value_at(light_type, pos);
 }
 
-mb::emptyres World::set_light(game::LightType light_type, const game::BlockPosition &pos,
-                              game::LightValue level)
+mb::emptyres World::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
+                                       game::LightValue level)
 {
    ACCESS_CHUNK_AT(pos.chunk_position(), [light_type, pos, level](world::Chunk *chunk) {
-      chunk->set_light(light_type, pos, level);
+      chunk->set_light_value_at(light_type, pos, level);
    });
    return mb::ok;
 }
@@ -203,7 +203,7 @@ bool World::is_movement_blocked_at(const math::Vector3 &position)
 {
    auto block_position = game::BlockPosition::from_vector3(position);
 
-   auto block_state_id = this->get_block(block_position);
+   auto block_state_id = this->block_at(block_position);
    if (block_state_id.has_failed())
       return false;
 
@@ -230,13 +230,13 @@ void World::kill_entity(game::EntityId id)
 
 void World::destroy_block(const game::BlockPosition &position)
 {
-   auto block_state_id = this->get_block(position);
+   auto block_state_id = this->block_at(position);
    if (block_state_id.has_failed())
       return;
    if (*block_state_id == DEFAULT_BLOCK_STATE(Air))
       return;
 
-   this->set_block(position, DEFAULT_BLOCK_STATE(Air));
+   this->set_block_at(position, DEFAULT_BLOCK_STATE(Air));
 
    world::BlockState block_state{*block_state_id};
    auto item_id = repository::Item::the().find_id_by_tag(block_state.block_tag());

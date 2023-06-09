@@ -59,7 +59,10 @@ function generate_cmake_target() {
   if [[  $header_only == "true"  ]]; then
     echo "target_include_directories($targetname INTERFACE \${CMAKE_CURRENT_SOURCE_DIR}/include)"
   else
-    echo "target_include_directories($targetname PUBLIC \${CMAKE_CURRENT_SOURCE_DIR}/include)"
+    echo "target_include_directories($targetname"
+    echo "  PUBLIC \${CMAKE_CURRENT_SOURCE_DIR}/include"
+    echo "  PRIVATE \${CMAKE_CURRENT_SOURCE_DIR}/include/$include_path"
+    echo ")"
     echo ""
     echo "# Source subdirectory"
     echo "add_subdirectory(\"src\")"

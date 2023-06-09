@@ -14,8 +14,8 @@ class Handler : public IResponseHandler
    void handle_chunk_data(const ResponseChunkData &proto_chunk) override
    {
       auto chunk = Chunk::from_proto(proto_chunk.chunk_data());
-      spdlog::info("obtained chunk data {}, {}", chunk.pos().x(), chunk.pos().z());
-      spdlog::info("block at 1 2 3: {}", *chunk.get_block({1, 2, 3}));
+      spdlog::info("obtained chunk data {}, {}", chunk.position().x(), chunk.position().z());
+      spdlog::info("block at 1 2 3: {}", *chunk.block_at({1, 2, 3}));
    }
 
    void handle_empty_chunk(const minecpp::service::storage::ResponseEmptyChunk & /*chunk*/) override {}
@@ -25,11 +25,9 @@ int main()
 {
    Handler handler;
 
-   StorageClient client{0, &handler, {"127.0.0.1:7000"}};
+   StorageClient client{0, &handler};
 
    client.subscribe_chunk({1, 2});
-
-   client.wait();
 
    spdlog::info("exiting");
 }

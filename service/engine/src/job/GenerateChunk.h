@@ -1,7 +1,9 @@
 #pragma once
+
 #include "../JobSystem.h"
-#include <minecpp/game/ChunkPosition.h>
-#include <minecpp/world/Generator.h>
+
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/world/Generator.h"
 
 namespace minecpp::service::engine::job {
 

@@ -5,7 +5,10 @@ set(MINECPP_NBTSCHEME_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_nbtscheme)
 
 # Public include headers
-target_include_directories(minecpp_nbtscheme PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_nbtscheme
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/nbtscheme
+)
 
 # Source subdirectory
 add_subdirectory("src")

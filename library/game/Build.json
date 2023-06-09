@@ -9,7 +9,8 @@
       "minecpp_api_nbt",
       "minecpp_chat",
       "minecpp_math",
-      "minecpp_utils"
+      "minecpp_utils",
+      "minecpp_signal"
     ],
     "private": [
       "minecpp_nbt",

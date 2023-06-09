@@ -33,7 +33,7 @@ bool Torch::on_player_place_block(IWorld &world, PlayerId, BlockId, BlockPositio
 
    // If we're placing the torch on a floor we should place minecraft:torch
    if (place_face == Face::Top) {
-      return world.set_block(torch_pos, DEFAULT_BLOCK_STATE(Torch)).ok();
+      return world.set_block_at(torch_pos, DEFAULT_BLOCK_STATE(Torch)).ok();
    }
 
    // Create new wall torch state and set facing to the same we are placing it
@@ -41,7 +41,7 @@ bool Torch::on_player_place_block(IWorld &world, PlayerId, BlockId, BlockPositio
    state.set("facing", place_face);
 
    // Set the final state id
-   return world.set_block(torch_pos, state.block_state_id()).ok();
+   return world.set_block_at(torch_pos, state.block_state_id()).ok();
 }
 
 std::optional<game::BlockStateId> Torch::on_neighbour_change(game::IWorld & /*world*/,

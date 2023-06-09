@@ -5,7 +5,10 @@ set(MINECPP_STORAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_storage)
 
 # Public include headers
-target_include_directories(minecpp_storage PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_storage
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/storage
+)
 
 # Source subdirectory
 add_subdirectory("src")
@@ -14,7 +17,7 @@ target_link_libraries(minecpp_storage
         LINK_PRIVATE
         minecpp_utils
         minecpp_game
-        minecpp_grpc
+        minecpp_stream
         minecpp_api_proto
         Boost::system
         spdlog

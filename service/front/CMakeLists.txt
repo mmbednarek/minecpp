@@ -5,7 +5,10 @@ set(MINECPP_FRONT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(minecpp_front)
 
 # Public include headers
-target_include_directories(minecpp_front PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_front
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/front
+)
 
 # Source subdirectory
 add_subdirectory("src")
@@ -16,7 +19,6 @@ target_link_libraries(minecpp_front
         minecpp_utils
         minecpp_engine_api
         minecpp_entity
-        minecpp_grpc
         minecpp_api_proto
         minecpp_event
         minecpp_network

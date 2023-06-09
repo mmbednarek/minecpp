@@ -65,6 +65,7 @@ class EventHandler
 
  private:
    mb::result<game::Entity> player_entity(game::PlayerId player_id);
+   bool should_destroy_block(game::Entity &entity, game::PlayerDiggingState state) const;
 
    Dispatcher &m_dispatcher;
    PlayerManager &m_player_manager;

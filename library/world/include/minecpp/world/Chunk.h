@@ -1,13 +1,15 @@
-#ifndef MINECPP_GAME_CHUNK_CHUNK_H
-#define MINECPP_GAME_CHUNK_CHUNK_H
+#pragma once
 
 #include "Section.h"
+
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/nbt/chunk/v1/Chunk.nbt.h"
+#include "minecpp/nbt/Reader.h"
+#include "minecpp/nbt/Tag.h"
+#include "minecpp/proto/chunk/v1/Chunk.pb.h"
+
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
-#include <minecpp/nbt/chunk/v1/Chunk.nbt.h>
-#include <minecpp/nbt/Reader.h>
-#include <minecpp/nbt/Tag.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
 #include <string_view>
 
 namespace minecpp::world {
@@ -21,18 +23,16 @@ class Chunk : public game::IBlockContainer
    Chunk();
    Chunk(int x, int z, const std::array<short, 256> &height_map);
 
-   void as_proto(minecpp::proto::chunk::v1::Chunk *chunk);
-   [[nodiscard]] minecpp::proto::chunk::v1::Chunk to_proto() const;
-   static Chunk from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
    void read_from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
    void set_height_map(game::HeightType height_type, const std::array<short, 256> &height_map);
 
    void create_empty_section(int8_t sec);
-   mb::emptyres set_block(const game::BlockPosition &position, game::BlockStateId state) override;
-   mb::result<game::BlockStateId> get_block(const game::BlockPosition &position) override;
-   mb::result<game::LightValue> get_light(game::LightType type, const game::BlockPosition &position) override;
-   mb::emptyres set_light(game::LightType type, const game::BlockPosition &position,
-                          game::LightValue value) override;
+   mb::emptyres set_block_at(const game::BlockPosition &position, game::BlockStateId state) override;
+   mb::result<game::BlockStateId> block_at(const game::BlockPosition &position) override;
+   mb::result<game::LightValue> light_value_at(game::LightType type,
+                                               const game::BlockPosition &position) override;
+   mb::emptyres set_light_value_at(game::LightType type, const game::BlockPosition &position,
+                                   game::LightValue value) override;
    int height_at(int x, int z);
    void put_section(int8_t level, Section sec);
    std::array<short, 256> get_height_map();
@@ -52,12 +52,12 @@ class Chunk : public game::IBlockContainer
 
    void set_full()
    {
-      m_full = true;
+      m_is_full = true;
    }
 
    [[nodiscard]] constexpr bool full() const
    {
-      return m_full;
+      return m_is_full;
    }
 
    [[nodiscard]] mb::result<Section &> section(std::int8_t y)
@@ -68,30 +68,30 @@ class Chunk : public game::IBlockContainer
       return m_sections.at(y);
    }
 
-   [[nodiscard]] uuid get_lock() const;
-   bool add_ref(uuid engine_id, game::PlayerId player_id);
-   void free_ref(game::PlayerId player_id);
-   [[nodiscard]] game::ChunkPosition pos() const;
+   bool add_player_reference(game::PlayerId player_id);
+   void remove_player_reference(game::PlayerId player_id);
+
+   [[nodiscard]] game::ChunkPosition position() const;
 
    static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
    minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;
+   static std::unique_ptr<Chunk> from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
+   [[nodiscard]] minecpp::proto::chunk::v1::Chunk to_proto() const;
 
  private:
    mb::result<Section &> section_from_y_level(int y);
    [[nodiscard]] HeightContainer &height_by_type(game::HeightType type);
    [[nodiscard]] const HeightContainer &height_by_type(game::HeightType type) const;
 
-   int m_pos_x{}, m_pos_z{};
-   bool m_full = false;
+   game::ChunkPosition m_position{};
+   bool m_is_full = false;
    std::array<int, 1024> m_biomes{};
    HeightContainer m_motion_blocking_height;
    HeightContainer m_world_surface_height;
    HeightContainer m_light_blocking_height;
    std::map<int8_t, Section> m_sections;
-   std::set<uuid> m_references;
-   uuid m_engine_lock{};
+   std::set<game::PlayerId> m_player_references;
+   std::mutex m_player_references_mutex;
 };
 
 }// namespace minecpp::world
-
-#endif//MINECPP_GAME_CHUNK_CHUNK_H

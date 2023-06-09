@@ -3,7 +3,7 @@ server:
   bind_port: 7101
 engine:
   endpoints:
-    - "127.0.0.1:7800"
+    - "localhost:7800"
   strategy: round_robin
 encryption:
   enabled: true

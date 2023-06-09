@@ -1,13 +1,15 @@
 #pragma once
+
 #include "Dispatcher.h"
 #include "Players.h"
+
+#include "minecpp/controller/BlockManager.h"
+#include "minecpp/game/IWorld.hpp"
+#include "minecpp/random/JavaRandom.h"
+#include "minecpp/world/LightSystem.h"
+
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
-#include <minecpp/controller/BlockManager.h>
-#include <minecpp/game/IWorld.hpp>
-#include <minecpp/proto/service/chunk_storage/v1/ChunkStorage.grpc.pb.h>
-#include <minecpp/random/JavaRandom.h>
-#include <minecpp/world/LightSystem.h>
 
 namespace minecpp::entity {
 class EntitySystem;
@@ -24,7 +26,7 @@ class JobSystem;
 class World : public minecpp::game::IWorld
 {
  public:
-   World(uuid engine_id, ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
+   World(ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
          PlayerManager &player_manager, entity::EntitySystem &entity_system,
          controller::BlockManager &block_controller);
    void destroy_block(const game::BlockPosition &position) override;
@@ -36,11 +38,11 @@ class World : public minecpp::game::IWorld
    mb::result<mb::empty> free_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<int> height_at(int x, int z) override;
    mb::result<mb::empty> set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state);
-   mb::result<mb::empty> set_block(const game::BlockPosition &pos, game::BlockStateId state) override;
-   mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos) override;
-   mb::result<game::LightValue> get_light(game::LightType light_type,
-                                          const game::BlockPosition &pos) override;
-   mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
+   mb::result<mb::empty> set_block_at(const game::BlockPosition &pos, game::BlockStateId state) override;
+   mb::result<game::BlockStateId> block_at(const game::BlockPosition &pos) override;
+   mb::result<game::LightValue> light_value_at(game::LightType light_type,
+                                               const game::BlockPosition &pos) override;
+   mb::emptyres set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
                           game::LightValue level) override;
    mb::result<std::unique_ptr<game::ISectionSlice>> get_slice(game::SectionRange range) override;
    mb::emptyres apply_slice(game::ISectionSlice &slice) override;
@@ -62,7 +64,6 @@ class World : public minecpp::game::IWorld
    PlayerManager &m_player_manager;
    entity::EntitySystem &m_entity_system;
    controller::BlockManager &m_block_controller;
-   uuid m_engine_id;
    world::LightSystem m_light_system;
    random::JavaRandom m_general_purpose_random;
 };

@@ -8,8 +8,8 @@ BlockContainer::BlockContainer(game::BlockRange range) :
 {
 }
 
-mb::result<game::LightValue> BlockContainer::get_light(game::LightType light_type,
-                                                       const game::BlockPosition &pos)
+mb::result<game::LightValue> BlockContainer::light_value_at(game::LightType light_type,
+                                                            const game::BlockPosition &pos)
 {
    if (not m_range.contains(pos)) {
       return mb::error("not in range");
@@ -17,7 +17,7 @@ mb::result<game::LightValue> BlockContainer::get_light(game::LightType light_typ
    return this->access_block_at(pos).light_values[static_cast<std::size_t>(light_type.index())];
 }
 
-mb::emptyres BlockContainer::set_light(game::LightType light_type, const game::BlockPosition &pos,
+mb::emptyres BlockContainer::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
                                        game::LightValue value)
 {
    if (not m_range.contains(pos)) {
@@ -28,7 +28,7 @@ mb::emptyres BlockContainer::set_light(game::LightType light_type, const game::B
    return mb::ok;
 }
 
-mb::result<game::BlockStateId> BlockContainer::get_block(const game::BlockPosition &pos)
+mb::result<game::BlockStateId> BlockContainer::block_at(const game::BlockPosition &pos)
 {
    if (not m_range.contains(pos)) {
       return mb::error("not in range");
@@ -36,7 +36,7 @@ mb::result<game::BlockStateId> BlockContainer::get_block(const game::BlockPositi
    return this->access_block_at(pos).state;
 }
 
-mb::emptyres BlockContainer::set_block(const game::BlockPosition &pos, game::BlockStateId state)
+mb::emptyres BlockContainer::set_block_at(const game::BlockPosition &pos, game::BlockStateId state)
 {
    if (not m_range.contains(pos)) {
       return mb::error("not in range");
@@ -61,7 +61,7 @@ BlockContainer::Block &BlockContainer::access_block_at(game::BlockPosition posit
 mb::emptyres BlockContainer::fill(game::BlockRange range, game::BlockStateId state)
 {
    for (auto pos : range) {
-      if (auto res = this->set_block(pos, state); res.has_failed())
+      if (auto res = this->set_block_at(pos, state); res.has_failed())
          return res;
    }
    return mb::ok;

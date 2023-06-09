@@ -1,9 +1,11 @@
 #include "EventHandler.h"
 #include "Dispatcher.h"
 #include "Players.h"
+
 #include <minecpp/chat/Chat.h>
 #include <minecpp/command/Command.h>
 #include <minecpp/command/core/Cord.h>
+#include <minecpp/command/core/DecimateBlocks.h>
 #include <minecpp/command/core/Echo.h>
 #include <minecpp/command/core/Fly.h>
 #include <minecpp/command/core/Format.h>
@@ -40,6 +42,7 @@
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
+
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine {
@@ -67,6 +70,7 @@ EventHandler::EventHandler(Dispatcher &dispatcher, PlayerManager &player_manager
    m_command_manager.register_command<command::core::Fly>();
    m_command_manager.register_command<command::core::KillAll>();
    m_command_manager.register_command<command::core::Teleport>();
+   m_command_manager.register_command<command::core::DecimateBlocks>();
 
    m_command_manager.register_command_as<command::core::Format>("black", format::Color::Black, false);
    m_command_manager.register_command_as<command::core::Format>("black-bold", format::Color::Black, true);
@@ -469,20 +473,22 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
 {
    m_dispatcher.acknowledge_block_change(player_id, event.sequence_id());
 
+   auto entity = this->player_entity(player_id);
+   if (entity.has_failed()) {
+      spdlog::warn("player entity is invalid: {}", entity.err()->msg());
+      return;
+   }
+
    auto status = static_cast<game::PlayerDiggingState>(event.state());
-   switch (status) {
-   case game::PlayerDiggingState::Digging:
-   case game::PlayerDiggingState::CanceledDigging: break;
-   case game::PlayerDiggingState::FinishedDigging: {
+
+   if (this->should_destroy_block(*entity, status)) {
       m_world.destroy_block(game::BlockPosition::from_proto(event.block_position()));
-   } break;
+      return;
+   }
+
+   switch (status) {
    case game::PlayerDiggingState::DropAllItems:
    case game::PlayerDiggingState::DropItem: {
-      auto entity = this->player_entity(player_id);
-      if (entity.has_failed()) {
-         spdlog::warn("player entity is invalid: {}", entity.err()->msg());
-         return;
-      }
       if (not entity->has_component<InventoryComponent>())
          return;
 
@@ -490,7 +496,6 @@ void EventHandler::handle_player_digging(const serverbound_v1::PlayerDigging &ev
               m_world, status == game::PlayerDiggingState::DropAllItems);
    } break;
    case game::PlayerDiggingState::ReleaseUseItem: {
-      auto entity = this->player_entity(player_id);
       if (not entity->has_component<InventoryComponent>()) {
          spdlog::error("player entity doesn't have inventory (entity_id:{})", entity->id());
          return;
@@ -591,7 +596,7 @@ void EventHandler::handle_block_placement(const serverbound_v1::BlockPlacement &
    auto face           = game::Face::from_proto(event.face());
    auto block_position = game::BlockPosition::from_proto(event.position());
 
-   auto state_id = m_world.get_block(block_position);
+   auto state_id = m_world.block_at(block_position);
    if (state_id.has_failed())
       return;
 
@@ -820,6 +825,22 @@ mb::result<game::Entity> EventHandler::player_entity(game::PlayerId player_id)
       return mb::error("invalid entity");
 
    return entity;
+}
+
+bool EventHandler::should_destroy_block(game::Entity &entity, game::PlayerDiggingState state) const
+{
+   assert(entity.has_component<AbilitiesComponent>());
+
+   if (entity.component<AbilitiesComponent>().abilities().may_build) {
+      switch (state) {
+      case game::PlayerDiggingState::FinishedDigging:
+      case game::PlayerDiggingState::Digging:
+         return true;
+      default:
+         return false;
+      }
+   }
+   return state == game::PlayerDiggingState::FinishedDigging;
 }
 
 }// namespace minecpp::service::engine

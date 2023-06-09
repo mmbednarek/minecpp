@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/container/BasicBuffer.h>
+#include <minecpp/container/BasicBuffer.hpp>
 #include <minecpp/game/BlockRange.h>
 #include <minecpp/game/IBlockController.hpp>
 
@@ -17,12 +17,12 @@ class BlockContainer : public game::IBlockContainer
    explicit BlockContainer(game::BlockRange range);
 
 
-   mb::result<game::LightValue> get_light(game::LightType light_type,
-                                          const game::BlockPosition &pos) override;
-   mb::emptyres set_light(game::LightType light_type, const game::BlockPosition &pos,
+   mb::result<game::LightValue> light_value_at(game::LightType light_type,
+                                               const game::BlockPosition &pos) override;
+   mb::emptyres set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
                           game::LightValue value) override;
-   mb::emptyres set_block(const game::BlockPosition &pos, game::BlockStateId state) override;
-   mb::result<game::BlockStateId> get_block(const game::BlockPosition &pos) override;
+   mb::emptyres set_block_at(const game::BlockPosition &pos, game::BlockStateId state) override;
+   mb::result<game::BlockStateId> block_at(const game::BlockPosition &pos) override;
    mb::emptyres fill(game::BlockRange range, game::BlockStateId state);
    mb::emptyres put_box(game::BlockRange range, game::BlockStateId state);
 

@@ -1,13 +1,16 @@
 #include "Config.h"
 #include "EventHandler.h"
-#include "mb/core.h"
 #include "protocol/LoginHandler.h"
 #include "protocol/PlayHandler.h"
 #include "protocol/StatusHandler.h"
 #include "Server.h"
 #include "Ticks.h"
+
+#include "minecpp/network/Network.h"
+#include "minecpp/repository/Repository.h"
+
 #include <atomic>
-#include <minecpp/repository/Repository.h>
+#include <mb/core.h>
 #include <spdlog/spdlog.h>
 #include <thread>
 
@@ -48,15 +51,25 @@ auto main() -> int
               dynamic_cast<protocol::Handler *>(&login_handler));
 
    EventHandler handler(svr, registry);
-   Client engine_client(config.engine_endpoints, handler);
+   Client engine_client(handler);
+   engine_client.tick();
 
-   service.set_stream(&engine_client);
-   handler.set_stream(&engine_client);
+   service.set_client(&engine_client);
+   handler.set_client(&engine_client);
 
    spdlog::info("established connection to all engine hosts");
 
-   TickManager ticks(svr);
+   TickManager ticks(svr, engine_client);
    std::thread ticks_thread([&ticks]() { ticks.tick(); });
+
+   for (const auto &endpoint_str : config.engine_endpoints) {
+      auto endpoint = minecpp::network::Endpoint::from_host(endpoint_str);
+      if (endpoint.has_failed()) {
+         spdlog::error("failed to resolve host: {}", endpoint_str);
+         return 1;
+      }
+      engine_client.connect(*endpoint);
+   }
 
    spdlog::info("starting TCP server on address {}:{}", config.server_bind_address, config.server_bind_port);
 

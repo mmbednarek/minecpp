@@ -43,9 +43,9 @@ void JobSystem::issue_job(std::unique_ptr<IJob> job)
    m_has_job_condition.notify_one();
 }
 
-void JobSystem::worker_routine()
+void JobSystem::worker_routine(std::size_t index)
 {
-   minecpp::util::label_thread("Job System worker {}");
+   minecpp::util::set_debug_thread_info(util::ThreadType::WorkerThread, index);
 
    while (m_is_running) {
       std::unique_lock lock{m_job_ready_mutex};
@@ -80,8 +80,9 @@ void JobSystem::process_awaiting_tickets()
 JobSystem::JobSystem(std::size_t thread_count)
 {
    m_threads.reserve(thread_count);
-   std::generate_n(std::back_inserter(m_threads), thread_count,
-                   [this]() { return std::thread(&JobSystem::worker_routine, this); });
+   std::generate_n(std::back_inserter(m_threads), thread_count, [this, index = 0]() mutable {
+      return std::thread(&JobSystem::worker_routine, this, index++);
+   });
 }
 
 bool Ticket::is_completed() const

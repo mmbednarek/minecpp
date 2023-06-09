@@ -1,11 +1,14 @@
 #include "EventHandler.h"
+
+#include "minecpp/game/Abilities.h"
+#include "minecpp/game/player/Player.h"
+#include "minecpp/network/message/Clientbound.h"
+#include "minecpp/proto/event/serverbound/v1/Serverbound.pb.h"
+#include "minecpp/repository/Repository.h"
+#include "minecpp/service/engine/Api.h"
+#include "minecpp/util/Uuid.h"
+
 #include <boost/uuid/uuid_io.hpp>
-#include <minecpp/game/Abilities.h>
-#include <minecpp/game/player/Player.h>
-#include <minecpp/network/message/Clientbound.h>
-#include <minecpp/repository/Repository.h>
-#include <minecpp/util/Time.h>
-#include <minecpp/util/Uuid.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::front {
@@ -260,13 +263,13 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
                    .furnace_filtering_craftable = msg.player().recipe_book().furnace_filtering_craftable(),
            });
 
-      if (m_stream == nullptr) {
+      if (m_client == nullptr) {
          spdlog::error("Player stream is null!");
          return;
       }
 
       spdlog::info("Issuing loading initial chunks");
-      m_stream->send(proto::event::serverbound::v1::PreInitialChunks{}, player_id);
+      m_client->send(proto::event::serverbound::v1::PreInitialChunks{}, player_id);
    }
 }
 
@@ -438,8 +441,8 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
 
 
          if (conn->initial_chunk_count > 32) {
-            assert(m_stream);
-            m_stream->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
+            assert(m_client);
+            m_client->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
             conn->initial_chunk_count = 0;
          }
       }
@@ -675,6 +678,16 @@ void EventHandler::handle_set_abilities(const clientbound_v1::SetAbilities &msg,
    };
 
    send_message(player_abilities, recipient_list);
+}
+
+void EventHandler::set_client(engine::Client *client)
+{
+   m_client = client;
+}
+
+void EventHandler::visit_event(const proto::event::clientbound::v1::Event &event)
+{
+   event::visit_clientbound(event, *this);
 }
 
 }// namespace minecpp::service::front

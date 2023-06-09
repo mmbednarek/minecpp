@@ -27,4 +27,15 @@ const game::Abilities &Abilities::abilities() const
    return m_abilities;
 }
 
+void Abilities::set_can_instantly_destroy_blocks(game::IWorld &world, bool enabled)
+{
+   auto entity = world.entity_system().entity(m_entity_id);
+   assert(entity.has_component<Player>());
+
+   auto player_id = entity.component<Player>().id();
+
+   m_abilities.may_build = enabled;
+   world.dispatcher().set_abilities(player_id, m_abilities);
+}
+
 }// namespace minecpp::entity::component

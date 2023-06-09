@@ -27,7 +27,7 @@ bool Stairs::on_player_place_block(game::IWorld &world, game::PlayerId player_id
    state.set("facing", *player_direction);
    state.set("waterlogged", *source_block_type == SourceBlockType::Water);
 
-   return world.set_block(target_position, state.block_state_id()).ok();
+   return world.set_block_at(target_position, state.block_state_id()).ok();
 }
 
 }// namespace minecpp::controller::block

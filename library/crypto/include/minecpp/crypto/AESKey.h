@@ -1,7 +1,8 @@
 #pragma once
 #include "Error.h"
 #include <iostream>
-#include <minecpp/container/BasicBuffer.h>
+#include <minecpp/container/BasicBufferView.hpp>
+#include <minecpp/container/BasicBuffer.hpp>
 #include <openssl/evp.h>
 
 namespace minecpp::crypto {
@@ -9,7 +10,7 @@ namespace minecpp::crypto {
 class AESKey
 {
  public:
-   AESKey(container::Buffer key, container::Buffer iv);
+   AESKey(container::BufferView key, container::BufferView iv);
    ~AESKey();
 
    AESKey(const AESKey &)            = delete;
@@ -24,8 +25,8 @@ class AESKey
    EmptyResult encrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count);
    EmptyResult decrypt_update(std::istream &in_stream, std::ostream &out_stream, std::size_t count);
 
-   EmptyResult encrypt_update_buffer(const container::Buffer &in_buffer, container::Buffer &out_buffer);
-   EmptyResult decrypt_update_buffer(const container::Buffer &in_buffer, container::Buffer &out_buffer);
+   EmptyResult encrypt_update_buffer(const container::BufferView &in_buffer, container::BufferView out_buffer);
+   EmptyResult decrypt_update_buffer(const container::BufferView &in_buffer, container::BufferView out_buffer);
 
  private:
    container::Buffer m_key;

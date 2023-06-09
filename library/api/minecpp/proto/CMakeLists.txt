@@ -5,18 +5,17 @@ set(MINECPP_API_MINECPP_PROTO_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(minecpp_api_proto STATIC)
 
 # Public include headers
-target_include_directories(minecpp_api_proto PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_api_proto
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/proto
+)
 
 # Source subdirectory
 add_subdirectory("src")
 
 target_link_libraries(minecpp_api_proto
         LINK_PUBLIC
-        grpc++
-        gpr
         protobuf
-        absl::base
-        absl::synchronization
 )
 
 target_compile_options(minecpp_api_proto PUBLIC

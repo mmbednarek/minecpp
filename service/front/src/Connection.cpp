@@ -93,40 +93,40 @@ void Connection::async_write_then_disconnect(const Ptr &conn, container::Buffer 
 
 void Connection::send(const Ptr &conn, minecpp::network::message::Writer &w)
 {
-   auto [bf, bf_size] = w.buff(m_compression_threshold);
+   auto buffer = w.buff(m_compression_threshold);
 
    if (m_encryption_key != nullptr) {
-      container::Buffer buffer(bf_size);
-      m_encryption_key->encrypt_update_buffer({bf, bf_size}, buffer);
-      async_write(conn, std::move(buffer));
+      container::Buffer encrypt_buffer(buffer.size());
+      m_encryption_key->encrypt_update_buffer(buffer.as_view(), encrypt_buffer.as_view());
+      async_write(conn, std::move(encrypt_buffer));
    } else {
-      async_write(conn, {bf, bf_size});
+      async_write(conn, std::move(buffer));
    }
 }
 
 void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, protocol::Handler &h)
 {
-   auto [bf, bf_size] = w.buff(m_compression_threshold);
+   auto buffer = w.buff(m_compression_threshold);
 
    if (m_encryption_key != nullptr) {
-      container::Buffer buffer(bf_size);
-      m_encryption_key->encrypt_update_buffer({bf, bf_size}, buffer);
-      async_write_then_read(conn, std::move(buffer), h);
+      container::Buffer encrypt_buffer(buffer.size());
+      m_encryption_key->encrypt_update_buffer(buffer.as_view(), encrypt_buffer.as_view());
+      async_write_then_read(conn, std::move(encrypt_buffer), h);
    } else {
-      async_write_then_read(conn, {bf, bf_size}, h);
+      async_write_then_read(conn, std::move(buffer), h);
    }
 }
 
 void Connection::send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w)
 {
-   auto [bf, bf_size] = w.buff(m_compression_threshold);
+   auto buffer = w.buff(m_compression_threshold);
 
    if (m_encryption_key != nullptr) {
-      container::Buffer buffer(bf_size);
-      m_encryption_key->encrypt_update_buffer({bf, bf_size}, buffer);
-      async_write_then_disconnect(conn, std::move(buffer));
+      container::Buffer encrypt_buffer(buffer.size());
+      m_encryption_key->encrypt_update_buffer(buffer.as_view(), encrypt_buffer.as_view());
+      async_write_then_disconnect(conn, std::move(encrypt_buffer));
    } else {
-      async_write_then_disconnect(conn, {bf, bf_size});
+      async_write_then_disconnect(conn, std::move(buffer));
    }
 }
 
@@ -208,10 +208,9 @@ void Connection::free_byte(mb::u8 *byte)
    m_byte_pool.destroy(byte);
 }
 
-void Connection::set_encryption(container::Buffer key)
+void Connection::set_encryption(container::BufferView key)
 {
-   container::Buffer iv(key);
-   m_encryption_key = std::make_unique<crypto::AESKey>(std::move(key), std::move(iv));
+   m_encryption_key = std::make_unique<crypto::AESKey>(key, key);
    if (m_encryption_key->initialise().has_failed()) {
       spdlog::error("failed to initialise encryption key");
    }
@@ -239,7 +238,7 @@ void async_read_packet(const Connection::Ptr &conn, protocol::Handler &handler)
 
       if (conn->encryption_key() != nullptr) {
          container::Buffer decrypted_buffer(packet_size);
-         conn->encryption_key()->decrypt_update_buffer(buffer, decrypted_buffer);
+         conn->encryption_key()->decrypt_update_buffer(buffer.as_view(), decrypted_buffer.as_view());
          handle_message(conn, handler, decrypted_buffer);
       } else {
          handle_message(conn, handler, buffer);
@@ -300,7 +299,7 @@ void async_read_varint(const Connection::Ptr &conn, mb::u32 /*result*/, mb::u32 
 
                                  if (conn->encryption_key() != nullptr) {
                                     mb::u8 decrypted_byte;
-                                    container::Buffer buffer{&decrypted_byte, 1};
+                                    container::BufferView buffer{&decrypted_byte, 1};
                                     conn->encryption_key()->decrypt_update_buffer({&b, 1}, buffer);
                                     b = decrypted_byte;
                                  }

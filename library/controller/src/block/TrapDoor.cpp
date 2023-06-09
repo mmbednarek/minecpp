@@ -29,7 +29,7 @@ bool TrapDoor::on_player_place_block(game::IWorld &world, game::PlayerId player_
    block_state.set("open", false);
    block_state.set("powered", false);
 
-   return world.set_block(target_position, block_state.block_state_id()).ok();
+   return world.set_block_at(target_position, block_state.block_state_id()).ok();
 }
 
 bool TrapDoor::on_player_action(game::IWorld &world, game::PlayerId /*player_id*/,
@@ -38,7 +38,7 @@ bool TrapDoor::on_player_action(game::IWorld &world, game::PlayerId /*player_id*
 {
    BlockState block_state(block_state_id);
    block_state.set("open", not block_state.get<bool>("open").value_or(false));
-   return world.set_block(position, block_state.block_state_id()).ok();
+   return world.set_block_at(position, block_state.block_state_id()).ok();
 }
 
 }// namespace minecpp::controller::block

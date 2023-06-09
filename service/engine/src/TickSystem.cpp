@@ -1,23 +1,29 @@
 #include "TickSystem.h"
 #include "JobSystem.h"
 #include "World.h"
+
+#include "minecpp/util/Threading.h"
+
 #include <chrono>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine {
 
-TickSystem::TickSystem(World &world) :
+TickSystem::TickSystem(World &world, ApiHandler &api_handler, storage::StorageClient &storage_client) :
     m_world(world),
-    m_tick_thread(&TickSystem::worker_routine, this)
+    m_api_handler(api_handler),
+    m_storage_client(storage_client)
 {
 }
 
-void TickSystem::worker_routine()
+void TickSystem::loop()
 {
    using namespace std::chrono_literals;
    using std::chrono::duration_cast;
    using std::chrono::milliseconds;
    using std::chrono::system_clock;
+
+   minecpp::util::set_debug_thread_info(minecpp::util::ThreadType::TickThread, 0);
 
    auto last_frame_tp = system_clock::now();
    while (m_running) {
@@ -28,6 +34,9 @@ void TickSystem::worker_routine()
       last_frame_tp = system_clock::now();
 
       run_tick(prop);
+
+      m_api_handler.tick();
+      m_storage_client.tick();
    }
 }
 
@@ -41,10 +50,9 @@ void TickSystem::run_tick(double delta_time)
       std::this_thread::sleep_for(5ms);
    }
 
-   m_delta_sum += delta_time;
-   if (m_delta_sum > 40.0) {
+   if (static_cast<int>(tps) != m_last_tps) {
       spdlog::debug("system: tps={}", tps);
-      m_delta_sum = 0.0;
+      m_last_tps = static_cast<int>(tps);
    }
 }
 

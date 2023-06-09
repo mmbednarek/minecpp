@@ -43,7 +43,7 @@ class Connection
    void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, protocol::Handler &h);
    void send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w);
 
-   void set_encryption(container::Buffer key);
+   void set_encryption(container::BufferView key);
    [[nodiscard]] crypto::AESKey *encryption_key() const;
 
    Server *get_server();

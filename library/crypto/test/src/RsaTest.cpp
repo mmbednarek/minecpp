@@ -11,10 +11,10 @@ TEST(MinecppCrypto, RSA_GeneratedKey)
 
    minecpp::crypto::PrivateKey key(1024);
 
-   auto encrypted_message = key.encrypt_message(input_buffer);
+   auto encrypted_message = key.encrypt_message(input_buffer.as_view());
    ASSERT_TRUE(encrypted_message.ok());
 
-   auto decrypted_message = key.decrypt_message(*encrypted_message);
+   auto decrypted_message = key.decrypt_message(encrypted_message->as_view());
    ASSERT_TRUE(decrypted_message.ok());
 
    auto original_message = decrypted_message->to_string();
@@ -29,10 +29,10 @@ TEST(MinecppCrypto, RSA_KeyLoadedFromFile)
 
    minecpp::crypto::PrivateKey key("key.pem", "");
 
-   auto encrypted_message = key.encrypt_message(input_buffer);
+   auto encrypted_message = key.encrypt_message(input_buffer.as_view());
    ASSERT_TRUE(encrypted_message.ok());
 
-   auto decrypted_message = key.decrypt_message(*encrypted_message);
+   auto decrypted_message = key.decrypt_message(encrypted_message->as_view());
    ASSERT_TRUE(decrypted_message.ok());
 
    auto original_message = decrypted_message->to_string();

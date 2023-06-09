@@ -1,54 +1,49 @@
 #pragma once
+
 #include "IHandler.h"
 #include "IResponder.h"
-#include <minecpp/grpc/server/Bidi.h>
-#include <minecpp/proto/service/storage/v1/Storage.grpc.pb.h>
+
+#include "minecpp/network/Network.h"
+#include "minecpp/proto/service/storage/v1/Storage.pb.h"
+#include "minecpp/stream/Server.h"
 
 namespace minecpp::service::storage {
 
 namespace storage_v1 = minecpp::proto::service::storage::v1;
 
-MINECPP_DECLARE_BIDI_SERVER(StorageServer, storage_v1::StorageService::AsyncService, Join,
-                            storage_v1::Response, storage_v1::Request)
-
-using Stream = grpc::server::Stream<StorageServer>;
-
 class Connection
 {
  public:
-   Connection(ConnectionId id, Stream stream, IHandler *handler);
-
-   Connection(Connection &)                      = delete;
-   Connection &operator=(Connection &)           = delete;
-   Connection(Connection &&) noexcept            = delete;
-   Connection &operator=(Connection &&) noexcept = delete;
+   explicit Connection(std::shared_ptr<stream::Peer> peer);
 
    void send(const storage_v1::Response &response);
 
-   void on_read(const storage_v1::Request &request);
-
  private:
-   ConnectionId m_id;
-   Stream m_stream;
-   IHandler *m_handler;
+   std::shared_ptr<stream::Peer> m_peer;
 };
 
 class Server : public IResponder
 {
  public:
-   explicit Server(const std::string &bind_address);
+   explicit Server(network::Port port);
 
-   void on_connection(Stream stream);
+   Server(Server &)                      = delete;
+   Server &operator=(Server &)           = delete;
+   Server(Server &&) noexcept            = delete;
+   Server &operator=(Server &&) noexcept = delete;
+
    void send(ConnectionId id, const storage_v1::Response &response) override;
    void set_handler(IHandler *handler);
-
-   void wait();
+   void tick();
 
  private:
-   StorageServer m_server;
+   void on_connected(std::shared_ptr<stream::Peer> peer);
+   void on_received_message(std::shared_ptr<stream::Peer> peer, container::BufferView message);
+   void on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect);
+
+   stream::Server m_server;
    std::mutex m_mutex;
    std::map<ConnectionId, std::unique_ptr<Connection>> m_connections;
-   ConnectionId m_top_connection_id{};
    IHandler *m_handler{};
 };
 

@@ -5,7 +5,10 @@ set(MINECPP_ENTITY_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(minecpp_entity STATIC)
 
 # Public include headers
-target_include_directories(minecpp_entity PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(minecpp_entity
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/entity
+)
 
 # Source subdirectory
 add_subdirectory("src")
