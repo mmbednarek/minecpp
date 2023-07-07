@@ -13,6 +13,8 @@ target_sources(minecpp_protonbt
         ${CMAKE_CURRENT_SOURCE_DIR}/Lex.yy.cc
         ${CMAKE_CURRENT_SOURCE_DIR}/Lex.yy.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Migration.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Migration.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Parser.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Parser.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Structgen.cpp

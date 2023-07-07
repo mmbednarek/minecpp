@@ -4,10 +4,10 @@ set(MINECPP_API_MINECPP_NBT_PLAYER_V1_INCLUDE_DIR ${MINECPP_API_MINECPP_NBT_DIR}
 target_sources(minecpp_api_nbt
     # Source files
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Player.nbt.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Player.schema.cpp
 
     # Header files
     PUBLIC
-        ${MINECPP_API_MINECPP_NBT_PLAYER_V1_INCLUDE_DIR}/Player.nbt.h
+        ${MINECPP_API_MINECPP_NBT_PLAYER_V1_INCLUDE_DIR}/Player.schema.h
 )
 

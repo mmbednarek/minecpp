@@ -1,0 +1,166 @@
+package minecpp.nbt.repository.v1
+
+[NBT]
+record MonsterSpawnLightLevelValue {
+    max_inclusive: int32
+    min_inclusive: int32
+}
+
+[NBT]
+record MonsterSpawnLightLevel {
+    type: string
+    value: MonsterSpawnLightLevelValue
+}
+
+[NBT]
+record DimensionTypeDescription {
+   piglin_safe: int8
+   has_raids: int8
+   monster_spawn_block_light_limit: int32
+   monster_spawn_light_level: variant[MonsterSpawnLightLevel, int32]
+   natural: int8
+   ambient_light: float32
+   fixed_time: optional[int64]
+   infiniburn: string
+   respawn_anchor_works: int8
+   has_skylight: int8
+   bed_works: int8
+   effects: string
+   min_y: int32
+   height: int32
+   logical_height: int32
+   coordinate_scale: float64
+   ultrawarm: int8
+   has_ceiling: int8
+}
+
+[NBT]
+record DimensionTypeEntry {
+   name: string
+   id: int32
+   element: DimensionTypeDescription
+}
+
+[NBT]
+record DimensionTypes {
+   type: string
+   value: list[DimensionTypeEntry]
+}
+
+[NBT]
+record BiomeMusic {
+   replace_current_music: int8
+   sound: string
+   max_delay: int32
+   min_delay: int32
+}
+
+[NBT]
+record BiomeAdditionsSound {
+   sound: string
+   tick_chance: float64
+}
+
+[NBT]
+record BiomeMoodSound {
+   sound: string
+   tick_delay: int32
+   offset: float64
+   block_search_extent: int32
+}
+
+[NBT]
+record BiomeParticleOptions {
+   type: string
+}
+
+[NBT]
+record BiomeParticle {
+   probability: float32
+   type: BiomeParticleOptions
+}
+
+[NBT]
+record BiomeEffects {
+   sky_color: int32
+   water_fog_color: int32
+   fog_color: int32
+   water_color: int32
+   foliage_color: optional[int32]
+   grass_color: optional[int32]
+   grass_color_modifier: optional[string]
+   music: optional[BiomeMusic]
+   ambient_sound: optional[string]
+   additions_sound: optional[BiomeAdditionsSound]
+   mood_sound: optional[BiomeMoodSound]
+   particle: optional[BiomeParticle]
+}
+
+[NBT]
+record BiomeDescription {
+   precipitation: string
+   depth: float32
+   temperature: float32
+   scale: float32
+   downfall: float32
+   category: string
+   temperature_modifier: optional[string]
+   effects: BiomeEffects
+}
+
+[NBT]
+record BiomeEntry {
+   name: string
+   id: int32
+   element: BiomeDescription
+}
+
+[NBT]
+record Biomes {
+   type: string
+   value: list[BiomeEntry]
+}
+
+[NBT]
+record ChatDecorationStyle {
+   color: string
+   italic: int8
+   bold: int8
+}
+
+[NBT]
+record ChatDetails {
+   parameters: list[string]
+   style: optional[ChatDecorationStyle]
+   translation_key: string
+}
+
+[NBT]
+record ChatTypeDescription {
+   chat: ChatDetails
+   narration: ChatDetails
+}
+
+[NBT]
+record ChatTypeEntry {
+   name: string
+   id: int32
+   element: ChatTypeDescription
+}
+
+[NBT]
+record ChatTypes {
+   type: string
+   value: list[ChatTypeEntry]
+}
+
+[NBT]
+record Registry {
+   [Namespace="minecraft", Path="dimension_type"]
+   dimension_types: DimensionTypes
+   [Namespace="minecraft", Path="worldgen/biome"]
+   biomes: Biomes
+   [Namespace="minecraft", Path="chat_type"]
+   chat_types: ChatTypes
+}
+

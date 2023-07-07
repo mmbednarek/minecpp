@@ -3,7 +3,7 @@
 #include <mb/int.h>
 #include <mb/result.h>
 #include <minecpp/game/Types.hpp>
-#include <minecpp/nbt/repository/v1/Codec.nbt.h>
+#include <minecpp/nbt/repository/v1/Codec.schema.h>
 #include <string>
 #include <unordered_map>
 #include <vector>

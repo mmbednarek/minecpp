@@ -1,0 +1,10 @@
+package minecpp.nbt.block.v1
+
+[NBT]
+record BlockState {
+   BlocksMovement: int8
+   Luminance: int32
+   Opacity: int32
+   SolidFaces: common.v1.FaceMask
+}
+

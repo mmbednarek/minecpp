@@ -4,12 +4,12 @@ set(MINECPP_API_MINECPP_NBT_BLOCK_V1_INCLUDE_DIR ${MINECPP_API_MINECPP_NBT_DIR}/
 target_sources(minecpp_api_nbt
     # Source files
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Block.nbt.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/BlockState.nbt.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Block.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/BlockState.schema.cpp
 
     # Header files
     PUBLIC
-        ${MINECPP_API_MINECPP_NBT_BLOCK_V1_INCLUDE_DIR}/Block.nbt.h
-        ${MINECPP_API_MINECPP_NBT_BLOCK_V1_INCLUDE_DIR}/BlockState.nbt.h
+        ${MINECPP_API_MINECPP_NBT_BLOCK_V1_INCLUDE_DIR}/Block.schema.h
+        ${MINECPP_API_MINECPP_NBT_BLOCK_V1_INCLUDE_DIR}/BlockState.schema.h
 )
 

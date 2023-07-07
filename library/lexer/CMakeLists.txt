@@ -15,3 +15,5 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_lexer
 )
+
+add_subdirectory("example/python")

@@ -1,7 +1,7 @@
 #pragma once
 #include "Server.h"
 #include <minecpp/game/player/Id.h>
-#include <minecpp/nbt/repository/v1/Codec.nbt.h>
+#include <minecpp/nbt/repository/v1/Codec.schema.h>
 #include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
 #include <minecpp/service/engine/Api.h>
 #include <string>

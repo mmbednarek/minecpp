@@ -1,6 +1,7 @@
 #include <cassert>
 #include <minecpp/nbt/Parser.h>
 #include <minecpp/nbt/Reader.h>
+#include <utility>
 
 namespace minecpp::nbt {
 
@@ -135,6 +136,51 @@ CompoundContent Reader::read_compound_content()
 {
    Parser p(raw_stream());
    return p.read_compound();
+}
+
+Reader::CompoundRange Reader::iterate_compound()
+{
+   return Reader::CompoundRange{*this};
+}
+
+Reader::CompoundIterator::CompoundIterator(Reader &reader, TagHeader current) :
+    m_reader(reader),
+    m_current(std::move(current))
+{
+}
+
+const TagHeader &Reader::CompoundIterator::operator*() const
+{
+   return m_current;
+}
+
+Reader::CompoundIterator &Reader::CompoundIterator::operator++()
+{
+   m_current = m_reader.peek_tag();
+   return *this;
+}
+
+bool Reader::CompoundIterator::operator==(const Reader::CompoundIterator &other) const
+{
+   return m_current.id == other.m_current.id;
+}
+
+Reader::CompoundRange::CompoundRange(Reader &reader) :
+    m_reader(reader)
+{
+}
+
+Reader::CompoundIterator Reader::CompoundRange::begin()
+{
+   return {m_reader, m_reader.peek_tag()};
+}
+
+Reader::CompoundIterator Reader::CompoundRange::end()
+{
+   return {
+           m_reader,
+           {TagId::End, ""}
+   };
 }
 
 }// namespace minecpp::nbt

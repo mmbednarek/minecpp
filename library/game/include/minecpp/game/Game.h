@@ -4,9 +4,9 @@
 
 #include <mb/enum.h>
 #include <mb/int.h>
-#include <minecpp/nbt/block/v1/Block.nbt.h>
-#include <minecpp/nbt/block/v1/BlockState.nbt.h>
-#include <minecpp/nbt/common/v1/Common.nbt.h>
+#include <minecpp/nbt/block/v1/Block.schema.h>
+#include <minecpp/nbt/block/v1/BlockState.schema.h>
+#include <minecpp/nbt/common/v1/Common.schema.h>
 #include <minecpp/proto/common/v1/Common.pb.h>
 #include <minecpp/proto/entity/v1/Entity.pb.h>
 

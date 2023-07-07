@@ -3,7 +3,7 @@
 #include <minecpp/game/block/Block.h>
 #include <minecpp/game/Game.h>
 #include <minecpp/game/item/Item.h>
-#include <minecpp/nbt/repository/v1/Repository.nbt.h>
+#include <minecpp/nbt/repository/v1/Repository.schema.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>

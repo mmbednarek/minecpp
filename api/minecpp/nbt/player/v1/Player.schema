@@ -1,0 +1,96 @@
+package minecpp.nbt.player.v1
+
+[NBT]
+record Attribute {
+   Base: float64
+   Name: string
+}
+
+[NBT]
+record Memories {
+   no_empty: int32
+}
+
+[NBT]
+record Brain {
+   memories: Memories
+}
+
+[NBT]
+record InventoryElement {
+   Count: int8
+   Slot: int8
+   id: string
+}
+
+[NBT]
+record Abilities {
+   flySpeed: float32
+   flying: int8
+   instabuild: int8
+   invulnerable: int8
+   mayBuild: int8
+   mayfly: int8
+   walkSpeed: float32
+}
+
+[NBT]
+record RecipeBook {
+   isBlastingFurnaceFilteringCraftable: int8
+   isBlastingFurnaceGuiOpen: int8
+   isFilteringCraftable: int8
+   isFurnaceFilteringCraftable: int8
+   isFurnaceGuiOpen: int8
+   isGuiOpen: int8
+   isSmokerFilteringCraftable: int8
+   isSmokerGuiOpen: int8
+   recipes: list[string]
+   toBeDisplayed: list[string]
+}
+
+[NBT]
+record Player {
+   AbsorptionAmount: float32
+   Air: int16
+   Attributes: list[Attribute]
+   Brain: Brain
+   DataVersion: int32
+   DeathTime: int16
+   Dimension: string
+   FallDistance: float32
+   FallFlying: int8
+   Fire: int16
+   Health: float32
+   HurtByTimestamp: int32
+   HurtTime: int16
+   Inventory: list[InventoryElement]
+   Invulnerable: int8
+   Motion: list[float64]
+   OnGround: int8
+   PortalCooldown: int32
+   Pos: list[float64]
+   Rotation: list[float32]
+   Score: int32
+   SelectedItemSlot: int32
+   SleepTimer: int16
+   SpawnAngle: float32
+   SpawnDimension: string
+   SpawnForced: int8
+   SpawnX: int32
+   SpawnY: int32
+   SpawnZ: int32
+   UUID: list[int32]
+   XpLevel: int32
+   XpP: float32
+   XpSeed: int32
+   XpTotal: int32
+   abilities: Abilities
+   foodExhaustionLevel: float32
+   foodLevel: int32
+   foodSaturationLevel: float32
+   foodTickTimer: int32
+   playerGameType: int32
+   recipeBook: RecipeBook
+   seenCredits: int8
+}
+

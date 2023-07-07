@@ -35,7 +35,8 @@
     "nbtprotogen",
     "nbtscheme",
     "recipes",
-    "snbt_parser"
+    "snbt_parser",
+    "schema_compiler"
   ],
   "external": [
     {

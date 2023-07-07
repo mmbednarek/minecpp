@@ -1,5 +1,5 @@
 #include <minecpp/game/player/Player.h>
-#include <minecpp/nbt/player/v1/Player.nbt.h>
+#include <minecpp/nbt/player/v1/Player.schema.h>
 
 namespace minecpp::game::player {
 

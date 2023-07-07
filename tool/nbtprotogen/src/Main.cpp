@@ -3,6 +3,8 @@
 #include "Lexer.h"
 #include "Parser.h"
 #include "Structgen.h"
+#include "Migration.h"
+
 #include <boost/program_options.hpp>
 #include <fmt/core.h>
 #include <fstream>
@@ -80,6 +82,12 @@ int main(int argc, char *argv[])
    auto parser     = Syntax::Parser(tkn_reader);
    try {
       auto nodes     = parser.parse();
+
+      auto output_path = fmt::format("{}.schema", scheme_file.substr(0, scheme_file.size() - 4));
+      std::ofstream out_file(output_path);
+      generate_output(nodes, out_file);
+      return EXIT_SUCCESS;
+
       auto structure = Semantics::Structure(nodes);
 
       minecpp::tool::nbt_idl::Generator gen(structure, module_name, include_path);

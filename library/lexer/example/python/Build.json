@@ -1,0 +1,11 @@
+{
+  "name": "minecpp_lexer_example_python",
+  "dependencies": {
+    "private": [
+      "libmb",
+      "minecpp_utils",
+      "minecpp_lexer",
+      "spdlog"
+    ]
+  }
+}

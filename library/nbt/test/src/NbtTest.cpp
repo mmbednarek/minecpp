@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <minecpp/nbt/Parser.h>
+#include <minecpp/nbt/Reader.h>
 
 using namespace minecpp::nbt;
 
@@ -191,6 +192,36 @@ TEST(NBT_Parser, CompoundTag)
    ASSERT_EQ(num_tag.as<short>(), 0x0123);
    ASSERT_EQ(stuff_tag.as<int>(), 0x10203040);
    ASSERT_EQ(tag.content.to_string(), "{\n\tNum: 291s,\n\tStuff: 270544960\n}");
+}
+
+TEST(NBT_Reader, CompoundTag)
+{
+   char buff[]{0x0a, 0x00, 0x04, 'D',  'a', 't', 'a', 0x02, 0x00, 0x03, 'N',  'u',  'm',  0x01,
+               0x23, 0x03, 0x00, 0x05, 'S', 't', 'u', 'f',  'f',  0x10, 0x20, 0x30, 0x40, 0x00};
+   auto stream = std::stringstream();
+   stream.write(buff, sizeof(buff));
+   Reader r(stream);
+
+   auto [tag, name]        = r.peek_tag();
+   EXPECT_EQ(tag, TagId::Compound);
+   EXPECT_EQ(name, "Data");
+
+   int index = 0;
+   for (const auto &[tag_id, com_name] : r.iterate_compound()) {
+      EXPECT_LE(index, 1);
+      if (index == 0) {
+         EXPECT_EQ(tag_id, TagId::Short);
+         EXPECT_EQ(com_name, "Num");
+         auto value = r.read_short();
+         EXPECT_EQ(value, 291);
+      } else {
+         EXPECT_EQ(tag_id, TagId::Int);
+         EXPECT_EQ(com_name, "Stuff");
+         auto value = r.read_int();
+         EXPECT_EQ(value, 270544960);
+      }
+      index++;
+   }
 }
 
 TEST(NBT_Parser, IntArrayTag)

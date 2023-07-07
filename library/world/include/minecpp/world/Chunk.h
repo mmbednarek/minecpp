@@ -3,7 +3,7 @@
 #include "Section.h"
 
 #include "minecpp/game/ChunkPosition.h"
-#include "minecpp/nbt/chunk/v1/Chunk.nbt.h"
+#include "minecpp/nbt/chunk/v1/Chunk.schema.h"
 #include "minecpp/nbt/Reader.h"
 #include "minecpp/nbt/Tag.h"
 #include "minecpp/proto/chunk/v1/Chunk.pb.h"

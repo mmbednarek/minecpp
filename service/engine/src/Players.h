@@ -7,7 +7,7 @@
 #include <minecpp/game/player/Player.h>
 #include <minecpp/game/player/Provider.hpp>
 #include <minecpp/game/Team.h>
-#include <minecpp/nbt/player/v1/Player.nbt.h>
+#include <minecpp/nbt/player/v1/Player.schema.h>
 #include <random>
 #include <vector>
 

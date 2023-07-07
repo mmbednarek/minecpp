@@ -1,0 +1,133 @@
+package minecpp.nbt.chunk.v1
+
+[NBT]
+record ArmorItem {
+   no_empty: int32
+}
+
+[NBT]
+record Attribute {
+   Base: float64
+   Name: string
+}
+
+[NBT]
+record Memories {
+   no_empty: int32
+}
+
+[NBT]
+record Brain {
+   memories: Memories
+}
+
+[NBT]
+record HandItem {
+   no_empty: int32
+}
+
+[NBT]
+record Entity {
+   AbsorptionAmount: float32
+   Air: int16
+   ArmorDropChances: list[float32]
+   ArmorItems: list[ArmorItem]
+   Attributes: list[Attribute]
+   Brain: Brain
+   CanPickUpLoot: int8
+   DeathTime: int16
+   ExplosionRadius: int8
+   FallDistance: float32
+   FallFlying: int8
+   Fire: int16
+   Fuse: int16
+   HandDropChances: list[float32]
+   HandItems: list[HandItem]
+   Health: float32
+   HurtByTimestamp: int32
+   HurtTime: int16
+   Invulnerable: int8
+   LeftHanded: int8
+   Motion: list[float64]
+   OnGround: int8
+   PersistenceRequired: int8
+   PortalCooldown: int32
+   Pos: list[float64]
+   Rotation: list[float32]
+   UUID: list[int32]
+   id: string
+   ignited: int8
+}
+
+[NBT]
+record Heightmaps {
+   [CC_Name="motion_blocking"]
+   MOTION_BLOCKING: list[int64]
+   [CC_Name="motion_blocking_no_leaves"]
+   MOTION_BLOCKING_NO_LEAVES: list[int64]
+   [CC_Name="ocean_floor"]
+   OCEAN_FLOOR: list[int64]
+   [CC_Name="ocean_floor_wg"]
+   OCEAN_FLOOR_WG: list[int64]
+   [CC_Name="world_surface"]
+   WORLD_SURFACE: list[int64]
+   [CC_Name="world_surface_wg"]
+   WORLD_SURFACE_WG: list[int64]
+}
+
+[NBT]
+record PaletteItem {
+   Name: string
+   Properties: nbt.CompoundContent
+}
+
+[NBT]
+record Section {
+   Y: int8
+   BlockLight: list[uint8]
+   SkyLight: list[uint8]
+   BlockStates: list[int64]
+   Palette: list[PaletteItem]
+}
+
+[NBT]
+record Start {
+   id: string
+}
+
+[NBT]
+record Structures {
+   Starts: map[string, Start]
+}
+
+[NBT]
+record CarvingMasks {
+   AIR: list[uint8]
+   LIQUID: list[uint8]
+}
+
+[NBT]
+record Level {
+   Biomes: list[int32]
+   CarvingMasks: CarvingMasks
+   Entities: list[Entity]
+   Heightmaps: Heightmaps
+   LastUpdate: int64
+   Lights: list[list[int16]]
+   InhabitedTime: int64
+   PostProcessing: list[list[int16]]
+   Sections: list[Section]
+   Status: string
+   Structures: Structures
+   isLightOn: int8
+   xPos: int32
+   zPos: int32
+}
+
+[NBT]
+record Chunk {
+   [CC_Name="version"]
+   DataVersion: int32
+   Level: Level
+}
+

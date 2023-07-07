@@ -1,0 +1,9 @@
+package minecpp.nbt.item.v1
+
+[NBT]
+record Item {
+   IsBlock: int8
+   CorrespondingBlockTag: string
+   MaxItemStack: int32
+}
+
