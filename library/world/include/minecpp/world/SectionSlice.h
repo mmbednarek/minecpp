@@ -2,7 +2,7 @@
 #include "Section.h"
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/game/SectionRange.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
+#include <minecpp/proto/chunk/Chunk.pb.h>
 #include <unordered_map>
 
 namespace minecpp::world {
@@ -22,8 +22,8 @@ class SectionSlice : public game::ISectionSlice
 
    [[nodiscard]] game::SectionRange range() const;
 
-   [[nodiscard]] static SectionSlice from_proto(const proto::chunk::v1::SectionSlice &slice);
-   [[nodiscard]] proto::chunk::v1::SectionSlice to_proto();
+   [[nodiscard]] static SectionSlice from_proto(const proto::chunk::SectionSlice &slice);
+   [[nodiscard]] proto::chunk::SectionSlice to_proto();
 
  private:
    game::SectionRange m_range;

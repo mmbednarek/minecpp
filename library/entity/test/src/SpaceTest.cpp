@@ -69,7 +69,7 @@ TEST(Entity, ProtoSerialize)
    EntitySystem system(chunk_system);
    auto entity = system.create_spatial_entity({4, 5, 6}, {1, 1, 1});
 
-   minecpp::proto::entity::v1::Entity proto_entity;
+   minecpp::proto::entity::Entity proto_entity;
    entity.serialize_to_proto(&proto_entity);
 
    EXPECT_EQ(proto_entity.entity_id(), entity.id());
@@ -88,7 +88,7 @@ TEST(Entity, ProtoPlayerSerialize)
    minecpp::entity::factory::Player player(minecpp::game::player::read_id_from_nbt({1, 2, 3, 4}), "test");
    auto entity = player.create_entity({4, 5, 6}, system);
 
-   minecpp::proto::entity::v1::PlayerEntity proto_entity;
+   minecpp::proto::entity::PlayerEntity proto_entity;
    entity.serialize_player_to_proto(&proto_entity);
 
    EXPECT_EQ(proto_entity.entity_id(), entity.id());

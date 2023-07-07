@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SectionPosition.h"
-#include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -17,9 +17,9 @@ class SectionRange
    [[nodiscard]] bool is_in_range(SectionPosition position) const;
    [[nodiscard]] SectionRange grow(int amount) const;
 
-   [[nodiscard]] proto::common::v1::SectionRange to_proto() const;
+   [[nodiscard]] proto::common::SectionRange to_proto() const;
 
-   [[nodiscard]] static SectionRange from_proto(const proto::common::v1::SectionRange &range);
+   [[nodiscard]] static SectionRange from_proto(const proto::common::SectionRange &range);
 
    class Iterator
    {

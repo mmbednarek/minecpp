@@ -3,7 +3,7 @@
 #include "Math.h"
 #include "Vector3.h"
 
-#include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::math {
 
@@ -58,14 +58,14 @@ struct Rotation
       return {static_cast<float>(yaw), static_cast<float>(pitch)};
    }
 
-   [[nodiscard]] static Rotation from_proto(const proto::common::v1::Rotation &proto_rot)
+   [[nodiscard]] static Rotation from_proto(const proto::common::Rotation &proto_rot)
    {
       return Rotation::from_degrees(proto_rot.yaw(), proto_rot.pitch());
    }
 
-   [[nodiscard]] proto::common::v1::Rotation to_proto() const
+   [[nodiscard]] proto::common::Rotation to_proto() const
    {
-      proto::common::v1::Rotation out{};
+      proto::common::Rotation out{};
       out.set_yaw(radians_to_degrees(yaw));
       out.set_pitch(radians_to_degrees(pitch));
       return out;

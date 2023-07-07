@@ -5,7 +5,7 @@
 #include <boost/uuid/name_generator.hpp>
 #include <minecpp/game/BlockPosition.h>
 #include <minecpp/network/message/Clientbound.h>
-#include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
+#include <minecpp/proto/event/serverbound/Serverbound.pb.h>
 #include <minecpp/util/Time.h>
 #include <minecpp/util/Uuid.h>
 #include <spdlog/spdlog.h>
@@ -14,7 +14,7 @@ using google::protobuf::Message;
 
 namespace minecpp::service::front {
 
-namespace serverbound_v1 = proto::event::serverbound::v1;
+namespace serverbound_v1 = proto::event::serverbound;
 
 Service::Service(Config & /*config*/) {}
 
@@ -40,7 +40,7 @@ void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std:
    conn->set_state(protocol::State::Play);
    conn->set_uuid(id);
 
-   proto::event::serverbound::v1::AcceptPlayer accept_player;
+   proto::event::serverbound::AcceptPlayer accept_player;
    accept_player.set_challenge_id(0);
    accept_player.set_name(std::string(name));
    this->send(accept_player, id);
@@ -50,7 +50,7 @@ void Service::on_player_disconnect(uuid /*engine_id*/, game::PlayerId player_id)
 {
    assert(m_client != nullptr);
 
-   proto::event::serverbound::v1::RemovePlayer remove_player{};
+   proto::event::serverbound::RemovePlayer remove_player{};
    this->send(remove_player, player_id);
 }
 
@@ -111,8 +111,8 @@ void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
    interact.mutable_position()->set_y(msg.y);
    interact.mutable_position()->set_z(msg.z);
    interact.set_is_sneaking(msg.is_sneaking);
-   interact.set_interaction_type(static_cast<proto::common::v1::InteractionType>(msg.type));
-   interact.set_hand_type(static_cast<proto::common::v1::HandType>(msg.hand));
+   interact.set_interaction_type(static_cast<proto::common::InteractionType>(msg.type));
+   interact.set_hand_type(static_cast<proto::common::HandType>(msg.hand));
    this->send(interact, player_id);
 }
 
@@ -128,7 +128,7 @@ void Service::on_message(uuid /*engine_id*/, game::PlayerId player_id,
                          minecpp::network::message::PlayerDigging msg)
 {
    serverbound_v1::PlayerDigging player_digging;
-   player_digging.set_state(static_cast<proto::common::v1::PlayerDiggingState>(msg.action));
+   player_digging.set_state(static_cast<proto::common::PlayerDiggingState>(msg.action));
    *player_digging.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
    player_digging.set_face(msg.facing.to_proto());
    this->send(player_digging, player_id);

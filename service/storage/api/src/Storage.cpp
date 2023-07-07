@@ -7,7 +7,7 @@ namespace minecpp::service::storage {
 
 void StorageClient::subscribe_chunk(game::ChunkPosition position)
 {
-   proto::service::storage::v1::Request request;
+   proto::service::storage::Request request;
    *request.mutable_chunk_subscription()->mutable_position() = position.to_proto();
 
    this->send(request);
@@ -18,7 +18,7 @@ void StorageClient::push_chunk(const world::Chunk *chunk)
    if (chunk == nullptr)
       return;
 
-   proto::service::storage::v1::Request request;
+   proto::service::storage::Request request;
    *request.mutable_chunk_data()->mutable_chunk_data() = chunk->to_proto();
 
    this->send(request);
@@ -71,7 +71,7 @@ void StorageClient::on_connected(std::shared_ptr<stream::Peer> peer)
 {
    spdlog::info("established connection to storage server at {}", peer->id());
 
-   proto::service::storage::v1::Request request;
+   proto::service::storage::Request request;
    request.mutable_set_client_id()->mutable_client_id()->set_value(m_client_id);
 
    container::Buffer buffer(static_cast<std::size_t>(request.ByteSizeLong()));
@@ -82,7 +82,7 @@ void StorageClient::on_connected(std::shared_ptr<stream::Peer> peer)
 void StorageClient::on_received_message(std::shared_ptr<stream::Peer> /*peer*/,
                                         minecpp::container::BufferView message)
 {
-   proto::service::storage::v1::Response response;
+   proto::service::storage::Response response;
    response.ParseFromArray(message.data(), static_cast<int>(message.size()));
 
    m_handler.handle_response(std::move(response));

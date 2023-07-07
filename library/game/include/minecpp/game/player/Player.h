@@ -3,7 +3,7 @@
 #include <minecpp/game/IDispatcher.hpp>
 #include <minecpp/game/Mode.h>
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/player/v1/Player.pb.h>
+#include <minecpp/proto/player/Player.pb.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -14,7 +14,7 @@ class Entity;
 }
 }// namespace minecpp::game
 
-namespace minecpp::nbt::player::v1 {
+namespace minecpp::nbt::player {
 class Player;
 }
 
@@ -29,9 +29,9 @@ struct Status
    int ping;
    game::Mode mode;
 
-   [[nodiscard]] inline proto::player::v1::Status to_proto() const
+   [[nodiscard]] inline proto::player::Status to_proto() const
    {
-      proto::player::v1::Status status;
+      proto::player::Status status;
       *status.mutable_id() = write_id_to_proto(id);
       status.set_name(name);
       status.set_ping(ping);
@@ -119,9 +119,9 @@ class Player
       };
    }
 
-   static Player from_nbt(const nbt::player::v1::Player &player, std::string_view name);
+   static Player from_nbt(const nbt::player::Player &player, std::string_view name);
 
-   [[nodiscard]] proto::player::v1::Player to_proto() const;
+   [[nodiscard]] proto::player::Player to_proto() const;
 };
 
 }// namespace minecpp::game::player

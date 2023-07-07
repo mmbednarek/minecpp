@@ -8,7 +8,7 @@ namespace minecpp::service::engine::job {
 class HandlePlayerMessage : public IJob
 {
  public:
-   using Event = proto::event::serverbound::v1::Event;
+   using Event = proto::event::serverbound::Event;
 
    HandlePlayerMessage(EventHandler &event_handler, Event event);
 

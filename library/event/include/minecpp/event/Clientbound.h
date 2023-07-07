@@ -2,11 +2,11 @@
 #define MINECPP_CLIENTBOUND_H
 #include "Recipient.h"
 #include <minecpp/game/player/Player.h>
-#include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
+#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
 
 namespace minecpp::event {
 
-namespace clientbound_v1 = proto::event::clientbound::v1;
+namespace clientbound_v1 = proto::event::clientbound;
 
 template<typename T>
 concept ClientboundVisitor =
@@ -52,7 +52,7 @@ void visit_event_type(const clientbound_v1::Event &event, TVisitor *visitor, TCa
    event.payload().UnpackTo(&target_event);
 
    switch (event.recipient_case()) {
-   case proto::event::clientbound::v1::Event::kSinglePlayer: {
+   case proto::event::clientbound::Event::kSinglePlayer: {
       auto player_id = game::player::read_id_from_proto(event.single_player().player_id());
       std::invoke(callback, visitor, target_event,
                   RecipientList{
@@ -61,18 +61,18 @@ void visit_event_type(const clientbound_v1::Event &event, TVisitor *visitor, TCa
       });
       break;
    }
-   case proto::event::clientbound::v1::Event::kMultiplePlayers: {
+   case proto::event::clientbound::Event::kMultiplePlayers: {
       std::vector<game::PlayerId> result(static_cast<mb::size>(event.multiple_players().player_ids_size()));
       auto &player_ids = event.multiple_players().player_ids();
       std::transform(player_ids.begin(), player_ids.end(), result.begin(), game::player::read_id_from_proto);
       std::invoke(callback, visitor, target_event, RecipientList{.type = RecipientType::Some, .list{result}});
       break;
    }
-   case proto::event::clientbound::v1::Event::kAllPlayers: {
+   case proto::event::clientbound::Event::kAllPlayers: {
       std::invoke(callback, visitor, target_event, RecipientList{.type = RecipientType::All, .list{}});
       break;
    }
-   case proto::event::clientbound::v1::Event::kExcluding: {
+   case proto::event::clientbound::Event::kExcluding: {
       auto player_id = game::player::read_id_from_proto(event.excluding().player_id());
       std::invoke(callback, visitor, target_event,
                   RecipientList{

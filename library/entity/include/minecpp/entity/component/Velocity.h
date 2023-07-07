@@ -18,7 +18,7 @@ class Velocity
 
    void on_attached(game::Entity &entity);
    void tick(game::IWorld &world, game::Entity &entity, double delta_time);
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_to_proto(proto::entity::Entity *entity) const;
    void set_velocity(game::IWorld &world, game::Entity &entity, const math::Vector3 &velocity);
    [[nodiscard]] const math::Vector3 &velocity() const;
 

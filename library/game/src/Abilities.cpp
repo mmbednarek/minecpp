@@ -2,7 +2,7 @@
 
 namespace minecpp::game {
 
-Abilities Abilities::from_proto(const proto::entity::v1::Abilities &abilities)
+Abilities Abilities::from_proto(const proto::entity::Abilities &abilities)
 {
    return {
            .fly_speed     = abilities.fly_speed(),
@@ -15,9 +15,9 @@ Abilities Abilities::from_proto(const proto::entity::v1::Abilities &abilities)
    };
 }
 
-minecpp::proto::entity::v1::Abilities Abilities::to_proto() const
+minecpp::proto::entity::Abilities Abilities::to_proto() const
 {
-   minecpp::proto::entity::v1::Abilities abilities;
+   minecpp::proto::entity::Abilities abilities;
    abilities.set_walk_speed(this->walk_speed);
    abilities.set_fly_speed(this->fly_speed);
    abilities.set_flying(this->flying);

@@ -2,7 +2,7 @@
 #include "Location.h"
 #include "Ticker.h"
 #include <minecpp/game/Entity.h>
-#include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <minecpp/proto/entity/Entity.pb.h>
 
 namespace minecpp::entity::component {
 

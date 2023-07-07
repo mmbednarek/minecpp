@@ -1,8 +1,8 @@
 #include "Api.h"
 
 #include "minecpp/container/BasicBuffer.hpp"
-#include "minecpp/proto/event/clientbound/v1/Clientbound.pb.h"
-#include "minecpp/proto/event/serverbound/v1/Serverbound.pb.h"
+#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
+#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 
 #include <charconv>
 #include <spdlog/spdlog.h>
@@ -20,7 +20,7 @@ void ClientStream::send(const pb::Message &message, game::PlayerId id)
 {
    assert(m_peer);
 
-   proto::event::serverbound::v1::Event proto_event;
+   proto::event::serverbound::Event proto_event;
    proto_event.mutable_payload()->PackFrom(message);
    *proto_event.mutable_player_id() = game::player::write_id_to_proto(id);
 
@@ -36,7 +36,7 @@ void Client::on_connected(std::shared_ptr<stream::Peer> peer)
 
 void Client::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, container::BufferView message)
 {
-   proto::event::clientbound::v1::Event proto_event;
+   proto::event::clientbound::Event proto_event;
    proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
    m_visitor.visit_event(proto_event);
 }

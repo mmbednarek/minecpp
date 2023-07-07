@@ -17,7 +17,7 @@ class IVisitor
  public:
    virtual ~IVisitor() noexcept = default;
 
-   virtual void visit_event(const proto::event::clientbound::v1::Event &event) = 0;
+   virtual void visit_event(const proto::event::clientbound::Event &event) = 0;
 };
 
 class ClientStream

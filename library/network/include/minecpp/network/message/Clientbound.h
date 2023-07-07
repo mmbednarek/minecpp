@@ -7,7 +7,7 @@
 #include <minecpp/chat/Chat.h>
 #include <minecpp/game/ChunkPosition.h>
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
+#include <minecpp/proto/chunk/Chunk.pb.h>
 #include <string_view>
 
 namespace minecpp::network::message {
@@ -160,7 +160,7 @@ struct KeepAlive
 // 0x21
 struct ChunkData
 {
-   const minecpp::proto::chunk::v1::Chunk &chunk;
+   const minecpp::proto::chunk::Chunk &chunk;
 
    [[nodiscard]] Writer serialize() const;
 };
@@ -176,7 +176,7 @@ struct UnloadChunk
 // 0x25
 struct UpdateLight
 {
-   minecpp::proto::chunk::v1::Chunk &chunk;
+   minecpp::proto::chunk::Chunk &chunk;
 
    [[nodiscard]] Writer serialize() const;
 };

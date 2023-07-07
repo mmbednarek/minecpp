@@ -2,7 +2,7 @@
 
 #include "Entt.hpp"
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <minecpp/proto/entity/Entity.pb.h>
 
 namespace minecpp::game {
 
@@ -11,10 +11,10 @@ class IWorld;
 
 template<typename T>
 concept ProtoSerializable =
-        requires(const T &t, proto::entity::v1::Entity *proto_entity) { t.serialize_to_proto(proto_entity); };
+        requires(const T &t, proto::entity::Entity *proto_entity) { t.serialize_to_proto(proto_entity); };
 
 template<typename T>
-concept PlayerProtoSerializable = requires(const T &t, proto::entity::v1::PlayerEntity *proto_entity) {
+concept PlayerProtoSerializable = requires(const T &t, proto::entity::PlayerEntity *proto_entity) {
                                      t.serialize_player_to_proto(proto_entity);
                                   };
 

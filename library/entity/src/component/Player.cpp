@@ -16,7 +16,7 @@ void Player::on_attached(game::Entity &entity)
    m_entity_id = entity.id();
 }
 
-void Player::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
+void Player::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
 {
    auto [lower, upper] = util::write_uuid(m_id);
    entity->mutable_uuid()->set_lower(lower);

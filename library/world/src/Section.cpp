@@ -73,7 +73,7 @@ std::vector<game::LightSource> &Section::light_sources()
    return m_light_sources;
 }
 
-Section Section::from_proto(const proto::chunk::v1::Section &section)
+Section Section::from_proto(const proto::chunk::Section &section)
 {
    auto palette = container::PalettedVector<game::BlockStateId>::from_raw(
            static_cast<container::TightVector::bits_type>(section.bits()), 4096, section.data().begin(),
@@ -96,11 +96,11 @@ Section Section::from_proto(const proto::chunk::v1::Section &section)
    return result;
 }
 
-proto::chunk::v1::Section Section::to_proto() const
+proto::chunk::Section Section::to_proto() const
 {
    std::shared_lock lock{m_mutex};
 
-   proto::chunk::v1::Section result{};
+   proto::chunk::Section result{};
 
    result.set_ref_count(m_reference_count);
    result.set_y(m_y);
@@ -178,7 +178,7 @@ Section &Section::operator=(const Section &section)
    return *this;
 }
 
-Section Section::from_nbt(const nbt::chunk::v1::Section &section)
+Section Section::from_nbt(const nbt::chunk::Section &section)
 {
    Section result{section.y};
 
@@ -191,7 +191,7 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
    std::vector<game::BlockStateId> palette;
    palette.resize(section.palette.size());
    std::transform(section.palette.begin(), section.palette.end(), palette.begin(),
-                  [](const nbt::chunk::v1::PaletteItem &item) -> game::BlockStateId {
+                  [](const nbt::chunk::PaletteItem &item) -> game::BlockStateId {
                      auto block_id = repository::Block::the().find_id_by_tag(item.name);
                      if (block_id.has_failed())
                         return DEFAULT_BLOCK_STATE(Air);
@@ -212,11 +212,11 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
    return result;
 }
 
-[[nodiscard]] nbt::chunk::v1::Section Section::to_nbt() const
+[[nodiscard]] nbt::chunk::Section Section::to_nbt() const
 {
    std::shared_lock lock{m_mutex};
 
-   nbt::chunk::v1::Section result;
+   nbt::chunk::Section result;
 
    result.y = static_cast<mb::i8>(m_y);
 
@@ -229,7 +229,7 @@ Section Section::from_nbt(const nbt::chunk::v1::Section &section)
    result.palette.resize(m_data.palette().size());
    std::transform(m_data.palette().begin(), m_data.palette().end(), result.palette.begin(),
                   [](const game::BlockStateId state) {
-                     nbt::chunk::v1::PaletteItem item;
+                     nbt::chunk::PaletteItem item;
                      auto [block_id, state_value] = repository::StateManager::the().parse_block_id(state);
                      auto res                     = repository::Block::the().get_by_id(block_id);
                      if (!res.ok()) {

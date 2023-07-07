@@ -2,9 +2,9 @@
 
 namespace minecpp::game {
 
-namespace pb_common  = proto::common::v1;
-namespace pb_entity  = proto::entity::v1;
-namespace nbt_common = nbt::common::v1;
+namespace pb_common  = proto::common;
+namespace pb_entity  = proto::entity;
+namespace nbt_common = nbt::common;
 
 FaceMask face_mask_from_nbt(const nbt_common::FaceMask &nbt_mask)
 {

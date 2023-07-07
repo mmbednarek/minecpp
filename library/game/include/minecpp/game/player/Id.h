@@ -1,23 +1,23 @@
 #pragma once
 #include <boost/uuid/uuid_io.hpp>
 #include <minecpp/game/Types.hpp>
-#include <minecpp/proto/player/v1/Player.pb.h>
+#include <minecpp/proto/player/Player.pb.h>
 
 namespace minecpp::game::player {
 
 using Id = game::PlayerId;
 
-inline Id read_id_from_proto(const proto::player::v1::PlayerId &id)
+inline Id read_id_from_proto(const proto::player::PlayerId &id)
 {
    return util::read_uuid(id.lower(), id.upper());
 }
 
-inline proto::player::v1::PlayerId write_id_to_proto(Id player_id)
+inline proto::player::PlayerId write_id_to_proto(Id player_id)
 {
    mb::u64 lower, upper;
    std::tie(lower, upper) = util::write_uuid(player_id);
 
-   proto::player::v1::PlayerId result;
+   proto::player::PlayerId result;
    result.set_lower(lower);
    result.set_upper(upper);
    return result;

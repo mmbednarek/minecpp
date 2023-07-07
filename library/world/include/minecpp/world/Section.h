@@ -5,8 +5,8 @@
 #include <minecpp/container/PalettedVector.h>
 #include <minecpp/container/TightArray.h>
 #include <minecpp/game/IWorld.hpp>
-#include <minecpp/nbt/chunk/v1/Chunk.schema.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
+#include <minecpp/nbt/chunk/Chunk.schema.h>
+#include <minecpp/proto/chunk/Chunk.pb.h>
 #include <shared_mutex>
 #include <vector>
 
@@ -29,11 +29,11 @@ class Section final : public game::ISection
    std::vector<game::LightSource> &light_sources() override;
    void reset_light(game::LightType light_type) override;
 
-   [[nodiscard]] static Section from_proto(const proto::chunk::v1::Section &section);
-   [[nodiscard]] proto::chunk::v1::Section to_proto() const;
+   [[nodiscard]] static Section from_proto(const proto::chunk::Section &section);
+   [[nodiscard]] proto::chunk::Section to_proto() const;
 
-   [[nodiscard]] static Section from_nbt(const nbt::chunk::v1::Section &section);
-   [[nodiscard]] nbt::chunk::v1::Section to_nbt() const;
+   [[nodiscard]] static Section from_nbt(const nbt::chunk::Section &section);
+   [[nodiscard]] nbt::chunk::Section to_nbt() const;
 
    void recalculate_reference_count();
 

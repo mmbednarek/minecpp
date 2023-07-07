@@ -1,13 +1,13 @@
 #pragma once
 #include <minecpp/game/ChunkPosition.h>
-#include <minecpp/proto/chunk/v1/Chunk.pb.h>
-#include <minecpp/proto/service/storage/v1/Storage.pb.h>
+#include <minecpp/proto/chunk/Chunk.pb.h>
+#include <minecpp/proto/service/storage/Storage.pb.h>
 #include <optional>
 
 namespace minecpp::service::storage {
 
-namespace proto_chunk   = proto::chunk::v1;
-namespace proto_storage = proto::service::storage::v1;
+namespace proto_chunk   = proto::chunk;
+namespace proto_storage = proto::service::storage;
 
 class IStorage
 {

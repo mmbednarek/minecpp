@@ -733,7 +733,7 @@ void EventHandler::handle_interact(const serverbound_v1::Interact &event, game::
    auto slot_item = player_entity->component<InventoryComponent>().active_item();
    m_root_item_controller.on_interact(m_world, slot_item.item_id, interaction, player_entity->id(),
                                       interacted_entity.id(), math::Vector3f::from_proto(event.position()),
-                                      event.hand_type() == proto::common::v1::HandType::OffHand);
+                                      event.hand_type() == proto::common::HandType::OffHand);
 }
 
 void EventHandler::handle_use_item(const serverbound_v1::UseItem & /*use_item*/, game::PlayerId player_id)

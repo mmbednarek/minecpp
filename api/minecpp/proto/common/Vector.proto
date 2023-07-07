@@ -1,0 +1,41 @@
+syntax = "proto3";
+package minecpp.proto.common;
+
+message Vector2 {
+  double x = 1;
+  double y = 2;
+}
+
+message Vector2f {
+  float x = 1;
+  float y = 2;
+}
+
+message Vector2i {
+  int32 x = 1;
+  int32 y = 2;
+}
+
+message Vector3 {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message Vector3f {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Vector3i {
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+}
+
+message Vector3l {
+  int64 x = 1;
+  int64 y = 2;
+  int64 z = 3;
+}

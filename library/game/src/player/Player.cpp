@@ -1,5 +1,5 @@
 #include <minecpp/game/player/Player.h>
-#include <minecpp/nbt/player/v1/Player.schema.h>
+#include <minecpp/nbt/player/Player.schema.h>
 
 namespace minecpp::game::player {
 
@@ -9,15 +9,15 @@ Player::Player(Id id, std::string_view name) :
 {
 }
 
-Player Player::from_nbt(const nbt::player::v1::Player &player, const std::string_view name)
+Player Player::from_nbt(const nbt::player::Player &player, const std::string_view name)
 {
    Player result(read_id_from_nbt(player.uuid), name);
    return result;
 }
 
-proto::player::v1::Player Player::to_proto() const
+proto::player::Player Player::to_proto() const
 {
-   proto::player::v1::Player result{};
+   proto::player::Player result{};
    result.set_entity_id(m_entity_id);
    result.set_name(m_name);
    result.set_game_mode(game::write_mode_to_proto(m_game_mode));

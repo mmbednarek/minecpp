@@ -8,13 +8,13 @@
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/game/ChunkPosition.h>
 #include <minecpp/game/player/Player.h>
-#include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
+#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
 #include <minecpp/util/Uuid.h>
 #include <minecpp/world/SectionSlice.h>
 
 namespace minecpp::service::engine {
 
-namespace clientbound_v1 = proto::event::clientbound::v1;
+namespace clientbound_v1 = proto::event::clientbound;
 
 Dispatcher::Dispatcher(EventManager &events, entity::EntitySystem &entity_system) :
     m_events(events),
@@ -244,7 +244,7 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
    if (section_slice == nullptr)
       return;
 
-   proto::event::clientbound::v1::UpdateBlockLight update_block_light;
+   proto::event::clientbound::UpdateBlockLight update_block_light;
    std::map<mb::u64, int> id_mapping;
 
    for (auto section : range) {
@@ -255,7 +255,7 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
          id                                          = update_block_light.block_light_size();
          id_mapping[section.chunk_position().hash()] = id;
 
-         proto::event::clientbound::v1::ChunkBlockLight chunk_block_light;
+         proto::event::clientbound::ChunkBlockLight chunk_block_light;
          *chunk_block_light.mutable_position() = section.chunk_position().to_proto();
 
          update_block_light.mutable_block_light()->Add(std::move(chunk_block_light));
@@ -266,7 +266,7 @@ void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRan
       if (chunk_section == nullptr)
          continue;
 
-      proto::event::clientbound::v1::SectionBlockLight section_block_light;
+      proto::event::clientbound::SectionBlockLight section_block_light;
       section_block_light.set_y(section.y());
       section_block_light.mutable_block_light()->resize(world::LightContainer::raw_size);
 
@@ -439,8 +439,8 @@ void Dispatcher::respawn_player(game::PlayerId player_id)
    respawn.set_dimension_type("minecraft:overworld");
    respawn.set_dimension_name("overworld");
    respawn.set_hashed_seed(0x12345);
-   respawn.set_game_mode(proto::common::v1::GameMode::Survival);
-   respawn.set_previous_game_mode(proto::common::v1::GameMode::Survival);
+   respawn.set_game_mode(proto::common::GameMode::Survival);
+   respawn.set_previous_game_mode(proto::common::GameMode::Survival);
    respawn.set_is_debug(false);
    respawn.set_is_flat(false);
    respawn.set_copy_metadata(true);
