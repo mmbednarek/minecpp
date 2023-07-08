@@ -1,6 +1,5 @@
 add_subdirectory(chunk_extractor)
 add_subdirectory(chunk_viewer)
-add_subdirectory(nbtprotogen)
 add_subdirectory(nbtscheme)
 add_subdirectory(nbt_viewer)
 add_subdirectory(recipes)

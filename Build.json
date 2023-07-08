@@ -32,7 +32,6 @@
     "chunk_extractor",
     "chunk_viewer",
     "nbt_viewer",
-    "nbtprotogen",
     "nbtscheme",
     "recipes",
     "snbt_parser",
