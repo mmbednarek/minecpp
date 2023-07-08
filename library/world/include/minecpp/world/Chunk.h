@@ -3,10 +3,10 @@
 #include "Section.h"
 
 #include "minecpp/game/ChunkPosition.h"
-#include "minecpp/nbt/chunk/v1/Chunk.nbt.h"
+#include "minecpp/nbt/chunk/Chunk.schema.h"
 #include "minecpp/nbt/Reader.h"
 #include "minecpp/nbt/Tag.h"
-#include "minecpp/proto/chunk/v1/Chunk.pb.h"
+#include "minecpp/proto/chunk/Chunk.pb.h"
 
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>
@@ -23,7 +23,7 @@ class Chunk : public game::IBlockContainer
    Chunk();
    Chunk(int x, int z, const std::array<short, 256> &height_map);
 
-   void read_from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
+   void read_from_proto(const minecpp::proto::chunk::Chunk &proto);
    void set_height_map(game::HeightType height_type, const std::array<short, 256> &height_map);
 
    void create_empty_section(int8_t sec);
@@ -73,10 +73,10 @@ class Chunk : public game::IBlockContainer
 
    [[nodiscard]] game::ChunkPosition position() const;
 
-   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::v1::Chunk &chunk) noexcept;
-   minecpp::nbt::chunk::v1::Chunk to_nbt() noexcept;
-   static std::unique_ptr<Chunk> from_proto(const minecpp::proto::chunk::v1::Chunk &proto);
-   [[nodiscard]] minecpp::proto::chunk::v1::Chunk to_proto() const;
+   static mb::result<std::unique_ptr<Chunk>> from_nbt(minecpp::nbt::chunk::Chunk &chunk) noexcept;
+   minecpp::nbt::chunk::Chunk to_nbt() noexcept;
+   static std::unique_ptr<Chunk> from_proto(const minecpp::proto::chunk::Chunk &proto);
+   [[nodiscard]] minecpp::proto::chunk::Chunk to_proto() const;
 
  private:
    mb::result<Section &> section_from_y_level(int y);

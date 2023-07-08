@@ -50,8 +50,8 @@ class Entity
       }
    }
 
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
-   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
+   void serialize_to_proto(proto::entity::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
    void on_killed(IWorld &world);
    void on_attached_to_world(IWorld &world, const math::Vector3 &position, const math::Vector3 &extent);
 

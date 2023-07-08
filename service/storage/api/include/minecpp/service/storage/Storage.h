@@ -1,8 +1,8 @@
 #pragma once
 
 #include "minecpp/network/Network.h"
-#include "minecpp/proto/chunk/v1/Chunk.pb.h"
-#include "minecpp/proto/service/storage/v1/Storage.pb.h"
+#include "minecpp/proto/chunk/Chunk.pb.h"
+#include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/stream/Client.h"
 #include "minecpp/world/Chunk.h"
 
@@ -12,11 +12,11 @@
 
 namespace minecpp::service::storage {
 
-using proto::service::storage::v1::Request;
-using proto::service::storage::v1::Response;
+using proto::service::storage::Request;
+using proto::service::storage::Response;
 
-using proto::service::storage::v1::ResponseChunkData;
-using proto::service::storage::v1::ResponseEmptyChunk;
+using proto::service::storage::ResponseChunkData;
+using proto::service::storage::ResponseEmptyChunk;
 
 using ClientId = std::uint64_t;
 

@@ -1,0 +1,51 @@
+package minecpp.nbt.repository
+
+[NBT]
+record BlockEntry {
+   Id: int32
+   Block: block.Block
+   Tag: string
+}
+
+[NBT]
+record ItemEntry {
+   Id: int32
+   Item: item.Item
+   Tag: string
+}
+
+[NBT]
+record EnumPropertyEntry {
+   Property: block.EnumProperty
+   Tag: string
+}
+
+[NBT]
+record IntPropertyEntry {
+   Property: block.IntProperty
+   Tag: string
+}
+
+[NBT]
+record BoolPropertyEntry {
+   Property: block.BoolProperty
+   Tag: string
+}
+
+[NBT]
+record BlockStateEntry {
+   Id: int32
+   State: block.BlockState
+   Tag: string
+}
+
+[NBT]
+record Repository {
+   BlockStates: list[BlockStateEntry]
+   Blocks: list[BlockEntry]
+   Items: list[ItemEntry]
+   EnumProperties: list[EnumPropertyEntry]
+   IntProperties: list[IntPropertyEntry]
+   BoolProperties: list[BoolPropertyEntry]
+}
+

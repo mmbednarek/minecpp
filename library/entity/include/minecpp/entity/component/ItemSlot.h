@@ -15,7 +15,7 @@ class ItemSlot
    void on_attached(game::Entity &entity);
    void on_begin_intersect(game::IWorld &world, game::Entity &entity, game::Entity &other_entity) const;
 
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_to_proto(proto::entity::Entity *entity) const;
 
  private:
    game::ItemSlot m_slot;

@@ -5,7 +5,7 @@
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <minecpp/proto/entity/Entity.pb.h>
 #include <mutex>
 #include <set>
 
@@ -53,8 +53,8 @@ class Location
    void teleport_player(game::IWorld &world, game::Entity &entity, const math::Vector3 &position);
    void set_is_on_ground(game::IWorld &world, game::Entity &entity, bool is_on_ground);
 
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
-   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
+   void serialize_to_proto(proto::entity::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
 
 
  private:
@@ -79,8 +79,8 @@ class Rotation
 
    void on_attached(game::Entity &entity);
 
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
-   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
+   void serialize_to_proto(proto::entity::Entity *entity) const;
+   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
 
    [[nodiscard]] math::Rotation rotation() const;
    [[nodiscard]] math::Degrees yaw_degrees() const;

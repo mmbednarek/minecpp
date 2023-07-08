@@ -28,7 +28,7 @@ proto:
 	./meta/generate-proto.sh
 
 nbt:
-	./meta/generate-nbt.sh
+	schema_compiler -i ./api/minecpp/nbt -s library/api/minecpp/nbt/src -h library/api/minecpp/nbt/include/minecpp/nbt -I minecpp/nbt
 
 cmake-files:
 	./meta/cmake-generate.sh

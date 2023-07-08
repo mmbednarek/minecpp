@@ -3,7 +3,7 @@
 #include <minecpp/game/block/Block.h>
 #include <minecpp/game/Game.h>
 #include <minecpp/game/item/Item.h>
-#include <minecpp/nbt/repository/v1/Repository.nbt.h>
+#include <minecpp/nbt/repository/Repository.schema.h>
 #include <minecpp/repository/Block.h>
 #include <minecpp/repository/Item.h>
 #include <minecpp/repository/State.h>
@@ -19,7 +19,7 @@ mb::emptyres load_repository_from_file(std::string_view filename)
    if (!in_file.is_open()) {
       return mb::error("could not open file");
    }
-   auto repo = minecpp::nbt::repository::v1::Repository::deserialize(in_file);
+   auto repo = minecpp::nbt::repository::Repository::deserialize(in_file);
 
    auto &states = BlockState::the();
    for (auto &bool_state : repo.bool_properties) {
@@ -130,13 +130,13 @@ std::optional<game::BlockStateId> set_state(game::BlockId block_id, game::StateO
    return StateManager::the().block_base_state(block_id) + state_id;
 }
 
-mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename)
+mb::result<nbt::repository::Registry> load_network_registry_from_file(std::string_view filename)
 {
    std::ifstream in_file(filename.data());
    if (!in_file.is_open()) {
       return mb::error("could not open file");
    }
-   return minecpp::nbt::repository::v1::Registry::deserialize(in_file);
+   return minecpp::nbt::repository::Registry::deserialize(in_file);
 }
 
 BlockIds &BlockIds::the()

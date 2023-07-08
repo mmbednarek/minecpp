@@ -3,7 +3,7 @@
 #include <mb/int.h>
 #include <mb/result.h>
 #include <minecpp/game/Types.hpp>
-#include <minecpp/nbt/repository/v1/Codec.nbt.h>
+#include <minecpp/nbt/repository/Codec.schema.h>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -80,7 +80,7 @@ struct BlockIds
    bool m_initialised = false;
 };
 
-mb::result<nbt::repository::v1::Registry> load_network_registry_from_file(std::string_view filename);
+mb::result<nbt::repository::Registry> load_network_registry_from_file(std::string_view filename);
 mb::emptyres load_repository_from_file(std::string_view filename);
 
 }// namespace minecpp::repository

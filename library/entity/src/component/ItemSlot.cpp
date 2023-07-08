@@ -35,7 +35,7 @@ void ItemSlot::on_begin_intersect(game::IWorld &world, game::Entity &entity, gam
    world.kill_entity(entity.id());
 }
 
-void ItemSlot::serialize_to_proto(proto::entity::v1::Entity *entity) const
+void ItemSlot::serialize_to_proto(proto::entity::Entity *entity) const
 {
    entity->set_entity_type(45);
 

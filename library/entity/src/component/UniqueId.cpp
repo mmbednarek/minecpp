@@ -10,7 +10,7 @@ UniqueId::UniqueId() :
 {
 }
 
-void UniqueId::serialize_to_proto(proto::entity::v1::Entity *entity) const
+void UniqueId::serialize_to_proto(proto::entity::Entity *entity) const
 {
    auto [lower, upper] = util::write_uuid(m_id);
    entity->mutable_uuid()->set_lower(lower);

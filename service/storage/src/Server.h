@@ -4,12 +4,12 @@
 #include "IResponder.h"
 
 #include "minecpp/network/Network.h"
-#include "minecpp/proto/service/storage/v1/Storage.pb.h"
+#include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/stream/Server.h"
 
 namespace minecpp::service::storage {
 
-namespace storage_v1 = minecpp::proto::service::storage::v1;
+namespace storage_v1 = minecpp::proto::service::storage;
 
 class Connection
 {

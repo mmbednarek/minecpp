@@ -10,7 +10,7 @@
 
 namespace minecpp::world {
 
-namespace nbt_chunk_v1 = minecpp::nbt::chunk::v1;
+namespace nbt_chunk_v1 = minecpp::nbt::chunk;
 
 Chunk::Chunk()
 {
@@ -228,9 +228,9 @@ const HeightContainer &Chunk::height_by_type(game::HeightType type) const
    assert(false && "not reachable");
 }
 
-minecpp::proto::chunk::v1::Chunk Chunk::to_proto() const
+minecpp::proto::chunk::Chunk Chunk::to_proto() const
 {
-   minecpp::proto::chunk::v1::Chunk chunk;
+   minecpp::proto::chunk::Chunk chunk;
    *chunk.mutable_position() = position().to_proto();
    chunk.set_full(m_is_full);
    if (m_is_full) {
@@ -250,14 +250,14 @@ minecpp::proto::chunk::v1::Chunk Chunk::to_proto() const
    return chunk;
 }
 
-std::unique_ptr<Chunk> Chunk::from_proto(const minecpp::proto::chunk::v1::Chunk &proto_chunk)
+std::unique_ptr<Chunk> Chunk::from_proto(const minecpp::proto::chunk::Chunk &proto_chunk)
 {
    auto chunk = std::make_unique<Chunk>();
    chunk->read_from_proto(proto_chunk);
    return chunk;
 }
 
-void Chunk::read_from_proto(const proto::chunk::v1::Chunk &proto_chunk)
+void Chunk::read_from_proto(const proto::chunk::Chunk &proto_chunk)
 {
    m_position = game::ChunkPosition::from_proto(proto_chunk.position());
 

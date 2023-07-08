@@ -6,7 +6,7 @@
 
 namespace minecpp::network::message {
 
-using minecpp::proto::chunk::v1::Chunk;
+using minecpp::proto::chunk::Chunk;
 
 Writer get_chunk_data(const Chunk &chunk);
 void write_light_data(Writer &w, const Chunk &chunk);

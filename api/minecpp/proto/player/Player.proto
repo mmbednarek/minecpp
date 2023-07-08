@@ -1,0 +1,33 @@
+syntax = "proto3";
+package minecpp.proto.player;
+
+import "minecpp/proto/common/Common.proto";
+import "minecpp/proto/player/Id.proto";
+
+message Status {
+  PlayerId id = 1;
+  string name = 2;
+  int32 ping = 3;
+  common.GameMode game_mode = 4;
+}
+
+message RecipeBook {
+  bool gui_open = 1;
+  bool filtering_craftable = 2;
+  bool furnace_gui_open = 3;
+  bool furnace_filtering_craftable = 4;
+}
+
+message Player {
+  PlayerId id = 1;
+  string name = 2;
+  uint32 entity_id = 3;
+  RecipeBook recipe_book = 4;
+  common.GameMode game_mode = 5;
+}
+
+message Slot {
+  uint32 slot_id = 1;
+  common.ItemId item_id = 2;
+  uint32 count = 3;
+}

@@ -4,11 +4,11 @@
 
 #include <mb/enum.h>
 #include <mb/int.h>
-#include <minecpp/nbt/block/v1/Block.nbt.h>
-#include <minecpp/nbt/block/v1/BlockState.nbt.h>
-#include <minecpp/nbt/common/v1/Common.nbt.h>
-#include <minecpp/proto/common/v1/Common.pb.h>
-#include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <minecpp/nbt/block/Block.schema.h>
+#include <minecpp/nbt/block/BlockState.schema.h>
+#include <minecpp/nbt/common/Common.schema.h>
+#include <minecpp/proto/common/Common.pb.h>
+#include <minecpp/proto/entity/Entity.pb.h>
 
 #include <utility>
 
@@ -69,7 +69,7 @@ inline bool operator&(FaceMask lhs, FaceMask rhs)
            static_cast<std::underlying_type_t<FaceMask>>(rhs)) != 0u;
 }
 
-FaceMask face_mask_from_nbt(const nbt::common::v1::FaceMask &nbt_mask);
+FaceMask face_mask_from_nbt(const nbt::common::FaceMask &nbt_mask);
 
 enum class WoodTypeValue
 {
@@ -126,7 +126,7 @@ struct BlockStateInfo
    bool blocks_movement{};
    FaceMask solid_faces{};
 
-   static BlockStateInfo from_nbt(const nbt::block::v1::BlockState &state)
+   static BlockStateInfo from_nbt(const nbt::block::BlockState &state)
    {
       return {static_cast<LightValue>(state.luminance), static_cast<LightValue>(state.opacity),
               state.blocks_movement != 0, face_mask_from_nbt(state.solid_faces)};
@@ -158,7 +158,7 @@ class EquipmentSlot final : public EquipmentSlot_Base
    MB_ENUM_FIELD(Chestplate)
    MB_ENUM_FIELD(Helmet)
 
-   [[nodiscard]] proto::entity::v1::EquipmentSlot to_proto() const;
+   [[nodiscard]] proto::entity::EquipmentSlot to_proto() const;
 };
 
 struct ItemSlot
@@ -192,7 +192,7 @@ class EntityAnimation : public EntityAnimation_Base
    MB_ENUM_FIELD(CriticalEffect)
    MB_ENUM_FIELD(MagicCriticalEffect)
 
-   proto::common::v1::EntityAnimation to_proto();
+   proto::common::EntityAnimation to_proto();
 };
 
 enum class InteractionTypeValue
@@ -211,7 +211,7 @@ class InteractionType : public InteractionType_Base
    MB_ENUM_FIELD(Standard)
    MB_ENUM_FIELD(Attack)
 
-   [[nodiscard]] static InteractionType from_proto(proto::common::v1::InteractionType type);
+   [[nodiscard]] static InteractionType from_proto(proto::common::InteractionType type);
 };
 
 }// namespace minecpp::game

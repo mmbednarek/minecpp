@@ -1,11 +1,11 @@
 #ifndef MINECPP_SERVERBOUND_H
 #define MINECPP_SERVERBOUND_H
 #include <minecpp/game/player/Player.h>
-#include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
+#include <minecpp/proto/event/serverbound/Serverbound.pb.h>
 
 namespace minecpp::event {
 
-namespace serverbound_v1 = proto::event::serverbound::v1;
+namespace serverbound_v1 = proto::event::serverbound;
 
 template<typename T>
 concept ServerboundVisitor =

@@ -41,7 +41,7 @@ void ChunkSystem::subscribe_chunk(const game::ChunkPosition &position)
    m_storage_client.subscribe_chunk(position);
 }
 
-void ChunkSystem::handle_chunk_data(const storage::ResponseChunkData &chunk)
+void ChunkSystem::handle_chunk_data(const proto::service::storage::ResponseChunkData &chunk)
 {
    auto *new_chunk = m_chunk_pool.construct();
    new_chunk->read_from_proto(chunk.chunk_data());
@@ -55,7 +55,7 @@ void ChunkSystem::handle_chunk_data(const storage::ResponseChunkData &chunk)
    m_job_system.process_awaiting_tickets();
 }
 
-void ChunkSystem::handle_empty_chunk(const storage::ResponseEmptyChunk &chunk)
+void ChunkSystem::handle_empty_chunk(const proto::service::storage::ResponseEmptyChunk &chunk)
 {
    spdlog::debug("chunk system: handling empty chunk");
    auto position = game::ChunkPosition::from_proto(chunk.position());

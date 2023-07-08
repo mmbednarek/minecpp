@@ -59,14 +59,14 @@ ChunkPosition ChunkPosition::from_position(const math::Vector3 &v)
    return ChunkPosition{(v.flat() / math::Vector2{g_chunk_width, g_chunk_depth}).floor().cast<int>()};
 }
 
-ChunkPosition ChunkPosition::from_proto(const proto::common::v1::ChunkPosition &pos)
+ChunkPosition ChunkPosition::from_proto(const proto::common::ChunkPosition &pos)
 {
    return {pos.x(), pos.z()};
 }
 
-proto::common::v1::ChunkPosition ChunkPosition::to_proto() const
+proto::common::ChunkPosition ChunkPosition::to_proto() const
 {
-   proto::common::v1::ChunkPosition result;
+   proto::common::ChunkPosition result;
    result.set_x(this->x());
    result.set_z(this->z());
    return result;

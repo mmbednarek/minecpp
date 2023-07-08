@@ -50,10 +50,10 @@ mb::result<game::Entity> PlayerManager::respawn_player(game::IWorld &world, cons
    return m_entity_system.entity(player->entity_id());
 }
 
-mb::result<minecpp::nbt::player::v1::Player> PlayerManager::load_player_data(game::IWorld & /*world*/,
+mb::result<minecpp::nbt::player::Player> PlayerManager::load_player_data(game::IWorld & /*world*/,
                                                                              game::PlayerId id) const
 {
-   minecpp::nbt::player::v1::Player data;
+   minecpp::nbt::player::Player data;
 
    auto pos = m_spawn_position.to_vector3();
 

@@ -2,7 +2,7 @@
 
 #include "../JobSystem.h"
 
-#include "minecpp/proto/service/storage/v1/Storage.pb.h"
+#include "minecpp/proto/service/storage/Storage.pb.h"
 
 namespace minecpp::service::engine {
 
@@ -15,7 +15,7 @@ namespace minecpp::service::engine::job {
 class HandleStorageMessage : public IJob
 {
  public:
-   using Response = proto::service::storage::v1::Response;
+   using Response = proto::service::storage::Response;
 
    HandleStorageMessage(ChunkSystem &chunk_system, Response response);
 

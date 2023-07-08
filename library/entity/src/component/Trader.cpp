@@ -6,7 +6,7 @@
 
 namespace minecpp::entity::component {
 
-void Trader::serialize_to_proto(proto::entity::v1::Entity *entity) const
+void Trader::serialize_to_proto(proto::entity::Entity *entity) const
 {
    entity->set_entity_type(m_entity_type_id);
 }

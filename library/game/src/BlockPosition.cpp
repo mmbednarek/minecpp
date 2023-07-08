@@ -37,7 +37,7 @@ namespace {
 
 namespace minecpp::game {
 
-namespace pb_common = minecpp::proto::common::v1;
+namespace pb_common = minecpp::proto::common;
 
 BlockPosition::BlockPosition() = default;
 

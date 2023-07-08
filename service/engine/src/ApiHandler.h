@@ -3,8 +3,8 @@
 #include "IConnection.h"
 #include "JobSystem.h"
 
-#include "minecpp/proto/event/clientbound/v1/Clientbound.pb.h"
-#include "minecpp/proto/event/serverbound/v1/Serverbound.pb.h"
+#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
+#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 #include "minecpp/stream/Server.h"
 
 #include <string>
@@ -26,7 +26,7 @@ class Connection : public IConnection
    void send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id) override;
 
  private:
-   void send(const proto::event::clientbound::v1::Event &event);
+   void send(const proto::event::clientbound::Event &event);
 
    std::shared_ptr<stream::Peer> m_peer;
 };

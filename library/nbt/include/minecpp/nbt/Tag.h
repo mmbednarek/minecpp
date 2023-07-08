@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <any>
 #include <cstdint>
+#include <fmt/format.h>
 #include <map>
 #include <memory>
 #include <string>
@@ -196,3 +197,38 @@ void serialize_compound_content(nbt::Writer &w, const CompoundContent &cc);
 void serialize_content(nbt::Writer &w, const Content *c);
 
 }// namespace minecpp::nbt
+
+template<>
+class fmt::formatter<minecpp::nbt::TagId>
+{
+ public:
+   constexpr auto parse(format_parse_context &ctx)
+   {
+      auto i = ctx.begin(), end = ctx.end();
+      if (i != end && *i != '}') {
+         throw format_error("invalid format");
+      }
+      return i;
+   }
+
+   template<typename FmtContext>
+   constexpr auto format(minecpp::nbt::TagId tag, FmtContext &ctx) const
+   {
+      switch (tag) {
+      case minecpp::nbt::TagId::End: return format_to(ctx.out(), "end");
+      case minecpp::nbt::TagId::Byte: return format_to(ctx.out(), "byte");
+      case minecpp::nbt::TagId::Short: return format_to(ctx.out(), "short");
+      case minecpp::nbt::TagId::Int: return format_to(ctx.out(), "int");
+      case minecpp::nbt::TagId::Long: return format_to(ctx.out(), "long");
+      case minecpp::nbt::TagId::Float: return format_to(ctx.out(), "float");
+      case minecpp::nbt::TagId::Double: return format_to(ctx.out(), "double");
+      case minecpp::nbt::TagId::ByteArray: return format_to(ctx.out(), "byte_array");
+      case minecpp::nbt::TagId::String: return format_to(ctx.out(), "string");
+      case minecpp::nbt::TagId::List: return format_to(ctx.out(), "list");
+      case minecpp::nbt::TagId::Compound: return format_to(ctx.out(), "compound");
+      case minecpp::nbt::TagId::IntArray: return format_to(ctx.out(), "int_array");
+      case minecpp::nbt::TagId::LongArray: return format_to(ctx.out(), "long_array");
+      }
+      return format_to(ctx.out(), "");
+   }
+};

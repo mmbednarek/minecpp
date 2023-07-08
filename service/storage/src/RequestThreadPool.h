@@ -2,7 +2,7 @@
 
 #include "IHandler.h"
 
-#include "minecpp/proto/service/storage/v1/Storage.pb.h"
+#include "minecpp/proto/service/storage/Storage.pb.h"
 
 #include <condition_variable>
 #include <mutex>
@@ -18,14 +18,14 @@ class RequestThreadPool : public IHandler
    struct Request
    {
       ConnectionId connection_id;
-      minecpp::proto::service::storage::v1::Request data;
+      minecpp::proto::service::storage::Request data;
    };
 
    explicit RequestThreadPool(IHandler &handler, std::size_t thread_count);
    ~RequestThreadPool() override;
 
    void loop();
-   void handle_request(ConnectionId id, proto::service::storage::v1::Request request) override;
+   void handle_request(ConnectionId id, proto::service::storage::Request request) override;
 
  private:
    IHandler &m_handler;

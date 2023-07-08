@@ -1,20 +1,20 @@
 #pragma once
 #include "Server.h"
 #include <minecpp/game/player/Id.h>
-#include <minecpp/nbt/repository/v1/Codec.nbt.h>
-#include <minecpp/proto/event/clientbound/v1/Clientbound.pb.h>
+#include <minecpp/nbt/repository/Codec.schema.h>
+#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
 #include <minecpp/service/engine/Api.h>
 #include <string>
 #include <vector>
 
 namespace minecpp::service::front {
 
-namespace clientbound_v1 = proto::event::clientbound::v1;
+namespace clientbound_v1 = proto::event::clientbound;
 
 class EventHandler : public engine::IVisitor
 {
  public:
-   explicit EventHandler(Server &server, nbt::repository::v1::Registry &registry);
+   explicit EventHandler(Server &server, nbt::repository::Registry &registry);
 
    void set_client(engine::Client *client);
 
@@ -72,7 +72,7 @@ class EventHandler : public engine::IVisitor
                                const event::RecipientList &recipient_list);
    void handle_set_abilities(const clientbound_v1::SetAbilities &msg,
                              const event::RecipientList &recipient_list);
-   void visit_event(const proto::event::clientbound::v1::Event &event) override;
+   void visit_event(const proto::event::clientbound::Event &event) override;
 
    template<typename T>
    void send_message_to_all_players(const T &msg)
@@ -120,12 +120,12 @@ class EventHandler : public engine::IVisitor
       }
    }
 
-   void send_entity(const event::RecipientList &recipient_list, const proto::entity::v1::Entity &entity);
+   void send_entity(const event::RecipientList &recipient_list, const proto::entity::Entity &entity);
 
  private:
    Server &m_server;
    engine::Client *m_client{};
-   nbt::repository::v1::Registry &m_registry;
+   nbt::repository::Registry &m_registry;
    std::unique_ptr<std::future<bool>> m_player_list{};
 };
 

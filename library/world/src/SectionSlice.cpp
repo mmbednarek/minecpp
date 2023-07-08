@@ -66,7 +66,7 @@ SectionSlice::SectionSlice(const game::SectionRange &range, std::unordered_map<m
 {
 }
 
-SectionSlice SectionSlice::from_proto(const proto::chunk::v1::SectionSlice &slice)
+SectionSlice SectionSlice::from_proto(const proto::chunk::SectionSlice &slice)
 {
    std::unordered_map<mb::u64, Section> sections{};
    for (auto &sec : slice.sections()) {
@@ -76,12 +76,12 @@ SectionSlice SectionSlice::from_proto(const proto::chunk::v1::SectionSlice &slic
    return {game::SectionRange::from_proto(slice.range()), std::move(sections)};
 }
 
-proto::chunk::v1::SectionSlice SectionSlice::to_proto()
+proto::chunk::SectionSlice SectionSlice::to_proto()
 {
-   proto::chunk::v1::SectionSlice result;
+   proto::chunk::SectionSlice result;
    *result.mutable_range() = m_range.to_proto();
    for (auto pos : m_range) {
-      proto::chunk::v1::SectionWithPosition section_with_position;
+      proto::chunk::SectionWithPosition section_with_position;
       *section_with_position.mutable_position() = pos.to_proto();
       *section_with_position.mutable_section()  = operator[](pos).to_proto();
       result.mutable_sections()->Add(std::move(section_with_position));

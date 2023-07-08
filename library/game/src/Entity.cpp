@@ -9,7 +9,7 @@ Entity::Entity(entt::registry &registry, game::EntityId id) :
 {
 }
 
-void Entity::serialize_to_proto(proto::entity::v1::Entity *entity) const
+void Entity::serialize_to_proto(proto::entity::Entity *entity) const
 {
    assert(entity);
 
@@ -24,7 +24,7 @@ void Entity::serialize_to_proto(proto::entity::v1::Entity *entity) const
    });
 }
 
-void Entity::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
+void Entity::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
 {
    assert(entity);
 

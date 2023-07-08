@@ -2,7 +2,7 @@
 
 #include <mb/int.h>
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -21,11 +21,11 @@ class SectionPosition
 
    [[nodiscard]] ChunkPosition chunk_position() const;
    [[nodiscard]] mb::u64 hash() const;
-   [[nodiscard]] proto::common::v1::ChunkSectionPosition to_proto() const;
+   [[nodiscard]] proto::common::ChunkSectionPosition to_proto() const;
    [[nodiscard]] const math::Vector3i &position() const;
    [[nodiscard]] math::Vector3i &position();
 
-   [[nodiscard]] static SectionPosition from_proto(const proto::common::v1::ChunkSectionPosition &position);
+   [[nodiscard]] static SectionPosition from_proto(const proto::common::ChunkSectionPosition &position);
 
    [[nodiscard]] bool operator!=(const SectionPosition &other) const;
 

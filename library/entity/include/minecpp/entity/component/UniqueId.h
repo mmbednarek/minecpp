@@ -9,7 +9,7 @@ class UniqueId
  public:
    UniqueId();
 
-   void serialize_to_proto(proto::entity::v1::Entity *entity) const;
+   void serialize_to_proto(proto::entity::Entity *entity) const;
 
  private:
    util::uuid m_id;

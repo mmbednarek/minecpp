@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/proto/entity/v1/Entity.pb.h>
+#include <minecpp/proto/entity/Entity.pb.h>
 
 namespace minecpp::game {
 
@@ -13,8 +13,8 @@ struct Abilities
    bool may_fly       = false;
    float walk_speed   = 0.1f;
 
-   static Abilities from_proto(const minecpp::proto::entity::v1::Abilities &abilities);
-   [[nodiscard]] minecpp::proto::entity::v1::Abilities to_proto() const;
+   static Abilities from_proto(const minecpp::proto::entity::Abilities &abilities);
+   [[nodiscard]] minecpp::proto::entity::Abilities to_proto() const;
 
    [[nodiscard]] constexpr std::uint32_t flags() const
    {

@@ -1,4 +1,7 @@
 {
   "name": "minecpp_lexer",
+  "examples": [
+    "python"
+  ],
   "dependencies": {}
 }

@@ -2,7 +2,7 @@
 
 #include <mb/int.h>
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -33,13 +33,13 @@ class BlockPosition
 
    [[nodiscard]] math::Vector3 to_vector3() const;
    [[nodiscard]] mb::u64 as_long() const;
-   [[nodiscard]] proto::common::v1::BlockPosition to_proto() const;
+   [[nodiscard]] proto::common::BlockPosition to_proto() const;
 
    void set_x(int x);
    void set_y(int y);
    void set_z(int z);
 
-   static BlockPosition from_proto(const proto::common::v1::BlockPosition &position);
+   static BlockPosition from_proto(const proto::common::BlockPosition &position);
    static BlockPosition from_vector3(const math::Vector3 &position);
 
    bool operator==(const BlockPosition &other) const;

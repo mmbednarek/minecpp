@@ -1,0 +1,20 @@
+package minecpp.example1
+
+// Some Item Stuff
+record Item {
+    Name: string
+    Count: int16
+    Props: example2.Properties
+}
+
+// Some person stuff
+record Person {
+    /* sdfsdfsd */
+    Name: string
+    /* sdfsdf */ Surname: /* type */ string
+    Age: int32
+    Inventory: list[list[Item]]
+    [Namespace="dimension_types", Path="dimension_type/stuff"]
+    DimensionTypes: int32
+    FooType: variant[int32, string, int8]
+}

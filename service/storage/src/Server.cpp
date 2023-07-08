@@ -56,7 +56,7 @@ void Server::on_received_message(std::shared_ptr<stream::Peer> peer, container::
 {
    assert(m_handler);
 
-   proto::service::storage::v1::Request request;
+   proto::service::storage::Request request;
    request.ParseFromArray(message.data(), static_cast<int>(message.size()));
    m_handler->handle_request(peer->id(), std::move(request));
 }

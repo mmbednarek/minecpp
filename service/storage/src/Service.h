@@ -15,10 +15,10 @@ class Service : public IHandler
    explicit Service(IResponder &m_responder, IStorage &storage);
 
    void subscribe_chunk(ConnectionId connection_id, game::ChunkPosition position);
-   void push_chunk_data(ConnectionId connection_id, const proto::chunk::v1::Chunk &position);
+   void push_chunk_data(ConnectionId connection_id, const proto::chunk::Chunk &position);
    void set_client_id(ConnectionId connection_id, ClientId client_id);
 
-   void handle_request(ConnectionId id, proto::service::storage::v1::Request request) override;
+   void handle_request(ConnectionId id, proto::service::storage::Request request) override;
 
  private:
    std::optional<ClientId> get_client_id(ConnectionId connection_id);

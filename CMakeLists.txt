@@ -63,7 +63,7 @@ FetchContent_MakeAvailable(libmb)
 FetchContent_Declare(
         libmb_codegen
         GIT_REPOSITORY https://github.com/mmbednarek/codegen
-        GIT_TAG codegen-0.0.32
+        GIT_TAG codegen-0.0.35
 )
 FetchContent_MakeAvailable(libmb_codegen)
 

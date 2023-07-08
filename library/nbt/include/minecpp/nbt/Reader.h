@@ -26,6 +26,30 @@ struct ListHeader
 class Reader : private minecpp::util::Reader
 {
  public:
+   class CompoundIterator
+   {
+    public:
+      CompoundIterator(Reader &reader, TagHeader current);
+
+      const TagHeader &operator*() const;
+      CompoundIterator &operator++();
+      [[nodiscard]] bool operator==(const CompoundIterator &other) const;
+    private:
+      Reader &m_reader;
+      TagHeader m_current;
+   };
+
+   class CompoundRange
+   {
+    public:
+      explicit CompoundRange(Reader &reader);
+
+      CompoundIterator begin();
+      CompoundIterator end();
+    private:
+      Reader &m_reader;
+   };
+
    explicit Reader(std::istream &s);
 
    typedef std::function<void(Reader &r, const TagId type, std::string name)> IterCallback;
@@ -140,6 +164,8 @@ class Reader : private minecpp::util::Reader
    }
 
    CompoundContent read_compound_content();
+
+   CompoundRange iterate_compound();
 
    std::istream &raw_stream();
 

@@ -13,7 +13,7 @@ class Player
 
    void on_attached(game::Entity &entity);
 
-   void serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const;
+   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
 
    [[nodiscard]] game::PlayerId id() const;
    [[nodiscard]] const std::string &name() const;

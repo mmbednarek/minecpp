@@ -5,7 +5,7 @@
 
 #include "minecpp/game/player/Id.h"
 #include "minecpp/network/message/Serverbound.h"
-#include "minecpp/proto/chunk/v1/Chunk.pb.h"
+#include "minecpp/proto/chunk/Chunk.pb.h"
 #include "minecpp/service/engine/Api.h"
 
 #include <boost/random.hpp>

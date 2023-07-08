@@ -8,7 +8,7 @@
 
 #include <spdlog/spdlog.h>
 
-using minecpp::proto::event::clientbound::v1::Event;
+using minecpp::proto::event::clientbound::Event;
 
 namespace minecpp::service::engine {
 
@@ -28,7 +28,7 @@ void Connection::send_to_player(const google::protobuf::Message &message, game::
 void Connection::send_to_all(const google::protobuf::Message &message)
 {
    Event proto_event;
-   *proto_event.mutable_all_players() = proto::event::clientbound::v1::RecipientAllPlayers();
+   *proto_event.mutable_all_players() = proto::event::clientbound::RecipientAllPlayers();
    proto_event.mutable_payload()->PackFrom(message);
    this->send(proto_event);
 }
@@ -81,7 +81,7 @@ void ApiHandler::on_connected(std::shared_ptr<stream::Peer> peer)
 
 void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, container::BufferView message)
 {
-   proto::event::serverbound::v1::Event proto_event;
+   proto::event::serverbound::Event proto_event;
    proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
 
    m_job_system.create_job<job::HandlePlayerMessage>(m_event_handler, std::move(proto_event));

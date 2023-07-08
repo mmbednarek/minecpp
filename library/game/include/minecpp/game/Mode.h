@@ -1,5 +1,5 @@
 #pragma once
-#include <minecpp/proto/common/v1/Common.pb.h>
+#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -12,16 +12,16 @@ enum class Mode
    Hardcore,
 };
 
-constexpr proto::common::v1::GameMode write_mode_to_proto(Mode mode)
+constexpr proto::common::GameMode write_mode_to_proto(Mode mode)
 {
    switch (mode) {
-   case Mode::Survival: return proto::common::v1::GameMode::Survival;
-   case Mode::Creative: return proto::common::v1::GameMode::Creative;
-   case Mode::Adventure: return proto::common::v1::GameMode::Adventure;
-   case Mode::Spectator: return proto::common::v1::GameMode::Spectator;
+   case Mode::Survival: return proto::common::GameMode::Survival;
+   case Mode::Creative: return proto::common::GameMode::Creative;
+   case Mode::Adventure: return proto::common::GameMode::Adventure;
+   case Mode::Spectator: return proto::common::GameMode::Spectator;
    case Mode::Hardcore: break;
    }
-   return proto::common::v1::GameMode::Survival;
+   return proto::common::GameMode::Survival;
 }
 
 }// namespace minecpp::game

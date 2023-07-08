@@ -3,7 +3,7 @@
 #include "minecpp/game/Abilities.h"
 #include "minecpp/game/player/Player.h"
 #include "minecpp/network/message/Clientbound.h"
-#include "minecpp/proto/event/serverbound/v1/Serverbound.pb.h"
+#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 #include "minecpp/repository/Repository.h"
 #include "minecpp/service/engine/Api.h"
 #include "minecpp/util/Uuid.h"
@@ -13,7 +13,7 @@
 
 namespace minecpp::service::front {
 
-EventHandler::EventHandler(Server &server, nbt::repository::v1::Registry &registry) :
+EventHandler::EventHandler(Server &server, nbt::repository::Registry &registry) :
     m_server(server),
     m_registry(registry)
 {
@@ -269,7 +269,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       }
 
       spdlog::info("Issuing loading initial chunks");
-      m_client->send(proto::event::serverbound::v1::PreInitialChunks{}, player_id);
+      m_client->send(proto::event::serverbound::PreInitialChunks{}, player_id);
    }
 }
 
@@ -441,7 +441,7 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
 
          if (conn->initial_chunk_count > 32) {
             assert(m_client);
-            m_client->send(proto::event::serverbound::v1::PostInitialChunks{}, player_id);
+            m_client->send(proto::event::serverbound::PostInitialChunks{}, player_id);
             conn->initial_chunk_count = -1;
          }
       }
@@ -543,7 +543,7 @@ void EventHandler::handle_spawn_entity(const clientbound_v1::SpawnEntity &msg,
 }
 
 void EventHandler::send_entity(const event::RecipientList &recipient_list,
-                               const proto::entity::v1::Entity &entity)
+                               const proto::entity::Entity &entity)
 {
    network::message::SpawnEntity spawn_entity{
            .entity_id   = entity.entity_id(),
@@ -564,7 +564,7 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
 
    for (const auto &meta : entity.metadata()) {
       switch (meta.value_case()) {
-      case proto::entity::v1::Metadata::kSlot: {
+      case proto::entity::Metadata::kSlot: {
          network::message::EntityMetadataSlot slot{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),
@@ -574,7 +574,7 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
          send_message(slot, recipient_list);
          break;
       }
-      case proto::entity::v1::Metadata::kByte: {
+      case proto::entity::Metadata::kByte: {
          network::message::EntityMetadataByte byte_meta{
                  .entity_id = entity.entity_id(),
                  .index     = static_cast<uint8_t>(meta.index()),
@@ -687,7 +687,7 @@ void EventHandler::set_client(engine::Client *client)
    m_client = client;
 }
 
-void EventHandler::visit_event(const proto::event::clientbound::v1::Event &event)
+void EventHandler::visit_event(const proto::event::clientbound::Event &event)
 {
    event::visit_clientbound(event, *this);
 }

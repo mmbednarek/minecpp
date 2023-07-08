@@ -1,15 +1,17 @@
 #include <minecpp/nbt/Exception.h>
+#include <fmt/core.h>
 
 namespace minecpp::nbt {
 
-Exception::Exception(const char *c) :
-    std::runtime_error(c)
-{
-}
+InvalidTag::InvalidTag(std::string_view structure, std::string_view key, TagId expected, TagId actual) :
+   std::runtime_error(fmt::format("nbt: error parsing field {} in structure {}: unexpected tag {} (expected {})", key, structure, actual, expected))
+{}
 
-Exception::Exception(const std::string &msg) :
-    std::runtime_error(msg)
+void verify_tag(std::string_view structure, std::string_view key, TagId expected, TagId actual)
 {
+   if (expected != actual) {
+      throw InvalidTag(structure, key, expected, actual);
+   }
 }
 
 }// namespace minecpp::nbt

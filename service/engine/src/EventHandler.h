@@ -6,7 +6,7 @@
 #include <minecpp/controller/BlockManager.h>
 #include <minecpp/controller/RootItem.h>
 #include <minecpp/game/player/Player.h>
-#include <minecpp/proto/event/serverbound/v1/Serverbound.pb.h>
+#include <minecpp/proto/event/serverbound/Serverbound.pb.h>
 
 namespace minecpp::game {
 class IWorld;
@@ -23,7 +23,7 @@ class Inventory;
 
 namespace minecpp::service::engine {
 
-namespace serverbound_v1 = proto::event::serverbound::v1;
+namespace serverbound_v1 = proto::event::serverbound;
 
 class Dispatcher;
 class PlayerManager;

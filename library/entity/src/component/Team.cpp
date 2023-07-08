@@ -13,35 +13,35 @@ game::Team Team::team() const
    return m_team;
 }
 
-void Team::serialize_player_to_proto(proto::entity::v1::PlayerEntity *entity) const
+void Team::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
 {
    auto material = m_team.material();
 
    auto helmet_id = repository::Item::the().lookup_id(fmt::format("minecraft:{}_helmet", material));
    assert(helmet_id.ok());
    auto *helmet = entity->add_equipment();
-   helmet->set_slot(proto::entity::v1::EquipmentSlot::HELMET);
+   helmet->set_slot(proto::entity::EquipmentSlot::HELMET);
    helmet->mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(*helmet_id));
    helmet->mutable_item()->set_count(1);
 
    auto chestplate_id = repository::Item::the().lookup_id(fmt::format("minecraft:{}_chestplate", material));
    assert(chestplate_id.ok());
    auto *chestplate = entity->add_equipment();
-   chestplate->set_slot(proto::entity::v1::EquipmentSlot::CHESTPLATE);
+   chestplate->set_slot(proto::entity::EquipmentSlot::CHESTPLATE);
    chestplate->mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(*chestplate_id));
    chestplate->mutable_item()->set_count(1);
 
    auto leggings_id = repository::Item::the().lookup_id(fmt::format("minecraft:{}_leggings", material));
    assert(leggings_id.ok());
    auto *leggings = entity->add_equipment();
-   leggings->set_slot(proto::entity::v1::EquipmentSlot::LEGGINGS);
+   leggings->set_slot(proto::entity::EquipmentSlot::LEGGINGS);
    leggings->mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(*leggings_id));
    leggings->mutable_item()->set_count(1);
 
    auto boots_id = repository::Item::the().lookup_id(fmt::format("minecraft:{}_boots", material));
    assert(boots_id.ok());
    auto *boots = entity->add_equipment();
-   boots->set_slot(proto::entity::v1::EquipmentSlot::BOOTS);
+   boots->set_slot(proto::entity::EquipmentSlot::BOOTS);
    boots->mutable_item()->mutable_item_id()->set_id(static_cast<uint32_t>(*boots_id));
    boots->mutable_item()->set_count(1);
 }
