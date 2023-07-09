@@ -157,6 +157,11 @@ const std::vector<Attribute> &Record::attributes() const
    return m_attributes;
 }
 
+const AnnotationList &Record::annotations() const
+{
+   return m_annotation_list;
+}
+
 Import::Import(int line, int column, std::vector<std::string> path) :
     Node(line, column),
     m_path(std::move(path))

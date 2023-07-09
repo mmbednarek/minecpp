@@ -92,6 +92,7 @@ class Record : public Node
 
    void add_attribute(Attribute attribute);
 
+   [[nodiscard]] const AnnotationList &annotations() const;
    [[nodiscard]] const std::string &name() const;
    [[nodiscard]] const std::vector<Attribute> &attributes() const;
 

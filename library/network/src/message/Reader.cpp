@@ -1,6 +1,6 @@
 #include <boost/endian/conversion.hpp>
 #include <minecpp/nbt/Parser.h>
-#include <minecpp/network/message/File.h>
+#include <minecpp/network/message/Reader.h>
 #include <minecpp/util/Cast.hpp>
 #include <stdexcept>
 

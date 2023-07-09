@@ -1,4 +1,3 @@
-#include <mb/int.h>
 #include <minecpp/network/message/Chunk.h>
 #include <minecpp/network/message/Clientbound.h>
 
@@ -307,9 +306,9 @@ Writer AddPlayer::serialize() const
    w.write_string(name);
 
    w.write_varint(static_cast<mb::u32>(properties.size()));
-   for (const auto &pair : properties) {
-      w.write_string(pair.first);
-      w.write_string(pair.second);
+   for (const auto &[key, value] : properties) {
+      w.write_string(key);
+      w.write_string(value);
       w.write_byte(0x00);// TODO: Add signature
    }
 

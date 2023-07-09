@@ -1,7 +1,7 @@
 #include "Server.h"
 #include "protocol/Protocol.h"
 #include <boost/asio.hpp>
-#include <minecpp/network/message/File.h>
+#include <minecpp/network/message/Reader.h>
 #include <spdlog/spdlog.h>
 #include <utility>
 

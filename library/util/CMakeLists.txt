@@ -2,7 +2,7 @@
 
 set(MINECPP_UTIL_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(minecpp_utils STATIC)
+add_library(minecpp_utils STATIC include/minecpp/util/Case.h)
 
 # Public include headers
 target_include_directories(minecpp_utils

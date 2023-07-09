@@ -3,7 +3,11 @@
 target_sources(minecpp_schema_compiler
     # Source files
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/CppUtil.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/CppUtil.h
         ${CMAKE_CURRENT_SOURCE_DIR}/NbtGenerator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/NbtGenerator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkGenerator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkGenerator.h
 )
 

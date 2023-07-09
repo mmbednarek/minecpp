@@ -27,6 +27,8 @@ enum class TypeClass
    Record,
    Optional,
    Variant,
+   Varint,
+   Varlong,
    NbtCompoundContent,
    Unknown
 };

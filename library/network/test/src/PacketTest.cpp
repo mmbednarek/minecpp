@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <minecpp/network/message/File.h>
+#include <minecpp/network/message/Reader.h>
 
 TEST(PacketReader, VarInt)
 {

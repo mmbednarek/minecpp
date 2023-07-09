@@ -1,0 +1,7 @@
+package minecpp.net.clientbound
+
+[MessageID=0x01]
+record Join {
+    [VariableLength]
+    some: int32
+}
