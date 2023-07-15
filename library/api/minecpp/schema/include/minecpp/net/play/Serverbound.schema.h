@@ -62,7 +62,7 @@ class ClickWindow {
  public:
    std::uint8_t window_id{};
    std::int32_t state_id{};
-   std::uint16_t clicked_slot{};
+   std::int16_t clicked_slot{};
    std::uint8_t button{};
    std::int32_t mode{};
    std::map<std::uint16_t, std::optional<play::Slot>> slots{};
@@ -104,11 +104,11 @@ class Interact {
    static Interact deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class KeepAliveClient {
+class KeepAlive {
  public:
    std::uint64_t time{};
    void serialize(::minecpp::network::message::Writer &writer) const;
-   static KeepAliveClient deserialize(::minecpp::network::message::Reader &reader);
+   static KeepAlive deserialize(::minecpp::network::message::Reader &reader);
 };
 
 class SetPlayerPosition {
@@ -248,8 +248,8 @@ void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::netwo
       break;
    }
    case 0x11: {
-      auto message = KeepAliveClient::deserialize(reader);
-      visitor.on_keep_alive_client(client_info, message);
+      auto message = KeepAlive::deserialize(reader);
+      visitor.on_keep_alive(client_info, message);
       break;
    }
    case 0x13: {

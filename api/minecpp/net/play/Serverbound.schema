@@ -45,7 +45,7 @@ record ClientSettings {
 record ClickWindow {
   window_id: uint8
   state_id: varint
-  clicked_slot: uint16
+  clicked_slot: int16
   button: uint8
   mode: varint
   slots: map[uint16, optional[Slot]]
@@ -78,7 +78,7 @@ record Interact {
 }
 
 [MessageID=0x11]
-record KeepAliveClient {
+record KeepAlive {
   time:uint64
 }
 

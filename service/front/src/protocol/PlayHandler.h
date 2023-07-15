@@ -20,7 +20,7 @@ class PlayHandler : public Handler
  public:
    explicit PlayHandler(Service &service);
 
-   void handle(Connection &connection, Reader &r) override;
+   void handle(Connection &connection, Reader &reader) override;
    void handle_disconnect(Connection &connection) override;
 };
 

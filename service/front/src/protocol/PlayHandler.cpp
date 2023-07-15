@@ -1,13 +1,8 @@
 #include "PlayHandler.h"
 #include "../Connection.h"
 #include "../Service.h"
-#include "minecpp/net/play/Clientbound.schema.h"
-#include "minecpp/net/play/Serverbound.schema.h"
-#include <minecpp/chat/Chat.h>
-#include <minecpp/network/message/Clientbound.h>
-#include <minecpp/network/message/Serverbound.h>
 
-#include <spdlog/spdlog.h>
+#include "minecpp/net/play/Serverbound.schema.h"
 
 namespace minecpp::service::front::protocol {
 
@@ -16,118 +11,10 @@ PlayHandler::PlayHandler(Service &service) :
 {
 }
 
-void PlayHandler::handle(Connection &conn, Reader &r)
+void PlayHandler::handle(Connection &connection, Reader &reader)
 {
-   using namespace minecpp::network::message;
-   conn.async_read_packet(*this);
-
-   auto op = r.read_byte();
-   switch (op) {
-   case 0x00: break;// confirm teleport
-   case 0x04: {     //  1.19.3 OK
-      ChatCommand msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x05: {// 1.19.3 OK
-      ChatMessage msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x06: {// 1.19.3 OK
-      ClientCommand msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x07: {// 1.19.3 OK
-      ClientSettings msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x0a: {// 1.19.3 OK
-      ClickWindow msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x0b: {// 1.19.3 OK
-      // TODO: Implement
-      // Close window
-   } break;
-   case 0x0c: {// 1.19.3 OK
-      PluginMessage msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x0f: {// 1.19.3 OK
-      Interact msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x11: {// 1.19.3 OK
-      KeepAliveClient msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x13: {// 1.19.3 OK
-      PlayerPosition msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x14: {// 1.19.3 OK
-      PlayerPositionRotation msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x15: {// 1.19.3 OK
-      PlayerRotation msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x16: {// 1.19.3 OK
-      PlayerOnGround msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x1b: {// 1.19.3 OK
-      // TODO: Implement
-      // Flying
-   } break;
-   case 0x1c: {// 1.19.3 OK
-      PlayerDigging msg;
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x1d: {// 1.19.3 OK
-      // TODO: Implement
-      // Crouching
-   } break;
-   case 0x28: {// 1.19.3 OK
-      HeldItemChange msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x2f: {// 1.19.3 OK
-      AnimateHandClient msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x31: {// 1.19.3 OK
-      PlayerBlockPlacement msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   case 0x32: {// 1.19.3 OK
-      UseItem msg{};
-      deserialize(r, msg);
-      service.on_message(conn.service_id(), conn.uuid(), msg);
-   } break;
-   default:
-      spdlog::info("play-handler: unknown op {}, packet data: {}", op, r.get_hex_data());
-      conn.send_message(minecpp::net::play::cb::SystemChat{
-              .message = minecpp::chat::format_warning_unknown_op_code(op),
-              .type    = 0,
-      });
-   }
+   connection.async_read_packet(*this);
+   net::play::sb::visit_message(service, connection.uuid(), reader);
 }
 
 void PlayHandler::handle_disconnect(Connection &conn)

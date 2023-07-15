@@ -128,7 +128,7 @@ ClickWindow ClickWindow::deserialize(::minecpp::network::message::Reader &reader
    ClickWindow result;
    result.window_id = reader.read_byte();
    result.state_id = reader.read_varint();
-   result.clicked_slot = reader.read_big_endian<std::uint16_t>();
+   result.clicked_slot = reader.read_big_endian<std::int16_t>();
    result.button = reader.read_byte();
    result.mode = reader.read_varint();
    const auto slots_map_size = reader.read_varint();
@@ -210,13 +210,13 @@ Interact Interact::deserialize(::minecpp::network::message::Reader &reader) {
    return result;
 }
 
-void KeepAliveClient::serialize(::minecpp::network::message::Writer &writer) const {
+void KeepAlive::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x11);
    writer.write_big_endian(this->time);
 }
 
-KeepAliveClient KeepAliveClient::deserialize(::minecpp::network::message::Reader &reader) {
-   KeepAliveClient result;
+KeepAlive KeepAlive::deserialize(::minecpp::network::message::Reader &reader) {
+   KeepAlive result;
    result.time = reader.read_big_endian<std::uint64_t>();
    return result;
 }

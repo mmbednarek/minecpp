@@ -16,6 +16,22 @@ add_subdirectory("src")
 target_link_libraries(minecpp_api_proto
         LINK_PUBLIC
         ${Protobuf_LIBRARIES}
+        absl_log_internal_proto
+        absl_low_level_hash
+        absl_log_sink
+        absl_log_severity
+        absl_log_internal_proto
+        absl_log_internal_nullguard
+        absl_log_internal_message
+        absl_log_internal_log_sink_set
+        absl_log_internal_globals
+        absl_log_internal_format
+        absl_log_internal_conditions
+        absl_log_internal_check_op
+        absl_log_initialize
+        absl_log_globals
+        absl_log_flags
+        absl_log_entry
 )
 
 target_compile_options(minecpp_api_proto PUBLIC
