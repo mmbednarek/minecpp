@@ -24,8 +24,8 @@ class NetworkGenerator : public IGenerator {
    void generate_header(std::ostream &output) override;
    void generate_source(std::ostream &output) override;
 
-   void put_attribute_serializer(const Type &type, std::string_view attribute_name, int depth, mb::codegen::statement::collector &col);
-   void put_attribute_deserializer(const Type &type, std::string_view attribute_name, mb::codegen::statement::collector &col);
+   void put_attribute_serializer(const Type &type, std::string_view attribute_name, const AnnotationList& annotations, int depth, mb::codegen::statement::collector &col);
+   void put_attribute_deserializer(const Type &type, std::string_view attribute_dst, std::string_view attribute_name, const AnnotationList& annotations, mb::codegen::statement::collector &col);
 
  private:
    [[nodiscard]] std::string corresponding_header(std::string_view document_path) const;

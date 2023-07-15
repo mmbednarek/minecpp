@@ -27,8 +27,8 @@ clang-format:
 proto:
 	./meta/generate-proto.sh
 
-nbt:
-	schema_compiler -i ./api/minecpp/nbt -s library/api/minecpp/nbt/src -h library/api/minecpp/nbt/include/minecpp/nbt -I minecpp/nbt
+schema:
+	schema_compiler -i ./api/minecpp -s library/api/minecpp/schema/src -h library/api/minecpp/schema/include/minecpp -I minecpp
 
 cmake-files:
 	./meta/cmake-generate.sh

@@ -32,6 +32,17 @@ class PackageInfo : public Node
    std::vector<std::string> m_package;
 };
 
+class GeneratorInfo : public Node
+{
+ public:
+   GeneratorInfo(int line, int column, std::string generator);
+
+   [[nodiscard]] const std::string &generator() const;
+
+ private:
+   std::string m_generator;
+};
+
 struct Annotation
 {
    std::string key;
@@ -41,6 +52,7 @@ struct Annotation
 class AnnotationList : Node
 {
  public:
+   AnnotationList();
    AnnotationList(int line, int column);
 
    void add_annotation(const std::string &key, const std::string &value);
@@ -114,15 +126,17 @@ class Import : public Node
 class Document
 {
  public:
-   explicit Document(PackageInfo package_info);
+   Document(std::string generator, PackageInfo package_info);
 
    void add_import(Import im);
    void add_record(Record record);
 
+   [[nodiscard]] const std::string &generator() const;
    [[nodiscard]] const PackageInfo &package_info() const;
    [[nodiscard]] const std::vector<Record> &records() const;
 
  private:
+   std::string m_generator;
    PackageInfo m_package_info;
    std::vector<Import> m_imports;
    std::vector<Record> m_records;

@@ -18,10 +18,11 @@ class Writer
    Writer() = default;
 
    void write_byte(std::uint8_t value);
+   void write_sbyte(std::int8_t value);
    void write_short(std::int16_t value);
    void write_long(std::uint64_t value);
-   void write_varint(std::uint32_t value);
-   void write_varlong(std::uint64_t value);
+   void write_varint(std::int32_t value);
+   void write_varlong(std::int64_t value);
    void write_string(std::string_view s);
    void write_uuid_str(boost::uuids::uuid id);
    void write_uuid(boost::uuids::uuid id);

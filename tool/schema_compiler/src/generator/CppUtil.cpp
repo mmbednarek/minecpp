@@ -30,7 +30,7 @@ CppType::CppType(const Document &document, const SymbolTable &symbol_table, cons
 }
 
 // clang-format off
-constexpr std::array<const char *, 20> g_core_cpp_types{
+constexpr std::array<const char *, 21> g_core_cpp_types{
         "std::int8_t",
         "std::int16_t",
         "std::int32_t",
@@ -49,6 +49,7 @@ constexpr std::array<const char *, 20> g_core_cpp_types{
         "std::variant",
         "std::int32_t",
         "std::int64_t",
+        "::minecpp::util::Uuid",
         "::minecpp::nbt::CompoundContent",
         ""
 };

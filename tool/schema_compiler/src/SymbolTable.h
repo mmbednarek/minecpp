@@ -29,6 +29,7 @@ enum class TypeClass
    Variant,
    Varint,
    Varlong,
+   Uuid,
    NbtCompoundContent,
    Unknown
 };
@@ -39,6 +40,8 @@ struct Symbol
    std::string name;
    std::string package;
    std::string source_file;
+   std::string generator;
+   AnnotationList annotations;
 };
 
 class SymbolTable

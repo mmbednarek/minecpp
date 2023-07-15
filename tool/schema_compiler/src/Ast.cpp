@@ -168,7 +168,8 @@ Import::Import(int line, int column, std::vector<std::string> path) :
 {
 }
 
-Document::Document(PackageInfo package_info) :
+Document::Document(std::string generator, PackageInfo package_info) :
+    m_generator(std::move(generator)),
     m_package_info(std::move(package_info))
 {
 }
@@ -191,6 +192,16 @@ const std::vector<Record> &Document::records() const
 const PackageInfo &Document::package_info() const
 {
    return m_package_info;
+}
+
+const std::string &Document::generator() const
+{
+   return m_generator;
+}
+
+AnnotationList::AnnotationList() :
+    Node(0, 0)
+{
 }
 
 AnnotationList::AnnotationList(int line, int column) :
@@ -217,5 +228,16 @@ std::string AnnotationList::value_at(std::string_view key) const
            m_annotations.begin(), m_annotations.end(),
            [seeked_key = key](const Annotation &annotation) { return annotation.key == seeked_key; });
    return it->value;
+}
+
+GeneratorInfo::GeneratorInfo(int line, int column, std::string generator) :
+    Node(line, column),
+    m_generator(std::move(generator))
+{
+}
+
+const std::string &GeneratorInfo::generator() const
+{
+   return m_generator;
 }
 }// namespace minecpp::tool::schema_compiler

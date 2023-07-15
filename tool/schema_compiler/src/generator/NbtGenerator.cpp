@@ -277,7 +277,7 @@ std::string NbtGenerator::cpp_type_of(const Type &type) const
 }
 
 // clang-format off
-constexpr std::array<const char *, 20> g_core_nbt_types{
+constexpr std::array<const char *, 21> g_core_nbt_types{
    "minecpp::nbt::TagId::Byte",
    "minecpp::nbt::TagId::Short",
    "minecpp::nbt::TagId::Int",
@@ -292,6 +292,7 @@ constexpr std::array<const char *, 20> g_core_nbt_types{
    "minecpp::nbt::TagId::List",
    "minecpp::nbt::TagId::Compound",
    "minecpp::nbt::TagId::Compound",
+   "",
    "",
    "",
    "",
@@ -372,6 +373,8 @@ raw NbtGenerator::put_deserialize_procedure(const Type &type, statement::collect
    }
 
    if (symbol->type_class == TypeClass::Record) {
+      generator_verify(symbol->generator == g_nbt_generator_name, type.line(), type.column(),
+                       "NBT records can only contain other NBT records");
       return raw("{}::deserialize_no_header(r)", this->cpp_type_of(type));
    }
 
@@ -573,7 +576,12 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
 
       break;
    }
-   case TypeClass::Record: col << method_call(value, "serialize_no_header", raw("w")); break;
+   case TypeClass::Record: {
+      generator_verify(symbol->generator == g_nbt_generator_name, type.line(), type.column(),
+                       "NBT records can only contain other NBT records");
+      col << method_call(value, "serialize_no_header", raw("w"));
+      break;
+   }
    case TypeClass::Variant: {
       for (std::size_t arg_index{0}; arg_index < type.template_args_count(); ++arg_index) {
          auto subtype = type.template_arg_at(arg_index);

@@ -14,13 +14,16 @@ class Reader
    explicit Reader(std::istream &s);
 
    uint8_t read_byte();
+   int8_t read_sbyte();
    int read_varint();
+   std::int64_t read_varlong();
    std::string read_string();
    void read_bytes(std::uint8_t *data, std::size_t size);
    container::Buffer read_buffer();
    float read_float();
    double read_double();
    nbt::CompoundContent read_nbt_tag();
+   util::Uuid read_uuid();
 
    game::item::Recipe read_recipe();
    game::item::Recipe read_recipe_shaped();
@@ -30,6 +33,9 @@ class Reader
 
    game::item::ItemStack read_stack();
    game::item::StackVariants read_stack_variants();
+   uint64_t read_long();
+   short read_short();
+   [[nodiscard]] std::istream &raw_stream();
 
    std::string get_hex_data();
 
@@ -42,9 +48,6 @@ class Reader
       return result;
    }
 
-   uint64_t read_long();
-
-   short read_short();
 
  private:
    std::istream &m_stream;

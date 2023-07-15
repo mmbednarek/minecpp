@@ -7,6 +7,8 @@ target_sources(minecpp_schema_compiler_example_net_generator
         ${CMAKE_CURRENT_SOURCE_DIR}/Example1.schema.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Example2.schema.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Example2.schema.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/ExampleNbt.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ExampleNbt.schema.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
 )
 

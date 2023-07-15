@@ -11,6 +11,9 @@
 
 namespace minecpp::tool::schema_compiler {
 
+constexpr auto g_nbt_generator_name = "nbt";
+constexpr auto g_network_generator_name = "net";
+
 struct PathInfo
 {
 

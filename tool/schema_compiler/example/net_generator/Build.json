@@ -2,7 +2,8 @@
   "name": "minecpp_schema_compiler_example_net_generator",
   "dependencies": {
     "private": [
-      "minecpp_network"
+      "minecpp_network",
+      "minecpp_utils"
     ]
   }
 }

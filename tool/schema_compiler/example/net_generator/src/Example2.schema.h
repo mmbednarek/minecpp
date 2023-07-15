@@ -2,6 +2,7 @@
 #include "minecpp/network/message/Reader.h"
 #include "minecpp/network/message/Writer.h"
 #include <cstdint>
+#include <optional>
 #include <string>
 
 namespace minecpp::example2 {

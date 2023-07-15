@@ -4,330 +4,392 @@
 #include <minecpp/proto/service/storage/Storage.pb.h>
 
 #include <algorithm>
-
-#include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/extension_set.h>
-#include <google/protobuf/wire_format_lite.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/generated_message_reflection.h>
-#include <google/protobuf/reflection_ops.h>
-#include <google/protobuf/wire_format.h>
+#include "google/protobuf/io/coded_stream.h"
+#include "google/protobuf/extension_set.h"
+#include "google/protobuf/wire_format_lite.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/generated_message_reflection.h"
+#include "google/protobuf/reflection_ops.h"
+#include "google/protobuf/wire_format.h"
 // @@protoc_insertion_point(includes)
-#include <google/protobuf/port_def.inc>
 
+// Must be included last.
+#include "google/protobuf/port_def.inc"
 PROTOBUF_PRAGMA_INIT_SEG
-
 namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = _pb::internal;
-
+namespace _pbi = ::PROTOBUF_NAMESPACE_ID::internal;
 namespace minecpp {
 namespace proto {
 namespace service {
 namespace storage {
+template <typename>
 PROTOBUF_CONSTEXPR ClientId::ClientId(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.value_)*/uint64_t{0u}
+    /*decltype(_impl_.value_)*/ ::uint64_t{0u}
+
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ClientIdDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ClientIdDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ClientIdDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ClientIdDefaultTypeInternal() {}
   union {
     ClientId _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ClientIdDefaultTypeInternal _ClientId_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ClientIdDefaultTypeInternal _ClientId_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR Request::Request(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.message_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
   , /*decltype(_impl_._oneof_case_)*/{}} {}
 struct RequestDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RequestDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RequestDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RequestDefaultTypeInternal() {}
   union {
     Request _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestDefaultTypeInternal _Request_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestDefaultTypeInternal _Request_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR RequestChunkSubscription::RequestChunkSubscription(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.position_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.position_)*/nullptr} {}
 struct RequestChunkSubscriptionDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RequestChunkSubscriptionDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RequestChunkSubscriptionDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RequestChunkSubscriptionDefaultTypeInternal() {}
   union {
     RequestChunkSubscription _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestChunkSubscriptionDefaultTypeInternal _RequestChunkSubscription_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestChunkSubscriptionDefaultTypeInternal _RequestChunkSubscription_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR RequestChunkData::RequestChunkData(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.chunk_data_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.chunk_data_)*/nullptr} {}
 struct RequestChunkDataDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RequestChunkDataDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RequestChunkDataDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RequestChunkDataDefaultTypeInternal() {}
   union {
     RequestChunkData _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestChunkDataDefaultTypeInternal _RequestChunkData_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestChunkDataDefaultTypeInternal _RequestChunkData_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR RequestSetClientId::RequestSetClientId(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.client_id_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.client_id_)*/nullptr} {}
 struct RequestSetClientIdDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RequestSetClientIdDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RequestSetClientIdDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RequestSetClientIdDefaultTypeInternal() {}
   union {
     RequestSetClientId _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestSetClientIdDefaultTypeInternal _RequestSetClientId_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RequestSetClientIdDefaultTypeInternal _RequestSetClientId_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR Response::Response(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.message_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
   , /*decltype(_impl_._oneof_case_)*/{}} {}
 struct ResponseDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ResponseDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ResponseDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ResponseDefaultTypeInternal() {}
   union {
     Response _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseDefaultTypeInternal _Response_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseDefaultTypeInternal _Response_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR ResponseEmptyChunk::ResponseEmptyChunk(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.position_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.position_)*/nullptr} {}
 struct ResponseEmptyChunkDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ResponseEmptyChunkDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ResponseEmptyChunkDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ResponseEmptyChunkDefaultTypeInternal() {}
   union {
     ResponseEmptyChunk _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseEmptyChunkDefaultTypeInternal _ResponseEmptyChunk_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseEmptyChunkDefaultTypeInternal _ResponseEmptyChunk_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR ResponseChunkData::ResponseChunkData(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.chunk_data_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.chunk_data_)*/nullptr} {}
 struct ResponseChunkDataDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ResponseChunkDataDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ResponseChunkDataDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ResponseChunkDataDefaultTypeInternal() {}
   union {
     ResponseChunkData _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseChunkDataDefaultTypeInternal _ResponseChunkData_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ResponseChunkDataDefaultTypeInternal _ResponseChunkData_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR ChunkSubscription::ChunkSubscription(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.client_ids_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ChunkSubscriptionDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ChunkSubscriptionDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR ChunkSubscriptionDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~ChunkSubscriptionDefaultTypeInternal() {}
   union {
     ChunkSubscription _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChunkSubscriptionDefaultTypeInternal _ChunkSubscription_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ChunkSubscriptionDefaultTypeInternal _ChunkSubscription_default_instance_;
 }  // namespace storage
 }  // namespace service
 }  // namespace proto
 }  // namespace minecpp
 static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[9];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto = nullptr;
-static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto = nullptr;
-
-const uint32_t TableStruct_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ClientId, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ClientId, _impl_.value_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _internal_metadata_),
-  ~0u,  // no _extensions_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _impl_._oneof_case_[0]),
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _impl_.message_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkSubscription, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkSubscription, _impl_.position_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkData, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkData, _impl_.chunk_data_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestSetClientId, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestSetClientId, _impl_.client_id_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _internal_metadata_),
-  ~0u,  // no _extensions_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _impl_._oneof_case_[0]),
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  ::_pbi::kInvalidFieldOffsetTag,
-  ::_pbi::kInvalidFieldOffsetTag,
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _impl_.message_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseEmptyChunk, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseEmptyChunk, _impl_.position_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseChunkData, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseChunkData, _impl_.chunk_data_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ChunkSubscription, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ChunkSubscription, _impl_.client_ids_),
+static constexpr const ::_pb::EnumDescriptor**
+    file_level_enum_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto = nullptr;
+static constexpr const ::_pb::ServiceDescriptor**
+    file_level_service_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto = nullptr;
+const ::uint32_t TableStruct_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
+    protodesc_cold) = {
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ClientId, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ClientId, _impl_.value_),
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _internal_metadata_),
+    ~0u,  // no _extensions_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _impl_._oneof_case_[0]),
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ::_pbi::kInvalidFieldOffsetTag,
+    ::_pbi::kInvalidFieldOffsetTag,
+    ::_pbi::kInvalidFieldOffsetTag,
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _impl_.message_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkSubscription, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkSubscription, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkSubscription, _impl_.position_),
+    0,
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkData, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkData, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestChunkData, _impl_.chunk_data_),
+    0,
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestSetClientId, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestSetClientId, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::RequestSetClientId, _impl_.client_id_),
+    0,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _internal_metadata_),
+    ~0u,  // no _extensions_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _impl_._oneof_case_[0]),
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    ::_pbi::kInvalidFieldOffsetTag,
+    ::_pbi::kInvalidFieldOffsetTag,
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _impl_.message_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseEmptyChunk, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseEmptyChunk, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseEmptyChunk, _impl_.position_),
+    0,
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseChunkData, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseChunkData, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ResponseChunkData, _impl_.chunk_data_),
+    0,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ChunkSubscription, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::ChunkSubscription, _impl_.client_ids_),
 };
-static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::minecpp::proto::service::storage::ClientId)},
-  { 7, -1, -1, sizeof(::minecpp::proto::service::storage::Request)},
-  { 17, -1, -1, sizeof(::minecpp::proto::service::storage::RequestChunkSubscription)},
-  { 24, -1, -1, sizeof(::minecpp::proto::service::storage::RequestChunkData)},
-  { 31, -1, -1, sizeof(::minecpp::proto::service::storage::RequestSetClientId)},
-  { 38, -1, -1, sizeof(::minecpp::proto::service::storage::Response)},
-  { 47, -1, -1, sizeof(::minecpp::proto::service::storage::ResponseEmptyChunk)},
-  { 54, -1, -1, sizeof(::minecpp::proto::service::storage::ResponseChunkData)},
-  { 61, -1, -1, sizeof(::minecpp::proto::service::storage::ChunkSubscription)},
+
+static const ::_pbi::MigrationSchema
+    schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+        { 0, -1, -1, sizeof(::minecpp::proto::service::storage::ClientId)},
+        { 9, -1, -1, sizeof(::minecpp::proto::service::storage::Request)},
+        { 21, 30, -1, sizeof(::minecpp::proto::service::storage::RequestChunkSubscription)},
+        { 31, 40, -1, sizeof(::minecpp::proto::service::storage::RequestChunkData)},
+        { 41, 50, -1, sizeof(::minecpp::proto::service::storage::RequestSetClientId)},
+        { 51, -1, -1, sizeof(::minecpp::proto::service::storage::Response)},
+        { 62, 71, -1, sizeof(::minecpp::proto::service::storage::ResponseEmptyChunk)},
+        { 72, 81, -1, sizeof(::minecpp::proto::service::storage::ResponseChunkData)},
+        { 82, -1, -1, sizeof(::minecpp::proto::service::storage::ChunkSubscription)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::minecpp::proto::service::storage::_ClientId_default_instance_._instance,
-  &::minecpp::proto::service::storage::_Request_default_instance_._instance,
-  &::minecpp::proto::service::storage::_RequestChunkSubscription_default_instance_._instance,
-  &::minecpp::proto::service::storage::_RequestChunkData_default_instance_._instance,
-  &::minecpp::proto::service::storage::_RequestSetClientId_default_instance_._instance,
-  &::minecpp::proto::service::storage::_Response_default_instance_._instance,
-  &::minecpp::proto::service::storage::_ResponseEmptyChunk_default_instance_._instance,
-  &::minecpp::proto::service::storage::_ResponseChunkData_default_instance_._instance,
-  &::minecpp::proto::service::storage::_ChunkSubscription_default_instance_._instance,
+    &::minecpp::proto::service::storage::_ClientId_default_instance_._instance,
+    &::minecpp::proto::service::storage::_Request_default_instance_._instance,
+    &::minecpp::proto::service::storage::_RequestChunkSubscription_default_instance_._instance,
+    &::minecpp::proto::service::storage::_RequestChunkData_default_instance_._instance,
+    &::minecpp::proto::service::storage::_RequestSetClientId_default_instance_._instance,
+    &::minecpp::proto::service::storage::_Response_default_instance_._instance,
+    &::minecpp::proto::service::storage::_ResponseEmptyChunk_default_instance_._instance,
+    &::minecpp::proto::service::storage::_ResponseChunkData_default_instance_._instance,
+    &::minecpp::proto::service::storage::_ChunkSubscription_default_instance_._instance,
 };
-
-const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n+minecpp/proto/service/storage/Storage."
-  "proto\022\035minecpp.proto.service.storage\032!mi"
-  "necpp/proto/common/Common.proto\032\037minecpp"
-  "/proto/chunk/Chunk.proto\"\031\n\010ClientId\022\r\n\005"
-  "value\030\001 \001(\004\"\376\001\n\007Request\022U\n\022chunk_subscri"
-  "ption\030\001 \001(\01327.minecpp.proto.service.stor"
-  "age.RequestChunkSubscriptionH\000\022E\n\nchunk_"
-  "data\030\002 \001(\0132/.minecpp.proto.service.stora"
-  "ge.RequestChunkDataH\000\022J\n\rset_client_id\030\003"
-  " \001(\01321.minecpp.proto.service.storage.Req"
-  "uestSetClientIdH\000B\t\n\007message\"Q\n\030RequestC"
-  "hunkSubscription\0225\n\010position\030\001 \001(\0132#.min"
-  "ecpp.proto.common.ChunkPosition\"B\n\020Reque"
-  "stChunkData\022.\n\nchunk_data\030\001 \001(\0132\032.minecp"
-  "p.proto.chunk.Chunk\"P\n\022RequestSetClientI"
-  "d\022:\n\tclient_id\030\001 \001(\0132\'.minecpp.proto.ser"
-  "vice.storage.ClientId\"\247\001\n\010Response\022F\n\nch"
-  "unk_data\030\001 \001(\01320.minecpp.proto.service.s"
-  "torage.ResponseChunkDataH\000\022H\n\013empty_chun"
-  "k\030\002 \001(\01321.minecpp.proto.service.storage."
-  "ResponseEmptyChunkH\000B\t\n\007message\"K\n\022Respo"
-  "nseEmptyChunk\0225\n\010position\030\001 \001(\0132#.minecp"
-  "p.proto.common.ChunkPosition\"C\n\021Response"
-  "ChunkData\022.\n\nchunk_data\030\001 \001(\0132\032.minecpp."
-  "proto.chunk.Chunk\"P\n\021ChunkSubscription\022;"
-  "\n\nclient_ids\030\001 \003(\0132\'.minecpp.proto.servi"
-  "ce.storage.ClientIdb\006proto3"
-  ;
-static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_deps[2] = {
-  &::descriptor_table_minecpp_2fproto_2fchunk_2fChunk_2eproto,
-  &::descriptor_table_minecpp_2fproto_2fcommon_2fCommon_2eproto,
+const char descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+    "\n+minecpp/proto/service/storage/Storage."
+    "proto\022\035minecpp.proto.service.storage\032!mi"
+    "necpp/proto/common/Common.proto\032\037minecpp"
+    "/proto/chunk/Chunk.proto\"\031\n\010ClientId\022\r\n\005"
+    "value\030\001 \001(\004\"\376\001\n\007Request\022U\n\022chunk_subscri"
+    "ption\030\001 \001(\01327.minecpp.proto.service.stor"
+    "age.RequestChunkSubscriptionH\000\022E\n\nchunk_"
+    "data\030\002 \001(\0132/.minecpp.proto.service.stora"
+    "ge.RequestChunkDataH\000\022J\n\rset_client_id\030\003"
+    " \001(\01321.minecpp.proto.service.storage.Req"
+    "uestSetClientIdH\000B\t\n\007message\"Q\n\030RequestC"
+    "hunkSubscription\0225\n\010position\030\001 \001(\0132#.min"
+    "ecpp.proto.common.ChunkPosition\"B\n\020Reque"
+    "stChunkData\022.\n\nchunk_data\030\001 \001(\0132\032.minecp"
+    "p.proto.chunk.Chunk\"P\n\022RequestSetClientI"
+    "d\022:\n\tclient_id\030\001 \001(\0132\'.minecpp.proto.ser"
+    "vice.storage.ClientId\"\247\001\n\010Response\022F\n\nch"
+    "unk_data\030\001 \001(\01320.minecpp.proto.service.s"
+    "torage.ResponseChunkDataH\000\022H\n\013empty_chun"
+    "k\030\002 \001(\01321.minecpp.proto.service.storage."
+    "ResponseEmptyChunkH\000B\t\n\007message\"K\n\022Respo"
+    "nseEmptyChunk\0225\n\010position\030\001 \001(\0132#.minecp"
+    "p.proto.common.ChunkPosition\"C\n\021Response"
+    "ChunkData\022.\n\nchunk_data\030\001 \001(\0132\032.minecpp."
+    "proto.chunk.Chunk\"P\n\021ChunkSubscription\022;"
+    "\n\nclient_ids\030\001 \003(\0132\'.minecpp.proto.servi"
+    "ce.storage.ClientIdb\006proto3"
 };
-static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once;
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_deps[2] =
+    {
+        &::descriptor_table_minecpp_2fproto_2fchunk_2fChunk_2eproto,
+        &::descriptor_table_minecpp_2fproto_2fcommon_2fCommon_2eproto,
+};
+static ::absl::once_flag descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto = {
-    false, false, 1067, descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto,
+    false,
+    false,
+    1067,
+    descriptor_table_protodef_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto,
     "minecpp/proto/service/storage/Storage.proto",
-    &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once, descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_deps, 2, 9,
-    schemas, file_default_instances, TableStruct_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto::offsets,
-    file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto,
+    &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
+    descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_deps,
+    2,
+    9,
+    schemas,
+    file_default_instances,
+    TableStruct_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto::offsets,
+    file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto,
+    file_level_enum_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto,
 };
+
+// This function exists to be marked as weak.
+// It can significantly speed up compilation by breaking up LLVM's SCC
+// in the .pb.cc translation units. Large translation units see a
+// reduction of more than 35% of walltime for optimized builds. Without
+// the weak attribute all the messages in the file, including all the
+// vtables and everything they use become part of the same SCC through
+// a cycle like:
+// GetMetadata -> descriptor table -> default instances ->
+//   vtables -> GetMetadata
+// By adding a weak function here we break the connection from the
+// individual vtables back into the descriptor table.
 PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter() {
   return &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto;
 }
-
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
+static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto(&descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto);
 namespace minecpp {
 namespace proto {
 namespace service {
 namespace storage {
-
 // ===================================================================
 
 class ClientId::_Internal {
  public:
 };
 
-ClientId::ClientId(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+ClientId::ClientId(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.ClientId)
 }
 ClientId::ClientId(const ClientId& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ClientId* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.value_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _this->_impl_.value_ = from._impl_.value_;
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.ClientId)
 }
 
-inline void ClientId::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void ClientId::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.value_){uint64_t{0u}}
+      decltype(_impl_.value_) { ::uint64_t{0u} }
+
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -342,7 +404,7 @@ ClientId::~ClientId() {
 }
 
 inline void ClientId::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
 void ClientId::SetCachedSize(int size) const {
@@ -351,27 +413,28 @@ void ClientId::SetCachedSize(int size) const {
 
 void ClientId::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.ClientId)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.value_ = uint64_t{0u};
+  _impl_.value_ = ::uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* ClientId::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint64 value = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
           _impl_.value_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -396,16 +459,17 @@ failure:
 #undef CHK_
 }
 
-uint8_t* ClientId::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* ClientId::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.ClientId)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint64 value = 1;
   if (this->_internal_value() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_value(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+        1, this->_internal_value(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -416,17 +480,18 @@ uint8_t* ClientId::_InternalSerialize(
   return target;
 }
 
-size_t ClientId::ByteSizeLong() const {
+::size_t ClientId::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.ClientId)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // uint64 value = 1;
   if (this->_internal_value() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_value());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+        this->_internal_value());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -443,8 +508,8 @@ void ClientId::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   auto* const _this = static_cast<ClientId*>(&to_msg);
   auto& from = static_cast<const ClientId&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.ClientId)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_value() != 0) {
@@ -467,6 +532,7 @@ bool ClientId::IsInitialized() const {
 void ClientId::InternalSwap(ClientId* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+
   swap(_impl_.value_, other->_impl_.value_);
 }
 
@@ -475,11 +541,12 @@ void ClientId::InternalSwap(ClientId* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[0]);
 }
-
 // ===================================================================
 
 class Request::_Internal {
  public:
+  static constexpr ::int32_t kOneofCaseOffset =
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Request, _impl_._oneof_case_);
   static const ::minecpp::proto::service::storage::RequestChunkSubscription& chunk_subscription(const Request* msg);
   static const ::minecpp::proto::service::storage::RequestChunkData& chunk_data(const Request* msg);
   static const ::minecpp::proto::service::storage::RequestSetClientId& set_client_id(const Request* msg);
@@ -542,10 +609,9 @@ void Request::set_allocated_set_client_id(::minecpp::proto::service::storage::Re
   }
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.storage.Request.set_client_id)
 }
-Request::Request(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+Request::Request(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.Request)
 }
 Request::Request(const Request& from)
@@ -581,10 +647,8 @@ Request::Request(const Request& from)
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.Request)
 }
 
-inline void Request::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void Request::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -603,7 +667,7 @@ Request::~Request() {
 }
 
 inline void Request::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (has_message()) {
     clear_message();
   }
@@ -644,7 +708,7 @@ void Request::clear_message() {
 
 void Request::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.Request)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -655,32 +719,35 @@ void Request::Clear() {
 const char* Request::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.service.storage.RequestChunkSubscription chunk_subscription = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_chunk_subscription(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.service.storage.RequestChunkData chunk_data = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_chunk_data(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.service.storage.RequestSetClientId set_client_id = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_set_client_id(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -705,33 +772,33 @@ failure:
 #undef CHK_
 }
 
-uint8_t* Request::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* Request::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.Request)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .minecpp.proto.service.storage.RequestChunkSubscription chunk_subscription = 1;
-  if (_internal_has_chunk_subscription()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::chunk_subscription(this),
-        _Internal::chunk_subscription(this).GetCachedSize(), target, stream);
+  switch (message_case()) {
+    case kChunkSubscription: {
+      target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(1, _Internal::chunk_subscription(this),
+          _Internal::chunk_subscription(this).GetCachedSize(), target, stream);
+      break;
+    }
+    case kChunkData: {
+      target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, _Internal::chunk_data(this),
+          _Internal::chunk_data(this).GetCachedSize(), target, stream);
+      break;
+    }
+    case kSetClientId: {
+      target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(3, _Internal::set_client_id(this),
+          _Internal::set_client_id(this).GetCachedSize(), target, stream);
+      break;
+    }
+    default: ;
   }
-
-  // .minecpp.proto.service.storage.RequestChunkData chunk_data = 2;
-  if (_internal_has_chunk_data()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::chunk_data(this),
-        _Internal::chunk_data(this).GetCachedSize(), target, stream);
-  }
-
-  // .minecpp.proto.service.storage.RequestSetClientId set_client_id = 3;
-  if (_internal_has_set_client_id()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::set_client_id(this),
-        _Internal::set_client_id(this).GetCachedSize(), target, stream);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -740,11 +807,11 @@ uint8_t* Request::_InternalSerialize(
   return target;
 }
 
-size_t Request::ByteSizeLong() const {
+::size_t Request::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.Request)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -788,8 +855,8 @@ void Request::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
   auto* const _this = static_cast<Request*>(&to_msg);
   auto& from = static_cast<const Request&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.Request)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   switch (from.message_case()) {
@@ -838,12 +905,17 @@ void Request::InternalSwap(Request* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[1]);
 }
-
 // ===================================================================
 
 class RequestChunkSubscription::_Internal {
  public:
+  using HasBits = decltype(std::declval<RequestChunkSubscription>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(RequestChunkSubscription, _impl_._has_bits_);
   static const ::minecpp::proto::common::ChunkPosition& position(const RequestChunkSubscription* msg);
+  static void set_has_position(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::common::ChunkPosition&
@@ -851,38 +923,35 @@ RequestChunkSubscription::_Internal::position(const RequestChunkSubscription* ms
   return *msg->_impl_.position_;
 }
 void RequestChunkSubscription::clear_position() {
-  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
-    delete _impl_.position_;
-  }
-  _impl_.position_ = nullptr;
+  if (_impl_.position_ != nullptr) _impl_.position_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-RequestChunkSubscription::RequestChunkSubscription(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+RequestChunkSubscription::RequestChunkSubscription(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.RequestChunkSubscription)
 }
 RequestChunkSubscription::RequestChunkSubscription(const RequestChunkSubscription& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   RequestChunkSubscription* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.position_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.position_){nullptr}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_position()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.position_ = new ::minecpp::proto::common::ChunkPosition(*from._impl_.position_);
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.RequestChunkSubscription)
 }
 
-inline void RequestChunkSubscription::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void RequestChunkSubscription::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.position_){nullptr}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.position_){nullptr}
   };
 }
 
@@ -896,7 +965,7 @@ RequestChunkSubscription::~RequestChunkSubscription() {
 }
 
 inline void RequestChunkSubscription::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.position_;
 }
 
@@ -906,30 +975,34 @@ void RequestChunkSubscription::SetCachedSize(int size) const {
 
 void RequestChunkSubscription::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.RequestChunkSubscription)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
-    delete _impl_.position_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.position_ != nullptr);
+    _impl_.position_->Clear();
   }
-  _impl_.position_ = nullptr;
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* RequestChunkSubscription::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.common.ChunkPosition position = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -947,6 +1020,7 @@ const char* RequestChunkSubscription::_InternalParse(const char* ptr, ::_pbi::Pa
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -954,14 +1028,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* RequestChunkSubscription::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* RequestChunkSubscription::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.RequestChunkSubscription)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.common.ChunkPosition position = 1;
-  if (this->_internal_has_position()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::position(this),
         _Internal::position(this).GetCachedSize(), target, stream);
@@ -975,16 +1050,17 @@ uint8_t* RequestChunkSubscription::_InternalSerialize(
   return target;
 }
 
-size_t RequestChunkSubscription::ByteSizeLong() const {
+::size_t RequestChunkSubscription::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.RequestChunkSubscription)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // .minecpp.proto.common.ChunkPosition position = 1;
-  if (this->_internal_has_position()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.position_);
@@ -1004,11 +1080,11 @@ void RequestChunkSubscription::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_ms
   auto* const _this = static_cast<RequestChunkSubscription*>(&to_msg);
   auto& from = static_cast<const RequestChunkSubscription&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.RequestChunkSubscription)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_position()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_position()->::minecpp::proto::common::ChunkPosition::MergeFrom(
         from._internal_position());
   }
@@ -1029,6 +1105,7 @@ bool RequestChunkSubscription::IsInitialized() const {
 void RequestChunkSubscription::InternalSwap(RequestChunkSubscription* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.position_, other->_impl_.position_);
 }
 
@@ -1037,12 +1114,17 @@ void RequestChunkSubscription::InternalSwap(RequestChunkSubscription* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[2]);
 }
-
 // ===================================================================
 
 class RequestChunkData::_Internal {
  public:
+  using HasBits = decltype(std::declval<RequestChunkData>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(RequestChunkData, _impl_._has_bits_);
   static const ::minecpp::proto::chunk::Chunk& chunk_data(const RequestChunkData* msg);
+  static void set_has_chunk_data(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::chunk::Chunk&
@@ -1050,38 +1132,35 @@ RequestChunkData::_Internal::chunk_data(const RequestChunkData* msg) {
   return *msg->_impl_.chunk_data_;
 }
 void RequestChunkData::clear_chunk_data() {
-  if (GetArenaForAllocation() == nullptr && _impl_.chunk_data_ != nullptr) {
-    delete _impl_.chunk_data_;
-  }
-  _impl_.chunk_data_ = nullptr;
+  if (_impl_.chunk_data_ != nullptr) _impl_.chunk_data_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-RequestChunkData::RequestChunkData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+RequestChunkData::RequestChunkData(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.RequestChunkData)
 }
 RequestChunkData::RequestChunkData(const RequestChunkData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   RequestChunkData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.chunk_data_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.chunk_data_){nullptr}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_chunk_data()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.chunk_data_ = new ::minecpp::proto::chunk::Chunk(*from._impl_.chunk_data_);
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.RequestChunkData)
 }
 
-inline void RequestChunkData::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void RequestChunkData::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.chunk_data_){nullptr}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.chunk_data_){nullptr}
   };
 }
 
@@ -1095,7 +1174,7 @@ RequestChunkData::~RequestChunkData() {
 }
 
 inline void RequestChunkData::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.chunk_data_;
 }
 
@@ -1105,30 +1184,34 @@ void RequestChunkData::SetCachedSize(int size) const {
 
 void RequestChunkData::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.RequestChunkData)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.chunk_data_ != nullptr) {
-    delete _impl_.chunk_data_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.chunk_data_ != nullptr);
+    _impl_.chunk_data_->Clear();
   }
-  _impl_.chunk_data_ = nullptr;
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* RequestChunkData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.chunk.Chunk chunk_data = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_chunk_data(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -1146,6 +1229,7 @@ const char* RequestChunkData::_InternalParse(const char* ptr, ::_pbi::ParseConte
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -1153,14 +1237,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* RequestChunkData::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* RequestChunkData::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.RequestChunkData)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.chunk.Chunk chunk_data = 1;
-  if (this->_internal_has_chunk_data()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::chunk_data(this),
         _Internal::chunk_data(this).GetCachedSize(), target, stream);
@@ -1174,16 +1259,17 @@ uint8_t* RequestChunkData::_InternalSerialize(
   return target;
 }
 
-size_t RequestChunkData::ByteSizeLong() const {
+::size_t RequestChunkData::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.RequestChunkData)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // .minecpp.proto.chunk.Chunk chunk_data = 1;
-  if (this->_internal_has_chunk_data()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.chunk_data_);
@@ -1203,11 +1289,11 @@ void RequestChunkData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   auto* const _this = static_cast<RequestChunkData*>(&to_msg);
   auto& from = static_cast<const RequestChunkData&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.RequestChunkData)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_chunk_data()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_chunk_data()->::minecpp::proto::chunk::Chunk::MergeFrom(
         from._internal_chunk_data());
   }
@@ -1228,6 +1314,7 @@ bool RequestChunkData::IsInitialized() const {
 void RequestChunkData::InternalSwap(RequestChunkData* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.chunk_data_, other->_impl_.chunk_data_);
 }
 
@@ -1236,45 +1323,49 @@ void RequestChunkData::InternalSwap(RequestChunkData* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[3]);
 }
-
 // ===================================================================
 
 class RequestSetClientId::_Internal {
  public:
+  using HasBits = decltype(std::declval<RequestSetClientId>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(RequestSetClientId, _impl_._has_bits_);
   static const ::minecpp::proto::service::storage::ClientId& client_id(const RequestSetClientId* msg);
+  static void set_has_client_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::service::storage::ClientId&
 RequestSetClientId::_Internal::client_id(const RequestSetClientId* msg) {
   return *msg->_impl_.client_id_;
 }
-RequestSetClientId::RequestSetClientId(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+RequestSetClientId::RequestSetClientId(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.RequestSetClientId)
 }
 RequestSetClientId::RequestSetClientId(const RequestSetClientId& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   RequestSetClientId* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_id_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.client_id_){nullptr}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_client_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.client_id_ = new ::minecpp::proto::service::storage::ClientId(*from._impl_.client_id_);
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.RequestSetClientId)
 }
 
-inline void RequestSetClientId::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void RequestSetClientId::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_id_){nullptr}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.client_id_){nullptr}
   };
 }
 
@@ -1288,7 +1379,7 @@ RequestSetClientId::~RequestSetClientId() {
 }
 
 inline void RequestSetClientId::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.client_id_;
 }
 
@@ -1298,30 +1389,34 @@ void RequestSetClientId::SetCachedSize(int size) const {
 
 void RequestSetClientId::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.RequestSetClientId)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.client_id_ != nullptr) {
-    delete _impl_.client_id_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.client_id_ != nullptr);
+    _impl_.client_id_->Clear();
   }
-  _impl_.client_id_ = nullptr;
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* RequestSetClientId::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.service.storage.ClientId client_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_client_id(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -1339,6 +1434,7 @@ const char* RequestSetClientId::_InternalParse(const char* ptr, ::_pbi::ParseCon
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -1346,14 +1442,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* RequestSetClientId::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* RequestSetClientId::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.RequestSetClientId)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.service.storage.ClientId client_id = 1;
-  if (this->_internal_has_client_id()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::client_id(this),
         _Internal::client_id(this).GetCachedSize(), target, stream);
@@ -1367,16 +1464,17 @@ uint8_t* RequestSetClientId::_InternalSerialize(
   return target;
 }
 
-size_t RequestSetClientId::ByteSizeLong() const {
+::size_t RequestSetClientId::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.RequestSetClientId)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // .minecpp.proto.service.storage.ClientId client_id = 1;
-  if (this->_internal_has_client_id()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.client_id_);
@@ -1396,11 +1494,11 @@ void RequestSetClientId::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
   auto* const _this = static_cast<RequestSetClientId*>(&to_msg);
   auto& from = static_cast<const RequestSetClientId&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.RequestSetClientId)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_client_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_client_id()->::minecpp::proto::service::storage::ClientId::MergeFrom(
         from._internal_client_id());
   }
@@ -1421,6 +1519,7 @@ bool RequestSetClientId::IsInitialized() const {
 void RequestSetClientId::InternalSwap(RequestSetClientId* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.client_id_, other->_impl_.client_id_);
 }
 
@@ -1429,11 +1528,12 @@ void RequestSetClientId::InternalSwap(RequestSetClientId* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[4]);
 }
-
 // ===================================================================
 
 class Response::_Internal {
  public:
+  static constexpr ::int32_t kOneofCaseOffset =
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::service::storage::Response, _impl_._oneof_case_);
   static const ::minecpp::proto::service::storage::ResponseChunkData& chunk_data(const Response* msg);
   static const ::minecpp::proto::service::storage::ResponseEmptyChunk& empty_chunk(const Response* msg);
 };
@@ -1476,10 +1576,9 @@ void Response::set_allocated_empty_chunk(::minecpp::proto::service::storage::Res
   }
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.service.storage.Response.empty_chunk)
 }
-Response::Response(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+Response::Response(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.Response)
 }
 Response::Response(const Response& from)
@@ -1510,10 +1609,8 @@ Response::Response(const Response& from)
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.Response)
 }
 
-inline void Response::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void Response::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.message_){}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -1532,7 +1629,7 @@ Response::~Response() {
 }
 
 inline void Response::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (has_message()) {
     clear_message();
   }
@@ -1567,7 +1664,7 @@ void Response::clear_message() {
 
 void Response::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.Response)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1578,24 +1675,26 @@ void Response::Clear() {
 const char* Response::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.service.storage.ResponseChunkData chunk_data = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_chunk_data(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.service.storage.ResponseEmptyChunk empty_chunk = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_empty_chunk(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -1620,26 +1719,27 @@ failure:
 #undef CHK_
 }
 
-uint8_t* Response::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* Response::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.Response)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .minecpp.proto.service.storage.ResponseChunkData chunk_data = 1;
-  if (_internal_has_chunk_data()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::chunk_data(this),
-        _Internal::chunk_data(this).GetCachedSize(), target, stream);
+  switch (message_case()) {
+    case kChunkData: {
+      target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(1, _Internal::chunk_data(this),
+          _Internal::chunk_data(this).GetCachedSize(), target, stream);
+      break;
+    }
+    case kEmptyChunk: {
+      target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(2, _Internal::empty_chunk(this),
+          _Internal::empty_chunk(this).GetCachedSize(), target, stream);
+      break;
+    }
+    default: ;
   }
-
-  // .minecpp.proto.service.storage.ResponseEmptyChunk empty_chunk = 2;
-  if (_internal_has_empty_chunk()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::empty_chunk(this),
-        _Internal::empty_chunk(this).GetCachedSize(), target, stream);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1648,11 +1748,11 @@ uint8_t* Response::_InternalSerialize(
   return target;
 }
 
-size_t Response::ByteSizeLong() const {
+::size_t Response::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.Response)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
@@ -1689,8 +1789,8 @@ void Response::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   auto* const _this = static_cast<Response*>(&to_msg);
   auto& from = static_cast<const Response&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.Response)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   switch (from.message_case()) {
@@ -1734,12 +1834,17 @@ void Response::InternalSwap(Response* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[5]);
 }
-
 // ===================================================================
 
 class ResponseEmptyChunk::_Internal {
  public:
+  using HasBits = decltype(std::declval<ResponseEmptyChunk>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(ResponseEmptyChunk, _impl_._has_bits_);
   static const ::minecpp::proto::common::ChunkPosition& position(const ResponseEmptyChunk* msg);
+  static void set_has_position(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::common::ChunkPosition&
@@ -1747,38 +1852,35 @@ ResponseEmptyChunk::_Internal::position(const ResponseEmptyChunk* msg) {
   return *msg->_impl_.position_;
 }
 void ResponseEmptyChunk::clear_position() {
-  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
-    delete _impl_.position_;
-  }
-  _impl_.position_ = nullptr;
+  if (_impl_.position_ != nullptr) _impl_.position_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-ResponseEmptyChunk::ResponseEmptyChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+ResponseEmptyChunk::ResponseEmptyChunk(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.ResponseEmptyChunk)
 }
 ResponseEmptyChunk::ResponseEmptyChunk(const ResponseEmptyChunk& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   ResponseEmptyChunk* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.position_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.position_){nullptr}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_position()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.position_ = new ::minecpp::proto::common::ChunkPosition(*from._impl_.position_);
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.ResponseEmptyChunk)
 }
 
-inline void ResponseEmptyChunk::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void ResponseEmptyChunk::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.position_){nullptr}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.position_){nullptr}
   };
 }
 
@@ -1792,7 +1894,7 @@ ResponseEmptyChunk::~ResponseEmptyChunk() {
 }
 
 inline void ResponseEmptyChunk::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.position_;
 }
 
@@ -1802,30 +1904,34 @@ void ResponseEmptyChunk::SetCachedSize(int size) const {
 
 void ResponseEmptyChunk::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.ResponseEmptyChunk)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.position_ != nullptr) {
-    delete _impl_.position_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.position_ != nullptr);
+    _impl_.position_->Clear();
   }
-  _impl_.position_ = nullptr;
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* ResponseEmptyChunk::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.common.ChunkPosition position = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_position(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -1843,6 +1949,7 @@ const char* ResponseEmptyChunk::_InternalParse(const char* ptr, ::_pbi::ParseCon
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -1850,14 +1957,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* ResponseEmptyChunk::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* ResponseEmptyChunk::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.ResponseEmptyChunk)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.common.ChunkPosition position = 1;
-  if (this->_internal_has_position()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::position(this),
         _Internal::position(this).GetCachedSize(), target, stream);
@@ -1871,16 +1979,17 @@ uint8_t* ResponseEmptyChunk::_InternalSerialize(
   return target;
 }
 
-size_t ResponseEmptyChunk::ByteSizeLong() const {
+::size_t ResponseEmptyChunk::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.ResponseEmptyChunk)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // .minecpp.proto.common.ChunkPosition position = 1;
-  if (this->_internal_has_position()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.position_);
@@ -1900,11 +2009,11 @@ void ResponseEmptyChunk::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
   auto* const _this = static_cast<ResponseEmptyChunk*>(&to_msg);
   auto& from = static_cast<const ResponseEmptyChunk&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.ResponseEmptyChunk)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_position()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_position()->::minecpp::proto::common::ChunkPosition::MergeFrom(
         from._internal_position());
   }
@@ -1925,6 +2034,7 @@ bool ResponseEmptyChunk::IsInitialized() const {
 void ResponseEmptyChunk::InternalSwap(ResponseEmptyChunk* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.position_, other->_impl_.position_);
 }
 
@@ -1933,12 +2043,17 @@ void ResponseEmptyChunk::InternalSwap(ResponseEmptyChunk* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[6]);
 }
-
 // ===================================================================
 
 class ResponseChunkData::_Internal {
  public:
+  using HasBits = decltype(std::declval<ResponseChunkData>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(ResponseChunkData, _impl_._has_bits_);
   static const ::minecpp::proto::chunk::Chunk& chunk_data(const ResponseChunkData* msg);
+  static void set_has_chunk_data(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::chunk::Chunk&
@@ -1946,38 +2061,35 @@ ResponseChunkData::_Internal::chunk_data(const ResponseChunkData* msg) {
   return *msg->_impl_.chunk_data_;
 }
 void ResponseChunkData::clear_chunk_data() {
-  if (GetArenaForAllocation() == nullptr && _impl_.chunk_data_ != nullptr) {
-    delete _impl_.chunk_data_;
-  }
-  _impl_.chunk_data_ = nullptr;
+  if (_impl_.chunk_data_ != nullptr) _impl_.chunk_data_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-ResponseChunkData::ResponseChunkData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+ResponseChunkData::ResponseChunkData(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.ResponseChunkData)
 }
 ResponseChunkData::ResponseChunkData(const ResponseChunkData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   ResponseChunkData* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.chunk_data_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.chunk_data_){nullptr}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_chunk_data()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.chunk_data_ = new ::minecpp::proto::chunk::Chunk(*from._impl_.chunk_data_);
   }
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.ResponseChunkData)
 }
 
-inline void ResponseChunkData::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void ResponseChunkData::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.chunk_data_){nullptr}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.chunk_data_){nullptr}
   };
 }
 
@@ -1991,7 +2103,7 @@ ResponseChunkData::~ResponseChunkData() {
 }
 
 inline void ResponseChunkData::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.chunk_data_;
 }
 
@@ -2001,30 +2113,34 @@ void ResponseChunkData::SetCachedSize(int size) const {
 
 void ResponseChunkData::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.ResponseChunkData)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.chunk_data_ != nullptr) {
-    delete _impl_.chunk_data_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.chunk_data_ != nullptr);
+    _impl_.chunk_data_->Clear();
   }
-  _impl_.chunk_data_ = nullptr;
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* ResponseChunkData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.chunk.Chunk chunk_data = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_chunk_data(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -2042,6 +2158,7 @@ const char* ResponseChunkData::_InternalParse(const char* ptr, ::_pbi::ParseCont
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -2049,14 +2166,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* ResponseChunkData::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* ResponseChunkData::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.ResponseChunkData)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.chunk.Chunk chunk_data = 1;
-  if (this->_internal_has_chunk_data()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::chunk_data(this),
         _Internal::chunk_data(this).GetCachedSize(), target, stream);
@@ -2070,16 +2188,17 @@ uint8_t* ResponseChunkData::_InternalSerialize(
   return target;
 }
 
-size_t ResponseChunkData::ByteSizeLong() const {
+::size_t ResponseChunkData::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.ResponseChunkData)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // .minecpp.proto.chunk.Chunk chunk_data = 1;
-  if (this->_internal_has_chunk_data()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.chunk_data_);
@@ -2099,11 +2218,11 @@ void ResponseChunkData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, cons
   auto* const _this = static_cast<ResponseChunkData*>(&to_msg);
   auto& from = static_cast<const ResponseChunkData&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.ResponseChunkData)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_chunk_data()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_chunk_data()->::minecpp::proto::chunk::Chunk::MergeFrom(
         from._internal_chunk_data());
   }
@@ -2124,6 +2243,7 @@ bool ResponseChunkData::IsInitialized() const {
 void ResponseChunkData::InternalSwap(ResponseChunkData* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   swap(_impl_.chunk_data_, other->_impl_.chunk_data_);
 }
 
@@ -2132,17 +2252,15 @@ void ResponseChunkData::InternalSwap(ResponseChunkData* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[7]);
 }
-
 // ===================================================================
 
 class ChunkSubscription::_Internal {
  public:
 };
 
-ChunkSubscription::ChunkSubscription(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+ChunkSubscription::ChunkSubscription(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.service.storage.ChunkSubscription)
 }
 ChunkSubscription::ChunkSubscription(const ChunkSubscription& from)
@@ -2156,10 +2274,8 @@ ChunkSubscription::ChunkSubscription(const ChunkSubscription& from)
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.service.storage.ChunkSubscription)
 }
 
-inline void ChunkSubscription::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void ChunkSubscription::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.client_ids_){arena}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -2176,8 +2292,8 @@ ChunkSubscription::~ChunkSubscription() {
 }
 
 inline void ChunkSubscription::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.client_ids_.~RepeatedPtrField();
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
+  _internal_mutable_client_ids()->~RepeatedPtrField();
 }
 
 void ChunkSubscription::SetCachedSize(int size) const {
@@ -2186,23 +2302,23 @@ void ChunkSubscription::SetCachedSize(int size) const {
 
 void ChunkSubscription::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.service.storage.ChunkSubscription)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.client_ids_.Clear();
+  _internal_mutable_client_ids()->Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* ChunkSubscription::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // repeated .minecpp.proto.service.storage.ClientId client_ids = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -2210,8 +2326,9 @@ const char* ChunkSubscription::_InternalParse(const char* ptr, ::_pbi::ParseCont
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -2236,10 +2353,10 @@ failure:
 #undef CHK_
 }
 
-uint8_t* ChunkSubscription::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* ChunkSubscription::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.service.storage.ChunkSubscription)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // repeated .minecpp.proto.service.storage.ClientId client_ids = 1;
@@ -2258,17 +2375,17 @@ uint8_t* ChunkSubscription::_InternalSerialize(
   return target;
 }
 
-size_t ChunkSubscription::ByteSizeLong() const {
+::size_t ChunkSubscription::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.service.storage.ChunkSubscription)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // repeated .minecpp.proto.service.storage.ClientId client_ids = 1;
   total_size += 1UL * this->_internal_client_ids_size();
-  for (const auto& msg : this->_impl_.client_ids_) {
+  for (const auto& msg : this->_internal_client_ids()) {
     total_size +=
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
@@ -2287,11 +2404,11 @@ void ChunkSubscription::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, cons
   auto* const _this = static_cast<ChunkSubscription*>(&to_msg);
   auto& from = static_cast<const ChunkSubscription&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.service.storage.ChunkSubscription)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.client_ids_.MergeFrom(from._impl_.client_ids_);
+  _this->_internal_mutable_client_ids()->MergeFrom(from._internal_client_ids());
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -2309,7 +2426,7 @@ bool ChunkSubscription::IsInitialized() const {
 void ChunkSubscription::InternalSwap(ChunkSubscription* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.client_ids_.InternalSwap(&other->_impl_.client_ids_);
+  _internal_mutable_client_ids()->InternalSwap(other->_internal_mutable_client_ids());
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ChunkSubscription::GetMetadata() const {
@@ -2317,7 +2434,6 @@ void ChunkSubscription::InternalSwap(ChunkSubscription* other) {
       &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_getter, &descriptor_table_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fservice_2fstorage_2fStorage_2eproto[8]);
 }
-
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace storage
 }  // namespace service
@@ -2361,6 +2477,5 @@ Arena::CreateMaybeMessage< ::minecpp::proto::service::storage::ChunkSubscription
   return Arena::CreateMessageInternal< ::minecpp::proto::service::storage::ChunkSubscription >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
-
 // @@protoc_insertion_point(global_scope)
-#include <google/protobuf/port_undef.inc>
+#include "google/protobuf/port_undef.inc"

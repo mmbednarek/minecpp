@@ -6,13 +6,19 @@
 
 namespace minecpp::network::message {
 
+void Writer::write_sbyte(std::int8_t value)
+{
+   m_stream.write(reinterpret_cast<const char *>(&value), sizeof(std::int8_t));
+}
+
 void Writer::write_byte(std::uint8_t value)
 {
    m_stream.write(reinterpret_cast<char *>(&value), sizeof(std::uint8_t));
 }
 
-void Writer::write_varint(std::uint32_t value)
+void Writer::write_varint(std::int32_t in_value)
 {
+   auto value = util::unsafe_cast<std::uint32_t>(in_value);
    for (;;) {
       if (value & (~0x7Fu)) {
          write_byte((value & 0x7Fu) | 0x80u);
@@ -24,8 +30,9 @@ void Writer::write_varint(std::uint32_t value)
    }
 }
 
-void Writer::write_varlong(std::uint64_t value)
+void Writer::write_varlong(std::int64_t in_value)
 {
+   auto value = util::unsafe_cast<std::uint64_t>(in_value);
    for (;;) {
       if (value & (~0x7Fu)) {
          write_byte((value & 0x7Fu) | 0x80u);

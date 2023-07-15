@@ -11,10 +11,17 @@ Reader::Reader(std::istream &s) :
 {
 }
 
-uint8_t Reader::read_byte()
+std::uint8_t Reader::read_byte()
 {
    uint8_t result;
-   m_stream.read((char *) &result, sizeof(uint8_t));
+   m_stream.read(reinterpret_cast<char *>(&result), sizeof(std::uint8_t));
+   return result;
+}
+
+std::int8_t Reader::read_sbyte()
+{
+   std::int8_t result;
+   m_stream.read(reinterpret_cast<char *>(&result), sizeof(std::uint8_t));
    return result;
 }
 
@@ -35,6 +42,25 @@ int Reader::read_varint()
    }
 
    return static_cast<int>(result);
+}
+
+std::int64_t Reader::read_varlong()
+{
+   std::uint64_t result = 0u;
+   std::uint64_t shift  = 0u;
+
+   for (;;) {
+      uint8_t b = read_byte();
+      if (b & 0x80u) {
+         result |= (b & 0x7Fu) << shift;
+         shift += 7u;
+         continue;
+      }
+      result |= static_cast<std::uint64_t>(b << shift);
+      break;
+   }
+
+   return static_cast<std::int64_t>(result);
 }
 
 std::string Reader::read_string()
@@ -236,6 +262,18 @@ container::Buffer Reader::read_buffer()
    container::Buffer buffer(static_cast<std::size_t>(buffer_size));
    read_bytes(buffer.data(), buffer.size());
    return buffer;
+}
+
+util::Uuid Reader::read_uuid()
+{
+   util::Uuid uuid;
+   this->read_bytes(uuid.data, 16);
+   return uuid;
+}
+
+std::istream &Reader::raw_stream()
+{
+   return m_stream;
 }
 
 }// namespace minecpp::network::message

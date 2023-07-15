@@ -18,7 +18,7 @@ target_link_libraries(minecpp_game
         EnTT
         libmb
         minecpp_api_proto
-        minecpp_api_nbt
+        minecpp_api_schema
         minecpp_chat
         minecpp_math
         minecpp_utils

@@ -16,4 +16,5 @@ add_subdirectory("src")
 target_link_libraries(minecpp_schema_compiler_example_net_generator
         LINK_PRIVATE
         minecpp_network
+        minecpp_utils
 )

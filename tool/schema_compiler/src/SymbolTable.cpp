@@ -14,6 +14,8 @@ void SymbolTable::read_document(std::string_view source_file, Document &document
               .name{record.name()},
               .package{package_name},
               .source_file{source_file},
+              .generator{document.generator()},
+              .annotations{record.annotations()},
       });
    }
 }
@@ -45,7 +47,12 @@ void SymbolTable::register_symbol(const Symbol &symbol)
       return;
    }
 
-   m_symbol_list.emplace(fmt::format("{}.{}", symbol.package, symbol.name), symbol);
+   auto symbol_id = fmt::format("{}.{}", symbol.package, symbol.name);
+   if (m_symbol_list.contains(symbol_id)) {
+      throw std::runtime_error(fmt::format("symbol {} is already registered", symbol_id));
+   }
+
+   m_symbol_list.emplace(symbol_id, symbol);
 }
 
 }// namespace minecpp::tool::schema_compiler

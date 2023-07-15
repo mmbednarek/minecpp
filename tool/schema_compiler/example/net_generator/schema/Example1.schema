@@ -1,28 +1,97 @@
+generator = "net"
 package minecpp.example1
 
 // Some Item Stuff
 record Item {
     Name: string
     Count: int16
-    Props: example2.Properties
+    Props: nbt.Properties
 }
 
 // Some person stuff
-[MessageID="01"]
+[MessageID=0x01]
 record Person {
     /* sdfsdfsd */
     Name: string
     /* sdfsdf */ Surname: /* type */ string
-    Age: int32
+    Age: varint
     Inventory: list[list[Item]]
     [Namespace="dimension_types", Path="dimension_type/stuff"]
     DimensionTypes: int32
-    FooType: variant[int32, string, int8]
+    Foo: uuid
+    Opts: variant[float32, int32, Item]
+
+    [TerminateOn="0xFF"]
+    More: map[uint8, string]
 }
 
-[MessageID="02"]
+[MessageID=0x02]
 record Car {
     Brand: string
     Vin: string
     Mileage: int64
+}
+
+record PlayerProperty {
+    key: string
+    value: string
+    signature: optional[string]
+}
+
+record ActionAddPlayer {
+    name: string
+    properties: list[PlayerProperty]
+}
+
+record PlayerChatSignature {
+    chat_session_id: uuid
+    public_key_expiry: uint64
+    public_key: string
+    signature: string
+}
+
+record ActionInitializeChat {
+    chat_signature: optional[PlayerChatSignature]
+}
+
+record ActionSetGameMode {
+    game_mode: varint
+}
+
+record ActionSetIsListed {
+    is_listed: int8
+}
+
+record ActionSetLatency {
+    ping: varint
+}
+
+record ActionSetDisplayName {
+    display_name: optional[string]
+}
+
+[ArgCount=1, Arg0="action_bits:uint32"]
+record PlayerInfoChange {
+    player_id: uuid
+
+    [Condition="(action_bits & 1u) != 0u"]
+    add_player: optional[ActionAddPlayer]
+    [Condition="(action_bits & 2u) != 0u"]
+    initialize_chat: optional[ActionInitializeChat]
+    [Condition="(action_bits & 3u) != 0u"]
+    set_game_mode: optional[ActionSetGameMode]
+    [Condition="(action_bits & 4u) != 0u"]
+    set_is_listed: optional[ActionSetIsListed]
+    [Condition="(action_bits & 5u) != 0u"]
+    set_latency: optional[ActionSetLatency]
+    [Condition="(action_bits & 6u) != 0u"]
+    set_display_name: optional[ActionSetDisplayName]
+}
+
+[MessageID=36]
+record UpdatePlayerInfo {
+    action_bits: uint32
+
+    [Capture="action_bits=result.action_bits", Bind="action_bits"]
+    actions: list[PlayerInfoChange]
 }

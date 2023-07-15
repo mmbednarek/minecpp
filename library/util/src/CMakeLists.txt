@@ -17,6 +17,7 @@ target_sources(minecpp_utils
 
     # Header files
     PUBLIC
+        ${MINECPP_UTIL_INCLUDE_DIR}/Case.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Cast.hpp
         ${MINECPP_UTIL_INCLUDE_DIR}/Compression.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Concepts.h

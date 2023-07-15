@@ -49,7 +49,7 @@ std::optional<game::Entity> RuntimeContext::entity()
 
 std::optional<game::PlayerId> RuntimeContext::player_id()
 {
-   auto player_id = this->variable<util::uuid>("player_id");
+   auto player_id = this->variable<util::Uuid>("player_id");
    if (not player_id.has_value())
       return std::nullopt;
    return static_cast<game::PlayerId>(*player_id);

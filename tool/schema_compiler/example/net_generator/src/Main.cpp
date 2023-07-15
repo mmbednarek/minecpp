@@ -7,6 +7,7 @@
 using minecpp::example1::Item;
 using minecpp::example1::Person;
 using minecpp::example1::Car;
+using minecpp::example1::UpdatePlayerInfo;
 
 class Visitor {
  public:
@@ -31,6 +32,10 @@ class Visitor {
       std::cout << "visited car " << car.brand << "\n";
    }
 
+   void on_update_player_info(const UpdatePlayerInfo &player_info) {
+      std::cout << "visited player info " << player_info.action_bits << "\n";
+   }
+
    void on_failure(std::uint8_t message_id) const {
       std::cerr << "failed to read message with id " << message_id << '\n';
    }
@@ -41,6 +46,10 @@ int main() {
    person.name = "hello";
    person.surname = "world";
    person.age = 20;
+   person.foo = {0x05, 0x10, 0x55, 0x10};
+   person.opts = 0.5f;
+   person.more[4] = "hi";
+   person.more[8] = "hello";
 
    Item item1;
    item1.name = "hello";

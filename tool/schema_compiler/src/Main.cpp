@@ -35,7 +35,6 @@ int main(int argc, char **argv)
    desc.add_options()
       ("help", "print help information")
       ("version,v", "print version")
-      ("generator,g", opts::value<std::string>(), "specify generator")
       ("input-path,i", opts::value<std::string>(), "specify schema input path")
       ("include-path,I", opts::value<std::string>(), "specify header include path")
       ("source-output,s", opts::value<std::string>(), "specify source output path")
@@ -75,11 +74,6 @@ int main(int argc, char **argv)
       std::cerr << desc;
       return EXIT_FAILURE;
    }
-   if (not values.contains("generator")) {
-      std::cerr << "schema_compiler: missing generator" << '\n';
-      std::cerr << desc;
-      return EXIT_FAILURE;
-   }
 
    const std::filesystem::path api{values["input-path"].as<std::string>()};
 
@@ -99,29 +93,26 @@ int main(int argc, char **argv)
       auto tokens = minecpp::tool::schema_compiler::lex_input(stream);
       minecpp::tool::schema_compiler::Parser parser(tokens);
 
-      auto document = parser.parse_document();
-      if (document.has_failed()) {
+      try {
+         auto document = parser.parse_document();
+
+         table.read_document(file.string(), document);
+         documents.emplace_back(file.string(), std::move(document));
+      } catch (minecpp::lexer::ParserError &parser_err) {
          std::cerr << "schema_compiler: failed to parse document " << file.string() << ": \n\t";
-         std::cerr << "[" << document.err().line << ":" << document.err().column << "] "
-                   << document.err().to_string() << '\n';
-         return 1;
+         std::cerr << parser_err.what() << '\n';
+         return EXIT_FAILURE;
+      } catch (std::runtime_error &runtime_error) {
+         std::cerr << "schema_compiler: failure analysing document " << file.string() << ": \n\t";
+         std::cerr << runtime_error.what() << '\n';
+         return EXIT_FAILURE;
       }
 
-      table.read_document(file.string(), *document);
-
-      documents.emplace_back(file.string(), std::move(*document));
    }
 
    std::map<std::string, std::unique_ptr<minecpp::tool::schema_compiler::IGeneratorFactory>> generators;
    generators.emplace("nbt", std::make_unique<NbtGeneratorFactory>());
    generators.emplace("net", std::make_unique<NetworkGeneratorFactory>());
-
-   const auto generator_name = values["generator"].as<std::string>();
-   if (not generators.contains(generator_name)) {
-      std::cerr << "schema_generator: no such generator " << generator_name << '\n';
-      return 1;
-   }
-   auto &generator_factory = *generators[generator_name];
 
    for (const auto &[filename, document] : documents) {
       minecpp::tool::schema_compiler::PathInfo path_info{
@@ -133,7 +124,13 @@ int main(int argc, char **argv)
       };
 
       try {
-         auto generator = generator_factory.create_generator(document, table, path_info);
+         auto generator_name{document.generator()};
+         if (not generators.contains(generator_name)) {
+            std::cerr << "schema_generator: error generating code for " << filename
+                      << ", no such generator \"" << generator_name << "\"\n";
+            return 1;
+         }
+         auto generator = generators[generator_name]->create_generator(document, table, path_info);
 
          {
             std::cerr << "schema_compiler: writing header to " << generator->target_header_path() << '\n';
@@ -228,6 +225,10 @@ void register_core_types(minecpp::tool::schema_compiler::SymbolTable &table)
    table.register_symbol(Symbol{
            .type_class = TypeClass::Varlong,
            .name{"varlong"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Uuid,
+           .name{"uuid"},
    });
    table.register_symbol(Symbol{.type_class = TypeClass::NbtCompoundContent,
                                 .name{"CompoundContent"},

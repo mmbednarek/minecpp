@@ -15,9 +15,9 @@ void decode_uuid(boost::uuids::uuid &dst, const char *src)
    std::memcpy(dst.data, src, 16);
 }
 
-mb::result<uuid> make_uuid(const std::string &id)
+mb::result<Uuid> make_uuid(const std::string &id)
 {
-   uuid result{};
+   Uuid result{};
    if (id.size() != 16)
       return result;
 
@@ -25,7 +25,7 @@ mb::result<uuid> make_uuid(const std::string &id)
    return result;
 }
 
-std::string uuid_to_string(uuid id)
+std::string uuid_to_string(Uuid id)
 {
    char data[17];
    encode_uuid(data, id);
