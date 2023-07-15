@@ -41,92 +41,92 @@ void Connection::set_state(protocol::State s)
    m_state = s;
 }
 
-void Connection::async_write_then_read(const Ptr &conn, container::Buffer buffer, protocol::Handler &h)
+void Connection::async_write_then_read(container::Buffer buffer, protocol::Handler &handler)
 {
    auto asio_buffer = boost::asio::buffer(buffer.data(), buffer.size());
-   boost::asio::async_write(
-           m_socket, asio_buffer,
-           [conn, &h, buffer = std::move(buffer)](const boost::system::error_code &err, size_t /*size*/) {
-              if (err) {
-                 spdlog::error("error reading data from client: {}", err.message());
-                 if (conn->m_id.has_value()) {
-                    conn->get_server()->drop_connection(*conn->m_id);
-                 }
-                 return;
-              }
+   boost::asio::async_write(m_socket, asio_buffer,
+                            [conn = this->shared_from_this(), &handler, buffer = std::move(buffer)](
+                                    const boost::system::error_code &err, size_t /*size*/) {
+                               if (err) {
+                                  spdlog::error("error reading data from client: {}", err.message());
+                                  if (conn->m_id.has_value()) {
+                                     conn->get_server()->drop_connection(*conn->m_id);
+                                  }
+                                  return;
+                               }
 
-              async_read_packet(conn, h);
-           });
+                               conn->async_read_packet(handler);
+                            });
 }
 
-void Connection::async_write(const Ptr &conn, container::Buffer buffer)
+void Connection::async_write(container::Buffer buffer)
 {
    auto asio_buffer = boost::asio::buffer(buffer.data(), buffer.size());
-   boost::asio::async_write(
-           m_socket, asio_buffer,
-           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t /*size*/) {
-              if (err) {
-                 spdlog::error("error reading data from client: {}", err.message());
-                 if (conn->m_id.has_value()) {
-                    conn->get_server()->drop_connection(*conn->m_id);
-                 }
-                 return;
-              }
-           });
+   boost::asio::async_write(m_socket, asio_buffer,
+                            [conn = this->shared_from_this(), buffer = std::move(buffer)](
+                                    const boost::system::error_code &err, size_t /*size*/) {
+                               if (err) {
+                                  spdlog::error("error reading data from client: {}", err.message());
+                                  if (conn->m_id.has_value()) {
+                                     conn->get_server()->drop_connection(*conn->m_id);
+                                  }
+                                  return;
+                               }
+                            });
 }
 
-void Connection::async_write_then_disconnect(const Ptr &conn, container::Buffer buffer)
+void Connection::async_write_then_disconnect(container::Buffer buffer)
 {
    auto asio_buffer = boost::asio::buffer(buffer.data(), buffer.size());
-   boost::asio::async_write(
-           m_socket, asio_buffer,
-           [conn, buffer = std::move(buffer)](const boost::system::error_code &err, size_t /*size*/) {
-              if (err) {
-                 spdlog::debug("error reading data from client: {}", err.message());
-              }
+   boost::asio::async_write(m_socket, asio_buffer,
+                            [conn = this->shared_from_this(), buffer = std::move(buffer)](
+                                    const boost::system::error_code &err, size_t /*size*/) {
+                               if (err) {
+                                  spdlog::debug("error reading data from client: {}", err.message());
+                               }
 
-              if (conn->m_id.has_value()) {
-                 conn->get_server()->drop_connection(*conn->m_id);
-              }
-           });
+                               if (conn->m_id.has_value()) {
+                                  conn->get_server()->drop_connection(*conn->m_id);
+                               }
+                            });
 }
 
-void Connection::send(const Ptr &conn, minecpp::network::message::Writer &w)
+void Connection::send(minecpp::network::message::Writer &w)
 {
    auto buffer = w.buff(m_compression_threshold);
 
    if (m_encryption_key != nullptr) {
       container::Buffer encrypt_buffer(buffer.size());
       m_encryption_key->encrypt_update_buffer(buffer.as_view(), encrypt_buffer.as_view());
-      async_write(conn, std::move(encrypt_buffer));
+      async_write(std::move(encrypt_buffer));
    } else {
-      async_write(conn, std::move(buffer));
+      async_write(std::move(buffer));
    }
 }
 
-void Connection::send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, protocol::Handler &h)
+void Connection::send_and_read(minecpp::network::message::Writer &w, protocol::Handler &h)
 {
    auto buffer = w.buff(m_compression_threshold);
 
    if (m_encryption_key != nullptr) {
       container::Buffer encrypt_buffer(buffer.size());
       m_encryption_key->encrypt_update_buffer(buffer.as_view(), encrypt_buffer.as_view());
-      async_write_then_read(conn, std::move(encrypt_buffer), h);
+      async_write_then_read(std::move(encrypt_buffer), h);
    } else {
-      async_write_then_read(conn, std::move(buffer), h);
+      async_write_then_read(std::move(buffer), h);
    }
 }
 
-void Connection::send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w)
+void Connection::send_and_disconnect(minecpp::network::message::Writer &w)
 {
    auto buffer = w.buff(m_compression_threshold);
 
    if (m_encryption_key != nullptr) {
       container::Buffer encrypt_buffer(buffer.size());
       m_encryption_key->encrypt_update_buffer(buffer.as_view(), encrypt_buffer.as_view());
-      async_write_then_disconnect(conn, std::move(encrypt_buffer));
+      async_write_then_disconnect(std::move(encrypt_buffer));
    } else {
-      async_write_then_disconnect(conn, std::move(buffer));
+      async_write_then_disconnect(std::move(buffer));
    }
 }
 
@@ -221,9 +221,9 @@ crypto::AESKey *Connection::encryption_key() const
    return m_encryption_key.get();
 }
 
-void async_read_packet(const Connection::Ptr &conn, protocol::Handler &handler)
+void Connection::async_read_packet(protocol::Handler &handler)
 {
-   async_read_varint(conn, 0u, 0u, [conn, &handler](mb::u32 packet_size) {
+   this->async_read_varint(0u, 0u, [conn = this->shared_from_this(), &handler](mb::u32 packet_size) {
       if (packet_size == 0) {
          return;
       }
@@ -256,25 +256,26 @@ void handle_message(const Connection::Ptr &conn, protocol::Handler &handler, con
       auto decompressed_size = r.read_varint();
       if (decompressed_size == 0) {
          // threshold not reached
-         handler.handle(conn, r);
+         handler.handle(*conn, r);
       } else {
          util::ZlibInputStream decompress(stream);
          network::message::Reader decompress_reader(decompress);
-         handler.handle(conn, decompress_reader);
+         handler.handle(*conn, decompress_reader);
       }
    } else {
       // not compressed
       network::message::Reader r(stream);
-      handler.handle(conn, r);
+      handler.handle(*conn, r);
    }
 }
 
-void async_read_varint(const Connection::Ptr &conn, mb::u32 /*result*/, mb::u32 /*shift*/,
-                       const std::function<void(mb::u32)> &callback)
+void Connection::async_read_varint(mb::u32 /*result*/, mb::u32 /*shift*/,
+                                   const std::function<void(mb::u32)> &callback)
 {
-   auto bp = conn->alloc_byte();
-   boost::asio::async_read(conn->socket(), boost::asio::buffer(bp, 1),
-                           [conn, callback, bp](const boost::system::error_code &err, size_t size) {
+   auto bp = this->alloc_byte();
+   boost::asio::async_read(this->socket(), boost::asio::buffer(bp, 1),
+                           [conn = this->shared_from_this(), callback,
+                            bp](const boost::system::error_code &err, size_t size) {
                               if (err) {
                                  conn->free_byte(bp);
                                  spdlog::warn("error reading data from client: {}", err.message());

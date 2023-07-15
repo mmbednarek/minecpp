@@ -13,46 +13,40 @@ StatusHandler::StatusHandler() = default;
 
 extern const char *g_favicon;
 
-void StatusHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+void StatusHandler::handle(Connection &conn, minecpp::network::message::Reader &r)
 {
    net::status::sb::visit_message(*this, conn, r);
 }
 
-void StatusHandler::on_status(const std::shared_ptr<Connection> &connection,
+void StatusHandler::on_status(Connection &connection,
                               const net::status::sb::Status & /*status*/)
 {
    using minecpp::format::Color;
 
-   net::status::cb::Status status;
-
-   std::stringstream ss;
-
    format::Builder builder;
    builder.bold(Color::Gold, "MineCPP Server\n").text("This server implementation is under development");
+
+   std::stringstream ss;
    ss << R"({"description":)" << builder.to_string() << R"(,)";
    ss << R"("favicon":"data:image/png;base64,)" << g_favicon << R"(",)";
    ss << R"("players":{"max":10000,"online":6142},)";
    ss << R"("version":{"name": "1.19.3", "protocol": 761}})";
-   status.status = ss.str();
 
-   minecpp::network::message::Writer w;
-   status.serialize(w);
-   connection->send_and_read(connection, w, *this);
+   net::status::cb::Status status;
+   status.status = ss.str();
+   connection.send_message_then_read(status, *this);
 }
 
-void StatusHandler::on_ping(const std::shared_ptr<Connection> &connection, const net::status::sb::Ping &ping)
+void StatusHandler::on_ping(Connection &connection, const net::status::sb::Ping &ping)
 {
    net::status::cb::Ping response;
    response.payload = ping.payload;
-
-   minecpp::network::message::Writer w;
-   response.serialize(w);
-   connection->send_and_disconnect(connection, w);
+   connection.send_message_then_disconnect(response);
 }
 
 void StatusHandler::handle_disconnect(Connection & /*conn*/) {}
 
-void StatusHandler::on_failure(const std::shared_ptr<Connection> & /*connection*/,
+void StatusHandler::on_failure(Connection &/*connection*/,
                                const std::uint8_t message_id)
 {
    spdlog::debug("[status protocol] unknown operation code {}", static_cast<int>(message_id));

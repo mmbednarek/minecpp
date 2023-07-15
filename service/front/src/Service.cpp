@@ -31,14 +31,14 @@ Service::LoginResponse Service::login_player(std::string &user_name)
    };
 }
 
-void Service::init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name)
+void Service::init_player(Connection &connection, uuid id, std::string_view name)
 {
    using namespace minecpp::network::message;
 
    assert(m_client != nullptr);
 
-   conn->set_state(protocol::State::Play);
-   conn->set_uuid(id);
+   connection.set_state(protocol::State::Play);
+   connection.set_uuid(id);
 
    proto::event::serverbound::AcceptPlayer accept_player;
    accept_player.set_challenge_id(0);

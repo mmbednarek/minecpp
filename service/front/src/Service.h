@@ -35,7 +35,7 @@ class Service
 
    static LoginResponse login_player(std::string &user_name);
 
-   void init_player(const std::shared_ptr<Connection> &conn, uuid id, std::string_view name);
+   void init_player(Connection &connection, uuid id, std::string_view name);
    void on_player_disconnect(uuid engine_id, game::PlayerId player_id);
    void set_client(engine::Client *stream);
    void send(const ::google::protobuf::Message &message, game::PlayerId id);

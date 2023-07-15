@@ -10,8 +10,8 @@ namespace protocol {
 class Handler
 {
  public:
-   virtual void handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r) = 0;
-   virtual void handle_disconnect(Connection &conn)                                                   = 0;
+   virtual void handle(Connection &connection, minecpp::network::message::Reader &reader) = 0;
+   virtual void handle_disconnect(Connection &connection)                                 = 0;
 };
 
 }// namespace protocol
