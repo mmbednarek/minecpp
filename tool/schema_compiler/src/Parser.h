@@ -20,7 +20,8 @@ class Parser
    PackageInfo parse_package_info();
    GeneratorInfo parse_generator_info();
    Import parse_import();
-   Record parse_record();
+   Record parse_record(AnnotationList annotations);
+   Alias parse_alias(AnnotationList annotations);
    AnnotationList parse_annotation_list();
    Attribute parse_attribute();
    Type parse_type();

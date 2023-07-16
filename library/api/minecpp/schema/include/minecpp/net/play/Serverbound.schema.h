@@ -21,7 +21,7 @@ class ChatCommand {
    std::uint64_t timestamp{};
    std::uint64_t salt{};
    std::map<std::string, std::string> argument_signatures{};
-   std::int8_t is_preview{};
+   bool is_preview{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ChatCommand deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -32,7 +32,7 @@ class ChatMessage {
    std::uint64_t timestamp{};
    std::uint64_t salt{};
    std::string salt_data{};
-   std::int8_t is_preview{};
+   bool is_preview{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ChatMessage deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -49,11 +49,11 @@ class ClientSettings {
    std::string locale{};
    std::uint8_t view_distance{};
    std::int32_t chat_mode{};
-   std::int8_t are_colors_enabled{};
+   bool are_colors_enabled{};
    std::uint8_t displayed_skin_parts{};
    std::int8_t main_hand{};
-   std::int8_t is_text_filtering_enabled{};
-   std::int8_t are_players_listed{};
+   bool is_text_filtering_enabled{};
+   bool are_players_listed{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ClientSettings deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -99,7 +99,7 @@ class Interact {
    std::int32_t entity_id{};
    std::int32_t type{};
    std::optional<InteractTarget> target{};
-   std::int8_t is_sneaking{};
+   bool is_sneaking{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Interact deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -114,7 +114,7 @@ class KeepAlive {
 class SetPlayerPosition {
  public:
    play::Vector3 position{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetPlayerPosition deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -124,7 +124,7 @@ class SetPlayerPositionAndRotation {
    play::Vector3 position{};
    float yaw{};
    float pitch{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetPlayerPositionAndRotation deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -133,14 +133,14 @@ class SetPlayerRotation {
  public:
    float yaw{};
    float pitch{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetPlayerRotation deserialize(::minecpp::network::message::Reader &reader);
 };
 
 class SetIsPlayerOnGround {
  public:
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetIsPlayerOnGround deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -184,7 +184,7 @@ class UseItemOn {
    std::uint64_t position{};
    std::int32_t facing{};
    play::Vector3f cursor_position{};
-   std::int8_t is_inside_block{};
+   bool is_inside_block{};
    std::int32_t sequence_id{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static UseItemOn deserialize(::minecpp::network::message::Reader &reader);

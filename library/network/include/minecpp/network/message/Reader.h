@@ -15,8 +15,10 @@ class Reader
 
    uint8_t read_byte();
    int8_t read_sbyte();
-   int read_varint();
+   std::int32_t read_varint();
    std::int64_t read_varlong();
+   std::int32_t read_uvarint();
+   std::int64_t read_uvarlong();
    std::string read_string();
    void read_bytes(std::uint8_t *data, std::size_t size);
    container::Buffer read_buffer();
@@ -24,6 +26,7 @@ class Reader
    double read_double();
    nbt::CompoundContent read_nbt_tag();
    util::Uuid read_uuid();
+   bool read_bool();
 
    game::item::Recipe read_recipe();
    game::item::Recipe read_recipe_shaped();

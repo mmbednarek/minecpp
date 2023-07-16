@@ -277,7 +277,7 @@ std::string NbtGenerator::cpp_type_of(const Type &type) const
 }
 
 // clang-format off
-constexpr std::array<const char *, 21> g_core_nbt_types{
+constexpr std::array<const char *, 24> g_core_nbt_types{
    "minecpp::nbt::TagId::Byte",
    "minecpp::nbt::TagId::Short",
    "minecpp::nbt::TagId::Int",
@@ -292,6 +292,9 @@ constexpr std::array<const char *, 21> g_core_nbt_types{
    "minecpp::nbt::TagId::List",
    "minecpp::nbt::TagId::Compound",
    "minecpp::nbt::TagId::Compound",
+   "",
+   "",
+   "",
    "",
    "",
    "",

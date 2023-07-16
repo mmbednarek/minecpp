@@ -5,6 +5,7 @@
 #include <boost/endian/conversion.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <sstream>
+#include <string_view>
 #include <tuple>
 #include <vector>
 
@@ -22,7 +23,9 @@ class Writer
    void write_short(std::int16_t value);
    void write_long(std::uint64_t value);
    void write_varint(std::int32_t value);
+   void write_uvarint(std::uint32_t value);
    void write_varlong(std::int64_t value);
+   void write_uvarlong(std::uint64_t value);
    void write_string(std::string_view s);
    void write_uuid_str(boost::uuids::uuid id);
    void write_uuid(boost::uuids::uuid id);
@@ -30,6 +33,7 @@ class Writer
    void write_double(double d);
    void write_bytes(const char *data, std::size_t size);
    void write_from(Writer &other);
+   void write_bool(bool value);
 
    container::Buffer buff(std::size_t comp_thres);
 
@@ -43,6 +47,8 @@ class Writer
    std::size_t peek_size();
 
    [[nodiscard]] std::ostream &raw_stream();
+
+   std::string_view view();
 
  private:
    std::stringstream m_stream;

@@ -1,6 +1,8 @@
 generator = "net"
 package minecpp.net.play
 
+alias EntityID = uvarint
+
 record Vector3 {
     x: float64
     y: float64

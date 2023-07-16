@@ -1,11 +1,20 @@
 generator = "net"
 package minecpp.example1
 
+alias EntityID = varint
+
+[Foo="bar"]
+alias Bar = string
+
 // Some Item Stuff
 record Item {
     Name: string
     Count: int16
     Props: nbt.Properties
+    ID: EntityID
+    Aa: uvarint
+    Ab: uvarlong
+    Ac: bool
 }
 
 // Some person stuff

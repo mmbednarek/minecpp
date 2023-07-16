@@ -13,6 +13,7 @@ enum class TokenType
    KeywordImport,
    KeywordRecord,
    KeywordGenerator,
+   KeywordAlias,
    Identifier,
    String,
    LeftBracket,
@@ -56,6 +57,7 @@ struct fmt::formatter<minecpp::tool::schema_compiler::TokenType>
       case KeywordImport: return fmt::format_to(ctx.out(), "KeywordImport");
       case KeywordRecord: return fmt::format_to(ctx.out(), "KeywordRecord");
       case KeywordGenerator: return fmt::format_to(ctx.out(), "KeywordGenerator");
+      case KeywordAlias: return fmt::format_to(ctx.out(), "KeywordAlias");
       case Identifier: return fmt::format_to(ctx.out(), "Identifier");
       case String: return fmt::format_to(ctx.out(), "String");
       case LeftBracket: return fmt::format_to(ctx.out(), "LeftBracket");

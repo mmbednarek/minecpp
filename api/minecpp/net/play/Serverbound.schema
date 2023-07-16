@@ -12,7 +12,7 @@ record ChatCommand {
   timestamp: uint64
   salt: uint64
   argument_signatures: map[string, string]
-  is_preview: int8
+  is_preview: bool
 }
 
 [MessageID=0x05]
@@ -21,7 +21,7 @@ record ChatMessage {
   timestamp: uint64
   salt: uint64
   salt_data: string
-  is_preview: int8
+  is_preview: bool
 }
 
 [MessageID=0x06]
@@ -34,11 +34,11 @@ record ClientSettings {
   locale: string
   view_distance: uint8
   chat_mode: varint
-  are_colors_enabled: int8
+  are_colors_enabled: bool
   displayed_skin_parts: uint8
   main_hand: int8
-  is_text_filtering_enabled: int8
-  are_players_listed: int8
+  is_text_filtering_enabled: bool
+  are_players_listed: bool
 }
 
 [MessageID=0x0A]
@@ -74,7 +74,7 @@ record Interact {
   type: varint
   [Condition="result.type == 2"]
   target: optional[InteractTarget]
-  is_sneaking: int8
+  is_sneaking: bool
 }
 
 [MessageID=0x11]
@@ -85,7 +85,7 @@ record KeepAlive {
 [MessageID=0x13]
 record SetPlayerPosition {
   position: Vector3
-  is_on_ground: int8
+  is_on_ground: bool
 }
 
 [MessageID=0x14]
@@ -93,19 +93,19 @@ record SetPlayerPositionAndRotation {
   position: Vector3
   yaw: float32
   pitch: float32
-  is_on_ground: int8
+  is_on_ground: bool
 }
 
 [MessageID=0x15]
 record SetPlayerRotation {
   yaw: float32
   pitch: float32
-  is_on_ground: int8
+  is_on_ground: bool
 }
 
 [MessageID=0x16]
 record SetIsPlayerOnGround {
-  is_on_ground: int8
+  is_on_ground: bool
 }
 
 [MessageID=0x1C]
@@ -139,7 +139,7 @@ record UseItemOn {
   position: uint64
   facing: varint
   cursor_position: Vector3f
-  is_inside_block: int8
+  is_inside_block: bool
   sequence_id: varint
 }
 

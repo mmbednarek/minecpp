@@ -13,6 +13,10 @@ class Item {
    std::string name{};
    std::int16_t count{};
    nbt::Properties props{};
+   std::int32_t id{};
+   std::uint32_t aa{};
+   std::uint64_t ab{};
+   bool ac{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Item deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -123,27 +127,27 @@ class UpdatePlayerInfo {
    static UpdatePlayerInfo deserialize(::minecpp::network::message::Reader &reader);
 };
 
-template<typename TVisitor>
-void visit_message(TVisitor &visitor, ::minecpp::network::message::Reader &reader) {
+template<typename TVisitor, typename TClientInfo>
+void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::network::message::Reader &reader) {
    auto message_id = reader.read_byte();
    switch (message_id) {
    case 0x01: {
       auto message = Person::deserialize(reader);
-      visitor.on_person(message);
+      visitor.on_person(client_info, message);
       break;
    }
    case 0x02: {
       auto message = Car::deserialize(reader);
-      visitor.on_car(message);
+      visitor.on_car(client_info, message);
       break;
    }
    case 36: {
       auto message = UpdatePlayerInfo::deserialize(reader);
-      visitor.on_update_player_info(message);
+      visitor.on_update_player_info(client_info, message);
       break;
    }
    default: 
-      visitor.on_failure(message_id);
+      visitor.on_failure(client_info, message_id);
       break;
    }
 }

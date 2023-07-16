@@ -107,7 +107,10 @@ int main(int argc, char **argv)
          std::cerr << runtime_error.what() << '\n';
          return EXIT_FAILURE;
       }
+   }
 
+   for (const auto &[filename, document] : documents) {
+      table.read_document_for_aliases(filename, document);
    }
 
    std::map<std::string, std::unique_ptr<minecpp::tool::schema_compiler::IGeneratorFactory>> generators;
@@ -225,6 +228,18 @@ void register_core_types(minecpp::tool::schema_compiler::SymbolTable &table)
    table.register_symbol(Symbol{
            .type_class = TypeClass::Varlong,
            .name{"varlong"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::UnsignedVarint,
+           .name{"uvarint"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::UnsignedVarlong,
+           .name{"uvarlong"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Bool,
+           .name{"bool"},
    });
    table.register_symbol(Symbol{
            .type_class = TypeClass::Uuid,

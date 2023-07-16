@@ -11,7 +11,7 @@ using minecpp::example1::UpdatePlayerInfo;
 
 class Visitor {
  public:
-   void on_person(const Person &person) {
+   void on_person(const std::string /*info*/, const Person &person) {
       std::cout << "visited person\n";
       std::cout << "\n\n.name: " << person.name << '\n';
       std::cout << ".surname: " << person.surname << '\n';
@@ -28,15 +28,15 @@ class Visitor {
       }
    }
 
-   void on_car(const Car &car) {
+   void on_car(const std::string /*info*/, const Car &car) {
       std::cout << "visited car " << car.brand << "\n";
    }
 
-   void on_update_player_info(const UpdatePlayerInfo &player_info) {
+   void on_update_player_info(const std::string /*info*/, const UpdatePlayerInfo &player_info) {
       std::cout << "visited player info " << player_info.action_bits << "\n";
    }
 
-   void on_failure(std::uint8_t message_id) const {
+   void on_failure(const std::string /*info*/, std::uint8_t message_id) const {
       std::cerr << "failed to read message with id " << message_id << '\n';
    }
 };
@@ -82,5 +82,6 @@ int main() {
    std::cout << "message size: " << reader.read_varint() << '\n';
 
    Visitor visitor;
-   minecpp::example1::visit_message(visitor, reader);
+   std::string hello;
+   minecpp::example1::visit_message(visitor, hello, reader);
 }

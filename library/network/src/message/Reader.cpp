@@ -25,7 +25,12 @@ std::int8_t Reader::read_sbyte()
    return result;
 }
 
-int Reader::read_varint()
+std::int32_t Reader::read_varint()
+{
+   return util::unsafe_cast<std::int32_t>(this->read_uvarint());
+}
+
+std::int32_t Reader::read_uvarint()
 {
    std::uint32_t result = 0u;
    std::uint32_t shift  = 0u;
@@ -45,6 +50,11 @@ int Reader::read_varint()
 }
 
 std::int64_t Reader::read_varlong()
+{
+   return util::unsafe_cast<std::int64_t>(this->read_uvarlong());
+}
+
+std::int64_t Reader::read_uvarlong()
 {
    std::uint64_t result = 0u;
    std::uint64_t shift  = 0u;
@@ -274,6 +284,11 @@ util::Uuid Reader::read_uuid()
 std::istream &Reader::raw_stream()
 {
    return m_stream;
+}
+
+bool Reader::read_bool()
+{
+   return this->read_byte() != 0;
 }
 
 }// namespace minecpp::network::message

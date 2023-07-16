@@ -490,7 +490,9 @@ PROTOBUF_CONSTEXPR SetInventorySlot::SetInventorySlot(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_._has_bits_)*/{}
   , /*decltype(_impl_._cached_size_)*/{}
-  , /*decltype(_impl_.slot_)*/nullptr} {}
+  , /*decltype(_impl_.slot_)*/nullptr
+  , /*decltype(_impl_.slot_id_)*/ 0u
+} {}
 struct SetInventorySlotDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SetInventorySlotDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~SetInventorySlotDefaultTypeInternal() {}
@@ -1089,7 +1091,9 @@ const ::uint32_t TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fClientbound
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::SetInventorySlot, _impl_.slot_id_),
     PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::SetInventorySlot, _impl_.slot_),
+    ~0u,
     0,
     ~0u,  // no _has_bits_
     PROTOBUF_FIELD_OFFSET(::minecpp::proto::event::clientbound::SectionBlockLight, _internal_metadata_),
@@ -1286,20 +1290,20 @@ static const ::_pbi::MigrationSchema
         { 271, 281, -1, sizeof(::minecpp::proto::event::clientbound::SetEntityVelocity)},
         { 283, 294, -1, sizeof(::minecpp::proto::event::clientbound::AcceptPlayer)},
         { 297, -1, -1, sizeof(::minecpp::proto::event::clientbound::DenyPlayer)},
-        { 306, 315, -1, sizeof(::minecpp::proto::event::clientbound::SetInventorySlot)},
-        { 316, -1, -1, sizeof(::minecpp::proto::event::clientbound::SectionBlockLight)},
-        { 326, 336, -1, sizeof(::minecpp::proto::event::clientbound::ChunkBlockLight)},
-        { 338, -1, -1, sizeof(::minecpp::proto::event::clientbound::UpdateBlockLight)},
-        { 347, 357, -1, sizeof(::minecpp::proto::event::clientbound::ChunkData)},
-        { 359, 368, -1, sizeof(::minecpp::proto::event::clientbound::SetCenterChunk)},
-        { 369, 380, -1, sizeof(::minecpp::proto::event::clientbound::SetEntityEquipment)},
-        { 383, -1, -1, sizeof(::minecpp::proto::event::clientbound::SetHealth)},
-        { 394, -1, -1, sizeof(::minecpp::proto::event::clientbound::CollectItem)},
-        { 405, -1, -1, sizeof(::minecpp::proto::event::clientbound::RemoveEntity)},
-        { 414, 426, -1, sizeof(::minecpp::proto::event::clientbound::TeleportEntity)},
-        { 430, -1, -1, sizeof(::minecpp::proto::event::clientbound::DisplayDeathScreen)},
-        { 441, 460, -1, sizeof(::minecpp::proto::event::clientbound::Respawn)},
-        { 471, 480, -1, sizeof(::minecpp::proto::event::clientbound::SetAbilities)},
+        { 306, 316, -1, sizeof(::minecpp::proto::event::clientbound::SetInventorySlot)},
+        { 318, -1, -1, sizeof(::minecpp::proto::event::clientbound::SectionBlockLight)},
+        { 328, 338, -1, sizeof(::minecpp::proto::event::clientbound::ChunkBlockLight)},
+        { 340, -1, -1, sizeof(::minecpp::proto::event::clientbound::UpdateBlockLight)},
+        { 349, 359, -1, sizeof(::minecpp::proto::event::clientbound::ChunkData)},
+        { 361, 370, -1, sizeof(::minecpp::proto::event::clientbound::SetCenterChunk)},
+        { 371, 382, -1, sizeof(::minecpp::proto::event::clientbound::SetEntityEquipment)},
+        { 385, -1, -1, sizeof(::minecpp::proto::event::clientbound::SetHealth)},
+        { 396, -1, -1, sizeof(::minecpp::proto::event::clientbound::CollectItem)},
+        { 407, -1, -1, sizeof(::minecpp::proto::event::clientbound::RemoveEntity)},
+        { 416, 428, -1, sizeof(::minecpp::proto::event::clientbound::TeleportEntity)},
+        { 432, -1, -1, sizeof(::minecpp::proto::event::clientbound::DisplayDeathScreen)},
+        { 443, 462, -1, sizeof(::minecpp::proto::event::clientbound::Respawn)},
+        { 473, 482, -1, sizeof(::minecpp::proto::event::clientbound::SetAbilities)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -1420,46 +1424,46 @@ const char descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fCli
     "proto.common.Gameplay\0222\n\tabilities\030\002 \001(\013"
     "2\037.minecpp.proto.entity.Abilities\022,\n\006pla"
     "yer\030\003 \001(\0132\034.minecpp.proto.player.Player\""
-    "#\n\nDenyPlayer\022\025\n\rdenial_reason\030\001 \001(\t\"<\n\020"
-    "SetInventorySlot\022(\n\004slot\030\001 \001(\0132\032.minecpp"
-    ".proto.player.Slot\"3\n\021SectionBlockLight\022"
-    "\t\n\001y\030\001 \001(\005\022\023\n\013block_light\030\002 \001(\014\"\216\001\n\017Chun"
-    "kBlockLight\0225\n\010position\030\001 \001(\0132#.minecpp."
-    "proto.common.ChunkPosition\022D\n\010sections\030\002"
-    " \003(\01322.minecpp.proto.event.clientbound.S"
-    "ectionBlockLight\"Y\n\020UpdateBlockLight\022E\n\013"
-    "block_light\030\001 \003(\01320.minecpp.proto.event."
-    "clientbound.ChunkBlockLight\"P\n\tChunkData"
-    "\022)\n\005chunk\030\001 \001(\0132\032.minecpp.proto.chunk.Ch"
-    "unk\022\030\n\020is_initial_chunk\030\002 \001(\010\"G\n\016SetCent"
-    "erChunk\0225\n\010position\030\001 \001(\0132#.minecpp.prot"
-    "o.common.ChunkPosition\"\216\001\n\022SetEntityEqui"
-    "pment\022\021\n\tentity_id\030\001 \001(\r\022;\n\016equipment_sl"
-    "ot\030\002 \001(\0162#.minecpp.proto.entity.Equipmen"
-    "tSlot\022(\n\004item\030\003 \001(\0132\032.minecpp.proto.play"
-    "er.Slot\"B\n\tSetHealth\022\016\n\006health\030\001 \001(\002\022\014\n\004"
-    "food\030\002 \001(\005\022\027\n\017food_saturation\030\003 \001(\002\"V\n\013C"
-    "ollectItem\022\033\n\023collected_entity_id\030\001 \001(\r\022"
-    "\033\n\023collector_entity_id\030\002 \001(\r\022\r\n\005count\030\003 "
-    "\001(\r\"!\n\014RemoveEntity\022\021\n\tentity_id\030\001 \001(\r\"\234"
-    "\001\n\016TeleportEntity\022\021\n\tentity_id\030\001 \001(\r\022/\n\010"
-    "position\030\002 \001(\0132\035.minecpp.proto.common.Ve"
-    "ctor3\0220\n\010rotation\030\003 \001(\0132\036.minecpp.proto."
-    "common.Rotation\022\024\n\014is_on_ground\030\004 \001(\010\"_\n"
-    "\022DisplayDeathScreen\022\030\n\020victim_entity_id\030"
-    "\001 \001(\r\022\030\n\020killer_entity_id\030\002 \001(\r\022\025\n\rdeath"
-    "_message\030\003 \001(\t\"\343\002\n\007Respawn\022\026\n\016dimension_"
-    "type\030\001 \001(\t\022\026\n\016dimension_name\030\002 \001(\t\022\023\n\013ha"
-    "shed_seed\030\003 \001(\003\0221\n\tgame_mode\030\004 \001(\0162\036.min"
-    "ecpp.proto.common.GameMode\022:\n\022previous_g"
-    "ame_mode\030\005 \001(\0162\036.minecpp.proto.common.Ga"
-    "meMode\022\020\n\010is_debug\030\006 \001(\010\022\017\n\007is_flat\030\007 \001("
-    "\010\022\025\n\rcopy_metadata\030\010 \001(\010\022\032\n\022has_death_lo"
-    "cation\030\t \001(\010\022\027\n\017death_dimension\030\n \001(\t\0225\n"
-    "\016death_position\030\013 \001(\0132\035.minecpp.proto.co"
-    "mmon.Vector3\"B\n\014SetAbilities\0222\n\tabilitie"
-    "s\030\001 \001(\0132\037.minecpp.proto.entity.Abilities"
-    "b\006proto3"
+    "#\n\nDenyPlayer\022\025\n\rdenial_reason\030\001 \001(\t\"M\n\020"
+    "SetInventorySlot\022\017\n\007slot_id\030\001 \001(\r\022(\n\004slo"
+    "t\030\002 \001(\0132\032.minecpp.proto.common.Slot\"3\n\021S"
+    "ectionBlockLight\022\t\n\001y\030\001 \001(\005\022\023\n\013block_lig"
+    "ht\030\002 \001(\014\"\216\001\n\017ChunkBlockLight\0225\n\010position"
+    "\030\001 \001(\0132#.minecpp.proto.common.ChunkPosit"
+    "ion\022D\n\010sections\030\002 \003(\01322.minecpp.proto.ev"
+    "ent.clientbound.SectionBlockLight\"Y\n\020Upd"
+    "ateBlockLight\022E\n\013block_light\030\001 \003(\01320.min"
+    "ecpp.proto.event.clientbound.ChunkBlockL"
+    "ight\"P\n\tChunkData\022)\n\005chunk\030\001 \001(\0132\032.minec"
+    "pp.proto.chunk.Chunk\022\030\n\020is_initial_chunk"
+    "\030\002 \001(\010\"G\n\016SetCenterChunk\0225\n\010position\030\001 \001"
+    "(\0132#.minecpp.proto.common.ChunkPosition\""
+    "\216\001\n\022SetEntityEquipment\022\021\n\tentity_id\030\001 \001("
+    "\r\022;\n\016equipment_slot\030\002 \001(\0162#.minecpp.prot"
+    "o.entity.EquipmentSlot\022(\n\004item\030\003 \001(\0132\032.m"
+    "inecpp.proto.common.Slot\"B\n\tSetHealth\022\016\n"
+    "\006health\030\001 \001(\002\022\014\n\004food\030\002 \001(\005\022\027\n\017food_satu"
+    "ration\030\003 \001(\002\"V\n\013CollectItem\022\033\n\023collected"
+    "_entity_id\030\001 \001(\r\022\033\n\023collector_entity_id\030"
+    "\002 \001(\r\022\r\n\005count\030\003 \001(\r\"!\n\014RemoveEntity\022\021\n\t"
+    "entity_id\030\001 \001(\r\"\234\001\n\016TeleportEntity\022\021\n\ten"
+    "tity_id\030\001 \001(\r\022/\n\010position\030\002 \001(\0132\035.minecp"
+    "p.proto.common.Vector3\0220\n\010rotation\030\003 \001(\013"
+    "2\036.minecpp.proto.common.Rotation\022\024\n\014is_o"
+    "n_ground\030\004 \001(\010\"_\n\022DisplayDeathScreen\022\030\n\020"
+    "victim_entity_id\030\001 \001(\r\022\030\n\020killer_entity_"
+    "id\030\002 \001(\r\022\025\n\rdeath_message\030\003 \001(\t\"\343\002\n\007Resp"
+    "awn\022\026\n\016dimension_type\030\001 \001(\t\022\026\n\016dimension"
+    "_name\030\002 \001(\t\022\023\n\013hashed_seed\030\003 \001(\003\0221\n\tgame"
+    "_mode\030\004 \001(\0162\036.minecpp.proto.common.GameM"
+    "ode\022:\n\022previous_game_mode\030\005 \001(\0162\036.minecp"
+    "p.proto.common.GameMode\022\020\n\010is_debug\030\006 \001("
+    "\010\022\017\n\007is_flat\030\007 \001(\010\022\025\n\rcopy_metadata\030\010 \001("
+    "\010\022\032\n\022has_death_location\030\t \001(\010\022\027\n\017death_d"
+    "imension\030\n \001(\t\0225\n\016death_position\030\013 \001(\0132\035"
+    ".minecpp.proto.common.Vector3\"B\n\014SetAbil"
+    "ities\0222\n\tabilities\030\001 \001(\0132\037.minecpp.proto"
+    ".entity.Abilitiesb\006proto3"
 };
 static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto_deps[7] =
     {
@@ -1475,7 +1479,7 @@ static ::absl::once_flag descriptor_table_minecpp_2fproto_2fevent_2fclientbound_
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto = {
     false,
     false,
-    4568,
+    4585,
     descriptor_table_protodef_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto,
     "minecpp/proto/event/clientbound/Clientbound.proto",
     &descriptor_table_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto_once,
@@ -7906,13 +7910,13 @@ class SetInventorySlot::_Internal {
   using HasBits = decltype(std::declval<SetInventorySlot>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
     8 * PROTOBUF_FIELD_OFFSET(SetInventorySlot, _impl_._has_bits_);
-  static const ::minecpp::proto::player::Slot& slot(const SetInventorySlot* msg);
+  static const ::minecpp::proto::common::Slot& slot(const SetInventorySlot* msg);
   static void set_has_slot(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
 
-const ::minecpp::proto::player::Slot&
+const ::minecpp::proto::common::Slot&
 SetInventorySlot::_Internal::slot(const SetInventorySlot* msg) {
   return *msg->_impl_.slot_;
 }
@@ -7931,12 +7935,15 @@ SetInventorySlot::SetInventorySlot(const SetInventorySlot& from)
   new (&_impl_) Impl_{
       decltype(_impl_._has_bits_){from._impl_._has_bits_}
     , /*decltype(_impl_._cached_size_)*/{}
-    , decltype(_impl_.slot_){nullptr}};
+    , decltype(_impl_.slot_){nullptr}
+    , decltype(_impl_.slot_id_) {}
+  };
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_impl_.slot_ = new ::minecpp::proto::player::Slot(*from._impl_.slot_);
+    _this->_impl_.slot_ = new ::minecpp::proto::common::Slot(*from._impl_.slot_);
   }
+  _this->_impl_.slot_id_ = from._impl_.slot_id_;
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.event.clientbound.SetInventorySlot)
 }
 
@@ -7946,6 +7953,8 @@ inline void SetInventorySlot::SharedCtor(::_pb::Arena* arena) {
       decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
     , decltype(_impl_.slot_){nullptr}
+    , decltype(_impl_.slot_id_) { 0u }
+
   };
 }
 
@@ -7978,6 +7987,7 @@ void SetInventorySlot::Clear() {
     ABSL_DCHECK(_impl_.slot_ != nullptr);
     _impl_.slot_->Clear();
   }
+  _impl_.slot_id_ = 0u;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -7989,9 +7999,18 @@ const char* SetInventorySlot::_InternalParse(const char* ptr, ::_pbi::ParseConte
     ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .minecpp.proto.player.Slot slot = 1;
+      // uint32 slot_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
+          _impl_.slot_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else {
+          goto handle_unusual;
+        }
+        continue;
+      // .minecpp.proto.common.Slot slot = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_slot(), ptr);
           CHK_(ptr);
         } else {
@@ -8028,11 +8047,18 @@ failure:
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  // uint32 slot_id = 1;
+  if (this->_internal_slot_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        1, this->_internal_slot_id(), target);
+  }
+
   cached_has_bits = _impl_._has_bits_[0];
-  // .minecpp.proto.player.Slot slot = 1;
+  // .minecpp.proto.common.Slot slot = 2;
   if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::slot(this),
+      InternalWriteMessage(2, _Internal::slot(this),
         _Internal::slot(this).GetCachedSize(), target, stream);
   }
 
@@ -8052,12 +8078,18 @@ failure:
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .minecpp.proto.player.Slot slot = 1;
+  // .minecpp.proto.common.Slot slot = 2;
   cached_has_bits = _impl_._has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.slot_);
+  }
+
+  // uint32 slot_id = 1;
+  if (this->_internal_slot_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+        this->_internal_slot_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -8079,8 +8111,11 @@ void SetInventorySlot::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   (void) cached_has_bits;
 
   if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_slot()->::minecpp::proto::player::Slot::MergeFrom(
+    _this->_internal_mutable_slot()->::minecpp::proto::common::Slot::MergeFrom(
         from._internal_slot());
+  }
+  if (from._internal_slot_id() != 0) {
+    _this->_internal_set_slot_id(from._internal_slot_id());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -8100,7 +8135,12 @@ void SetInventorySlot::InternalSwap(SetInventorySlot* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
-  swap(_impl_.slot_, other->_impl_.slot_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SetInventorySlot, _impl_.slot_id_)
+      + sizeof(SetInventorySlot::_impl_.slot_id_)
+      - PROTOBUF_FIELD_OFFSET(SetInventorySlot, _impl_.slot_)>(
+          reinterpret_cast<char*>(&_impl_.slot_),
+          reinterpret_cast<char*>(&other->_impl_.slot_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata SetInventorySlot::GetMetadata() const {
@@ -9220,13 +9260,13 @@ class SetEntityEquipment::_Internal {
   using HasBits = decltype(std::declval<SetEntityEquipment>()._impl_._has_bits_);
   static constexpr ::int32_t kHasBitsOffset =
     8 * PROTOBUF_FIELD_OFFSET(SetEntityEquipment, _impl_._has_bits_);
-  static const ::minecpp::proto::player::Slot& item(const SetEntityEquipment* msg);
+  static const ::minecpp::proto::common::Slot& item(const SetEntityEquipment* msg);
   static void set_has_item(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
 
-const ::minecpp::proto::player::Slot&
+const ::minecpp::proto::common::Slot&
 SetEntityEquipment::_Internal::item(const SetEntityEquipment* msg) {
   return *msg->_impl_.item_;
 }
@@ -9253,7 +9293,7 @@ SetEntityEquipment::SetEntityEquipment(const SetEntityEquipment& from)
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_impl_.item_ = new ::minecpp::proto::player::Slot(*from._impl_.item_);
+    _this->_impl_.item_ = new ::minecpp::proto::common::Slot(*from._impl_.item_);
   }
   ::memcpy(&_impl_.entity_id_, &from._impl_.entity_id_,
     static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.equipment_slot_) -
@@ -9336,7 +9376,7 @@ const char* SetEntityEquipment::_InternalParse(const char* ptr, ::_pbi::ParseCon
           goto handle_unusual;
         }
         continue;
-      // .minecpp.proto.player.Slot item = 3;
+      // .minecpp.proto.common.Slot item = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_item(), ptr);
@@ -9390,7 +9430,7 @@ failure:
   }
 
   cached_has_bits = _impl_._has_bits_[0];
-  // .minecpp.proto.player.Slot item = 3;
+  // .minecpp.proto.common.Slot item = 3;
   if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(3, _Internal::item(this),
@@ -9413,7 +9453,7 @@ failure:
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .minecpp.proto.player.Slot item = 3;
+  // .minecpp.proto.common.Slot item = 3;
   cached_has_bits = _impl_._has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
@@ -9452,7 +9492,7 @@ void SetEntityEquipment::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
   (void) cached_has_bits;
 
   if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
-    _this->_internal_mutable_item()->::minecpp::proto::player::Slot::MergeFrom(
+    _this->_internal_mutable_item()->::minecpp::proto::common::Slot::MergeFrom(
         from._internal_item());
   }
   if (from._internal_entity_id() != 0) {

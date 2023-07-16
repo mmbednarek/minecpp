@@ -184,6 +184,11 @@ void Document::add_record(Record record)
    m_records.emplace_back(std::move(record));
 }
 
+void Document::add_alias(Alias alias)
+{
+    m_aliases.emplace_back(std::move(alias));
+}
+
 const std::vector<Record> &Document::records() const
 {
    return m_records;
@@ -197,6 +202,11 @@ const PackageInfo &Document::package_info() const
 const std::string &Document::generator() const
 {
    return m_generator;
+}
+
+const std::vector<Alias> &Document::aliases() const
+{
+   return m_aliases;
 }
 
 AnnotationList::AnnotationList() :
@@ -239,5 +249,28 @@ GeneratorInfo::GeneratorInfo(int line, int column, std::string generator) :
 const std::string &GeneratorInfo::generator() const
 {
    return m_generator;
+}
+
+Alias::Alias(int line, int column, std::string name, AnnotationList annotation_list, Type aliased_type) :
+    Node(line, column),
+    m_name(std::move(name)),
+    m_annotation_list(std::move(annotation_list)),
+    m_aliased_type(std::move(aliased_type))
+{
+}
+
+const AnnotationList &Alias::annotations() const
+{
+   return m_annotation_list;
+}
+
+const std::string &Alias::name() const
+{
+   return m_name;
+}
+
+const Type &Alias::aliased_type() const
+{
+   return m_aliased_type;
 }
 }// namespace minecpp::tool::schema_compiler

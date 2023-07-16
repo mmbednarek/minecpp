@@ -29,6 +29,8 @@ TokenType classify_token(const std::string &token_value, Environment environment
       return TokenType::KeywordRecord;
    if (token_value == "generator")
       return TokenType::KeywordGenerator;
+   if (token_value == "alias")
+      return TokenType::KeywordAlias;
 
    return TokenType::Identifier;
 }

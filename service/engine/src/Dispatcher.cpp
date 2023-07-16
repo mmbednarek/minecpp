@@ -231,7 +231,7 @@ void Dispatcher::set_inventory_slot(game::PlayerId player_id, game::ItemId item_
                                     int count)
 {
    clientbound_v1::SetInventorySlot set_slot;
-   set_slot.mutable_slot()->set_slot_id(slot_id);
+   set_slot.set_slot_id(slot_id);
    set_slot.mutable_slot()->set_count(static_cast<uint32_t>(count));
    set_slot.mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(item_id));
 

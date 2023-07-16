@@ -20,11 +20,11 @@ void ChatCommand::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_big_endian(this->timestamp);
    writer.write_big_endian(this->salt);
    writer.write_varint(static_cast<std::int32_t>(this->argument_signatures.size()));
-   for (const auto &[key_0, value_0] : this->argument_signatures) {
-      writer.write_string(key_0);
-      writer.write_string(value_0);
+   for (const auto &[argument_signatures_key_0, argument_signatures_value_0] : this->argument_signatures) {
+      writer.write_string(argument_signatures_key_0);
+      writer.write_string(argument_signatures_value_0);
    }
-   writer.write_sbyte(this->is_preview);
+   writer.write_bool(this->is_preview);
 }
 
 ChatCommand ChatCommand::deserialize(::minecpp::network::message::Reader &reader) {
@@ -32,15 +32,11 @@ ChatCommand ChatCommand::deserialize(::minecpp::network::message::Reader &reader
    result.command = reader.read_string();
    result.timestamp = reader.read_big_endian<std::uint64_t>();
    result.salt = reader.read_big_endian<std::uint64_t>();
-   const auto argument_signatures_map_size = reader.read_varint();
-   std::generate_n(std::inserter(result.argument_signatures, result.argument_signatures.begin()), static_cast<std::size_t>(argument_signatures_map_size), [&reader]() {
-      std::string key_result;
-      std::string value_result;
-      key_result = reader.read_string();
-      value_result = reader.read_string();
-      return std::make_pair(key_result, value_result);
+   const auto argument_signatures_map_size_0 = reader.read_varint();
+   std::generate_n(std::inserter(result.argument_signatures, result.argument_signatures.begin()), static_cast<std::size_t>(argument_signatures_map_size_0), [&reader]() {
+      return std::make_pair(reader.read_string(), reader.read_string());
    });
-   result.is_preview = reader.read_sbyte();
+   result.is_preview = reader.read_bool();
    return result;
 }
 
@@ -50,7 +46,7 @@ void ChatMessage::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_big_endian(this->timestamp);
    writer.write_big_endian(this->salt);
    writer.write_string(this->salt_data);
-   writer.write_sbyte(this->is_preview);
+   writer.write_bool(this->is_preview);
 }
 
 ChatMessage ChatMessage::deserialize(::minecpp::network::message::Reader &reader) {
@@ -59,7 +55,7 @@ ChatMessage ChatMessage::deserialize(::minecpp::network::message::Reader &reader
    result.timestamp = reader.read_big_endian<std::uint64_t>();
    result.salt = reader.read_big_endian<std::uint64_t>();
    result.salt_data = reader.read_string();
-   result.is_preview = reader.read_sbyte();
+   result.is_preview = reader.read_bool();
    return result;
 }
 
@@ -79,11 +75,11 @@ void ClientSettings::serialize(::minecpp::network::message::Writer &writer) cons
    writer.write_string(this->locale);
    writer.write_byte(this->view_distance);
    writer.write_varint(this->chat_mode);
-   writer.write_sbyte(this->are_colors_enabled);
+   writer.write_bool(this->are_colors_enabled);
    writer.write_byte(this->displayed_skin_parts);
    writer.write_sbyte(this->main_hand);
-   writer.write_sbyte(this->is_text_filtering_enabled);
-   writer.write_sbyte(this->are_players_listed);
+   writer.write_bool(this->is_text_filtering_enabled);
+   writer.write_bool(this->are_players_listed);
 }
 
 ClientSettings ClientSettings::deserialize(::minecpp::network::message::Reader &reader) {
@@ -91,11 +87,11 @@ ClientSettings ClientSettings::deserialize(::minecpp::network::message::Reader &
    result.locale = reader.read_string();
    result.view_distance = reader.read_byte();
    result.chat_mode = reader.read_varint();
-   result.are_colors_enabled = reader.read_sbyte();
+   result.are_colors_enabled = reader.read_bool();
    result.displayed_skin_parts = reader.read_byte();
    result.main_hand = reader.read_sbyte();
-   result.is_text_filtering_enabled = reader.read_sbyte();
-   result.are_players_listed = reader.read_sbyte();
+   result.is_text_filtering_enabled = reader.read_bool();
+   result.are_players_listed = reader.read_bool();
    return result;
 }
 
@@ -107,18 +103,18 @@ void ClickWindow::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(this->button);
    writer.write_varint(this->mode);
    writer.write_varint(static_cast<std::int32_t>(this->slots.size()));
-   for (const auto &[key_0, value_0] : this->slots) {
-      writer.write_big_endian(key_0);
-      if (value_0.has_value()) {
+   for (const auto &[slots_key_0, slots_value_0] : this->slots) {
+      writer.write_big_endian(slots_key_0);
+      if (slots_value_0.has_value()) {
          writer.write_byte(1);
-         (*value_0).serialize(writer);
+         slots_value_0->serialize(writer);
       } else {
          writer.write_byte(0);
       }
    }
    if (this->carried_item.has_value()) {
       writer.write_byte(1);
-      (*this->carried_item).serialize(writer);
+      this->carried_item->serialize(writer);
    } else {
       writer.write_byte(0);
    }
@@ -131,19 +127,17 @@ ClickWindow ClickWindow::deserialize(::minecpp::network::message::Reader &reader
    result.clicked_slot = reader.read_big_endian<std::int16_t>();
    result.button = reader.read_byte();
    result.mode = reader.read_varint();
-   const auto slots_map_size = reader.read_varint();
-   std::generate_n(std::inserter(result.slots, result.slots.begin()), static_cast<std::size_t>(slots_map_size), [&reader]() {
-      std::uint16_t key_result;
-      std::optional<play::Slot> value_result;
-      key_result = reader.read_big_endian<std::uint16_t>();
-      const auto value_result_has_value = reader.read_byte();
-      if (value_result_has_value) {
-         value_result = play::Slot::deserialize(reader);
+   const auto slots_map_size_0 = reader.read_varint();
+   std::generate_n(std::inserter(result.slots, result.slots.begin()), static_cast<std::size_t>(slots_map_size_0), [&reader]() {
+      std::optional<play::Slot> slots_value_0;
+      const auto slots_value_0_has_value_1 = reader.read_byte();
+      if (slots_value_0_has_value_1) {
+         slots_value_0 = play::Slot::deserialize(reader);
       }
-      return std::make_pair(key_result, value_result);
+      return std::make_pair(reader.read_big_endian<std::uint16_t>(), slots_value_0);
    });
-   const auto carried_item_has_value = reader.read_byte();
-   if (carried_item_has_value) {
+   const auto carried_item_has_value_0 = reader.read_byte();
+   if (carried_item_has_value_0) {
       result.carried_item = play::Slot::deserialize(reader);
    }
    return result;
@@ -190,23 +184,20 @@ void Interact::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_varint(this->entity_id);
    writer.write_varint(this->type);
    if (this->target.has_value()) {
-      writer.write_byte(1);
-      (*this->target).serialize(writer);
-   } else {
-      writer.write_byte(0);
+      this->target->serialize(writer);
    }
-   writer.write_sbyte(this->is_sneaking);
+   writer.write_bool(this->is_sneaking);
 }
 
 Interact Interact::deserialize(::minecpp::network::message::Reader &reader) {
    Interact result;
    result.entity_id = reader.read_varint();
    result.type = reader.read_varint();
-   const auto target_has_value = result.type == 2;
-   if (target_has_value) {
+   const auto target_has_value_0 = result.type == 2;
+   if (target_has_value_0) {
       result.target = InteractTarget::deserialize(reader);
    }
-   result.is_sneaking = reader.read_sbyte();
+   result.is_sneaking = reader.read_bool();
    return result;
 }
 
@@ -224,13 +215,13 @@ KeepAlive KeepAlive::deserialize(::minecpp::network::message::Reader &reader) {
 void SetPlayerPosition::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x13);
    this->position.serialize(writer);
-   writer.write_sbyte(this->is_on_ground);
+   writer.write_bool(this->is_on_ground);
 }
 
 SetPlayerPosition SetPlayerPosition::deserialize(::minecpp::network::message::Reader &reader) {
    SetPlayerPosition result;
    result.position = play::Vector3::deserialize(reader);
-   result.is_on_ground = reader.read_sbyte();
+   result.is_on_ground = reader.read_bool();
    return result;
 }
 
@@ -239,7 +230,7 @@ void SetPlayerPositionAndRotation::serialize(::minecpp::network::message::Writer
    this->position.serialize(writer);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
-   writer.write_sbyte(this->is_on_ground);
+   writer.write_bool(this->is_on_ground);
 }
 
 SetPlayerPositionAndRotation SetPlayerPositionAndRotation::deserialize(::minecpp::network::message::Reader &reader) {
@@ -247,7 +238,7 @@ SetPlayerPositionAndRotation SetPlayerPositionAndRotation::deserialize(::minecpp
    result.position = play::Vector3::deserialize(reader);
    result.yaw = reader.read_float();
    result.pitch = reader.read_float();
-   result.is_on_ground = reader.read_sbyte();
+   result.is_on_ground = reader.read_bool();
    return result;
 }
 
@@ -255,25 +246,25 @@ void SetPlayerRotation::serialize(::minecpp::network::message::Writer &writer) c
    writer.write_byte(0x15);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
-   writer.write_sbyte(this->is_on_ground);
+   writer.write_bool(this->is_on_ground);
 }
 
 SetPlayerRotation SetPlayerRotation::deserialize(::minecpp::network::message::Reader &reader) {
    SetPlayerRotation result;
    result.yaw = reader.read_float();
    result.pitch = reader.read_float();
-   result.is_on_ground = reader.read_sbyte();
+   result.is_on_ground = reader.read_bool();
    return result;
 }
 
 void SetIsPlayerOnGround::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x16);
-   writer.write_sbyte(this->is_on_ground);
+   writer.write_bool(this->is_on_ground);
 }
 
 SetIsPlayerOnGround SetIsPlayerOnGround::deserialize(::minecpp::network::message::Reader &reader) {
    SetIsPlayerOnGround result;
-   result.is_on_ground = reader.read_sbyte();
+   result.is_on_ground = reader.read_bool();
    return result;
 }
 
@@ -337,7 +328,7 @@ void UseItemOn::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_big_endian(this->position);
    writer.write_varint(this->facing);
    this->cursor_position.serialize(writer);
-   writer.write_sbyte(this->is_inside_block);
+   writer.write_bool(this->is_inside_block);
    writer.write_varint(this->sequence_id);
 }
 
@@ -347,7 +338,7 @@ UseItemOn UseItemOn::deserialize(::minecpp::network::message::Reader &reader) {
    result.position = reader.read_big_endian<std::uint64_t>();
    result.facing = reader.read_varint();
    result.cursor_position = play::Vector3f::deserialize(reader);
-   result.is_inside_block = reader.read_sbyte();
+   result.is_inside_block = reader.read_bool();
    result.sequence_id = reader.read_varint();
    return result;
 }

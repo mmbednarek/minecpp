@@ -5016,22 +5016,33 @@ class SetInventorySlot final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSlotFieldNumber = 1,
+    kSlotFieldNumber = 2,
+    kSlotIdFieldNumber = 1,
   };
-  // .minecpp.proto.player.Slot slot = 1;
+  // .minecpp.proto.common.Slot slot = 2;
   bool has_slot() const;
   void clear_slot() ;
-  const ::minecpp::proto::player::Slot& slot() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::player::Slot* release_slot();
-  ::minecpp::proto::player::Slot* mutable_slot();
-  void set_allocated_slot(::minecpp::proto::player::Slot* slot);
+  const ::minecpp::proto::common::Slot& slot() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::Slot* release_slot();
+  ::minecpp::proto::common::Slot* mutable_slot();
+  void set_allocated_slot(::minecpp::proto::common::Slot* slot);
   private:
-  const ::minecpp::proto::player::Slot& _internal_slot() const;
-  ::minecpp::proto::player::Slot* _internal_mutable_slot();
+  const ::minecpp::proto::common::Slot& _internal_slot() const;
+  ::minecpp::proto::common::Slot* _internal_mutable_slot();
   public:
   void unsafe_arena_set_allocated_slot(
-      ::minecpp::proto::player::Slot* slot);
-  ::minecpp::proto::player::Slot* unsafe_arena_release_slot();
+      ::minecpp::proto::common::Slot* slot);
+  ::minecpp::proto::common::Slot* unsafe_arena_release_slot();
+  // uint32 slot_id = 1;
+  void clear_slot_id() ;
+  ::uint32_t slot_id() const;
+  void set_slot_id(::uint32_t value);
+
+  private:
+  ::uint32_t _internal_slot_id() const;
+  void _internal_set_slot_id(::uint32_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.SetInventorySlot)
  private:
   class _Internal;
@@ -5042,7 +5053,8 @@ class SetInventorySlot final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-    ::minecpp::proto::player::Slot* slot_;
+    ::minecpp::proto::common::Slot* slot_;
+    ::uint32_t slot_id_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto;
@@ -6036,20 +6048,20 @@ class SetEntityEquipment final :
     kEntityIdFieldNumber = 1,
     kEquipmentSlotFieldNumber = 2,
   };
-  // .minecpp.proto.player.Slot item = 3;
+  // .minecpp.proto.common.Slot item = 3;
   bool has_item() const;
   void clear_item() ;
-  const ::minecpp::proto::player::Slot& item() const;
-  PROTOBUF_NODISCARD ::minecpp::proto::player::Slot* release_item();
-  ::minecpp::proto::player::Slot* mutable_item();
-  void set_allocated_item(::minecpp::proto::player::Slot* item);
+  const ::minecpp::proto::common::Slot& item() const;
+  PROTOBUF_NODISCARD ::minecpp::proto::common::Slot* release_item();
+  ::minecpp::proto::common::Slot* mutable_item();
+  void set_allocated_item(::minecpp::proto::common::Slot* item);
   private:
-  const ::minecpp::proto::player::Slot& _internal_item() const;
-  ::minecpp::proto::player::Slot* _internal_mutable_item();
+  const ::minecpp::proto::common::Slot& _internal_item() const;
+  ::minecpp::proto::common::Slot* _internal_mutable_item();
   public:
   void unsafe_arena_set_allocated_item(
-      ::minecpp::proto::player::Slot* item);
-  ::minecpp::proto::player::Slot* unsafe_arena_release_item();
+      ::minecpp::proto::common::Slot* item);
+  ::minecpp::proto::common::Slot* unsafe_arena_release_item();
   // uint32 entity_id = 1;
   void clear_entity_id() ;
   ::uint32_t entity_id() const;
@@ -6080,7 +6092,7 @@ class SetEntityEquipment final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-    ::minecpp::proto::player::Slot* item_;
+    ::minecpp::proto::common::Slot* item_;
     ::uint32_t entity_id_;
     int equipment_slot_;
   };
@@ -10539,23 +10551,43 @@ inline void DenyPlayer::set_allocated_denial_reason(std::string* value) {
 
 // SetInventorySlot
 
-// .minecpp.proto.player.Slot slot = 1;
+// uint32 slot_id = 1;
+inline void SetInventorySlot::clear_slot_id() {
+  _impl_.slot_id_ = 0u;
+}
+inline ::uint32_t SetInventorySlot::slot_id() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.SetInventorySlot.slot_id)
+  return _internal_slot_id();
+}
+inline void SetInventorySlot::set_slot_id(::uint32_t value) {
+  _internal_set_slot_id(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.SetInventorySlot.slot_id)
+}
+inline ::uint32_t SetInventorySlot::_internal_slot_id() const {
+  return _impl_.slot_id_;
+}
+inline void SetInventorySlot::_internal_set_slot_id(::uint32_t value) {
+  ;
+  _impl_.slot_id_ = value;
+}
+
+// .minecpp.proto.common.Slot slot = 2;
 inline bool SetInventorySlot::has_slot() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.slot_ != nullptr);
   return value;
 }
-inline const ::minecpp::proto::player::Slot& SetInventorySlot::_internal_slot() const {
-  const ::minecpp::proto::player::Slot* p = _impl_.slot_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::Slot&>(
-      ::minecpp::proto::player::_Slot_default_instance_);
+inline const ::minecpp::proto::common::Slot& SetInventorySlot::_internal_slot() const {
+  const ::minecpp::proto::common::Slot* p = _impl_.slot_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::Slot&>(
+      ::minecpp::proto::common::_Slot_default_instance_);
 }
-inline const ::minecpp::proto::player::Slot& SetInventorySlot::slot() const {
+inline const ::minecpp::proto::common::Slot& SetInventorySlot::slot() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.SetInventorySlot.slot)
   return _internal_slot();
 }
 inline void SetInventorySlot::unsafe_arena_set_allocated_slot(
-    ::minecpp::proto::player::Slot* slot) {
+    ::minecpp::proto::common::Slot* slot) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.slot_);
   }
@@ -10567,9 +10599,9 @@ inline void SetInventorySlot::unsafe_arena_set_allocated_slot(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.SetInventorySlot.slot)
 }
-inline ::minecpp::proto::player::Slot* SetInventorySlot::release_slot() {
+inline ::minecpp::proto::common::Slot* SetInventorySlot::release_slot() {
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::minecpp::proto::player::Slot* temp = _impl_.slot_;
+  ::minecpp::proto::common::Slot* temp = _impl_.slot_;
   _impl_.slot_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -10582,27 +10614,27 @@ inline ::minecpp::proto::player::Slot* SetInventorySlot::release_slot() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::player::Slot* SetInventorySlot::unsafe_arena_release_slot() {
+inline ::minecpp::proto::common::Slot* SetInventorySlot::unsafe_arena_release_slot() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.SetInventorySlot.slot)
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::minecpp::proto::player::Slot* temp = _impl_.slot_;
+  ::minecpp::proto::common::Slot* temp = _impl_.slot_;
   _impl_.slot_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::player::Slot* SetInventorySlot::_internal_mutable_slot() {
+inline ::minecpp::proto::common::Slot* SetInventorySlot::_internal_mutable_slot() {
   _impl_._has_bits_[0] |= 0x00000001u;
   if (_impl_.slot_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::player::Slot>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::Slot>(GetArenaForAllocation());
     _impl_.slot_ = p;
   }
   return _impl_.slot_;
 }
-inline ::minecpp::proto::player::Slot* SetInventorySlot::mutable_slot() {
-  ::minecpp::proto::player::Slot* _msg = _internal_mutable_slot();
+inline ::minecpp::proto::common::Slot* SetInventorySlot::mutable_slot() {
+  ::minecpp::proto::common::Slot* _msg = _internal_mutable_slot();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.SetInventorySlot.slot)
   return _msg;
 }
-inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::player::Slot* slot) {
+inline void SetInventorySlot::set_allocated_slot(::minecpp::proto::common::Slot* slot) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.slot_);
@@ -11122,23 +11154,23 @@ inline void SetEntityEquipment::_internal_set_equipment_slot(::minecpp::proto::e
   _impl_.equipment_slot_ = value;
 }
 
-// .minecpp.proto.player.Slot item = 3;
+// .minecpp.proto.common.Slot item = 3;
 inline bool SetEntityEquipment::has_item() const {
   bool value = (_impl_._has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || _impl_.item_ != nullptr);
   return value;
 }
-inline const ::minecpp::proto::player::Slot& SetEntityEquipment::_internal_item() const {
-  const ::minecpp::proto::player::Slot* p = _impl_.item_;
-  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::player::Slot&>(
-      ::minecpp::proto::player::_Slot_default_instance_);
+inline const ::minecpp::proto::common::Slot& SetEntityEquipment::_internal_item() const {
+  const ::minecpp::proto::common::Slot* p = _impl_.item_;
+  return p != nullptr ? *p : reinterpret_cast<const ::minecpp::proto::common::Slot&>(
+      ::minecpp::proto::common::_Slot_default_instance_);
 }
-inline const ::minecpp::proto::player::Slot& SetEntityEquipment::item() const {
+inline const ::minecpp::proto::common::Slot& SetEntityEquipment::item() const {
   // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.SetEntityEquipment.item)
   return _internal_item();
 }
 inline void SetEntityEquipment::unsafe_arena_set_allocated_item(
-    ::minecpp::proto::player::Slot* item) {
+    ::minecpp::proto::common::Slot* item) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.item_);
   }
@@ -11150,9 +11182,9 @@ inline void SetEntityEquipment::unsafe_arena_set_allocated_item(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:minecpp.proto.event.clientbound.SetEntityEquipment.item)
 }
-inline ::minecpp::proto::player::Slot* SetEntityEquipment::release_item() {
+inline ::minecpp::proto::common::Slot* SetEntityEquipment::release_item() {
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::minecpp::proto::player::Slot* temp = _impl_.item_;
+  ::minecpp::proto::common::Slot* temp = _impl_.item_;
   _impl_.item_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -11165,27 +11197,27 @@ inline ::minecpp::proto::player::Slot* SetEntityEquipment::release_item() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::minecpp::proto::player::Slot* SetEntityEquipment::unsafe_arena_release_item() {
+inline ::minecpp::proto::common::Slot* SetEntityEquipment::unsafe_arena_release_item() {
   // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.SetEntityEquipment.item)
   _impl_._has_bits_[0] &= ~0x00000001u;
-  ::minecpp::proto::player::Slot* temp = _impl_.item_;
+  ::minecpp::proto::common::Slot* temp = _impl_.item_;
   _impl_.item_ = nullptr;
   return temp;
 }
-inline ::minecpp::proto::player::Slot* SetEntityEquipment::_internal_mutable_item() {
+inline ::minecpp::proto::common::Slot* SetEntityEquipment::_internal_mutable_item() {
   _impl_._has_bits_[0] |= 0x00000001u;
   if (_impl_.item_ == nullptr) {
-    auto* p = CreateMaybeMessage<::minecpp::proto::player::Slot>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::minecpp::proto::common::Slot>(GetArenaForAllocation());
     _impl_.item_ = p;
   }
   return _impl_.item_;
 }
-inline ::minecpp::proto::player::Slot* SetEntityEquipment::mutable_item() {
-  ::minecpp::proto::player::Slot* _msg = _internal_mutable_item();
+inline ::minecpp::proto::common::Slot* SetEntityEquipment::mutable_item() {
+  ::minecpp::proto::common::Slot* _msg = _internal_mutable_item();
   // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.SetEntityEquipment.item)
   return _msg;
 }
-inline void SetEntityEquipment::set_allocated_item(::minecpp::proto::player::Slot* item) {
+inline void SetEntityEquipment::set_allocated_item(::minecpp::proto::common::Slot* item) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.item_);

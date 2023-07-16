@@ -46,14 +46,28 @@ Document Parser::parse_document()
       if (not m_token_feed.has_next())
          break;
 
-      auto token = m_token_feed.expect(TokenType::KeywordImport, TokenType::KeywordRecord, TokenType::LeftSquareBracket);
+      auto token = m_token_feed.expect(TokenType::KeywordRecord, TokenType::KeywordAlias,
+                                  TokenType::LeftSquareBracket);
       m_token_feed.step_back();
-
-      if (token.type == TokenType::KeywordImport) {
-         document.add_import(this->parse_import());
-         continue;
+      switch (token.type) {
+      case TokenType::KeywordRecord: document.add_record(this->parse_record(AnnotationList{})); break;
+      case TokenType::KeywordAlias: document.add_alias(this->parse_alias(AnnotationList{})); break;
+      case TokenType::LeftSquareBracket: {
+         auto annotations = this->parse_annotation_list();
+         this->skip_new_lines();
+         token            = m_token_feed.expect(TokenType::KeywordRecord, TokenType::KeywordAlias);
+         m_token_feed.step_back();
+         switch (token.type) {
+         case TokenType::KeywordRecord:
+            document.add_record(this->parse_record(std::move(annotations)));
+            break;
+         case TokenType::KeywordAlias: document.add_alias(this->parse_alias(std::move(annotations))); break;
+         default: break;
+         }
+         break;
       }
-      document.add_record(this->parse_record());
+      default: break;
+      }
    }
 
    return document;
@@ -70,25 +84,15 @@ GeneratorInfo Parser::parse_generator_info()
 Import Parser::parse_import()
 {
    auto import_keyword = m_token_feed.expect(TokenType::KeywordPackage);
-   auto name = m_token_feed.expect(TokenType::String);
+   auto name           = m_token_feed.expect(TokenType::String);
    return {import_keyword.line, import_keyword.column, {name.value}};
 }
 
-Record Parser::parse_record()
+Record Parser::parse_record(AnnotationList annotations)
 {
-   auto initial_token = m_token_feed.expect(TokenType::LeftSquareBracket, TokenType::KeywordRecord);
-   AnnotationList annotation_list(initial_token.line, initial_token.column);
-   if (initial_token.type == TokenType::LeftSquareBracket) {
-      m_token_feed.step_back();
-
-      annotation_list = this->parse_annotation_list();
-
-      this->skip_new_lines();
-      initial_token = m_token_feed.expect(TokenType::KeywordRecord);
-   }
-
+   auto initial_token = m_token_feed.expect(TokenType::KeywordRecord);
    auto token = m_token_feed.expect(TokenType::Identifier);
-   Record record(initial_token.line, initial_token.column, token.value, std::move(annotation_list));
+   Record record(initial_token.line, initial_token.column, token.value, std::move(annotations));
 
    this->skip_new_lines();
 
@@ -145,7 +149,8 @@ AnnotationList Parser::parse_annotation_list()
 
 Attribute Parser::parse_attribute()
 {
-   auto initial_token = m_token_feed.expect(TokenType::LeftSquareBracket, TokenType::Identifier, TokenType::KeywordGenerator);
+   auto initial_token = m_token_feed.expect(TokenType::LeftSquareBracket, TokenType::Identifier,
+                                            TokenType::KeywordGenerator);
    AnnotationList annotation_list(initial_token.line, initial_token.column);
    if (initial_token.type == TokenType::LeftSquareBracket) {
       m_token_feed.step_back();
@@ -157,10 +162,10 @@ Attribute Parser::parse_attribute()
    }
 
    auto token = m_token_feed.expect(TokenType::Colon);
-   auto type = this->parse_type();
+   auto type  = this->parse_type();
 
    return {initial_token.line, initial_token.column, std::move(annotation_list), std::move(type),
-                    initial_token.value};
+           initial_token.value};
 }
 
 Type Parser::parse_type()
@@ -168,7 +173,7 @@ Type Parser::parse_type()
    std::vector<std::string> package;
 
    for (;;) {
-      auto token = m_token_feed.expect(TokenType::Identifier);
+      auto token     = m_token_feed.expect(TokenType::Identifier);
       auto dot_token = m_token_feed.next();
       if (dot_token.type != TokenType::Dot) {
          m_token_feed.step_back();
@@ -219,6 +224,16 @@ void Parser::skip_new_lines()
    }
 
    m_token_feed.step_back();
+}
+
+Alias Parser::parse_alias(AnnotationList annotations)
+{
+   auto base_token = m_token_feed.expect(TokenType::KeywordAlias);
+   auto alias_name = m_token_feed.expect(TokenType::Identifier);
+   m_token_feed.expect(TokenType::EqualSign);
+   auto aliased_type = this->parse_type();
+   return {base_token.line, base_token.column, alias_name.value, std::move(annotations),
+           std::move(aliased_type)};
 }
 
 }// namespace minecpp::tool::schema_compiler

@@ -1,7 +1,7 @@
 #pragma once
 #include "minecpp/nbt/block/Block.schema.h"
 #include "minecpp/nbt/chunk/Chunk.schema.h"
-#include "minecpp/nbt/repository/Repository.schema.h"
+#include "minecpp/nbt/repository/Codec.schema.h"
 #include "minecpp/net/play/Common.schema.h"
 #include "minecpp/network/message/Reader.h"
 #include "minecpp/network/message/Writer.h"
@@ -13,7 +13,7 @@ namespace minecpp::net::play::cb {
 
 class SpawnEntity {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    ::minecpp::util::Uuid unique_id{};
    std::int32_t entity_type{};
    play::Vector3 position{};
@@ -28,7 +28,7 @@ class SpawnEntity {
 
 class SpawnExperienceOrb {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    play::Vector3 position{};
    std::int16_t xp_value{};
    void serialize(::minecpp::network::message::Writer &writer) const;
@@ -37,8 +37,8 @@ class SpawnExperienceOrb {
 
 class SpawnPlayer {
  public:
-   std::int32_t entity_id{};
-   ::minecpp::util::Uuid unique_id{};
+   std::uint32_t entity_id{};
+   ::minecpp::util::Uuid player_id{};
    play::Vector3 position{};
    std::uint8_t yaw{};
    std::uint8_t pitch{};
@@ -48,7 +48,7 @@ class SpawnPlayer {
 
 class AnimateEntity {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::uint8_t type{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static AnimateEntity deserialize(::minecpp::network::message::Reader &reader);
@@ -136,6 +136,7 @@ class BlockEntity {
 
 class LightData {
  public:
+   bool trust_edges{};
    std::vector<std::uint64_t> sky_light_mask{};
    std::vector<std::uint64_t> block_light_mask{};
    std::vector<std::uint64_t> empty_sky_light_mask{};
@@ -148,7 +149,7 @@ class LightData {
 
 class UpdateChunk {
  public:
-   play::Vector2vi position{};
+   play::Vector2i position{};
    nbt::chunk::HeightmapsNet heightmaps{};
    std::vector<std::uint8_t> data{};
    std::vector<BlockEntity> block_entities{};
@@ -175,22 +176,22 @@ class DeathLocation {
 
 class JoinGame {
  public:
-   std::uint32_t player_id{};
-   std::int8_t is_hardcode{};
+   std::uint32_t entity_id{};
+   bool is_hardcode{};
    std::int8_t game_mode{};
    std::int8_t previous_game_mode{};
    std::vector<std::string> available_dimensions{};
-   nbt::repository::Repository dimension_codec{};
+   nbt::repository::Registry dimension_codec{};
    std::string dimension_name{};
    std::string world_name{};
    std::uint64_t seed{};
-   std::int8_t max_players{};
+   std::uint8_t max_players{};
    std::int32_t view_distance{};
    std::int32_t simulation_distance{};
    std::int8_t reduced_debug_info{};
-   std::int8_t should_show_respawn_screen{};
-   std::int8_t is_debug{};
-   std::int8_t is_flat{};
+   bool should_show_respawn_screen{};
+   bool is_debug{};
+   bool is_flat{};
    std::optional<DeathLocation> death_location{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static JoinGame deserialize(::minecpp::network::message::Reader &reader);
@@ -198,30 +199,30 @@ class JoinGame {
 
 class EntityRelativeMove {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    play::Vector3s difference{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityRelativeMove deserialize(::minecpp::network::message::Reader &reader);
 };
 
 class EntityMove {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    play::Vector3s difference{};
    std::uint8_t yaw{};
    std::uint8_t pitch{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityMove deserialize(::minecpp::network::message::Reader &reader);
 };
 
 class EntityLook {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::uint8_t yaw{};
    std::uint8_t pitch{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityLook deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -237,7 +238,7 @@ class PlayerAbilities {
 
 class DisplayDeathScreen {
  public:
-   std::int32_t victim_entity_id{};
+   std::uint32_t victim_entity_id{};
    std::uint32_t killer_entity_id{};
    std::string message{};
    void serialize(::minecpp::network::message::Writer &writer) const;
@@ -294,7 +295,7 @@ class ActionSetGameMode {
 
 class ActionSetIsListed {
  public:
-   std::int8_t is_listed{};
+   bool is_listed{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ActionSetIsListed deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -341,15 +342,15 @@ class PlayerPositionLook {
    float pitch{};
    std::uint8_t flags{};
    std::int32_t teleport_id{};
-   std::int8_t has_dismounted_vehicle{};
+   bool has_dismounted_vehicle{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static PlayerPositionLook deserialize(::minecpp::network::message::Reader &reader);
 };
 
 class RecipeGui {
  public:
-   std::int8_t is_open{};
-   std::int8_t is_filtring_craftable{};
+   bool is_open{};
+   bool is_filtering_craftable{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static RecipeGui deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -363,7 +364,7 @@ class RecipeList {
 
 class RecipeBook {
  public:
-   std::uint8_t state{};
+   std::int32_t state{};
    RecipeGui crafting_table{};
    RecipeGui furnace{};
    RecipeGui blaster{};
@@ -376,7 +377,7 @@ class RecipeBook {
 
 class RemoveEntities {
  public:
-   std::vector<std::int32_t> entity_ids{};
+   std::vector<std::uint32_t> entity_ids{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static RemoveEntities deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -387,9 +388,10 @@ class Respawn {
    std::string dimension_name{};
    std::uint64_t seed{};
    std::int8_t game_mode{};
-   std::int8_t is_debug{};
-   std::int8_t is_flat{};
-   std::int8_t should_copy_metadata{};
+   std::int8_t previous_game_mode{};
+   bool is_debug{};
+   bool is_flat{};
+   std::uint8_t should_copy_metadata{};
    DeathLocation death_location{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Respawn deserialize(::minecpp::network::message::Reader &reader);
@@ -397,7 +399,7 @@ class Respawn {
 
 class EntityHeadLook {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::uint8_t yaw{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityHeadLook deserialize(::minecpp::network::message::Reader &reader);
@@ -406,7 +408,7 @@ class EntityHeadLook {
 class MultiBlockChange {
  public:
    std::uint64_t chunk_position{};
-   std::int8_t should_distrust_edges{};
+   bool should_distrust_edges{};
    std::vector<std::int64_t> block_changes{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static MultiBlockChange deserialize(::minecpp::network::message::Reader &reader);
@@ -436,7 +438,7 @@ class SetDefaultSpawnPosition {
 
 class SetEntityMetadata {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::map<std::uint8_t, std::variant<std::int8_t, std::int32_t, std::int64_t, float, std::string, play::Chat, std::optional<play::Chat>, std::optional<play::Slot>>> data{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetEntityMetadata deserialize(::minecpp::network::message::Reader &reader);
@@ -444,7 +446,7 @@ class SetEntityMetadata {
 
 class SetEntityVelocity {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    play::Vector3s velocity{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetEntityVelocity deserialize(::minecpp::network::message::Reader &reader);
@@ -452,7 +454,7 @@ class SetEntityVelocity {
 
 class SetEquipment {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::int8_t slot_id{};
    std::optional<play::Slot> slot{};
    void serialize(::minecpp::network::message::Writer &writer) const;
@@ -478,8 +480,8 @@ class SystemChat {
 
 class PickupItem {
  public:
-   std::int32_t collected_entity_id{};
-   std::int32_t collector_entity_id{};
+   std::uint32_t collected_entity_id{};
+   std::uint32_t collector_entity_id{};
    std::int32_t count{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static PickupItem deserialize(::minecpp::network::message::Reader &reader);
@@ -487,11 +489,11 @@ class PickupItem {
 
 class TeleportEntity {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    play::Vector3 position{};
    std::uint8_t yaw{};
    std::uint8_t pitch{};
-   std::int8_t is_on_ground{};
+   bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static TeleportEntity deserialize(::minecpp::network::message::Reader &reader);
 };
