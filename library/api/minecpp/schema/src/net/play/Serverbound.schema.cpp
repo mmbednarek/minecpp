@@ -34,7 +34,9 @@ ChatCommand ChatCommand::deserialize(::minecpp::network::message::Reader &reader
    result.salt = reader.read_big_endian<std::uint64_t>();
    const auto argument_signatures_map_size_0 = reader.read_varint();
    std::generate_n(std::inserter(result.argument_signatures, result.argument_signatures.begin()), static_cast<std::size_t>(argument_signatures_map_size_0), [&reader]() {
-      return std::make_pair(reader.read_string(), reader.read_string());
+      std::string argument_signatures_key_0;
+      argument_signatures_key_0 = reader.read_string();
+      return std::make_pair(argument_signatures_key_0, reader.read_string());
    });
    result.is_preview = reader.read_bool();
    return result;
@@ -129,12 +131,14 @@ ClickWindow ClickWindow::deserialize(::minecpp::network::message::Reader &reader
    result.mode = reader.read_varint();
    const auto slots_map_size_0 = reader.read_varint();
    std::generate_n(std::inserter(result.slots, result.slots.begin()), static_cast<std::size_t>(slots_map_size_0), [&reader]() {
+      std::uint16_t slots_key_0;
+      slots_key_0 = reader.read_big_endian<std::uint16_t>();
       std::optional<play::Slot> slots_value_0;
       const auto slots_value_0_has_value_1 = reader.read_byte();
       if (slots_value_0_has_value_1) {
          slots_value_0 = play::Slot::deserialize(reader);
       }
-      return std::make_pair(reader.read_big_endian<std::uint16_t>(), slots_value_0);
+      return std::make_pair(slots_key_0, slots_value_0);
    });
    const auto carried_item_has_value_0 = reader.read_byte();
    if (carried_item_has_value_0) {
