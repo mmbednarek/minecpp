@@ -1,0 +1,43 @@
+generator = "net"
+package minecpp.net.play
+
+alias EntityID = uvarint
+
+record Vector3 {
+    x: float64
+    y: float64
+    z: float64
+}
+
+record Vector3f {
+    x: float32
+    y: float32
+    z: float32
+}
+
+record Vector3s {
+    x: int16
+    y: int16
+    z: int16
+}
+
+record Vector2i {
+    x: int32
+    y: int32
+}
+
+record Vector2vi {
+    x: varint
+    y: varint
+}
+
+record Chat {
+  format: string
+}
+
+record Slot {
+  item_id: varint
+  item_count: int8
+  data: nbt.item.SlotData
+}
+

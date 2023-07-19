@@ -12,7 +12,7 @@ class UniqueId
    void serialize_to_proto(proto::entity::Entity *entity) const;
 
  private:
-   util::uuid m_id;
+   util::Uuid m_id;
 };
 
 }// namespace minecpp::entity::component

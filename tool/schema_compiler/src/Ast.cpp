@@ -157,13 +157,19 @@ const std::vector<Attribute> &Record::attributes() const
    return m_attributes;
 }
 
+const AnnotationList &Record::annotations() const
+{
+   return m_annotation_list;
+}
+
 Import::Import(int line, int column, std::vector<std::string> path) :
     Node(line, column),
     m_path(std::move(path))
 {
 }
 
-Document::Document(PackageInfo package_info) :
+Document::Document(std::string generator, PackageInfo package_info) :
+    m_generator(std::move(generator)),
     m_package_info(std::move(package_info))
 {
 }
@@ -178,6 +184,11 @@ void Document::add_record(Record record)
    m_records.emplace_back(std::move(record));
 }
 
+void Document::add_alias(Alias alias)
+{
+    m_aliases.emplace_back(std::move(alias));
+}
+
 const std::vector<Record> &Document::records() const
 {
    return m_records;
@@ -186,6 +197,21 @@ const std::vector<Record> &Document::records() const
 const PackageInfo &Document::package_info() const
 {
    return m_package_info;
+}
+
+const std::string &Document::generator() const
+{
+   return m_generator;
+}
+
+const std::vector<Alias> &Document::aliases() const
+{
+   return m_aliases;
+}
+
+AnnotationList::AnnotationList() :
+    Node(0, 0)
+{
 }
 
 AnnotationList::AnnotationList(int line, int column) :
@@ -212,5 +238,39 @@ std::string AnnotationList::value_at(std::string_view key) const
            m_annotations.begin(), m_annotations.end(),
            [seeked_key = key](const Annotation &annotation) { return annotation.key == seeked_key; });
    return it->value;
+}
+
+GeneratorInfo::GeneratorInfo(int line, int column, std::string generator) :
+    Node(line, column),
+    m_generator(std::move(generator))
+{
+}
+
+const std::string &GeneratorInfo::generator() const
+{
+   return m_generator;
+}
+
+Alias::Alias(int line, int column, std::string name, AnnotationList annotation_list, Type aliased_type) :
+    Node(line, column),
+    m_name(std::move(name)),
+    m_annotation_list(std::move(annotation_list)),
+    m_aliased_type(std::move(aliased_type))
+{
+}
+
+const AnnotationList &Alias::annotations() const
+{
+   return m_annotation_list;
+}
+
+const std::string &Alias::name() const
+{
+   return m_name;
+}
+
+const Type &Alias::aliased_type() const
+{
+   return m_aliased_type;
 }
 }// namespace minecpp::tool::schema_compiler

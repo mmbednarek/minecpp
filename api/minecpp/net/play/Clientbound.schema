@@ -1,0 +1,416 @@
+generator = "net"
+package minecpp.net.play.cb
+
+[MessageID=0x00]
+record SpawnEntity {
+    entity_id: EntityID
+    unique_id: uuid
+    entity_type: varint
+    position: Vector3
+    pitch: uint8
+    yaw: uint8
+    head_yaw: uint8
+    data: varint
+    velocity: Vector3s
+}
+
+[MessageID=0x01]
+record SpawnExperienceOrb {
+    entity_id: EntityID
+    position: Vector3
+    xp_value: int16
+}
+
+[MessageID=0x02]
+record SpawnPlayer {
+    entity_id: EntityID
+    player_id: uuid
+    position: Vector3
+    yaw: uint8
+    pitch: uint8
+}
+
+[MessageID=0x03]
+record AnimateEntity {
+    entity_id: EntityID
+    type: uint8
+}
+
+[MessageID=0x05]
+record AcknowledgeBlockChanges {
+    sequence_id: uvarint
+}
+
+[MessageID=0x09]
+record BlockChange {
+    block_position: uint64
+    block_id: varint
+}
+
+[MessageID=0x0B]
+record Difficulty {
+    difficulty: uint8
+    locked: int8
+}
+
+[MessageID=0x12]
+record SetSlot {
+    window_id: uint8
+    state_id: varint
+    slot_id: int16
+    slot: optional[Slot]
+}
+
+[MessageID=0x15]
+record PluginMessage {
+    key: string
+    value: string
+}
+
+[MessageID=0x17]
+record Disconnect {
+    reason: string
+}
+
+[MessageID=0x19]
+record EntityStatus {
+    entity_id: int32
+    opcode: int8
+}
+
+[MessageID=0x1B]
+record UnloadChunk {
+    position: Vector2i
+}
+
+[MessageID=0x1F]
+record KeepAlive {
+    time: int64
+}
+
+record BlockEntity {
+  position_xz: uint8
+  y: int16
+  type: varint
+  data: nbt.block.BlockEntityData
+}
+
+record LightData {
+  trust_edges: bool
+
+  sky_light_mask: list[uint64]
+  block_light_mask: list[uint64]
+  empty_sky_light_mask: list[uint64]
+  empty_block_light_mask: list[uint64]
+
+  sky_light: list[list[uint8]]
+  block_light: list[list[uint8]]
+}
+
+[MessageID=0x20]
+record UpdateChunk {
+    position: Vector2i
+    heightmaps: nbt.chunk.HeightmapsNet
+    data: list[uint8]
+    block_entities: list[BlockEntity]
+    light_data: LightData
+}
+
+[MessageID=0x23]
+record UpdateLight {
+    position: Vector2vi
+    light_data: LightData
+}
+
+record DeathLocation {
+    dimension: string
+    position: int64
+}
+
+[MessageID=0x24]
+record JoinGame {
+    entity_id: uint32
+    is_hardcode: bool
+    game_mode: int8
+    previous_game_mode: int8
+    available_dimensions: list[string]
+    [ConstRef]
+    dimension_codec: nbt.repository.Registry
+    dimension_name: string
+    world_name: string
+    seed: uint64
+    max_players: uint8
+    view_distance: varint
+    simulation_distance: varint
+    reduced_debug_info: int8
+    should_show_respawn_screen: bool
+    is_debug: bool
+    is_flat: bool
+    death_location: optional[DeathLocation]
+}
+
+[MessageID=0x27]
+record EntityRelativeMove {
+    entity_id: EntityID
+    difference: Vector3s
+    is_on_ground: bool
+}
+
+[MessageID=0x28]
+record EntityMove {
+    entity_id: EntityID
+    difference: Vector3s
+    yaw: uint8
+    pitch: uint8
+    is_on_ground: bool
+}
+
+[MessageID=0x29]
+record EntityLook {
+    entity_id: EntityID
+    yaw: uint8
+    pitch: uint8
+    is_on_ground: bool
+}
+
+[MessageID=0x30]
+record PlayerAbilities {
+    flags: uint8
+    fly_speed: float32
+    field_of_view: float32
+}
+
+[MessageID=0x34]
+record DisplayDeathScreen {
+  victim_entity_id: EntityID
+  killer_entity_id: uint32
+  message: string
+}
+
+[MessageID=0x35]
+record RemovePlayerInfo {
+    player_ids: list[uuid]
+}
+
+record PlayerProperty {
+    key: string
+    value: string
+    signature: optional[string]
+}
+
+record ActionAddPlayer {
+    name: string
+    properties: list[PlayerProperty]
+}
+
+record PlayerChatSignature {
+    chat_session_id: uuid
+    public_key_expiry: uint64
+    public_key: string
+    signature: string
+}
+
+record ActionInitializeChat {
+    chat_signature: optional[PlayerChatSignature]
+}
+
+record ActionSetGameMode {
+    game_mode: varint
+}
+
+record ActionSetIsListed {
+    is_listed: bool
+}
+
+record ActionSetLatency {
+    ping: varint
+}
+
+record ActionSetDisplayName {
+    display_name: optional[string]
+}
+
+[ArgCount=1, Arg0="action_bits:uint8"]
+record PlayerInfoChange {
+    player_id: uuid
+
+    /* Condition overrides standard optional logic
+     * with `reader.read_byte()` specifying the condition
+     * for which optional will contain value.
+     */
+    [Condition="(action_bits & 1u) != 0u"]
+    add_player: optional[ActionAddPlayer]
+    [Condition="(action_bits & 2u) != 0u"]
+    initialize_chat: optional[ActionInitializeChat]
+    [Condition="(action_bits & 3u) != 0u"]
+    set_game_mode: optional[ActionSetGameMode]
+    [Condition="(action_bits & 4u) != 0u"]
+    set_is_listed: optional[ActionSetIsListed]
+    [Condition="(action_bits & 5u) != 0u"]
+    set_latency: optional[ActionSetLatency]
+    [Condition="(action_bits & 6u) != 0u"]
+    set_display_name: optional[ActionSetDisplayName]
+}
+
+[MessageID=0x36]
+record UpdatePlayerInfo {
+    /* Action bits specify with bit fields which actions
+     * should be included in the message.
+     * A list contains actions for players specified with a player id.
+     * For example if action_bits's first bit is 1
+     * For each player the message should contain add player action.
+     */
+    action_bits: uint8
+
+    /* A hack to support this crazy message structure.
+     *
+     *  Capture - instructs the generator to capture action bits from this structure
+     *  Bind    - passes captured action bits
+     */
+    [Capture="action_bits=result.action_bits", Bind="action_bits"]
+    actions: list[PlayerInfoChange]
+}
+
+[MessageID=0x38]
+record PlayerPositionLook {
+    position: Vector3
+    yaw: float32
+    pitch: float32
+    flags: uint8
+    teleport_id: varint
+    has_dismounted_vehicle: bool
+}
+
+record RecipeGui {
+    is_open: bool
+    is_filtering_craftable: bool
+}
+
+record RecipeList {
+    recipes: list[string]
+}
+
+[MessageID=0x39]
+record RecipeBook {
+  state: varint
+  crafting_table: RecipeGui 
+  furnace: RecipeGui 
+  blaster: RecipeGui 
+  smoker: RecipeGui 
+
+  recipes: list[string]
+
+  [Condition="result.state == 0"]    
+  additional_recipes: optional[RecipeList]
+}
+
+[MessageID=0x3A]
+record RemoveEntities {
+  entity_ids: list[EntityID]
+}
+
+[MessageID=0x3D]
+record Respawn {
+  dimension_codec: string
+  dimension_name: string
+  seed: uint64
+  game_mode: int8
+  previous_game_mode: int8
+  is_debug: bool
+  is_flat: bool
+  should_copy_metadata: uint8
+  death_location: DeathLocation
+}
+
+[MessageID=0x3E]
+record EntityHeadLook {
+  entity_id: EntityID
+  yaw: uint8
+}
+
+[MessageID=0x3F]
+record MultiBlockChange {
+  chunk_position: uint64
+  should_distrust_edges: bool
+  block_changes: list[varlong]
+}
+
+[MessageID=0x49]
+record ChangeHeldItem {
+  item_index: int8
+}
+
+[MessageID=0x4A]
+record UpdateChunkPosition {
+  chunk_position: Vector2vi
+}
+
+[MessageID=0x4C]
+record SetDefaultSpawnPosition {
+  position: uint64
+  angle: float32
+}
+
+
+[MessageID=0x4E]
+record SetEntityMetadata {
+  entity_id: EntityID
+
+  /* Don't write size, instead wait for 0xFF key value to terminate.
+   * TODO: Add more cases
+   */
+  [TerminateOn=0xFF]
+  data: map[uint8, variant[
+    int8,
+    varint,
+    varlong,
+    float32,
+    string,
+    Chat,
+    optional[Chat],
+    optional[Slot]
+  ]]
+}
+
+[MessageID=0x50]
+record SetEntityVelocity {
+  entity_id: EntityID
+  velocity: Vector3s
+}
+
+[MessageID=0x51]
+record SetEquipment {
+  entity_id: EntityID
+  slot_id: int8
+  slot: optional[Slot]
+}
+
+[MessageID=0x53]
+record SetHealth {
+  health: float32
+  food: varint
+  food_saturation: float32
+}
+
+[MessageID=0x60]
+record SystemChat {
+  message: string
+  type: int8
+}
+
+[MessageID=0x63]
+record PickupItem {
+  collected_entity_id: EntityID
+  collector_entity_id: EntityID
+  count: varint
+}
+
+[MessageID=0x64]
+record TeleportEntity {
+  entity_id: EntityID
+  position: Vector3
+  yaw: uint8
+  pitch: uint8
+  is_on_ground: bool
+}
+

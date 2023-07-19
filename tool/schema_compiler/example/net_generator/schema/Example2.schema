@@ -1,0 +1,9 @@
+generator = "net"
+package minecpp.example2
+
+record Properties {
+    Name: string
+    Position: float64
+    Count: int16
+    Meta: map[string, string]
+}

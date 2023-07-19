@@ -1,7 +1,7 @@
 #include "Server.h"
 #include "protocol/Protocol.h"
 #include <boost/asio.hpp>
-#include <minecpp/network/message/File.h>
+#include <minecpp/network/message/Reader.h>
 #include <spdlog/spdlog.h>
 #include <utility>
 
@@ -42,7 +42,7 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
       conn->socket().non_blocking(true);
    }
 
-   async_read_varint(conn, 0u, 0u, [this, conn](mb::u32 packet_size) {
+   conn->async_read_varint(0u, 0u, [this, conn](mb::u32 packet_size) {
       if (packet_size == 0)
          return;
 
@@ -81,10 +81,10 @@ void Server::handshake(const std::shared_ptr<Connection> &conn)
                     network::message::Writer msg_disconnect;
                     msg_disconnect.write_byte(0);
                     msg_disconnect.write_string(g_disconnect_message);
-                    conn->send_and_disconnect(conn, msg_disconnect);
+                    conn->send_and_disconnect(msg_disconnect);
                     return;
                  } else {
-                    async_read_packet(conn, *m_handlers[request_state]);
+                    conn->async_read_packet(*m_handlers[request_state]);
                  }
               });
    });

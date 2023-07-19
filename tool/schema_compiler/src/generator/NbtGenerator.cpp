@@ -1,4 +1,5 @@
 #include "NbtGenerator.h"
+#include "CppUtil.h"
 
 #include <array>
 #include <fmt/core.h>
@@ -110,8 +111,10 @@ NbtGenerator::NbtGenerator(const Document &document, const SymbolTable &table, c
                        col << if_statement(method_call(value, "has_value"),
                                            [this, &attribute, &value](statement::collector &col) {
                                               auto core_type = attribute.type().template_arg_at(0);
-                                             generator_verify(core_type.has_value(), attribute.line(), attribute.column(),
-                                                              "optional type is missing a template argument");
+                                              generator_verify(
+                                                      core_type.has_value(), attribute.line(),
+                                                      attribute.column(),
+                                                      "optional type is missing a template argument");
 
                                               col << call("w.write_header", raw(this->nbt_tag_id(*core_type)),
                                                           raw("\"{}\"", this->nbt_name(attribute)));
@@ -267,119 +270,14 @@ std::set<std::string> NbtGenerator::collect_headers() const
    return output;
 }
 
-// clang-format off
-constexpr std::array<const char *, 18> g_core_cpp_types{
-   "std::int8_t",
-   "std::int16_t",
-   "std::int32_t",
-   "std::int64_t",
-   "std::uint8_t",
-   "std::uint16_t",
-   "std::uint32_t",
-   "std::uint64_t",
-   "std::string",
-   "float",
-   "double",
-   "std::vector",
-   "std::map",
-   "std::map",
-   "std::optional",
-   "std::variant",
-   "::minecpp::nbt::CompoundContent",
-   ""
-};
-
-// clang-format on
-
-/*
- This functions looks for dots
- of 2 packages and checks their common part.
- */
-std::size_t common_package_part(std::string_view left, std::string_view right)
-{
-   std::size_t result{0};
-
-   while (result != std::string_view::npos) {
-      auto left_dot  = left.find('.', result + 1);
-      auto right_dot = right.find('.', result + 1);
-
-      if (left_dot != right_dot)
-         return result;
-      if (left.substr(0, left_dot) != right.substr(0, right_dot))
-         return result;
-
-      result = left_dot;
-   }
-
-   return left.size();
-}
-
-std::string construct_cpp_namespace(const std::size_t start_at, std::string_view package_name)
-{
-   if (package_name.size() <= start_at)
-      return {};
-
-   std::stringstream ss;
-   std::for_each(package_name.begin() + start_at, package_name.end(), [&ss](char ch) {
-      if (ch == '.') {
-         ss << "::";
-         return;
-      }
-      ss << ch;
-   });
-
-   return ss.str();
-}
-
 std::string NbtGenerator::cpp_type_of(const Type &type) const
 {
-   auto symbol = m_table.find_symbol(m_document.package_info().full_name(), type.full_name());
-   generator_verify(symbol.has_value(), type.line(), type.column(), "could not find symbol {} in package {}",
-                    type.full_name(), m_document.package_info().full_name());
-
-   if (symbol->type_class != TypeClass::Record) {
-      auto &cpp_type = g_core_cpp_types[static_cast<std::size_t>(symbol->type_class)];
-      if (type.template_args_count() == 0) {
-         return cpp_type;
-      }
-
-      std::stringstream ss;
-      ss << cpp_type << '<';
-
-      bool is_first = true;
-      for (std::size_t i{}; i < type.template_args_count(); ++i) {
-         if (is_first) {
-            is_first = false;
-         } else {
-            ss << ", ";
-         }
-
-         const auto &sub_type = type.template_arg_at(i);
-         generator_verify(symbol.has_value(), sub_type->line(), sub_type->column(),
-                          "internal error: invalid template argument count");
-
-         ss << this->cpp_type_of(*sub_type);
-      }
-      ss << '>';
-
-      return ss.str();
-   }
-
-   generator_verify(symbol.has_value(), type.line(), type.column(),
-                    "record shouldn't have template arguments");
-
-   auto package_name = m_document.package_info().full_name();
-   auto common_at    = common_package_part(symbol->package, package_name);
-
-   auto namespace_name = construct_cpp_namespace(common_at + 1, symbol->package);
-   if (namespace_name.empty())
-      return type.name();
-
-   return fmt::format("{}::{}", namespace_name, type.name());
+   CppType cpp_type(m_document, m_table, type);
+   return cpp_type.type_name();
 }
 
 // clang-format off
-constexpr std::array<const char *, 18> g_core_nbt_types{
+constexpr std::array<const char *, 24> g_core_nbt_types{
    "minecpp::nbt::TagId::Byte",
    "minecpp::nbt::TagId::Short",
    "minecpp::nbt::TagId::Int",
@@ -394,6 +292,12 @@ constexpr std::array<const char *, 18> g_core_nbt_types{
    "minecpp::nbt::TagId::List",
    "minecpp::nbt::TagId::Compound",
    "minecpp::nbt::TagId::Compound",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
    "",
    "",
    "minecpp::nbt::TagId::Compound",
@@ -438,34 +342,10 @@ std::string NbtGenerator::nbt_tag_id(const Type &type) const
    return g_core_nbt_types[static_cast<std::size_t>(symbol->type_class)];
 }
 
-std::string convert_to_snake_case(std::string_view input)
-{
-   bool previous_lower = false;
-
-   std::string output{};
-   for (auto ch : input) {
-      if (std::isupper(ch)) {
-         if (previous_lower) {
-            output.push_back('_');
-         }
-         output.push_back(static_cast<char>(std::tolower(ch)));
-         previous_lower = false;
-         continue;
-      }
-      output.push_back(ch);
-      previous_lower = true;
-   }
-
-   return output;
-}
-
 std::string NbtGenerator::cpp_name(const Attribute &attribute) const
 {
-   if (attribute.annotations().has_key("CC_Name")) {
-      return attribute.annotations().value_at("CC_Name");
-   }
-
-   return convert_to_snake_case(attribute.name());
+   CppAttribute cpp_attribute(m_document, m_table, attribute);
+   return cpp_attribute.name();
 }
 
 std::string NbtGenerator::nbt_name(const Attribute &attribute) const
@@ -496,6 +376,8 @@ raw NbtGenerator::put_deserialize_procedure(const Type &type, statement::collect
    }
 
    if (symbol->type_class == TypeClass::Record) {
+      generator_verify(symbol->generator == g_nbt_generator_name, type.line(), type.column(),
+                       "NBT records can only contain other NBT records");
       return raw("{}::deserialize_no_header(r)", this->cpp_type_of(type));
    }
 
@@ -504,8 +386,7 @@ raw NbtGenerator::put_deserialize_procedure(const Type &type, statement::collect
       if_switch_statement if_switch;
       for (std::size_t arg_index{0}; arg_index < type.template_args_count(); ++arg_index) {
          auto subtype = type.template_arg_at(arg_index);
-         generator_verify(subtype.has_value(), type.line(), type.column(),
-                          "internal error");
+         generator_verify(subtype.has_value(), type.line(), type.column(), "internal error");
          if_switch.add_case(
                  raw("tagid == {}", this->nbt_tag_id(*subtype)), [this, &subtype](statement::collector &col) {
                     col << assign("result_variant", this->put_deserialize_procedure(*subtype, col, true));
@@ -576,8 +457,7 @@ raw NbtGenerator::put_deserialize_procedure(const Type &type, statement::collect
       return raw("r.read_compound_content()");
    }
 
-   generator_verify(false, type.line(), type.column(),
-                    "unsupported type for NBT generation");
+   generator_verify(false, type.line(), type.column(), "unsupported type for NBT generation");
    return raw{""};
 }
 
@@ -621,8 +501,9 @@ std::optional<std::string> NbtGenerator::static_deserializer_of(const Type &type
          return std::nullopt;
 
       auto sub_symbol = m_table.find_symbol(m_document.package_info().full_name(), subtype->full_name());
-      generator_verify(sub_symbol.has_value(), subtype->line(), subtype->column(), "could not find symbol {} in package {}",
-                       subtype->full_name(), m_document.package_info().full_name());
+      generator_verify(sub_symbol.has_value(), subtype->line(), subtype->column(),
+                       "could not find symbol {} in package {}", subtype->full_name(),
+                       m_document.package_info().full_name());
 
       switch (sub_symbol->type_class) {
       case TypeClass::UInt8: return "r.read_byte_vector()";
@@ -652,11 +533,13 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
    case TypeClass::Float64: col << call("w.write_double_content", value); break;
    case TypeClass::List: {
       auto subtype = type.template_arg_at(0);
-      generator_verify(subtype.has_value(), type.line(), type.column(), "list type is missing a template argument");
+      generator_verify(subtype.has_value(), type.line(), type.column(),
+                       "list type is missing a template argument");
 
       auto sub_symbol = m_table.find_symbol(m_document.package_info().full_name(), subtype->full_name());
-      generator_verify(sub_symbol.has_value(), subtype->line(), subtype->column(), "could not find symbol {} in package {}",
-                       subtype->full_name(), m_document.package_info().full_name());
+      generator_verify(sub_symbol.has_value(), subtype->line(), subtype->column(),
+                       "could not find symbol {} in package {}", subtype->full_name(),
+                       m_document.package_info().full_name());
 
       switch (sub_symbol->type_class) {
       case TypeClass::UInt8: col << call("w.write_bytes_content", value); break;
@@ -677,11 +560,14 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
    }
    case TypeClass::Map: {
       auto key_type = type.template_arg_at(0);
-      generator_verify(key_type.has_value(), type.line(), type.column(), "map type is missing first template argument");
-      generator_verify(key_type->full_name() == "string", type.line(), type.column(), "map key type needs to be a string");
+      generator_verify(key_type.has_value(), type.line(), type.column(),
+                       "map type is missing first template argument");
+      generator_verify(key_type->full_name() == "string", type.line(), type.column(),
+                       "map key type needs to be a string");
 
       auto value_type = type.template_arg_at(1);
-      generator_verify(value_type.has_value(), type.line(), type.column(), "map type is missing second template argument");
+      generator_verify(value_type.has_value(), type.line(), type.column(),
+                       "map type is missing second template argument");
 
       std::string key_value_name = fmt::format("&[key_{}, value_{}]", depth, depth);
       col << ranged_for_statement(
@@ -693,7 +579,12 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
 
       break;
    }
-   case TypeClass::Record: col << method_call(value, "serialize_no_header", raw("w")); break;
+   case TypeClass::Record: {
+      generator_verify(symbol->generator == g_nbt_generator_name, type.line(), type.column(),
+                       "NBT records can only contain other NBT records");
+      col << method_call(value, "serialize_no_header", raw("w"));
+      break;
+   }
    case TypeClass::Variant: {
       for (std::size_t arg_index{0}; arg_index < type.template_args_count(); ++arg_index) {
          auto subtype = type.template_arg_at(arg_index);
@@ -712,8 +603,8 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
       col << call("minecpp::nbt::serialize_compound_content", raw("w"), value);
       break;
    default:
-      generator_verify(false, type.line(), type.column(), "type {} is unsupported for NBT generation", type.full_name());
-
+      generator_verify(false, type.line(), type.column(), "type {} is unsupported for NBT generation",
+                       type.full_name());
    }
 }
 }// namespace minecpp::tool::schema_compiler::generator

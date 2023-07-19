@@ -1,3 +1,4 @@
+generator = "nbt"
 package minecpp.nbt.item
 
 [NBT]
@@ -7,3 +8,13 @@ record Item {
    MaxItemStack: int32
 }
 
+[NBT]
+record StoredEnchantment {
+  id: string
+  lvl: int16
+}
+
+[NBT]
+record SlotData {
+  StoredEnchantments: optional[list[StoredEnchantment]]
+}

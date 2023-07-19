@@ -1,57 +1,58 @@
 #include "StatusHandler.h"
 #include "../Connection.h"
-#include <minecpp/format/Format.h>
+
+#include "minecpp/format/Format.h"
+#include "minecpp/net/status/Clientbound.schema.h"
+#include "minecpp/net/status/Serverbound.schema.h"
+
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::front::protocol {
 
-StatusHandler::StatusHandler() {}
+StatusHandler::StatusHandler() = default;
 
-extern const char *favicon;
+extern const char *g_favicon;
 
-void StatusHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+void StatusHandler::handle(Connection &conn, minecpp::network::message::Reader &r)
 {
-   uint8_t op = r.read_byte();
-   switch (op) {
-   case 0: handle_info(conn); break;
-   case 1: handle_ping(conn, r); break;
-   default: spdlog::debug("[status protocol] unknown operation code {}", (int) op);
-   }
+   net::status::sb::visit_message(*this, conn, r);
 }
 
-void StatusHandler::handle_info(const std::shared_ptr<Connection> &conn)
+void StatusHandler::on_status(Connection &connection,
+                              const net::status::sb::Status & /*status*/)
 {
    using minecpp::format::Color;
 
-   minecpp::network::message::Writer w;
-   w.write_byte(0);
-
    format::Builder builder;
-   builder.bold(Color::Aqua, "MineCPP Server\n").text("This server implementation is under development");
+   builder.bold(Color::Gold, "MineCPP Server\n").text("This server implementation is under development");
 
    std::stringstream ss;
    ss << R"({"description":)" << builder.to_string() << R"(,)";
-   ss << R"("favicon":"data:image/png;base64,)" << favicon << R"(",)";
+   ss << R"("favicon":"data:image/png;base64,)" << g_favicon << R"(",)";
    ss << R"("players":{"max":10000,"online":6142},)";
    ss << R"("version":{"name": "1.19.3", "protocol": 761}})";
 
-   w.write_string(ss.str());
-   conn->send_and_read(conn, w, *this);
+   net::status::cb::Status status;
+   status.status = ss.str();
+   connection.send_message_then_read(status, *this);
 }
 
-void StatusHandler::handle_ping(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+void StatusHandler::on_ping(Connection &connection, const net::status::sb::Ping &ping)
 {
-   auto player_time = r.read_big_endian<uint64_t>();
-
-   minecpp::network::message::Writer w;
-   w.write_byte(1);
-   w.write_big_endian(player_time);
-   conn->send_and_disconnect(conn, w);
+   net::status::cb::Ping response;
+   response.payload = ping.payload;
+   connection.send_message_then_disconnect(response);
 }
 
 void StatusHandler::handle_disconnect(Connection & /*conn*/) {}
 
-const char *favicon = R"(
+void StatusHandler::on_failure(Connection &/*connection*/,
+                               const std::uint8_t message_id)
+{
+   spdlog::debug("[status protocol] unknown operation code {}", static_cast<int>(message_id));
+}
+
+const char *g_favicon = R"(
 iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAABhGlDQ1BJQ0MgcHJvZmlsZQAAKJF9
 kT1Iw0AcxV9TpaIVQTuIOGSoTnZRkeJUq1CECqFWaNXB5NIvaNKQpLg4Cq4FBz8Wqw4uzro6uAqC
 4AeIq4uToouU+L+k0CLWg+N+vLv3uHsHCPUy06yuGKDptplKxMVMdlUMvMKPQfQhilmZWcacJCXR

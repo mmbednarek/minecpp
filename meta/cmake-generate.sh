@@ -1,22 +1,34 @@
 #!/usr/bin/env bash
 
-libraries=$(jq -r '.libraries[]' <Build.json)
+tmp_file=$(mktemp ./cmakegen_lock.XXXXX)
+lock_file="./cmakegen-lock"
 
-for lib in $libraries; do
-  echo "Configuring library $lib"
-  ./meta/cmake-generate-target.sh $lib "library/$lib" "library"
-done
+trap "rm $tmp_file" EXIT
 
-services=$(jq -r '.services[]' <Build.json)
+if ln $tmp_file $lock_file; then
+  trap "rm $tmp_file $lock_file" EXIT
 
-for serv in $services; do
-  echo "Configuring service $serv"
-  ./meta/cmake-generate-target.sh $serv "service/$serv" "executable"
-done
+  libraries=$(jq -r '.libraries[]' <Build.json)
 
-tools=$(jq -r '.tools[]' <Build.json)
+  for lib in $libraries; do
+    echo "Configuring library $lib"
+    ./meta/cmake-generate-target.sh $lib "library/$lib" "library"
+  done
 
-for tool in $tools; do
-  echo "Configuring tool $tool"
-  ./meta/cmake-generate-target.sh $tool "tool/$tool" "executable"
-done
+  services=$(jq -r '.services[]' <Build.json)
+
+  for serv in $services; do
+    echo "Configuring service $serv"
+    ./meta/cmake-generate-target.sh $serv "service/$serv" "executable"
+  done
+
+  tools=$(jq -r '.tools[]' <Build.json)
+
+  for tool in $tools; do
+    echo "Configuring tool $tool"
+    ./meta/cmake-generate-target.sh $tool "tool/$tool" "executable"
+  done
+else
+  echo "cmake generator is locked">/dev/stderr
+  exit 1
+fi

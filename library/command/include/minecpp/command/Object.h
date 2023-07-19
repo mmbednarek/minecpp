@@ -102,9 +102,9 @@ struct UUIDObject final : public Object
 {
    constexpr static ObjectType object_type = ObjectType::UUID;
 
-   util::uuid value;
+   util::Uuid value;
 
-   explicit UUIDObject(util::uuid value) :
+   explicit UUIDObject(util::Uuid value) :
        value(value)
    {
    }
@@ -121,7 +121,7 @@ struct UUIDObject final : public Object
 };
 
 template<>
-struct WrapperFinder<util::uuid>
+struct WrapperFinder<util::Uuid>
 {
    using Type = UUIDObject;
 };

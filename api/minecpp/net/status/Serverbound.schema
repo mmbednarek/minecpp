@@ -1,0 +1,11 @@
+generator = "net"
+package minecpp.net.status.sb
+
+[MessageID=0x00]
+record Status {
+}
+
+[MessageID=0x01]
+record Ping {
+  payload: uint64
+}

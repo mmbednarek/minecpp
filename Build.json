@@ -1,7 +1,7 @@
 {
   "libraries": [
-    "api/minecpp/nbt",
     "api/minecpp/proto",
+    "api/minecpp/schema",
     "chat",
     "crypto",
     "controller",

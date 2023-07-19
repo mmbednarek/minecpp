@@ -3,7 +3,30 @@
 target_sources(minecpp_schema_compiler
     # Source files
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/CppUtil.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/CppUtil.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/INetworkProperty.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/NbtGenerator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/NbtGenerator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkBasicProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkBasicProperty.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkDeserializeContext.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkDeserializeContext.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkGenerator.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkGenerator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkListProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkListProperty.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkMapProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkMapProperty.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkOptionalProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkOptionalProperty.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkPropertyStorage.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkPropertyStorage.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkRecordProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkRecordProperty.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkSerializeContext.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkSerializeContext.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkVariantProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkVariantProperty.h
 )
 

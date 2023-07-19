@@ -36,8 +36,6 @@ class EventHandler : public engine::IVisitor
                                         const event::RecipientList &recipient_list);
    void handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
                             const event::RecipientList &recipient_list);
-   void handle_transfer_player(const clientbound_v1::TransferPlayer &msg,
-                               const event::RecipientList &recipient_list);
    void handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
                             const event::RecipientList &recipient_list);
    void handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
@@ -80,7 +78,7 @@ class EventHandler : public engine::IVisitor
       for (auto &[_, conn] : m_server) {
          if (conn.get() == nullptr)
             continue;
-         send(conn, msg);
+         conn->send_message(msg);
       }
    }
 
@@ -94,7 +92,7 @@ class EventHandler : public engine::IVisitor
             continue;
          }
 
-         send(conn, msg);
+         conn->send_message(msg);
       }
    }
 
@@ -106,7 +104,7 @@ class EventHandler : public engine::IVisitor
             continue;
          if (conn->uuid() == excluded)
             continue;
-         send(conn, msg);
+         conn->send_message(msg);
       }
    }
 

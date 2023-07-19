@@ -5,6 +5,8 @@
 #include <minecpp/util/Time.h>
 #include <minecpp/world/BlockState.h>
 #include <minecpp/world/Chunk.h>
+
+#include <mutex>
 #include <stdexcept>
 #include <vector>
 

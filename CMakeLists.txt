@@ -40,18 +40,18 @@ FetchContent_MakeAvailable(yaml-cpp)
 
 # Disable warnings for yaml-cpp
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  target_compile_options(yaml-cpp PUBLIC -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
-  target_compile_options(yaml-cpp-read PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
-  target_compile_options(yaml-cpp-parse PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
-  target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+    target_compile_options(yaml-cpp PUBLIC -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+    target_compile_options(yaml-cpp-read PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+    target_compile_options(yaml-cpp-parse PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
+    target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-implicit-int-conversion -Wno-sign-conversion -Wno-shadow -Wno-unused-parameter)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  target_compile_options(yaml-cpp PUBLIC -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
-  target_compile_options(yaml-cpp-read PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
-  target_compile_options(yaml-cpp-parse PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
-  target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
-else()
-  message(FATAL_ERROR "Unsupported compiler")
-endif()
+    target_compile_options(yaml-cpp PUBLIC -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+    target_compile_options(yaml-cpp-read PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+    target_compile_options(yaml-cpp-parse PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+    target_compile_options(yaml-cpp-sandbox PRIVATE -Wno-conversion -Wno-shadow -Wno-unused-parameter -Wno-restrict)
+else ()
+    message(FATAL_ERROR "Unsupported compiler")
+endif ()
 
 FetchContent_Declare(
         libmb
@@ -63,7 +63,7 @@ FetchContent_MakeAvailable(libmb)
 FetchContent_Declare(
         libmb_codegen
         GIT_REPOSITORY https://github.com/mmbednarek/codegen
-        GIT_TAG codegen-0.0.35
+        GIT_TAG codegen-0.0.39
 )
 FetchContent_MakeAvailable(libmb_codegen)
 

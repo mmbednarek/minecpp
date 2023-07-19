@@ -1,0 +1,150 @@
+generator = "net"
+package minecpp.net.play.sb
+
+[MessageID=0x00]
+record ConfirmTeleport {
+  teleport_id: varint
+}
+
+[MessageID=0x04]
+record ChatCommand {
+  command: string
+  timestamp: uint64
+  salt: uint64
+  argument_signatures: map[string, string]
+  is_preview: bool
+}
+
+[MessageID=0x05]
+record ChatMessage {
+  message: string
+  timestamp: uint64
+  salt: uint64
+  salt_data: string
+  is_preview: bool
+}
+
+[MessageID=0x06]
+record ClientCommand {
+  action_id: varint
+}
+
+[MessageID=0x07]
+record ClientSettings {
+  locale: string
+  view_distance: uint8
+  chat_mode: varint
+  are_colors_enabled: bool
+  displayed_skin_parts: uint8
+  main_hand: int8
+  is_text_filtering_enabled: bool
+  are_players_listed: bool
+}
+
+[MessageID=0x0A]
+record ClickWindow {
+  window_id: uint8
+  state_id: varint
+  clicked_slot: int16
+  button: uint8
+  mode: varint
+  slots: map[uint16, optional[Slot]]
+  carried_item: optional[Slot]
+}
+
+[MessageID=0x0B]
+record CloseWindow {
+  window_id: uint8
+}
+
+[MessageID=0x0C]
+record PluginMessage {
+  channel: string
+  data: string
+}
+
+record InteractTarget {
+  position: Vector3f
+  hand: varint
+}
+
+[MessageID=0x0F]
+record Interact {
+  entity_id: varint
+  type: varint
+  [Condition="result.type == 2"]
+  target: optional[InteractTarget]
+  is_sneaking: bool
+}
+
+[MessageID=0x11]
+record KeepAlive {
+  time:uint64
+}
+
+[MessageID=0x13]
+record SetPlayerPosition {
+  position: Vector3
+  is_on_ground: bool
+}
+
+[MessageID=0x14]
+record SetPlayerPositionAndRotation {
+  position: Vector3
+  yaw: float32
+  pitch: float32
+  is_on_ground: bool
+}
+
+[MessageID=0x15]
+record SetPlayerRotation {
+  yaw: float32
+  pitch: float32
+  is_on_ground: bool
+}
+
+[MessageID=0x16]
+record SetIsPlayerOnGround {
+  is_on_ground: bool
+}
+
+[MessageID=0x1C]
+record PlayerDigging {
+  state: varint
+  position: uint64
+  facing: int8
+  sequence_id: varint
+}
+
+[MessageID=0x1D]
+record PlayerCommand {
+  entity_id: varint
+  action_id: varint
+  jump_boost: varint
+}
+
+[MessageID=0x28]
+record SetHeldItem {
+  slot_id: uint16
+}
+
+[MessageID=0x2F]
+record AnimateHand {
+  hand: varint
+}
+
+[MessageID=0x31]
+record UseItemOn {
+  hand: varint
+  position: uint64
+  facing: varint
+  cursor_position: Vector3f
+  is_inside_block: bool
+  sequence_id: varint
+}
+
+[MessageID=0x32]
+record UseItem {
+  hand: varint
+  sequence_id: varint
+}

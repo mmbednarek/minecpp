@@ -1,4 +1,5 @@
 #include "generator/NbtGenerator.h"
+#include "generator/NetworkGenerator.h"
 #include "IGenerator.h"
 #include "Lexer.h"
 #include "Parser.h"
@@ -17,6 +18,8 @@ using minecpp::tool::schema_compiler::GeneratorError;
 using minecpp::tool::schema_compiler::Symbol;
 using minecpp::tool::schema_compiler::TypeClass;
 using minecpp::tool::schema_compiler::generator::NbtGenerator;
+using minecpp::tool::schema_compiler::generator::NbtGeneratorFactory;
+using minecpp::tool::schema_compiler::generator::NetworkGeneratorFactory;
 
 void register_core_types(minecpp::tool::schema_compiler::SymbolTable &table);
 void list_schema_files(const Path &path, std::vector<Path> &out);
@@ -32,7 +35,6 @@ int main(int argc, char **argv)
    desc.add_options()
       ("help", "print help information")
       ("version,v", "print version")
-      ("generator,g", "specify generator")
       ("input-path,i", opts::value<std::string>(), "specify schema input path")
       ("include-path,I", opts::value<std::string>(), "specify header include path")
       ("source-output,s", opts::value<std::string>(), "specify source output path")
@@ -91,17 +93,29 @@ int main(int argc, char **argv)
       auto tokens = minecpp::tool::schema_compiler::lex_input(stream);
       minecpp::tool::schema_compiler::Parser parser(tokens);
 
-      auto document = parser.parse_document();
-      if (document.has_failed()) {
+      try {
+         auto document = parser.parse_document();
+
+         table.read_document(file.string(), document);
+         documents.emplace_back(file.string(), std::move(document));
+      } catch (minecpp::lexer::ParserError &parser_err) {
          std::cerr << "schema_compiler: failed to parse document " << file.string() << ": \n\t";
-         std::cerr << "[" << document.err().line << ":" << document.err().column << "] " << document.err().to_string() << '\n';
-         return 1;
+         std::cerr << parser_err.what() << '\n';
+         return EXIT_FAILURE;
+      } catch (std::runtime_error &runtime_error) {
+         std::cerr << "schema_compiler: failure analysing document " << file.string() << ": \n\t";
+         std::cerr << runtime_error.what() << '\n';
+         return EXIT_FAILURE;
       }
-
-      table.read_document(file.string(), *document);
-
-      documents.emplace_back(file.string(), std::move(*document));
    }
+
+   for (const auto &[filename, document] : documents) {
+      table.read_document_for_aliases(filename, document);
+   }
+
+   std::map<std::string, std::unique_ptr<minecpp::tool::schema_compiler::IGeneratorFactory>> generators;
+   generators.emplace("nbt", std::make_unique<NbtGeneratorFactory>());
+   generators.emplace("net", std::make_unique<NetworkGeneratorFactory>());
 
    for (const auto &[filename, document] : documents) {
       minecpp::tool::schema_compiler::PathInfo path_info{
@@ -109,24 +123,31 @@ int main(int argc, char **argv)
               .root_source_target_dir{values["source-output"].as<std::string>()},
               .root_header_target_dir{values["header-output"].as<std::string>()},
               .origin_document_path{filename},
-              .root_include_path{values["include-path"].as<std::string>()}};
+              .root_include_path{values["include-path"].as<std::string>()},
+      };
 
       try {
-         minecpp::tool::schema_compiler::generator::NbtGenerator generator(document, table, path_info);
+         auto generator_name{document.generator()};
+         if (not generators.contains(generator_name)) {
+            std::cerr << "schema_generator: error generating code for " << filename
+                      << ", no such generator \"" << generator_name << "\"\n";
+            return 1;
+         }
+         auto generator = generators[generator_name]->create_generator(document, table, path_info);
 
          {
-            std::cerr << "schema_compiler: writing header to " << generator.target_header_path() << '\n';
-            ensure_directory(generator.target_header_path());
-            std::ofstream header_output{generator.target_header_path()};
+            std::cerr << "schema_compiler: writing header to " << generator->target_header_path() << '\n';
+            ensure_directory(generator->target_header_path());
+            std::ofstream header_output{generator->target_header_path()};
             assert(header_output.is_open());
-            generator.generate_header(header_output);
+            generator->generate_header(header_output);
          }
          {
-            std::cerr << "schema_compiler: writing source to " << generator.target_source_path() << '\n';
-            ensure_directory(generator.target_source_path());
-            std::ofstream source_output{generator.target_source_path()};
+            std::cerr << "schema_compiler: writing source to " << generator->target_source_path() << '\n';
+            ensure_directory(generator->target_source_path());
+            std::ofstream source_output{generator->target_source_path()};
             assert(source_output.is_open());
-            generator.generate_source(source_output);
+            generator->generate_source(source_output);
          }
       } catch (GeneratorError &err) {
          std::cerr << "schema_compiler: failed to compile source " << filename << ":\n\t" << err.what()
@@ -199,6 +220,30 @@ void register_core_types(minecpp::tool::schema_compiler::SymbolTable &table)
    table.register_symbol(Symbol{
            .type_class = TypeClass::Variant,
            .name{"variant"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Varint,
+           .name{"varint"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Varlong,
+           .name{"varlong"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::UnsignedVarint,
+           .name{"uvarint"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::UnsignedVarlong,
+           .name{"uvarlong"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Bool,
+           .name{"bool"},
+   });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Uuid,
+           .name{"uuid"},
    });
    table.register_symbol(Symbol{.type_class = TypeClass::NbtCompoundContent,
                                 .name{"CompoundContent"},

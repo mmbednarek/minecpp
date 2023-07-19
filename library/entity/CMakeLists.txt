@@ -17,7 +17,7 @@ target_link_libraries(minecpp_entity
         LINK_PUBLIC
         EnTT
         minecpp_api_proto
-        minecpp_api_nbt
+        minecpp_api_schema
         minecpp_game
         minecpp_random
         minecpp_repository

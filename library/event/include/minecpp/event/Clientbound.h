@@ -22,7 +22,6 @@ concept ClientboundVisitor =
            t.handle_animate_entity(clientbound_v1::AnimateEntity(), RecipientList{});
            t.handle_acknowledge_block_change(clientbound_v1::AcknowledgeBlockChange(), RecipientList{});
            t.handle_load_terrain(clientbound_v1::LoadTerrain(), RecipientList{});
-           t.handle_transfer_player(clientbound_v1::TransferPlayer(), RecipientList{});
            t.handle_unload_chunk(clientbound_v1::UnloadChunk(), RecipientList{});
            t.handle_player_list(clientbound_v1::PlayerList(), RecipientList{});
            t.handle_entity_list(clientbound_v1::EntityList(), RecipientList{});
@@ -111,7 +110,6 @@ void visit_clientbound(const clientbound_v1::Event &event, T &visitor)
    MINECPP_EVENT_HANDLE_CLIENTBOUND(AnimateEntity, handle_animate_entity);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(AcknowledgeBlockChange, handle_acknowledge_block_change);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(LoadTerrain, handle_load_terrain);
-   MINECPP_EVENT_HANDLE_CLIENTBOUND(TransferPlayer, handle_transfer_player);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(UnloadChunk, handle_unload_chunk);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(PlayerList, handle_player_list);
    MINECPP_EVENT_HANDLE_CLIENTBOUND(EntityList, handle_entity_list);

@@ -1,3 +1,4 @@
+generator = "nbt"
 package minecpp.nbt.chunk
 
 [NBT]
@@ -73,6 +74,14 @@ record Heightmaps {
    WORLD_SURFACE: list[int64]
    [CC_Name="world_surface_wg"]
    WORLD_SURFACE_WG: list[int64]
+}
+
+[NBT]
+record HeightmapsNet {
+   [CC_Name="motion_blocking"]
+   MOTION_BLOCKING: list[int64]
+   [CC_Name="world_surface"]
+   WORLD_SURFACE: list[int64]
 }
 
 [NBT]

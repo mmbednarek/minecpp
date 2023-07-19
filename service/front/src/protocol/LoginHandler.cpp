@@ -1,9 +1,15 @@
 #include "LoginHandler.h"
+
+#include "minecpp/crypto/AESKey.h"
+#include "minecpp/net/login/Clientbound.schema.h"
+#include "minecpp/net/login/Serverbound.schema.h"
+
 #include <boost/uuid/uuid_io.hpp>
-#include <minecpp/crypto/AESKey.h>
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::front::protocol {
+
+constexpr int g_compression_threshold = 256;
 
 LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler, crypto::PrivateKey *private_key) :
     m_private_key(private_key),
@@ -12,118 +18,103 @@ LoginHandler::LoginHandler(Service &service, PlayHandler &play_handler, crypto::
 {
 }
 
-void LoginHandler::handle(const std::shared_ptr<Connection> &conn, minecpp::network::message::Reader &r)
+void LoginHandler::handle(Connection &connection, minecpp::network::message::Reader &r)
 {
-   uint8_t op = r.read_byte();
-   switch (op) {
-   case 0: handle_login_start(conn, r); break;
-   case 1: handle_encryption_response(conn, r); break;
-   default: spdlog::debug("[login protocol] unknown operation code {}", (int) op);
-   }
+   net::login::sb::visit_message(*this, connection, r);
 }
 
-constexpr int g_compression_threshold = 256;
-
-void LoginHandler::handle_login_start(const std::shared_ptr<Connection> &conn,
-                                      minecpp::network::message::Reader &r)
+void LoginHandler::accept_connection(Connection &connection)
 {
-   spdlog::info("login start");
-
-   conn->user_name = r.read_string();
-
-   if (m_private_key == nullptr) {
-      accept_connection(conn);
+   auto response = Service::login_player(connection.user_name);
+   if (not response.accepted) {
+      reject(connection, response.refusal_reason);
       return;
    }
 
-   this->write_encryption_request(conn);
-   async_read_packet(conn, *this);
+   net::login::cb::SetCompression set_compression;
+   set_compression.threshold = g_compression_threshold;
+   connection.send_message(set_compression);
+   connection.set_compression_threshold(g_compression_threshold);
+
+   net::login::cb::LoginSuccess login_success;
+   login_success.player_id = response.id;
+   login_success.username  = response.user_name;
+   connection.send_message(login_success);
+
+   m_service.init_player(connection, response.id, response.user_name);
+   connection.async_read_packet(m_play_handler);
 }
 
-void LoginHandler::reject(const std::shared_ptr<Connection> &conn, std::string_view message)
+void LoginHandler::on_login_start(Connection &connection, const net::login::sb::LoginStart &login_start)
 {
-   minecpp::network::message::Writer w;
+   spdlog::info("login-handler: login request from user {}", login_start.name);
+   connection.user_name = login_start.name;
 
-   w.write_byte(0);
+   if (m_private_key == nullptr) {
+      accept_connection(connection);
+      return;
+   }
+
+   auto public_key = m_private_key->public_key();
+   if (public_key.has_failed()) {
+      spdlog::warn("login-handler: no valid public key");
+      accept_connection(connection);
+      return;
+   }
+
+   net::login::cb::EncryptionRequest request;
+   request.server_id = "minecpp";
+   request.public_key.resize(public_key->size());
+   std::copy(public_key->data(), public_key->data() + public_key->size(), request.public_key.begin());
+   request.token = {'A', 'A', 'B', 'B'};
+   connection.send_message(request);
+
+   connection.async_read_packet(*this);
+}
+
+void LoginHandler::on_encryption_response(Connection &connection,
+                                          net::login::sb::EncryptionResponse &encryption_response)
+{
+   spdlog::debug("encryption enabled");
+
+   container::BufferView shared_secret{encryption_response.shared_secret.data(),
+                                       encryption_response.shared_secret.size()};
+   auto encryption_key = m_private_key->decrypt_message(shared_secret);
+   if (not encryption_key.ok()) {
+      LoginHandler::reject(connection, "Failed to establish encryption");
+      return;
+   }
+
+   connection.set_encryption(encryption_key->as_view());
+   accept_connection(connection);
+}
+
+void LoginHandler::on_plugin_response(Connection & /*connection*/,
+                                      const net::login::sb::PluginResponse &plugin_response)
+{
+   spdlog::info("login-handler: received plugin response message: {}", plugin_response.message_id);
+}
+
+void LoginHandler::on_failure(Connection & /*connection*/, std::uint8_t message_id)
+{
+   spdlog::warn("login-handler: unknown operation code {}", static_cast<int>(message_id));
+}
+
+void LoginHandler::handle_disconnect(Connection & /*connection*/)
+{
+   spdlog::info("login-handler: player disconnected while logging in");
+}
+
+void LoginHandler::reject(Connection &connection, std::string_view message)
+{
    std::stringstream ss;
    ss << R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": ")";
    ss << message;
    ss << R"("}], "text": ""})";
-   w.write_string(ss.str());
 
-   conn->send_and_disconnect(conn, w);
-}
-
-void LoginHandler::handle_disconnect(Connection & /*conn*/) {}
-
-bool LoginHandler::write_encryption_request(const std::shared_ptr<Connection> &conn)
-{
-   auto public_key = m_private_key->public_key();
-   if (public_key.has_failed()) {
-      return false;
-   }
-
-   minecpp::network::message::Writer writer;
-   writer.write_byte(0x01);
-   writer.write_string("");// server ID
-   writer.write_varint(static_cast<std::uint32_t>(public_key->size()));
-   writer.write_bytes(reinterpret_cast<const char *>(public_key->data()), public_key->size());
-   writer.write_varint(4);
-   writer.write_bytes("AAAA", 4);
-   conn->send(conn, writer);
-
-   return true;
-}
-
-void LoginHandler::handle_encryption_response(const std::shared_ptr<Connection> &conn, Reader &r)
-{
-   spdlog::debug("encryption enabled");
-
-   auto secret = r.read_buffer();
-
-   bool has_verify_token = r.read_byte();
-   if (has_verify_token) {
-      [[maybe_unused]] auto token   = r.read_buffer();
-      [[maybe_unused]] auto salt    = r.read_long();
-      [[maybe_unused]] auto message = r.read_buffer();
-      // OK idk
-   }
-
-   auto encryption_key = m_private_key->decrypt_message(secret.as_view());
-   if (not encryption_key.ok()) {
-      LoginHandler::reject(conn, "Failed to establish encryption");
-      return;
-   }
-
-   conn->set_encryption(encryption_key->as_view());
-
-   accept_connection(conn);
-}
-
-void LoginHandler::accept_connection(const std::shared_ptr<Connection> &conn)
-{
-   auto response = m_service.login_player(conn->user_name);
-   if (!response.accepted) {
-      reject(conn, response.refusal_reason);
-      return;
-   }
-
-   // set compression
-   network::message::Writer w_comp;
-   w_comp.write_byte(3);
-   w_comp.write_varint(g_compression_threshold);
-   conn->send(conn, w_comp);
-   conn->set_compression_threshold(g_compression_threshold);
-
-   network::message::Writer w;
-   w.write_byte(0x02);
-   w.write_uuid(response.id);
-   w.write_string(response.user_name);
-   w.write_varint(0);
-   conn->send(conn, w);
-
-   m_service.init_player(conn, response.id, response.user_name);
-   async_read_packet(conn, m_play_handler);
+   net::login::cb::Disconnect disconnect_msg;
+   disconnect_msg.reason = ss.str();
+   connection.send_message_then_disconnect(disconnect_msg);
 }
 
 }// namespace minecpp::service::front::protocol

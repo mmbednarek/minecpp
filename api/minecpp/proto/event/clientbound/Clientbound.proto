@@ -146,7 +146,8 @@ message DenyPlayer {
 }
 
 message SetInventorySlot {
-  player.Slot slot = 1;
+  uint32 slot_id = 1;
+  common.Slot slot = 2;
 }
 
 message SectionBlockLight {
@@ -175,7 +176,7 @@ message SetCenterChunk {
 message SetEntityEquipment {
   uint32 entity_id = 1;
   entity.EquipmentSlot equipment_slot = 2;
-  player.Slot item = 3;
+  common.Slot item = 3;
 }
 
 message SetHealth {

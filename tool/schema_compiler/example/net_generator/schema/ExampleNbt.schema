@@ -1,0 +1,9 @@
+generator = "nbt"
+package minecpp.nbt
+
+record Properties {
+    Name: string
+    Position: float64
+    Count: int16
+    Meta: map[string, string]
+}

@@ -1,0 +1,21 @@
+generator = "net"
+package minecpp.net.login.sb
+
+[MessageID=0x00]
+record LoginStart {
+  name: string
+  player_id: optional[uuid]
+}
+
+[MessageID=0x01]
+record EncryptionResponse {
+  shared_secret: list[uint8]
+  token: list[uint8]
+}
+
+[MessageID=0x02]
+record PluginResponse {
+  message_id: varint
+  is_successful: int8
+  data: list[uint8]
+}

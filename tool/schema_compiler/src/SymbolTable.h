@@ -27,6 +27,12 @@ enum class TypeClass
    Record,
    Optional,
    Variant,
+   Varint,
+   Varlong,
+   UnsignedVarint,
+   UnsignedVarlong,
+   Bool,
+   Uuid,
    NbtCompoundContent,
    Unknown
 };
@@ -37,12 +43,15 @@ struct Symbol
    std::string name;
    std::string package;
    std::string source_file;
+   std::string generator;
+   AnnotationList annotations;
 };
 
 class SymbolTable
 {
  public:
-   void read_document(std::string_view source_file, Document &document);
+   void read_document(std::string_view source_file, const Document &document);
+   void read_document_for_aliases(std::string_view source_file, const Document &document);
    [[nodiscard]] std::optional<Symbol> find_symbol(std::string_view package, std::string_view name) const;
    void register_symbol(const Symbol &symbol);
 

@@ -24,3 +24,5 @@ target_link_libraries(minecpp_schema_compiler
 )
 
 add_subdirectory("example/nbt_generator")
+
+add_subdirectory("example/net_generator")

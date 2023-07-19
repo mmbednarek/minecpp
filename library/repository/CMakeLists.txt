@@ -17,7 +17,7 @@ target_link_libraries(minecpp_repository
         LINK_PUBLIC
         libmb
         minecpp_game
-        minecpp_api_nbt
+        minecpp_api_schema
 )
 
 add_subdirectory("test")

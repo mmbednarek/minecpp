@@ -4,199 +4,274 @@
 #include <minecpp/proto/player/Player.pb.h>
 
 #include <algorithm>
-
-#include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/extension_set.h>
-#include <google/protobuf/wire_format_lite.h>
-#include <google/protobuf/descriptor.h>
-#include <google/protobuf/generated_message_reflection.h>
-#include <google/protobuf/reflection_ops.h>
-#include <google/protobuf/wire_format.h>
+#include "google/protobuf/io/coded_stream.h"
+#include "google/protobuf/extension_set.h"
+#include "google/protobuf/wire_format_lite.h"
+#include "google/protobuf/descriptor.h"
+#include "google/protobuf/generated_message_reflection.h"
+#include "google/protobuf/reflection_ops.h"
+#include "google/protobuf/wire_format.h"
 // @@protoc_insertion_point(includes)
-#include <google/protobuf/port_def.inc>
 
+// Must be included last.
+#include "google/protobuf/port_def.inc"
 PROTOBUF_PRAGMA_INIT_SEG
-
 namespace _pb = ::PROTOBUF_NAMESPACE_ID;
-namespace _pbi = _pb::internal;
-
+namespace _pbi = ::PROTOBUF_NAMESPACE_ID::internal;
 namespace minecpp {
 namespace proto {
 namespace player {
+template <typename>
 PROTOBUF_CONSTEXPR Status::Status(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.name_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
   , /*decltype(_impl_.id_)*/nullptr
-  , /*decltype(_impl_.ping_)*/0
-  , /*decltype(_impl_.game_mode_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+  , /*decltype(_impl_.ping_)*/ 0
+
+  , /*decltype(_impl_.game_mode_)*/ 0
+} {}
 struct StatusDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR StatusDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR StatusDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~StatusDefaultTypeInternal() {}
   union {
     Status _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusDefaultTypeInternal _Status_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 StatusDefaultTypeInternal _Status_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR RecipeBook::RecipeBook(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.gui_open_)*/false
-  , /*decltype(_impl_.filtering_craftable_)*/false
-  , /*decltype(_impl_.furnace_gui_open_)*/false
-  , /*decltype(_impl_.furnace_filtering_craftable_)*/false
+    /*decltype(_impl_.gui_open_)*/ false
+
+  , /*decltype(_impl_.filtering_craftable_)*/ false
+
+  , /*decltype(_impl_.furnace_gui_open_)*/ false
+
+  , /*decltype(_impl_.furnace_filtering_craftable_)*/ false
+
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct RecipeBookDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR RecipeBookDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR RecipeBookDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~RecipeBookDefaultTypeInternal() {}
   union {
     RecipeBook _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RecipeBookDefaultTypeInternal _RecipeBook_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 RecipeBookDefaultTypeInternal _RecipeBook_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR Player::Player(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.name_)*/ {
+    &::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized {}
+  }
+
   , /*decltype(_impl_.id_)*/nullptr
   , /*decltype(_impl_.recipe_book_)*/nullptr
-  , /*decltype(_impl_.entity_id_)*/0u
-  , /*decltype(_impl_.game_mode_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+  , /*decltype(_impl_.entity_id_)*/ 0u
+
+  , /*decltype(_impl_.game_mode_)*/ 0
+} {}
 struct PlayerDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PlayerDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR PlayerDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~PlayerDefaultTypeInternal() {}
   union {
     Player _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerDefaultTypeInternal _Player_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PlayerDefaultTypeInternal _Player_default_instance_;
+template <typename>
 PROTOBUF_CONSTEXPR Slot::Slot(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.item_id_)*/nullptr
-  , /*decltype(_impl_.slot_id_)*/0u
-  , /*decltype(_impl_.count_)*/0u
-  , /*decltype(_impl_._cached_size_)*/{}} {}
+    /*decltype(_impl_._has_bits_)*/{}
+  , /*decltype(_impl_._cached_size_)*/{}
+  , /*decltype(_impl_.item_id_)*/nullptr
+  , /*decltype(_impl_.slot_id_)*/ 0u
+
+  , /*decltype(_impl_.count_)*/ 0u
+} {}
 struct SlotDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR SlotDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
+  PROTOBUF_CONSTEXPR SlotDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
   ~SlotDefaultTypeInternal() {}
   union {
     Slot _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SlotDefaultTypeInternal _Slot_default_instance_;
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SlotDefaultTypeInternal _Slot_default_instance_;
 }  // namespace player
 }  // namespace proto
 }  // namespace minecpp
 static ::_pb::Metadata file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto[4];
-static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto = nullptr;
-static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto = nullptr;
-
-const uint32_t TableStruct_minecpp_2fproto_2fplayer_2fPlayer_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.name_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.ping_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.game_mode_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.gui_open_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.filtering_craftable_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.furnace_gui_open_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.furnace_filtering_craftable_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.name_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.entity_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.recipe_book_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.game_mode_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_.slot_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_.item_id_),
-  PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_.count_),
+static constexpr const ::_pb::EnumDescriptor**
+    file_level_enum_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto = nullptr;
+static constexpr const ::_pb::ServiceDescriptor**
+    file_level_service_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto = nullptr;
+const ::uint32_t TableStruct_minecpp_2fproto_2fplayer_2fPlayer_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(
+    protodesc_cold) = {
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.id_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.name_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.ping_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Status, _impl_.game_mode_),
+    0,
+    ~0u,
+    ~0u,
+    ~0u,
+    ~0u,  // no _has_bits_
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.gui_open_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.filtering_craftable_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.furnace_gui_open_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::RecipeBook, _impl_.furnace_filtering_craftable_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.id_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.name_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.entity_id_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.recipe_book_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Player, _impl_.game_mode_),
+    0,
+    ~0u,
+    ~0u,
+    1,
+    ~0u,
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_._has_bits_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    ~0u,  // no _weak_field_map_
+    ~0u,  // no _inlined_string_donated_
+    ~0u,  // no _split_
+    ~0u,  // no sizeof(Split)
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_.slot_id_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_.item_id_),
+    PROTOBUF_FIELD_OFFSET(::minecpp::proto::player::Slot, _impl_.count_),
+    ~0u,
+    0,
+    ~0u,
 };
-static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::minecpp::proto::player::Status)},
-  { 10, -1, -1, sizeof(::minecpp::proto::player::RecipeBook)},
-  { 20, -1, -1, sizeof(::minecpp::proto::player::Player)},
-  { 31, -1, -1, sizeof(::minecpp::proto::player::Slot)},
+
+static const ::_pbi::MigrationSchema
+    schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+        { 0, 12, -1, sizeof(::minecpp::proto::player::Status)},
+        { 16, -1, -1, sizeof(::minecpp::proto::player::RecipeBook)},
+        { 28, 41, -1, sizeof(::minecpp::proto::player::Player)},
+        { 46, 57, -1, sizeof(::minecpp::proto::player::Slot)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
-  &::minecpp::proto::player::_Status_default_instance_._instance,
-  &::minecpp::proto::player::_RecipeBook_default_instance_._instance,
-  &::minecpp::proto::player::_Player_default_instance_._instance,
-  &::minecpp::proto::player::_Slot_default_instance_._instance,
+    &::minecpp::proto::player::_Status_default_instance_._instance,
+    &::minecpp::proto::player::_RecipeBook_default_instance_._instance,
+    &::minecpp::proto::player::_Player_default_instance_._instance,
+    &::minecpp::proto::player::_Slot_default_instance_._instance,
 };
-
-const char descriptor_table_protodef_minecpp_2fproto_2fplayer_2fPlayer_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n!minecpp/proto/player/Player.proto\022\024min"
-  "ecpp.proto.player\032!minecpp/proto/common/"
-  "Common.proto\032\035minecpp/proto/player/Id.pr"
-  "oto\"\203\001\n\006Status\022*\n\002id\030\001 \001(\0132\036.minecpp.pro"
-  "to.player.PlayerId\022\014\n\004name\030\002 \001(\t\022\014\n\004ping"
-  "\030\003 \001(\005\0221\n\tgame_mode\030\004 \001(\0162\036.minecpp.prot"
-  "o.common.GameMode\"z\n\nRecipeBook\022\020\n\010gui_o"
-  "pen\030\001 \001(\010\022\033\n\023filtering_craftable\030\002 \001(\010\022\030"
-  "\n\020furnace_gui_open\030\003 \001(\010\022#\n\033furnace_filt"
-  "ering_craftable\030\004 \001(\010\"\277\001\n\006Player\022*\n\002id\030\001"
-  " \001(\0132\036.minecpp.proto.player.PlayerId\022\014\n\004"
-  "name\030\002 \001(\t\022\021\n\tentity_id\030\003 \001(\r\0225\n\013recipe_"
-  "book\030\004 \001(\0132 .minecpp.proto.player.Recipe"
-  "Book\0221\n\tgame_mode\030\005 \001(\0162\036.minecpp.proto."
-  "common.GameMode\"U\n\004Slot\022\017\n\007slot_id\030\001 \001(\r"
-  "\022-\n\007item_id\030\002 \001(\0132\034.minecpp.proto.common"
-  ".ItemId\022\r\n\005count\030\003 \001(\rb\006proto3"
-  ;
-static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_deps[2] = {
-  &::descriptor_table_minecpp_2fproto_2fcommon_2fCommon_2eproto,
-  &::descriptor_table_minecpp_2fproto_2fplayer_2fId_2eproto,
+const char descriptor_table_protodef_minecpp_2fproto_2fplayer_2fPlayer_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
+    "\n!minecpp/proto/player/Player.proto\022\024min"
+    "ecpp.proto.player\032!minecpp/proto/common/"
+    "Common.proto\032\035minecpp/proto/player/Id.pr"
+    "oto\"\203\001\n\006Status\022*\n\002id\030\001 \001(\0132\036.minecpp.pro"
+    "to.player.PlayerId\022\014\n\004name\030\002 \001(\t\022\014\n\004ping"
+    "\030\003 \001(\005\0221\n\tgame_mode\030\004 \001(\0162\036.minecpp.prot"
+    "o.common.GameMode\"z\n\nRecipeBook\022\020\n\010gui_o"
+    "pen\030\001 \001(\010\022\033\n\023filtering_craftable\030\002 \001(\010\022\030"
+    "\n\020furnace_gui_open\030\003 \001(\010\022#\n\033furnace_filt"
+    "ering_craftable\030\004 \001(\010\"\277\001\n\006Player\022*\n\002id\030\001"
+    " \001(\0132\036.minecpp.proto.player.PlayerId\022\014\n\004"
+    "name\030\002 \001(\t\022\021\n\tentity_id\030\003 \001(\r\0225\n\013recipe_"
+    "book\030\004 \001(\0132 .minecpp.proto.player.Recipe"
+    "Book\0221\n\tgame_mode\030\005 \001(\0162\036.minecpp.proto."
+    "common.GameMode\"U\n\004Slot\022\017\n\007slot_id\030\001 \001(\r"
+    "\022-\n\007item_id\030\002 \001(\0132\034.minecpp.proto.common"
+    ".ItemId\022\r\n\005count\030\003 \001(\rb\006proto3"
 };
-static ::_pbi::once_flag descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once;
+static const ::_pbi::DescriptorTable* const descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_deps[2] =
+    {
+        &::descriptor_table_minecpp_2fproto_2fcommon_2fCommon_2eproto,
+        &::descriptor_table_minecpp_2fproto_2fplayer_2fId_2eproto,
+};
+static ::absl::once_flag descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto = {
-    false, false, 670, descriptor_table_protodef_minecpp_2fproto_2fplayer_2fPlayer_2eproto,
+    false,
+    false,
+    670,
+    descriptor_table_protodef_minecpp_2fproto_2fplayer_2fPlayer_2eproto,
     "minecpp/proto/player/Player.proto",
-    &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once, descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_deps, 2, 4,
-    schemas, file_default_instances, TableStruct_minecpp_2fproto_2fplayer_2fPlayer_2eproto::offsets,
-    file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto, file_level_enum_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto,
+    &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once,
+    descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_deps,
+    2,
+    4,
+    schemas,
+    file_default_instances,
+    TableStruct_minecpp_2fproto_2fplayer_2fPlayer_2eproto::offsets,
+    file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto,
+    file_level_enum_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto,
     file_level_service_descriptors_minecpp_2fproto_2fplayer_2fPlayer_2eproto,
 };
+
+// This function exists to be marked as weak.
+// It can significantly speed up compilation by breaking up LLVM's SCC
+// in the .pb.cc translation units. Large translation units see a
+// reduction of more than 35% of walltime for optimized builds. Without
+// the weak attribute all the messages in the file, including all the
+// vtables and everything they use become part of the same SCC through
+// a cycle like:
+// GetMetadata -> descriptor table -> default instances ->
+//   vtables -> GetMetadata
+// By adding a weak function here we break the connection from the
+// individual vtables back into the descriptor table.
 PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_getter() {
   return &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto;
 }
-
 // Force running AddDescriptors() at dynamic initialization time.
-PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fplayer_2fPlayer_2eproto(&descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto);
+PROTOBUF_ATTRIBUTE_INIT_PRIORITY2
+static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_minecpp_2fproto_2fplayer_2fPlayer_2eproto(&descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto);
 namespace minecpp {
 namespace proto {
 namespace player {
-
 // ===================================================================
 
 class Status::_Internal {
  public:
+  using HasBits = decltype(std::declval<Status>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(Status, _impl_._has_bits_);
   static const ::minecpp::proto::player::PlayerId& id(const Status* msg);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::player::PlayerId&
@@ -204,60 +279,62 @@ Status::_Internal::id(const Status* msg) {
   return *msg->_impl_.id_;
 }
 void Status::clear_id() {
-  if (GetArenaForAllocation() == nullptr && _impl_.id_ != nullptr) {
-    delete _impl_.id_;
-  }
-  _impl_.id_ = nullptr;
+  if (_impl_.id_ != nullptr) _impl_.id_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-Status::Status(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+Status::Status(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.Status)
 }
 Status::Status(const Status& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   Status* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_){}
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.name_) {}
+
     , decltype(_impl_.id_){nullptr}
-    , decltype(_impl_.ping_){}
-    , decltype(_impl_.game_mode_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
+    , decltype(_impl_.ping_) {}
+
+    , decltype(_impl_.game_mode_) {}
+  };
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_name().empty()) {
-    _this->_impl_.name_.Set(from._internal_name(), 
-      _this->GetArenaForAllocation());
+    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
   }
-  if (from._internal_has_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.id_ = new ::minecpp::proto::player::PlayerId(*from._impl_.id_);
   }
   ::memcpy(&_impl_.ping_, &from._impl_.ping_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.game_mode_) -
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.game_mode_) -
     reinterpret_cast<char*>(&_impl_.ping_)) + sizeof(_impl_.game_mode_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.Status)
 }
 
-inline void Status::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void Status::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_){}
-    , decltype(_impl_.id_){nullptr}
-    , decltype(_impl_.ping_){0}
-    , decltype(_impl_.game_mode_){0}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.name_) {}
+
+    , decltype(_impl_.id_){nullptr}
+    , decltype(_impl_.ping_) { 0 }
+
+    , decltype(_impl_.game_mode_) { 0 }
+
   };
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 Status::~Status() {
@@ -270,7 +347,7 @@ Status::~Status() {
 }
 
 inline void Status::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.name_.Destroy();
   if (this != internal_default_instance()) delete _impl_.id_;
 }
@@ -281,61 +358,68 @@ void Status::SetCachedSize(int size) const {
 
 void Status::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.player.Status)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.name_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.id_ != nullptr) {
-    delete _impl_.id_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.id_ != nullptr);
+    _impl_.id_->Clear();
   }
-  _impl_.id_ = nullptr;
-  ::memset(&_impl_.ping_, 0, static_cast<size_t>(
+  ::memset(&_impl_.ping_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.game_mode_) -
       reinterpret_cast<char*>(&_impl_.ping_)) + sizeof(_impl_.game_mode_));
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* Status::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.player.PlayerId id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_id(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // string name = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.player.Status.name"));
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // int32 ping = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
           _impl_.ping_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.common.GameMode game_mode = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 32)) {
+          ::int32_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
           _internal_set_game_mode(static_cast<::minecpp::proto::common::GameMode>(val));
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -353,6 +437,7 @@ const char* Status::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -360,14 +445,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* Status::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* Status::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.player.Status)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.player.PlayerId id = 1;
-  if (this->_internal_has_id()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::id(this),
         _Internal::id(this).GetCachedSize(), target, stream);
@@ -375,25 +461,24 @@ uint8_t* Status::_InternalSerialize(
 
   // string name = 2;
   if (!this->_internal_name().empty()) {
+    const std::string& _s = this->_internal_name();
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "minecpp.proto.player.Status.name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_name(), target);
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "minecpp.proto.player.Status.name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // int32 ping = 3;
   if (this->_internal_ping() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_ping(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(
+        3, this->_internal_ping(), target);
   }
 
   // .minecpp.proto.common.GameMode game_mode = 4;
   if (this->_internal_game_mode() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      4, this->_internal_game_mode(), target);
+        4, this->_internal_game_mode(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -404,23 +489,23 @@ uint8_t* Status::_InternalSerialize(
   return target;
 }
 
-size_t Status::ByteSizeLong() const {
+::size_t Status::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.player.Status)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string name = 2;
   if (!this->_internal_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_name());
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_name());
   }
 
   // .minecpp.proto.player.PlayerId id = 1;
-  if (this->_internal_has_id()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.id_);
@@ -428,13 +513,14 @@ size_t Status::ByteSizeLong() const {
 
   // int32 ping = 3;
   if (this->_internal_ping() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_ping());
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(
+        this->_internal_ping());
   }
 
   // .minecpp.proto.common.GameMode game_mode = 4;
   if (this->_internal_game_mode() != 0) {
     total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_game_mode());
+                  ::_pbi::WireFormatLite::EnumSize(this->_internal_game_mode());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -451,14 +537,14 @@ void Status::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   auto* const _this = static_cast<Status*>(&to_msg);
   auto& from = static_cast<const Status&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.Status)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
   }
-  if (from._internal_has_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_id()->::minecpp::proto::player::PlayerId::MergeFrom(
         from._internal_id());
   }
@@ -487,10 +573,9 @@ void Status::InternalSwap(Status* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.name_, lhs_arena,
-      &other->_impl_.name_, rhs_arena
-  );
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
+                                       &other->_impl_.name_, rhs_arena);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Status, _impl_.game_mode_)
       + sizeof(Status::_impl_.game_mode_)
@@ -504,45 +589,35 @@ void Status::InternalSwap(Status* other) {
       &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_getter, &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto[0]);
 }
-
 // ===================================================================
 
 class RecipeBook::_Internal {
  public:
 };
 
-RecipeBook::RecipeBook(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+RecipeBook::RecipeBook(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.RecipeBook)
 }
 RecipeBook::RecipeBook(const RecipeBook& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  RecipeBook* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.gui_open_){}
-    , decltype(_impl_.filtering_craftable_){}
-    , decltype(_impl_.furnace_gui_open_){}
-    , decltype(_impl_.furnace_filtering_craftable_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.gui_open_, &from._impl_.gui_open_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.furnace_filtering_craftable_) -
-    reinterpret_cast<char*>(&_impl_.gui_open_)) + sizeof(_impl_.furnace_filtering_craftable_));
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _impl_(from._impl_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(
+      from._internal_metadata_);
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.RecipeBook)
 }
 
-inline void RecipeBook::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void RecipeBook::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.gui_open_){false}
-    , decltype(_impl_.filtering_craftable_){false}
-    , decltype(_impl_.furnace_gui_open_){false}
-    , decltype(_impl_.furnace_filtering_craftable_){false}
+      decltype(_impl_.gui_open_) { false }
+
+    , decltype(_impl_.filtering_craftable_) { false }
+
+    , decltype(_impl_.furnace_gui_open_) { false }
+
+    , decltype(_impl_.furnace_filtering_craftable_) { false }
+
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -557,7 +632,7 @@ RecipeBook::~RecipeBook() {
 }
 
 inline void RecipeBook::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
 void RecipeBook::SetCachedSize(int size) const {
@@ -566,11 +641,11 @@ void RecipeBook::SetCachedSize(int size) const {
 
 void RecipeBook::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.player.RecipeBook)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.gui_open_, 0, static_cast<size_t>(
+  ::memset(&_impl_.gui_open_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.furnace_filtering_craftable_) -
       reinterpret_cast<char*>(&_impl_.gui_open_)) + sizeof(_impl_.furnace_filtering_craftable_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -579,40 +654,44 @@ void RecipeBook::Clear() {
 const char* RecipeBook::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // bool gui_open = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
           _impl_.gui_open_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // bool filtering_craftable = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 16)) {
           _impl_.filtering_craftable_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // bool furnace_gui_open = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
           _impl_.furnace_gui_open_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // bool furnace_filtering_craftable = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 32)) {
           _impl_.furnace_filtering_craftable_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -637,34 +716,38 @@ failure:
 #undef CHK_
 }
 
-uint8_t* RecipeBook::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* RecipeBook::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.player.RecipeBook)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // bool gui_open = 1;
   if (this->_internal_gui_open() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(1, this->_internal_gui_open(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        1, this->_internal_gui_open(), target);
   }
 
   // bool filtering_craftable = 2;
   if (this->_internal_filtering_craftable() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(2, this->_internal_filtering_craftable(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        2, this->_internal_filtering_craftable(), target);
   }
 
   // bool furnace_gui_open = 3;
   if (this->_internal_furnace_gui_open() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_furnace_gui_open(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        3, this->_internal_furnace_gui_open(), target);
   }
 
   // bool furnace_filtering_craftable = 4;
   if (this->_internal_furnace_filtering_craftable() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_furnace_filtering_craftable(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(
+        4, this->_internal_furnace_filtering_craftable(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -675,32 +758,32 @@ uint8_t* RecipeBook::_InternalSerialize(
   return target;
 }
 
-size_t RecipeBook::ByteSizeLong() const {
+::size_t RecipeBook::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.player.RecipeBook)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // bool gui_open = 1;
   if (this->_internal_gui_open() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
   // bool filtering_craftable = 2;
   if (this->_internal_filtering_craftable() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
   // bool furnace_gui_open = 3;
   if (this->_internal_furnace_gui_open() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
   // bool furnace_filtering_craftable = 4;
   if (this->_internal_furnace_filtering_craftable() != 0) {
-    total_size += 1 + 1;
+    total_size += 2;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -717,8 +800,8 @@ void RecipeBook::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   auto* const _this = static_cast<RecipeBook*>(&to_msg);
   auto& from = static_cast<const RecipeBook&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.RecipeBook)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (from._internal_gui_open() != 0) {
@@ -763,13 +846,21 @@ void RecipeBook::InternalSwap(RecipeBook* other) {
       &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_getter, &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto[1]);
 }
-
 // ===================================================================
 
 class Player::_Internal {
  public:
+  using HasBits = decltype(std::declval<Player>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(Player, _impl_._has_bits_);
   static const ::minecpp::proto::player::PlayerId& id(const Player* msg);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
   static const ::minecpp::proto::player::RecipeBook& recipe_book(const Player* msg);
+  static void set_has_recipe_book(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
 };
 
 const ::minecpp::proto::player::PlayerId&
@@ -781,65 +872,67 @@ Player::_Internal::recipe_book(const Player* msg) {
   return *msg->_impl_.recipe_book_;
 }
 void Player::clear_id() {
-  if (GetArenaForAllocation() == nullptr && _impl_.id_ != nullptr) {
-    delete _impl_.id_;
-  }
-  _impl_.id_ = nullptr;
+  if (_impl_.id_ != nullptr) _impl_.id_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-Player::Player(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+Player::Player(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.Player)
 }
 Player::Player(const Player& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   Player* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_){}
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.name_) {}
+
     , decltype(_impl_.id_){nullptr}
     , decltype(_impl_.recipe_book_){nullptr}
-    , decltype(_impl_.entity_id_){}
-    , decltype(_impl_.game_mode_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
+    , decltype(_impl_.entity_id_) {}
+
+    , decltype(_impl_.game_mode_) {}
+  };
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   if (!from._internal_name().empty()) {
-    _this->_impl_.name_.Set(from._internal_name(), 
-      _this->GetArenaForAllocation());
+    _this->_impl_.name_.Set(from._internal_name(), _this->GetArenaForAllocation());
   }
-  if (from._internal_has_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.id_ = new ::minecpp::proto::player::PlayerId(*from._impl_.id_);
   }
-  if (from._internal_has_recipe_book()) {
+  if ((from._impl_._has_bits_[0] & 0x00000002u) != 0) {
     _this->_impl_.recipe_book_ = new ::minecpp::proto::player::RecipeBook(*from._impl_.recipe_book_);
   }
   ::memcpy(&_impl_.entity_id_, &from._impl_.entity_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.game_mode_) -
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.game_mode_) -
     reinterpret_cast<char*>(&_impl_.entity_id_)) + sizeof(_impl_.game_mode_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.Player)
 }
 
-inline void Player::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void Player::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.name_){}
+      decltype(_impl_._has_bits_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.name_) {}
+
     , decltype(_impl_.id_){nullptr}
     , decltype(_impl_.recipe_book_){nullptr}
-    , decltype(_impl_.entity_id_){0u}
-    , decltype(_impl_.game_mode_){0}
-    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.entity_id_) { 0u }
+
+    , decltype(_impl_.game_mode_) { 0 }
+
   };
   _impl_.name_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.name_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 Player::~Player() {
@@ -852,7 +945,7 @@ Player::~Player() {
 }
 
 inline void Player::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.name_.Destroy();
   if (this != internal_default_instance()) delete _impl_.id_;
   if (this != internal_default_instance()) delete _impl_.recipe_book_;
@@ -864,73 +957,83 @@ void Player::SetCachedSize(int size) const {
 
 void Player::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.player.Player)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   _impl_.name_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.id_ != nullptr) {
-    delete _impl_.id_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      ABSL_DCHECK(_impl_.id_ != nullptr);
+      _impl_.id_->Clear();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      ABSL_DCHECK(_impl_.recipe_book_ != nullptr);
+      _impl_.recipe_book_->Clear();
+    }
   }
-  _impl_.id_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && _impl_.recipe_book_ != nullptr) {
-    delete _impl_.recipe_book_;
-  }
-  _impl_.recipe_book_ = nullptr;
-  ::memset(&_impl_.entity_id_, 0, static_cast<size_t>(
+  ::memset(&_impl_.entity_id_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.game_mode_) -
       reinterpret_cast<char*>(&_impl_.entity_id_)) + sizeof(_impl_.game_mode_));
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* Player::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // .minecpp.proto.player.PlayerId id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_id(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // string name = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
           auto str = _internal_mutable_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "minecpp.proto.player.Player.name"));
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // uint32 entity_id = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
           _impl_.entity_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.player.RecipeBook recipe_book = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_recipe_book(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.common.GameMode game_mode = 5;
       case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 40)) {
+          ::int32_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
           _internal_set_game_mode(static_cast<::minecpp::proto::common::GameMode>(val));
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -948,6 +1051,7 @@ const char* Player::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -955,14 +1059,15 @@ failure:
 #undef CHK_
 }
 
-uint8_t* Player::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* Player::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.player.Player)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.player.PlayerId id = 1;
-  if (this->_internal_has_id()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::id(this),
         _Internal::id(this).GetCachedSize(), target, stream);
@@ -970,22 +1075,21 @@ uint8_t* Player::_InternalSerialize(
 
   // string name = 2;
   if (!this->_internal_name().empty()) {
+    const std::string& _s = this->_internal_name();
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "minecpp.proto.player.Player.name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_name(), target);
+        _s.data(), static_cast<int>(_s.length()), ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE, "minecpp.proto.player.Player.name");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
   }
 
   // uint32 entity_id = 3;
   if (this->_internal_entity_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_entity_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        3, this->_internal_entity_id(), target);
   }
 
   // .minecpp.proto.player.RecipeBook recipe_book = 4;
-  if (this->_internal_has_recipe_book()) {
+  if (cached_has_bits & 0x00000002u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(4, _Internal::recipe_book(this),
         _Internal::recipe_book(this).GetCachedSize(), target, stream);
@@ -995,7 +1099,7 @@ uint8_t* Player::_InternalSerialize(
   if (this->_internal_game_mode() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      5, this->_internal_game_mode(), target);
+        5, this->_internal_game_mode(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1006,44 +1110,47 @@ uint8_t* Player::_InternalSerialize(
   return target;
 }
 
-size_t Player::ByteSizeLong() const {
+::size_t Player::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.player.Player)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // string name = 2;
   if (!this->_internal_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_name());
+    total_size += 1 + ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+                                    this->_internal_name());
   }
 
-  // .minecpp.proto.player.PlayerId id = 1;
-  if (this->_internal_has_id()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.id_);
-  }
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // .minecpp.proto.player.PlayerId id = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.id_);
+    }
 
-  // .minecpp.proto.player.RecipeBook recipe_book = 4;
-  if (this->_internal_has_recipe_book()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.recipe_book_);
-  }
+    // .minecpp.proto.player.RecipeBook recipe_book = 4;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+          *_impl_.recipe_book_);
+    }
 
+  }
   // uint32 entity_id = 3;
   if (this->_internal_entity_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_entity_id());
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+        this->_internal_entity_id());
   }
 
   // .minecpp.proto.common.GameMode game_mode = 5;
   if (this->_internal_game_mode() != 0) {
     total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_game_mode());
+                  ::_pbi::WireFormatLite::EnumSize(this->_internal_game_mode());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -1060,20 +1167,23 @@ void Player::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   auto* const _this = static_cast<Player*>(&to_msg);
   auto& from = static_cast<const Player&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.Player)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   if (!from._internal_name().empty()) {
     _this->_internal_set_name(from._internal_name());
   }
-  if (from._internal_has_id()) {
-    _this->_internal_mutable_id()->::minecpp::proto::player::PlayerId::MergeFrom(
-        from._internal_id());
-  }
-  if (from._internal_has_recipe_book()) {
-    _this->_internal_mutable_recipe_book()->::minecpp::proto::player::RecipeBook::MergeFrom(
-        from._internal_recipe_book());
+  cached_has_bits = from._impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _this->_internal_mutable_id()->::minecpp::proto::player::PlayerId::MergeFrom(
+          from._internal_id());
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _this->_internal_mutable_recipe_book()->::minecpp::proto::player::RecipeBook::MergeFrom(
+          from._internal_recipe_book());
+    }
   }
   if (from._internal_entity_id() != 0) {
     _this->_internal_set_entity_id(from._internal_entity_id());
@@ -1100,10 +1210,9 @@ void Player::InternalSwap(Player* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.name_, lhs_arena,
-      &other->_impl_.name_, rhs_arena
-  );
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.name_, lhs_arena,
+                                       &other->_impl_.name_, rhs_arena);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Player, _impl_.game_mode_)
       + sizeof(Player::_impl_.game_mode_)
@@ -1117,12 +1226,17 @@ void Player::InternalSwap(Player* other) {
       &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_getter, &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto[2]);
 }
-
 // ===================================================================
 
 class Slot::_Internal {
  public:
+  using HasBits = decltype(std::declval<Slot>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+    8 * PROTOBUF_FIELD_OFFSET(Slot, _impl_._has_bits_);
   static const ::minecpp::proto::common::ItemId& item_id(const Slot* msg);
+  static void set_has_item_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
 };
 
 const ::minecpp::proto::common::ItemId&
@@ -1130,45 +1244,46 @@ Slot::_Internal::item_id(const Slot* msg) {
   return *msg->_impl_.item_id_;
 }
 void Slot::clear_item_id() {
-  if (GetArenaForAllocation() == nullptr && _impl_.item_id_ != nullptr) {
-    delete _impl_.item_id_;
-  }
-  _impl_.item_id_ = nullptr;
+  if (_impl_.item_id_ != nullptr) _impl_.item_id_->Clear();
+  _impl_._has_bits_[0] &= ~0x00000001u;
 }
-Slot::Slot(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
+Slot::Slot(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor(arena);
   // @@protoc_insertion_point(arena_constructor:minecpp.proto.player.Slot)
 }
 Slot::Slot(const Slot& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   Slot* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.item_id_){nullptr}
-    , decltype(_impl_.slot_id_){}
-    , decltype(_impl_.count_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
+      decltype(_impl_._has_bits_){from._impl_._has_bits_}
+    , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.item_id_){nullptr}
+    , decltype(_impl_.slot_id_) {}
+
+    , decltype(_impl_.count_) {}
+  };
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_item_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_impl_.item_id_ = new ::minecpp::proto::common::ItemId(*from._impl_.item_id_);
   }
   ::memcpy(&_impl_.slot_id_, &from._impl_.slot_id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.count_) -
+    static_cast<::size_t>(reinterpret_cast<char*>(&_impl_.count_) -
     reinterpret_cast<char*>(&_impl_.slot_id_)) + sizeof(_impl_.count_));
   // @@protoc_insertion_point(copy_constructor:minecpp.proto.player.Slot)
 }
 
-inline void Slot::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
+inline void Slot::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
-  (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.item_id_){nullptr}
-    , decltype(_impl_.slot_id_){0u}
-    , decltype(_impl_.count_){0u}
+      decltype(_impl_._has_bits_){}
     , /*decltype(_impl_._cached_size_)*/{}
+    , decltype(_impl_.item_id_){nullptr}
+    , decltype(_impl_.slot_id_) { 0u }
+
+    , decltype(_impl_.count_) { 0u }
+
   };
 }
 
@@ -1182,7 +1297,7 @@ Slot::~Slot() {
 }
 
 inline void Slot::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  ABSL_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete _impl_.item_id_;
 }
 
@@ -1192,49 +1307,55 @@ void Slot::SetCachedSize(int size) const {
 
 void Slot::Clear() {
 // @@protoc_insertion_point(message_clear_start:minecpp.proto.player.Slot)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.item_id_ != nullptr) {
-    delete _impl_.item_id_;
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    ABSL_DCHECK(_impl_.item_id_ != nullptr);
+    _impl_.item_id_->Clear();
   }
-  _impl_.item_id_ = nullptr;
-  ::memset(&_impl_.slot_id_, 0, static_cast<size_t>(
+  ::memset(&_impl_.slot_id_, 0, static_cast<::size_t>(
       reinterpret_cast<char*>(&_impl_.count_) -
       reinterpret_cast<char*>(&_impl_.slot_id_)) + sizeof(_impl_.count_));
+  _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 const char* Slot::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
   while (!ctx->Done(&ptr)) {
-    uint32_t tag;
+    ::uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
       // uint32 slot_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 8)) {
           _impl_.slot_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // .minecpp.proto.common.ItemId item_id = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_item_id(), ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       // uint32 count = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::uint8_t>(tag) == 24)) {
           _impl_.count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else
+        } else {
           goto handle_unusual;
+        }
         continue;
       default:
         goto handle_unusual;
@@ -1252,6 +1373,7 @@ const char* Slot::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     CHK_(ptr != nullptr);
   }  // while
 message_done:
+  _impl_._has_bits_.Or(has_bits);
   return ptr;
 failure:
   ptr = nullptr;
@@ -1259,20 +1381,22 @@ failure:
 #undef CHK_
 }
 
-uint8_t* Slot::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+::uint8_t* Slot::_InternalSerialize(
+    ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
   // @@protoc_insertion_point(serialize_to_array_start:minecpp.proto.player.Slot)
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
   // uint32 slot_id = 1;
   if (this->_internal_slot_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_slot_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        1, this->_internal_slot_id(), target);
   }
 
+  cached_has_bits = _impl_._has_bits_[0];
   // .minecpp.proto.common.ItemId item_id = 2;
-  if (this->_internal_has_item_id()) {
+  if (cached_has_bits & 0x00000001u) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(2, _Internal::item_id(this),
         _Internal::item_id(this).GetCachedSize(), target, stream);
@@ -1281,7 +1405,8 @@ uint8_t* Slot::_InternalSerialize(
   // uint32 count = 3;
   if (this->_internal_count() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(3, this->_internal_count(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(
+        3, this->_internal_count(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1292,16 +1417,17 @@ uint8_t* Slot::_InternalSerialize(
   return target;
 }
 
-size_t Slot::ByteSizeLong() const {
+::size_t Slot::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:minecpp.proto.player.Slot)
-  size_t total_size = 0;
+  ::size_t total_size = 0;
 
-  uint32_t cached_has_bits = 0;
+  ::uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
   // .minecpp.proto.common.ItemId item_id = 2;
-  if (this->_internal_has_item_id()) {
+  cached_has_bits = _impl_._has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.item_id_);
@@ -1309,12 +1435,14 @@ size_t Slot::ByteSizeLong() const {
 
   // uint32 slot_id = 1;
   if (this->_internal_slot_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_slot_id());
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+        this->_internal_slot_id());
   }
 
   // uint32 count = 3;
   if (this->_internal_count() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_count());
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(
+        this->_internal_count());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -1331,11 +1459,11 @@ void Slot::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_
   auto* const _this = static_cast<Slot*>(&to_msg);
   auto& from = static_cast<const Slot&>(from_msg);
   // @@protoc_insertion_point(class_specific_merge_from_start:minecpp.proto.player.Slot)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_item_id()) {
+  if ((from._impl_._has_bits_[0] & 0x00000001u) != 0) {
     _this->_internal_mutable_item_id()->::minecpp::proto::common::ItemId::MergeFrom(
         from._internal_item_id());
   }
@@ -1362,6 +1490,7 @@ bool Slot::IsInitialized() const {
 void Slot::InternalSwap(Slot* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(Slot, _impl_.count_)
       + sizeof(Slot::_impl_.count_)
@@ -1375,7 +1504,6 @@ void Slot::InternalSwap(Slot* other) {
       &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_getter, &descriptor_table_minecpp_2fproto_2fplayer_2fPlayer_2eproto_once,
       file_level_metadata_minecpp_2fproto_2fplayer_2fPlayer_2eproto[3]);
 }
-
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace player
 }  // namespace proto
@@ -1398,6 +1526,5 @@ Arena::CreateMaybeMessage< ::minecpp::proto::player::Slot >(Arena* arena) {
   return Arena::CreateMessageInternal< ::minecpp::proto::player::Slot >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
-
 // @@protoc_insertion_point(global_scope)
-#include <google/protobuf/port_undef.inc>
+#include "google/protobuf/port_undef.inc"

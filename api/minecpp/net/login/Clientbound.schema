@@ -1,0 +1,39 @@
+generator = "net"
+package minecpp.net.login.cb
+
+[MessageID=0x00]
+record Disconnect {
+  reason: string
+}
+
+[MessageID=0x01]
+record EncryptionRequest {
+  server_id: string
+  public_key: list[uint8]
+  token: list[uint8]
+}
+
+record LoginProperty {
+  key: string
+  value: string
+  signature: optional[string]
+}
+
+[MessageID=0x02]
+record LoginSuccess {
+  player_id: uuid
+  username: string
+  properties: list[LoginProperty]
+}
+
+[MessageID=0x03]
+record SetCompression {
+  threshold: varint
+}
+
+[MessageID=0x04]
+record PluginRequest {
+  message_id: varint
+  channel: string
+  data: list[uint8]
+}

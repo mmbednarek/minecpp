@@ -6,12 +6,22 @@
 
 namespace minecpp::network::message {
 
+void Writer::write_sbyte(std::int8_t value)
+{
+   m_stream.write(reinterpret_cast<const char *>(&value), sizeof(std::int8_t));
+}
+
 void Writer::write_byte(std::uint8_t value)
 {
    m_stream.write(reinterpret_cast<char *>(&value), sizeof(std::uint8_t));
 }
 
-void Writer::write_varint(std::uint32_t value)
+void Writer::write_varint(std::int32_t in_value)
+{
+   write_uvarint(util::unsafe_cast<std::uint32_t>(in_value));
+}
+
+void Writer::write_uvarint(std::uint32_t value)
 {
    for (;;) {
       if (value & (~0x7Fu)) {
@@ -24,7 +34,12 @@ void Writer::write_varint(std::uint32_t value)
    }
 }
 
-void Writer::write_varlong(std::uint64_t value)
+void Writer::write_varlong(std::int64_t in_value)
+{
+   write_uvarlong(util::unsafe_cast<std::uint64_t>(in_value));
+}
+
+void Writer::write_uvarlong(std::uint64_t value)
 {
    for (;;) {
       if (value & (~0x7Fu)) {
@@ -184,6 +199,16 @@ void Writer::write_short(int16_t value)
 {
    value = boost::endian::native_to_big(value);
    m_stream.write((char *) &value, sizeof(int16_t));
+}
+
+void Writer::write_bool(bool value)
+{
+   this->write_byte(value ? 1 : 0);
+}
+
+std::string_view Writer::view()
+{
+   return m_stream.view();
 }
 
 }// namespace minecpp::network::message

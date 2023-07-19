@@ -1,6 +1,13 @@
 #pragma once
+
 #include "protocol/Handler.h"
 #include "protocol/Protocol.h"
+
+#include "minecpp/crypto/AESKey.h"
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/network/message/Io.h"
+#include "minecpp/util/StaticQueue.h"
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
@@ -8,10 +15,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <memory>
-#include <minecpp/crypto/AESKey.h>
-#include <minecpp/network/message/Io.h>
-#include <minecpp/network/message/Message.h>
-#include <minecpp/util/StaticQueue.h>
+#include <optional>
 #include <queue>
 #include <spdlog/spdlog.h>
 #include <tuple>
@@ -23,7 +27,7 @@ class Server;
 
 using ConnectionId = mb::size;
 
-class Connection
+class Connection : public std::enable_shared_from_this<Connection>
 {
    friend Server;
 
@@ -35,13 +39,16 @@ class Connection
 
    void set_non_blocking();
 
-   void async_write_then_read(const Ptr &conn, container::Buffer buffer, protocol::Handler &h);
-   void async_write(const Ptr &conn, container::Buffer buffer);
-   void async_write_then_disconnect(const Ptr &conn, container::Buffer buffer);
+   void async_write_then_read(container::Buffer buffer, protocol::Handler &handler);
+   void async_write(container::Buffer buffer);
+   void async_write_then_disconnect(container::Buffer buffer);
 
-   void send(const Ptr &conn, minecpp::network::message::Writer &w);
-   void send_and_read(const Ptr &conn, minecpp::network::message::Writer &w, protocol::Handler &h);
-   void send_and_disconnect(const Ptr &conn, minecpp::network::message::Writer &w);
+   void send(minecpp::network::message::Writer &w);
+   void send_and_read(minecpp::network::message::Writer &w, protocol::Handler &h);
+   void send_and_disconnect(minecpp::network::message::Writer &w);
+
+   void async_read_varint(mb::u32 result, mb::u32 shift, const std::function<void(mb::u32)> &callback);
+   void async_read_packet(protocol::Handler &handler);
 
    void set_encryption(container::BufferView key);
    [[nodiscard]] crypto::AESKey *encryption_key() const;
@@ -69,6 +76,30 @@ class Connection
    mb::u8 *alloc_byte();
    void free_byte(mb::u8 *byte);
 
+   template<typename TMessage>
+   void send_message(const TMessage &msg)
+   {
+      minecpp::network::message::Writer writer;
+      msg.serialize(writer);
+      this->send(writer);
+   }
+
+   template<typename TMessage>
+   void send_message_then_read(const TMessage &msg, protocol::Handler &handler)
+   {
+      minecpp::network::message::Writer writer;
+      msg.serialize(writer);
+      this->send_and_read(writer, handler);
+   }
+
+   template<typename TMessage>
+   void send_message_then_disconnect(const TMessage &msg)
+   {
+      minecpp::network::message::Writer writer;
+      msg.serialize(writer);
+      this->send_and_disconnect(writer);
+   }
+
    std::string user_name;
    std::atomic_int initial_chunk_count{};
 
@@ -87,30 +118,5 @@ class Connection
 
    std::unique_ptr<crypto::AESKey> m_encryption_key{};
 };
-
-void async_read_varint(const Connection::Ptr &conn, mb::u32 result, mb::u32 shift,
-                       const std::function<void(mb::u32)> &callback);
-void async_read_packet(const Connection::Ptr &conn, protocol::Handler &handler);
-
-template<typename M>
-void send(const Connection::Ptr &conn, M msg)
-{
-   auto w = msg.serialize();
-   conn->send(conn, w);
-}
-
-template<typename M>
-void send_and_read(const Connection::Ptr &conn, M msg, protocol::Handler &h)
-{
-   auto w = msg.serialize();
-   conn->send_and_read(conn, w, h);
-}
-
-template<typename M>
-void send_and_disconnect(const Connection::Ptr &conn, M msg)
-{
-   auto w = msg.serialize();
-   conn->send_and_disconnect(conn, w);
-}
 
 }// namespace minecpp::service::front

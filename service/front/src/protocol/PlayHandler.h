@@ -20,8 +20,8 @@ class PlayHandler : public Handler
  public:
    explicit PlayHandler(Service &service);
 
-   void handle(const std::shared_ptr<Connection> &conn, Reader &r) override;
-   void handle_disconnect(Connection &conn) override;
+   void handle(Connection &connection, Reader &reader) override;
+   void handle_disconnect(Connection &connection) override;
 };
 
 }// namespace minecpp::service::front::protocol

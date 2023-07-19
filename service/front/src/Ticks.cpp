@@ -1,6 +1,8 @@
 #include "Ticks.h"
-#include <minecpp/network/message/Clientbound.h>
-#include <minecpp/util/Time.h>
+
+#include "minecpp/net/play/Clientbound.schema.h"
+#include "minecpp/util/Time.h"
+
 #include <spdlog/spdlog.h>
 #include <thread>
 
@@ -46,9 +48,9 @@ void TickManager::keep_alive()
          return;
       }
 
-      send(conn, minecpp::network::message::KeepAlive{
-                         .time = static_cast<std::uint32_t>(minecpp::util::now_milis()),
-                 });
+      conn->send_message(net::play::cb::KeepAlive{
+              .time = util::now_milis(),
+      });
    });
 }
 
