@@ -1,7 +1,8 @@
+#include "minecpp/region/File.h"
+#include "minecpp/util/Compression.h"
+
 #include <iostream>
-#include <minecpp/network/message/Chunk.h>
-#include <minecpp/region/File.h>
-#include <minecpp/util/Compression.h>
+#include <sstream>
 
 auto main(int argc, char *argv[]) -> int
 {

@@ -1,6 +1,13 @@
 #pragma once
+
 #include "protocol/Handler.h"
 #include "protocol/Protocol.h"
+
+#include "minecpp/crypto/AESKey.h"
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/network/message/Io.h"
+#include "minecpp/util/StaticQueue.h"
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/streambuf.hpp>
@@ -8,10 +15,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <memory>
-#include <minecpp/crypto/AESKey.h>
-#include <minecpp/network/message/Io.h>
-#include <minecpp/network/message/Message.h>
-#include <minecpp/util/StaticQueue.h>
+#include <optional>
 #include <queue>
 #include <spdlog/spdlog.h>
 #include <tuple>
@@ -43,8 +47,7 @@ class Connection : public std::enable_shared_from_this<Connection>
    void send_and_read(minecpp::network::message::Writer &w, protocol::Handler &h);
    void send_and_disconnect(minecpp::network::message::Writer &w);
 
-   void async_read_varint(mb::u32 result, mb::u32 shift,
-                          const std::function<void(mb::u32)> &callback);
+   void async_read_varint(mb::u32 result, mb::u32 shift, const std::function<void(mb::u32)> &callback);
    void async_read_packet(protocol::Handler &handler);
 
    void set_encryption(container::BufferView key);
@@ -115,19 +118,5 @@ class Connection : public std::enable_shared_from_this<Connection>
 
    std::unique_ptr<crypto::AESKey> m_encryption_key{};
 };
-
-template<typename M>
-void send(const Connection::Ptr &conn, M msg)
-{
-   auto w = msg.serialize();
-   conn->send(w);
-}
-
-template<typename M>
-void send_and_disconnect(const Connection::Ptr &conn, M msg)
-{
-   auto w = msg.serialize();
-   conn->send_and_disconnect(w);
-}
 
 }// namespace minecpp::service::front
