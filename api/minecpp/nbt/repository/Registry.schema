@@ -1,0 +1,19 @@
+generator = "nbt"
+package minecpp.nbt.repository
+
+[NBT]
+record Registry {
+   [Namespace="minecraft", Path="chat_type"]
+   chat_types: ChatTypes
+   [Namespace="minecraft", Path="damage_type"]
+   damage_types: DamageTypes
+   [Namespace="minecraft", Path="dimension_type"]
+   dimension_types: DimensionTypes
+   [Namespace="minecraft", Path="trim_material"]
+   trim_materials: TrimMaterialTypes
+   [Namespace="minecraft", Path="trim_pattern"]
+   trim_patterns: TrimPatternTypes
+   [Namespace="minecraft", Path="worldgen/biome"]
+   biomes: BiomeTypes
+}
+

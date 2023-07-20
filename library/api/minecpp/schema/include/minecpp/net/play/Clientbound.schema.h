@@ -1,7 +1,7 @@
 #pragma once
 #include "minecpp/nbt/block/Block.schema.h"
 #include "minecpp/nbt/chunk/Chunk.schema.h"
-#include "minecpp/nbt/repository/Codec.schema.h"
+#include "minecpp/nbt/repository/Registry.schema.h"
 #include "minecpp/net/play/Common.schema.h"
 #include "minecpp/network/message/Reader.h"
 #include "minecpp/network/message/Writer.h"
@@ -10,6 +10,12 @@
 #include <string>
 
 namespace minecpp::net::play::cb {
+
+class BundleDelimiter {
+ public:
+   void serialize(::minecpp::network::message::Writer &writer) const;
+   static BundleDelimiter deserialize(::minecpp::network::message::Reader &/*reader*/);
+};
 
 class SpawnEntity {
  public:
@@ -136,7 +142,6 @@ class BlockEntity {
 
 class LightData {
  public:
-   bool trust_edges{};
    std::vector<std::uint64_t> sky_light_mask{};
    std::vector<std::uint64_t> block_light_mask{};
    std::vector<std::uint64_t> empty_sky_light_mask{};
@@ -169,7 +174,7 @@ class UpdateLight {
 class DeathLocation {
  public:
    std::string dimension{};
-   std::int64_t position{};
+   std::uint64_t position{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static DeathLocation deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -185,7 +190,7 @@ class JoinGame {
    std::string dimension_name{};
    std::string world_name{};
    std::uint64_t seed{};
-   std::uint8_t max_players{};
+   std::int32_t max_players{};
    std::int32_t view_distance{};
    std::int32_t simulation_distance{};
    std::int8_t reduced_debug_info{};
@@ -193,6 +198,7 @@ class JoinGame {
    bool is_debug{};
    bool is_flat{};
    std::optional<DeathLocation> death_location{};
+   std::int32_t portal_cooldown{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static JoinGame deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -239,7 +245,6 @@ class PlayerAbilities {
 class DisplayDeathScreen {
  public:
    std::uint32_t victim_entity_id{};
-   std::uint32_t killer_entity_id{};
    std::string message{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static DisplayDeathScreen deserialize(::minecpp::network::message::Reader &reader);
@@ -342,7 +347,6 @@ class PlayerPositionLook {
    float pitch{};
    std::uint8_t flags{};
    std::int32_t teleport_id{};
-   bool has_dismounted_vehicle{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static PlayerPositionLook deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -393,6 +397,7 @@ class Respawn {
    bool is_flat{};
    std::uint8_t should_copy_metadata{};
    DeathLocation death_location{};
+   std::int32_t portal_cooldown{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Respawn deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -408,7 +413,6 @@ class EntityHeadLook {
 class MultiBlockChange {
  public:
    std::uint64_t chunk_position{};
-   bool should_distrust_edges{};
    std::vector<std::int64_t> block_changes{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static MultiBlockChange deserialize(::minecpp::network::message::Reader &reader);
@@ -473,7 +477,7 @@ class SetHealth {
 class SystemChat {
  public:
    std::string message{};
-   std::int8_t type{};
+   bool is_actionbar{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SystemChat deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -503,196 +507,201 @@ void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::netwo
    auto message_id = reader.read_byte();
    switch (message_id) {
    case 0x00: {
+      auto message = BundleDelimiter::deserialize(reader);
+      visitor.on_bundle_delimiter(client_info, message);
+      break;
+   }
+   case 0x01: {
       auto message = SpawnEntity::deserialize(reader);
       visitor.on_spawn_entity(client_info, message);
       break;
    }
-   case 0x01: {
+   case 0x02: {
       auto message = SpawnExperienceOrb::deserialize(reader);
       visitor.on_spawn_experience_orb(client_info, message);
       break;
    }
-   case 0x02: {
+   case 0x03: {
       auto message = SpawnPlayer::deserialize(reader);
       visitor.on_spawn_player(client_info, message);
       break;
    }
-   case 0x03: {
+   case 0x04: {
       auto message = AnimateEntity::deserialize(reader);
       visitor.on_animate_entity(client_info, message);
       break;
    }
-   case 0x05: {
+   case 0x06: {
       auto message = AcknowledgeBlockChanges::deserialize(reader);
       visitor.on_acknowledge_block_changes(client_info, message);
       break;
    }
-   case 0x09: {
+   case 0x0A: {
       auto message = BlockChange::deserialize(reader);
       visitor.on_block_change(client_info, message);
       break;
    }
-   case 0x0B: {
+   case 0x0C: {
       auto message = Difficulty::deserialize(reader);
       visitor.on_difficulty(client_info, message);
       break;
    }
-   case 0x12: {
+   case 0x14: {
       auto message = SetSlot::deserialize(reader);
       visitor.on_set_slot(client_info, message);
       break;
    }
-   case 0x15: {
+   case 0x17: {
       auto message = PluginMessage::deserialize(reader);
       visitor.on_plugin_message(client_info, message);
       break;
    }
-   case 0x17: {
+   case 0x1A: {
       auto message = Disconnect::deserialize(reader);
       visitor.on_disconnect(client_info, message);
       break;
    }
-   case 0x19: {
+   case 0x1C: {
       auto message = EntityStatus::deserialize(reader);
       visitor.on_entity_status(client_info, message);
       break;
    }
-   case 0x1B: {
+   case 0x1E: {
       auto message = UnloadChunk::deserialize(reader);
       visitor.on_unload_chunk(client_info, message);
       break;
    }
-   case 0x1F: {
+   case 0x23: {
       auto message = KeepAlive::deserialize(reader);
       visitor.on_keep_alive(client_info, message);
       break;
    }
-   case 0x20: {
+   case 0x24: {
       auto message = UpdateChunk::deserialize(reader);
       visitor.on_update_chunk(client_info, message);
       break;
    }
-   case 0x23: {
+   case 0x27: {
       auto message = UpdateLight::deserialize(reader);
       visitor.on_update_light(client_info, message);
       break;
    }
-   case 0x24: {
+   case 0x28: {
       auto message = JoinGame::deserialize(reader);
       visitor.on_join_game(client_info, message);
       break;
    }
-   case 0x27: {
+   case 0x2B: {
       auto message = EntityRelativeMove::deserialize(reader);
       visitor.on_entity_relative_move(client_info, message);
       break;
    }
-   case 0x28: {
+   case 0x2C: {
       auto message = EntityMove::deserialize(reader);
       visitor.on_entity_move(client_info, message);
       break;
    }
-   case 0x29: {
+   case 0x2D: {
       auto message = EntityLook::deserialize(reader);
       visitor.on_entity_look(client_info, message);
       break;
    }
-   case 0x30: {
+   case 0x34: {
       auto message = PlayerAbilities::deserialize(reader);
       visitor.on_player_abilities(client_info, message);
       break;
    }
-   case 0x34: {
+   case 0x38: {
       auto message = DisplayDeathScreen::deserialize(reader);
       visitor.on_display_death_screen(client_info, message);
       break;
    }
-   case 0x35: {
+   case 0x39: {
       auto message = RemovePlayerInfo::deserialize(reader);
       visitor.on_remove_player_info(client_info, message);
       break;
    }
-   case 0x36: {
+   case 0x3A: {
       auto message = UpdatePlayerInfo::deserialize(reader);
       visitor.on_update_player_info(client_info, message);
       break;
    }
-   case 0x38: {
+   case 0x3C: {
       auto message = PlayerPositionLook::deserialize(reader);
       visitor.on_player_position_look(client_info, message);
       break;
    }
-   case 0x39: {
+   case 0x3D: {
       auto message = RecipeBook::deserialize(reader);
       visitor.on_recipe_book(client_info, message);
       break;
    }
-   case 0x3A: {
+   case 0x3E: {
       auto message = RemoveEntities::deserialize(reader);
       visitor.on_remove_entities(client_info, message);
       break;
    }
-   case 0x3D: {
+   case 0x41: {
       auto message = Respawn::deserialize(reader);
       visitor.on_respawn(client_info, message);
       break;
    }
-   case 0x3E: {
+   case 0x42: {
       auto message = EntityHeadLook::deserialize(reader);
       visitor.on_entity_head_look(client_info, message);
       break;
    }
-   case 0x3F: {
+   case 0x43: {
       auto message = MultiBlockChange::deserialize(reader);
       visitor.on_multi_block_change(client_info, message);
       break;
    }
-   case 0x49: {
+   case 0x4D: {
       auto message = ChangeHeldItem::deserialize(reader);
       visitor.on_change_held_item(client_info, message);
       break;
    }
-   case 0x4A: {
+   case 0x4E: {
       auto message = UpdateChunkPosition::deserialize(reader);
       visitor.on_update_chunk_position(client_info, message);
       break;
    }
-   case 0x4C: {
+   case 0x50: {
       auto message = SetDefaultSpawnPosition::deserialize(reader);
       visitor.on_set_default_spawn_position(client_info, message);
       break;
    }
-   case 0x4E: {
+   case 0x52: {
       auto message = SetEntityMetadata::deserialize(reader);
       visitor.on_set_entity_metadata(client_info, message);
       break;
    }
-   case 0x50: {
+   case 0x54: {
       auto message = SetEntityVelocity::deserialize(reader);
       visitor.on_set_entity_velocity(client_info, message);
       break;
    }
-   case 0x51: {
+   case 0x55: {
       auto message = SetEquipment::deserialize(reader);
       visitor.on_set_equipment(client_info, message);
       break;
    }
-   case 0x53: {
+   case 0x57: {
       auto message = SetHealth::deserialize(reader);
       visitor.on_set_health(client_info, message);
       break;
    }
-   case 0x60: {
+   case 0x64: {
       auto message = SystemChat::deserialize(reader);
       visitor.on_system_chat(client_info, message);
       break;
    }
-   case 0x63: {
+   case 0x67: {
       auto message = PickupItem::deserialize(reader);
       visitor.on_pickup_item(client_info, message);
       break;
    }
-   case 0x64: {
+   case 0x68: {
       auto message = TeleportEntity::deserialize(reader);
       visitor.on_teleport_entity(client_info, message);
       break;

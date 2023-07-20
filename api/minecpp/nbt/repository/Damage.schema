@@ -1,0 +1,22 @@
+generator = "nbt"
+package minecpp.nbt.repository
+
+[NBT]
+record DamageTypeDescription {
+   exhaustion: float32
+   message_id: string
+   scaling: string
+}
+
+[NBT]
+record DamageTypeEntry  {
+   element: DamageTypeDescription
+   id: int32
+   name: string
+}
+
+[NBT]
+record DamageTypes {
+   type: string
+   value: list[DamageTypeEntry]
+}

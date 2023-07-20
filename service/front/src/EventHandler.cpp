@@ -142,8 +142,8 @@ void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg,
                                const event::RecipientList &recipient_list)
 {
    net::play::cb::SystemChat chat{
-           .message = chat_msg.message(),
-           .type    = static_cast<std::int8_t>(chat_msg.type()),
+           .message      = chat_msg.message(),
+           .is_actionbar = chat_msg.type() == 1,
    };
    send_message(chat, recipient_list);
 }
@@ -447,9 +447,6 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
 {
    for (auto &chunk : msg.block_light()) {
       net::play::cb::UpdateLight update_block_light{
-              .light_data{
-                          .trust_edges = true,
-                          }
       };
       update_block_light.position = net::play::Vector2vi{chunk.position().x(), chunk.position().z()};
       update_block_light.light_data.block_light.resize(chunk.sections_size());
@@ -561,9 +558,6 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
                      .y = msg.chunk().position().z(),
                      },
            .data = get_chunk_data(msg.chunk()),
-           .light_data{
-                     .trust_edges = true,
-                     }
    };
 
    chunk_data.heightmaps.motion_blocking.resize(msg.chunk().hm_motion_blocking_size());
@@ -667,7 +661,6 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
            .pitch                  = msg.rotation().pitch(),
            .flags                  = 0,
            .teleport_id            = 0,
-           .has_dismounted_vehicle = false,
    };
 
    for (auto player_id : recipient_list.list) {
@@ -813,7 +806,6 @@ void EventHandler::handle_display_death_screen(const clientbound_v1::DisplayDeat
 {
    net::play::cb::DisplayDeathScreen display_death_screen{
            .victim_entity_id = msg.victim_entity_id(),
-           .killer_entity_id = msg.killer_entity_id(),
            .message          = msg.death_message(),
    };
    send_message(display_death_screen, recipient_list);
@@ -837,7 +829,7 @@ void EventHandler::handle_respawn(const clientbound_v1::Respawn &msg,
    if (msg.has_death_location()) {
       respawn.death_location = net::play::cb::DeathLocation{
               .dimension = msg.death_dimension(),
-              .position  = static_cast<int64_t>(math::Vector3::from_proto(msg.death_position()).sum()),
+              .position  = static_cast<uint64_t>(math::Vector3::from_proto(msg.death_position()).sum()),
       };
    }
 

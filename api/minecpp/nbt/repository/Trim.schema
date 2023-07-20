@@ -1,0 +1,55 @@
+generator = "nbt"
+package minecpp.nbt.repository
+
+[NBT]
+record TrimMaterialDescription {
+   color: string
+   translate: string
+}
+
+[NBT]
+record TrimMaterialInfo {
+   asset_name: string
+   description: TrimMaterialDescription
+   ingredient: string
+   item_model_index: float32
+   override_armor_materials: nbt.CompoundContent
+}
+
+[NBT]
+record TrimMaterialEntry {
+   element: TrimMaterialInfo
+   id: int32
+   name: string
+}
+
+[NBT]
+record TrimMaterialTypes {
+   type: string
+   value: list[TrimMaterialEntry]
+}
+
+[NBT]
+record TrimPatternDescription {
+   translate: string
+}
+
+[NBT]
+record TrimPatternInfo {
+   asset_id: string
+   description: TrimPatternDescription
+   template_item: string
+}
+
+[NBT]
+record TrimPatternEntry {
+   element: TrimPatternInfo 
+   id: int32
+   name: string
+}
+
+[NBT]
+record TrimPatternTypes {
+   type: string
+   value: list[TrimPatternEntry]
+}

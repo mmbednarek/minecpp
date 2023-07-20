@@ -1,0 +1,50 @@
+generator = "nbt"
+package minecpp.nbt.repository
+
+[NBT]
+record MonsterSpawnLightLevelValue {
+    max_inclusive: int32
+    min_inclusive: int32
+}
+
+[NBT]
+record MonsterSpawnLightLevel {
+    type: string
+    value: MonsterSpawnLightLevelValue
+}
+
+[NBT]
+record DimensionTypeDescription {
+   piglin_safe: int8
+   has_raids: int8
+   monster_spawn_block_light_limit: int32
+   monster_spawn_light_level: variant[MonsterSpawnLightLevel, int32]
+   natural: int8
+   ambient_light: float32
+   fixed_time: optional[int64]
+   infiniburn: string
+   respawn_anchor_works: int8
+   has_skylight: int8
+   bed_works: int8
+   effects: string
+   min_y: int32
+   height: int32
+   logical_height: int32
+   coordinate_scale: float64
+   ultrawarm: int8
+   has_ceiling: int8
+}
+
+[NBT]
+record DimensionTypeEntry {
+   name: string
+   id: int32
+   element: DimensionTypeDescription
+}
+
+[NBT]
+record DimensionTypes {
+   type: string
+   value: list[DimensionTypeEntry]
+}
+

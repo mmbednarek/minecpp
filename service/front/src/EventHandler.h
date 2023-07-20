@@ -1,9 +1,12 @@
 #pragma once
+
 #include "Server.h"
-#include <minecpp/game/player/Id.h>
-#include <minecpp/nbt/repository/Codec.schema.h>
-#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
-#include <minecpp/service/engine/Api.h>
+
+#include "minecpp/game/player/Id.h"
+#include "minecpp/nbt/repository/Registry.schema.h"
+#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
+#include "minecpp/service/engine/Api.h"
+
 #include <string>
 #include <vector>
 

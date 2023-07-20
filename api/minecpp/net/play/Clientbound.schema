@@ -2,6 +2,10 @@ generator = "net"
 package minecpp.net.play.cb
 
 [MessageID=0x00]
+record BundleDelimiter {
+}
+
+[MessageID=0x01]
 record SpawnEntity {
     entity_id: EntityID
     unique_id: uuid
@@ -14,14 +18,14 @@ record SpawnEntity {
     velocity: Vector3s
 }
 
-[MessageID=0x01]
+[MessageID=0x02]
 record SpawnExperienceOrb {
     entity_id: EntityID
     position: Vector3
     xp_value: int16
 }
 
-[MessageID=0x02]
+[MessageID=0x03]
 record SpawnPlayer {
     entity_id: EntityID
     player_id: uuid
@@ -30,30 +34,30 @@ record SpawnPlayer {
     pitch: uint8
 }
 
-[MessageID=0x03]
+[MessageID=0x04]
 record AnimateEntity {
     entity_id: EntityID
     type: uint8
 }
 
-[MessageID=0x05]
+[MessageID=0x06]
 record AcknowledgeBlockChanges {
     sequence_id: uvarint
 }
 
-[MessageID=0x09]
+[MessageID=0x0A]
 record BlockChange {
     block_position: uint64
     block_id: varint
 }
 
-[MessageID=0x0B]
+[MessageID=0x0C]
 record Difficulty {
     difficulty: uint8
     locked: int8
 }
 
-[MessageID=0x12]
+[MessageID=0x14]
 record SetSlot {
     window_id: uint8
     state_id: varint
@@ -61,29 +65,29 @@ record SetSlot {
     slot: optional[Slot]
 }
 
-[MessageID=0x15]
+[MessageID=0x17]
 record PluginMessage {
     key: string
     value: string
 }
 
-[MessageID=0x17]
+[MessageID=0x1A]
 record Disconnect {
     reason: string
 }
 
-[MessageID=0x19]
+[MessageID=0x1C]
 record EntityStatus {
     entity_id: int32
     opcode: int8
 }
 
-[MessageID=0x1B]
+[MessageID=0x1E]
 record UnloadChunk {
     position: Vector2i
 }
 
-[MessageID=0x1F]
+[MessageID=0x23]
 record KeepAlive {
     time: int64
 }
@@ -96,8 +100,6 @@ record BlockEntity {
 }
 
 record LightData {
-  trust_edges: bool
-
   sky_light_mask: list[uint64]
   block_light_mask: list[uint64]
   empty_sky_light_mask: list[uint64]
@@ -107,7 +109,7 @@ record LightData {
   block_light: list[list[uint8]]
 }
 
-[MessageID=0x20]
+[MessageID=0x24]
 record UpdateChunk {
     position: Vector2i
     heightmaps: nbt.chunk.HeightmapsNet
@@ -116,7 +118,7 @@ record UpdateChunk {
     light_data: LightData
 }
 
-[MessageID=0x23]
+[MessageID=0x27]
 record UpdateLight {
     position: Vector2vi
     light_data: LightData
@@ -124,10 +126,10 @@ record UpdateLight {
 
 record DeathLocation {
     dimension: string
-    position: int64
+    position: uint64
 }
 
-[MessageID=0x24]
+[MessageID=0x28]
 record JoinGame {
     entity_id: uint32
     is_hardcode: bool
@@ -139,7 +141,7 @@ record JoinGame {
     dimension_name: string
     world_name: string
     seed: uint64
-    max_players: uint8
+    max_players: varint
     view_distance: varint
     simulation_distance: varint
     reduced_debug_info: int8
@@ -147,16 +149,17 @@ record JoinGame {
     is_debug: bool
     is_flat: bool
     death_location: optional[DeathLocation]
+    portal_cooldown: varint
 }
 
-[MessageID=0x27]
+[MessageID=0x2B]
 record EntityRelativeMove {
     entity_id: EntityID
     difference: Vector3s
     is_on_ground: bool
 }
 
-[MessageID=0x28]
+[MessageID=0x2C]
 record EntityMove {
     entity_id: EntityID
     difference: Vector3s
@@ -165,7 +168,7 @@ record EntityMove {
     is_on_ground: bool
 }
 
-[MessageID=0x29]
+[MessageID=0x2D]
 record EntityLook {
     entity_id: EntityID
     yaw: uint8
@@ -173,21 +176,20 @@ record EntityLook {
     is_on_ground: bool
 }
 
-[MessageID=0x30]
+[MessageID=0x34]
 record PlayerAbilities {
     flags: uint8
     fly_speed: float32
     field_of_view: float32
 }
 
-[MessageID=0x34]
+[MessageID=0x38]
 record DisplayDeathScreen {
   victim_entity_id: EntityID
-  killer_entity_id: uint32
   message: string
 }
 
-[MessageID=0x35]
+[MessageID=0x39]
 record RemovePlayerInfo {
     player_ids: list[uuid]
 }
@@ -252,7 +254,7 @@ record PlayerInfoChange {
     set_display_name: optional[ActionSetDisplayName]
 }
 
-[MessageID=0x36]
+[MessageID=0x3A]
 record UpdatePlayerInfo {
     /* Action bits specify with bit fields which actions
      * should be included in the message.
@@ -271,14 +273,13 @@ record UpdatePlayerInfo {
     actions: list[PlayerInfoChange]
 }
 
-[MessageID=0x38]
+[MessageID=0x3C]
 record PlayerPositionLook {
     position: Vector3
     yaw: float32
     pitch: float32
     flags: uint8
     teleport_id: varint
-    has_dismounted_vehicle: bool
 }
 
 record RecipeGui {
@@ -290,7 +291,7 @@ record RecipeList {
     recipes: list[string]
 }
 
-[MessageID=0x39]
+[MessageID=0x3D]
 record RecipeBook {
   state: varint
   crafting_table: RecipeGui 
@@ -304,12 +305,12 @@ record RecipeBook {
   additional_recipes: optional[RecipeList]
 }
 
-[MessageID=0x3A]
+[MessageID=0x3E]
 record RemoveEntities {
   entity_ids: list[EntityID]
 }
 
-[MessageID=0x3D]
+[MessageID=0x41]
 record Respawn {
   dimension_codec: string
   dimension_name: string
@@ -320,39 +321,39 @@ record Respawn {
   is_flat: bool
   should_copy_metadata: uint8
   death_location: DeathLocation
+  portal_cooldown: varint
 }
 
-[MessageID=0x3E]
+[MessageID=0x42]
 record EntityHeadLook {
   entity_id: EntityID
   yaw: uint8
 }
 
-[MessageID=0x3F]
+[MessageID=0x43]
 record MultiBlockChange {
   chunk_position: uint64
-  should_distrust_edges: bool
   block_changes: list[varlong]
 }
 
-[MessageID=0x49]
+[MessageID=0x4D]
 record ChangeHeldItem {
   item_index: int8
 }
 
-[MessageID=0x4A]
+[MessageID=0x4E]
 record UpdateChunkPosition {
   chunk_position: Vector2vi
 }
 
-[MessageID=0x4C]
+[MessageID=0x50]
 record SetDefaultSpawnPosition {
   position: uint64
   angle: float32
 }
 
 
-[MessageID=0x4E]
+[MessageID=0x52]
 record SetEntityMetadata {
   entity_id: EntityID
 
@@ -372,40 +373,41 @@ record SetEntityMetadata {
   ]]
 }
 
-[MessageID=0x50]
+[MessageID=0x54]
 record SetEntityVelocity {
   entity_id: EntityID
   velocity: Vector3s
 }
 
-[MessageID=0x51]
+[MessageID=0x55]
 record SetEquipment {
   entity_id: EntityID
+  // TODO: Support array
   slot_id: int8
   slot: optional[Slot]
 }
 
-[MessageID=0x53]
+[MessageID=0x57]
 record SetHealth {
   health: float32
   food: varint
   food_saturation: float32
 }
 
-[MessageID=0x60]
+[MessageID=0x64]
 record SystemChat {
   message: string
-  type: int8
+  is_actionbar: bool
 }
 
-[MessageID=0x63]
+[MessageID=0x67]
 record PickupItem {
   collected_entity_id: EntityID
   collector_entity_id: EntityID
   count: varint
 }
 
-[MessageID=0x64]
+[MessageID=0x68]
 record TeleportEntity {
   entity_id: EntityID
   position: Vector3

@@ -3,8 +3,17 @@
 
 namespace minecpp::net::play::cb {
 
-void SpawnEntity::serialize(::minecpp::network::message::Writer &writer) const {
+void BundleDelimiter::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x00);
+}
+
+BundleDelimiter BundleDelimiter::deserialize(::minecpp::network::message::Reader &/*reader*/) {
+   BundleDelimiter result;
+   return result;
+}
+
+void SpawnEntity::serialize(::minecpp::network::message::Writer &writer) const {
+   writer.write_byte(0x01);
    writer.write_uvarint(this->entity_id);
    writer.write_uuid(this->unique_id);
    writer.write_varint(this->entity_type);
@@ -31,7 +40,7 @@ SpawnEntity SpawnEntity::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void SpawnExperienceOrb::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x01);
+   writer.write_byte(0x02);
    writer.write_uvarint(this->entity_id);
    this->position.serialize(writer);
    writer.write_big_endian(this->xp_value);
@@ -46,7 +55,7 @@ SpawnExperienceOrb SpawnExperienceOrb::deserialize(::minecpp::network::message::
 }
 
 void SpawnPlayer::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x02);
+   writer.write_byte(0x03);
    writer.write_uvarint(this->entity_id);
    writer.write_uuid(this->player_id);
    this->position.serialize(writer);
@@ -65,7 +74,7 @@ SpawnPlayer SpawnPlayer::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void AnimateEntity::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x03);
+   writer.write_byte(0x04);
    writer.write_uvarint(this->entity_id);
    writer.write_byte(this->type);
 }
@@ -78,7 +87,7 @@ AnimateEntity AnimateEntity::deserialize(::minecpp::network::message::Reader &re
 }
 
 void AcknowledgeBlockChanges::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x05);
+   writer.write_byte(0x06);
    writer.write_uvarint(this->sequence_id);
 }
 
@@ -89,7 +98,7 @@ AcknowledgeBlockChanges AcknowledgeBlockChanges::deserialize(::minecpp::network:
 }
 
 void BlockChange::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x09);
+   writer.write_byte(0x0A);
    writer.write_big_endian(this->block_position);
    writer.write_varint(this->block_id);
 }
@@ -102,7 +111,7 @@ BlockChange BlockChange::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void Difficulty::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x0B);
+   writer.write_byte(0x0C);
    writer.write_byte(this->difficulty);
    writer.write_sbyte(this->locked);
 }
@@ -115,7 +124,7 @@ Difficulty Difficulty::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void SetSlot::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x12);
+   writer.write_byte(0x14);
    writer.write_byte(this->window_id);
    writer.write_varint(this->state_id);
    writer.write_big_endian(this->slot_id);
@@ -140,7 +149,7 @@ SetSlot SetSlot::deserialize(::minecpp::network::message::Reader &reader) {
 }
 
 void PluginMessage::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x15);
+   writer.write_byte(0x17);
    writer.write_string(this->key);
    writer.write_string(this->value);
 }
@@ -153,7 +162,7 @@ PluginMessage PluginMessage::deserialize(::minecpp::network::message::Reader &re
 }
 
 void Disconnect::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x17);
+   writer.write_byte(0x1A);
    writer.write_string(this->reason);
 }
 
@@ -164,7 +173,7 @@ Disconnect Disconnect::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void EntityStatus::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x19);
+   writer.write_byte(0x1C);
    writer.write_big_endian(this->entity_id);
    writer.write_sbyte(this->opcode);
 }
@@ -177,7 +186,7 @@ EntityStatus EntityStatus::deserialize(::minecpp::network::message::Reader &read
 }
 
 void UnloadChunk::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x1B);
+   writer.write_byte(0x1E);
    this->position.serialize(writer);
 }
 
@@ -188,7 +197,7 @@ UnloadChunk UnloadChunk::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void KeepAlive::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x1F);
+   writer.write_byte(0x23);
    writer.write_big_endian(this->time);
 }
 
@@ -215,7 +224,6 @@ BlockEntity BlockEntity::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void LightData::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_bool(this->trust_edges);
    writer.write_varint(static_cast<std::int32_t>(this->sky_light_mask.size()));
    for (const auto &sky_light_mask_value_0 : this->sky_light_mask) {
       writer.write_big_endian(sky_light_mask_value_0);
@@ -250,7 +258,6 @@ void LightData::serialize(::minecpp::network::message::Writer &writer) const {
 
 LightData LightData::deserialize(::minecpp::network::message::Reader &reader) {
    LightData result;
-   result.trust_edges = reader.read_bool();
    auto sky_light_mask_size_0 = reader.read_varint();
    result.sky_light_mask.resize(static_cast<std::size_t>(sky_light_mask_size_0));
    std::generate(result.sky_light_mask.begin(), result.sky_light_mask.end(), [&reader]() {
@@ -297,7 +304,7 @@ LightData LightData::deserialize(::minecpp::network::message::Reader &reader) {
 }
 
 void UpdateChunk::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x20);
+   writer.write_byte(0x24);
    this->position.serialize(writer);
    this->heightmaps.serialize(writer.raw_stream(), "");
    writer.write_varint(static_cast<std::int32_t>(this->data.size()));
@@ -330,7 +337,7 @@ UpdateChunk UpdateChunk::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void UpdateLight::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x23);
+   writer.write_byte(0x27);
    this->position.serialize(writer);
    this->light_data.serialize(writer);
 }
@@ -350,12 +357,12 @@ void DeathLocation::serialize(::minecpp::network::message::Writer &writer) const
 DeathLocation DeathLocation::deserialize(::minecpp::network::message::Reader &reader) {
    DeathLocation result;
    result.dimension = reader.read_string();
-   result.position = reader.read_big_endian<std::int64_t>();
+   result.position = reader.read_big_endian<std::uint64_t>();
    return result;
 }
 
 void JoinGame::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x24);
+   writer.write_byte(0x28);
    writer.write_big_endian(this->entity_id);
    writer.write_bool(this->is_hardcode);
    writer.write_sbyte(this->game_mode);
@@ -368,7 +375,7 @@ void JoinGame::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_string(this->dimension_name);
    writer.write_string(this->world_name);
    writer.write_big_endian(this->seed);
-   writer.write_byte(this->max_players);
+   writer.write_varint(this->max_players);
    writer.write_varint(this->view_distance);
    writer.write_varint(this->simulation_distance);
    writer.write_sbyte(this->reduced_debug_info);
@@ -381,6 +388,7 @@ void JoinGame::serialize(::minecpp::network::message::Writer &writer) const {
    } else {
       writer.write_byte(0);
    }
+   writer.write_varint(this->portal_cooldown);
 }
 
 JoinGame JoinGame::deserialize(::minecpp::network::message::Reader &reader) {
@@ -398,7 +406,7 @@ JoinGame JoinGame::deserialize(::minecpp::network::message::Reader &reader) {
    result.dimension_name = reader.read_string();
    result.world_name = reader.read_string();
    result.seed = reader.read_big_endian<std::uint64_t>();
-   result.max_players = reader.read_byte();
+   result.max_players = reader.read_varint();
    result.view_distance = reader.read_varint();
    result.simulation_distance = reader.read_varint();
    result.reduced_debug_info = reader.read_sbyte();
@@ -409,11 +417,12 @@ JoinGame JoinGame::deserialize(::minecpp::network::message::Reader &reader) {
    if (death_location_has_value_0) {
       result.death_location = DeathLocation::deserialize(reader);
    }
+   result.portal_cooldown = reader.read_varint();
    return result;
 }
 
 void EntityRelativeMove::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x27);
+   writer.write_byte(0x2B);
    writer.write_uvarint(this->entity_id);
    this->difference.serialize(writer);
    writer.write_bool(this->is_on_ground);
@@ -428,7 +437,7 @@ EntityRelativeMove EntityRelativeMove::deserialize(::minecpp::network::message::
 }
 
 void EntityMove::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x28);
+   writer.write_byte(0x2C);
    writer.write_uvarint(this->entity_id);
    this->difference.serialize(writer);
    writer.write_byte(this->yaw);
@@ -447,7 +456,7 @@ EntityMove EntityMove::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void EntityLook::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x29);
+   writer.write_byte(0x2D);
    writer.write_uvarint(this->entity_id);
    writer.write_byte(this->yaw);
    writer.write_byte(this->pitch);
@@ -464,7 +473,7 @@ EntityLook EntityLook::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void PlayerAbilities::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x30);
+   writer.write_byte(0x34);
    writer.write_byte(this->flags);
    writer.write_float(this->fly_speed);
    writer.write_float(this->field_of_view);
@@ -479,22 +488,20 @@ PlayerAbilities PlayerAbilities::deserialize(::minecpp::network::message::Reader
 }
 
 void DisplayDeathScreen::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x34);
+   writer.write_byte(0x38);
    writer.write_uvarint(this->victim_entity_id);
-   writer.write_big_endian(this->killer_entity_id);
    writer.write_string(this->message);
 }
 
 DisplayDeathScreen DisplayDeathScreen::deserialize(::minecpp::network::message::Reader &reader) {
    DisplayDeathScreen result;
    result.victim_entity_id = reader.read_uvarint();
-   result.killer_entity_id = reader.read_big_endian<std::uint32_t>();
    result.message = reader.read_string();
    return result;
 }
 
 void RemovePlayerInfo::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x35);
+   writer.write_byte(0x39);
    writer.write_varint(static_cast<std::int32_t>(this->player_ids.size()));
    for (const auto &player_ids_value_0 : this->player_ids) {
       writer.write_uuid(player_ids_value_0);
@@ -687,7 +694,7 @@ PlayerInfoChange PlayerInfoChange::deserialize(::minecpp::network::message::Read
 }
 
 void UpdatePlayerInfo::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x36);
+   writer.write_byte(0x3A);
    writer.write_byte(this->action_bits);
    writer.write_varint(static_cast<std::int32_t>(this->actions.size()));
    for (const auto &actions_value_0 : this->actions) {
@@ -707,13 +714,12 @@ UpdatePlayerInfo UpdatePlayerInfo::deserialize(::minecpp::network::message::Read
 }
 
 void PlayerPositionLook::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x38);
+   writer.write_byte(0x3C);
    this->position.serialize(writer);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
    writer.write_byte(this->flags);
    writer.write_varint(this->teleport_id);
-   writer.write_bool(this->has_dismounted_vehicle);
 }
 
 PlayerPositionLook PlayerPositionLook::deserialize(::minecpp::network::message::Reader &reader) {
@@ -723,7 +729,6 @@ PlayerPositionLook PlayerPositionLook::deserialize(::minecpp::network::message::
    result.pitch = reader.read_float();
    result.flags = reader.read_byte();
    result.teleport_id = reader.read_varint();
-   result.has_dismounted_vehicle = reader.read_bool();
    return result;
 }
 
@@ -757,7 +762,7 @@ RecipeList RecipeList::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void RecipeBook::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x39);
+   writer.write_byte(0x3D);
    writer.write_varint(this->state);
    this->crafting_table.serialize(writer);
    this->furnace.serialize(writer);
@@ -792,7 +797,7 @@ RecipeBook RecipeBook::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void RemoveEntities::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x3A);
+   writer.write_byte(0x3E);
    writer.write_varint(static_cast<std::int32_t>(this->entity_ids.size()));
    for (const auto &entity_ids_value_0 : this->entity_ids) {
       writer.write_uvarint(entity_ids_value_0);
@@ -810,7 +815,7 @@ RemoveEntities RemoveEntities::deserialize(::minecpp::network::message::Reader &
 }
 
 void Respawn::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x3D);
+   writer.write_byte(0x41);
    writer.write_string(this->dimension_codec);
    writer.write_string(this->dimension_name);
    writer.write_big_endian(this->seed);
@@ -820,6 +825,7 @@ void Respawn::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_bool(this->is_flat);
    writer.write_byte(this->should_copy_metadata);
    this->death_location.serialize(writer);
+   writer.write_varint(this->portal_cooldown);
 }
 
 Respawn Respawn::deserialize(::minecpp::network::message::Reader &reader) {
@@ -833,11 +839,12 @@ Respawn Respawn::deserialize(::minecpp::network::message::Reader &reader) {
    result.is_flat = reader.read_bool();
    result.should_copy_metadata = reader.read_byte();
    result.death_location = DeathLocation::deserialize(reader);
+   result.portal_cooldown = reader.read_varint();
    return result;
 }
 
 void EntityHeadLook::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x3E);
+   writer.write_byte(0x42);
    writer.write_uvarint(this->entity_id);
    writer.write_byte(this->yaw);
 }
@@ -850,9 +857,8 @@ EntityHeadLook EntityHeadLook::deserialize(::minecpp::network::message::Reader &
 }
 
 void MultiBlockChange::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x3F);
+   writer.write_byte(0x43);
    writer.write_big_endian(this->chunk_position);
-   writer.write_bool(this->should_distrust_edges);
    writer.write_varint(static_cast<std::int32_t>(this->block_changes.size()));
    for (const auto &block_changes_value_0 : this->block_changes) {
       writer.write_varlong(block_changes_value_0);
@@ -862,7 +868,6 @@ void MultiBlockChange::serialize(::minecpp::network::message::Writer &writer) co
 MultiBlockChange MultiBlockChange::deserialize(::minecpp::network::message::Reader &reader) {
    MultiBlockChange result;
    result.chunk_position = reader.read_big_endian<std::uint64_t>();
-   result.should_distrust_edges = reader.read_bool();
    auto block_changes_size_0 = reader.read_varint();
    result.block_changes.resize(static_cast<std::size_t>(block_changes_size_0));
    std::generate(result.block_changes.begin(), result.block_changes.end(), [&reader]() {
@@ -872,7 +877,7 @@ MultiBlockChange MultiBlockChange::deserialize(::minecpp::network::message::Read
 }
 
 void ChangeHeldItem::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x49);
+   writer.write_byte(0x4D);
    writer.write_sbyte(this->item_index);
 }
 
@@ -883,7 +888,7 @@ ChangeHeldItem ChangeHeldItem::deserialize(::minecpp::network::message::Reader &
 }
 
 void UpdateChunkPosition::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x4A);
+   writer.write_byte(0x4E);
    this->chunk_position.serialize(writer);
 }
 
@@ -894,7 +899,7 @@ UpdateChunkPosition UpdateChunkPosition::deserialize(::minecpp::network::message
 }
 
 void SetDefaultSpawnPosition::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x4C);
+   writer.write_byte(0x50);
    writer.write_big_endian(this->position);
    writer.write_float(this->angle);
 }
@@ -907,7 +912,7 @@ SetDefaultSpawnPosition SetDefaultSpawnPosition::deserialize(::minecpp::network:
 }
 
 void SetEntityMetadata::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x4E);
+   writer.write_byte(0x52);
    writer.write_uvarint(this->entity_id);
    for (const auto &[data_key_0, data_value_0] : this->data) {
       writer.write_byte(data_key_0);
@@ -1021,7 +1026,7 @@ SetEntityMetadata SetEntityMetadata::deserialize(::minecpp::network::message::Re
 }
 
 void SetEntityVelocity::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x50);
+   writer.write_byte(0x54);
    writer.write_uvarint(this->entity_id);
    this->velocity.serialize(writer);
 }
@@ -1034,7 +1039,7 @@ SetEntityVelocity SetEntityVelocity::deserialize(::minecpp::network::message::Re
 }
 
 void SetEquipment::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x51);
+   writer.write_byte(0x55);
    writer.write_uvarint(this->entity_id);
    writer.write_sbyte(this->slot_id);
    if (this->slot.has_value()) {
@@ -1057,7 +1062,7 @@ SetEquipment SetEquipment::deserialize(::minecpp::network::message::Reader &read
 }
 
 void SetHealth::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x53);
+   writer.write_byte(0x57);
    writer.write_float(this->health);
    writer.write_varint(this->food);
    writer.write_float(this->food_saturation);
@@ -1072,20 +1077,20 @@ SetHealth SetHealth::deserialize(::minecpp::network::message::Reader &reader) {
 }
 
 void SystemChat::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x60);
+   writer.write_byte(0x64);
    writer.write_string(this->message);
-   writer.write_sbyte(this->type);
+   writer.write_bool(this->is_actionbar);
 }
 
 SystemChat SystemChat::deserialize(::minecpp::network::message::Reader &reader) {
    SystemChat result;
    result.message = reader.read_string();
-   result.type = reader.read_sbyte();
+   result.is_actionbar = reader.read_bool();
    return result;
 }
 
 void PickupItem::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x63);
+   writer.write_byte(0x67);
    writer.write_uvarint(this->collected_entity_id);
    writer.write_uvarint(this->collector_entity_id);
    writer.write_varint(this->count);
@@ -1100,7 +1105,7 @@ PickupItem PickupItem::deserialize(::minecpp::network::message::Reader &reader) 
 }
 
 void TeleportEntity::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x64);
+   writer.write_byte(0x68);
    writer.write_uvarint(this->entity_id);
    this->position.serialize(writer);
    writer.write_byte(this->yaw);
