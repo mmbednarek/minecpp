@@ -7,7 +7,7 @@
 
 namespace minecpp::service::front {
 
-constexpr auto g_protocol_version = 761;
+constexpr auto g_protocol_version = 763;
 constexpr auto g_disconnect_message =
         R"({"extra":[{"color": "red", "bold": true, "text": "Disconnected"}, {"color":"gray", "text": " invalid protocol version"}], "text": ""})";
 

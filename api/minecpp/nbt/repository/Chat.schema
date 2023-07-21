@@ -1,0 +1,35 @@
+generator = "nbt"
+package minecpp.nbt.repository
+
+[NBT]
+record ChatDecorationStyle {
+   color: string
+   italic: int8
+   bold: int8
+}
+
+[NBT]
+record ChatDetails {
+   parameters: list[string]
+   style: optional[ChatDecorationStyle]
+   translation_key: string
+}
+
+[NBT]
+record ChatTypeDescription {
+   chat: ChatDetails
+   narration: ChatDetails
+}
+
+[NBT]
+record ChatTypeEntry {
+   name: string
+   id: int32
+   element: ChatTypeDescription
+}
+
+[NBT]
+record ChatTypes {
+   type: string
+   value: list[ChatTypeEntry]
+}

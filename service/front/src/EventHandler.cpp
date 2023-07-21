@@ -73,6 +73,7 @@ void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &spawn,
                                        const event::RecipientList &recipient_list)
 {
    auto player_id = game::player::read_id_from_proto(spawn.player_id());
+   spdlog::info("event-handler: spawning player {}", boost::uuids::to_string(player_id));
 
    auto spawn_player = net::play::cb::SpawnPlayer{
            .entity_id = spawn.entity().entity_id(),
@@ -123,11 +124,16 @@ void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
 void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
                                       const event::RecipientList &recipient_list)
 {
-   net::play::cb::EntityLook entity_look{
-           .entity_id    = pos.entity_id(),
+   net::play::cb::EntityMove entity_look{
+           .entity_id = pos.entity_id(),
+           .difference{
+                       .x = 0,
+                       .y = 0,
+                       .z = 0,
+                       },
            .yaw          = encode_angle(pos.rotation().yaw()),
            .pitch        = encode_angle(pos.rotation().pitch()),
-           .is_on_ground = true,
+           .is_on_ground = pos.is_on_ground(),
    };
    send_message(entity_look, recipient_list);
 
@@ -142,8 +148,8 @@ void EventHandler::handle_chat(const clientbound_v1::Chat &chat_msg,
                                const event::RecipientList &recipient_list)
 {
    net::play::cb::SystemChat chat{
-           .message = chat_msg.message(),
-           .type    = static_cast<std::int8_t>(chat_msg.type()),
+           .message      = chat_msg.message(),
+           .is_actionbar = chat_msg.type() == 1,
    };
    send_message(chat, recipient_list);
 }
@@ -446,11 +452,7 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
                                              const event::RecipientList &recipient_list)
 {
    for (auto &chunk : msg.block_light()) {
-      net::play::cb::UpdateLight update_block_light{
-              .light_data{
-                          .trust_edges = true,
-                          }
-      };
+      net::play::cb::UpdateLight update_block_light{};
       update_block_light.position = net::play::Vector2vi{chunk.position().x(), chunk.position().z()};
       update_block_light.light_data.block_light.resize(chunk.sections_size());
 
@@ -561,9 +563,6 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
                      .y = msg.chunk().position().z(),
                      },
            .data = get_chunk_data(msg.chunk()),
-           .light_data{
-                     .trust_edges = true,
-                     }
    };
 
    chunk_data.heightmaps.motion_blocking.resize(msg.chunk().hm_motion_blocking_size());
@@ -663,11 +662,10 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
                               .y = msg.position().y(),
                               .z = msg.position().z(),
                               },
-           .yaw                    = msg.rotation().yaw(),
-           .pitch                  = msg.rotation().pitch(),
-           .flags                  = 0,
-           .teleport_id            = 0,
-           .has_dismounted_vehicle = false,
+           .yaw         = msg.rotation().yaw(),
+           .pitch       = msg.rotation().pitch(),
+           .flags       = 0,
+           .teleport_id = 0,
    };
 
    for (auto player_id : recipient_list.list) {
@@ -813,7 +811,6 @@ void EventHandler::handle_display_death_screen(const clientbound_v1::DisplayDeat
 {
    net::play::cb::DisplayDeathScreen display_death_screen{
            .victim_entity_id = msg.victim_entity_id(),
-           .killer_entity_id = msg.killer_entity_id(),
            .message          = msg.death_message(),
    };
    send_message(display_death_screen, recipient_list);
@@ -827,7 +824,7 @@ void EventHandler::handle_respawn(const clientbound_v1::Respawn &msg,
            .dimension_name  = msg.dimension_name(),
 
            .seed               = static_cast<uint64_t>(msg.hashed_seed()),
-           .game_mode          = static_cast<int8_t>(msg.game_mode()),
+           .game_mode          = static_cast<uint8_t>(msg.game_mode()),
            .previous_game_mode = static_cast<int8_t>(msg.game_mode()),
 
            .is_debug             = msg.is_debug(),
@@ -837,7 +834,7 @@ void EventHandler::handle_respawn(const clientbound_v1::Respawn &msg,
    if (msg.has_death_location()) {
       respawn.death_location = net::play::cb::DeathLocation{
               .dimension = msg.death_dimension(),
-              .position  = static_cast<int64_t>(math::Vector3::from_proto(msg.death_position()).sum()),
+              .position  = static_cast<uint64_t>(math::Vector3::from_proto(msg.death_position()).sum()),
       };
    }
 
@@ -896,6 +893,23 @@ void EventHandler::set_client(engine::Client *client)
 void EventHandler::visit_event(const proto::event::clientbound::Event &event)
 {
    event::visit_clientbound(event, *this);
+}
+
+void EventHandler::handle_raw_message(const clientbound_v1::RawMessage &msg,
+                                      const event::RecipientList &recipient_list)
+{
+   struct RawMsg
+   {
+      const clientbound_v1::RawMessage &msg;
+
+      void serialize(::minecpp::network::message::Writer &writer) const
+      {
+         writer.write_bytes(msg.message_data().data(), msg.message_data().size());
+      }
+   };
+
+   RawMsg raw_message{msg};
+   send_message(raw_message, recipient_list);
 }
 
 }// namespace minecpp::service::front

@@ -24,7 +24,11 @@ void ChatCommand::serialize(::minecpp::network::message::Writer &writer) const {
       writer.write_string(argument_signatures_key_0);
       writer.write_string(argument_signatures_value_0);
    }
-   writer.write_bool(this->is_preview);
+   writer.write_varint(this->message_count);
+   writer.write_varint(static_cast<std::int32_t>(this->acknowledged.size()));
+   for (const auto &acknowledged_value_0 : this->acknowledged) {
+      writer.write_big_endian(acknowledged_value_0);
+   }
 }
 
 ChatCommand ChatCommand::deserialize(::minecpp::network::message::Reader &reader) {
@@ -38,7 +42,12 @@ ChatCommand ChatCommand::deserialize(::minecpp::network::message::Reader &reader
       argument_signatures_key_0 = reader.read_string();
       return std::make_pair(argument_signatures_key_0, reader.read_string());
    });
-   result.is_preview = reader.read_bool();
+   result.message_count = reader.read_varint();
+   auto acknowledged_size_0 = reader.read_varint();
+   result.acknowledged.resize(static_cast<std::size_t>(acknowledged_size_0));
+   std::generate(result.acknowledged.begin(), result.acknowledged.end(), [&reader]() {
+      return reader.read_big_endian<std::uint64_t>();
+   });
    return result;
 }
 
@@ -47,8 +56,17 @@ void ChatMessage::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_string(this->message);
    writer.write_big_endian(this->timestamp);
    writer.write_big_endian(this->salt);
-   writer.write_string(this->salt_data);
-   writer.write_bool(this->is_preview);
+   if (this->signature.has_value()) {
+      writer.write_byte(1);
+      writer.write_string(*this->signature);
+   } else {
+      writer.write_byte(0);
+   }
+   writer.write_varint(this->message_count);
+   writer.write_varint(static_cast<std::int32_t>(this->acknowledged.size()));
+   for (const auto &acknowledged_value_0 : this->acknowledged) {
+      writer.write_big_endian(acknowledged_value_0);
+   }
 }
 
 ChatMessage ChatMessage::deserialize(::minecpp::network::message::Reader &reader) {
@@ -56,13 +74,21 @@ ChatMessage ChatMessage::deserialize(::minecpp::network::message::Reader &reader
    result.message = reader.read_string();
    result.timestamp = reader.read_big_endian<std::uint64_t>();
    result.salt = reader.read_big_endian<std::uint64_t>();
-   result.salt_data = reader.read_string();
-   result.is_preview = reader.read_bool();
+   const auto signature_has_value_0 = reader.read_byte();
+   if (signature_has_value_0) {
+      result.signature = reader.read_string();
+   }
+   result.message_count = reader.read_varint();
+   auto acknowledged_size_0 = reader.read_varint();
+   result.acknowledged.resize(static_cast<std::size_t>(acknowledged_size_0));
+   std::generate(result.acknowledged.begin(), result.acknowledged.end(), [&reader]() {
+      return reader.read_big_endian<std::uint64_t>();
+   });
    return result;
 }
 
 void ClientCommand::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x06);
+   writer.write_byte(0x07);
    writer.write_varint(this->action_id);
 }
 
@@ -73,7 +99,7 @@ ClientCommand ClientCommand::deserialize(::minecpp::network::message::Reader &re
 }
 
 void ClientSettings::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x07);
+   writer.write_byte(0x08);
    writer.write_string(this->locale);
    writer.write_byte(this->view_distance);
    writer.write_varint(this->chat_mode);
@@ -98,7 +124,7 @@ ClientSettings ClientSettings::deserialize(::minecpp::network::message::Reader &
 }
 
 void ClickWindow::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x0A);
+   writer.write_byte(0x0B);
    writer.write_byte(this->window_id);
    writer.write_varint(this->state_id);
    writer.write_big_endian(this->clicked_slot);
@@ -148,7 +174,7 @@ ClickWindow ClickWindow::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void CloseWindow::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x0B);
+   writer.write_byte(0x0C);
    writer.write_byte(this->window_id);
 }
 
@@ -159,7 +185,7 @@ CloseWindow CloseWindow::deserialize(::minecpp::network::message::Reader &reader
 }
 
 void PluginMessage::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x0C);
+   writer.write_byte(0x0D);
    writer.write_string(this->channel);
    writer.write_string(this->data);
 }
@@ -184,7 +210,7 @@ InteractTarget InteractTarget::deserialize(::minecpp::network::message::Reader &
 }
 
 void Interact::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x0F);
+   writer.write_byte(0x10);
    writer.write_varint(this->entity_id);
    writer.write_varint(this->type);
    if (this->target.has_value()) {
@@ -206,7 +232,7 @@ Interact Interact::deserialize(::minecpp::network::message::Reader &reader) {
 }
 
 void KeepAlive::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x11);
+   writer.write_byte(0x12);
    writer.write_big_endian(this->time);
 }
 
@@ -217,7 +243,7 @@ KeepAlive KeepAlive::deserialize(::minecpp::network::message::Reader &reader) {
 }
 
 void SetPlayerPosition::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x13);
+   writer.write_byte(0x14);
    this->position.serialize(writer);
    writer.write_bool(this->is_on_ground);
 }
@@ -230,7 +256,7 @@ SetPlayerPosition SetPlayerPosition::deserialize(::minecpp::network::message::Re
 }
 
 void SetPlayerPositionAndRotation::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x14);
+   writer.write_byte(0x15);
    this->position.serialize(writer);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
@@ -247,7 +273,7 @@ SetPlayerPositionAndRotation SetPlayerPositionAndRotation::deserialize(::minecpp
 }
 
 void SetPlayerRotation::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x15);
+   writer.write_byte(0x16);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
    writer.write_bool(this->is_on_ground);
@@ -262,7 +288,7 @@ SetPlayerRotation SetPlayerRotation::deserialize(::minecpp::network::message::Re
 }
 
 void SetIsPlayerOnGround::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x16);
+   writer.write_byte(0x17);
    writer.write_bool(this->is_on_ground);
 }
 
@@ -273,7 +299,7 @@ SetIsPlayerOnGround SetIsPlayerOnGround::deserialize(::minecpp::network::message
 }
 
 void PlayerDigging::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x1C);
+   writer.write_byte(0x1D);
    writer.write_varint(this->state);
    writer.write_big_endian(this->position);
    writer.write_sbyte(this->facing);
@@ -290,7 +316,7 @@ PlayerDigging PlayerDigging::deserialize(::minecpp::network::message::Reader &re
 }
 
 void PlayerCommand::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(0x1D);
+   writer.write_byte(0x1E);
    writer.write_varint(this->entity_id);
    writer.write_varint(this->action_id);
    writer.write_varint(this->jump_boost);

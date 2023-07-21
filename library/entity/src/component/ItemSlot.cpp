@@ -37,7 +37,7 @@ void ItemSlot::on_begin_intersect(game::IWorld &world, game::Entity &entity, gam
 
 void ItemSlot::serialize_to_proto(proto::entity::Entity *entity) const
 {
-   entity->set_entity_type(45);
+   entity->set_entity_type(54);
 
    auto *metadata = entity->mutable_metadata()->Add();
    metadata->set_index(8);

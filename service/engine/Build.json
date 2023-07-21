@@ -3,6 +3,7 @@
   "api_library": "true",
   "dependencies": {
     "private": [
+      "minecpp_api_schema",
       "minecpp_controller",
       "minecpp_event",
       "minecpp_engine_api",

@@ -61,6 +61,7 @@ message EntityLook {
   player.PlayerId player_id = 1;
   uint32 entity_id = 2;
   common.Rotation rotation = 3;
+  bool is_on_ground = 4;
 }
 
 message PlayerPositionRotation {
@@ -224,4 +225,8 @@ message Respawn {
 
 message SetAbilities {
   entity.Abilities abilities = 1;
+}
+
+message RawMessage {
+  bytes message_data = 1;
 }

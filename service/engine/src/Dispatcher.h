@@ -1,11 +1,14 @@
 #pragma once
+
 #include "ApiHandler.h"
+
+#include "minecpp/chat/Chat.h"
 #include "minecpp/game/Abilities.h"
+#include "minecpp/game/IDispatcher.hpp"
+#include "minecpp/game/player/Id.h"
+#include "minecpp/game/player/Player.h"
+#include "minecpp/network/message/Writer.h"
 #include "minecpp/world/Chunk.h"
-#include <minecpp/chat/Chat.h>
-#include <minecpp/game/IDispatcher.hpp>
-#include <minecpp/game/player/Id.h>
-#include <minecpp/game/player/Player.h>
 
 namespace minecpp::player {
 class Player;
@@ -22,7 +25,6 @@ class EntitySystem;
 namespace minecpp::service::engine {
 
 class EventManager;
-class EntityManager;
 using boost::uuids::uuid;
 
 class Dispatcher : public minecpp::game::IDispatcher
@@ -87,16 +89,63 @@ class Dispatcher : public minecpp::game::IDispatcher
                              game::EntityId killer_entity_id, const std::string &message) override;
    void respawn_player(game::PlayerId player_id) override;
    void set_abilities(game::PlayerId player_id, const game::Abilities &abilities) override;
+   void send_damage_event(game::EntityId target, int id, std::optional<game::EntityId> cause_entity_id,
+                          std::optional<game::EntityId> direct_entity_id,
+                          const math::Vector3 &position) override;
 
  private:
+   void send_to_all(const google::protobuf::Message &message) const;
+   void send_to_player(game::PlayerId player_id, const google::protobuf::Message &message) const;
    void send_to_players_in_view_distance(const math::Vector3 &position,
                                          const google::protobuf::Message &message) const;
    void send_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position,
                                                 const google::protobuf::Message &message) const;
-   void send_to_player_visible_by(game::Entity &entity, const google::protobuf::Message &message) const;
+   void send_to_players_visible_by(game::Entity &entity, const google::protobuf::Message &message) const;
+
+   template<typename TMessage>
+   void send_raw_to_players_in_view_distance(const math::Vector3 &position, const TMessage &message) const
+   {
+      network::message::Writer writer;
+      message.serialize(writer);
+      this->send_to_players_in_view_distance(position, make_raw_message(writer));
+   }
+
+   template<typename TMessage>
+   void send_raw_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position,
+                                                    const TMessage &message) const
+   {
+      network::message::Writer writer;
+      message.serialize(writer);
+      this->send_to_players_in_view_distance_except(player_id, position, make_raw_message(writer));
+   }
+
+   template<typename TMessage>
+   void send_raw_to_player_visible_by(game::Entity &entity, const TMessage &message) const
+   {
+      network::message::Writer writer;
+      message.serialize(writer);
+      this->send_to_players_visible_by(entity, make_raw_message(writer));
+   }
+
+   template<typename TMessage>
+   void send_raw_to_all(const TMessage &message) const
+   {
+      network::message::Writer writer;
+      message.serialize(writer);
+      this->send_to_all(make_raw_message(writer));
+   }
+
+   template<typename TMessage>
+   void send_raw_to_player(game::PlayerId player_id, const TMessage &message) const
+   {
+      network::message::Writer writer;
+      message.serialize(writer);
+      this->send_to_player(player_id, make_raw_message(writer));
+   }
 
    EventManager &m_events;
    entity::EntitySystem &m_entity_system;
+   [[nodiscard]] static proto::event::clientbound::RawMessage make_raw_message(const network::message::Writer &writer) ;
 };
 
 }// namespace minecpp::service::engine

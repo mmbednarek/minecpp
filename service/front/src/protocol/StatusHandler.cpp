@@ -30,7 +30,7 @@ void StatusHandler::on_status(Connection &connection,
    ss << R"({"description":)" << builder.to_string() << R"(,)";
    ss << R"("favicon":"data:image/png;base64,)" << g_favicon << R"(",)";
    ss << R"("players":{"max":10000,"online":6142},)";
-   ss << R"("version":{"name": "1.19.3", "protocol": 761}})";
+   ss << R"("version":{"name": "1.20.1", "protocol": 763}})";
 
    net::status::cb::Status status;
    status.status = ss.str();

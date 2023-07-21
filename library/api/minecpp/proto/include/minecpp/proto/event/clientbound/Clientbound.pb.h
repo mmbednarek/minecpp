@@ -113,6 +113,9 @@ extern PlayerListDefaultTypeInternal _PlayerList_default_instance_;
 class PlayerPositionRotation;
 struct PlayerPositionRotationDefaultTypeInternal;
 extern PlayerPositionRotationDefaultTypeInternal _PlayerPositionRotation_default_instance_;
+class RawMessage;
+struct RawMessageDefaultTypeInternal;
+extern RawMessageDefaultTypeInternal _RawMessage_default_instance_;
 class RecipientAllPlayers;
 struct RecipientAllPlayersDefaultTypeInternal;
 extern RecipientAllPlayersDefaultTypeInternal _RecipientAllPlayers_default_instance_;
@@ -221,6 +224,8 @@ template <>
 ::minecpp::proto::event::clientbound::PlayerList* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::PlayerList>(Arena*);
 template <>
 ::minecpp::proto::event::clientbound::PlayerPositionRotation* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::PlayerPositionRotation>(Arena*);
+template <>
+::minecpp::proto::event::clientbound::RawMessage* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::RawMessage>(Arena*);
 template <>
 ::minecpp::proto::event::clientbound::RecipientAllPlayers* Arena::CreateMaybeMessage<::minecpp::proto::event::clientbound::RecipientAllPlayers>(Arena*);
 template <>
@@ -2024,6 +2029,7 @@ class EntityLook final :
     kPlayerIdFieldNumber = 1,
     kRotationFieldNumber = 3,
     kEntityIdFieldNumber = 2,
+    kIsOnGroundFieldNumber = 4,
   };
   // .minecpp.proto.player.PlayerId player_id = 1;
   bool has_player_id() const;
@@ -2063,6 +2069,16 @@ class EntityLook final :
   void _internal_set_entity_id(::uint32_t value);
 
   public:
+  // bool is_on_ground = 4;
+  void clear_is_on_ground() ;
+  bool is_on_ground() const;
+  void set_is_on_ground(bool value);
+
+  private:
+  bool _internal_is_on_ground() const;
+  void _internal_set_is_on_ground(bool value);
+
+  public:
   // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.EntityLook)
  private:
   class _Internal;
@@ -2076,6 +2092,7 @@ class EntityLook final :
     ::minecpp::proto::player::PlayerId* player_id_;
     ::minecpp::proto::common::Rotation* rotation_;
     ::uint32_t entity_id_;
+    bool is_on_ground_;
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto;
@@ -7470,6 +7487,171 @@ class SetAbilities final :
   };
   union { Impl_ _impl_; };
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto;
+};// -------------------------------------------------------------------
+
+class RawMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.clientbound.RawMessage) */ {
+ public:
+  inline RawMessage() : RawMessage(nullptr) {}
+  ~RawMessage() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RawMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RawMessage(const RawMessage& from);
+  RawMessage(RawMessage&& from) noexcept
+    : RawMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline RawMessage& operator=(const RawMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RawMessage& operator=(RawMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RawMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RawMessage* internal_default_instance() {
+    return reinterpret_cast<const RawMessage*>(
+               &_RawMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    40;
+
+  friend void swap(RawMessage& a, RawMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RawMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RawMessage* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RawMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RawMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RawMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RawMessage& from) {
+    RawMessage::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RawMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "minecpp.proto.event.clientbound.RawMessage";
+  }
+  protected:
+  explicit RawMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMessageDataFieldNumber = 1,
+  };
+  // bytes message_data = 1;
+  void clear_message_data() ;
+  const std::string& message_data() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_message_data(Arg_&& arg, Args_... args);
+  std::string* mutable_message_data();
+  PROTOBUF_NODISCARD std::string* release_message_data();
+  void set_allocated_message_data(std::string* ptr);
+
+  private:
+  const std::string& _internal_message_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message_data(
+      const std::string& value);
+  std::string* _internal_mutable_message_data();
+
+  public:
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.clientbound.RawMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_data_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fclientbound_2fClientbound_2eproto;
 };
 
 // ===================================================================
@@ -8943,6 +9125,26 @@ inline void EntityLook::set_allocated_rotation(::minecpp::proto::common::Rotatio
   }
   _impl_.rotation_ = rotation;
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.EntityLook.rotation)
+}
+
+// bool is_on_ground = 4;
+inline void EntityLook::clear_is_on_ground() {
+  _impl_.is_on_ground_ = false;
+}
+inline bool EntityLook::is_on_ground() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.EntityLook.is_on_ground)
+  return _internal_is_on_ground();
+}
+inline void EntityLook::set_is_on_ground(bool value) {
+  _internal_set_is_on_ground(value);
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.EntityLook.is_on_ground)
+}
+inline bool EntityLook::_internal_is_on_ground() const {
+  return _impl_.is_on_ground_;
+}
+inline void EntityLook::_internal_set_is_on_ground(bool value) {
+  ;
+  _impl_.is_on_ground_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -12148,6 +12350,57 @@ inline void SetAbilities::set_allocated_abilities(::minecpp::proto::entity::Abil
   }
   _impl_.abilities_ = abilities;
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.SetAbilities.abilities)
+}
+
+// -------------------------------------------------------------------
+
+// RawMessage
+
+// bytes message_data = 1;
+inline void RawMessage::clear_message_data() {
+  _impl_.message_data_.ClearToEmpty();
+}
+inline const std::string& RawMessage::message_data() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.clientbound.RawMessage.message_data)
+  return _internal_message_data();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RawMessage::set_message_data(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.message_data_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.clientbound.RawMessage.message_data)
+}
+inline std::string* RawMessage::mutable_message_data() {
+  std::string* _s = _internal_mutable_message_data();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.clientbound.RawMessage.message_data)
+  return _s;
+}
+inline const std::string& RawMessage::_internal_message_data() const {
+  return _impl_.message_data_.Get();
+}
+inline void RawMessage::_internal_set_message_data(const std::string& value) {
+  ;
+
+
+  _impl_.message_data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RawMessage::_internal_mutable_message_data() {
+  ;
+  return _impl_.message_data_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RawMessage::release_message_data() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.clientbound.RawMessage.message_data)
+  return _impl_.message_data_.Release();
+}
+inline void RawMessage::set_allocated_message_data(std::string* value) {
+  _impl_.message_data_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.message_data_.IsDefault()) {
+          _impl_.message_data_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.clientbound.RawMessage.message_data)
 }
 
 #ifdef __GNUC__

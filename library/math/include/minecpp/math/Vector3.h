@@ -86,3 +86,21 @@ struct fmt::formatter<minecpp::math::Vector3f>
       return ::fmt::format_to(ctx.out(), "{}, {}, {}", s.x(), s.y(), s.z());
    }
 };
+
+template<>
+struct fmt::formatter<minecpp::math::Vector3s>
+{
+   using Self = minecpp::math::Vector3s;
+
+   template<typename ParseContext>
+   constexpr auto parse(ParseContext &ctx)
+   {
+      return ctx.begin();
+   }
+
+   template<typename FormatContext>
+   auto format(const Self &s, FormatContext &ctx)
+   {
+      return ::fmt::format_to(ctx.out(), "{}, {}, {}", s.x(), s.y(), s.z());
+   }
+};

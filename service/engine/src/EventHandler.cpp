@@ -546,6 +546,8 @@ void EventHandler::handle_pre_initial_chunks(const serverbound_v1::PreInitialChu
    assert(entity->has_component<StreamerComponent>());
    assert(entity->has_component<InventoryComponent>());
 
+   m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
+
    auto result = entity->component<StreamerComponent>().send_all_visible_chunks(
            m_world, player_id, entity->component<LocationComponent>().position());
    if (result.has_failed()) {
@@ -580,11 +582,10 @@ void EventHandler::handle_post_initial_chunks(const serverbound_v1::PostInitialC
 
    entity->component<InventoryComponent>().synchronize_inventory(m_dispatcher);
 
-   m_dispatcher.player_list(player_id, m_player_manager.player_status_list());
-
    m_dispatcher.synchronise_player_position_and_rotation(player_id,
                                                          entity->component<LocationComponent>().position(),
                                                          entity->component<RotationComponent>().rotation());
+   m_dispatcher.teleport_entity(entity->id(), entity->component<LocationComponent>().position(), entity->component<RotationComponent>().rotation(), entity->component<LocationComponent>().is_on_ground());
 
    m_dispatcher.set_spawn_position(player_id, game::BlockPosition(),
                                    entity->component<entity::component::Rotation>().pitch_degrees());

@@ -4,12 +4,22 @@ set(MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR ${MINECPP_API_MINECPP_
 target_sources(minecpp_api_schema
     # Source files
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Codec.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Biome.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Chat.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Damage.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Dimension.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Registry.schema.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Repository.schema.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Trim.schema.cpp
 
     # Header files
     PUBLIC
-        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Codec.schema.h
+        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Biome.schema.h
+        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Chat.schema.h
+        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Damage.schema.h
+        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Dimension.schema.h
+        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Registry.schema.h
         ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Repository.schema.h
+        ${MINECPP_API_MINECPP_SCHEMA_NBT_REPOSITORY_INCLUDE_DIR}/Trim.schema.h
 )
 
