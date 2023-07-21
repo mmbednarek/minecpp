@@ -206,7 +206,7 @@ void Writer::write_bool(bool value)
    this->write_byte(value ? 1 : 0);
 }
 
-std::string_view Writer::view()
+std::string_view Writer::view() const
 {
    return m_stream.view();
 }

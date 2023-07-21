@@ -29,7 +29,7 @@ class PlayerManager : public game::player::Provider
  public:
    PlayerManager(entity::EntitySystem &entity_system, game::BlockPosition spawn_position);
 
-   mb::result<mb::empty> join_player(minecpp::game::IWorld &w, const std::string &name, game::PlayerId id);
+   mb::result<mb::empty> join_player(minecpp::game::IWorld &world, const std::string &name, game::PlayerId id);
    mb::result<game::Entity> respawn_player(game::IWorld &world, game::PlayerId player_id);
    mb::result<nbt::player::Player> load_player_data(minecpp::game::IWorld &w, game::PlayerId id) const;
    mb::emptyres mark_player_as_dead(game::PlayerId id);

@@ -71,6 +71,17 @@ record PluginMessage {
     value: string
 }
 
+[MessageID=0x18]
+record DamageEvent {
+    entity_id: EntityID
+    type_id: varint
+    // EntityID + 1
+    entity_cause_id: uvarint
+    // EntityID + 1
+    entity_direct_id: uvarint
+    source_position: optional[Vector3]
+}
+
 [MessageID=0x1A]
 record Disconnect {
     reason: string
@@ -315,12 +326,12 @@ record Respawn {
   dimension_codec: string
   dimension_name: string
   seed: uint64
-  game_mode: int8
+  game_mode: uint8
   previous_game_mode: int8
   is_debug: bool
   is_flat: bool
   should_copy_metadata: uint8
-  death_location: DeathLocation
+  death_location: optional[DeathLocation]
   portal_cooldown: varint
 }
 
@@ -415,4 +426,3 @@ record TeleportEntity {
   pitch: uint8
   is_on_ground: bool
 }
-

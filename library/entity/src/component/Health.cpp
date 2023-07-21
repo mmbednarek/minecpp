@@ -19,12 +19,7 @@ void Health::apply_damage(game::IWorld &world, const game::Damage &damage)
    auto entity = world.entity_system().entity(damage.target_entity);
 
    if (entity.has_component<Location>()) {
-      world.dispatcher().animate_entity(damage.target_entity, entity.component<Location>().position(),
-                                        game::EntityAnimation::TakeDamage);
-      if (killed) {
-         world.dispatcher().animate_entity(damage.target_entity, entity.component<Location>().position(),
-                                           game::EntityAnimation::CriticalEffect);
-      }
+      world.dispatcher().send_damage_event(damage.target_entity, 0, damage.source_entity, damage.source_entity, entity.component<Location>().position());
    }
 
    if (killed) {

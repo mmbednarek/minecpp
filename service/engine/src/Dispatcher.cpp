@@ -1,5 +1,6 @@
 #include "Dispatcher.h"
 #include "EventManager.h"
+#include "minecpp/net/play/Clientbound.schema.h"
 #include <minecpp/chat/Chat.h>
 #include <minecpp/entity/Aliases.hpp>
 #include <minecpp/entity/component/Abilities.h>
@@ -52,9 +53,11 @@ void Dispatcher::entity_move(game::EntityId entity_id, const math::Vector3 &posi
    *event.mutable_rotation() = rotation.to_proto();
    event.set_is_on_ground(is_on_ground);
 
+   spdlog::info("entity move: {}", movement);
+
    auto entity = m_entity_system.entity(entity_id);
    if (entity.has_component<PlayerComponent>()) {
-      this->send_to_player_visible_by(entity, event);
+      this->send_to_players_visible_by(entity, event);
    } else {
       this->send_to_players_in_view_distance(position, event);
    }
@@ -104,13 +107,17 @@ void Dispatcher::send_direct_chat(game::PlayerId player_id, chat::MessageType ms
 void Dispatcher::entity_look(game::EntityId entity_id, const math::Vector3 &position,
                              const math::Rotation &rotation)
 {
+   auto entity = m_entity_system.entity(entity_id);
+
    clientbound_v1::EntityLook event;
    event.set_entity_id(entity_id);
    *event.mutable_rotation() = rotation.to_proto();
+   if (entity.has_component<LocationComponent>()) {
+      event.set_is_on_ground(entity.component<LocationComponent>().is_on_ground());
+   }
 
-   auto entity = m_entity_system.entity(entity_id);
    if (entity.has_component<PlayerComponent>()) {
-      this->send_to_player_visible_by(entity, event);
+      this->send_to_players_visible_by(entity, event);
    } else {
       this->send_to_players_in_view_distance(position, event);
    }
@@ -175,6 +182,7 @@ void Dispatcher::accept_player(const game::player::Player &player)
 {
    clientbound_v1::AcceptPlayer accept_player;
    accept_player.mutable_gameplay()->set_view_distance(32);
+   accept_player.mutable_gameplay()->set_do_immediate_respawn(true);
    *accept_player.mutable_player() = player.to_proto();
 
    auto entity = m_entity_system.entity(player.entity_id());
@@ -459,14 +467,24 @@ void Dispatcher::teleport_entity(game::EntityId entity_id, const math::Vector3 &
 
    auto entity = m_entity_system.entity(entity_id);
    if (entity.has_component<PlayerComponent>()) {
-      this->send_to_player_visible_by(entity, teleport_entity);
+      this->send_to_players_visible_by(entity, teleport_entity);
    } else {
       this->send_to_players_in_view_distance(position, teleport_entity);
    }
 }
 
-void Dispatcher::send_to_player_visible_by(game::Entity &entity,
-                                           const google::protobuf::Message &message) const
+void Dispatcher::send_to_all(const google::protobuf::Message &message) const
+{
+   m_events.send_to_all(message);
+}
+
+void Dispatcher::send_to_player(game::PlayerId player_id, const google::protobuf::Message &message) const
+{
+   m_events.send_to(message, player_id);
+}
+
+void Dispatcher::send_to_players_visible_by(game::Entity &entity,
+                                            const google::protobuf::Message &message) const
 {
    assert(entity.has_component<PlayerComponent>());
 
@@ -529,11 +547,38 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
    m_events.send_to_many(message, players);
 }
 
+clientbound_v1::RawMessage Dispatcher::make_raw_message(const network::message::Writer &writer)
+{
+   clientbound_v1::RawMessage raw_msg;
+   raw_msg.mutable_message_data()->resize(writer.view().size());
+   std::copy(writer.view().begin(), writer.view().end(), raw_msg.mutable_message_data()->begin());
+   return raw_msg;
+}
+
 void Dispatcher::set_abilities(game::PlayerId player_id, const game::Abilities &abilities)
 {
    clientbound_v1::SetAbilities set_abilities;
    *set_abilities.mutable_abilities() = abilities.to_proto();
    m_events.send_to(set_abilities, player_id);
+}
+
+void Dispatcher::send_damage_event(game::EntityId target, int id,
+                                   std::optional<game::EntityId> cause_entity_id,
+                                   std::optional<game::EntityId> direct_entity_id,
+                                   const math::Vector3 &position)
+{
+   net::play::cb::DamageEvent damage_event;
+   damage_event.entity_id        = target;
+   damage_event.type_id          = id;
+   damage_event.entity_cause_id  = cause_entity_id.has_value() ? (cause_entity_id.value() + 1) : 0;
+   damage_event.entity_direct_id = direct_entity_id.has_value() ? (direct_entity_id.value() + 1) : 0;
+   damage_event.source_position  = net::play::Vector3{
+            .x = position.x(),
+            .y = position.y(),
+            .z = position.z(),
+   };
+
+   this->send_raw_to_players_in_view_distance(position, damage_event);
 }
 
 }// namespace minecpp::service::engine

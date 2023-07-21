@@ -161,6 +161,33 @@ PluginMessage PluginMessage::deserialize(::minecpp::network::message::Reader &re
    return result;
 }
 
+void DamageEvent::serialize(::minecpp::network::message::Writer &writer) const {
+   writer.write_byte(0x18);
+   writer.write_uvarint(this->entity_id);
+   writer.write_varint(this->type_id);
+   writer.write_uvarint(this->entity_cause_id);
+   writer.write_uvarint(this->entity_direct_id);
+   if (this->source_position.has_value()) {
+      writer.write_byte(1);
+      this->source_position->serialize(writer);
+   } else {
+      writer.write_byte(0);
+   }
+}
+
+DamageEvent DamageEvent::deserialize(::minecpp::network::message::Reader &reader) {
+   DamageEvent result;
+   result.entity_id = reader.read_uvarint();
+   result.type_id = reader.read_varint();
+   result.entity_cause_id = reader.read_uvarint();
+   result.entity_direct_id = reader.read_uvarint();
+   const auto source_position_has_value_0 = reader.read_byte();
+   if (source_position_has_value_0) {
+      result.source_position = play::Vector3::deserialize(reader);
+   }
+   return result;
+}
+
 void Disconnect::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x1A);
    writer.write_string(this->reason);
@@ -819,12 +846,17 @@ void Respawn::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_string(this->dimension_codec);
    writer.write_string(this->dimension_name);
    writer.write_big_endian(this->seed);
-   writer.write_sbyte(this->game_mode);
+   writer.write_byte(this->game_mode);
    writer.write_sbyte(this->previous_game_mode);
    writer.write_bool(this->is_debug);
    writer.write_bool(this->is_flat);
    writer.write_byte(this->should_copy_metadata);
-   this->death_location.serialize(writer);
+   if (this->death_location.has_value()) {
+      writer.write_byte(1);
+      this->death_location->serialize(writer);
+   } else {
+      writer.write_byte(0);
+   }
    writer.write_varint(this->portal_cooldown);
 }
 
@@ -833,12 +865,15 @@ Respawn Respawn::deserialize(::minecpp::network::message::Reader &reader) {
    result.dimension_codec = reader.read_string();
    result.dimension_name = reader.read_string();
    result.seed = reader.read_big_endian<std::uint64_t>();
-   result.game_mode = reader.read_sbyte();
+   result.game_mode = reader.read_byte();
    result.previous_game_mode = reader.read_sbyte();
    result.is_debug = reader.read_bool();
    result.is_flat = reader.read_bool();
    result.should_copy_metadata = reader.read_byte();
-   result.death_location = DeathLocation::deserialize(reader);
+   const auto death_location_has_value_0 = reader.read_byte();
+   if (death_location_has_value_0) {
+      result.death_location = DeathLocation::deserialize(reader);
+   }
    result.portal_cooldown = reader.read_varint();
    return result;
 }

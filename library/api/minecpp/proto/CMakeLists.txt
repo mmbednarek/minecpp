@@ -16,9 +16,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_api_proto
         LINK_PUBLIC
         ${Protobuf_LIBRARIES}
-        protobuf
-        absl_log_internal_check_op
         absl_log_internal_message
+        absl_log_internal_check_op
 )
 
 target_compile_options(minecpp_api_proto PUBLIC

@@ -66,6 +66,9 @@ class IDispatcher
    virtual void teleport_entity(EntityId entity_id, const math::Vector3 &position,
                                 const math::Rotation &rotation, bool is_on_ground)                       = 0;
    virtual void set_abilities(PlayerId player_id, const game::Abilities &abilities)                      = 0;
+   virtual void send_damage_event(EntityId target, int id, std::optional<EntityId> cause_entity_id,
+                                  std::optional<EntityId> direct_entity_id,
+                                  const math::Vector3 &position)                                 = 0;
 };
 
 }// namespace minecpp::game

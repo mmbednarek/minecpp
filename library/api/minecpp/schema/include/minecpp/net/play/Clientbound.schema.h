@@ -101,6 +101,17 @@ class PluginMessage {
    static PluginMessage deserialize(::minecpp::network::message::Reader &reader);
 };
 
+class DamageEvent {
+ public:
+   std::uint32_t entity_id{};
+   std::int32_t type_id{};
+   std::uint32_t entity_cause_id{};
+   std::uint32_t entity_direct_id{};
+   std::optional<play::Vector3> source_position{};
+   void serialize(::minecpp::network::message::Writer &writer) const;
+   static DamageEvent deserialize(::minecpp::network::message::Reader &reader);
+};
+
 class Disconnect {
  public:
    std::string reason{};
@@ -391,12 +402,12 @@ class Respawn {
    std::string dimension_codec{};
    std::string dimension_name{};
    std::uint64_t seed{};
-   std::int8_t game_mode{};
+   std::uint8_t game_mode{};
    std::int8_t previous_game_mode{};
    bool is_debug{};
    bool is_flat{};
    std::uint8_t should_copy_metadata{};
-   DeathLocation death_location{};
+   std::optional<DeathLocation> death_location{};
    std::int32_t portal_cooldown{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Respawn deserialize(::minecpp::network::message::Reader &reader);
@@ -554,6 +565,11 @@ void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::netwo
    case 0x17: {
       auto message = PluginMessage::deserialize(reader);
       visitor.on_plugin_message(client_info, message);
+      break;
+   }
+   case 0x18: {
+      auto message = DamageEvent::deserialize(reader);
+      visitor.on_damage_event(client_info, message);
       break;
    }
    case 0x1A: {

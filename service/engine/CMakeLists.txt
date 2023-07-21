@@ -15,6 +15,7 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_engine
         LINK_PRIVATE
+        minecpp_api_schema
         minecpp_controller
         minecpp_event
         minecpp_engine_api
