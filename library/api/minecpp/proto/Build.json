@@ -6,9 +6,7 @@
   ],
   "dependencies": {
     "public": [
-      "${Protobuf_LIBRARIES}",
-      "absl_log_internal_message",
-      "absl_log_internal_check_op"
+      "${Protobuf_LIBRARIES}"
     ]
   }
 }
