@@ -17,8 +17,8 @@ target_link_libraries(minecpp_crypto
         LINK_PUBLIC
         minecpp_container
         LINK_PRIVATE
-        ssl
-        crypto
+        OpenSSL::SSL
+        OpenSSL::Crypto
 )
 
 add_subdirectory("test")

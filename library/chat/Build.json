@@ -6,7 +6,7 @@
     ],
     "private": [
       "minecpp_utils",
-      "fmt"
+      "fmt::fmt"
     ]
   }
 }

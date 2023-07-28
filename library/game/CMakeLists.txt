@@ -26,7 +26,7 @@ target_link_libraries(minecpp_game
         LINK_PRIVATE
         minecpp_nbt
         minecpp_random
-        spdlog
+        spdlog::spdlog
 )
 
 add_subdirectory("test")

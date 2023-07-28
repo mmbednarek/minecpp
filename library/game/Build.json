@@ -15,7 +15,7 @@
     "private": [
       "minecpp_nbt",
       "minecpp_random",
-      "spdlog"
+      "spdlog::spdlog"
     ]
   }
 }

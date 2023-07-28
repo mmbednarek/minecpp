@@ -11,7 +11,7 @@
       "minecpp_network"
     ],
     "private": [
-      "enet"
+      "enet::enet"
     ]
   }
 }

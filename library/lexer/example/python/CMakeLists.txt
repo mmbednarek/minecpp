@@ -18,5 +18,5 @@ target_link_libraries(minecpp_lexer_example_python
         libmb
         minecpp_utils
         minecpp_lexer
-        spdlog
+        spdlog::spdlog
 )

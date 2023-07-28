@@ -20,9 +20,9 @@ target_link_libraries(minecpp_storage
         minecpp_stream
         minecpp_api_proto
         Boost::system
-        spdlog
+        spdlog::spdlog
         libmb
-        fdb_c
+        fdb::fdb
 )
 
 add_subdirectory("api")

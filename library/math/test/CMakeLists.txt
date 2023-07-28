@@ -16,8 +16,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_math_test
         LINK_PUBLIC
         minecpp_math
-        gtest
-        gtest_main
+        GTest::gtest
+        GTest::gtest_main
 )
 
 add_test(NAME minecpp_math COMMAND minecpp_math_test)

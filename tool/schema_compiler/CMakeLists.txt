@@ -18,7 +18,7 @@ target_link_libraries(minecpp_schema_compiler
         minecpp_nbt
         minecpp_lexer
         libmb
-        fmt
+        fmt::fmt
         libmb_codegen
         Boost::program_options
 )

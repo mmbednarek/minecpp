@@ -16,8 +16,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_container_test
         LINK_PRIVATE
         minecpp_container
-        gtest
-        gtest_main
+        GTest::gtest
+        GTest::gtest_main
 )
 
 add_test(NAME minecpp_container COMMAND minecpp_container_test)

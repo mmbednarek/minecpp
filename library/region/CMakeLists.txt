@@ -17,7 +17,7 @@ target_link_libraries(minecpp_region
         LINK_PUBLIC
         Boost::iostreams
         libmb
-        fmt
+        fmt::fmt
         LINK_PRIVATE
         minecpp_utils
 )

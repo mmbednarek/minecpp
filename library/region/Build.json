@@ -4,7 +4,7 @@
     "public": [
       "Boost::iostreams",
       "libmb",
-      "fmt"
+      "fmt::fmt"
     ],
     "private": [
       "minecpp_utils"

@@ -16,6 +16,6 @@ add_subdirectory("src")
 target_link_libraries(minecpp_storage_fdb_request
         LINK_PRIVATE
         fdb_c
-        spdlog
-        fmt
+        spdlog::spdlog
+        fmt::fmt
 )

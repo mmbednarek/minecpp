@@ -36,13 +36,5 @@
     "recipes",
     "snbt_parser",
     "schema_compiler"
-  ],
-  "external": [
-    {
-      "link_name": "fmt",
-      "cmake_package": "fmt",
-      "git_repo": "https://github.com/fmtlib/fmt",
-      "git_tag": "9.0.0"
-    }
   ]
 }

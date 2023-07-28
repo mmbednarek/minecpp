@@ -19,7 +19,7 @@ target_link_libraries(minecpp_stream
         minecpp_container
         minecpp_network
         LINK_PRIVATE
-        enet
+        enet::enet
 )
 
 add_subdirectory("example/client")

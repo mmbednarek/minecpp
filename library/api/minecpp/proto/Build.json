@@ -6,7 +6,8 @@
   ],
   "dependencies": {
     "public": [
-      "${Protobuf_LIBRARIES}"
+      "protobuf::libprotobuf",
+      "absl::log_internal_check_op"
     ]
   }
 }

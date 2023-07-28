@@ -4,7 +4,7 @@
   "dependencies": {
     "public": [
       "libmb",
-      "fmt",
+      "fmt::fmt",
       "minecpp_format",
       "minecpp_game",
       "minecpp_entity",

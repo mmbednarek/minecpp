@@ -18,5 +18,5 @@ target_link_libraries(minecpp_chat
         minecpp_format
         LINK_PRIVATE
         minecpp_utils
-        fmt
+        fmt::fmt
 )

@@ -16,8 +16,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_crypto_test
         LINK_PUBLIC
         LINK_PRIVATE
-        gtest
-        gtest_main
+        GTest::gtest
+        GTest::gtest_main
         minecpp_crypto
 )
 

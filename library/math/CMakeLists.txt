@@ -10,7 +10,7 @@ target_include_directories(minecpp_math INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/in
 target_link_libraries(minecpp_math
         INTERFACE
         minecpp_api_proto
-        fmt
+        fmt::fmt
 )
 
 add_subdirectory("test")

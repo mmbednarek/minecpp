@@ -5,7 +5,7 @@
       "minecpp_game",
       "minecpp_nbt",
       "minecpp_utils",
-      "fmt"
+      "fmt::fmt"
     ]
   }
 }

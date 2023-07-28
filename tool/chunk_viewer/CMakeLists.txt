@@ -18,5 +18,5 @@ target_link_libraries(minecpp_chunk_viewer
         minecpp_game
         minecpp_nbt
         minecpp_utils
-        fmt
+        fmt::fmt
 )

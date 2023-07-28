@@ -18,7 +18,7 @@ target_link_libraries(minecpp_utils
         libmb
         LINK_PRIVATE
         Boost::iostreams
-        fmt
+        fmt::fmt
 )
 
 add_subdirectory("test")

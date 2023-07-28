@@ -3,8 +3,8 @@
   "dependencies": {
     "private": [
       "fdb_c",
-      "spdlog",
-      "fmt"
+      "spdlog::spdlog",
+      "fmt::fmt"
     ]
   }
 }

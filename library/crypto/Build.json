@@ -6,8 +6,8 @@
       "minecpp_container"
     ],
     "private": [
-      "ssl",
-      "crypto"
+      "OpenSSL::SSL",
+      "OpenSSL::Crypto"
     ]
   }
 }

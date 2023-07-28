@@ -15,8 +15,8 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_nbt_test
         LINK_PUBLIC
-        gtest
-        gtest_main
+        GTest::gtest
+        GTest::gtest_main
         minecpp_nbt
 )
 

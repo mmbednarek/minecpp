@@ -34,7 +34,7 @@ target_link_libraries(minecpp_engine
         minecpp_lexer
         yaml-cpp
         Boost::system
-        spdlog
+        spdlog::spdlog
         libmb
 )
 

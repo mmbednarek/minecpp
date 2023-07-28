@@ -16,8 +16,8 @@ add_subdirectory("src")
 target_link_libraries(minecpp_entity_test
         LINK_PUBLIC
         minecpp_entity
-        gtest
-        gtest_main
+        GTest::gtest
+        GTest::gtest_main
 )
 
 add_test(NAME minecpp_entity COMMAND minecpp_entity_test)

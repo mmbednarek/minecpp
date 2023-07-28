@@ -8,8 +8,8 @@
     "public": [
       "minecpp_world",
       "minecpp_container",
-      "gtest",
-      "gtest_main"
+      "GTest::gtest",
+      "GTest::gtest_main"
     ]
   }
 }

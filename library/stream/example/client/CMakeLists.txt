@@ -17,5 +17,5 @@ target_link_libraries(minecpp_stream_example_client
         LINK_PRIVATE
         minecpp_utils
         minecpp_stream
-        spdlog
+        spdlog::spdlog
 )

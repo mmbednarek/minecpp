@@ -3,8 +3,8 @@
   "is_test": true,
   "dependencies": {
     "public": [
-      "gtest",
-      "gtest_main",
+      "GTest::gtest",
+      "GTest::gtest_main",
       "minecpp_random"
     ]
   }

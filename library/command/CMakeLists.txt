@@ -16,7 +16,7 @@ add_subdirectory("src")
 target_link_libraries(minecpp_command
         LINK_PUBLIC
         libmb
-        fmt
+        fmt::fmt
         minecpp_format
         minecpp_game
         minecpp_entity

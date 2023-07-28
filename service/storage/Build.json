@@ -12,9 +12,9 @@
       "minecpp_stream",
       "minecpp_api_proto",
       "Boost::system",
-      "spdlog",
+      "spdlog::spdlog",
       "libmb",
-      "fdb_c"
+      "fdb::fdb"
     ]
   }
 }

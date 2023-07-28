@@ -21,6 +21,6 @@ target_link_libraries(minecpp_engine_api
         minecpp_event
         minecpp_game
         libmb
-        fmt
-        spdlog
+        fmt::fmt
+        spdlog::spdlog
 )

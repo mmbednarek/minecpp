@@ -5,7 +5,7 @@
       "libmb",
       "minecpp_utils",
       "minecpp_lexer",
-      "spdlog"
+      "spdlog::spdlog"
     ]
   }
 }

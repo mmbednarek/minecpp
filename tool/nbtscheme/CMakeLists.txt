@@ -17,5 +17,5 @@ target_link_libraries(minecpp_nbtscheme
         LINK_PRIVATE
         minecpp_nbt
         minecpp_utils
-        fmt
+        fmt::fmt
 )

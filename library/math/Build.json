@@ -5,7 +5,7 @@
   "dependencies": {
     "interface": [
       "minecpp_api_proto",
-      "fmt"
+      "fmt::fmt"
     ]
   }
 }

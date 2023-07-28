@@ -52,7 +52,7 @@ void Service::handle_request(ConnectionId connection_id, proto::service::storage
    case Request::kSetClientId:
       this->set_client_id(connection_id, request.set_client_id().client_id().value());
       return;
-   default: spdlog::warn("unhandled message case: {}", request.message_case()); break;
+   default: spdlog::warn("unhandled message case: {}", static_cast<int>(request.message_case())); break;
    }
 }
 
