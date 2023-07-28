@@ -61,8 +61,9 @@ void Connection::send(const Event &event)
    m_peer->send_reliable_message(buffer.as_view());
 }
 
-ApiHandler::ApiHandler(EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system,
-                       std::uint16_t port) :
+ApiHandler::ApiHandler(Service &service, EventHandler &event_handler, EventManager &event_manager,
+                       JobSystem &job_system, std::uint16_t port) :
+    m_service{service},
     m_event_handler{event_handler},
     m_event_manager{event_manager},
     m_server{port},
@@ -84,7 +85,7 @@ void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, con
    proto::event::serverbound::Event proto_event;
    proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
 
-   m_job_system.create_job<job::HandlePlayerMessage>(m_event_handler, std::move(proto_event));
+   m_job_system.create_job<job::HandlePlayerMessage>(m_service, m_event_handler, std::move(proto_event));
 }
 
 void ApiHandler::on_disconnected(std::shared_ptr<stream::Peer> peer, bool * /*try_reconnect*/)

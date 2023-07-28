@@ -98,6 +98,9 @@ extern PostInitialChunksDefaultTypeInternal _PostInitialChunks_default_instance_
 class PreInitialChunks;
 struct PreInitialChunksDefaultTypeInternal;
 extern PreInitialChunksDefaultTypeInternal _PreInitialChunks_default_instance_;
+class RawMessage;
+struct RawMessageDefaultTypeInternal;
+extern RawMessageDefaultTypeInternal _RawMessage_default_instance_;
 class RemovePlayer;
 struct RemovePlayerDefaultTypeInternal;
 extern RemovePlayerDefaultTypeInternal _RemovePlayer_default_instance_;
@@ -156,6 +159,8 @@ template <>
 ::minecpp::proto::event::serverbound::PostInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::PostInitialChunks>(Arena*);
 template <>
 ::minecpp::proto::event::serverbound::PreInitialChunks* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::PreInitialChunks>(Arena*);
+template <>
+::minecpp::proto::event::serverbound::RawMessage* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::RawMessage>(Arena*);
 template <>
 ::minecpp::proto::event::serverbound::RemovePlayer* Arena::CreateMaybeMessage<::minecpp::proto::event::serverbound::RemovePlayer>(Arena*);
 template <>
@@ -362,6 +367,171 @@ class Event final :
   friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fServerbound_2eproto;
 };// -------------------------------------------------------------------
 
+class RawMessage final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.RawMessage) */ {
+ public:
+  inline RawMessage() : RawMessage(nullptr) {}
+  ~RawMessage() override;
+  template<typename = void>
+  explicit PROTOBUF_CONSTEXPR RawMessage(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RawMessage(const RawMessage& from);
+  RawMessage(RawMessage&& from) noexcept
+    : RawMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline RawMessage& operator=(const RawMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RawMessage& operator=(RawMessage&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RawMessage& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RawMessage* internal_default_instance() {
+    return reinterpret_cast<const RawMessage*>(
+               &_RawMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(RawMessage& a, RawMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RawMessage* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RawMessage* other) {
+    if (other == this) return;
+    ABSL_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RawMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RawMessage>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RawMessage& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RawMessage& from) {
+    RawMessage::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  ::size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::uint8_t* _InternalSerialize(
+      ::uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RawMessage* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::absl::string_view FullMessageName() {
+    return "minecpp.proto.event.serverbound.RawMessage";
+  }
+  protected:
+  explicit RawMessage(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 1,
+  };
+  // bytes data = 1;
+  void clear_data() ;
+  const std::string& data() const;
+
+
+
+
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_data(Arg_&& arg, Args_... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* ptr);
+
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(
+      const std::string& value);
+  std::string* _internal_mutable_data();
+
+  public:
+  // @@protoc_insertion_point(class_scope:minecpp.proto.event.serverbound.RawMessage)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_minecpp_2fproto_2fevent_2fserverbound_2fServerbound_2eproto;
+};// -------------------------------------------------------------------
+
 class AcceptPlayer final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:minecpp.proto.event.serverbound.AcceptPlayer) */ {
  public:
@@ -418,7 +588,7 @@ class AcceptPlayer final :
                &_AcceptPlayer_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(AcceptPlayer& a, AcceptPlayer& b) {
     a.Swap(&b);
@@ -607,7 +777,7 @@ class SetPlayerPosition final :
                &_SetPlayerPosition_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(SetPlayerPosition& a, SetPlayerPosition& b) {
     a.Swap(&b);
@@ -779,7 +949,7 @@ class SetPlayerRotation final :
                &_SetPlayerRotation_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(SetPlayerRotation& a, SetPlayerRotation& b) {
     a.Swap(&b);
@@ -951,7 +1121,7 @@ class SetPlayerPositionRotation final :
                &_SetPlayerPositionRotation_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(SetPlayerPositionRotation& a, SetPlayerPositionRotation& b) {
     a.Swap(&b);
@@ -1139,7 +1309,7 @@ class SetPlayerOnGround final :
                &_SetPlayerOnGround_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(SetPlayerOnGround& a, SetPlayerOnGround& b) {
     a.Swap(&b);
@@ -1294,7 +1464,7 @@ class ChatMessage final :
                &_ChatMessage_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(ChatMessage& a, ChatMessage& b) {
     a.Swap(&b);
@@ -1458,7 +1628,7 @@ class RemovePlayer final :
                &_RemovePlayer_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(RemovePlayer& a, RemovePlayer& b) {
     a.Swap(&b);
@@ -1583,7 +1753,7 @@ class PlayerDigging final :
                &_PlayerDigging_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(PlayerDigging& a, PlayerDigging& b) {
     a.Swap(&b);
@@ -1779,7 +1949,7 @@ class UpdatePing final :
                &_UpdatePing_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    10;
 
   friend void swap(UpdatePing& a, UpdatePing& b) {
     a.Swap(&b);
@@ -1934,7 +2104,7 @@ class AnimateHand final :
                &_AnimateHand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    11;
 
   friend void swap(AnimateHand& a, AnimateHand& b) {
     a.Swap(&b);
@@ -2088,7 +2258,7 @@ class PreInitialChunks final :
                &_PreInitialChunks_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    12;
 
   friend void swap(PreInitialChunks& a, PreInitialChunks& b) {
     a.Swap(&b);
@@ -2212,7 +2382,7 @@ class PostInitialChunks final :
                &_PostInitialChunks_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    13;
 
   friend void swap(PostInitialChunks& a, PostInitialChunks& b) {
     a.Swap(&b);
@@ -2337,7 +2507,7 @@ class BlockPlacement final :
                &_BlockPlacement_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    14;
 
   friend void swap(BlockPlacement& a, BlockPlacement& b) {
     a.Swap(&b);
@@ -2561,7 +2731,7 @@ class UseItem final :
                &_UseItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    15;
 
   friend void swap(UseItem& a, UseItem& b) {
     a.Swap(&b);
@@ -2728,7 +2898,7 @@ class ChangeInventoryItem final :
                &_ChangeInventoryItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    16;
 
   friend void swap(ChangeInventoryItem& a, ChangeInventoryItem& b) {
     a.Swap(&b);
@@ -2912,7 +3082,7 @@ class DropInventoryItem final :
                &_DropInventoryItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    17;
 
   friend void swap(DropInventoryItem& a, DropInventoryItem& b) {
     a.Swap(&b);
@@ -3067,7 +3237,7 @@ class SetCarriedItem final :
                &_SetCarriedItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    18;
 
   friend void swap(SetCarriedItem& a, SetCarriedItem& b) {
     a.Swap(&b);
@@ -3239,7 +3409,7 @@ class ChangeHeldItem final :
                &_ChangeHeldItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    19;
 
   friend void swap(ChangeHeldItem& a, ChangeHeldItem& b) {
     a.Swap(&b);
@@ -3394,7 +3564,7 @@ class IssueCommand final :
                &_IssueCommand_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    20;
 
   friend void swap(IssueCommand& a, IssueCommand& b) {
     a.Swap(&b);
@@ -3559,7 +3729,7 @@ class Interact final :
                &_Interact_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    21;
 
   friend void swap(Interact& a, Interact& b) {
     a.Swap(&b);
@@ -3766,7 +3936,7 @@ class RequestRespawn final :
                &_RequestRespawn_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    22;
 
   friend void swap(RequestRespawn& a, RequestRespawn& b) {
     a.Swap(&b);
@@ -4017,6 +4187,57 @@ inline void Event::set_allocated_player_id(::minecpp::proto::player::PlayerId* p
   }
   _impl_.player_id_ = player_id;
   // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.Event.player_id)
+}
+
+// -------------------------------------------------------------------
+
+// RawMessage
+
+// bytes data = 1;
+inline void RawMessage::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& RawMessage::data() const {
+  // @@protoc_insertion_point(field_get:minecpp.proto.event.serverbound.RawMessage.data)
+  return _internal_data();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void RawMessage::set_data(Arg_&& arg,
+                                                     Args_... args) {
+  ;
+  _impl_.data_.SetBytes(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:minecpp.proto.event.serverbound.RawMessage.data)
+}
+inline std::string* RawMessage::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:minecpp.proto.event.serverbound.RawMessage.data)
+  return _s;
+}
+inline const std::string& RawMessage::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void RawMessage::_internal_set_data(const std::string& value) {
+  ;
+
+
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RawMessage::_internal_mutable_data() {
+  ;
+  return _impl_.data_.Mutable( GetArenaForAllocation());
+}
+inline std::string* RawMessage::release_data() {
+  // @@protoc_insertion_point(field_release:minecpp.proto.event.serverbound.RawMessage.data)
+  return _impl_.data_.Release();
+}
+inline void RawMessage::set_allocated_data(std::string* value) {
+  _impl_.data_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.data_.IsDefault()) {
+          _impl_.data_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:minecpp.proto.event.serverbound.RawMessage.data)
 }
 
 // -------------------------------------------------------------------

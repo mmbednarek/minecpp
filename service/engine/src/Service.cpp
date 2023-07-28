@@ -1,9 +1,11 @@
 #include "Service.h"
-#include "protocol/Protocol.h"
-#include "Server.h"
 
+#include "EventHandler.h"
+
+#include "minecpp/event/Serverbound.h"
 #include "minecpp/game/BlockPosition.h"
 #include "minecpp/game/property/Face.h"
+#include "minecpp/net/play/Serverbound.schema.h"
 #include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 #include "minecpp/util/Time.h"
 
@@ -12,59 +14,28 @@
 
 using google::protobuf::Message;
 
-namespace minecpp::service::front {
+namespace minecpp::service::engine {
 
 namespace serverbound_v1 = proto::event::serverbound;
 
-Service::Service(Config & /*config*/) {}
-
-Service::LoginResponse Service::login_player(std::string &user_name)
+Service::Service(EventHandler &handler) :
+    m_event_handler{handler}
 {
-   // TODO: authentication
-   boost::uuids::name_generator gen(g_player_uuid_namespace);
-
-   return Service::LoginResponse{
-           .accepted = true,
-           .refusal_reason{},
-           .user_name = user_name,
-           .id        = gen(user_name),
-   };
 }
 
-void Service::init_player(Connection &connection, uuid id, std::string_view name)
+void Service::handle_raw_message(game::PlayerId player_id, container::BufferView data)
 {
-   using namespace minecpp::network::message;
-
-   assert(m_client != nullptr);
-
-   connection.set_state(protocol::State::Play);
-   connection.set_uuid(id);
-
-   proto::event::serverbound::AcceptPlayer accept_player;
-   accept_player.set_challenge_id(0);
-   accept_player.set_name(std::string(name));
-   this->send(accept_player, id);
-}
-
-void Service::on_player_disconnect(uuid /*engine_id*/, game::PlayerId player_id)
-{
-   assert(m_client != nullptr);
-
-   proto::event::serverbound::RemovePlayer remove_player{};
-   this->send(remove_player, player_id);
+   auto stream = data.make_stream();
+   network::message::Reader reader(stream);
+   net::play::sb::visit_message(*this, player_id, reader);
 }
 
 void Service::send(const google::protobuf::Message &message, game::PlayerId id)
 {
-   if (m_client == nullptr)
-      throw std::runtime_error("no available engine connection");
-
-   m_client->send(message, id);
-}
-
-void Service::set_client(engine::Client *client)
-{
-   m_client = client;
+   proto::event::serverbound::Event proto_event;
+   proto_event.mutable_payload()->PackFrom(message);
+   *proto_event.mutable_player_id() = game::player::write_id_to_proto(id);
+   event::visit_serverbound(proto_event, m_event_handler);
 }
 
 void Service::on_chat_command(game::PlayerId player_id, const net::play::sb::ChatCommand &msg)
@@ -269,11 +240,4 @@ void Service::on_close_window(game::PlayerId player_id, const net::play::sb::Clo
                 msg.window_id);
 }
 
-void Service::send_raw_message(game::PlayerId id, container::BufferView data)
-{
-   serverbound_v1::RawMessage raw_message;
-   raw_message.set_data(data.to_string());
-   this->send(raw_message, id);
-}
-
-}// namespace minecpp::service::front
+}// namespace minecpp::service::engine

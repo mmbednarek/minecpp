@@ -1,45 +1,20 @@
 #pragma once
-#include "Config.h"
-#include "Connection.h"
-#include "protocol/PlayHandler.h"
 
 #include "minecpp/game/player/Id.h"
 #include "minecpp/net/play/Serverbound.schema.h"
 #include "minecpp/proto/chunk/Chunk.pb.h"
-#include "minecpp/service/engine/Api.h"
 
-#include <boost/random.hpp>
+namespace minecpp::service::engine {
 
-namespace minecpp::service::front {
-
-class Server;
-using boost::uuids::uuid;
-
-
-constexpr boost::uuids::uuid g_player_uuid_namespace{
-        .data{0xe3, 0x35, 0xd4, 0xb4, 0x8d, 0x91, 0x4c, 0x5b, 0x8a, 0x7c, 0x23, 0x08, 0xf3, 0x0e, 0x29, 0x52},
-};
+class EventHandler;
 
 class Service
 {
  public:
-   explicit Service(Config &conf);
+   explicit Service(EventHandler &handler);
 
-   struct LoginResponse
-   {
-      bool accepted;
-      std::string_view refusal_reason;
-      std::string_view user_name;
-      uuid id;
-   };
+   void handle_raw_message(game::PlayerId player_id, container::BufferView data);
 
-   static LoginResponse login_player(std::string &user_name);
-
-   void send_raw_message(game::PlayerId id, container::BufferView data);
-
-   void init_player(Connection &connection, uuid id, std::string_view name);
-   void on_player_disconnect(uuid engine_id, game::PlayerId player_id);
-   void set_client(engine::Client *stream);
    void send(const ::google::protobuf::Message &message, game::PlayerId id);
 
    void on_confirm_teleport(game::PlayerId player_id, const net::play::sb::ConfirmTeleport &msg);
@@ -62,10 +37,11 @@ class Service
    void on_plugin_message(game::PlayerId player_id, const net::play::sb::PluginMessage &msg);
    void on_use_item(game::PlayerId player_id, const net::play::sb::UseItem &msg);
    void on_client_command(game::PlayerId player_id, const net::play::sb::ClientCommand &msg);
+
    static void on_failure(game::PlayerId player_id, std::uint8_t message_id);
 
  private:
-   engine::Client *m_client{};
+   EventHandler &m_event_handler;
 };
 
 }// namespace minecpp::service::front

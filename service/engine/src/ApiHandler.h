@@ -12,6 +12,7 @@
 namespace minecpp::service::engine {
 
 class EventHandler;
+class Service;
 class EventManager;
 class ApiHandler;
 
@@ -34,7 +35,7 @@ class Connection : public IConnection
 class ApiHandler
 {
  public:
-   ApiHandler(EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system,
+   ApiHandler(Service &service, EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system,
               std::uint16_t port);
 
    ApiHandler(const ApiHandler &)                = delete;
@@ -49,6 +50,7 @@ class ApiHandler
    void on_received_message(std::shared_ptr<stream::Peer> peer, container::BufferView message);
    void on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect);
 
+   Service &m_service;
    EventHandler &m_event_handler;
    EventManager &m_event_manager;
    stream::Server m_server;

@@ -19,6 +19,8 @@ target_sources(minecpp_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Players.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Players.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/Service.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Service.h
         ${CMAKE_CURRENT_SOURCE_DIR}/StorageResponseHandler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/StorageResponseHandler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/TickSystem.cpp

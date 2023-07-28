@@ -11,6 +11,10 @@ message Event {
   player.PlayerId player_id = 2;
 }
 
+message RawMessage {
+  bytes data = 1;
+}
+
 message AcceptPlayer {
   string name = 1;
   uint32 challenge_id = 2;

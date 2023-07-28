@@ -14,7 +14,8 @@ PlayHandler::PlayHandler(Service &service) :
 void PlayHandler::handle(Connection &connection, Reader &reader)
 {
    connection.async_read_packet(*this);
-   net::play::sb::visit_message(service, connection.uuid(), reader);
+   auto buffer = container::Buffer::from_istream(reader.raw_stream());
+   service.send_raw_message(connection.uuid(), buffer.as_view());
 }
 
 void PlayHandler::handle_disconnect(Connection &conn)

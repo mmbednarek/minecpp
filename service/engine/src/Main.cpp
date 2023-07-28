@@ -6,6 +6,7 @@
 #include "JobSystem.h"
 #include "minecpp/world/population/Object.h"
 #include "Players.h"
+#include "Service.h"
 #include "StorageResponseHandler.h"
 #include "TickSystem.h"
 #include "World.h"
@@ -88,8 +89,9 @@ auto main() -> int
 
    World world(chunk_system, job_system, dispatcher, players, entity_system, block_manager);
    EventHandler handler(dispatcher, players, entity_system, world, block_manager, root_item_controller);
+   Service service(handler);
 
-   ApiHandler api_handler(handler, manager, job_system, config.server_bind_port);
+   ApiHandler api_handler(service, handler, manager, job_system, config.server_bind_port);
    api_handler.tick();
 
    for (auto endpoint_str : config.storage_endpoints) {

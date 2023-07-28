@@ -51,7 +51,6 @@ class Reader
       return result;
    }
 
-
  private:
    std::istream &m_stream;
 };
