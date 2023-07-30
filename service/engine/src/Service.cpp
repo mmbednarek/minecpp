@@ -1,12 +1,14 @@
 #include "Service.h"
 
-#include "EventHandler.h"
+#include "service/PlayerInteraction.h"
+#include "service/PlayerInterface.h"
+#include "service/PlayerMovement.h"
+#include "service/PlayerSession.h"
 
 #include "minecpp/event/Serverbound.h"
 #include "minecpp/game/BlockPosition.h"
 #include "minecpp/game/property/Face.h"
 #include "minecpp/net/play/Serverbound.schema.h"
-#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 #include "minecpp/util/Time.h"
 
 #include <boost/uuid/name_generator.hpp>
@@ -18,8 +20,12 @@ namespace minecpp::service::engine {
 
 namespace serverbound_v1 = proto::event::serverbound;
 
-Service::Service(EventHandler &handler) :
-    m_event_handler{handler}
+Service::Service(service::PlayerInteraction &interaction_service, service::PlayerInterface &interface_service,
+                 service::PlayerMovement &movement_service, service::PlayerSession &session_service) :
+    m_interaction_service(interaction_service),
+    m_interface_service(interface_service),
+    m_movement_service(movement_service),
+    m_session_service(session_service)
 {
 }
 
@@ -30,26 +36,34 @@ void Service::handle_raw_message(game::PlayerId player_id, container::BufferView
    net::play::sb::visit_message(*this, player_id, reader);
 }
 
-void Service::send(const google::protobuf::Message &message, game::PlayerId id)
+void Service::on_accept_player(game::PlayerId player_id, std::string_view name)
 {
-   proto::event::serverbound::Event proto_event;
-   proto_event.mutable_payload()->PackFrom(message);
-   *proto_event.mutable_player_id() = game::player::write_id_to_proto(id);
-   event::visit_serverbound(proto_event, m_event_handler);
+   m_session_service.handle_accept_player(player_id, name);
+}
+
+void Service::on_remove_player(game::PlayerId player_id)
+{
+   m_session_service.handle_remove_player(player_id);
+}
+
+void Service::on_pre_initial_chunks(game::PlayerId player_id)
+{
+   m_session_service.handle_pre_initial_chunks(player_id);
+}
+
+void Service::on_post_initial_chunks(game::PlayerId player_id)
+{
+   m_session_service.handle_post_initial_chunks(player_id);
 }
 
 void Service::on_chat_command(game::PlayerId player_id, const net::play::sb::ChatCommand &msg)
 {
-   serverbound_v1::IssueCommand command;
-   command.set_command(msg.command);
-   this->send(command, player_id);
+   m_interface_service.handle_issue_command(player_id, msg.command);
 }
 
 void Service::on_chat_message(game::PlayerId player_id, const net::play::sb::ChatMessage &msg)
 {
-   serverbound_v1::ChatMessage chat_message;
-   chat_message.set_message(msg.message);
-   this->send(chat_message, player_id);
+   m_interface_service.handle_chat_message(player_id, msg.message);
 }
 
 void Service::on_client_settings(game::PlayerId player_id, const net::play::sb::ClientSettings &msg)
@@ -60,94 +74,78 @@ void Service::on_client_settings(game::PlayerId player_id, const net::play::sb::
 
 void Service::on_interact(game::PlayerId player_id, const net::play::sb::Interact &msg)
 {
-   serverbound_v1::Interact interact{};
-   interact.set_entity_id(static_cast<mb::u32>(msg.entity_id));
-   if (msg.target.has_value()) {
-      interact.mutable_position()->set_x(msg.target->position.x);
-      interact.mutable_position()->set_y(msg.target->position.y);
-      interact.mutable_position()->set_z(msg.target->position.z);
-      interact.set_hand_type(static_cast<proto::common::HandType>(msg.target.has_value()));
-   }
-   interact.set_is_sneaking(msg.is_sneaking);
-   interact.set_interaction_type(static_cast<proto::common::InteractionType>(msg.type));
-   this->send(interact, player_id);
+   m_interaction_service.handle_interact(player_id, msg.entity_id,
+                                         static_cast<game::InteractionTypeValue>(msg.type),
+                                         msg.target.has_value() ? msg.target->position : math::Vector3f{},
+                                         !msg.target.has_value() && (msg.target->hand == 1));
 }
 
 void Service::on_set_player_position(game::PlayerId player_id, const net::play::sb::SetPlayerPosition &msg)
 {
-   serverbound_v1::SetPlayerPosition player_position;
-   player_position.mutable_position()->set_x(msg.position.x);
-   player_position.mutable_position()->set_y(msg.position.y);
-   player_position.mutable_position()->set_z(msg.position.z);
-   player_position.set_is_on_ground(msg.is_on_ground);
-   this->send(player_position, player_id);
+   m_movement_service.handle_set_player_position(player_id, msg.position, msg.is_on_ground);
 }
 
 void Service::on_set_player_position_and_rotation(game::PlayerId player_id,
                                                   const net::play::sb::SetPlayerPositionAndRotation &msg)
 {
-   serverbound_v1::SetPlayerPositionRotation player_position_rotation;
-   player_position_rotation.mutable_position()->set_x(msg.position.x);
-   player_position_rotation.mutable_position()->set_y(msg.position.y);
-   player_position_rotation.mutable_position()->set_z(msg.position.z);
-   player_position_rotation.mutable_rotation()->set_yaw(msg.yaw);
-   player_position_rotation.mutable_rotation()->set_pitch(msg.pitch);
-   player_position_rotation.set_is_on_ground(msg.is_on_ground);
-   this->send(player_position_rotation, player_id);
+   m_movement_service.handle_set_player_position(player_id, msg.position, msg.is_on_ground);
+   m_movement_service.handle_set_player_rotation(player_id, math::Rotation::from_degrees(msg.yaw, msg.pitch));
 }
 
 void Service::on_set_player_rotation(game::PlayerId player_id, const net::play::sb::SetPlayerRotation &msg)
 {
-   serverbound_v1::SetPlayerRotation player_rotation;
-   player_rotation.mutable_rotation()->set_yaw(msg.yaw);
-   player_rotation.mutable_rotation()->set_pitch(msg.pitch);
-   player_rotation.set_is_on_ground(msg.is_on_ground);
-   this->send(player_rotation, player_id);
+   m_movement_service.handle_set_player_rotation(player_id, math::Rotation::from_degrees(msg.yaw, msg.pitch));
+   m_movement_service.handle_set_player_is_on_ground(player_id, msg.is_on_ground);
 }
 
 void Service::on_set_is_player_on_ground(game::PlayerId player_id,
                                          const net::play::sb::SetIsPlayerOnGround &msg)
 {
-   serverbound_v1::SetPlayerOnGround player_on_ground;
-   player_on_ground.set_is_on_ground(msg.is_on_ground);
-   this->send(player_on_ground, player_id);
+   m_movement_service.handle_set_player_is_on_ground(player_id, msg.is_on_ground);
 }
 
 void Service::on_player_digging(game::PlayerId player_id, const net::play::sb::PlayerDigging &msg)
 {
-   serverbound_v1::PlayerDigging player_digging;
-   player_digging.set_state(static_cast<proto::common::PlayerDiggingState>(msg.state));
-   *player_digging.mutable_block_position() = game::BlockPosition(msg.position).to_proto();
-   player_digging.set_face(game::Face(static_cast<game::FaceValue>(msg.facing)).to_proto());
-   this->send(player_digging, player_id);
+   auto operation = static_cast<game::ItemOperation>(msg.state);
+
+   switch (operation) {
+   case game::ItemOperation::Digging:
+      m_interaction_service.handle_start_digging(player_id, msg.sequence_id,
+                                                 game::BlockPosition(msg.position));
+      break;
+   case game::ItemOperation::CanceledDigging:
+      m_interaction_service.handle_cancel_digging(player_id, msg.sequence_id,
+                                                  game::BlockPosition(msg.position));
+      break;
+   case game::ItemOperation::FinishedDigging:
+      m_interaction_service.handle_finish_digging(player_id, msg.sequence_id,
+                                                  game::BlockPosition(msg.position));
+      break;
+   case game::ItemOperation::DropAllItems:
+      m_interaction_service.handle_drop_active_item(player_id, true);
+      break;
+   case game::ItemOperation::DropItem: m_interaction_service.handle_drop_active_item(player_id, false); break;
+   case game::ItemOperation::ReleaseUseItem: m_interaction_service.handle_release_used_item(player_id); break;
+   case game::ItemOperation::SwapHeldItems: m_interaction_service.handle_swap_held_items(player_id); break;
+   }
 }
 
 void Service::on_keep_alive(game::PlayerId player_id, const net::play::sb::KeepAlive &msg)
 {
-   serverbound_v1::UpdatePing update_ping;
-   update_ping.set_ping(static_cast<int>(static_cast<std::uint64_t>(minecpp::util::now_milis()) - msg.time));
-   this->send(update_ping, player_id);
+   m_session_service.handle_update_ping(
+           player_id, static_cast<int>(static_cast<std::uint64_t>(minecpp::util::now_milis()) - msg.time));
 }
 
 void Service::on_animate_hand(game::PlayerId player_id, const net::play::sb::AnimateHand &msg)
 {
-   serverbound_v1::AnimateHand animate_hand;
-   animate_hand.set_hand(static_cast<int>(msg.hand));
-   this->send(animate_hand, player_id);
+   m_interaction_service.handle_animate_hand(player_id, static_cast<game::EntityAnimationValue>(msg.hand));
 }
 
 void Service::on_use_item_on(game::PlayerId player_id, const net::play::sb::UseItemOn &msg)
 {
-   serverbound_v1::BlockPlacement block_placement;
-   block_placement.set_hand(static_cast<int32_t>(msg.hand));
-   *block_placement.mutable_position() = game::BlockPosition(msg.position).to_proto();
-   block_placement.set_face(game::Face(static_cast<game::FaceValue>(msg.facing)).to_proto());
-   block_placement.mutable_crosshair()->set_x(msg.cursor_position.x);
-   block_placement.mutable_crosshair()->set_y(msg.cursor_position.y);
-   block_placement.mutable_crosshair()->set_z(msg.cursor_position.z);
-   block_placement.set_inside_block(msg.is_inside_block);
-   block_placement.set_sequence_id(msg.sequence_id);
-   this->send(block_placement, player_id);
+   m_interaction_service.handle_use_item_on(player_id, msg.sequence_id,
+                                            static_cast<game::FaceValue>(msg.facing),
+                                            game::BlockPosition(msg.position), msg.cursor_position);
 }
 
 void Service::on_click_window(game::PlayerId player_id, const net::play::sb::ClickWindow &msg)
@@ -156,39 +154,31 @@ void Service::on_click_window(game::PlayerId player_id, const net::play::sb::Cli
       return;
 
    if (msg.clicked_slot == -999 && msg.mode == 0) {
-      serverbound_v1::DropInventoryItem drop_item;
-      drop_item.set_full_stack(msg.button == 0);
-      this->send(drop_item, player_id);
+      m_interface_service.handle_drop_carried_item(player_id, msg.button == 0);
       return;
    }
 
    for (const auto &[slot_id, slot] : msg.slots) {
-      serverbound_v1::ChangeInventoryItem change_item;
+      game::ItemSlot item_slot{};
       if (slot.has_value()) {
-         change_item.mutable_item_id()->set_id(static_cast<std::uint32_t>(slot->item_id));
-         change_item.set_item_count(slot->item_count);
-      } else {
-         change_item.set_item_count(0);
+         item_slot.item_id = slot->item_id;
+         item_slot.count   = static_cast<unsigned char>(slot->item_count);
       }
-      change_item.set_slot_id(slot_id);
-      this->send(change_item, player_id);
+      m_interface_service.handle_change_inventory_item(player_id, slot_id, item_slot);
    }
 
-   serverbound_v1::SetCarriedItem carried_item;
+   game::ItemSlot item_slot{};
    if (msg.carried_item.has_value()) {
-      carried_item.mutable_carried_item_id()->set_id(static_cast<std::uint32_t>(msg.carried_item->item_id));
-      carried_item.set_carried_item_count(msg.carried_item->item_count);
-   } else {
-      carried_item.set_carried_item_count(0);
+      item_slot.item_id = msg.carried_item->item_id;
+      item_slot.count   = static_cast<unsigned char>(msg.carried_item->item_id);
    }
-   this->send(carried_item, player_id);
+
+   m_interface_service.handle_set_carried_item(player_id, item_slot);
 }
 
 void Service::on_set_held_item(game::PlayerId player_id, const net::play::sb::SetHeldItem &msg)
 {
-   serverbound_v1::ChangeHeldItem held_item;
-   held_item.set_slot(msg.slot_id);
-   this->send(held_item, player_id);
+   m_interface_service.handle_change_held_item(player_id, msg.slot_id);
 }
 
 void Service::on_plugin_message(game::PlayerId /*player_id*/, const net::play::sb::PluginMessage &msg)
@@ -199,24 +189,14 @@ void Service::on_plugin_message(game::PlayerId /*player_id*/, const net::play::s
 
 void Service::on_use_item(game::PlayerId player_id, const net::play::sb::UseItem &msg)
 {
-   serverbound_v1::UseItem use_item;
-   use_item.set_hand(static_cast<int32_t>(msg.hand));
-   use_item.set_sequence_id(msg.sequence_id);
-   this->send(use_item, player_id);
+   m_interaction_service.handle_use_item(player_id, msg.sequence_id, msg.hand);
 }
 
 void Service::on_client_command(game::PlayerId player_id, const net::play::sb::ClientCommand &msg)
 {
    if (msg.action_id == 0) {
-      serverbound_v1::RequestRespawn request_respawn;
-      this->send(request_respawn, player_id);
+      m_session_service.handle_request_respawn(player_id);
    }
-}
-
-void Service::on_failure(game::PlayerId player_id, std::uint8_t message_id)
-{
-   spdlog::warn("play-handler: unknown op {} received from player {}", message_id,
-                boost::uuids::to_string(player_id));
 }
 
 void Service::on_confirm_teleport(game::PlayerId player_id, const net::play::sb::ConfirmTeleport &msg)
@@ -238,6 +218,12 @@ void Service::on_close_window(game::PlayerId player_id, const net::play::sb::Clo
    static_cast<void>(this);
    spdlog::info("play-handler: player {} closed window {}", boost::uuids::to_string(player_id),
                 msg.window_id);
+}
+
+void Service::on_failure(game::PlayerId player_id, std::uint8_t message_id)
+{
+   spdlog::warn("service: unknown op {} received from player {}", message_id,
+                boost::uuids::to_string(player_id));
 }
 
 }// namespace minecpp::service::engine

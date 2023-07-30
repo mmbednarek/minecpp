@@ -24,6 +24,7 @@ RUN apt-get -y install \
   libprotobuf-dev \
   protobuf-compiler \
   libenet-dev \
+  libabsl-dev \
   unzip \
   jq \
   dnsutils \

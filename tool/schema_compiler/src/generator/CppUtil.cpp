@@ -30,7 +30,7 @@ CppType::CppType(const Document &document, const SymbolTable &symbol_table, cons
 }
 
 // clang-format off
-constexpr std::array<const char *, 24> g_core_cpp_types{
+constexpr std::array<const char *, 25> g_core_cpp_types{
         "std::int8_t",
         "std::int16_t",
         "std::int32_t",
@@ -54,6 +54,7 @@ constexpr std::array<const char *, 24> g_core_cpp_types{
         "bool",
         "::minecpp::util::Uuid",
         "::minecpp::nbt::CompoundContent",
+        "",
         ""
 };
 
@@ -105,6 +106,11 @@ std::string construct_cpp_namespace(const std::size_t start_at, std::string_view
 
 std::string CppType::type_name() const
 {
+   if (m_symbol.type_class == TypeClass::Extern) {
+      generator_verify(m_symbol.annotations.has_key("CppType"), m_type.line(), m_type.column(),
+                       "extern type is missing CppType field");
+      return m_symbol.annotations.value_at("CppType");
+   }
    if (m_symbol.type_class != TypeClass::Record) {
       auto &cpp_type = g_core_cpp_types[static_cast<std::size_t>(m_symbol.type_class)];
       if (m_type.template_args_count() == 0) {

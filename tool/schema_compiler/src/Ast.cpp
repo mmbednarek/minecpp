@@ -186,7 +186,7 @@ void Document::add_record(Record record)
 
 void Document::add_alias(Alias alias)
 {
-    m_aliases.emplace_back(std::move(alias));
+   m_aliases.emplace_back(std::move(alias));
 }
 
 const std::vector<Record> &Document::records() const

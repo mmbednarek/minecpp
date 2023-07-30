@@ -24,6 +24,7 @@ class NetworkDeserializeContext
    [[nodiscard]] const AnnotationList &annotations() const;
    [[nodiscard]] std::string type_generator() const;
    [[nodiscard]] TypeClass type_class() const;
+   [[nodiscard]] Symbol symbol() const;
 
    void assign_expression(const mb::codegen::expression &expression);
    std::string unique_name(std::string_view suffix);

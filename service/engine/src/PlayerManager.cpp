@@ -1,13 +1,10 @@
-#include "Players.h"
+#include "PlayerManager.h"
 #include <boost/uuid/uuid_io.hpp>
 #include <fmt/core.h>
-#include <minecpp/entity/Aliases.hpp>
-#include <minecpp/entity/component/Team.h>
 #include <minecpp/entity/EntitySystem.h>
 #include <minecpp/entity/factory/Player.h>
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/nbt/Reader.h>
-#include <minecpp/util/Compression.h>
 #include <minecpp/util/Uuid.h>
 #include <utility>
 
@@ -19,7 +16,8 @@ PlayerManager::PlayerManager(entity::EntitySystem &entity_system, game::BlockPos
 {
 }
 
-mb::result<mb::empty> PlayerManager::join_player(game::IWorld &world, const std::string &name, game::PlayerId id)
+mb::result<mb::empty> PlayerManager::join_player(game::IWorld &world, const std::string &name,
+                                                 game::PlayerId id)
 {
    entity::factory::Player player_factory(id, name);
    auto player_entity = player_factory.create_entity(m_spawn_position.to_vector3(), m_entity_system);
@@ -51,7 +49,7 @@ mb::result<game::Entity> PlayerManager::respawn_player(game::IWorld &world, cons
 }
 
 mb::result<minecpp::nbt::player::Player> PlayerManager::load_player_data(game::IWorld & /*world*/,
-                                                                             game::PlayerId id) const
+                                                                         game::PlayerId id) const
 {
    minecpp::nbt::player::Player data;
 

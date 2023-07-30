@@ -18,8 +18,7 @@ void StatusHandler::handle(Connection &conn, minecpp::network::message::Reader &
    net::status::sb::visit_message(*this, conn, r);
 }
 
-void StatusHandler::on_status(Connection &connection,
-                              const net::status::sb::Status & /*status*/)
+void StatusHandler::on_status(Connection &connection, const net::status::sb::Status & /*status*/)
 {
    using minecpp::format::Color;
 
@@ -46,8 +45,7 @@ void StatusHandler::on_ping(Connection &connection, const net::status::sb::Ping 
 
 void StatusHandler::handle_disconnect(Connection & /*conn*/) {}
 
-void StatusHandler::on_failure(Connection &/*connection*/,
-                               const std::uint8_t message_id)
+void StatusHandler::on_failure(Connection & /*connection*/, const std::uint8_t message_id)
 {
    spdlog::debug("[status protocol] unknown operation code {}", static_cast<int>(message_id));
 }

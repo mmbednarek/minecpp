@@ -6,6 +6,15 @@ alias EntityID = varint
 [Foo="bar"]
 alias Bar = string
 
+[
+    IncludeHeader = "minecpp/math/Vector3.h",
+
+    CppType = "::minecpp::math::Vector3",
+    Write   = "::minecpp::network::write_vector3",
+    Read    = "::minecpp::network::read_vector3"
+]
+alias Vector3 = extern
+
 // Some Item Stuff
 record Item {
     Name: string
@@ -29,6 +38,8 @@ record Person {
     DimensionTypes: int32
     Foo: uuid
     Opts: variant[float32, int32, Item]
+    Position: Vector3
+    Size: Vector3
 
     [TerminateOn="0xFF"]
     More: map[uint8, string]

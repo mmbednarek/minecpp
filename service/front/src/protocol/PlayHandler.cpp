@@ -2,8 +2,6 @@
 #include "../Connection.h"
 #include "../Service.h"
 
-#include "minecpp/net/play/Serverbound.schema.h"
-
 namespace minecpp::service::front::protocol {
 
 PlayHandler::PlayHandler(Service &service) :

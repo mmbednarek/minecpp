@@ -12,7 +12,8 @@
 
 namespace minecpp::example1 {
 
-class Item {
+class Item
+{
  public:
    std::string name{};
    std::int16_t count{};
@@ -24,7 +25,8 @@ class Item {
    static Item deserialize(std::istream &in);
 };
 
-class Person {
+class Person
+{
  public:
    std::string name{};
    std::string surname{};
@@ -39,4 +41,4 @@ class Person {
    static Person deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::example1

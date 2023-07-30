@@ -28,7 +28,7 @@ TEST(BufferTest, StreamFromBufferStream)
    ss << "Hello World!";
 
    auto buffer1 = Buffer::from_istream(ss);
-   auto stream = buffer1.make_stream();
+   auto stream  = buffer1.make_stream();
    auto buffer2 = Buffer::from_istream(stream);
 
    EXPECT_EQ(buffer2.to_string(), "Hello World!");

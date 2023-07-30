@@ -245,6 +245,10 @@ void register_core_types(minecpp::tool::schema_compiler::SymbolTable &table)
            .type_class = TypeClass::Uuid,
            .name{"uuid"},
    });
+   table.register_symbol(Symbol{
+           .type_class = TypeClass::Extern,
+           .name{"extern"},
+   });
    table.register_symbol(Symbol{.type_class = TypeClass::NbtCompoundContent,
                                 .name{"CompoundContent"},
                                 .package{"minecpp.nbt"}});

@@ -25,6 +25,7 @@ class NetworkSerializeContext
    [[nodiscard]] const Type &type() const;
    [[nodiscard]] std::string type_generator() const;
    [[nodiscard]] TypeClass type_class() const;
+   [[nodiscard]] Symbol symbol() const;
 
    void write_serializer(const Type &type, const mb::codegen::expression &source_expression,
                          std::string_view name, mb::codegen::statement::collector &collector);

@@ -90,7 +90,7 @@ class PluginMessage {
 
 class InteractTarget {
  public:
-   play::Vector3f position{};
+   ::minecpp::math::Vector3f position{};
    std::int32_t hand{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static InteractTarget deserialize(::minecpp::network::message::Reader &reader);
@@ -98,7 +98,7 @@ class InteractTarget {
 
 class Interact {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::int32_t type{};
    std::optional<InteractTarget> target{};
    bool is_sneaking{};
@@ -115,7 +115,7 @@ class KeepAlive {
 
 class SetPlayerPosition {
  public:
-   play::Vector3 position{};
+   ::minecpp::math::Vector3 position{};
    bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetPlayerPosition deserialize(::minecpp::network::message::Reader &reader);
@@ -123,7 +123,7 @@ class SetPlayerPosition {
 
 class SetPlayerPositionAndRotation {
  public:
-   play::Vector3 position{};
+   ::minecpp::math::Vector3 position{};
    float yaw{};
    float pitch{};
    bool is_on_ground{};
@@ -185,7 +185,7 @@ class UseItemOn {
    std::int32_t hand{};
    std::uint64_t position{};
    std::int32_t facing{};
-   play::Vector3f cursor_position{};
+   ::minecpp::math::Vector3f cursor_position{};
    bool is_inside_block{};
    std::int32_t sequence_id{};
    void serialize(::minecpp::network::message::Writer &writer) const;

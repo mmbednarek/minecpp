@@ -17,11 +17,6 @@ namespace minecpp::service::front {
 
 namespace {
 
-constexpr std::uint8_t encode_angle(float angle)
-{
-   return static_cast<std::uint8_t>(angle / 360.0f * 256.0f);
-}
-
 std::optional<net::play::Slot> encode_slot(const proto::common::Slot &slot)
 {
    if (slot.count() == 0)
@@ -78,13 +73,9 @@ void EventHandler::handle_spawn_player(const clientbound_v1::SpawnPlayer &spawn,
    auto spawn_player = net::play::cb::SpawnPlayer{
            .entity_id = spawn.entity().entity_id(),
            .player_id = player_id,
-           .position{
-                     .x = spawn.entity().position().x(),
-                     .y = spawn.entity().position().y(),
-                     .z = spawn.entity().position().z(),
-                     },
-           .yaw   = encode_angle(spawn.entity().rotation().yaw()),
-           .pitch = encode_angle(spawn.entity().rotation().pitch()),
+           .position  = math::Vector3::from_proto(spawn.entity().position()),
+           .yaw       = spawn.entity().rotation().yaw(),
+           .pitch     = spawn.entity().rotation().pitch(),
    };
 
    send_message(spawn_player, recipient_list);
@@ -107,14 +98,10 @@ void EventHandler::handle_entity_move(const clientbound_v1::EntityMove &pos,
                                       const event::RecipientList &recipient_list)
 {
    net::play::cb::EntityMove entity_move{
-           .entity_id = pos.entity_id(),
-           .difference{
-                       .x = static_cast<short>(pos.movement().x()),
-                       .y = static_cast<short>(pos.movement().y()),
-                       .z = static_cast<short>(pos.movement().z()),
-                       },
-           .yaw          = encode_angle(pos.rotation().yaw()),
-           .pitch        = encode_angle(pos.rotation().pitch()),
+           .entity_id    = pos.entity_id(),
+           .difference   = math::Vector3i::from_proto(pos.movement()).cast<short>(),
+           .yaw          = pos.rotation().yaw(),
+           .pitch        = pos.rotation().pitch(),
            .is_on_ground = pos.is_on_ground(),
    };
 
@@ -125,21 +112,17 @@ void EventHandler::handle_entity_look(const clientbound_v1::EntityLook &pos,
                                       const event::RecipientList &recipient_list)
 {
    net::play::cb::EntityMove entity_look{
-           .entity_id = pos.entity_id(),
-           .difference{
-                       .x = 0,
-                       .y = 0,
-                       .z = 0,
-                       },
-           .yaw          = encode_angle(pos.rotation().yaw()),
-           .pitch        = encode_angle(pos.rotation().pitch()),
+           .entity_id    = pos.entity_id(),
+           .difference   = math::Vector3s{0, 0, 0},
+           .yaw          = pos.rotation().yaw(),
+           .pitch        = pos.rotation().pitch(),
            .is_on_ground = pos.is_on_ground(),
    };
    send_message(entity_look, recipient_list);
 
    net::play::cb::EntityHeadLook entity_head_look{
            .entity_id = pos.entity_id(),
-           .yaw       = encode_angle(pos.rotation().yaw()),
+           .yaw       = pos.rotation().yaw(),
    };
    send_message(entity_head_look, recipient_list);
 }
@@ -203,10 +186,7 @@ void EventHandler::handle_load_terrain(const clientbound_v1::LoadTerrain &msg,
                                        const event::RecipientList &recipient_list)
 {
    net::play::cb::UpdateChunkPosition update_chunk_position{
-           .chunk_position{
-                           .x = msg.central_chunk().x(),
-                           .y = msg.central_chunk().z(),
-                           }
+           .chunk_position = math::Vector2i{msg.central_chunk().x(), msg.central_chunk().z()},
    };
 
    this->send_message(update_chunk_position, recipient_list);
@@ -216,10 +196,7 @@ void EventHandler::handle_unload_chunk(const clientbound_v1::UnloadChunk &msg,
                                        const event::RecipientList &recipient_list)
 {
    net::play::cb::UnloadChunk unload_chunk{
-           .position{
-                     .x = msg.chunk_position().x(),
-                     .y = msg.chunk_position().z(),
-                     }
+           .position = math::Vector2i{msg.chunk_position().x(), msg.chunk_position().z()},
    };
    send_message(unload_chunk, recipient_list);
 }
@@ -400,13 +377,9 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
          conn->send_message(net::play::cb::SpawnPlayer{
                  .entity_id = entity.entity_id(),
                  .player_id = id,
-                 .position{
-                           .x = entity.position().x(),
-                           .y = entity.position().y(),
-                           .z = entity.position().z(),
-                           },
-                 .yaw   = encode_angle(entity.rotation().yaw()),
-                 .pitch = encode_angle(entity.rotation().pitch()),
+                 .position  = math::Vector3::from_proto(entity.position()),
+                 .yaw       = entity.rotation().yaw(),
+                 .pitch     = entity.rotation().pitch(),
          });
 
          for (const auto &equipment : entity.equipment()) {
@@ -453,7 +426,7 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
 {
    for (auto &chunk : msg.block_light()) {
       net::play::cb::UpdateLight update_block_light{};
-      update_block_light.position = net::play::Vector2vi{chunk.position().x(), chunk.position().z()};
+      update_block_light.position = math::Vector2i{chunk.position().x(), chunk.position().z()};
       update_block_light.light_data.block_light.resize(chunk.sections_size());
 
       std::uint64_t empty_light{};
@@ -558,11 +531,8 @@ void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
                                      const event::RecipientList &recipient_list)
 {
    net::play::cb::UpdateChunk chunk_data{
-           .position{
-                     .x = msg.chunk().position().x(),
-                     .y = msg.chunk().position().z(),
-                     },
-           .data = get_chunk_data(msg.chunk()),
+           .position = math::Vector2i{msg.chunk().position().x(), msg.chunk().position().z()},
+           .data     = get_chunk_data(msg.chunk()),
    };
 
    chunk_data.heightmaps.motion_blocking.resize(msg.chunk().hm_motion_blocking_size());
@@ -635,10 +605,7 @@ void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk 
                                            const event::RecipientList &recipient_list)
 {
    net::play::cb::UpdateChunkPosition chunk_position{
-           .chunk_position{
-                           .x = msg.position().x(),
-                           .y = msg.position().z(),
-                           }
+           .chunk_position = math::Vector2i{msg.position().x(), msg.position().z()},
    };
 
    for (auto player_id : recipient_list.list) {
@@ -656,12 +623,7 @@ void EventHandler::handle_player_position_rotation(const clientbound_v1::PlayerP
                                                    const event::RecipientList &recipient_list)
 {
    net::play::cb::PlayerPositionLook player_pos_look{
-           .position =
-                   {
-                              .x = msg.position().x(),
-                              .y = msg.position().y(),
-                              .z = msg.position().z(),
-                              },
+           .position    = math::Vector3::from_proto(msg.position()),
            .yaw         = msg.rotation().yaw(),
            .pitch       = msg.rotation().pitch(),
            .flags       = 0,
@@ -734,20 +696,12 @@ void EventHandler::send_entity(const event::RecipientList &recipient_list,
            .entity_id   = entity.entity_id(),
            .unique_id   = util::read_uuid(entity.uuid().lower(), entity.uuid().upper()),
            .entity_type = static_cast<int>(entity.entity_type()),
-           .position{
-                     .x = entity.position().x(),
-                     .y = entity.position().y(),
-                     .z = entity.position().z(),
-                     },
-           .pitch    = encode_angle(entity.rotation().pitch()),
-           .yaw      = encode_angle(entity.rotation().yaw()),
-           .head_yaw = encode_angle(entity.head_yaw()),
-           .data     = static_cast<int>(entity.data()),
-           .velocity{
-                     .x = static_cast<std::int16_t>(entity.velocity().x()),
-                     .y = static_cast<std::int16_t>(entity.velocity().y()),
-                     .z = static_cast<std::int16_t>(entity.velocity().z()),
-                     }
+           .position    = math::Vector3::from_proto(entity.position()),
+           .pitch       = entity.rotation().pitch(),
+           .yaw         = entity.rotation().yaw(),
+           .head_yaw    = entity.head_yaw(),
+           .data        = static_cast<int>(entity.data()),
+           .velocity    = math::Vector3i::from_proto(entity.velocity()).cast<short>(),
    };
    send_message(spawn_entity, recipient_list);
 
@@ -797,11 +751,7 @@ void EventHandler::handle_set_entity_velocity(const clientbound_v1::SetEntityVel
 {
    net::play::cb::SetEntityVelocity update_velocity{
            .entity_id = static_cast<std::uint32_t>(msg.entity_id()),
-           .velocity{
-                     .x = static_cast<std::int16_t>(msg.velocity().x()),
-                     .y = static_cast<std::int16_t>(msg.velocity().y()),
-                     .z = static_cast<std::int16_t>(msg.velocity().z()),
-                     }
+           .velocity  = math::Vector3i::from_proto(msg.velocity()).cast<short>(),
    };
    send_message(update_velocity, recipient_list);
 }
@@ -844,17 +794,11 @@ void EventHandler::handle_respawn(const clientbound_v1::Respawn &msg,
 void EventHandler::handle_teleport_entity(const clientbound_v1::TeleportEntity &msg,
                                           const event::RecipientList &recipient_list)
 {
-   net::play::cb::TeleportEntity teleport_entity{
-           .entity_id = msg.entity_id(),
-           .position{
-                     .x = msg.position().x(),
-                     .y = msg.position().y(),
-                     .z = msg.position().z(),
-                     },
-           .yaw          = encode_angle(msg.rotation().yaw()),
-           .pitch        = encode_angle(msg.rotation().pitch()),
-           .is_on_ground = msg.is_on_ground()
-   };
+   net::play::cb::TeleportEntity teleport_entity{.entity_id    = msg.entity_id(),
+                                                 .position     = math::Vector3::from_proto(msg.position()),
+                                                 .yaw          = msg.rotation().yaw(),
+                                                 .pitch        = msg.rotation().pitch(),
+                                                 .is_on_ground = msg.is_on_ground()};
    send_message(teleport_entity, recipient_list);
 }
 

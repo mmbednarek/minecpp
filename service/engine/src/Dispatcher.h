@@ -145,7 +145,8 @@ class Dispatcher : public minecpp::game::IDispatcher
 
    EventManager &m_events;
    entity::EntitySystem &m_entity_system;
-   [[nodiscard]] static proto::event::clientbound::RawMessage make_raw_message(const network::message::Writer &writer) ;
+   [[nodiscard]] static proto::event::clientbound::RawMessage
+   make_raw_message(const network::message::Writer &writer);
 };
 
 }// namespace minecpp::service::engine

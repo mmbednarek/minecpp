@@ -1,3 +1,4 @@
+#include "minecpp/network/NetworkUtil.h"
 #include "net/login/Clientbound.schema.h"
 #include <algorithm>
 

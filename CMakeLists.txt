@@ -5,9 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Werror -Wno-unknown-pragmas")
 
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
-option(ENET_PROVIDER "ENet provider" "library")
+set(ENET_PROVIDER "library" CACHE STRING "ENetProvider")
 
 find_package(fmt REQUIRED)
 find_package(spdlog REQUIRED)
@@ -83,7 +83,7 @@ FetchContent_MakeAvailable(libmb)
 FetchContent_Declare(
         libmb_codegen
         GIT_REPOSITORY https://github.com/mmbednarek/codegen
-        GIT_TAG codegen-0.0.39
+        GIT_TAG codegen-0.0.40
 )
 FetchContent_MakeAvailable(libmb_codegen)
 

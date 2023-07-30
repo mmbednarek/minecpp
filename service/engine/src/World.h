@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Dispatcher.h"
-#include "Players.h"
+#include "PlayerManager.h"
 
 #include "minecpp/controller/BlockManager.h"
 #include "minecpp/game/IWorld.hpp"
@@ -33,7 +33,8 @@ class World : public minecpp::game::IWorld
 
    game::player::Provider &players() override;
    game::IEntitySystem &entity_system() override;
-   minecpp::game::IDispatcher &dispatcher() override;
+   game::IDispatcher &dispatcher() override;
+
    mb::result<mb::empty> add_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<mb::empty> free_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<int> height_at(int x, int z) override;
@@ -54,6 +55,7 @@ class World : public minecpp::game::IWorld
    bool is_movement_blocked_at(const math::Vector3 &position) override;
    void kill_entity(game::EntityId id) override;
    void apply_damage_or_kill_entity(game::EntityId id, const game::Damage &damage) override;
+   mb::result<game::Entity> player_entity(game::PlayerId player_id) override;
 
  private:
    void notify_neighbours(game::BlockPosition position, game::BlockStateId state);

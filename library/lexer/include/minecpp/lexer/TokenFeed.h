@@ -10,12 +10,13 @@ class ParserError : public std::runtime_error
  public:
    template<typename... TArgs>
    ParserError(int line, int column, fmt::format_string<TArgs...> format_string, TArgs &&...args) :
-       std::runtime_error(fmt::format("[{}:{}] {}", line, column, fmt::format(format_string, std::forward<TArgs>(args)...)))
+       std::runtime_error(fmt::format("[{}:{}] {}", line, column,
+                                      fmt::format(format_string, std::forward<TArgs>(args)...)))
    {
    }
 };
 
-template <typename TFirst, typename... TArgs>
+template<typename TFirst, typename... TArgs>
 bool any_of(TFirst actual, TFirst first_expected, TArgs... other_expected)
 {
    if (first_expected == actual)
@@ -28,8 +29,9 @@ bool any_of(TFirst actual, TFirst first_expected, TArgs... other_expected)
    }
 }
 
-template <typename TFirst, typename... TArgs>
-std::string format_args_internal(std::string &output, TFirst actual, TArgs... args) {
+template<typename TFirst, typename... TArgs>
+std::string format_args_internal(std::string &output, TFirst actual, TArgs... args)
+{
    fmt::format_to(std::back_inserter(output), ", {}", actual);
    if constexpr (sizeof...(args)) {
       format_args_internal(output, args...);
@@ -37,8 +39,9 @@ std::string format_args_internal(std::string &output, TFirst actual, TArgs... ar
    return output;
 }
 
-template <typename TFirst, typename... TArgs>
-std::string format_args(TFirst actual, TArgs... args) {
+template<typename TFirst, typename... TArgs>
+std::string format_args(TFirst actual, TArgs... args)
+{
    std::string output;
    fmt::format_to(std::back_inserter(output), "{}", actual);
    if constexpr (sizeof...(args)) {
@@ -78,15 +81,17 @@ class TokenFeed
       return *token;
    }
 
-   template <typename... TArgs>
+   template<typename... TArgs>
    TToken expect(TArgs... expected)
    {
       auto token = this->next();
       if (not any_of(token.type, expected...)) {
          if constexpr (sizeof...(expected) == 1) {
-            throw ParserError(token.line, token.column, "unexpected token {}, expected {}", token.type, expected...);
+            throw ParserError(token.line, token.column, "unexpected token {}, expected {}", token.type,
+                              expected...);
          } else {
-            throw ParserError(token.line, token.column, "unexpected token {}, expected one of: {}", token.type, format_args(expected...));
+            throw ParserError(token.line, token.column, "unexpected token {}, expected one of: {}",
+                              token.type, format_args(expected...));
          }
       }
       return token;

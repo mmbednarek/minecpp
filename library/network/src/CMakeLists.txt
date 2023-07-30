@@ -6,11 +6,13 @@ target_sources(minecpp_network
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/Chat.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Network.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkUtil.cpp
 
     # Header files
     PUBLIC
         ${MINECPP_NETWORK_INCLUDE_DIR}/Chat.h
         ${MINECPP_NETWORK_INCLUDE_DIR}/Network.h
+        ${MINECPP_NETWORK_INCLUDE_DIR}/NetworkUtil.h
         ${MINECPP_NETWORK_INCLUDE_DIR}/Result.hpp
 )
 

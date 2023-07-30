@@ -4,6 +4,7 @@ set(MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR ${MINECPP_CONTROLLER_DIR}/include/minec
 target_sources(minecpp_controller
     # Source files
     PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/Block.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Default.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Door.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Fence.cpp
@@ -17,6 +18,7 @@ target_sources(minecpp_controller
 
     # Header files
     PUBLIC
+        ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Block.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Default.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Door.h
         ${MINECPP_CONTROLLER_BLOCK_INCLUDE_DIR}/Fence.h

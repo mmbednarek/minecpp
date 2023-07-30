@@ -22,12 +22,12 @@ class SpawnEntity {
    std::uint32_t entity_id{};
    ::minecpp::util::Uuid unique_id{};
    std::int32_t entity_type{};
-   play::Vector3 position{};
-   std::uint8_t pitch{};
-   std::uint8_t yaw{};
-   std::uint8_t head_yaw{};
+   ::minecpp::math::Vector3 position{};
+   float pitch{};
+   float yaw{};
+   float head_yaw{};
    std::int32_t data{};
-   play::Vector3s velocity{};
+   ::minecpp::math::Vector3s velocity{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SpawnEntity deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -35,7 +35,7 @@ class SpawnEntity {
 class SpawnExperienceOrb {
  public:
    std::uint32_t entity_id{};
-   play::Vector3 position{};
+   ::minecpp::math::Vector3 position{};
    std::int16_t xp_value{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SpawnExperienceOrb deserialize(::minecpp::network::message::Reader &reader);
@@ -45,9 +45,9 @@ class SpawnPlayer {
  public:
    std::uint32_t entity_id{};
    ::minecpp::util::Uuid player_id{};
-   play::Vector3 position{};
-   std::uint8_t yaw{};
-   std::uint8_t pitch{};
+   ::minecpp::math::Vector3 position{};
+   float yaw{};
+   float pitch{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SpawnPlayer deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -107,7 +107,7 @@ class DamageEvent {
    std::int32_t type_id{};
    std::uint32_t entity_cause_id{};
    std::uint32_t entity_direct_id{};
-   std::optional<play::Vector3> source_position{};
+   std::optional<::minecpp::math::Vector3> source_position{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static DamageEvent deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -129,7 +129,7 @@ class EntityStatus {
 
 class UnloadChunk {
  public:
-   play::Vector2i position{};
+   ::minecpp::math::Vector2i position{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static UnloadChunk deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -165,7 +165,7 @@ class LightData {
 
 class UpdateChunk {
  public:
-   play::Vector2i position{};
+   ::minecpp::math::Vector2i position{};
    nbt::chunk::HeightmapsNet heightmaps{};
    std::vector<std::uint8_t> data{};
    std::vector<BlockEntity> block_entities{};
@@ -176,7 +176,7 @@ class UpdateChunk {
 
 class UpdateLight {
  public:
-   play::Vector2vi position{};
+   ::minecpp::math::Vector2i position{};
    LightData light_data{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static UpdateLight deserialize(::minecpp::network::message::Reader &reader);
@@ -217,7 +217,7 @@ class JoinGame {
 class EntityRelativeMove {
  public:
    std::uint32_t entity_id{};
-   play::Vector3s difference{};
+   ::minecpp::math::Vector3s difference{};
    bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityRelativeMove deserialize(::minecpp::network::message::Reader &reader);
@@ -226,9 +226,9 @@ class EntityRelativeMove {
 class EntityMove {
  public:
    std::uint32_t entity_id{};
-   play::Vector3s difference{};
-   std::uint8_t yaw{};
-   std::uint8_t pitch{};
+   ::minecpp::math::Vector3s difference{};
+   float yaw{};
+   float pitch{};
    bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityMove deserialize(::minecpp::network::message::Reader &reader);
@@ -237,8 +237,8 @@ class EntityMove {
 class EntityLook {
  public:
    std::uint32_t entity_id{};
-   std::uint8_t yaw{};
-   std::uint8_t pitch{};
+   float yaw{};
+   float pitch{};
    bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityLook deserialize(::minecpp::network::message::Reader &reader);
@@ -353,7 +353,7 @@ class UpdatePlayerInfo {
 
 class PlayerPositionLook {
  public:
-   play::Vector3 position{};
+   ::minecpp::math::Vector3 position{};
    float yaw{};
    float pitch{};
    std::uint8_t flags{};
@@ -416,7 +416,7 @@ class Respawn {
 class EntityHeadLook {
  public:
    std::uint32_t entity_id{};
-   std::uint8_t yaw{};
+   float yaw{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityHeadLook deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -438,7 +438,7 @@ class ChangeHeldItem {
 
 class UpdateChunkPosition {
  public:
-   play::Vector2vi chunk_position{};
+   ::minecpp::math::Vector2i chunk_position{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static UpdateChunkPosition deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -462,7 +462,7 @@ class SetEntityMetadata {
 class SetEntityVelocity {
  public:
    std::uint32_t entity_id{};
-   play::Vector3s velocity{};
+   ::minecpp::math::Vector3s velocity{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetEntityVelocity deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -505,9 +505,9 @@ class PickupItem {
 class TeleportEntity {
  public:
    std::uint32_t entity_id{};
-   play::Vector3 position{};
-   std::uint8_t yaw{};
-   std::uint8_t pitch{};
+   ::minecpp::math::Vector3 position{};
+   float yaw{};
+   float pitch{};
    bool is_on_ground{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static TeleportEntity deserialize(::minecpp::network::message::Reader &reader);

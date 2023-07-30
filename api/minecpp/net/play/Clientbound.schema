@@ -11,9 +11,9 @@ record SpawnEntity {
     unique_id: uuid
     entity_type: varint
     position: Vector3
-    pitch: uint8
-    yaw: uint8
-    head_yaw: uint8
+    pitch: Angle
+    yaw: Angle
+    head_yaw: Angle
     data: varint
     velocity: Vector3s
 }
@@ -30,8 +30,8 @@ record SpawnPlayer {
     entity_id: EntityID
     player_id: uuid
     position: Vector3
-    yaw: uint8
-    pitch: uint8
+    yaw: Angle
+    pitch: Angle
 }
 
 [MessageID=0x04]
@@ -174,16 +174,16 @@ record EntityRelativeMove {
 record EntityMove {
     entity_id: EntityID
     difference: Vector3s
-    yaw: uint8
-    pitch: uint8
+    yaw: Angle
+    pitch: Angle
     is_on_ground: bool
 }
 
 [MessageID=0x2D]
 record EntityLook {
     entity_id: EntityID
-    yaw: uint8
-    pitch: uint8
+    yaw: Angle
+    pitch: Angle
     is_on_ground: bool
 }
 
@@ -338,7 +338,7 @@ record Respawn {
 [MessageID=0x42]
 record EntityHeadLook {
   entity_id: EntityID
-  yaw: uint8
+  yaw: Angle
 }
 
 [MessageID=0x43]
@@ -422,7 +422,7 @@ record PickupItem {
 record TeleportEntity {
   entity_id: EntityID
   position: Vector3
-  yaw: uint8
-  pitch: uint8
+  yaw: Angle
+  pitch: Angle
   is_on_ground: bool
 }

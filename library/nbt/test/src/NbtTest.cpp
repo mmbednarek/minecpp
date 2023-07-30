@@ -202,7 +202,7 @@ TEST(NBT_Reader, CompoundTag)
    stream.write(buff, sizeof(buff));
    Reader r(stream);
 
-   auto [tag, name]        = r.peek_tag();
+   auto [tag, name] = r.peek_tag();
    EXPECT_EQ(tag, TagId::Compound);
    EXPECT_EQ(name, "Data");
 

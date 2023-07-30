@@ -572,11 +572,7 @@ void Dispatcher::send_damage_event(game::EntityId target, int id,
    damage_event.type_id          = id;
    damage_event.entity_cause_id  = cause_entity_id.has_value() ? (cause_entity_id.value() + 1) : 0;
    damage_event.entity_direct_id = direct_entity_id.has_value() ? (direct_entity_id.value() + 1) : 0;
-   damage_event.source_position  = net::play::Vector3{
-            .x = position.x(),
-            .y = position.y(),
-            .z = position.z(),
-   };
+   damage_event.source_position  = position;
 
    this->send_raw_to_players_in_view_distance(position, damage_event);
 }

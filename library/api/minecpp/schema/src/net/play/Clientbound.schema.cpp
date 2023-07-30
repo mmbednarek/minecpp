@@ -1,3 +1,4 @@
+#include "minecpp/network/NetworkUtil.h"
 #include "net/play/Clientbound.schema.h"
 #include <algorithm>
 
@@ -17,12 +18,12 @@ void SpawnEntity::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_uvarint(this->entity_id);
    writer.write_uuid(this->unique_id);
    writer.write_varint(this->entity_type);
-   this->position.serialize(writer);
-   writer.write_byte(this->pitch);
-   writer.write_byte(this->yaw);
-   writer.write_byte(this->head_yaw);
+   network::write_vector3(writer, this->position);
+   network::write_angle(writer, this->pitch);
+   network::write_angle(writer, this->yaw);
+   network::write_angle(writer, this->head_yaw);
    writer.write_varint(this->data);
-   this->velocity.serialize(writer);
+   network::write_vector3s(writer, this->velocity);
 }
 
 SpawnEntity SpawnEntity::deserialize(::minecpp::network::message::Reader &reader) {
@@ -30,26 +31,26 @@ SpawnEntity SpawnEntity::deserialize(::minecpp::network::message::Reader &reader
    result.entity_id = reader.read_uvarint();
    result.unique_id = reader.read_uuid();
    result.entity_type = reader.read_varint();
-   result.position = play::Vector3::deserialize(reader);
-   result.pitch = reader.read_byte();
-   result.yaw = reader.read_byte();
-   result.head_yaw = reader.read_byte();
+   result.position = network::read_vector3(reader);
+   result.pitch = network::read_angle(reader);
+   result.yaw = network::read_angle(reader);
+   result.head_yaw = network::read_angle(reader);
    result.data = reader.read_varint();
-   result.velocity = play::Vector3s::deserialize(reader);
+   result.velocity = network::read_vector3s(reader);
    return result;
 }
 
 void SpawnExperienceOrb::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x02);
    writer.write_uvarint(this->entity_id);
-   this->position.serialize(writer);
+   network::write_vector3(writer, this->position);
    writer.write_big_endian(this->xp_value);
 }
 
 SpawnExperienceOrb SpawnExperienceOrb::deserialize(::minecpp::network::message::Reader &reader) {
    SpawnExperienceOrb result;
    result.entity_id = reader.read_uvarint();
-   result.position = play::Vector3::deserialize(reader);
+   result.position = network::read_vector3(reader);
    result.xp_value = reader.read_big_endian<std::int16_t>();
    return result;
 }
@@ -58,18 +59,18 @@ void SpawnPlayer::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x03);
    writer.write_uvarint(this->entity_id);
    writer.write_uuid(this->player_id);
-   this->position.serialize(writer);
-   writer.write_byte(this->yaw);
-   writer.write_byte(this->pitch);
+   network::write_vector3(writer, this->position);
+   network::write_angle(writer, this->yaw);
+   network::write_angle(writer, this->pitch);
 }
 
 SpawnPlayer SpawnPlayer::deserialize(::minecpp::network::message::Reader &reader) {
    SpawnPlayer result;
    result.entity_id = reader.read_uvarint();
    result.player_id = reader.read_uuid();
-   result.position = play::Vector3::deserialize(reader);
-   result.yaw = reader.read_byte();
-   result.pitch = reader.read_byte();
+   result.position = network::read_vector3(reader);
+   result.yaw = network::read_angle(reader);
+   result.pitch = network::read_angle(reader);
    return result;
 }
 
@@ -169,7 +170,7 @@ void DamageEvent::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_uvarint(this->entity_direct_id);
    if (this->source_position.has_value()) {
       writer.write_byte(1);
-      this->source_position->serialize(writer);
+      network::write_vector3(writer, *this->source_position);
    } else {
       writer.write_byte(0);
    }
@@ -183,7 +184,7 @@ DamageEvent DamageEvent::deserialize(::minecpp::network::message::Reader &reader
    result.entity_direct_id = reader.read_uvarint();
    const auto source_position_has_value_0 = reader.read_byte();
    if (source_position_has_value_0) {
-      result.source_position = play::Vector3::deserialize(reader);
+      result.source_position = network::read_vector3(reader);
    }
    return result;
 }
@@ -214,12 +215,12 @@ EntityStatus EntityStatus::deserialize(::minecpp::network::message::Reader &read
 
 void UnloadChunk::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x1E);
-   this->position.serialize(writer);
+   network::write_vector2i(writer, this->position);
 }
 
 UnloadChunk UnloadChunk::deserialize(::minecpp::network::message::Reader &reader) {
    UnloadChunk result;
-   result.position = play::Vector2i::deserialize(reader);
+   result.position = network::read_vector2i(reader);
    return result;
 }
 
@@ -332,7 +333,7 @@ LightData LightData::deserialize(::minecpp::network::message::Reader &reader) {
 
 void UpdateChunk::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x24);
-   this->position.serialize(writer);
+   network::write_vector2i(writer, this->position);
    this->heightmaps.serialize(writer.raw_stream(), "");
    writer.write_varint(static_cast<std::int32_t>(this->data.size()));
    for (const auto &data_value_0 : this->data) {
@@ -347,7 +348,7 @@ void UpdateChunk::serialize(::minecpp::network::message::Writer &writer) const {
 
 UpdateChunk UpdateChunk::deserialize(::minecpp::network::message::Reader &reader) {
    UpdateChunk result;
-   result.position = play::Vector2i::deserialize(reader);
+   result.position = network::read_vector2i(reader);
    result.heightmaps = nbt::chunk::HeightmapsNet::deserialize(reader.raw_stream());
    auto data_size_0 = reader.read_varint();
    result.data.resize(static_cast<std::size_t>(data_size_0));
@@ -365,13 +366,13 @@ UpdateChunk UpdateChunk::deserialize(::minecpp::network::message::Reader &reader
 
 void UpdateLight::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x27);
-   this->position.serialize(writer);
+   network::write_vector2vi(writer, this->position);
    this->light_data.serialize(writer);
 }
 
 UpdateLight UpdateLight::deserialize(::minecpp::network::message::Reader &reader) {
    UpdateLight result;
-   result.position = play::Vector2vi::deserialize(reader);
+   result.position = network::read_vector2vi(reader);
    result.light_data = LightData::deserialize(reader);
    return result;
 }
@@ -451,14 +452,14 @@ JoinGame JoinGame::deserialize(::minecpp::network::message::Reader &reader) {
 void EntityRelativeMove::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x2B);
    writer.write_uvarint(this->entity_id);
-   this->difference.serialize(writer);
+   network::write_vector3s(writer, this->difference);
    writer.write_bool(this->is_on_ground);
 }
 
 EntityRelativeMove EntityRelativeMove::deserialize(::minecpp::network::message::Reader &reader) {
    EntityRelativeMove result;
    result.entity_id = reader.read_uvarint();
-   result.difference = play::Vector3s::deserialize(reader);
+   result.difference = network::read_vector3s(reader);
    result.is_on_ground = reader.read_bool();
    return result;
 }
@@ -466,18 +467,18 @@ EntityRelativeMove EntityRelativeMove::deserialize(::minecpp::network::message::
 void EntityMove::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x2C);
    writer.write_uvarint(this->entity_id);
-   this->difference.serialize(writer);
-   writer.write_byte(this->yaw);
-   writer.write_byte(this->pitch);
+   network::write_vector3s(writer, this->difference);
+   network::write_angle(writer, this->yaw);
+   network::write_angle(writer, this->pitch);
    writer.write_bool(this->is_on_ground);
 }
 
 EntityMove EntityMove::deserialize(::minecpp::network::message::Reader &reader) {
    EntityMove result;
    result.entity_id = reader.read_uvarint();
-   result.difference = play::Vector3s::deserialize(reader);
-   result.yaw = reader.read_byte();
-   result.pitch = reader.read_byte();
+   result.difference = network::read_vector3s(reader);
+   result.yaw = network::read_angle(reader);
+   result.pitch = network::read_angle(reader);
    result.is_on_ground = reader.read_bool();
    return result;
 }
@@ -485,16 +486,16 @@ EntityMove EntityMove::deserialize(::minecpp::network::message::Reader &reader) 
 void EntityLook::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x2D);
    writer.write_uvarint(this->entity_id);
-   writer.write_byte(this->yaw);
-   writer.write_byte(this->pitch);
+   network::write_angle(writer, this->yaw);
+   network::write_angle(writer, this->pitch);
    writer.write_bool(this->is_on_ground);
 }
 
 EntityLook EntityLook::deserialize(::minecpp::network::message::Reader &reader) {
    EntityLook result;
    result.entity_id = reader.read_uvarint();
-   result.yaw = reader.read_byte();
-   result.pitch = reader.read_byte();
+   result.yaw = network::read_angle(reader);
+   result.pitch = network::read_angle(reader);
    result.is_on_ground = reader.read_bool();
    return result;
 }
@@ -742,7 +743,7 @@ UpdatePlayerInfo UpdatePlayerInfo::deserialize(::minecpp::network::message::Read
 
 void PlayerPositionLook::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x3C);
-   this->position.serialize(writer);
+   network::write_vector3(writer, this->position);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
    writer.write_byte(this->flags);
@@ -751,7 +752,7 @@ void PlayerPositionLook::serialize(::minecpp::network::message::Writer &writer) 
 
 PlayerPositionLook PlayerPositionLook::deserialize(::minecpp::network::message::Reader &reader) {
    PlayerPositionLook result;
-   result.position = play::Vector3::deserialize(reader);
+   result.position = network::read_vector3(reader);
    result.yaw = reader.read_float();
    result.pitch = reader.read_float();
    result.flags = reader.read_byte();
@@ -881,13 +882,13 @@ Respawn Respawn::deserialize(::minecpp::network::message::Reader &reader) {
 void EntityHeadLook::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x42);
    writer.write_uvarint(this->entity_id);
-   writer.write_byte(this->yaw);
+   network::write_angle(writer, this->yaw);
 }
 
 EntityHeadLook EntityHeadLook::deserialize(::minecpp::network::message::Reader &reader) {
    EntityHeadLook result;
    result.entity_id = reader.read_uvarint();
-   result.yaw = reader.read_byte();
+   result.yaw = network::read_angle(reader);
    return result;
 }
 
@@ -924,12 +925,12 @@ ChangeHeldItem ChangeHeldItem::deserialize(::minecpp::network::message::Reader &
 
 void UpdateChunkPosition::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x4E);
-   this->chunk_position.serialize(writer);
+   network::write_vector2vi(writer, this->chunk_position);
 }
 
 UpdateChunkPosition UpdateChunkPosition::deserialize(::minecpp::network::message::Reader &reader) {
    UpdateChunkPosition result;
-   result.chunk_position = play::Vector2vi::deserialize(reader);
+   result.chunk_position = network::read_vector2vi(reader);
    return result;
 }
 
@@ -1063,13 +1064,13 @@ SetEntityMetadata SetEntityMetadata::deserialize(::minecpp::network::message::Re
 void SetEntityVelocity::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x54);
    writer.write_uvarint(this->entity_id);
-   this->velocity.serialize(writer);
+   network::write_vector3s(writer, this->velocity);
 }
 
 SetEntityVelocity SetEntityVelocity::deserialize(::minecpp::network::message::Reader &reader) {
    SetEntityVelocity result;
    result.entity_id = reader.read_uvarint();
-   result.velocity = play::Vector3s::deserialize(reader);
+   result.velocity = network::read_vector3s(reader);
    return result;
 }
 
@@ -1142,18 +1143,18 @@ PickupItem PickupItem::deserialize(::minecpp::network::message::Reader &reader) 
 void TeleportEntity::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x68);
    writer.write_uvarint(this->entity_id);
-   this->position.serialize(writer);
-   writer.write_byte(this->yaw);
-   writer.write_byte(this->pitch);
+   network::write_vector3(writer, this->position);
+   network::write_angle(writer, this->yaw);
+   network::write_angle(writer, this->pitch);
    writer.write_bool(this->is_on_ground);
 }
 
 TeleportEntity TeleportEntity::deserialize(::minecpp::network::message::Reader &reader) {
    TeleportEntity result;
    result.entity_id = reader.read_uvarint();
-   result.position = play::Vector3::deserialize(reader);
-   result.yaw = reader.read_byte();
-   result.pitch = reader.read_byte();
+   result.position = network::read_vector3(reader);
+   result.yaw = network::read_angle(reader);
+   result.pitch = network::read_angle(reader);
    result.is_on_ground = reader.read_bool();
    return result;
 }

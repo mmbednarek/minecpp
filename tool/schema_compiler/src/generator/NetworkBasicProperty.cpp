@@ -1,6 +1,6 @@
 #include "NetworkBasicProperty.h"
-#include "NetworkSerializeContext.h"
 #include "NetworkDeserializeContext.h"
+#include "NetworkSerializeContext.h"
 
 #include <mb/codegen/expression.h>
 

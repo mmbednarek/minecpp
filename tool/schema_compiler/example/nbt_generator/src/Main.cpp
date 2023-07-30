@@ -7,26 +7,27 @@
 using minecpp::example1::Item;
 using minecpp::example1::Person;
 
-int main() {
+int main()
+{
    Person person;
-   person.name = "hello";
+   person.name    = "hello";
    person.surname = "world";
-   person.age = 20;
+   person.age     = 20;
 
    Item item1;
-   item1.name = "hello";
+   item1.name  = "hello";
    item1.count = 16;
    Item item2;
-   item2.name = "world";
+   item2.name  = "world";
    item2.count = 32;
    std::vector<Item> items1{std::move(item1), std::move(item2)};
    person.inventory.emplace_back(std::move(items1));
 
    Item item3;
-   item3.name = "foo";
+   item3.name  = "foo";
    item3.count = 48;
    Item item4;
-   item4.name = "bar";
+   item4.name  = "bar";
    item4.count = 72;
    std::vector<Item> items2{std::move(item3), std::move(item4)};
    person.inventory.emplace_back(std::move(items2));

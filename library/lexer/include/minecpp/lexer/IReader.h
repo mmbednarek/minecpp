@@ -10,4 +10,4 @@ class IReader
    virtual void step_back() = 0;
 };
 
-}
+}// namespace minecpp::lexer

@@ -1,7 +1,7 @@
 #include "minecpp/lexer/Core.h"
 
-#include <mb/enum.h>
 #include <iostream>
+#include <mb/enum.h>
 
 enum class TokenType
 {
@@ -18,7 +18,8 @@ enum class TokenType
    PlusAssignment
 };
 
-struct Token {
+struct Token
+{
    TokenType type;
    std::string value;
    int line;
@@ -116,7 +117,8 @@ class StringReader : public minecpp::lexer::IReader
       return m_data[m_at++];
    }
 
-   void step_back() override {
+   void step_back() override
+   {
       if (m_at == 0)
          return;
       --m_at;
@@ -131,9 +133,8 @@ def main(argv):
 )";
    StringReader reader(data);
 
-   auto lexed =
-           minecpp::lexer::lex_from<LexerTypes, BaseEnv, DoubleQuoteStringEnv, DoubleQuoteStringEscapeEnv, PlusSignEnv>(
-                   reader);
+   auto lexed = minecpp::lexer::lex_from<LexerTypes, BaseEnv, DoubleQuoteStringEnv,
+                                         DoubleQuoteStringEscapeEnv, PlusSignEnv>(reader);
 
    for (const auto &token : lexed) {
       std::cout << "(" << token.line << ":" << token.column << ") " << token.value << '\n';

@@ -73,8 +73,7 @@ class EventHandler : public engine::IVisitor
                                const event::RecipientList &recipient_list);
    void handle_set_abilities(const clientbound_v1::SetAbilities &msg,
                              const event::RecipientList &recipient_list);
-   void handle_raw_message(const clientbound_v1::RawMessage &msg,
-                             const event::RecipientList &recipient_list);
+   void handle_raw_message(const clientbound_v1::RawMessage &msg, const event::RecipientList &recipient_list);
    void visit_event(const proto::event::clientbound::Event &event) override;
 
    template<typename T>

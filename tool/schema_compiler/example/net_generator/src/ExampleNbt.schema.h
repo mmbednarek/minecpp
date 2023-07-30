@@ -11,7 +11,8 @@
 
 namespace minecpp::nbt {
 
-class Properties {
+class Properties
+{
  public:
    std::string name{};
    double position{};
@@ -24,4 +25,4 @@ class Properties {
    static Properties deserialize(std::istream &in);
 };
 
-}
+}// namespace minecpp::nbt

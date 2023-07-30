@@ -15,7 +15,7 @@ concept ServerboundVisitor =
            t.handle_set_player_rotation(serverbound_v1::SetPlayerRotation(), game::PlayerId());
            t.handle_set_player_position_rotation(serverbound_v1::SetPlayerPositionRotation(),
                                                  game::PlayerId());
-           t.handle_set_player_on_ground(serverbound_v1::SetPlayerOnGround(), game::PlayerId());
+           t.handle_set_player_is_on_ground(serverbound_v1::SetPlayerOnGround(), game::PlayerId());
            t.handle_chat_message(serverbound_v1::ChatMessage(), game::PlayerId());
            t.handle_remove_player(serverbound_v1::RemovePlayer(), game::PlayerId());
            t.handle_player_digging(serverbound_v1::PlayerDigging(), game::PlayerId());
@@ -28,7 +28,7 @@ concept ServerboundVisitor =
            t.handle_change_held_item(serverbound_v1::ChangeHeldItem(), game::PlayerId());
            t.handle_issue_command(serverbound_v1::IssueCommand(), game::PlayerId());
            t.handle_interact(serverbound_v1::Interact(), game::PlayerId());
-           t.handle_use_item(serverbound_v1::UseItem(), game::PlayerId());
+           t.handle_use_item(serverbound_v1::UseItem(), 0, false);
            t.handle_drop_inventory_item(serverbound_v1::DropInventoryItem(), game::PlayerId());
            t.handle_set_carried_item(serverbound_v1::SetCarriedItem(), game::PlayerId());
            t.handle_request_respawn(serverbound_v1::RequestRespawn(), game::PlayerId());

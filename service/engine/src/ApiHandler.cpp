@@ -1,5 +1,4 @@
 #include "ApiHandler.h"
-#include "EventHandler.h"
 #include "EventManager.h"
 #include "job/HandlePlayerMessage.h"
 
@@ -61,10 +60,9 @@ void Connection::send(const Event &event)
    m_peer->send_reliable_message(buffer.as_view());
 }
 
-ApiHandler::ApiHandler(Service &service, EventHandler &event_handler, EventManager &event_manager,
-                       JobSystem &job_system, std::uint16_t port) :
+ApiHandler::ApiHandler(Service &service, EventManager &event_manager, JobSystem &job_system,
+                       std::uint16_t port) :
     m_service{service},
-    m_event_handler{event_handler},
     m_event_manager{event_manager},
     m_server{port},
     m_job_system{job_system}
@@ -76,7 +74,7 @@ ApiHandler::ApiHandler(Service &service, EventHandler &event_handler, EventManag
 
 void ApiHandler::on_connected(std::shared_ptr<stream::Peer> peer)
 {
-   spdlog::info("recevied inbound connection from client id={}", peer->id());
+   spdlog::info("received inbound connection from client id={}", peer->id());
    m_event_manager.add_client(peer->id(), std::make_unique<Connection>(std::move(peer)));
 }
 
@@ -85,7 +83,7 @@ void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, con
    proto::event::serverbound::Event proto_event;
    proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
 
-   m_job_system.create_job<job::HandlePlayerMessage>(m_service, m_event_handler, std::move(proto_event));
+   m_job_system.create_job<job::HandlePlayerMessage>(m_service, std::move(proto_event));
 }
 
 void ApiHandler::on_disconnected(std::shared_ptr<stream::Peer> peer, bool * /*try_reconnect*/)

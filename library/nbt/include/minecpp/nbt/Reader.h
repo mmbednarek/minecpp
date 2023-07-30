@@ -34,6 +34,7 @@ class Reader : private minecpp::util::Reader
       const TagHeader &operator*() const;
       CompoundIterator &operator++();
       [[nodiscard]] bool operator==(const CompoundIterator &other) const;
+
     private:
       Reader &m_reader;
       TagHeader m_current;
@@ -46,6 +47,7 @@ class Reader : private minecpp::util::Reader
 
       CompoundIterator begin();
       CompoundIterator end();
+
     private:
       Reader &m_reader;
    };

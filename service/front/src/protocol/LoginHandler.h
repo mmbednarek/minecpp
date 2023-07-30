@@ -23,8 +23,10 @@ class LoginHandler : public Handler
    void handle(Connection &connection, minecpp::network::message::Reader &reader) override;
 
    void on_login_start(Connection &connection, const net::login::sb::LoginStart &login_start);
-   void on_encryption_response(Connection &connection, net::login::sb::EncryptionResponse &encryption_response);
-   static void on_plugin_response(Connection &connection, const net::login::sb::PluginResponse &plugin_response);
+   void on_encryption_response(Connection &connection,
+                               net::login::sb::EncryptionResponse &encryption_response);
+   static void on_plugin_response(Connection &connection,
+                                  const net::login::sb::PluginResponse &plugin_response);
    static void on_failure(Connection &connection, std::uint8_t message_id);
    void handle_disconnect(Connection &conn) override;
 

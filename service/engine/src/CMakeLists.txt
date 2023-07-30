@@ -9,16 +9,14 @@ target_sources(minecpp_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/EventHandler.h
         ${CMAKE_CURRENT_SOURCE_DIR}/EventManager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/EventManager.h
         ${CMAKE_CURRENT_SOURCE_DIR}/IConnection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/JobSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/JobSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Main.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Players.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/Players.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/PlayerManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/PlayerManager.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Service.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Service.h
         ${CMAKE_CURRENT_SOURCE_DIR}/StorageResponseHandler.cpp
@@ -31,4 +29,5 @@ target_sources(minecpp_engine
 
 # Subdirectories
 add_subdirectory("job")
+add_subdirectory("service")
 

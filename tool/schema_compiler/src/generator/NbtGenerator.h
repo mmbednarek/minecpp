@@ -36,7 +36,9 @@ class NbtGenerator : public IGenerator
    [[nodiscard]] std::string cpp_name(const Attribute &attribute) const;
    [[nodiscard]] std::string nbt_name(const Attribute &attribute) const;
    [[nodiscard]] std::optional<std::string> static_deserializer_of(const Type &type) const;
-   [[nodiscard]] mb::codegen::raw put_deserialize_procedure(const Type &type, mb::codegen::statement::collector &collector, bool should_move);
+   [[nodiscard]] mb::codegen::raw put_deserialize_procedure(const Type &type,
+                                                            mb::codegen::statement::collector &collector,
+                                                            bool should_move);
 
    void put_serialize_logic(mb::codegen::statement::collector &col, const Type &type,
                             const mb::codegen::expression &value, int depth);

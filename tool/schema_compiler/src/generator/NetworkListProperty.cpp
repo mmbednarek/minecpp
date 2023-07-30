@@ -1,7 +1,7 @@
 #include "NetworkListProperty.h"
 #include "../IGenerator.h"
-#include "NetworkSerializeContext.h"
 #include "NetworkDeserializeContext.h"
+#include "NetworkSerializeContext.h"
 
 #include <mb/codegen/lambda.h>
 

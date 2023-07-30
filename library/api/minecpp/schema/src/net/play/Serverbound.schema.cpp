@@ -1,3 +1,4 @@
+#include "minecpp/network/NetworkUtil.h"
 #include "net/play/Serverbound.schema.h"
 #include <algorithm>
 
@@ -198,20 +199,20 @@ PluginMessage PluginMessage::deserialize(::minecpp::network::message::Reader &re
 }
 
 void InteractTarget::serialize(::minecpp::network::message::Writer &writer) const {
-   this->position.serialize(writer);
+   network::write_vector3f(writer, this->position);
    writer.write_varint(this->hand);
 }
 
 InteractTarget InteractTarget::deserialize(::minecpp::network::message::Reader &reader) {
    InteractTarget result;
-   result.position = play::Vector3f::deserialize(reader);
+   result.position = network::read_vector3f(reader);
    result.hand = reader.read_varint();
    return result;
 }
 
 void Interact::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x10);
-   writer.write_varint(this->entity_id);
+   writer.write_uvarint(this->entity_id);
    writer.write_varint(this->type);
    if (this->target.has_value()) {
       this->target->serialize(writer);
@@ -221,7 +222,7 @@ void Interact::serialize(::minecpp::network::message::Writer &writer) const {
 
 Interact Interact::deserialize(::minecpp::network::message::Reader &reader) {
    Interact result;
-   result.entity_id = reader.read_varint();
+   result.entity_id = reader.read_uvarint();
    result.type = reader.read_varint();
    const auto target_has_value_0 = result.type == 2;
    if (target_has_value_0) {
@@ -244,20 +245,20 @@ KeepAlive KeepAlive::deserialize(::minecpp::network::message::Reader &reader) {
 
 void SetPlayerPosition::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x14);
-   this->position.serialize(writer);
+   network::write_vector3(writer, this->position);
    writer.write_bool(this->is_on_ground);
 }
 
 SetPlayerPosition SetPlayerPosition::deserialize(::minecpp::network::message::Reader &reader) {
    SetPlayerPosition result;
-   result.position = play::Vector3::deserialize(reader);
+   result.position = network::read_vector3(reader);
    result.is_on_ground = reader.read_bool();
    return result;
 }
 
 void SetPlayerPositionAndRotation::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x15);
-   this->position.serialize(writer);
+   network::write_vector3(writer, this->position);
    writer.write_float(this->yaw);
    writer.write_float(this->pitch);
    writer.write_bool(this->is_on_ground);
@@ -265,7 +266,7 @@ void SetPlayerPositionAndRotation::serialize(::minecpp::network::message::Writer
 
 SetPlayerPositionAndRotation SetPlayerPositionAndRotation::deserialize(::minecpp::network::message::Reader &reader) {
    SetPlayerPositionAndRotation result;
-   result.position = play::Vector3::deserialize(reader);
+   result.position = network::read_vector3(reader);
    result.yaw = reader.read_float();
    result.pitch = reader.read_float();
    result.is_on_ground = reader.read_bool();
@@ -357,7 +358,7 @@ void UseItemOn::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_varint(this->hand);
    writer.write_big_endian(this->position);
    writer.write_varint(this->facing);
-   this->cursor_position.serialize(writer);
+   network::write_vector3f(writer, this->cursor_position);
    writer.write_bool(this->is_inside_block);
    writer.write_varint(this->sequence_id);
 }
@@ -367,7 +368,7 @@ UseItemOn UseItemOn::deserialize(::minecpp::network::message::Reader &reader) {
    result.hand = reader.read_varint();
    result.position = reader.read_big_endian<std::uint64_t>();
    result.facing = reader.read_varint();
-   result.cursor_position = play::Vector3f::deserialize(reader);
+   result.cursor_position = network::read_vector3f(reader);
    result.is_inside_block = reader.read_bool();
    result.sequence_id = reader.read_varint();
    return result;

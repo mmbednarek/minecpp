@@ -3,7 +3,8 @@
 
 namespace minecpp::example2 {
 
-void Properties::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Properties::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::String, "Name");
    w.write_string_content(name);
    w.write_header(minecpp::nbt::TagId::Double, "Position");
@@ -19,13 +20,15 @@ void Properties::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Properties::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Properties::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    this->serialize_no_header(w);
 }
 
-Properties Properties::deserialize_no_header(minecpp::nbt::Reader &r) {
+Properties Properties::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Properties result;
    for (const auto &[tagid, in_field_name] : r.iterate_compound()) {
       if (in_field_name == "Name") {
@@ -57,7 +60,8 @@ Properties Properties::deserialize_no_header(minecpp::nbt::Reader &r) {
    return result;
 }
 
-Properties Properties::deserialize(std::istream &in) {
+Properties Properties::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -66,4 +70,4 @@ Properties Properties::deserialize(std::istream &in) {
    return Properties::deserialize_no_header(r);
 }
 
-}
+}// namespace minecpp::example2

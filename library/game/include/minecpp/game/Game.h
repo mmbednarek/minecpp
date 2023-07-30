@@ -14,7 +14,7 @@
 
 namespace minecpp::game {
 
-enum class PlayerDiggingState : int
+enum class ItemOperation : int
 {
    Digging         = 0,
    CanceledDigging = 1,

@@ -5,7 +5,8 @@
 
 namespace minecpp::tool::schema_compiler::generator {
 
-class CppType {
+class CppType
+{
  public:
    CppType(const Document &document, const SymbolTable &symbol_table, const Type &type);
 
@@ -19,7 +20,8 @@ class CppType {
    const Type &m_type;
 };
 
-class CppAttribute {
+class CppAttribute
+{
  public:
    CppAttribute(const Document &document, const SymbolTable &symbol_table, const Attribute &attribute);
 
@@ -32,4 +34,4 @@ class CppAttribute {
    const Attribute &m_attribute;
 };
 
-}
+}// namespace minecpp::tool::schema_compiler::generator

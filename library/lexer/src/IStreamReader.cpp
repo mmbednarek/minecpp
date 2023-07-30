@@ -3,7 +3,7 @@
 namespace minecpp::lexer {
 
 IStreamReader::IStreamReader(std::istream &stream) :
-   m_stream(stream)
+    m_stream(stream)
 {
 }
 
@@ -17,9 +17,9 @@ char IStreamReader::next()
    return m_next_char;
 }
 
-void IStreamReader::step_back() {
+void IStreamReader::step_back()
+{
    m_stream.seekg(-1, std::ios::cur);
 }
 
-}
-
+}// namespace minecpp::lexer

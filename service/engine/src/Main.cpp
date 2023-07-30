@@ -1,19 +1,25 @@
 #include "ApiHandler.h"
 #include "ChunkSystem.h"
 #include "Dispatcher.h"
-#include "EventHandler.h"
 #include "EventManager.h"
 #include "JobSystem.h"
-#include "minecpp/world/population/Object.h"
-#include "Players.h"
+#include "PlayerManager.h"
 #include "Service.h"
+#include "service/PlayerInteraction.h"
+#include "service/PlayerInterface.h"
+#include "service/PlayerMovement.h"
+#include "service/PlayerSession.h"
 #include "StorageResponseHandler.h"
 #include "TickSystem.h"
 #include "World.h"
+
+#include "minecpp/controller/RootItem.h"
+#include "minecpp/entity/EntitySystem.h"
+#include "minecpp/repository/Repository.h"
+#include "minecpp/service/storage/Storage.h"
+#include "minecpp/world/population/Object.h"
+
 #include <mb/core.h>
-#include <minecpp/entity/EntitySystem.h>
-#include <minecpp/repository/Repository.h>
-#include <minecpp/service/storage/Storage.h>
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
@@ -79,19 +85,26 @@ auto main() -> int
    storage_handler.set_chunk_system(&chunk_system);
 
    minecpp::entity::EntitySystem entity_system(chunk_system);
-   PlayerManager players(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
-                                         config.gameplay_spawn_point_z});
+   PlayerManager player_manager(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
+                                                config.gameplay_spawn_point_z});
 
    EventManager manager;
    Dispatcher dispatcher(manager, entity_system);
    minecpp::controller::BlockManager block_manager;
    minecpp::controller::RootItem root_item_controller;
 
-   World world(chunk_system, job_system, dispatcher, players, entity_system, block_manager);
-   EventHandler handler(dispatcher, players, entity_system, world, block_manager, root_item_controller);
-   Service service(handler);
+   World world(chunk_system, job_system, dispatcher, player_manager, entity_system, block_manager);
 
-   ApiHandler api_handler(service, handler, manager, job_system, config.server_bind_port);
+   service::PlayerInteraction player_interaction_service(world, dispatcher, block_manager,
+                                                         root_item_controller);
+   service::PlayerInterface player_interface_service(player_manager, world, dispatcher);
+   service::PlayerMovement player_movement_service(player_manager, world, dispatcher);
+   service::PlayerSession player_session_service(player_manager, world, dispatcher);
+
+   Service service(player_interaction_service, player_interface_service, player_movement_service,
+                   player_session_service);
+
+   ApiHandler api_handler(service, manager, job_system, config.server_bind_port);
    api_handler.tick();
 
    for (auto endpoint_str : config.storage_endpoints) {
