@@ -20,6 +20,11 @@ const math::Vector2i &ChunkPosition::position() const
    return m_position;
 }
 
+math::Vector2i &ChunkPosition::position()
+{
+   return m_position;
+}
+
 int ChunkPosition::x() const
 {
    return m_position.x();

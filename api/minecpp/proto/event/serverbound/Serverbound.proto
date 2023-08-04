@@ -2,8 +2,6 @@ syntax = "proto3";
 package minecpp.proto.event.serverbound;
 
 import "google/protobuf/any.proto";
-import "minecpp/proto/common/Common.proto";
-import "minecpp/proto/common/Vector.proto";
 import "minecpp/proto/player/Id.proto";
 
 message Event {
@@ -21,46 +19,7 @@ message AcceptPlayer {
   uint32 front_id = 3;
 }
 
-message SetPlayerPosition {
-  common.Vector3 position = 1;
-  bool is_on_ground = 2;
-}
-
-message SetPlayerRotation {
-  common.Rotation rotation = 1;
-  bool is_on_ground = 2;
-}
-
-message SetPlayerPositionRotation {
-  common.Vector3 position = 1;
-  common.Rotation rotation = 2;
-  bool is_on_ground = 3;
-}
-
-message SetPlayerOnGround {
-  bool is_on_ground = 1;
-}
-
-message ChatMessage {
-  string message = 1;
-}
-
 message RemovePlayer {
-}
-
-message PlayerDigging {
-  common.PlayerDiggingState state = 1;
-  common.BlockPosition block_position = 2;
-  common.Face face = 3;
-  int32 sequence_id = 4;
-}
-
-message UpdatePing {
-  int32 ping = 1;
-}
-
-message AnimateHand {
-  int32 hand = 1;
 }
 
 message PreInitialChunks {
@@ -68,51 +27,3 @@ message PreInitialChunks {
 
 message PostInitialChunks  {
 }
-
-message BlockPlacement {
-  int32 hand = 1;
-  common.BlockPosition position = 2;
-  common.Face face = 3;
-  common.Vector3f crosshair = 4;
-  bool inside_block = 5;
-  int32 sequence_id = 6;
-}
-
-message UseItem {
-  int32 hand = 1;
-  int32 sequence_id = 2;
-}
-
-message ChangeInventoryItem {
-  int32 slot_id = 1;
-  common.ItemId item_id = 2;
-  int32 item_count = 3;
-}
-
-message DropInventoryItem {
-  bool full_stack = 1;
-}
-
-message SetCarriedItem {
-  common.ItemId carried_item_id = 1;
-  int32 carried_item_count  = 2;
-}
-
-message ChangeHeldItem {
-  int32 slot = 1;
-}
-
-message IssueCommand  {
-  string command = 1;
-}
-
-message Interact  {
-  uint32 entity_id = 1;
-  common.InteractionType interaction_type = 2;
-  common.Vector3f position = 3;
-  common.HandType hand_type = 4;
-  bool is_sneaking = 5;
-}
-
-message RequestRespawn {
-};

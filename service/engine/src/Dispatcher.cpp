@@ -17,60 +17,61 @@ namespace minecpp::service::engine {
 
 namespace clientbound_v1 = proto::event::clientbound;
 
-Dispatcher::Dispatcher(EventManager &events, entity::EntitySystem &entity_system) :
+Dispatcher::Dispatcher(EventManager &events, entity::EntitySystem &entity_system,
+                       nbt::repository::Registry &registry) :
     m_events(events),
-    m_entity_system(entity_system)
+    m_entity_system(entity_system),
+    m_registry{registry}
 {
-}
-
-void Dispatcher::load_terrain(game::PlayerId player_id, const game::ChunkPosition &central_chunk,
-                              std::vector<minecpp::game::ChunkPosition> coords)
-{
-   clientbound_v1::LoadTerrain event;
-   *event.mutable_central_chunk() = central_chunk.to_proto();
-   for (const auto &c : coords) {
-      *event.add_coords() = c.to_proto();
-   }
-
-   m_events.send_to(event, player_id);
-}
-
-void Dispatcher::transfer_player(game::PlayerId player_id, boost::uuids::uuid /*target_engine*/)
-{
-   clientbound_v1::TransferPlayer event;
-   event.set_engine_instance_id(0);// TODO: Set engine id
-
-   m_events.send_to(event, player_id);
 }
 
 void Dispatcher::entity_move(game::EntityId entity_id, const math::Vector3 &position,
                              const math::Vector3s &movement, const math::Rotation &rotation,
                              const bool is_on_ground)
 {
-   clientbound_v1::EntityMove event;
-   event.set_entity_id(entity_id);
-   *event.mutable_movement() = movement.to_proto();
-   *event.mutable_rotation() = rotation.to_proto();
-   event.set_is_on_ground(is_on_ground);
-
-   spdlog::info("entity move: {}", movement);
+   net::play::cb::EntityMove entity_move{
+           .entity_id    = entity_id,
+           .difference   = movement,
+           .yaw          = math::radians_to_degrees(rotation.yaw),
+           .pitch        = math::radians_to_degrees(rotation.pitch),
+           .is_on_ground = is_on_ground,
+   };
 
    auto entity = m_entity_system.entity(entity_id);
    if (entity.has_component<PlayerComponent>()) {
-      this->send_to_players_visible_by(entity, event);
+      this->send_raw_to_player_visible_by(entity, entity_move);
    } else {
-      this->send_to_players_in_view_distance(position, event);
+      this->send_raw_to_players_in_view_distance(position, entity_move);
    }
 }
 
 void Dispatcher::add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping)
 {
-   clientbound_v1::AddPlayer add_player;
-   *add_player.mutable_player_id() = game::player::write_id_to_proto(player_id);
-   add_player.set_name(name);
-   add_player.set_ping(ping);
+   auto add_player = net::play::cb::UpdatePlayerInfo{
+           .action_bits = 0b11101,
+   };
+   add_player.actions.push_back(net::play::cb::PlayerInfoChange{
+           .player_id = player_id,
+           .add_player =
+                   net::play::cb::ActionAddPlayer{
+                                                  .name = name,
+                                                  .properties{},
+                                                  },
+           .set_game_mode =
+                   net::play::cb::ActionSetGameMode{
+                                                  .game_mode = 0,
+                                                  },
+           .set_is_listed =
+                   net::play::cb::ActionSetIsListed{
+                                                  .is_listed = true,
+                                                  },
+           .set_latency =
+                   net::play::cb::ActionSetLatency{
+                                                  .ping = static_cast<std::int32_t>(ping),
+                                                  },
+   });
 
-   m_events.send_to_all(add_player);
+   this->send_raw_to_all(add_player);
 }
 
 void Dispatcher::spawn_player(game::PlayerId player_id, game::EntityId entity_id,
@@ -78,30 +79,34 @@ void Dispatcher::spawn_player(game::PlayerId player_id, game::EntityId entity_id
 {
    auto entity = m_entity_system.entity(entity_id);
 
-   clientbound_v1::SpawnPlayer spawn_player;
-   *spawn_player.mutable_player_id() = game::player::write_id_to_proto(player_id);
-   entity.serialize_player_to_proto(spawn_player.mutable_entity());
+   auto spawn_player = net::play::cb::SpawnPlayer{
+           .entity_id = entity_id,
+           .player_id = player_id,
+           .position  = position,
+           .yaw       = entity.component<RotationComponent>().yaw_degrees(),
+           .pitch     = entity.component<RotationComponent>().pitch_degrees(),
+   };
 
-   this->send_to_players_in_view_distance_except(player_id, position, spawn_player);
+   this->send_raw_to_players_in_view_distance_except(player_id, position, spawn_player);
 }
 
 void Dispatcher::send_chat(chat::MessageType msg_type, const std::string &msg)
 {
-   clientbound_v1::Chat chat;
-   chat.set_type(static_cast<google::protobuf::int32>(msg_type));
-   chat.set_message(msg);
-
-   m_events.send_to_all(chat);
+   net::play::cb::SystemChat chat{
+           .message      = msg,
+           .is_actionbar = msg_type == chat::MessageType::SystemMessage,
+   };
+   this->send_raw_to_all(chat);
 }
 
 void Dispatcher::send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
                                   const std::string &msg)
 {
-   clientbound_v1::Chat chat;
-   chat.set_type(static_cast<google::protobuf::int32>(msg_type));
-   chat.set_message(msg);
-
-   m_events.send_to(chat, player_id);
+   net::play::cb::SystemChat chat{
+           .message      = msg,
+           .is_actionbar = msg_type == chat::MessageType::SystemMessage,
+   };
+   this->send_raw_to_player(player_id, chat);
 }
 
 void Dispatcher::entity_look(game::EntityId entity_id, const math::Vector3 &position,
@@ -109,108 +114,191 @@ void Dispatcher::entity_look(game::EntityId entity_id, const math::Vector3 &posi
 {
    auto entity = m_entity_system.entity(entity_id);
 
-   clientbound_v1::EntityLook event;
-   event.set_entity_id(entity_id);
-   *event.mutable_rotation() = rotation.to_proto();
-   if (entity.has_component<LocationComponent>()) {
-      event.set_is_on_ground(entity.component<LocationComponent>().is_on_ground());
-   }
+   net::play::cb::EntityMove entity_look{
+           .entity_id    = entity_id,
+           .difference   = math::Vector3s{0, 0, 0},
+           .yaw          = math::radians_to_degrees(rotation.yaw),
+           .pitch        = math::radians_to_degrees(rotation.pitch),
+           .is_on_ground = entity.component<LocationComponent>().is_on_ground(),
+   };
 
    if (entity.has_component<PlayerComponent>()) {
-      this->send_to_players_visible_by(entity, event);
+      this->send_raw_to_player_visible_by(entity, entity_look);
+
+      net::play::cb::EntityHeadLook entity_head_look{
+              .entity_id = entity_id,
+              .yaw       = math::radians_to_degrees(rotation.yaw),
+      };
+      this->send_raw_to_player_visible_by(entity, entity_head_look);
    } else {
-      this->send_to_players_in_view_distance(position, event);
+      this->send_raw_to_players_in_view_distance(position, entity_look);
    }
 }
 
 void Dispatcher::remove_player(game::PlayerId player_id, mb::u32 entity_id)
 {
-   clientbound_v1::RemovePlayer remove_player;
-   *remove_player.mutable_player_id() = game::player::write_id_to_proto(player_id);
-   remove_player.set_entity_id(entity_id);
+   auto entity = m_entity_system.entity(entity_id);
 
-   m_events.send_to_all(remove_player);
+   net::play::cb::RemoveEntities destroy_entity{
+           .entity_ids{entity_id},
+   };
+   this->send_raw_to_player_visible_by(entity, destroy_entity);
+
+   net::play::cb::RemovePlayerInfo remove_player{
+           .player_ids{player_id},
+   };
+   this->send_raw_to_all(remove_player);
 }
 
-void Dispatcher::update_block(minecpp::game::BlockPosition block, game::BlockStateId state)
+void Dispatcher::update_block(minecpp::game::BlockPosition block_position, game::BlockStateId state)
 {
-   clientbound_v1::UpdateBlock update_block;
-   update_block.set_block_position(block.as_long());
-   update_block.set_state(state);
-
-   this->send_to_players_in_view_distance(block.to_vector3(), update_block);
+   net::play::cb::BlockChange change{
+           .block_position = block_position.as_long(),
+           .block_id       = state,
+   };
+   this->send_raw_to_players_in_view_distance(block_position.to_vector3(), change);
 }
 
 void Dispatcher::animate_entity(game::EntityId entity_id, const math::Vector3 &position,
                                 game::EntityAnimation animation)
 {
-   clientbound_v1::AnimateEntity animate;
-   animate.set_entity_id(entity_id);
-   animate.set_animation(animation.to_proto());
-
-   this->send_to_players_in_view_distance(position, animate);
+   net::play::cb::AnimateEntity animate{
+           .entity_id = entity_id,
+           .type      = static_cast<std::uint8_t>(animation),
+   };
+   this->send_raw_to_players_in_view_distance(position, animate);
 }
 
 void Dispatcher::animate_player_entity(game::PlayerId player_id, game::EntityId entity_id,
                                        const math::Vector3 &position, game::EntityAnimation animation)
 {
-   clientbound_v1::AnimateEntity animate;
-   animate.set_entity_id(entity_id);
-   animate.set_animation(animation.to_proto());
-
-   this->send_to_players_in_view_distance_except(player_id, position, animate);
+   net::play::cb::AnimateEntity animate{
+           .entity_id = entity_id,
+           .type      = static_cast<std::uint8_t>(animation),
+   };
+   this->send_raw_to_players_in_view_distance_except(player_id, position, animate);
 }
 
 void Dispatcher::acknowledge_block_change(game::PlayerId player_id, int sequence_id)
 {
-   clientbound_v1::AcknowledgeBlockChange digging;
-   digging.set_sequence_id(sequence_id);
-
-   m_events.send_to(digging, player_id);
+   net::play::cb::AcknowledgeBlockChanges acknowledge{
+           .sequence_id = static_cast<std::uint32_t>(sequence_id),
+   };
+   this->send_raw_to_player(player_id, acknowledge);
 }
 
 void Dispatcher::unload_chunk(game::PlayerId player_id, const game::ChunkPosition &chunk_position)
 {
-   clientbound_v1::UnloadChunk unload;
-   *unload.mutable_player_id()      = game::player::write_id_to_proto(player_id);
-   *unload.mutable_chunk_position() = chunk_position.to_proto();
-
-   m_events.send_to(unload, player_id);
+   net::play::cb::UnloadChunk unload_chunk{
+           .position = chunk_position.position(),
+   };
+   this->send_raw_to_player(player_id, unload_chunk);
 }
 
 void Dispatcher::accept_player(const game::player::Player &player)
 {
-   clientbound_v1::AcceptPlayer accept_player;
-   accept_player.mutable_gameplay()->set_view_distance(32);
-   accept_player.mutable_gameplay()->set_do_immediate_respawn(true);
-   *accept_player.mutable_player() = player.to_proto();
-
    auto entity = m_entity_system.entity(player.entity_id());
    assert(entity.has_component<entity::component::Abilities>());
 
-   auto abilities                     = entity.component<entity::component::Abilities>();
-   *accept_player.mutable_abilities() = abilities.abilities().to_proto();
+   this->send_raw_to_player(player.id(), net::play::cb::JoinGame{
+                                                 .entity_id          = player.entity_id(),
+                                                 .game_mode          = 0,
+                                                 .previous_game_mode = 0,
+                                                 .available_dimensions{"overworld", "the_nether", "the_end",
+                                                                       "overworld_caves"},
+                                                 .dimension_codec            = m_registry,
+                                                 .dimension_name             = "minecraft:overworld",
+                                                 .world_name                 = "overworld",
+                                                 .seed                       = 0,
+                                                 .max_players                = 32,
+                                                 .view_distance              = 32,
+                                                 .reduced_debug_info         = false,
+                                                 .should_show_respawn_screen = true,
+                                                 .is_debug                   = false,
+                                                 .is_flat                    = false,
+                                                 .death_location{}
+   });
 
-   m_events.send_to(accept_player, player.id());
+   this->send_raw_to_player(player.id(), net::play::cb::PluginMessage{"minecraft:brand", "minecpp"});
+
+   this->send_raw_to_player(player.id(), net::play::cb::Difficulty{
+                                                 .difficulty = 0,
+                                                 .locked     = false,
+                                         });
+
+   auto abilities = entity.component<AbilitiesComponent>();
+   this->send_raw_to_player(player.id(), net::play::cb::PlayerAbilities{
+                                                 .flags = static_cast<mb::u8>(abilities.abilities().flags()),
+                                                 .fly_speed     = abilities.abilities().fly_speed,
+                                                 .field_of_view = abilities.abilities().field_of_view,
+                                         });
+
+   // TODO: Send command list
+   this->send_raw_to_player(player.id(), net::play::cb::RecipeBook{
+                                                 .state = 0,
+                                                 .crafting_table{
+                                                                 .is_open                = false,
+                                                                 .is_filtering_craftable = false,
+                                                                 },
+                                                 .furnace{
+                                                                 .is_open                = false,
+                                                                 .is_filtering_craftable = false,
+                                                                 },
+                                                 .blaster{
+                                                                 .is_open                = false,
+                                                                 .is_filtering_craftable = false,
+                                                                 },
+                                                 .smoker{
+                                                                 .is_open                = false,
+                                                                 .is_filtering_craftable = false,
+                                                                 },
+                                                 .recipes{},
+                                                 .additional_recipes{
+                                                                 net::play::cb::RecipeList{},
+                                                                 },
+   });
 }
 
 void Dispatcher::deny_player(const game::PlayerId &player_id, const std::string &reason)
 {
-   clientbound_v1::DenyPlayer deny_player;
-   deny_player.set_denial_reason(reason);
-
-   m_events.send_to(deny_player, player_id);
+   this->send_raw_to_player(player_id, net::play::cb::Disconnect{
+                                               .reason = format::Builder()
+                                                                 .bold(format::Color::Red, "DISCONNECTED ")
+                                                                 .text(reason)
+                                                                 .to_string(),
+                                       });
 }
 
 void Dispatcher::player_list(game::PlayerId player_id, const std::vector<game::player::Status> &status_list)
 {
-   clientbound_v1::PlayerList player_list;
-   player_list.mutable_list()->Reserve(static_cast<int>(status_list.size()));
+   auto player_list = net::play::cb::UpdatePlayerInfo{
+           .action_bits = 0b11101,
+   };
+
    for (const auto &status : status_list) {
-      *player_list.add_list() = status.to_proto();
+      player_list.actions.push_back(net::play::cb::PlayerInfoChange{
+              .player_id = status.id,
+              .add_player =
+                      net::play::cb::ActionAddPlayer{
+                                                     .name = status.name,
+                                                     .properties{},
+                                                     },
+              .set_game_mode =
+                      net::play::cb::ActionSetGameMode{
+                                                     .game_mode = 0,
+                                                     },
+              .set_is_listed =
+                      net::play::cb::ActionSetIsListed{
+                                                     .is_listed = true,
+                                                     },
+              .set_latency =
+                      net::play::cb::ActionSetLatency{
+                                                     .ping = status.ping,
+                                                     },
+      });
    }
 
-   m_events.send_to(player_list, player_id);
+   this->send_raw_to_player(player_id, player_list);
 }
 
 void Dispatcher::send_entities(game::PlayerId player_id, std::span<game::EntityId> entities)
@@ -233,17 +321,41 @@ void Dispatcher::send_entities(game::PlayerId player_id, std::span<game::EntityI
    }
 
    m_events.send_to(list, player_id);
+
+   for (const auto entity_id : entities) {
+      auto entity = m_entity_system.entity(entity_id);
+      if (entity.has_component<entity::component::Player>()) {
+         if (entity.component<entity::component::Player>().id() == player_id)
+            continue;
+
+         this->send_raw_to_player(player_id,
+                                  net::play::cb::SpawnPlayer{
+                                          .entity_id = entity_id,
+                                          .player_id = entity.component<PlayerComponent>().id(),
+                                          .position  = entity.component<LocationComponent>().position(),
+                                          .yaw       = entity.component<RotationComponent>().yaw_degrees(),
+                                          .pitch     = entity.component<RotationComponent>().pitch_degrees(),
+                                  });
+      } else {
+         this->spawn_entity(entity_id, entity.component<LocationComponent>().position());
+      }
+   }
 }
 
 void Dispatcher::set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                                     int count)
 {
-   clientbound_v1::SetInventorySlot set_slot;
-   set_slot.set_slot_id(slot_id);
-   set_slot.mutable_slot()->set_count(static_cast<uint32_t>(count));
-   set_slot.mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(item_id));
-
-   m_events.send_to(set_slot, player_id);
+   this->send_raw_to_player(
+           player_id, net::play::cb::SetSlot{
+                              .window_id = 0,
+                              .state_id  = 0,
+                              .slot_id   = static_cast<short>(slot_id),
+                              .slot      = count == 0 ? std::nullopt
+                                                      : std::make_optional(net::play::Slot{
+                                                                .item_id    = item_id,
+                                                                .item_count = static_cast<std::int8_t>(count),
+                                                   }),
+                      });
 }
 
 void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRange range)

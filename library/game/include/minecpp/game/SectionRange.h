@@ -5,6 +5,8 @@
 
 namespace minecpp::game {
 
+class ChunkRange;
+
 class SectionRange
 {
  public:
@@ -20,6 +22,8 @@ class SectionRange
    [[nodiscard]] proto::common::SectionRange to_proto() const;
 
    [[nodiscard]] static SectionRange from_proto(const proto::common::SectionRange &range);
+
+   [[nodiscard]] ChunkRange to_chunk_range() const;
 
    class Iterator
    {

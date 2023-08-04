@@ -70,7 +70,7 @@ class AcknowledgeBlockChanges {
 class BlockChange {
  public:
    std::uint64_t block_position{};
-   std::int32_t block_id{};
+   std::uint32_t block_id{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static BlockChange deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -121,7 +121,7 @@ class Disconnect {
 
 class EntityStatus {
  public:
-   std::int32_t entity_id{};
+   std::uint32_t entity_id{};
    std::int8_t opcode{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static EntityStatus deserialize(::minecpp::network::message::Reader &reader);
@@ -192,6 +192,8 @@ class DeathLocation {
 
 class JoinGame {
  public:
+   static constexpr std::uint8_t op_code{0x28};
+
    std::uint32_t entity_id{};
    bool is_hardcode{};
    std::int8_t game_mode{};

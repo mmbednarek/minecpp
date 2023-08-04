@@ -7,6 +7,7 @@ storage:
     - "storage:7000"
 resources:
   data_file: "/config/repository.bin"
+  registry_file: "/config/registry.bin"
 gameplay:
   world_seed: 2300
   max_players: 2000

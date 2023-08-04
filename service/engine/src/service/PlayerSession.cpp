@@ -103,6 +103,8 @@ void PlayerSession::handle_accept_player(game::PlayerId player_id, std::string_v
    m_dispatcher.synchronise_player_position_and_rotation(player_id,
                                                          entity->component<LocationComponent>().position(),
                                                          entity->component<RotationComponent>().rotation());
+
+   this->handle_pre_initial_chunks(player_id);
 }
 
 void PlayerSession::handle_remove_player(game::PlayerId player_id)
@@ -181,6 +183,9 @@ void PlayerSession::handle_post_initial_chunks(game::PlayerId player_id)
            m_dispatcher, m_world.entity_system(), entity->component<LocationComponent>().position());
 
    entity->component<InventoryComponent>().synchronize_inventory(m_dispatcher);
+
+   m_dispatcher.update_chunk_position(
+           player_id, ChunkPosition::from_position(entity->component<LocationComponent>().position()));
 
    m_dispatcher.synchronise_player_position_and_rotation(player_id,
                                                          entity->component<LocationComponent>().position(),

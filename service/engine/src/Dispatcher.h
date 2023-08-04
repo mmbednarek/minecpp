@@ -7,6 +7,7 @@
 #include "minecpp/game/IDispatcher.hpp"
 #include "minecpp/game/player/Id.h"
 #include "minecpp/game/player/Player.h"
+#include "minecpp/nbt/repository/Registry.schema.h"
 #include "minecpp/network/message/Writer.h"
 #include "minecpp/world/Chunk.h"
 
@@ -30,17 +31,14 @@ using boost::uuids::uuid;
 class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
-   explicit Dispatcher(EventManager &events, entity::EntitySystem &entity_system);
+   explicit Dispatcher(EventManager &events, entity::EntitySystem &entity_system, nbt::repository::Registry &registry);
    void spawn_entity(game::EntityId entity_id, const math::Vector3 &position) override;
-   void load_terrain(game::PlayerId player_id, const game::ChunkPosition &central_chunk,
-                     std::vector<minecpp::game::ChunkPosition> coords) override;
    void remove_entity(game::EntityId entity_id) override;
    void remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
-   void transfer_player(game::PlayerId player_id, boost::uuids::uuid target_engine);
    void spawn_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
    void spawn_player_for_player(game::PlayerId receiver, game::PlayerId spawned_player,
                                 game::EntityId entity_id) override;
-   void update_block(game::BlockPosition block, game::BlockStateId state) override;
+   void update_block(game::BlockPosition block_position, game::BlockStateId state) override;
 
    void entity_move(game::EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
                     const math::Rotation &rotation, bool is_on_ground) override;
@@ -143,10 +141,12 @@ class Dispatcher : public minecpp::game::IDispatcher
       this->send_to_player(player_id, make_raw_message(writer));
    }
 
-   EventManager &m_events;
-   entity::EntitySystem &m_entity_system;
    [[nodiscard]] static proto::event::clientbound::RawMessage
    make_raw_message(const network::message::Writer &writer);
+
+   EventManager &m_events;
+   entity::EntitySystem &m_entity_system;
+   nbt::repository::Registry &m_registry;
 };
 
 }// namespace minecpp::service::engine

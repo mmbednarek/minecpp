@@ -23,8 +23,6 @@ using boost::uuids::uuid;
 class IDispatcher
 {
  public:
-   virtual void load_terrain(PlayerId player, const ChunkPosition &central_chunk,
-                             std::vector<ChunkPosition> coords)                                          = 0;
    virtual void spawn_entity(EntityId entity_id, const math::Vector3 &position)                          = 0;
    virtual void spawn_entity_for_player(PlayerId player_id, EntityId entity_id)                          = 0;
    virtual void entity_move(EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,

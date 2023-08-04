@@ -157,7 +157,7 @@ void EventHandler::handle_update_block(const clientbound_v1::UpdateBlock &msg,
 {
    net::play::cb::BlockChange change{
            .block_position = static_cast<mb::u64>(msg.block_position()),
-           .block_id       = static_cast<std::int32_t>(msg.state()),
+           .block_id       = static_cast<std::uint32_t>(msg.state()),
    };
    send_message(change, recipient_list);
 }
@@ -249,7 +249,7 @@ void EventHandler::handle_accept_player(const clientbound_v1::AcceptPlayer &msg,
       conn->send_message(PlayerAbilities{
               .flags         = static_cast<mb::u8>(abilities.flags()),
               .fly_speed     = abilities.fly_speed,
-              .field_of_view = abilities.walk_speed,
+              .field_of_view = abilities.field_of_view,
       });
 
       // TODO: Send recipes and tags
@@ -854,6 +854,16 @@ void EventHandler::handle_raw_message(const clientbound_v1::RawMessage &msg,
 
    RawMsg raw_message{msg};
    send_message(raw_message, recipient_list);
+
+//   if (not msg.message_data().empty()) {
+//      auto op_code = msg.message_data()[0];
+//      // Join Game
+//      // TODO: Replace with net::play::cb::RecipeBook::OpCode
+//      if (op_code == 0x3D) {
+//         assert(recipient_list.type == event::RecipientType::Some);
+//         m_client->send(proto::event::serverbound::PreInitialChunks{}, recipient_list.list[0]);
+//      }
+//   }
 }
 
 }// namespace minecpp::service::front

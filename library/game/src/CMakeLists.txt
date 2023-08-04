@@ -8,6 +8,7 @@ target_sources(minecpp_game
         ${CMAKE_CURRENT_SOURCE_DIR}/BlockPosition.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/BlockRange.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkPosition.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkRange.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Game.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Light.cpp
@@ -22,6 +23,7 @@ target_sources(minecpp_game
         ${MINECPP_GAME_INCLUDE_DIR}/BlockPosition.h
         ${MINECPP_GAME_INCLUDE_DIR}/BlockRange.h
         ${MINECPP_GAME_INCLUDE_DIR}/ChunkPosition.h
+        ${MINECPP_GAME_INCLUDE_DIR}/ChunkRange.h
         ${MINECPP_GAME_INCLUDE_DIR}/Concepts.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Constants.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Delegate.hpp

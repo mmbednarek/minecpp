@@ -11,14 +11,14 @@ Abilities Abilities::from_proto(const proto::entity::Abilities &abilities)
            .invulnerable  = abilities.invulnerable(),
            .may_build     = abilities.may_build(),
            .may_fly       = abilities.may_fly(),
-           .walk_speed    = abilities.walk_speed(),
+           .field_of_view = abilities.walk_speed(),
    };
 }
 
 minecpp::proto::entity::Abilities Abilities::to_proto() const
 {
    minecpp::proto::entity::Abilities abilities;
-   abilities.set_walk_speed(this->walk_speed);
+   abilities.set_walk_speed(this->field_of_view);
    abilities.set_fly_speed(this->fly_speed);
    abilities.set_flying(this->flying);
    abilities.set_instant_build(this->instant_build);

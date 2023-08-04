@@ -21,6 +21,7 @@ class ChunkPosition
    [[nodiscard]] int z() const;
 
    [[nodiscard]] const math::Vector2i &position() const;
+   [[nodiscard]] math::Vector2i &position();
    [[nodiscard]] ChunkHash hash() const;
    [[nodiscard]] BlockPosition block_at(int block_x, int block_y, int block_z) const;
    [[nodiscard]] bool is_block_inside(int block_x, int block_z) const;

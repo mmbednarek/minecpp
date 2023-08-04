@@ -11,7 +11,7 @@ struct Abilities
    bool invulnerable  = false;
    bool may_build     = false;
    bool may_fly       = false;
-   float walk_speed   = 0.1f;
+   float field_of_view = 0.1f;
 
    static Abilities from_proto(const minecpp::proto::entity::Abilities &abilities);
    [[nodiscard]] minecpp::proto::entity::Abilities to_proto() const;

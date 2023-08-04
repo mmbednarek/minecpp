@@ -29,6 +29,7 @@ struct Configuration
    std::uint16_t server_bind_port{};
    std::vector<std::string> storage_endpoints{};
    std::string resources_data_file{};
+   std::string resources_registry{};
    std::uint64_t gameplay_world_seed{};
    int gameplay_max_players{};
    int gameplay_spawn_point_x{};
@@ -45,6 +46,7 @@ struct Configuration
       this->storage_endpoints   = yaml_cfg["storage"]["endpoints"].as<std::vector<std::string>>(
               std::vector<std::string>{"127.0.0.1:8080"});
       this->resources_data_file    = yaml_cfg["resources"]["data_file"].as<std::string>("repository.bin");
+      this->resources_registry     = yaml_cfg["resources"]["registry_file"].as<std::string>("registry.bin");
       this->gameplay_world_seed    = yaml_cfg["gameplay"]["world_seed"].as<unsigned long long>(0ULL);
       this->gameplay_max_players   = yaml_cfg["gameplay"]["max_players"].as<int>(10);
       this->gameplay_spawn_point_x = yaml_cfg["gameplay"]["spawn_point"]["x"].as<int>(0);
@@ -76,6 +78,8 @@ auto main() -> int
 
    minecpp::world::population::ObjectRepository::the().register_objects();
 
+   auto registry = minecpp::repository::load_network_registry_from_file(config.resources_registry).unwrap({});
+
    JobSystem job_system{static_cast<std::size_t>(config.worker_count)};
 
    StorageResponseHandler storage_handler{job_system};
@@ -89,7 +93,7 @@ auto main() -> int
                                                 config.gameplay_spawn_point_z});
 
    EventManager manager;
-   Dispatcher dispatcher(manager, entity_system);
+   Dispatcher dispatcher(manager, entity_system, registry);
    minecpp::controller::BlockManager block_manager;
    minecpp::controller::RootItem root_item_controller;
 

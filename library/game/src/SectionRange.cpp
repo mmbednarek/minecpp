@@ -1,4 +1,5 @@
-#include <minecpp/game/SectionRange.h>
+#include "SectionRange.h"
+#include "ChunkRange.h"
 
 namespace minecpp::game {
 
@@ -62,6 +63,11 @@ bool SectionRange::is_in_range(SectionPosition position) const
       return false;
 
    return true;
+}
+
+ChunkRange SectionRange::to_chunk_range() const
+{
+   return {m_from.chunk_position(), m_to.chunk_position()};
 }
 
 SectionRange::Iterator::Iterator(SectionRange &range, const SectionPosition &at) :

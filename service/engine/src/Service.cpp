@@ -5,7 +5,6 @@
 #include "service/PlayerMovement.h"
 #include "service/PlayerSession.h"
 
-#include "minecpp/event/Serverbound.h"
 #include "minecpp/game/BlockPosition.h"
 #include "minecpp/game/property/Face.h"
 #include "minecpp/net/play/Serverbound.schema.h"
@@ -17,8 +16,6 @@
 using google::protobuf::Message;
 
 namespace minecpp::service::engine {
-
-namespace serverbound_v1 = proto::event::serverbound;
 
 Service::Service(service::PlayerInteraction &interaction_service, service::PlayerInterface &interface_service,
                  service::PlayerMovement &movement_service, service::PlayerSession &session_service) :

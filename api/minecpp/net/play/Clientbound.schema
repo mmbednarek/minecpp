@@ -48,7 +48,7 @@ record AcknowledgeBlockChanges {
 [MessageID=0x0A]
 record BlockChange {
     block_position: uint64
-    block_id: varint
+    block_id: uvarint
 }
 
 [MessageID=0x0C]
@@ -89,7 +89,7 @@ record Disconnect {
 
 [MessageID=0x1C]
 record EntityStatus {
-    entity_id: int32
+    entity_id: uint32
     opcode: int8
 }
 

@@ -101,13 +101,13 @@ AcknowledgeBlockChanges AcknowledgeBlockChanges::deserialize(::minecpp::network:
 void BlockChange::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x0A);
    writer.write_big_endian(this->block_position);
-   writer.write_varint(this->block_id);
+   writer.write_uvarint(this->block_id);
 }
 
 BlockChange BlockChange::deserialize(::minecpp::network::message::Reader &reader) {
    BlockChange result;
    result.block_position = reader.read_big_endian<std::uint64_t>();
-   result.block_id = reader.read_varint();
+   result.block_id = reader.read_uvarint();
    return result;
 }
 
@@ -208,7 +208,7 @@ void EntityStatus::serialize(::minecpp::network::message::Writer &writer) const 
 
 EntityStatus EntityStatus::deserialize(::minecpp::network::message::Reader &reader) {
    EntityStatus result;
-   result.entity_id = reader.read_big_endian<std::int32_t>();
+   result.entity_id = reader.read_big_endian<std::uint32_t>();
    result.opcode = reader.read_sbyte();
    return result;
 }
