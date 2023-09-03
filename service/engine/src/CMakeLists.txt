@@ -5,8 +5,6 @@ target_sources(minecpp_engine
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/ApiHandler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ApiHandler.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSerializer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSerializer.h
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSystem.h
         ${CMAKE_CURRENT_SOURCE_DIR}/Dispatcher.cpp

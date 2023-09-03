@@ -49,6 +49,7 @@ class Writer
    [[nodiscard]] std::ostream &raw_stream();
 
    std::string_view view() const;
+   container::BufferView buffer_view() const;
 
  private:
    std::stringstream m_stream;

@@ -70,6 +70,16 @@ ChunkRange SectionRange::to_chunk_range() const
    return {m_from.chunk_position(), m_to.chunk_position()};
 }
 
+int SectionRange::min_section() const
+{
+   return m_from.y();
+}
+
+int SectionRange::max_section() const
+{
+   return m_to.y();
+}
+
 SectionRange::Iterator::Iterator(SectionRange &range, const SectionPosition &at) :
     m_range(range),
     m_at(at)

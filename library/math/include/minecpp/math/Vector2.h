@@ -1,6 +1,9 @@
 #pragma once
+
 #include "BaseVector.h"
 #include "ProtoTypes.h"
+
+#include <concepts>
 
 namespace minecpp::math {
 

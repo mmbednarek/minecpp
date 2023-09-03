@@ -45,9 +45,9 @@ class ApiHandler
    void tick();
 
  private:
-   void on_connected(std::shared_ptr<stream::Peer> peer);
-   void on_received_message(std::shared_ptr<stream::Peer> peer, container::BufferView message);
-   void on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect);
+   void on_connected(stream::Peer *peer);
+   void on_received_message(stream::Peer *peer, container::BufferView message);
+   void on_disconnected(stream::Peer *peer, bool *try_reconnect);
 
    Service &m_service;
    EventManager &m_event_manager;

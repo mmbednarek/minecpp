@@ -103,30 +103,9 @@ record KeepAlive {
     time: int64
 }
 
-record BlockEntity {
-  position_xz: uint8
-  y: int16
-  type: varint
-  data: nbt.block.BlockEntityData
-}
-
-record LightData {
-  sky_light_mask: list[uint64]
-  block_light_mask: list[uint64]
-  empty_sky_light_mask: list[uint64]
-  empty_block_light_mask: list[uint64]
-
-  sky_light: list[list[uint8]]
-  block_light: list[list[uint8]]
-}
-
 [MessageID=0x24]
 record UpdateChunk {
-    position: Vector2i
-    heightmaps: nbt.chunk.HeightmapsNet
-    data: list[uint8]
-    block_entities: list[BlockEntity]
-    light_data: LightData
+    chunk: Chunk
 }
 
 [MessageID=0x27]

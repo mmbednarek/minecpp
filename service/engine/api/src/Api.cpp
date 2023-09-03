@@ -7,7 +7,7 @@
 #include <charconv>
 #include <spdlog/spdlog.h>
 
-namespace pb = google::protobuf;
+namespace gpb = google::protobuf;
 
 namespace minecpp::service::engine {
 
@@ -16,7 +16,7 @@ ClientStream::ClientStream(stream::Client &client, const network::Endpoint &endp
 {
 }
 
-void ClientStream::send(const pb::Message &message, game::PlayerId id)
+void ClientStream::send(const gpb::Message &message, game::PlayerId id)
 {
    assert(m_peer);
 
@@ -29,19 +29,19 @@ void ClientStream::send(const pb::Message &message, game::PlayerId id)
    m_peer->send_reliable_message(buffer.as_view());
 }
 
-void Client::on_connected(std::shared_ptr<stream::Peer> peer)
+void Client::on_connected(stream::Peer *peer)
 {
    spdlog::info("established connection to server {}", peer->hostname());
 }
 
-void Client::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, container::BufferView message)
+void Client::on_received_message(stream::Peer */*peer*/, container::BufferView message)
 {
    proto::event::clientbound::Event proto_event;
    proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
    m_visitor.visit_event(proto_event);
 }
 
-void Client::on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect)
+void Client::on_disconnected(stream::Peer *peer, bool *try_reconnect)
 {
    spdlog::info("lost connection to server {}", peer->hostname());
    *try_reconnect = true;
@@ -66,7 +66,7 @@ void Client::connect(const network::Endpoint &address)
    this->tick();
 }
 
-bool Client::send(const pb::Message &message, game::PlayerId id)
+bool Client::send(const gpb::Message &message, game::PlayerId id)
 {
    assert(not m_streams.empty());
 

@@ -1,5 +1,9 @@
 #include "Storage.h"
 #include "Future.h"
+
+#include "minecpp/net/storage/Serverbound.schema.h"
+#include "minecpp/util/Cast.hpp"
+
 #include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
@@ -9,7 +13,8 @@ Storage::~Storage()
 {
    Error err(fdb_stop_network());
    if (not err.ok()) {
-      spdlog::error("could not stop network: {}", err.to_string());
+      auto msg = err.to_string();
+      spdlog::error("could not stop network: {}", msg);
    }
 
    m_network_thread.join();
@@ -19,12 +24,14 @@ Storage::~Storage()
 std::unique_ptr<Storage> Storage::create(std::string_view cluster_file_path)
 {
    if (auto err = fdb_select_api_version(FDB_API_VERSION); err != 0) {
-      spdlog::error("invalid api version: {}", fdb_get_error(err));
+      const auto *err_msg = fdb_get_error(err);
+      spdlog::error("invalid api version: {}", err_msg);
       return {};
    }
 
    if (auto err = fdb_setup_network(); err != 0) {
-      spdlog::error("failed to setup network: {}", fdb_get_error(err));
+      auto err_msg = fdb_get_error(err);
+      spdlog::error("failed to setup network: {}", err_msg);
       return {};
    }
 
@@ -33,9 +40,11 @@ std::unique_ptr<Storage> Storage::create(std::string_view cluster_file_path)
    FDBDatabase *database;
 
    if (auto err = fdb_create_database(cluster_file_path.data(), &database); err != 0) {
-      spdlog::error("failed to create database: {}", fdb_get_error(err));
+      auto err_msg = fdb_get_error(err);
+      spdlog::error("failed to create database: {}", err_msg);
       if (auto err2 = fdb_stop_network(); err2 != 0) {
-         spdlog::error("failed to stop network: {}", fdb_get_error(err2));
+         auto err_msg2 = fdb_get_error(err2);
+         spdlog::error("failed to stop network: {}", err_msg2);
       }
       network_thread.join();
       return {};
@@ -47,30 +56,34 @@ std::unique_ptr<Storage> Storage::create(std::string_view cluster_file_path)
 void Storage::network_thread()
 {
    if (auto err = fdb_run_network(); err != 0) {
-      spdlog::error("failed to create database: {}", fdb_get_error(err));
+      auto err_msg = fdb_get_error(err);
+      spdlog::error("failed to create database: {}", err_msg);
    }
 }
 
-bool Storage::write_chunk(const proto_chunk::Chunk &chunk)
+bool Storage::write_chunk(const net::Chunk &chunk)
 {
    std::unique_lock lock{m_mutex};
 
-   const auto chunk_position = game::ChunkPosition::from_proto(chunk.position());
-   const auto key            = fmt::format("chunk_data.{}", chunk_position.hash());
-   const auto data           = chunk.SerializeAsString();
+   network::message::Writer writer;
+   chunk.serialize(writer);
+
+   const auto key = fmt::format("chunk_data.{}", game::ChunkPosition(chunk.position).hash());
 
    auto transaction = create_transaction();
    if (not transaction.ok()) {
-      spdlog::error("fdb: failed to create transaction. {}", transaction.err().to_string());
+      auto err_msg = transaction.err().to_string();
+      spdlog::error("fdb: failed to create transaction. {}", err_msg);
       return false;
    }
 
-   transaction->set(key, {data.data(), data.size()});
+   transaction->set(key, {writer.view().data(), writer.view().size()});
 
    const auto commit_future = transaction->commit();
    auto err                 = commit_future.await();
    if (not err.ok()) {
-      spdlog::error("failed to commit transaction: {}", err.to_string());
+      auto err_msg = err.to_string();
+      spdlog::error("failed to commit transaction: {}", err_msg);
       return false;
    }
 
@@ -90,7 +103,7 @@ Result<Transaction> Storage::create_transaction()
    return Transaction(transaction);
 }
 
-std::optional<proto_chunk::Chunk> Storage::read_chunk(game::ChunkPosition position)
+std::optional<net::Chunk> Storage::read_chunk(game::ChunkPosition position)
 {
    std::unique_lock lock{m_mutex};
 
@@ -106,16 +119,19 @@ std::optional<proto_chunk::Chunk> Storage::read_chunk(game::ChunkPosition positi
 
    auto value = future.get_value();
    if (not value.ok()) {
-      spdlog::error("fdb: failed to get value. {}", value.err().to_string());
+      auto err_msg = value.err().to_string();
+      spdlog::error("fdb: failed to get value. {}", err_msg);
       return std::nullopt;
    }
 
    if (value->data == nullptr)
       return std::nullopt;
 
-   proto_chunk::Chunk chunk;
-   if (not chunk.ParseFromArray(value->data, static_cast<int>(value->size)))
-      return std::nullopt;
+   container::BufferView buffer{util::unsafe_cast<unsigned char *>(value->data), value->size};
+   auto buff_stream = buffer.make_stream();
+
+   network::message::Reader reader(buff_stream);
+   auto chunk = net::Chunk::deserialize(reader);
 
    return chunk;
 }
@@ -127,7 +143,7 @@ Storage::Storage(std::thread network_thread, FDBDatabase *database) :
 }
 
 bool Storage::update_chunk(game::ChunkPosition position,
-                           const std::function<void(proto_chunk::Chunk &chunk)> &callback)
+                           const std::function<void(net::Chunk &chunk)> &callback)
 {
    std::unique_lock lock{m_mutex};
 
@@ -147,21 +163,24 @@ bool Storage::update_chunk(game::ChunkPosition position,
       return false;
    }
 
-   proto_chunk::Chunk chunk;
-   if (not chunk.ParseFromArray(value->data, static_cast<int>(value->size)))
-      return false;
+   container::BufferView buffer{util::unsafe_cast<unsigned char *>(value->data), value->size};
+   auto buff_stream = buffer.make_stream();
+
+   network::message::Reader reader(buff_stream);
+   auto chunk = net::Chunk::deserialize(reader);
 
    callback(chunk);
 
-   auto data = chunk.SerializeAsString();
+   network::message::Writer writer;
+   chunk.serialize(writer);
 
-   transaction->set(key, {data.data(), data.size()});
+   transaction->set(key, {writer.view().data(), writer.view().size()});
 
    auto commit_future = transaction->commit();
    return Error(commit_future.await()).ok();
 }
 
-bool Storage::add_chunk_subscription(game::ChunkPosition position, const proto_storage::ClientId &client_id)
+bool Storage::add_chunk_subscription(game::ChunkPosition position, std::uint64_t client_id)
 {
    std::unique_lock lock{m_mutex};
 
@@ -181,17 +200,18 @@ bool Storage::add_chunk_subscription(game::ChunkPosition position, const proto_s
       return false;
    }
 
-   proto_storage::ChunkSubscription subscription;
-   if (value->data != nullptr) {
-      if (not subscription.ParseFromArray(value->data, static_cast<int>(value->size)))
-         return false;
-   }
+   container::BufferView buffer{util::unsafe_cast<unsigned char *>(value->data), value->size};
+   auto buff_stream = buffer.make_stream();
+   network::message::Reader reader(buff_stream);
 
-   *subscription.mutable_client_ids()->Add() = client_id;
+   auto subscription = net::storage::sb::ChunkSubscription::deserialize(reader);
 
-   auto data = subscription.SerializeAsString();
+   subscription.client_ids.push_back(client_id);
 
-   transaction->set(key, {data.data(), data.size()});
+   network::message::Writer writer;
+   subscription.serialize(writer);
+
+   transaction->set(key, {writer.view().data(), writer.view().size()});
    auto commit_future = transaction->commit();
 
    return Error(commit_future.await()).ok();

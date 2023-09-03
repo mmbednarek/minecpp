@@ -1,12 +1,15 @@
 #pragma once
+
+#include "minecpp/container/PalettedVector.h"
+#include "minecpp/container/TightArray.h"
+#include "minecpp/game/IWorld.hpp"
+#include "minecpp/nbt/chunk/Chunk.schema.h"
+#include "minecpp/net/Chunk.schema.h"
+#include "minecpp/proto/chunk/Chunk.pb.h"
+
 #include <cstdint>
 #include <functional>
 #include <map>
-#include <minecpp/container/PalettedVector.h>
-#include <minecpp/container/TightArray.h>
-#include <minecpp/game/IWorld.hpp>
-#include <minecpp/nbt/chunk/Chunk.schema.h>
-#include <minecpp/proto/chunk/Chunk.pb.h>
 #include <shared_mutex>
 #include <vector>
 
@@ -14,14 +17,14 @@ namespace minecpp::world {
 
 using LightContainer     = container::TightArray<game::LightValue, 4096, mb::u8, 4>;
 using LightContainerUPtr = std::unique_ptr<LightContainer>;
+using BlockContainer     = container::PalettedVector<game::BlockStateId, 9>;
 
 class Section final : public game::ISection
 {
  public:
    explicit Section(int y);
 
-   Section(int ref_count, container::PalettedVector<game::BlockStateId> data,
-           std::vector<game::LightSource> light_sources);
+   Section(int ref_count, BlockContainer data, std::vector<game::LightSource> light_sources);
 
    Section(const Section &section);
    Section &operator=(const Section &section);
@@ -29,21 +32,11 @@ class Section final : public game::ISection
    std::vector<game::LightSource> &light_sources() override;
    void reset_light(game::LightType light_type) override;
 
-   [[nodiscard]] static Section from_proto(const proto::chunk::Section &section);
-   [[nodiscard]] proto::chunk::Section to_proto() const;
-
-   [[nodiscard]] static Section from_nbt(const nbt::chunk::Section &section);
-   [[nodiscard]] nbt::chunk::Section to_nbt() const;
-
    void recalculate_reference_count();
 
-   [[nodiscard]] const container::PalettedVector<game::BlockStateId> &data() const;
+   [[nodiscard]] const BlockContainer &data() const;
 
-   [[nodiscard]] constexpr container::PalettedVector<game::BlockStateId> &data()
-   {
-      // TODO: MUTEX!!!
-      return m_data;
-   }
+   [[nodiscard]] BlockContainer &data();
 
    [[nodiscard]] int reference_count() const;
 
@@ -59,6 +52,8 @@ class Section final : public game::ISection
 
    [[nodiscard]] LightContainer *light_data(game::LightType type) const;
 
+   static Section from_net(const minecpp::net::Section &section, int y);
+
  private:
    [[nodiscard]] game::BlockStateId get_block_internal(game::BlockPosition position) const;
    [[nodiscard]] LightContainer *light_data_internal(game::LightType type) const;
@@ -66,7 +61,7 @@ class Section final : public game::ISection
 
    int m_reference_count{};
    int m_y{};
-   container::PalettedVector<game::BlockStateId> m_data;
+   BlockContainer m_data;
    LightContainerUPtr m_block_light;
    LightContainerUPtr m_sky_light;
    std::vector<game::LightSource> m_light_sources;

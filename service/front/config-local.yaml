@@ -6,7 +6,7 @@ engine:
     - "localhost:7800"
   strategy: round_robin
 encryption:
-  enabled: true
+  enabled: false
 debug_logger: true
 resources:
   registry: "registry.bin"

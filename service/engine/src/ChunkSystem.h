@@ -1,5 +1,6 @@
 #pragma once
 
+#include "minecpp/net/Chunk.schema.h"
 #include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/util/Pool.h"
 #include "minecpp/world/Chunk.h"
@@ -44,8 +45,8 @@ class ChunkSystem : public world::IChunkSystem
    world::Chunk *create_empty_chunk_at(const game::ChunkPosition &position) override;
    void set_chunk_state_at(const game::ChunkPosition &position, world::ChunkState state) override;
 
-   void handle_chunk_data(const proto::service::storage::ResponseChunkData &chunk);
-   void handle_empty_chunk(const proto::service::storage::ResponseEmptyChunk &chunk);
+   void handle_chunk_data(const net::Chunk &chunk);
+   void handle_empty_chunk(const game::ChunkPosition &chunk_position);
 
    void save_chunk_at(const game::ChunkPosition &position) override;
 

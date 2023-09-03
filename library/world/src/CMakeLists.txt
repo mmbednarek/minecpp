@@ -6,6 +6,7 @@ target_sources(minecpp_world
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/BlockState.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Chunk.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkSerializer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Generator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/LightSystem.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Section.cpp
@@ -17,6 +18,7 @@ target_sources(minecpp_world
     PUBLIC
         ${MINECPP_WORLD_INCLUDE_DIR}/BlockState.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Chunk.h
+        ${MINECPP_WORLD_INCLUDE_DIR}/ChunkSerializer.h
         ${MINECPP_WORLD_INCLUDE_DIR}/Generator.h
         ${MINECPP_WORLD_INCLUDE_DIR}/IChunkSystem.h
         ${MINECPP_WORLD_INCLUDE_DIR}/LightSystem.h

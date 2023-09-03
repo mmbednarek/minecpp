@@ -1,6 +1,8 @@
 #pragma once
 
-#include <minecpp/container/BasicBufferView.hpp>
+#include "minecpp/container/BasicBufferView.hpp"
+
+#include <memory>
 
 struct _ENetPeer;
 
@@ -12,7 +14,7 @@ class Host;
 class Server;
 class Client;
 
-class Peer
+class Peer : public std::enable_shared_from_this<Peer>
 {
    friend Server;
    friend Client;

@@ -144,7 +144,7 @@ SetSlot SetSlot::deserialize(::minecpp::network::message::Reader &reader) {
    result.slot_id = reader.read_big_endian<std::int16_t>();
    const auto slot_has_value_0 = reader.read_byte();
    if (slot_has_value_0) {
-      result.slot = play::Slot::deserialize(reader);
+      result.slot = net::Slot::deserialize(reader);
    }
    return result;
 }
@@ -235,132 +235,14 @@ KeepAlive KeepAlive::deserialize(::minecpp::network::message::Reader &reader) {
    return result;
 }
 
-void BlockEntity::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_byte(this->position_xz);
-   writer.write_big_endian(this->y);
-   writer.write_varint(this->type);
-   this->data.serialize(writer.raw_stream(), "");
-}
-
-BlockEntity BlockEntity::deserialize(::minecpp::network::message::Reader &reader) {
-   BlockEntity result;
-   result.position_xz = reader.read_byte();
-   result.y = reader.read_big_endian<std::int16_t>();
-   result.type = reader.read_varint();
-   result.data = nbt::block::BlockEntityData::deserialize(reader.raw_stream());
-   return result;
-}
-
-void LightData::serialize(::minecpp::network::message::Writer &writer) const {
-   writer.write_varint(static_cast<std::int32_t>(this->sky_light_mask.size()));
-   for (const auto &sky_light_mask_value_0 : this->sky_light_mask) {
-      writer.write_big_endian(sky_light_mask_value_0);
-   }
-   writer.write_varint(static_cast<std::int32_t>(this->block_light_mask.size()));
-   for (const auto &block_light_mask_value_0 : this->block_light_mask) {
-      writer.write_big_endian(block_light_mask_value_0);
-   }
-   writer.write_varint(static_cast<std::int32_t>(this->empty_sky_light_mask.size()));
-   for (const auto &empty_sky_light_mask_value_0 : this->empty_sky_light_mask) {
-      writer.write_big_endian(empty_sky_light_mask_value_0);
-   }
-   writer.write_varint(static_cast<std::int32_t>(this->empty_block_light_mask.size()));
-   for (const auto &empty_block_light_mask_value_0 : this->empty_block_light_mask) {
-      writer.write_big_endian(empty_block_light_mask_value_0);
-   }
-   writer.write_varint(static_cast<std::int32_t>(this->sky_light.size()));
-   for (const auto &sky_light_value_0 : this->sky_light) {
-      writer.write_varint(static_cast<std::int32_t>(sky_light_value_0.size()));
-      for (const auto &sky_light_value_0_value_1 : sky_light_value_0) {
-         writer.write_byte(sky_light_value_0_value_1);
-      }
-   }
-   writer.write_varint(static_cast<std::int32_t>(this->block_light.size()));
-   for (const auto &block_light_value_0 : this->block_light) {
-      writer.write_varint(static_cast<std::int32_t>(block_light_value_0.size()));
-      for (const auto &block_light_value_0_value_1 : block_light_value_0) {
-         writer.write_byte(block_light_value_0_value_1);
-      }
-   }
-}
-
-LightData LightData::deserialize(::minecpp::network::message::Reader &reader) {
-   LightData result;
-   auto sky_light_mask_size_0 = reader.read_varint();
-   result.sky_light_mask.resize(static_cast<std::size_t>(sky_light_mask_size_0));
-   std::generate(result.sky_light_mask.begin(), result.sky_light_mask.end(), [&reader]() {
-      return reader.read_big_endian<std::uint64_t>();
-   });
-   auto block_light_mask_size_0 = reader.read_varint();
-   result.block_light_mask.resize(static_cast<std::size_t>(block_light_mask_size_0));
-   std::generate(result.block_light_mask.begin(), result.block_light_mask.end(), [&reader]() {
-      return reader.read_big_endian<std::uint64_t>();
-   });
-   auto empty_sky_light_mask_size_0 = reader.read_varint();
-   result.empty_sky_light_mask.resize(static_cast<std::size_t>(empty_sky_light_mask_size_0));
-   std::generate(result.empty_sky_light_mask.begin(), result.empty_sky_light_mask.end(), [&reader]() {
-      return reader.read_big_endian<std::uint64_t>();
-   });
-   auto empty_block_light_mask_size_0 = reader.read_varint();
-   result.empty_block_light_mask.resize(static_cast<std::size_t>(empty_block_light_mask_size_0));
-   std::generate(result.empty_block_light_mask.begin(), result.empty_block_light_mask.end(), [&reader]() {
-      return reader.read_big_endian<std::uint64_t>();
-   });
-   auto sky_light_size_0 = reader.read_varint();
-   result.sky_light.resize(static_cast<std::size_t>(sky_light_size_0));
-   std::generate(result.sky_light.begin(), result.sky_light.end(), [&reader]() {
-      std::vector<std::uint8_t> sky_light_result_0;
-      auto sky_light_result_0_size_1 = reader.read_varint();
-      sky_light_result_0.resize(static_cast<std::size_t>(sky_light_result_0_size_1));
-      std::generate(sky_light_result_0.begin(), sky_light_result_0.end(), [&reader]() {
-         return reader.read_byte();
-      });
-      return sky_light_result_0;
-   });
-   auto block_light_size_0 = reader.read_varint();
-   result.block_light.resize(static_cast<std::size_t>(block_light_size_0));
-   std::generate(result.block_light.begin(), result.block_light.end(), [&reader]() {
-      std::vector<std::uint8_t> block_light_result_0;
-      auto block_light_result_0_size_1 = reader.read_varint();
-      block_light_result_0.resize(static_cast<std::size_t>(block_light_result_0_size_1));
-      std::generate(block_light_result_0.begin(), block_light_result_0.end(), [&reader]() {
-         return reader.read_byte();
-      });
-      return block_light_result_0;
-   });
-   return result;
-}
-
 void UpdateChunk::serialize(::minecpp::network::message::Writer &writer) const {
    writer.write_byte(0x24);
-   network::write_vector2i(writer, this->position);
-   this->heightmaps.serialize(writer.raw_stream(), "");
-   writer.write_varint(static_cast<std::int32_t>(this->data.size()));
-   for (const auto &data_value_0 : this->data) {
-      writer.write_byte(data_value_0);
-   }
-   writer.write_varint(static_cast<std::int32_t>(this->block_entities.size()));
-   for (const auto &block_entities_value_0 : this->block_entities) {
-      block_entities_value_0.serialize(writer);
-   }
-   this->light_data.serialize(writer);
+   this->chunk.serialize(writer);
 }
 
 UpdateChunk UpdateChunk::deserialize(::minecpp::network::message::Reader &reader) {
    UpdateChunk result;
-   result.position = network::read_vector2i(reader);
-   result.heightmaps = nbt::chunk::HeightmapsNet::deserialize(reader.raw_stream());
-   auto data_size_0 = reader.read_varint();
-   result.data.resize(static_cast<std::size_t>(data_size_0));
-   std::generate(result.data.begin(), result.data.end(), [&reader]() {
-      return reader.read_byte();
-   });
-   auto block_entities_size_0 = reader.read_varint();
-   result.block_entities.resize(static_cast<std::size_t>(block_entities_size_0));
-   std::generate(result.block_entities.begin(), result.block_entities.end(), [&reader]() {
-      return BlockEntity::deserialize(reader);
-   });
-   result.light_data = LightData::deserialize(reader);
+   result.chunk = net::Chunk::deserialize(reader);
    return result;
 }
 
@@ -373,7 +255,7 @@ void UpdateLight::serialize(::minecpp::network::message::Writer &writer) const {
 UpdateLight UpdateLight::deserialize(::minecpp::network::message::Reader &reader) {
    UpdateLight result;
    result.position = network::read_vector2vi(reader);
-   result.light_data = LightData::deserialize(reader);
+   result.light_data = net::LightData::deserialize(reader);
    return result;
 }
 
@@ -1012,7 +894,7 @@ SetEntityMetadata SetEntityMetadata::deserialize(::minecpp::network::message::Re
       if (data_key_0 == 0xFF) {
          break;
       }
-      std::variant<std::int8_t, std::int32_t, std::int64_t, float, std::string, play::Chat, std::optional<play::Chat>, std::optional<play::Slot>> data_value_0;
+      std::variant<std::int8_t, std::int32_t, std::int64_t, float, std::string, net::Chat, std::optional<net::Chat>, std::optional<net::Slot>> data_value_0;
       auto data_value_0_index_1 = reader.read_varint();
       switch (data_value_0_index_1) {
       case 0: {
@@ -1036,20 +918,20 @@ SetEntityMetadata SetEntityMetadata::deserialize(::minecpp::network::message::Re
          break;
       }
       case 5: {
-         data_value_0 = play::Chat::deserialize(reader);
+         data_value_0 = net::Chat::deserialize(reader);
          break;
       }
       case 6: {
          const auto data_value_0_item_1_has_value_2 = reader.read_byte();
          if (data_value_0_item_1_has_value_2) {
-            data_value_0 = play::Chat::deserialize(reader);
+            data_value_0 = net::Chat::deserialize(reader);
          }
          break;
       }
       case 7: {
          const auto data_value_0_item_1_has_value_2 = reader.read_byte();
          if (data_value_0_item_1_has_value_2) {
-            data_value_0 = play::Slot::deserialize(reader);
+            data_value_0 = net::Slot::deserialize(reader);
          }
          break;
       }
@@ -1092,7 +974,7 @@ SetEquipment SetEquipment::deserialize(::minecpp::network::message::Reader &read
    result.slot_id = reader.read_sbyte();
    const auto slot_has_value_0 = reader.read_byte();
    if (slot_has_value_0) {
-      result.slot = play::Slot::deserialize(reader);
+      result.slot = net::Slot::deserialize(reader);
    }
    return result;
 }

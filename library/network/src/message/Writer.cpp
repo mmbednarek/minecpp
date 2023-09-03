@@ -211,4 +211,11 @@ std::string_view Writer::view() const
    return m_stream.view();
 }
 
+container::BufferView Writer::buffer_view() const
+{
+   auto view = this->view();
+   return container::BufferView{reinterpret_cast<unsigned char *>(const_cast<char *>(view.data())),
+                                view.size()};
+}
+
 }// namespace minecpp::network::message

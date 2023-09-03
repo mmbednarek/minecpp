@@ -23,12 +23,12 @@ class Storage : public IStorage
 
    static void network_thread();
 
-   bool write_chunk(const proto_chunk::Chunk &chunk) override;
-   std::optional<proto_chunk::Chunk> read_chunk(game::ChunkPosition position) override;
+   bool write_chunk(const net::Chunk &chunk) override;
+   std::optional<net::Chunk> read_chunk(game::ChunkPosition position) override;
    bool update_chunk(game::ChunkPosition position,
-                     const std::function<void(proto_chunk::Chunk &chunk)> &callback) override;
+                     const std::function<void(net::Chunk &chunk)> &callback) override;
    bool add_chunk_subscription(game::ChunkPosition position,
-                               const proto_storage::ClientId &client_id) override;
+                               std::uint64_t client_id) override;
 
  private:
    Result<Transaction> create_transaction();

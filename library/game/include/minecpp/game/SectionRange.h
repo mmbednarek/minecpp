@@ -18,6 +18,8 @@ class SectionRange
    [[nodiscard]] Iterator end();
    [[nodiscard]] bool is_in_range(SectionPosition position) const;
    [[nodiscard]] SectionRange grow(int amount) const;
+   [[nodiscard]] int min_section() const;
+   [[nodiscard]] int max_section() const;
 
    [[nodiscard]] proto::common::SectionRange to_proto() const;
 

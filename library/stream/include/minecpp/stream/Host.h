@@ -25,9 +25,9 @@ class Host
  public:
    virtual ~Host();
 
-   using ConnectionDelegate   = signal::Delegate<std::shared_ptr<Peer>>;
-   using ReceivedDelegate     = signal::Delegate<std::shared_ptr<Peer>, container::BufferView>;
-   using DisconnectedDelegate = signal::Delegate<std::shared_ptr<Peer>, bool *>;
+   using ConnectionDelegate   = signal::Delegate<Peer *>;
+   using ReceivedDelegate     = signal::Delegate<Peer *, container::BufferView>;
+   using DisconnectedDelegate = signal::Delegate<Peer *, bool *>;
    ConnectionDelegate on_connected;
    ReceivedDelegate on_received;
    DisconnectedDelegate on_disconnected;

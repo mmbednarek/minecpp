@@ -1,0 +1,21 @@
+generator = "net"
+package minecpp.net.storage.sb
+
+[MessageID=0x00]
+record SetClientId {
+  client_id: uint64
+}
+
+[MessageID=0x01]
+record SubscribeChunk {
+  position: Vector2i
+}
+
+[MessageID=0x02]
+record StoreChunk {
+  chunk: Chunk
+}
+
+record ChunkSubscription {
+    client_ids: list[uint64]
+}

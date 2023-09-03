@@ -3,14 +3,38 @@ project(minecpp)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wconversion -Werror -Wno-unknown-pragmas")
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wconversion -Werror -Wno-unknown-pragmas -Wno-extra-semi -Wno-dangling-reference -fpermissive")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
 set(ENET_PROVIDER "library" CACHE STRING "ENetProvider")
+set(FMT_PROVIDER "fetch_content" CACHE STRING "FmtProvider")
+set(SPDLOG_PROVIDER "fetch_content" CACHE STRING "FmtProvider")
 
-find_package(fmt REQUIRED)
-find_package(spdlog REQUIRED)
+include(CTest)
+include(FetchContent)
+
+if (${FMT_PROVIDER} STREQUAL "find_package")
+    find_package(fmt REQUIRED)
+elseif(${FMT_PROVIDER} STREQUAL "fetch_content")
+    FetchContent_Declare(
+            fmt
+            GIT_REPOSITORY https://github.com/fmtlib/fmt
+            GIT_TAG 9.1.0
+    )
+    FetchContent_MakeAvailable(fmt)
+endif()
+
+if (${SPDLOG_PROVIDER} STREQUAL "find_package")
+    find_package(spdlog REQUIRED)
+elseif(${SPDLOG_PROVIDER} STREQUAL "fetch_content")
+    FetchContent_Declare(
+            spdlog
+            GIT_REPOSITORY https://github.com/gabime/spdlog
+            GIT_TAG v1.12.0
+    )
+    FetchContent_MakeAvailable(spdlog)
+endif()
 find_package(Boost REQUIRED COMPONENTS iostreams system program_options)
 find_package(GTest REQUIRED)
 find_package(OpenSSL REQUIRED)
@@ -38,14 +62,7 @@ else()
     find_package(ENet REQUIRED)
 endif()
 
-include(CTest)
-include(FetchContent)
-
 find_package(Protobuf REQUIRED)
-
-if (${SPDLOG_FMT_EXTERNAL})
-    add_definitions(-DSPDLOG_FMT_EXTERNAL=1)
-endif ()
 
 if (${FDB_API_VERSION})
     add_definitions(-DFDB_API_VERSION=${FDB_API_VERSION})

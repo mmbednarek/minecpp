@@ -1,7 +1,7 @@
 server:
   bind_address: "0.0.0.0"
   bind_port: 7800
-debug_logger: true
+debug_logger: false
 storage:
   endpoints:
     - "127.0.0.1:8080"

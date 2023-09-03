@@ -157,6 +157,8 @@ void PlayerSession::handle_pre_initial_chunks(game::PlayerId player_id)
       spdlog::error("error loading chunks: {}", result.err()->msg());
       return;
    }
+
+   this->handle_post_initial_chunks(player_id);
 }
 
 void PlayerSession::handle_post_initial_chunks(game::PlayerId player_id)

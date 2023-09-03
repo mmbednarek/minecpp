@@ -30,7 +30,7 @@ void RequestThreadPool::loop()
    }
 }
 
-void RequestThreadPool::handle_request(ConnectionId id, proto::service::storage::Request request)
+void RequestThreadPool::handle_request(ConnectionId id, container::Buffer request)
 {
    {
       std::lock_guard lk{m_mutex};

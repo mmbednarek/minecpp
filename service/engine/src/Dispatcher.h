@@ -26,12 +26,13 @@ class EntitySystem;
 namespace minecpp::service::engine {
 
 class EventManager;
+class ChunkSystem;
 using boost::uuids::uuid;
 
 class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
-   explicit Dispatcher(EventManager &events, entity::EntitySystem &entity_system, nbt::repository::Registry &registry);
+   explicit Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system, nbt::repository::Registry &registry);
    void spawn_entity(game::EntityId entity_id, const math::Vector3 &position) override;
    void remove_entity(game::EntityId entity_id) override;
    void remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
@@ -69,7 +70,7 @@ class Dispatcher : public minecpp::game::IDispatcher
 
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            int count) override;
-   void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
+   void update_block_light(const math::Vector3& center, game::SectionRange range) override;
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool is_initial);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
@@ -145,6 +146,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    make_raw_message(const network::message::Writer &writer);
 
    EventManager &m_events;
+   ChunkSystem &m_chunk_system;
    entity::EntitySystem &m_entity_system;
    nbt::repository::Registry &m_registry;
 };

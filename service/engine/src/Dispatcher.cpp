@@ -1,26 +1,32 @@
 #include "Dispatcher.h"
+
+#include "ChunkSystem.h"
 #include "EventManager.h"
+
+#include "minecpp/chat/Chat.h"
+#include "minecpp/entity/Aliases.hpp"
+#include "minecpp/entity/component/Abilities.h"
+#include "minecpp/entity/component/Location.h"
+#include "minecpp/entity/component/Player.h"
+#include "minecpp/entity/EntitySystem.h"
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/game/ChunkRange.h"
+#include "minecpp/game/player/Player.h"
 #include "minecpp/net/play/Clientbound.schema.h"
-#include <minecpp/chat/Chat.h>
-#include <minecpp/entity/Aliases.hpp>
-#include <minecpp/entity/component/Abilities.h>
-#include <minecpp/entity/component/Location.h>
-#include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/EntitySystem.h>
-#include <minecpp/game/ChunkPosition.h>
-#include <minecpp/game/player/Player.h>
-#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
-#include <minecpp/util/Uuid.h>
-#include <minecpp/world/SectionSlice.h>
+#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
+#include "minecpp/util/Uuid.h"
+#include "minecpp/world/ChunkSerializer.h"
+#include "minecpp/world/SectionSlice.h"
 
 namespace minecpp::service::engine {
 
 namespace clientbound_v1 = proto::event::clientbound;
 
-Dispatcher::Dispatcher(EventManager &events, entity::EntitySystem &entity_system,
+Dispatcher::Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system,
                        nbt::repository::Registry &registry) :
-    m_events(events),
-    m_entity_system(entity_system),
+    m_events{events},
+    m_chunk_system{chunk_system},
+    m_entity_system{entity_system},
     m_registry{registry}
 {
 }
@@ -351,63 +357,40 @@ void Dispatcher::set_inventory_slot(game::PlayerId player_id, game::ItemId item_
                               .state_id  = 0,
                               .slot_id   = static_cast<short>(slot_id),
                               .slot      = count == 0 ? std::nullopt
-                                                      : std::make_optional(net::play::Slot{
+                                                      : std::make_optional(net::Slot{
                                                                 .item_id    = item_id,
                                                                 .item_count = static_cast<std::int8_t>(count),
                                                    }),
                       });
 }
 
-void Dispatcher::update_block_light(game::ISectionSlice &slice, game::SectionRange range)
+void Dispatcher::update_block_light(const math::Vector3 &center, game::SectionRange range)
 {
-   auto *section_slice = dynamic_cast<world::SectionSlice *>(&slice);
-   if (section_slice == nullptr)
-      return;
+   assert(range.min_section() <= range.max_section());
 
-   proto::event::clientbound::UpdateBlockLight update_block_light;
-   std::map<mb::u64, int> id_mapping;
+   auto chunk_range = range.to_chunk_range();
 
-   for (auto section : range) {
-      int id;
-      if (id_mapping.contains(section.chunk_position().hash())) {
-         id = id_mapping[section.chunk_position().hash()];
-      } else {
-         id                                          = update_block_light.block_light_size();
-         id_mapping[section.chunk_position().hash()] = id;
+   for (const auto chunk_position : chunk_range) {
+      auto *chunk = m_chunk_system.chunk_at(chunk_position);
+      world::ChunkSerializer serializer(*chunk);
 
-         proto::event::clientbound::ChunkBlockLight chunk_block_light;
-         *chunk_block_light.mutable_position() = section.chunk_position().to_proto();
+      net::play::cb::UpdateLight update_light;
+      serializer.write_update_light(update_light, game::LightType::Block, range.min_section(),
+                                    range.max_section());
 
-         update_block_light.mutable_block_light()->Add(std::move(chunk_block_light));
-      }
-
-      auto *chunk         = update_block_light.mutable_block_light(id);
-      auto *chunk_section = dynamic_cast<world::Section *>(&section_slice->operator[](section));
-      if (chunk_section == nullptr)
-         continue;
-
-      proto::event::clientbound::SectionBlockLight section_block_light;
-      section_block_light.set_y(section.y());
-      section_block_light.mutable_block_light()->resize(world::LightContainer::raw_size);
-
-      auto light = chunk_section->light_data(game::LightType::Block);
-      if (light != nullptr)
-         std::copy(light->raw().begin(), light->raw().end(),
-                   section_block_light.mutable_block_light()->begin());
-
-      chunk->mutable_sections()->Add(std::move(section_block_light));
+      this->send_raw_to_players_in_view_distance(center, update_light);
    }
-
-   m_events.send_to_all(update_block_light);
 }
 
 void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool is_initial)
 {
-   clientbound_v1::ChunkData chunk_data;
-   *chunk_data.mutable_chunk() = chunk->to_proto();
-   chunk_data.set_is_initial_chunk(is_initial);
+   net::play::cb::UpdateChunk update_chunk;
+   world::ChunkSerializer serializer(*chunk);
+   serializer.write_chunk(update_chunk.chunk);
+   this->send_raw_to_player(player_id, update_chunk);
 
-   m_events.send_to(chunk_data, player_id);
+   spdlog::info("dispatcher: sending chunk {} {}", update_chunk.chunk.position.x(),
+                update_chunk.chunk.position.y());
 }
 
 void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position)

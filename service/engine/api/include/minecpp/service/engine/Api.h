@@ -47,9 +47,9 @@ class Client
    void tick();
 
  private:
-   void on_connected(std::shared_ptr<stream::Peer> peer);
-   void on_received_message(std::shared_ptr<stream::Peer> peer, minecpp::container::BufferView message);
-   void on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect);
+   void on_connected(stream::Peer *peer);
+   void on_received_message(stream::Peer *peer, minecpp::container::BufferView message);
+   void on_disconnected(stream::Peer *peer, bool *try_reconnect);
 
    stream::Client m_client;
    std::vector<ClientStream> m_streams;

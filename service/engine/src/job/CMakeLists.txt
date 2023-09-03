@@ -11,7 +11,5 @@ target_sources(minecpp_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/GenerateChunk.h
         ${CMAKE_CURRENT_SOURCE_DIR}/HandlePlayerMessage.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/HandlePlayerMessage.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/HandleStorageMessage.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/HandleStorageMessage.h
 )
 

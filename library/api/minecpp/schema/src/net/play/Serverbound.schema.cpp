@@ -160,16 +160,16 @@ ClickWindow ClickWindow::deserialize(::minecpp::network::message::Reader &reader
    std::generate_n(std::inserter(result.slots, result.slots.begin()), static_cast<std::size_t>(slots_map_size_0), [&reader]() {
       std::uint16_t slots_key_0;
       slots_key_0 = reader.read_big_endian<std::uint16_t>();
-      std::optional<play::Slot> slots_value_0;
+      std::optional<net::Slot> slots_value_0;
       const auto slots_value_0_has_value_1 = reader.read_byte();
       if (slots_value_0_has_value_1) {
-         slots_value_0 = play::Slot::deserialize(reader);
+         slots_value_0 = net::Slot::deserialize(reader);
       }
       return std::make_pair(slots_key_0, slots_value_0);
    });
    const auto carried_item_has_value_0 = reader.read_byte();
    if (carried_item_has_value_0) {
-      result.carried_item = play::Slot::deserialize(reader);
+      result.carried_item = net::Slot::deserialize(reader);
    }
    return result;
 }

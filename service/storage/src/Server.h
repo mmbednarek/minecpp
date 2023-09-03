@@ -3,6 +3,7 @@
 #include "IHandler.h"
 #include "IResponder.h"
 
+#include "minecpp/container/BasicBuffer.hpp"
 #include "minecpp/network/Network.h"
 #include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/stream/Server.h"
@@ -16,13 +17,13 @@ class Connection
  public:
    explicit Connection(std::shared_ptr<stream::Peer> peer);
 
-   void send(const storage_v1::Response &response);
+   void send(const container::BufferView &response);
 
  private:
    std::shared_ptr<stream::Peer> m_peer;
 };
 
-class Server : public IResponder
+class Server
 {
  public:
    explicit Server(network::Port port);
@@ -32,14 +33,14 @@ class Server : public IResponder
    Server(Server &&) noexcept            = delete;
    Server &operator=(Server &&) noexcept = delete;
 
-   void send(ConnectionId id, const storage_v1::Response &response) override;
+   void send(ConnectionId id, const container::BufferView &response);
    void set_handler(IHandler *handler);
    void tick();
 
  private:
-   void on_connected(std::shared_ptr<stream::Peer> peer);
-   void on_received_message(std::shared_ptr<stream::Peer> peer, container::BufferView message);
-   void on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect);
+   void on_connected(stream::Peer *peer);
+   void on_received_message(const stream::Peer *peer, container::BufferView message);
+   void on_disconnected(const stream::Peer *peer, bool *try_reconnect);
 
    stream::Server m_server;
    std::mutex m_mutex;

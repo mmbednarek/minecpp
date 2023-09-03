@@ -15,6 +15,7 @@ add_subdirectory("src")
 
 target_link_libraries(minecpp_storage
         LINK_PRIVATE
+        minecpp_api_schema
         minecpp_utils
         minecpp_game
         minecpp_stream

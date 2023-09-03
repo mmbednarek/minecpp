@@ -22,9 +22,6 @@ class SectionSlice : public game::ISectionSlice
 
    [[nodiscard]] game::SectionRange range() const;
 
-   [[nodiscard]] static SectionSlice from_proto(const proto::chunk::SectionSlice &slice);
-   [[nodiscard]] proto::chunk::SectionSlice to_proto();
-
  private:
    game::SectionRange m_range;
    std::unordered_map<mb::u64, Section> m_sections;

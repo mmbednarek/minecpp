@@ -44,7 +44,7 @@ class IDispatcher
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                            = 0;
    virtual void unload_chunk(PlayerId player, const ChunkPosition &chunk_position)                       = 0;
    virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, int count)        = 0;
-   virtual void update_block_light(ISectionSlice &slice, SectionRange range)                             = 0;
+   virtual void update_block_light(const math::Vector3 &center, game::SectionRange range)                = 0;
    virtual void update_chunk_position(PlayerId player_id, const ChunkPosition &chunk_position)           = 0;
    virtual void synchronise_player_position_and_rotation(PlayerId player_id, math::Vector3 position,
                                                          math::Rotation rotation)                        = 0;
@@ -66,7 +66,7 @@ class IDispatcher
    virtual void set_abilities(PlayerId player_id, const game::Abilities &abilities)                      = 0;
    virtual void send_damage_event(EntityId target, int id, std::optional<EntityId> cause_entity_id,
                                   std::optional<EntityId> direct_entity_id,
-                                  const math::Vector3 &position)                                 = 0;
+                                  const math::Vector3 &position)                                         = 0;
 };
 
 }// namespace minecpp::game

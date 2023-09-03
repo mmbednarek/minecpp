@@ -26,9 +26,10 @@ void NetworkListProperty::write_serializer(NetworkSerializeContext &ctx)
    generator_verify(subtype.has_value(), ctx.type().line(), ctx.type().column(),
                     "list type requires a template argument");
 
-
-   ctx << call("writer.write_varint",
-               call("static_cast<std::int32_t>", method_call(ctx.source_property(), "size")));
+   if (not ctx.annotations().has_key("ArraySize")) {
+      ctx << call("writer.write_varint",
+                  call("static_cast<std::int32_t>", method_call(ctx.source_property(), "size")));
+   }
 
    auto value_name = ctx.unique_name("_value");
    ctx << ranged_for_statement("const auto", fmt::format("&{}", value_name), ctx.source_property(),
@@ -46,9 +47,16 @@ void NetworkListProperty::write_deserializer(NetworkDeserializeContext &ctx)
    generator_verify(subtype.has_value(), ctx.type().line(), ctx.type().column(),
                     "list type requires a template argument");
 
-   auto size_name = ctx.unique_name("_size");
+   auto has_size = ctx.annotations().has_key("ArraySize");
 
-   ctx << raw("auto {} = reader.read_varint()", size_name);
+   std::string size_name;
+   if (not has_size) {
+      size_name = ctx.unique_name("_size");
+      ctx << raw("auto {} = reader.read_varint()", size_name);
+   } else {
+      size_name = ctx.annotations().value_at("ArraySize");
+   }
+
    ctx << method_call(ctx.destination(), "resize", call("static_cast<std::size_t>", raw(size_name)));
 
    std::string lambda_captures;

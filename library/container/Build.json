@@ -3,7 +3,8 @@
   "has_test": true,
   "dependencies": {
     "public": [
-      "libmb"
+      "libmb",
+      "minecpp_api_schema"
     ]
   }
 }

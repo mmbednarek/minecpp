@@ -1,8 +1,10 @@
-#include <minecpp/util/Packed.h>
-#include <minecpp/world/BlockState.h>
-#include <minecpp/world/Section.h>
-#include <minecpp/world/Util.h>
-#include <numeric>
+#include "Section.h"
+
+#include "BlockState.h"
+#include "Util.h"
+
+#include "minecpp/util/Packed.h"
+
 #include <spdlog/spdlog.h>
 #include <utility>
 
@@ -28,7 +30,7 @@ void SectionBuilder::fill(const std::function<int(short, short, short)> &callbac
 
 Section SectionBuilder::build()
 {
-   auto data = container::PalettedVector<game::BlockStateId>(m_content.begin(), m_content.end());
+   auto data = BlockContainer(m_content.begin(), m_content.end());
 
    Section section{0, std::move(data), {}};
    section.recalculate_reference_count();
@@ -49,8 +51,7 @@ Section::Section(int y) :
 {
 }
 
-Section::Section(int ref_count, container::PalettedVector<game::BlockStateId> data,
-                 std::vector<game::LightSource> m_light_sources) :
+Section::Section(int ref_count, BlockContainer data, std::vector<game::LightSource> m_light_sources) :
     m_reference_count(ref_count),
     m_data(std::move(data)),
     m_light_sources(std::move(m_light_sources))
@@ -73,66 +74,6 @@ std::vector<game::LightSource> &Section::light_sources()
    return m_light_sources;
 }
 
-Section Section::from_proto(const proto::chunk::Section &section)
-{
-   auto palette = container::PalettedVector<game::BlockStateId>::from_raw(
-           static_cast<container::TightVector::bits_type>(section.bits()), 4096, section.data().begin(),
-           section.data().end(), section.palette().begin(), section.palette().end());
-
-   std::vector<game::LightSource> light_sources{};
-   light_sources.resize(static_cast<mb::u64>(section.light_sources_size()));
-   std::transform(section.light_sources().begin(), section.light_sources().end(), light_sources.begin(),
-                  game::LightSource::from_proto);
-
-   Section result{section.ref_count(), std::move(palette), std::move(light_sources)};
-
-   result.m_block_light = std::make_unique<LightContainer>(
-           LightContainer::from_raw(section.block_light().begin(), section.block_light().end()));
-   result.m_sky_light = std::make_unique<LightContainer>(
-           LightContainer::from_raw(section.sky_light().begin(), section.sky_light().end()));
-
-   result.m_y = section.y();
-
-   return result;
-}
-
-proto::chunk::Section Section::to_proto() const
-{
-   std::shared_lock lock{m_mutex};
-
-   proto::chunk::Section result{};
-
-   result.set_ref_count(m_reference_count);
-   result.set_y(m_y);
-
-   result.mutable_palette()->Resize(static_cast<int>(m_data.palette().size()), 0);
-   std::copy(m_data.palette().begin(), m_data.palette().end(), result.mutable_palette()->begin());
-
-   result.set_bits(m_data.indices().bits());
-   if (not m_data.indices().raw().empty()) {
-      result.mutable_data()->Resize(static_cast<int>(m_data.indices().raw().size()), 0);
-      std::copy(m_data.indices().raw().begin(), m_data.indices().raw().end(), result.mutable_data()->begin());
-   }
-
-   result.mutable_block_light()->resize(LightContainer::raw_size);
-   if (m_block_light != nullptr) {
-      std::copy(m_block_light->raw().begin(), m_block_light->raw().end(),
-                result.mutable_block_light()->begin());
-   }
-
-   result.mutable_sky_light()->resize(LightContainer::raw_size);
-   if (m_sky_light != nullptr) {
-      std::copy(m_sky_light->raw().begin(), m_sky_light->raw().end(), result.mutable_sky_light()->begin());
-   }
-
-   result.mutable_light_sources()->Reserve(static_cast<int>(m_light_sources.size()));
-   std::transform(m_light_sources.begin(), m_light_sources.end(),
-                  google::protobuf::RepeatedFieldBackInserter(result.mutable_light_sources()),
-                  [](const game::LightSource &light) { return light.to_proto(); });
-
-   return result;
-}
-
 void Section::recalculate_reference_count()
 {
    std::unique_lock lock{m_mutex};
@@ -145,8 +86,9 @@ void Section::recalculate_reference_count()
       if (!res.ok())
          return;
 
-      auto &block = res.unwrap();
-      if (block.stats().material != &game::block::Material::Air) {
+//      auto &block = res.unwrap();
+//      if (block.stats().material != &game::block::Material::Air) {
+      if (block_state.block_id() != 0) {
          ++m_reference_count;
       }
    }
@@ -178,75 +120,6 @@ Section &Section::operator=(const Section &section)
    return *this;
 }
 
-Section Section::from_nbt(const nbt::chunk::Section &section)
-{
-   Section result{section.y};
-
-   result.m_y         = static_cast<int>(section.y);
-   result.m_sky_light = std::make_unique<LightContainer>(
-           LightContainer::from_raw(section.sky_light.begin(), section.sky_light.end()));
-   result.m_block_light = std::make_unique<LightContainer>(
-           LightContainer::from_raw(section.block_light.begin(), section.block_light.end()));
-
-   std::vector<game::BlockStateId> palette;
-   palette.resize(section.palette.size());
-   std::transform(section.palette.begin(), section.palette.end(), palette.begin(),
-                  [](const nbt::chunk::PaletteItem &item) -> game::BlockStateId {
-                     auto block_id = repository::Block::the().find_id_by_tag(item.name);
-                     if (block_id.has_failed())
-                        return DEFAULT_BLOCK_STATE(Air);
-
-                     BlockState state{*block_id, 0};
-                     for (const auto &property : item.properties) {
-                        state.set_from_string(property.first, property.second.as<std::string>());
-                     }
-
-                     return state.block_state_id();
-                  });
-
-   result.m_data = container::PalettedVector<game::BlockStateId>::from_raw(
-           4096, section.block_states.begin(), section.block_states.end(), palette.begin(), palette.end());
-
-   result.recalculate_reference_count();
-
-   return result;
-}
-
-[[nodiscard]] nbt::chunk::Section Section::to_nbt() const
-{
-   std::shared_lock lock{m_mutex};
-
-   nbt::chunk::Section result;
-
-   result.y = static_cast<mb::i8>(m_y);
-
-   if (m_sky_light != nullptr)
-      result.sky_light = {m_sky_light->raw().begin(), m_sky_light->raw().end()};
-
-   if (m_block_light != nullptr)
-      result.block_light = {m_block_light->raw().begin(), m_block_light->raw().end()};
-
-   result.palette.resize(m_data.palette().size());
-   std::transform(m_data.palette().begin(), m_data.palette().end(), result.palette.begin(),
-                  [](const game::BlockStateId state) {
-                     nbt::chunk::PaletteItem item;
-                     auto [block_id, state_value] = repository::StateManager::the().parse_block_id(state);
-                     auto res                     = repository::Block::the().get_by_id(block_id);
-                     if (!res.ok()) {
-                        return item;
-                     }
-                     auto &block = res.unwrap();
-                     item.name   = block.tag();
-                     return item;
-                  });
-
-   result.block_states.resize(m_data.indices().raw().size());
-
-   std::copy(m_data.indices().raw().begin(), m_data.indices().raw().end(), result.block_states.begin());
-
-   return result;
-}
-
 void Section::set_block(game::BlockPosition position, game::BlockStateId id)
 {
    std::unique_lock lock{m_mutex};
@@ -261,9 +134,13 @@ void Section::set_block(game::BlockPosition position, game::BlockStateId id)
    m_data.set(position.section_offset(), id);
 }
 
-const container::PalettedVector<game::BlockStateId> &Section::data() const
+const BlockContainer &Section::data() const
 {
-   std::shared_lock lock{m_mutex};
+   return m_data;
+}
+
+BlockContainer &Section::data()
+{
    return m_data;
 }
 
@@ -331,6 +208,16 @@ LightContainer *Section::light_data_internal(game::LightType type) const
    case game::LightType::Sky: return m_sky_light.get();
    }
    return nullptr;
+}
+
+Section Section::from_net(const net::Section &section, int y)
+{
+   auto data = BlockContainer::from_net(section.block_states, 4096);
+
+   Section result(section.block_count, std::move(data), {});
+   result.m_y = y;
+
+   return result;
 }
 
 }// namespace minecpp::world

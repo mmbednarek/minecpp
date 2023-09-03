@@ -1,8 +1,7 @@
 #pragma once
-#include "minecpp/nbt/block/Block.schema.h"
-#include "minecpp/nbt/chunk/Chunk.schema.h"
 #include "minecpp/nbt/repository/Registry.schema.h"
-#include "minecpp/net/play/Common.schema.h"
+#include "minecpp/net/Chunk.schema.h"
+#include "minecpp/net/Common.schema.h"
 #include "minecpp/network/message/Reader.h"
 #include "minecpp/network/message/Writer.h"
 #include <cstdint>
@@ -88,7 +87,7 @@ class SetSlot {
    std::uint8_t window_id{};
    std::int32_t state_id{};
    std::int16_t slot_id{};
-   std::optional<play::Slot> slot{};
+   std::optional<net::Slot> slot{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetSlot deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -141,35 +140,9 @@ class KeepAlive {
    static KeepAlive deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class BlockEntity {
- public:
-   std::uint8_t position_xz{};
-   std::int16_t y{};
-   std::int32_t type{};
-   nbt::block::BlockEntityData data{};
-   void serialize(::minecpp::network::message::Writer &writer) const;
-   static BlockEntity deserialize(::minecpp::network::message::Reader &reader);
-};
-
-class LightData {
- public:
-   std::vector<std::uint64_t> sky_light_mask{};
-   std::vector<std::uint64_t> block_light_mask{};
-   std::vector<std::uint64_t> empty_sky_light_mask{};
-   std::vector<std::uint64_t> empty_block_light_mask{};
-   std::vector<std::vector<std::uint8_t>> sky_light{};
-   std::vector<std::vector<std::uint8_t>> block_light{};
-   void serialize(::minecpp::network::message::Writer &writer) const;
-   static LightData deserialize(::minecpp::network::message::Reader &reader);
-};
-
 class UpdateChunk {
  public:
-   ::minecpp::math::Vector2i position{};
-   nbt::chunk::HeightmapsNet heightmaps{};
-   std::vector<std::uint8_t> data{};
-   std::vector<BlockEntity> block_entities{};
-   LightData light_data{};
+   net::Chunk chunk{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static UpdateChunk deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -177,7 +150,7 @@ class UpdateChunk {
 class UpdateLight {
  public:
    ::minecpp::math::Vector2i position{};
-   LightData light_data{};
+   net::LightData light_data{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static UpdateLight deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -192,8 +165,6 @@ class DeathLocation {
 
 class JoinGame {
  public:
-   static constexpr std::uint8_t op_code{0x28};
-
    std::uint32_t entity_id{};
    bool is_hardcode{};
    std::int8_t game_mode{};
@@ -456,7 +427,7 @@ class SetDefaultSpawnPosition {
 class SetEntityMetadata {
  public:
    std::uint32_t entity_id{};
-   std::map<std::uint8_t, std::variant<std::int8_t, std::int32_t, std::int64_t, float, std::string, play::Chat, std::optional<play::Chat>, std::optional<play::Slot>>> data{};
+   std::map<std::uint8_t, std::variant<std::int8_t, std::int32_t, std::int64_t, float, std::string, net::Chat, std::optional<net::Chat>, std::optional<net::Slot>>> data{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetEntityMetadata deserialize(::minecpp::network::message::Reader &reader);
 };
@@ -473,7 +444,7 @@ class SetEquipment {
  public:
    std::uint32_t entity_id{};
    std::int8_t slot_id{};
-   std::optional<play::Slot> slot{};
+   std::optional<net::Slot> slot{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static SetEquipment deserialize(::minecpp::network::message::Reader &reader);
 };

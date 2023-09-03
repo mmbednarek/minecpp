@@ -93,7 +93,7 @@ auto main() -> int
                                                 config.gameplay_spawn_point_z});
 
    EventManager manager;
-   Dispatcher dispatcher(manager, entity_system, registry);
+   Dispatcher dispatcher(manager, chunk_system, entity_system, registry);
    minecpp::controller::BlockManager block_manager;
    minecpp::controller::RootItem root_item_controller;
 

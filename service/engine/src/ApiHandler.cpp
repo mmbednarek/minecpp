@@ -71,13 +71,13 @@ ApiHandler::ApiHandler(Service &service, EventManager &event_manager, JobSystem 
    m_server.on_disconnected.connect<&ApiHandler::on_disconnected>(this);
 }
 
-void ApiHandler::on_connected(std::shared_ptr<stream::Peer> peer)
+void ApiHandler::on_connected(stream::Peer* peer)
 {
    spdlog::info("received inbound connection from client id={}", peer->id());
-   m_event_manager.add_client(peer->id(), std::make_unique<Connection>(std::move(peer)));
+   m_event_manager.add_client(peer->id(), std::make_unique<Connection>(peer->shared_from_this()));
 }
 
-void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, container::BufferView message)
+void ApiHandler::on_received_message(stream::Peer */*peer*/, container::BufferView message)
 {
    proto::event::serverbound::Event proto_event;
    proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
@@ -85,7 +85,7 @@ void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, con
    m_job_system.create_job<job::HandlePlayerMessage>(m_service, std::move(proto_event));
 }
 
-void ApiHandler::on_disconnected(std::shared_ptr<stream::Peer> peer, bool * /*try_reconnect*/)
+void ApiHandler::on_disconnected(stream::Peer *peer, bool * /*try_reconnect*/)
 {
    m_event_manager.remove_client(peer->id());
 }

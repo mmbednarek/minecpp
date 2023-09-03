@@ -1,5 +1,5 @@
 #pragma once
-#include "minecpp/net/play/Common.schema.h"
+#include "minecpp/net/Common.schema.h"
 #include "minecpp/network/message/Reader.h"
 #include "minecpp/network/message/Writer.h"
 #include <cstdint>
@@ -67,8 +67,8 @@ class ClickWindow {
    std::int16_t clicked_slot{};
    std::uint8_t button{};
    std::int32_t mode{};
-   std::map<std::uint16_t, std::optional<play::Slot>> slots{};
-   std::optional<play::Slot> carried_item{};
+   std::map<std::uint16_t, std::optional<net::Slot>> slots{};
+   std::optional<net::Slot> carried_item{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ClickWindow deserialize(::minecpp::network::message::Reader &reader);
 };

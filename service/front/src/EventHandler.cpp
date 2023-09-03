@@ -17,12 +17,12 @@ namespace minecpp::service::front {
 
 namespace {
 
-std::optional<net::play::Slot> encode_slot(const proto::common::Slot &slot)
+std::optional<net::Slot> encode_slot(const proto::common::Slot &slot)
 {
    if (slot.count() == 0)
       return std::nullopt;
 
-   return net::play::Slot{.item_id    = static_cast<std::int32_t>(slot.item_id().id()),
+   return net::Slot{.item_id    = static_cast<std::int32_t>(slot.item_id().id()),
                           .item_count = static_cast<std::int8_t>(slot.count()),
                           .data{}};
 }
@@ -390,7 +390,7 @@ void EventHandler::handle_entity_list(const clientbound_v1::EntityList &msg,
                     .entity_id = entity.entity_id(),
                     .slot_id   = static_cast<std::int8_t>(equipment.slot()),
                     .slot =
-                            net::play::Slot{
+                            net::Slot{
                                             .item_id    = static_cast<std::int32_t>(equipment.item().item_id().id()),
                                             .item_count = static_cast<std::int8_t>(equipment.item().count()),
                                             },
@@ -456,149 +456,9 @@ void EventHandler::handle_update_block_light(const clientbound_v1::UpdateBlockLi
    }
 }
 
-std::vector<std::uint8_t> get_chunk_data(const proto::chunk::Chunk &chunk)
-{
-   network::message::Writer chunk_data_writer;
-   int index = 0;
-   for (const auto &sec : chunk.sections()) {
-      auto section = world::Section::from_proto(sec);
-
-      chunk_data_writer.write_big_endian<short>(static_cast<short>(sec.ref_count()));
-
-      if (section.data().indices().raw().empty()) {
-         section.data().set(4095, 0);
-      }
-
-      if (section.data().indices().bits() <= 4) {
-         section.data().indices().set_bits(5);
-      }
-
-      // write palette
-      chunk_data_writer.write_byte(static_cast<uint8_t>(section.data().indices().bits()));
-      chunk_data_writer.write_varint(static_cast<uint32_t>(section.data().palette().size()));
-      for (auto item : section.data().palette()) {
-         chunk_data_writer.write_varint(static_cast<uint32_t>(item));
-      }
-
-
-      // write data
-      chunk_data_writer.write_big_endian_array(section.data().indices().raw().data(),
-                                               static_cast<size_t>(section.data().indices().raw().size()));
-
-      // write biomes
-      chunk_data_writer.write_byte(6);// ignore palette
-
-      auto biome_data = util::generate_packed(
-              6, 64, [it = chunk.biomes().begin(), end = chunk.biomes().end()]() mutable {
-                 if (it == end)
-                    return 0;
-                 return *(it++);
-              });
-
-      // write data
-      chunk_data_writer.write_big_endian_array(biome_data.data(), biome_data.size());
-
-      ++index;
-   }
-
-   for (int i = index; i < 16; ++i) {
-      chunk_data_writer.write_big_endian<short>(0);
-
-      // TODO: Abstract palatalized containers
-
-      // write palette
-      chunk_data_writer.write_byte(0);
-      chunk_data_writer.write_varint(0);// AIR
-
-      // write data
-      chunk_data_writer.write_big_endian_array<uint64_t>(nullptr, 0);
-
-      // write biomes
-      chunk_data_writer.write_byte(0);  // ignore palette
-      chunk_data_writer.write_varint(1);// default biome
-
-      chunk_data_writer.write_big_endian_array<uint64_t>(nullptr, 0);
-   }
-
-   auto view = chunk_data_writer.view();
-   std::vector<std::uint8_t> result{};
-   result.resize(view.size());
-   std::copy(view.data(), view.data() + view.size(), result.begin());
-   return result;
-}
-
 void EventHandler::handle_chunk_data(const clientbound_v1::ChunkData &msg,
                                      const event::RecipientList &recipient_list)
 {
-   net::play::cb::UpdateChunk chunk_data{
-           .position = math::Vector2i{msg.chunk().position().x(), msg.chunk().position().z()},
-           .data     = get_chunk_data(msg.chunk()),
-   };
-
-   chunk_data.heightmaps.motion_blocking.resize(msg.chunk().hm_motion_blocking_size());
-   std::copy(msg.chunk().hm_motion_blocking().begin(), msg.chunk().hm_motion_blocking().end(),
-             chunk_data.heightmaps.motion_blocking.begin());
-
-   chunk_data.heightmaps.world_surface.resize(msg.chunk().hm_world_surface_size());
-   std::copy(msg.chunk().hm_world_surface().begin(), msg.chunk().hm_world_surface().end(),
-             chunk_data.heightmaps.world_surface.begin());
-
-   std::uint64_t empty_block_light{};
-   std::uint64_t update_block_light{};
-   std::uint64_t empty_sky_light{};
-   std::uint64_t update_sky_light{};
-
-   // Update masks
-   for (auto const &sec : msg.chunk().sections()) {
-      auto place = static_cast<char>(sec.y()) + 1;
-      if (sec.sky_light().empty()) {
-         empty_sky_light |= 1u << place;
-      } else {
-         update_sky_light |= 1u << place;
-      }
-      if (sec.block_light().empty()) {
-         empty_block_light |= 1u << place;
-      } else {
-         update_block_light |= 1u << place;
-      }
-   }
-
-   chunk_data.light_data.empty_block_light_mask.emplace_back(empty_block_light);
-   chunk_data.light_data.block_light_mask.emplace_back(update_block_light);
-   chunk_data.light_data.empty_sky_light_mask.emplace_back(empty_sky_light);
-   chunk_data.light_data.sky_light_mask.emplace_back(update_sky_light);
-
-   for (auto &section : msg.chunk().sections()) {
-      std::vector<std::uint8_t> block_data;
-      block_data.resize(section.block_light().size());
-      std::copy(section.block_light().begin(), section.block_light().end(), block_data.begin());
-      chunk_data.light_data.block_light.emplace_back(std::move(block_data));
-
-      std::vector<std::uint8_t> sky_data;
-      sky_data.resize(section.sky_light().size());
-      std::copy(section.sky_light().begin(), section.sky_light().end(), sky_data.begin());
-      chunk_data.light_data.sky_light.emplace_back(std::move(sky_data));
-   }
-
-   for (auto player_id : recipient_list.list) {
-      auto conn = m_server.connection_by_player_id(player_id);
-      if (not conn) {
-         spdlog::error("connection {} is null", game::player::format_player_id(player_id));
-         return;
-      }
-
-      conn->send_message(chunk_data);
-
-      if (msg.is_initial_chunk() && conn->initial_chunk_count >= 0) {
-         ++conn->initial_chunk_count;
-
-         if (conn->initial_chunk_count > 32) {
-            assert(m_client);
-            m_client->send(proto::event::serverbound::PostInitialChunks{}, player_id);
-            conn->initial_chunk_count = -1;
-         }
-      }
-   }
 }
 
 void EventHandler::handle_set_center_chunk(const clientbound_v1::SetCenterChunk &msg,

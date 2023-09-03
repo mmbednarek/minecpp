@@ -1,5 +1,5 @@
 generator = "net"
-package minecpp.net.play
+package minecpp.net
 
 [
   CppType = "::minecpp::game::EntityId",
