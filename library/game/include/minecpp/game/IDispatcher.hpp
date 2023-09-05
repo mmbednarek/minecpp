@@ -23,7 +23,7 @@ using boost::uuids::uuid;
 class IDispatcher
 {
  public:
-   virtual void spawn_entity(EntityId entity_id, const math::Vector3 &position)                          = 0;
+   virtual void spawn_entity(EntityId entity_id)                                                         = 0;
    virtual void spawn_entity_for_player(PlayerId player_id, EntityId entity_id)                          = 0;
    virtual void entity_move(EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
                             const math::Rotation &rotation, bool is_on_ground)                           = 0;
@@ -31,8 +31,6 @@ class IDispatcher
                             const math::Rotation &rotation)                                              = 0;
    virtual void send_entities(PlayerId player_id, std::span<EntityId> entities)                          = 0;
    virtual void add_player(PlayerId player, const std::string &name, mb::u32 ping)                       = 0;
-   virtual void spawn_player(PlayerId player, EntityId entity_id, const math::Vector3 &position)         = 0;
-   virtual void spawn_player_for_player(PlayerId receiver, PlayerId spawned_player, EntityId entity_id)  = 0;
    virtual void send_chat(chat::MessageType msg_type, const std::string &msg)                            = 0;
    virtual void send_direct_chat(PlayerId player_id, chat::MessageType msg_type, const std::string &msg) = 0;
    virtual void remove_player(PlayerId player, EntityId entity_id)                                       = 0;

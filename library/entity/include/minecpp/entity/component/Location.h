@@ -1,11 +1,14 @@
 #pragma once
-#include <minecpp/game/Delegate.hpp>
-#include <minecpp/game/Entity.h>
-#include <minecpp/game/Entt.hpp>
-#include <minecpp/game/IWorld.hpp>
-#include <minecpp/math/Rotation.h>
-#include <minecpp/math/Vector3.h>
-#include <minecpp/proto/entity/Entity.pb.h>
+
+#include "minecpp/game/Delegate.hpp"
+#include "minecpp/game/Entity.h"
+#include "minecpp/game/EntityData.hpp"
+#include "minecpp/game/Entt.hpp"
+#include "minecpp/game/IWorld.hpp"
+#include "minecpp/math/Rotation.h"
+#include "minecpp/math/Vector3.h"
+#include "minecpp/proto/entity/Entity.pb.h"
+
 #include <mutex>
 #include <set>
 
@@ -56,6 +59,9 @@ class Location
    void serialize_to_proto(proto::entity::Entity *entity) const;
    void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
 
+   void serialize_to_net(game::NetworkEntity *net_entity) const;
+   void serialize_to_net_player(game::NetworkPlayer *net_player) const;
+
 
  private:
    math::Vector3l set_logical_position(game::IWorld &world, game::EntityId entity_id,
@@ -94,6 +100,9 @@ class Rotation
    void set_pitch(math::Radians pitch);
    void set_rotation(game::IDispatcher &dispatcher, const math::Vector3 &position,
                      const math::Rotation &rotation);
+
+   void serialize_to_net(game::NetworkEntity *net_entity) const;
+   void serialize_to_net_player(game::NetworkPlayer *net_player) const;
 
  private:
    math::Rotation m_rotation{};

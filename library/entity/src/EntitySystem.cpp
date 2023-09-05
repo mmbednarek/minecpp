@@ -1,20 +1,21 @@
 #include "EntitySpace.h"
-#include <minecpp/entity/component/DealthScreen.h>
-#include <minecpp/entity/component/Health.h>
-#include <minecpp/entity/component/Inventory.h>
-#include <minecpp/entity/component/ItemSlot.h>
-#include <minecpp/entity/component/Location.h>
-#include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/component/Projectile.h>
-#include <minecpp/entity/component/Team.h>
-#include <minecpp/entity/component/Ticker.h>
-#include <minecpp/entity/component/Totem.h>
-#include <minecpp/entity/component/Trader.h>
-#include <minecpp/entity/component/UniqueId.h>
-#include <minecpp/entity/EntitySystem.h>
-#include <minecpp/game/ChunkPosition.h>
-#include <minecpp/game/Concepts.hpp>
-#include <minecpp/world/IChunkSystem.h>
+
+#include "minecpp/entity/component/DealthScreen.h"
+#include "minecpp/entity/component/Health.h"
+#include "minecpp/entity/component/Inventory.h"
+#include "minecpp/entity/component/ItemSlot.h"
+#include "minecpp/entity/component/Location.h"
+#include "minecpp/entity/component/Player.h"
+#include "minecpp/entity/component/Projectile.h"
+#include "minecpp/entity/component/Team.h"
+#include "minecpp/entity/component/Ticker.h"
+#include "minecpp/entity/component/Totem.h"
+#include "minecpp/entity/component/Trader.h"
+#include "minecpp/entity/component/UniqueId.h"
+#include "minecpp/entity/EntitySystem.h"
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/game/Concepts.hpp"
+#include "minecpp/world/IChunkSystem.h"
 
 namespace minecpp::entity {
 

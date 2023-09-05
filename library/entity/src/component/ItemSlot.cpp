@@ -45,4 +45,11 @@ void ItemSlot::serialize_to_proto(proto::entity::Entity *entity) const
    metadata->mutable_slot()->set_count(static_cast<uint32_t>(m_slot.count));
 }
 
+void ItemSlot::serialize_to_net(game::NetworkEntity *net_entity) const
+{
+   assert(net_entity);
+   net_entity->entity_data.entity_type = 54;
+   net_entity->metadata.data[8] = net::Slot{m_slot.item_id, static_cast<std::int8_t>(m_slot.count), {}};
+}
+
 }// namespace minecpp::entity::component

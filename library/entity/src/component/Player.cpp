@@ -23,6 +23,11 @@ void Player::serialize_player_to_proto(proto::entity::PlayerEntity *entity) cons
    entity->mutable_uuid()->set_upper(upper);
 }
 
+void Player::serialize_to_net_player(game::NetworkPlayer *net_player) const
+{
+   net_player->player_data.player_id = m_id;
+}
+
 game::PlayerId Player::id() const
 {
    return m_id;
@@ -60,17 +65,13 @@ void Player::refresh_visible_entities(game::IDispatcher &dispatcher, game::IEnti
 
       if (old_it == m_visible_entities.end() or *new_it < *old_it) {
          auto other_entity = entity_system.entity(*new_it);
-         if (other_entity.has_component<Player>()) {
-            if (other_entity.component<Player>().id() == m_id) {
-               ++new_it;
-               continue;
-            }
+         dispatcher.spawn_entity_for_player(m_id, other_entity.id());
 
-            dispatcher.spawn_player_for_player(m_id, other_entity.component<Player>().id(),
-                                               other_entity.id());
-            other_entity.component<Player>().add_visible_player_entity(dispatcher, m_id, m_entity_id);
-         } else {
-            dispatcher.spawn_entity_for_player(m_id, other_entity.id());
+         if (other_entity.has_component<Player>()) {
+            auto &player_com = other_entity.component<Player>();
+            if (player_com.id() != m_id) {
+               other_entity.component<Player>().add_visible_player_entity(dispatcher, m_entity_id);
+            }
          }
 
          ++new_it;
@@ -104,7 +105,7 @@ void Player::init_visible_entities(game::IDispatcher &dispatcher, game::IEntityS
       if (not entity.has_component<Player>())
          continue;
 
-      entity.component<Player>().add_visible_player_entity(dispatcher, m_id, m_entity_id);
+      entity.component<Player>().add_visible_player_entity(dispatcher, m_entity_id);
    }
 }
 
@@ -148,10 +149,9 @@ void Player::remove_visible_entity(game::IDispatcher &dispatcher, game::EntityId
    }
 }
 
-void Player::add_visible_player_entity(game::IDispatcher &dispatcher, game::PlayerId player_id,
-                                       game::EntityId entity_id)
+void Player::add_visible_player_entity(game::IDispatcher &dispatcher, game::EntityId entity_id)
 {
-   dispatcher.spawn_player_for_player(m_id, player_id, entity_id);
+   dispatcher.spawn_entity_for_player(m_id, entity_id);
 
    std::lock_guard lk{m_visible_entities_mutex};
 

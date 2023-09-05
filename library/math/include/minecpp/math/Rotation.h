@@ -94,6 +94,16 @@ struct Rotation
               pitch,
       };
    }
+
+    [[nodiscard]] Degrees yaw_degrees() const
+    {
+        return radians_to_degrees(yaw);
+    }
+
+    [[nodiscard]] Degrees pitch_degrees() const
+    {
+        return radians_to_degrees(pitch);
+    }
 };
 
 }// namespace minecpp::math

@@ -33,12 +33,10 @@ class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
    explicit Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system, nbt::repository::Registry &registry);
-   void spawn_entity(game::EntityId entity_id, const math::Vector3 &position) override;
+   void spawn_entity(game::EntityId entity_id) override;
    void remove_entity(game::EntityId entity_id) override;
    void remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
    void spawn_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
-   void spawn_player_for_player(game::PlayerId receiver, game::PlayerId spawned_player,
-                                game::EntityId entity_id) override;
    void update_block(game::BlockPosition block_position, game::BlockStateId state) override;
 
    void entity_move(game::EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
@@ -49,8 +47,6 @@ class Dispatcher : public minecpp::game::IDispatcher
                         const math::Rotation &rotation, bool is_on_ground) override;
 
    void add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping) override;
-   void spawn_player(game::PlayerId player_id, game::EntityId entity_id,
-                     const math::Vector3 &position) override;
    void remove_player(game::PlayerId player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
    void send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,

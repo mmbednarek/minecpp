@@ -226,7 +226,7 @@ void PlayerSession::handle_request_respawn(game::PlayerId player_id)
                                                          entity->component<LocationComponent>().position(),
                                                          entity->component<RotationComponent>().rotation());
 
-   m_dispatcher.spawn_player(player_id, entity->id(), entity->component<LocationComponent>().position());
+   m_dispatcher.spawn_entity(entity->id());
 }
 
 }// namespace minecpp::service::engine::service

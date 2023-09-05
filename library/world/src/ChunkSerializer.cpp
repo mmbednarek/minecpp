@@ -121,7 +121,7 @@ void ChunkSerializer::write_update_light(net::play::cb::UpdateLight &update_ligh
 
 void ChunkSerializer::write_chunk_data(net::ChunkData &out_chunk_data) const
 {
-   const auto section_count = 16;
+   static constexpr auto section_count = 16;
    out_chunk_data.sections.resize(section_count);
    for (auto at = m_chunk.bottom_section(); at < section_count; ++at) {
       auto section = m_chunk.section(at);

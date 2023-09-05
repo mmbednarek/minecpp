@@ -39,6 +39,38 @@ void Entity::serialize_player_to_proto(proto::entity::PlayerEntity *entity) cons
    });
 }
 
+void Entity::serialize_to_net(NetworkEntity *net_entity) const
+{
+   assert(net_entity);
+
+   net_entity->entity_data.entity_id = static_cast<mb::u32>(m_entity);
+   net_entity->metadata.entity_id = static_cast<mb::u32>(m_entity);
+
+   this->for_each_component([net_entity](const entt::meta_any &obj) mutable {
+     using namespace entt::literals;
+     auto serialize = obj.type().func("serialize_to_net"_hs);
+     if (serialize) {
+        serialize.invoke(obj, net_entity);
+     }
+   });
+}
+
+void Entity::serialize_player_to_net(NetworkPlayer *net_player) const
+{
+   assert(net_player);
+
+   net_player->player_data.entity_id = static_cast<mb::u32>(m_entity);
+   net_player->metadata.entity_id = static_cast<mb::u32>(m_entity);
+
+   this->for_each_component([net_player](const entt::meta_any &obj) mutable {
+     using namespace entt::literals;
+     auto serialize = obj.type().func("serialize_player_to_net"_hs);
+     if (serialize) {
+        serialize.invoke(obj, net_player);
+     }
+   });
+}
+
 game::EntityId Entity::id() const
 {
    return static_cast<game::EntityId>(m_entity);

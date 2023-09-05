@@ -27,6 +27,7 @@ target_sources(minecpp_game
         ${MINECPP_GAME_INCLUDE_DIR}/Concepts.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Constants.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Delegate.hpp
+        ${MINECPP_GAME_INCLUDE_DIR}/EntityData.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Entity.h
         ${MINECPP_GAME_INCLUDE_DIR}/Entt.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h

@@ -17,4 +17,10 @@ void UniqueId::serialize_to_proto(proto::entity::Entity *entity) const
    entity->mutable_uuid()->set_upper(upper);
 }
 
+void UniqueId::serialize_to_net(game::NetworkEntity *net_entity) const
+{
+   assert(net_entity);
+   net_entity->entity_data.unique_id = m_id;
+}
+
 }// namespace minecpp::entity::component

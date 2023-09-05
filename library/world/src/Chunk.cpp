@@ -49,7 +49,6 @@ mb::emptyres Chunk::set_block_at(const game::BlockPosition &position, game::Bloc
    }
 
    auto &section = iter->second;
-
    section.set_block(position, state);
 
    BlockState block_state{state};

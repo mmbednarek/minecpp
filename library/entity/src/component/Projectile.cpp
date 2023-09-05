@@ -31,6 +31,12 @@ void Projectile::serialize_to_proto(proto::entity::Entity *entity) const
    entity->set_entity_type(static_cast<game::EntityId>(m_entity_type_id));
 }
 
+void Projectile::serialize_to_net(game::NetworkEntity *net_entity) const
+{
+   assert(net_entity);
+   net_entity->entity_data.entity_type = m_entity_type_id;
+}
+
 void Projectile::on_begin_intersect(game::IWorld &world, game::Entity &entity, game::Entity &other_entity)
 {
    if (not other_entity.has_component<Health>())
