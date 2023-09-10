@@ -1,14 +1,11 @@
 #include "ApiHandler.h"
-#include "EventHandler.h"
 #include "EventManager.h"
 #include "job/HandlePlayerMessage.h"
 
 #include "minecpp/container/BasicBuffer.hpp"
-#include "minecpp/event/Serverbound.h"
+#include "minecpp/net/engine/Clientbound.schema.h"
 
 #include <spdlog/spdlog.h>
-
-using minecpp::proto::event::clientbound::Event;
 
 namespace minecpp::service::engine {
 
@@ -17,53 +14,66 @@ Connection::Connection(std::shared_ptr<stream::Peer> peer) :
 {
 }
 
-void Connection::send_to_player(const google::protobuf::Message &message, game::PlayerId player_id)
+void Connection::send_to_player(container::BufferView message, game::PlayerId player_id)
 {
-   Event proto_event;
-   *proto_event.mutable_single_player()->mutable_player_id() = game::player::write_id_to_proto(player_id);
-   proto_event.mutable_payload()->PackFrom(message);
-   this->send(proto_event);
+   net::engine::cb::SendMsgToSinglePlayer send_msg_to_single_player;
+   send_msg_to_single_player.player_id = player_id;
+   send_msg_to_single_player.data.resize(message.size());
+   std::copy(message.begin(), message.end(), send_msg_to_single_player.data.begin());
+
+   network::message::Writer writer;
+   send_msg_to_single_player.serialize(writer);
+
+   this->send(writer.buffer_view());
 }
 
-void Connection::send_to_all(const google::protobuf::Message &message)
+void Connection::send_to_all(container::BufferView message)
 {
-   Event proto_event;
-   *proto_event.mutable_all_players() = proto::event::clientbound::RecipientAllPlayers();
-   proto_event.mutable_payload()->PackFrom(message);
-   this->send(proto_event);
+   net::engine::cb::SendMsgToAllPlayers send_msg_to_all_players;
+   send_msg_to_all_players.data.resize(message.size());
+   std::copy(message.begin(), message.end(), send_msg_to_all_players.data.begin());
+
+   network::message::Writer writer;
+   send_msg_to_all_players.serialize(writer);
+
+   this->send(writer.buffer_view());
 }
 
-void Connection::send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id)
+void Connection::send_to_all_excluding(container::BufferView message, game::PlayerId player_id)
 {
-   Event proto_event;
-   *proto_event.mutable_excluding()->mutable_player_id() = game::player::write_id_to_proto(player_id);
-   proto_event.mutable_payload()->PackFrom(message);
-   this->send(proto_event);
+   net::engine::cb::SendMsgToAllPlayersExcept send_msg_to_all_players_excluding;
+   send_msg_to_all_players_excluding.data.resize(message.size());
+   send_msg_to_all_players_excluding.player_id = player_id;
+   std::copy(message.begin(), message.end(), send_msg_to_all_players_excluding.data.begin());
+
+   network::message::Writer writer;
+   send_msg_to_all_players_excluding.serialize(writer);
+
+   this->send(writer.buffer_view());
 }
 
-void Connection::send_to_many(const google::protobuf::Message &message, std::span<game::PlayerId> player_ids)
+void Connection::send_to_many(container::BufferView message, std::span<game::PlayerId> player_ids)
 {
-   Event proto_event;
-   for (auto player_id : player_ids) {
-      auto [lower, upper] = util::write_uuid(player_id);
-      auto *proto_id      = proto_event.mutable_multiple_players()->add_player_ids();
-      proto_id->set_lower(lower);
-      proto_id->set_upper(upper);
-   }
-   proto_event.mutable_payload()->PackFrom(message);
-   this->send(proto_event);
+   net::engine::cb::SendMsgToSomePlayers send_msg_to_some_player;
+   send_msg_to_some_player.player_ids.resize(player_ids.size());
+   std::copy(player_ids.begin(), player_ids.end(), send_msg_to_some_player.player_ids.begin());
+   send_msg_to_some_player.data.resize(message.size());
+   std::copy(message.begin(), message.end(), send_msg_to_some_player.data.begin());
+
+   network::message::Writer writer;
+   send_msg_to_some_player.serialize(writer);
+
+   this->send(writer.buffer_view());
 }
 
-void Connection::send(const Event &event)
+void Connection::send(container::BufferView message)
 {
-   container::Buffer buffer(static_cast<std::size_t>(event.ByteSizeLong()));
-   event.SerializeToArray(buffer.data(), static_cast<int>(buffer.size()));
-   m_peer->send_reliable_message(buffer.as_view());
+   m_peer->send_reliable_message(message);
 }
 
-ApiHandler::ApiHandler(EventHandler &event_handler, EventManager &event_manager, JobSystem &job_system,
+ApiHandler::ApiHandler(Service &service, EventManager &event_manager, JobSystem &job_system,
                        std::uint16_t port) :
-    m_event_handler{event_handler},
+    m_service{service},
     m_event_manager{event_manager},
     m_server{port},
     m_job_system{job_system}
@@ -73,21 +83,18 @@ ApiHandler::ApiHandler(EventHandler &event_handler, EventManager &event_manager,
    m_server.on_disconnected.connect<&ApiHandler::on_disconnected>(this);
 }
 
-void ApiHandler::on_connected(std::shared_ptr<stream::Peer> peer)
+void ApiHandler::on_connected(stream::Peer *peer)
 {
-   spdlog::info("recevied inbound connection from client id={}", peer->id());
-   m_event_manager.add_client(peer->id(), std::make_unique<Connection>(std::move(peer)));
+   spdlog::info("received inbound connection from client id={}", peer->id());
+   m_event_manager.add_client(peer->id(), std::make_unique<Connection>(peer->shared_from_this()));
 }
 
-void ApiHandler::on_received_message(std::shared_ptr<stream::Peer> /*peer*/, container::BufferView message)
+void ApiHandler::on_received_message(stream::Peer * /*peer*/, container::BufferView message)
 {
-   proto::event::serverbound::Event proto_event;
-   proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
-
-   m_job_system.create_job<job::HandlePlayerMessage>(m_event_handler, std::move(proto_event));
+   m_job_system.create_job<job::HandlePlayerMessage>(m_service, container::Buffer(message));
 }
 
-void ApiHandler::on_disconnected(std::shared_ptr<stream::Peer> peer, bool * /*try_reconnect*/)
+void ApiHandler::on_disconnected(stream::Peer *peer, bool * /*try_reconnect*/)
 {
    m_event_manager.remove_client(peer->id());
 }

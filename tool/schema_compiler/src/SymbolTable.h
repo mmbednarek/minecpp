@@ -34,6 +34,7 @@ enum class TypeClass
    Bool,
    Uuid,
    NbtCompoundContent,
+   Extern,
    Unknown
 };
 

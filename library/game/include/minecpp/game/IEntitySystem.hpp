@@ -24,7 +24,7 @@ class IEntitySystem
    virtual void tick_entities(IWorld &world, double delta_time)                                = 0;
    virtual void move_spatial_entity(EntityId id, math::Vector3 extend, math::Vector3 old_position,
                                     math::Vector3 new_position)                                = 0;
-   virtual double view_distance() const                                                        = 0;
+   [[nodiscard]] virtual double view_distance() const                                                        = 0;
    virtual void destroy_entity(EntityId id)                                                    = 0;
    virtual void detach_entity(EntityId id)                                                     = 0;
    virtual void attach_entity(game::IWorld &world, game::EntityId entity_id, const math::Vector3 &position,

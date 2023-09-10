@@ -22,5 +22,4 @@ target_link_libraries(minecpp_chunk_extractor
         minecpp_utils
         minecpp_game
         minecpp_network
-        minecpp_api_proto
 )

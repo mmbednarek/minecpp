@@ -1,4 +1,4 @@
-.PHONY: docker-core docker-storage docker-engine docker-front docker docker-run clang-format proto nbt
+.PHONY: docker-core docker-storage docker-engine docker-front docker docker-run clang-format nbt
 
 .docker-ubuntu: docker/Ubuntu.Dockerfile
 	docker build . --network=host --no-cache -t minecpp/ubuntu:latest -f ./docker/Ubuntu.Dockerfile
@@ -23,9 +23,6 @@ docker-run: docker
 
 clang-format:
 	./meta/run-clang-format.sh
-
-proto:
-	./meta/generate-proto.sh
 
 schema:
 	schema_compiler -i ./api/minecpp -s library/api/minecpp/schema/src -h library/api/minecpp/schema/include/minecpp -I minecpp

@@ -3,28 +3,34 @@
 #include "IHandler.h"
 #include "IResponder.h"
 #include "IStorage.h"
+
+#include "minecpp/net/storage/Serverbound.schema.h"
+
 #include <map>
 
 namespace minecpp::service::storage {
+
+class Server;
 
 using ClientId = std::uint64_t;
 
 class Service : public IHandler
 {
  public:
-   explicit Service(IResponder &m_responder, IStorage &storage);
+   explicit Service(Server &server, IStorage &storage);
 
-   void subscribe_chunk(ConnectionId connection_id, game::ChunkPosition position);
-   void push_chunk_data(ConnectionId connection_id, const proto::chunk::Chunk &position);
-   void set_client_id(ConnectionId connection_id, ClientId client_id);
+   void handle_request(ConnectionId id, container::Buffer message) override;
 
-   void handle_request(ConnectionId id, proto::service::storage::Request request) override;
+   void on_set_client_id(ConnectionId connection_id, const net::storage::sb::SetClientId &message);
+   void on_subscribe_chunk(ConnectionId connection_id, const net::storage::sb::SubscribeChunk &message);
+   void on_store_chunk(ConnectionId connection_id, const net::storage::sb::StoreChunk &message);
+   void on_failure(ConnectionId connection_id, std::uint8_t id);
 
  private:
    std::optional<ClientId> get_client_id(ConnectionId connection_id);
 
+   Server &m_server;
    IStorage &m_storage;
-   IResponder &m_responder;
    std::map<ConnectionId, ClientId> m_connection_to_client_map;
 };
 

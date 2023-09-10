@@ -25,4 +25,4 @@ void convert_to_snake_case(TInIterator beg, TInIterator end, TOutIterator out)
    }
 }
 
-}
+}// namespace minecpp::util

@@ -25,8 +25,7 @@ void NetworkRecordProperty::write_serializer(NetworkSerializeContext &ctx)
       return;
    }
    if (generator == g_nbt_generator_name) {
-      ctx << method_call(ctx.source_property(), "serialize",
-                         raw("writer.raw_stream()"), raw("\"\""));
+      ctx << method_call(ctx.source_property(), "serialize", raw("writer.raw_stream()"), raw("\"\""));
       return;
    }
 

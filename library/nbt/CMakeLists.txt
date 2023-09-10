@@ -16,6 +16,7 @@ add_subdirectory("src")
 target_link_libraries(minecpp_nbt
         LINK_PUBLIC
         minecpp_utils
+        fmt::fmt
 )
 
 add_subdirectory("test")

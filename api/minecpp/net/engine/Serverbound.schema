@@ -1,0 +1,19 @@
+generator = "net"
+package minecpp.net.engine.sb
+
+[MessageID=0x00]
+record AcceptPlayer {
+    player_id: uuid
+    name: string
+}
+
+[MessageID=0x01]
+record RemovePlayer {
+    player_id: uuid
+}
+
+[MessageID=0x02]
+record PlayerMessage {
+    player_id: uuid
+    data: list[uint8]
+}

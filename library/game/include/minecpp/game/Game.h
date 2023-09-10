@@ -7,14 +7,12 @@
 #include <minecpp/nbt/block/Block.schema.h>
 #include <minecpp/nbt/block/BlockState.schema.h>
 #include <minecpp/nbt/common/Common.schema.h>
-#include <minecpp/proto/common/Common.pb.h>
-#include <minecpp/proto/entity/Entity.pb.h>
 
 #include <utility>
 
 namespace minecpp::game {
 
-enum class PlayerDiggingState : int
+enum class ItemOperation : int
 {
    Digging         = 0,
    CanceledDigging = 1,
@@ -157,8 +155,6 @@ class EquipmentSlot final : public EquipmentSlot_Base
    MB_ENUM_FIELD(Leggings)
    MB_ENUM_FIELD(Chestplate)
    MB_ENUM_FIELD(Helmet)
-
-   [[nodiscard]] proto::entity::EquipmentSlot to_proto() const;
 };
 
 struct ItemSlot
@@ -191,8 +187,6 @@ class EntityAnimation : public EntityAnimation_Base
    MB_ENUM_FIELD(SwingOffHand)
    MB_ENUM_FIELD(CriticalEffect)
    MB_ENUM_FIELD(MagicCriticalEffect)
-
-   proto::common::EntityAnimation to_proto();
 };
 
 enum class InteractionTypeValue
@@ -210,8 +204,6 @@ class InteractionType : public InteractionType_Base
 
    MB_ENUM_FIELD(Standard)
    MB_ENUM_FIELD(Attack)
-
-   [[nodiscard]] static InteractionType from_proto(proto::common::InteractionType type);
 };
 
 }// namespace minecpp::game

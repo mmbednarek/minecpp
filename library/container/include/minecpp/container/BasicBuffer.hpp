@@ -1,6 +1,7 @@
 #pragma once
 #include "BasicBufferView.hpp"
 #include <cstdint>
+#include <cstring>
 #include <istream>
 #include <memory>
 #include <ostream>
@@ -83,6 +84,7 @@ class BasicBuffer
    std::string to_string();
    void read_from(std::istream &stream);
    void write_to(std::ostream &stream);
+   void append(View data);
 
    [[nodiscard]] InputStreamBuffer<BasicBuffer<TByte, TAllocator>> make_stream() const;
 
@@ -97,6 +99,22 @@ class BasicBuffer
    std::size_t m_allocated_size{};
    TByte *m_data{};
 };
+
+template<typename TByte, typename TAllocator>
+void BasicBuffer<TByte, TAllocator>::append(BasicBuffer::View data)
+{
+   auto new_size   = m_size + data.size();
+   auto *new_data = m_allocator.allocate(new_size);
+
+   std::memcpy(new_data, m_data, sizeof(TByte) * m_size);
+   std::memcpy(new_data + m_size, data.data(), sizeof(TByte) * data.size());
+
+   m_allocator.deallocate(m_data, m_allocated_size);
+
+   m_data           = new_data;
+   m_size           = new_size;
+   m_allocated_size = new_size;
+}
 
 template<typename TByte, typename TAllocator>
 BasicBuffer<TByte, TAllocator>::BasicBuffer(BasicBufferView<TByte> view) :
@@ -237,12 +255,18 @@ void BasicBuffer<TByte, TAllocator>::write_to(std::ostream &stream)
 template<typename TByte, typename TAllocator>
 BasicBuffer<TByte, TAllocator> BasicBuffer<TByte, TAllocator>::from_istream(std::istream &stream)
 {
-   stream.seekg(0, std::ios::end);
-   auto size = stream.tellg();
-   BasicBuffer<TByte, TAllocator> buffer(static_cast<std::size_t>(size));
-   stream.seekg(0, std::ios::beg);
-   buffer.read_from(stream);
-   return buffer;
+   static constexpr auto buffer_size = 4096;
+
+   BasicBuffer<TByte, TAllocator> result;
+   TByte data_part[buffer_size];
+   std::streamsize n;
+
+   while (n = stream.readsome(reinterpret_cast<char *>(data_part), static_cast<std::streamsize>(buffer_size)),
+          n != 0) {
+      result.append(View{data_part, static_cast<std::size_t>(n)});
+   }
+
+   return result;
 }
 
 template<typename TByte, typename TAllocator>

@@ -1,8 +1,12 @@
 #pragma once
-#include <minecpp/game/IDispatcher.hpp>
-#include <minecpp/game/IEntitySystem.hpp>
+
+#include <chrono>
 #include <string>
 #include <vector>
+
+#include "minecpp/game/EntityData.hpp"
+#include "minecpp/game/IDispatcher.hpp"
+#include "minecpp/game/IEntitySystem.hpp"
 
 namespace minecpp::entity::component {
 
@@ -13,7 +17,7 @@ class Player
 
    void on_attached(game::Entity &entity);
 
-   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
+   void serialize_to_net_player(game::NetworkPlayer *net_player) const;
 
    [[nodiscard]] game::PlayerId id() const;
    [[nodiscard]] const std::string &name() const;
@@ -26,8 +30,7 @@ class Player
                              const math::Vector3 &extent);
 
    [[nodiscard]] const std::vector<game::EntityId> &visible_entities() const;
-   void add_visible_player_entity(game::IDispatcher &dispatcher, game::PlayerId player_id,
-                                  game::EntityId entity_id);
+   void add_visible_player_entity(game::IDispatcher &dispatcher, game::EntityId entity_id);
    void remove_visible_entity(game::IDispatcher &dispatcher, game::EntityId entity_id);
 
    void begin_use_item();

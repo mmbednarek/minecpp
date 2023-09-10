@@ -1,0 +1,65 @@
+generator = "net"
+package minecpp.net
+
+record SingleValueData {
+    value: varint
+    length: varint // always zero
+}
+
+record PalettedData {
+    palette: list[varint]
+    data: list[uint64]
+}
+
+record DirectData {
+    data: list[uint64]
+}
+
+[ArgCount=1, Arg0="indirect_limit:uint8"]
+record PalettedContainer {
+    bits_per_entry: uint8
+
+    [Condition="result.bits_per_entry == 0u"]
+    single_value_data: optional[SingleValueData]
+    [Condition="result.bits_per_entry > 0u && result.bits_per_entry <= indirect_limit"]
+    indirect_data: optional[PalettedData]
+    [Condition="result.bits_per_entry > indirect_limit"]
+    direct_data: optional[DirectData]
+}
+
+record Section {
+    block_count: uint16
+    [Bind="8u"] block_states: PalettedContainer
+    [Bind="3u"] biomes: PalettedContainer
+}
+
+[ArgCount=1, Arg0="section_count:int32"]
+record ChunkData {
+  [ArraySize="section_count"]
+  sections: list[Section]
+}
+
+record BlockEntity {
+  position_xz: uint8
+  y: int16
+  type: varint
+  data: nbt.block.BlockEntityData
+}
+
+record LightData {
+  sky_light_mask: list[uint64]
+  block_light_mask: list[uint64]
+  empty_sky_light_mask: list[uint64]
+  empty_block_light_mask: list[uint64]
+
+  sky_light: list[list[uint8]]
+  block_light: list[list[uint8]]
+}
+
+record Chunk {
+    position: Vector2i
+    heightmaps: nbt.chunk.HeightmapsNet
+    data: list[uint8]
+    block_entities: list[BlockEntity]
+    light_data: LightData
+}

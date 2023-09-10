@@ -1,0 +1,71 @@
+generator = "net"
+package minecpp.net
+
+[
+  CppType = "::minecpp::game::EntityId",
+]
+alias EntityID = uvarint
+
+// math::Vector3
+[
+  IncludeHeader = "minecpp/math/Vector3.h",
+  CppType       = "::minecpp::math::Vector3",
+  Write         = "network::write_vector3",
+  Read          = "network::read_vector3"
+]
+alias Vector3 = extern
+
+// math::Vector3f
+[
+  IncludeHeader = "minecpp/math/Vector3.h",
+  CppType       = "::minecpp::math::Vector3f",
+  Write         = "network::write_vector3f",
+  Read          = "network::read_vector3f"
+]
+alias Vector3f = extern
+
+// math::Vector3s
+[
+  IncludeHeader = "minecpp/math/Vector3.h",
+  CppType       = "::minecpp::math::Vector3s",
+  Write         = "network::write_vector3s",
+  Read          = "network::read_vector3s"
+]
+alias Vector3s = extern
+
+// math::Vector2i
+[
+  IncludeHeader = "minecpp/math/Vector2.h",
+  CppType       = "::minecpp::math::Vector2i",
+  Write         = "network::write_vector2i",
+  Read          = "network::read_vector2i"
+]
+alias Vector2i = extern
+
+// math::Vector2i (varint)
+[
+  IncludeHeader = "minecpp/math/Vector2.h",
+  CppType       = "::minecpp::math::Vector2i",
+  Write         = "network::write_vector2vi",
+  Read          = "network::read_vector2vi"
+]
+alias Vector2vi = extern
+
+// Angle
+[
+  CppType       = "float",
+  Write         = "network::write_angle",
+  Read          = "network::read_angle"
+]
+alias Angle = extern
+
+record Chat {
+  format: string
+}
+
+record Slot {
+  item_id: varint
+  item_count: int8
+  data: nbt.item.SlotData
+}
+

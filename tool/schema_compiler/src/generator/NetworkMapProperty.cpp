@@ -81,7 +81,8 @@ void NetworkMapProperty::write_deserializer(NetworkDeserializeContext &ctx)
                   lambda(
                           {},
                           [&key_type, &value_type, &ctx](statement::collector &col) {
-                             auto key_expr = ctx.write_deserializer_to_var(*key_type, col, ctx.unique_name("_key"));
+                             auto key_expr =
+                                     ctx.write_deserializer_to_var(*key_type, col, ctx.unique_name("_key"));
                              auto value_expr =
                                      ctx.write_deserializer(*value_type, col, ctx.unique_name("_value"));
 

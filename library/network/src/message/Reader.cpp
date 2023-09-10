@@ -30,7 +30,7 @@ std::int32_t Reader::read_varint()
    return util::unsafe_cast<std::int32_t>(this->read_uvarint());
 }
 
-std::int32_t Reader::read_uvarint()
+std::uint32_t Reader::read_uvarint()
 {
    std::uint32_t result = 0u;
    std::uint32_t shift  = 0u;
@@ -46,7 +46,7 @@ std::int32_t Reader::read_uvarint()
       break;
    }
 
-   return static_cast<int>(result);
+   return result;
 }
 
 std::int64_t Reader::read_varlong()
@@ -54,7 +54,7 @@ std::int64_t Reader::read_varlong()
    return util::unsafe_cast<std::int64_t>(this->read_uvarlong());
 }
 
-std::int64_t Reader::read_uvarlong()
+std::uint64_t Reader::read_uvarlong()
 {
    std::uint64_t result = 0u;
    std::uint64_t shift  = 0u;
@@ -70,7 +70,7 @@ std::int64_t Reader::read_uvarlong()
       break;
    }
 
-   return static_cast<std::int64_t>(result);
+   return result;
 }
 
 std::string Reader::read_string()

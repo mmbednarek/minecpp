@@ -16,6 +16,7 @@ add_subdirectory("src")
 target_link_libraries(minecpp_container
         LINK_PUBLIC
         libmb
+        minecpp_api_schema
 )
 
 add_subdirectory("test")

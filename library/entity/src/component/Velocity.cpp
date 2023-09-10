@@ -51,9 +51,9 @@ void Velocity::tick(game::IWorld &world, game::Entity &entity, double delta_time
    }
 }
 
-void Velocity::serialize_to_proto(proto::entity::Entity *entity) const
+void Velocity::serialize_to_net(game::NetworkEntity *net_entity) const
 {
-   *entity->mutable_velocity() = (m_velocity * 8000.0).cast<short>().to_proto();
+   net_entity->entity_data.velocity = (m_velocity * 8000.0).cast<short>();
 }
 
 void Velocity::set_velocity(game::IWorld &world, game::Entity &entity, const math::Vector3 &velocity)

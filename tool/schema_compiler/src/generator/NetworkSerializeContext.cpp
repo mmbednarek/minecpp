@@ -72,20 +72,21 @@ mb::codegen::statement::collector &NetworkSerializeContext::collector()
 
 std::string NetworkSerializeContext::type_generator() const
 {
-   auto symbol = m_symbol_table.find_symbol(m_document.package_info().full_name(), m_type.full_name());
-   generator_verify(symbol.has_value(), m_type.line(), m_type.column(),
-                    "could not find symbol {} in package {}", m_type.full_name(),
-                    m_document.package_info().full_name());
-   return symbol->generator;
+   return this->symbol().generator;
 }
 
 TypeClass NetworkSerializeContext::type_class() const
+{
+   return this->symbol().type_class;
+}
+
+Symbol NetworkSerializeContext::symbol() const
 {
    auto symbol = m_symbol_table.find_symbol(m_document.package_info().full_name(), m_type.full_name());
    generator_verify(symbol.has_value(), m_type.line(), m_type.column(),
                     "could not find symbol {} in package {}", m_type.full_name(),
                     m_document.package_info().full_name());
-   return symbol->type_class;
+   return std::move(*symbol);
 }
 
 }// namespace minecpp::tool::schema_compiler::generator

@@ -47,7 +47,7 @@ Document Parser::parse_document()
          break;
 
       auto token = m_token_feed.expect(TokenType::KeywordRecord, TokenType::KeywordAlias,
-                                  TokenType::LeftSquareBracket);
+                                       TokenType::LeftSquareBracket);
       m_token_feed.step_back();
       switch (token.type) {
       case TokenType::KeywordRecord: document.add_record(this->parse_record(AnnotationList{})); break;
@@ -55,7 +55,7 @@ Document Parser::parse_document()
       case TokenType::LeftSquareBracket: {
          auto annotations = this->parse_annotation_list();
          this->skip_new_lines();
-         token            = m_token_feed.expect(TokenType::KeywordRecord, TokenType::KeywordAlias);
+         token = m_token_feed.expect(TokenType::KeywordRecord, TokenType::KeywordAlias);
          m_token_feed.step_back();
          switch (token.type) {
          case TokenType::KeywordRecord:
@@ -91,7 +91,7 @@ Import Parser::parse_import()
 Record Parser::parse_record(AnnotationList annotations)
 {
    auto initial_token = m_token_feed.expect(TokenType::KeywordRecord);
-   auto token = m_token_feed.expect(TokenType::Identifier);
+   auto token         = m_token_feed.expect(TokenType::Identifier);
    Record record(initial_token.line, initial_token.column, token.value, std::move(annotations));
 
    this->skip_new_lines();
@@ -136,6 +136,8 @@ AnnotationList Parser::parse_annotation_list()
 
       auto value_token = m_token_feed.expect(TokenType::String, TokenType::Identifier);
       annotation_list.add_annotation(key_token.value, value_token.value);
+
+      this->skip_new_lines();
 
       token = m_token_feed.expect(TokenType::Comma, TokenType::RightSquareBracket);
       if (token.type == TokenType::Comma)

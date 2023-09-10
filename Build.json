@@ -1,6 +1,5 @@
 {
   "libraries": [
-    "api/minecpp/proto",
     "api/minecpp/schema",
     "chat",
     "crypto",

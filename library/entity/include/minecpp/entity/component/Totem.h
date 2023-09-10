@@ -2,9 +2,12 @@
 
 #include "Health.h"
 #include "Location.h"
-#include <minecpp/game/Entity.h>
-#include <minecpp/game/IWorld.hpp>
-#include <minecpp/game/Team.h>
+
+#include "minecpp/game/Entity.h"
+#include "minecpp/game/EntityData.hpp"
+#include "minecpp/game/IWorld.hpp"
+#include "minecpp/game/Team.h"
+
 #include <optional>
 
 namespace minecpp::entity::component {
@@ -18,7 +21,7 @@ class Totem
 
    void on_attached(game::Entity &entity);
 
-   void serialize_to_proto(proto::entity::Entity *entity) const;
+   void serialize_to_net(game::NetworkEntity *net_entity) const;
    void on_begin_intersect(game::IWorld &world, game::Entity &entity, game::Entity &other_entity);
    void on_player_move(game::IWorld &world, game::Entity &entity, const math::Vector3 &old_position,
                        const math::Vector3 &new_position);

@@ -322,7 +322,7 @@ std::vector<typename TTypes::Token> lex_from(IReader &reader)
 
       auto result = EnvironmentSelector<TTypes, TEnvironmentRules...>{env}.run(ch, context);
       assert(result);
-      (void)result;
+      (void) result;
 
       context.increase_column();
    }

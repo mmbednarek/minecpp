@@ -41,25 +41,24 @@ void ChunkSystem::subscribe_chunk(const game::ChunkPosition &position)
    m_storage_client.subscribe_chunk(position);
 }
 
-void ChunkSystem::handle_chunk_data(const proto::service::storage::ResponseChunkData &chunk)
+void ChunkSystem::handle_chunk_data(const net::Chunk &chunk)
 {
    auto *new_chunk = m_chunk_pool.construct();
-   new_chunk->read_from_proto(chunk.chunk_data());
+   new_chunk->read_net_chunk(chunk);
 
    {
       std::unique_lock lk{m_chunk_mutex};
-      m_chunks.emplace(game::ChunkPosition::from_proto(chunk.chunk_data().position()).hash(),
+      m_chunks.emplace(game::ChunkPosition(chunk.position).hash(),
                        ChunkMeta{SubscriptionState::Subscribed, world::ChunkState::COMPLETE, new_chunk});
    }
 
    m_job_system.process_awaiting_tickets();
 }
 
-void ChunkSystem::handle_empty_chunk(const proto::service::storage::ResponseEmptyChunk &chunk)
+void ChunkSystem::handle_empty_chunk(const game::ChunkPosition &chunk_position)
 {
-   spdlog::debug("chunk system: handling empty chunk");
-   auto position = game::ChunkPosition::from_proto(chunk.position());
-   m_job_system.create_job<job::GenerateChunk>(m_generator, position);
+   spdlog::info("chunk system: handling empty chunk {} {}", chunk_position.x(), chunk_position.z());
+   m_job_system.create_job<job::GenerateChunk>(m_generator, chunk_position);
 }
 
 world::Chunk *ChunkSystem::create_empty_chunk_at(const game::ChunkPosition &position)

@@ -12,6 +12,8 @@ target_sources(minecpp_schema_compiler
         ${CMAKE_CURRENT_SOURCE_DIR}/NetworkBasicProperty.h
         ${CMAKE_CURRENT_SOURCE_DIR}/NetworkDeserializeContext.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/NetworkDeserializeContext.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkExternProperty.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/NetworkExternProperty.h
         ${CMAKE_CURRENT_SOURCE_DIR}/NetworkGenerator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/NetworkGenerator.h
         ${CMAKE_CURRENT_SOURCE_DIR}/NetworkListProperty.cpp

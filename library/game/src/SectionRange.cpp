@@ -1,4 +1,5 @@
-#include <minecpp/game/SectionRange.h>
+#include "SectionRange.h"
+#include "ChunkRange.h"
 
 namespace minecpp::game {
 
@@ -19,22 +20,6 @@ SectionRange::Iterator SectionRange::end()
            *this,
            {m_to.x(), m_to.y() + 1, m_to.z()}
    };
-}
-
-SectionRange SectionRange::from_proto(const proto::common::SectionRange &range)
-{
-   return SectionRange{
-           SectionPosition::from_proto(range.from()),
-           SectionPosition::from_proto(range.to()),
-   };
-}
-
-proto::common::SectionRange SectionRange::to_proto() const
-{
-   proto::common::SectionRange result;
-   *result.mutable_from() = m_from.to_proto();
-   *result.mutable_to()   = m_to.to_proto();
-   return result;
 }
 
 SectionRange SectionRange::grow(int amount) const
@@ -62,6 +47,21 @@ bool SectionRange::is_in_range(SectionPosition position) const
       return false;
 
    return true;
+}
+
+ChunkRange SectionRange::to_chunk_range() const
+{
+   return {m_from.chunk_position(), m_to.chunk_position()};
+}
+
+int SectionRange::min_section() const
+{
+   return m_from.y();
+}
+
+int SectionRange::max_section() const
+{
+   return m_to.y();
 }
 
 SectionRange::Iterator::Iterator(SectionRange &range, const SectionPosition &at) :

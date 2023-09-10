@@ -3,18 +3,6 @@
 
 namespace minecpp::game {
 
-namespace pb_common = minecpp::proto::common;
-
-Face Face::from_proto(const pb_common::Face face)
-{
-   return Face{static_cast<FaceValue>(face)};
-}
-
-pb_common::Face Face::to_proto()
-{
-   return static_cast<pb_common::Face>(index());
-}
-
 Face Face::opposite_face()
 {
    switch (value()) {

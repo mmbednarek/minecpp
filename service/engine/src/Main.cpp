@@ -1,18 +1,25 @@
 #include "ApiHandler.h"
 #include "ChunkSystem.h"
 #include "Dispatcher.h"
-#include "EventHandler.h"
 #include "EventManager.h"
 #include "JobSystem.h"
-#include "minecpp/world/population/Object.h"
-#include "Players.h"
+#include "PlayerManager.h"
+#include "Service.h"
+#include "service/PlayerInteraction.h"
+#include "service/PlayerInterface.h"
+#include "service/PlayerMovement.h"
+#include "service/PlayerSession.h"
 #include "StorageResponseHandler.h"
 #include "TickSystem.h"
 #include "World.h"
+
+#include "minecpp/controller/RootItem.h"
+#include "minecpp/entity/EntitySystem.h"
+#include "minecpp/repository/Repository.h"
+#include "minecpp/service/storage/Storage.h"
+#include "minecpp/world/population/Object.h"
+
 #include <mb/core.h>
-#include <minecpp/entity/EntitySystem.h>
-#include <minecpp/repository/Repository.h>
-#include <minecpp/service/storage/Storage.h>
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
@@ -22,6 +29,7 @@ struct Configuration
    std::uint16_t server_bind_port{};
    std::vector<std::string> storage_endpoints{};
    std::string resources_data_file{};
+   std::string resources_registry{};
    std::uint64_t gameplay_world_seed{};
    int gameplay_max_players{};
    int gameplay_spawn_point_x{};
@@ -38,6 +46,7 @@ struct Configuration
       this->storage_endpoints   = yaml_cfg["storage"]["endpoints"].as<std::vector<std::string>>(
               std::vector<std::string>{"127.0.0.1:8080"});
       this->resources_data_file    = yaml_cfg["resources"]["data_file"].as<std::string>("repository.bin");
+      this->resources_registry     = yaml_cfg["resources"]["registry_file"].as<std::string>("registry.bin");
       this->gameplay_world_seed    = yaml_cfg["gameplay"]["world_seed"].as<unsigned long long>(0ULL);
       this->gameplay_max_players   = yaml_cfg["gameplay"]["max_players"].as<int>(10);
       this->gameplay_spawn_point_x = yaml_cfg["gameplay"]["spawn_point"]["x"].as<int>(0);
@@ -69,6 +78,8 @@ auto main() -> int
 
    minecpp::world::population::ObjectRepository::the().register_objects();
 
+   auto registry = minecpp::repository::load_network_registry_from_file(config.resources_registry).unwrap({});
+
    JobSystem job_system{static_cast<std::size_t>(config.worker_count)};
 
    StorageResponseHandler storage_handler{job_system};
@@ -78,18 +89,26 @@ auto main() -> int
    storage_handler.set_chunk_system(&chunk_system);
 
    minecpp::entity::EntitySystem entity_system(chunk_system);
-   PlayerManager players(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
-                                         config.gameplay_spawn_point_z});
+   PlayerManager player_manager(entity_system, {config.gameplay_spawn_point_x, config.gameplay_spawn_point_y,
+                                                config.gameplay_spawn_point_z});
 
    EventManager manager;
-   Dispatcher dispatcher(manager, entity_system);
+   Dispatcher dispatcher(manager, chunk_system, entity_system, registry);
    minecpp::controller::BlockManager block_manager;
    minecpp::controller::RootItem root_item_controller;
 
-   World world(chunk_system, job_system, dispatcher, players, entity_system, block_manager);
-   EventHandler handler(dispatcher, players, entity_system, world, block_manager, root_item_controller);
+   World world(chunk_system, job_system, dispatcher, player_manager, entity_system, block_manager);
 
-   ApiHandler api_handler(handler, manager, job_system, config.server_bind_port);
+   service::PlayerInteraction player_interaction_service(world, dispatcher, block_manager,
+                                                         root_item_controller);
+   service::PlayerInterface player_interface_service(player_manager, world, dispatcher);
+   service::PlayerMovement player_movement_service(player_manager, world, dispatcher);
+   service::PlayerSession player_session_service(player_manager, world, dispatcher);
+
+   Service service(player_interaction_service, player_interface_service, player_movement_service,
+                   player_session_service);
+
+   ApiHandler api_handler(service, manager, job_system, config.server_bind_port);
    api_handler.tick();
 
    for (auto endpoint_str : config.storage_endpoints) {

@@ -3,8 +3,6 @@
 
 namespace minecpp::game {
 
-namespace pb_common = minecpp::proto::common;
-
 SectionPosition::SectionPosition() = default;
 
 SectionPosition::SectionPosition(int x, int y, int z) :
@@ -52,22 +50,6 @@ mb::u64 SectionPosition::hash() const
 bool SectionPosition::operator!=(const SectionPosition &other) const
 {
    return m_position != other.m_position;
-}
-
-SectionPosition SectionPosition::from_proto(const pb_common::ChunkSectionPosition &position)
-{
-   return {
-           ChunkPosition::from_proto(position.chunk_position()),
-           position.y(),
-   };
-}
-
-pb_common::ChunkSectionPosition SectionPosition::to_proto() const
-{
-   pb_common::ChunkSectionPosition result;
-   *result.mutable_chunk_position() = this->chunk_position().to_proto();
-   result.set_y(this->y());
-   return result;
 }
 
 const math::Vector3i &SectionPosition::position() const

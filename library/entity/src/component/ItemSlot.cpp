@@ -35,14 +35,11 @@ void ItemSlot::on_begin_intersect(game::IWorld &world, game::Entity &entity, gam
    world.kill_entity(entity.id());
 }
 
-void ItemSlot::serialize_to_proto(proto::entity::Entity *entity) const
+void ItemSlot::serialize_to_net(game::NetworkEntity *net_entity) const
 {
-   entity->set_entity_type(54);
-
-   auto *metadata = entity->mutable_metadata()->Add();
-   metadata->set_index(8);
-   metadata->mutable_slot()->mutable_item_id()->set_id(static_cast<uint32_t>(m_slot.item_id));
-   metadata->mutable_slot()->set_count(static_cast<uint32_t>(m_slot.count));
+   assert(net_entity);
+   net_entity->entity_data.entity_type = 54;
+   net_entity->metadata.data[8] = net::Slot{m_slot.item_id, static_cast<std::int8_t>(m_slot.count), {}};
 }
 
 }// namespace minecpp::entity::component

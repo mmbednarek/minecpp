@@ -22,7 +22,6 @@ target_link_libraries(minecpp_engine
         minecpp_entity
         minecpp_utils
         minecpp_game
-        minecpp_api_proto
         minecpp_nbt
         minecpp_chat
         minecpp_format

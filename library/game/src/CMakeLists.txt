@@ -4,10 +4,10 @@ set(MINECPP_GAME_INCLUDE_DIR ${MINECPP_GAME_DIR}/include/minecpp/game)
 target_sources(minecpp_game
     # Source files
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/Abilities.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/BlockPosition.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/BlockRange.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/ChunkPosition.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/ChunkRange.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Entity.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Game.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Light.cpp
@@ -18,13 +18,15 @@ target_sources(minecpp_game
 
     # Header files
     PUBLIC
-        ${MINECPP_GAME_INCLUDE_DIR}/Abilities.h
+        ${MINECPP_GAME_INCLUDE_DIR}/Abilities.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/BlockPosition.h
         ${MINECPP_GAME_INCLUDE_DIR}/BlockRange.h
         ${MINECPP_GAME_INCLUDE_DIR}/ChunkPosition.h
+        ${MINECPP_GAME_INCLUDE_DIR}/ChunkRange.h
         ${MINECPP_GAME_INCLUDE_DIR}/Concepts.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Constants.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Delegate.hpp
+        ${MINECPP_GAME_INCLUDE_DIR}/EntityData.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Entity.h
         ${MINECPP_GAME_INCLUDE_DIR}/Entt.hpp
         ${MINECPP_GAME_INCLUDE_DIR}/Game.h

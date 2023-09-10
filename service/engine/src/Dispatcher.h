@@ -3,10 +3,11 @@
 #include "ApiHandler.h"
 
 #include "minecpp/chat/Chat.h"
-#include "minecpp/game/Abilities.h"
+#include "minecpp/game/Abilities.hpp"
 #include "minecpp/game/IDispatcher.hpp"
 #include "minecpp/game/player/Id.h"
 #include "minecpp/game/player/Player.h"
+#include "minecpp/nbt/repository/Registry.schema.h"
 #include "minecpp/network/message/Writer.h"
 #include "minecpp/world/Chunk.h"
 
@@ -25,22 +26,19 @@ class EntitySystem;
 namespace minecpp::service::engine {
 
 class EventManager;
+class ChunkSystem;
 using boost::uuids::uuid;
 
 class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
-   explicit Dispatcher(EventManager &events, entity::EntitySystem &entity_system);
-   void spawn_entity(game::EntityId entity_id, const math::Vector3 &position) override;
-   void load_terrain(game::PlayerId player_id, const game::ChunkPosition &central_chunk,
-                     std::vector<minecpp::game::ChunkPosition> coords) override;
+   explicit Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system,
+                       nbt::repository::Registry &registry);
+   void spawn_entity(game::EntityId entity_id) override;
    void remove_entity(game::EntityId entity_id) override;
    void remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
-   void transfer_player(game::PlayerId player_id, boost::uuids::uuid target_engine);
    void spawn_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
-   void spawn_player_for_player(game::PlayerId receiver, game::PlayerId spawned_player,
-                                game::EntityId entity_id) override;
-   void update_block(game::BlockPosition block, game::BlockStateId state) override;
+   void update_block(game::BlockPosition block_position, game::BlockStateId state) override;
 
    void entity_move(game::EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
                     const math::Rotation &rotation, bool is_on_ground) override;
@@ -50,8 +48,6 @@ class Dispatcher : public minecpp::game::IDispatcher
                         const math::Rotation &rotation, bool is_on_ground) override;
 
    void add_player(game::PlayerId player_id, const std::string &name, mb::u32 ping) override;
-   void spawn_player(game::PlayerId player_id, game::EntityId entity_id,
-                     const math::Vector3 &position) override;
    void remove_player(game::PlayerId player_id, mb::u32 entity_id) override;
    void send_chat(chat::MessageType msg_type, const std::string &msg) override;
    void send_direct_chat(game::PlayerId player_id, chat::MessageType msg_type,
@@ -71,7 +67,7 @@ class Dispatcher : public minecpp::game::IDispatcher
 
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            int count) override;
-   void update_block_light(game::ISectionSlice &slice, game::SectionRange range) override;
+   void update_block_light(const math::Vector3 &center, game::SectionRange range) override;
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool is_initial);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
@@ -94,20 +90,19 @@ class Dispatcher : public minecpp::game::IDispatcher
                           const math::Vector3 &position) override;
 
  private:
-   void send_to_all(const google::protobuf::Message &message) const;
-   void send_to_player(game::PlayerId player_id, const google::protobuf::Message &message) const;
-   void send_to_players_in_view_distance(const math::Vector3 &position,
-                                         const google::protobuf::Message &message) const;
+   void send_to_all(container::BufferView message) const;
+   void send_to_player(game::PlayerId player_id, container::BufferView message) const;
+   void send_to_players_in_view_distance(const math::Vector3 &position, container::BufferView message) const;
    void send_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position,
-                                                const google::protobuf::Message &message) const;
-   void send_to_players_visible_by(game::Entity &entity, const google::protobuf::Message &message) const;
+                                                container::BufferView message) const;
+   void send_to_players_visible_by(game::Entity &entity, container::BufferView message) const;
 
    template<typename TMessage>
    void send_raw_to_players_in_view_distance(const math::Vector3 &position, const TMessage &message) const
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_players_in_view_distance(position, make_raw_message(writer));
+      this->send_to_players_in_view_distance(position, writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -116,7 +111,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_players_in_view_distance_except(player_id, position, make_raw_message(writer));
+      this->send_to_players_in_view_distance_except(player_id, position, writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -124,7 +119,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_players_visible_by(entity, make_raw_message(writer));
+      this->send_to_players_visible_by(entity, writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -132,7 +127,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_all(make_raw_message(writer));
+      this->send_to_all(writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -140,12 +135,13 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_player(player_id, make_raw_message(writer));
+      this->send_to_player(player_id, writer.buffer_view());
    }
 
    EventManager &m_events;
+   ChunkSystem &m_chunk_system;
    entity::EntitySystem &m_entity_system;
-   [[nodiscard]] static proto::event::clientbound::RawMessage make_raw_message(const network::message::Writer &writer) ;
+   nbt::repository::Registry &m_registry;
 };
 
 }// namespace minecpp::service::engine

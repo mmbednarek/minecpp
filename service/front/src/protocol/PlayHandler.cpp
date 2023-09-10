@@ -2,8 +2,6 @@
 #include "../Connection.h"
 #include "../Service.h"
 
-#include "minecpp/net/play/Serverbound.schema.h"
-
 namespace minecpp::service::front::protocol {
 
 PlayHandler::PlayHandler(Service &service) :
@@ -14,7 +12,8 @@ PlayHandler::PlayHandler(Service &service) :
 void PlayHandler::handle(Connection &connection, Reader &reader)
 {
    connection.async_read_packet(*this);
-   net::play::sb::visit_message(service, connection.uuid(), reader);
+   auto buffer = container::Buffer::from_istream(reader.raw_stream());
+   service.send(buffer.as_view(), connection.uuid());
 }
 
 void PlayHandler::handle_disconnect(Connection &conn)

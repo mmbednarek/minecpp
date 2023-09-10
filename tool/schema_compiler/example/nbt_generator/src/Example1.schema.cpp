@@ -3,7 +3,8 @@
 
 namespace minecpp::example1 {
 
-void Item::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Item::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::String, "Name");
    w.write_string_content(name);
    w.write_header(minecpp::nbt::TagId::Short, "Count");
@@ -13,13 +14,15 @@ void Item::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Item::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Item::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    this->serialize_no_header(w);
 }
 
-Item Item::deserialize_no_header(minecpp::nbt::Reader &r) {
+Item Item::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Item result;
    for (const auto &[tagid, in_field_name] : r.iterate_compound()) {
       if (in_field_name == "Name") {
@@ -42,7 +45,8 @@ Item Item::deserialize_no_header(minecpp::nbt::Reader &r) {
    return result;
 }
 
-Item Item::deserialize(std::istream &in) {
+Item Item::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -51,7 +55,8 @@ Item Item::deserialize(std::istream &in) {
    return Item::deserialize_no_header(r);
 }
 
-void Person::serialize_no_header(minecpp::nbt::Writer &w) const {
+void Person::serialize_no_header(minecpp::nbt::Writer &w) const
+{
    w.write_header(minecpp::nbt::TagId::String, "Name");
    w.write_string_content(name);
    w.write_header(minecpp::nbt::TagId::String, "Surname");
@@ -81,13 +86,15 @@ void Person::serialize_no_header(minecpp::nbt::Writer &w) const {
    w.end_compound();
 }
 
-void Person::serialize(std::ostream &out_stream, std::string_view in_compound_name) const {
+void Person::serialize(std::ostream &out_stream, std::string_view in_compound_name) const
+{
    minecpp::nbt::Writer w(out_stream);
    w.begin_compound(in_compound_name);
    this->serialize_no_header(w);
 }
 
-Person Person::deserialize_no_header(minecpp::nbt::Reader &r) {
+Person Person::deserialize_no_header(minecpp::nbt::Reader &r)
+{
    Person result;
    for (const auto &[tagid, in_field_name] : r.iterate_compound()) {
       if (in_field_name == "Name") {
@@ -112,9 +119,7 @@ Person Person::deserialize_no_header(minecpp::nbt::Reader &r) {
          std::generate(list.begin(), list.end(), [&r]() {
             auto list_info = r.peek_list();
             std::vector<Item> list(list_info.size);
-            std::generate(list.begin(), list.end(), [&r]() {
-               return Item::deserialize_no_header(r);
-            });
+            std::generate(list.begin(), list.end(), [&r]() { return Item::deserialize_no_header(r); });
             return list;
          });
          result.inventory = std::move(list);
@@ -142,7 +147,8 @@ Person Person::deserialize_no_header(minecpp::nbt::Reader &r) {
    return result;
 }
 
-Person Person::deserialize(std::istream &in) {
+Person Person::deserialize(std::istream &in)
+{
    minecpp::nbt::Reader r(in);
    auto peek = r.peek_tag();
    if (peek.id != minecpp::nbt::TagId::Compound) {
@@ -151,4 +157,4 @@ Person Person::deserialize(std::istream &in) {
    return Person::deserialize_no_header(r);
 }
 
-}
+}// namespace minecpp::example1

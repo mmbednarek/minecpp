@@ -1,6 +1,8 @@
 #pragma once
-#include <minecpp/game/Types.hpp>
-#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
+
+#include "minecpp/container/BasicBufferView.hpp"
+#include "minecpp/game/Types.hpp"
+
 #include <span>
 
 namespace minecpp::service::engine {
@@ -12,11 +14,10 @@ class IConnection
  public:
    virtual ~IConnection() noexcept = default;
 
-   virtual void send_to_player(const google::protobuf::Message &message, game::PlayerId player_id)        = 0;
-   virtual void send_to_many(const google::protobuf::Message &message,
-                             std::span<game::PlayerId> player_ids)                                        = 0;
-   virtual void send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id) = 0;
-   virtual void send_to_all(const google::protobuf::Message &message)                                     = 0;
+   virtual void send_to_many(container::BufferView message, std::span<game::PlayerId> player_ids) = 0;
+   virtual void send_to_player(container::BufferView message, game::PlayerId player_id)           = 0;
+   virtual void send_to_all(container::BufferView message)                                        = 0;
+   virtual void send_to_all_excluding(container::BufferView message, game::PlayerId player_id)    = 0;
 };
 
 }// namespace minecpp::service::engine

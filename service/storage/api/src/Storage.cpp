@@ -1,27 +1,36 @@
+#include "minecpp/service/storage/Storage.h"
 #include "minecpp/container/BasicBuffer.hpp"
-#include <minecpp/game/ChunkPosition.h>
-#include <minecpp/service/storage/Storage.h>
+#include "minecpp/game/ChunkPosition.h"
+#include "minecpp/net/storage/Serverbound.schema.h"
+#include "minecpp/util/Cast.hpp"
+#include "minecpp/world/ChunkSerializer.h"
+
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::storage {
 
 void StorageClient::subscribe_chunk(game::ChunkPosition position)
 {
-   proto::service::storage::Request request;
-   *request.mutable_chunk_subscription()->mutable_position() = position.to_proto();
+   net::storage::sb::SubscribeChunk subscribe_chunk;
+   subscribe_chunk.position = position.position();
 
-   this->send(request);
+   network::message::Writer writer;
+   subscribe_chunk.serialize(writer);
+   this->send(writer.buffer_view());
 }
 
-void StorageClient::push_chunk(const world::Chunk *chunk)
+void StorageClient::push_chunk(world::Chunk *chunk)
 {
    if (chunk == nullptr)
       return;
 
-   proto::service::storage::Request request;
-   *request.mutable_chunk_data()->mutable_chunk_data() = chunk->to_proto();
+   net::storage::sb::StoreChunk store_chunk;
+   world::ChunkSerializer serializer(*chunk);
+   serializer.write_chunk(store_chunk.chunk);
 
-   this->send(request);
+   network::message::Writer writer;
+   store_chunk.serialize(writer);
+   this->send(writer.buffer_view());
 }
 
 Stream::Stream(stream::Client &client, const network::Endpoint &endpoint) :
@@ -29,11 +38,9 @@ Stream::Stream(stream::Client &client, const network::Endpoint &endpoint) :
 {
 }
 
-void Stream::send(const Request &req)
+void Stream::send(const container::BufferView &message)
 {
-   container::Buffer buffer(static_cast<std::size_t>(req.ByteSizeLong()));
-   req.SerializeToArray(buffer.data(), static_cast<int>(buffer.size()));
-   m_peer->send_reliable_message(buffer.as_view());
+   m_peer->send_reliable_message(message);
 }
 
 bool Stream::is_connected() const
@@ -56,8 +63,9 @@ void StorageClient::connect(const network::Endpoint &address)
    this->tick();
 }
 
-bool StorageClient::send(const Request &request)
+bool StorageClient::send(const container::BufferView &request)
 {
+   assert(not m_streams.empty());
    m_streams.front().send(request);
    return false;
 }
@@ -67,28 +75,28 @@ void StorageClient::tick()
    m_client.tick();
 }
 
-void StorageClient::on_connected(std::shared_ptr<stream::Peer> peer)
+void StorageClient::on_connected(stream::Peer *peer)
 {
    spdlog::info("established connection to storage server at {}", peer->id());
 
-   proto::service::storage::Request request;
-   request.mutable_set_client_id()->mutable_client_id()->set_value(m_client_id);
+   net::storage::sb::SetClientId set_client_id;
+   set_client_id.client_id = m_client_id;
 
-   container::Buffer buffer(static_cast<std::size_t>(request.ByteSizeLong()));
-   request.SerializeToArray(buffer.data(), static_cast<int>(buffer.size()));
-   peer->send_reliable_message(buffer.as_view());
+   network::message::Writer writer;
+   set_client_id.serialize(writer);
+   this->send(writer.buffer_view());
 }
 
-void StorageClient::on_received_message(std::shared_ptr<stream::Peer> /*peer*/,
-                                        minecpp::container::BufferView message)
+void StorageClient::on_received_message(stream::Peer * /*peer*/, minecpp::container::BufferView message)
 {
-   proto::service::storage::Response response;
-   response.ParseFromArray(message.data(), static_cast<int>(message.size()));
+   auto stream = message.make_stream();
+   network::message::Reader reader(stream);
 
-   m_handler.handle_response(std::move(response));
+   int a = 0;
+   net::storage::cb::visit_message(m_handler, a, reader);
 }
 
-void StorageClient::on_disconnected(std::shared_ptr<stream::Peer> peer, bool *try_reconnect)
+void StorageClient::on_disconnected(stream::Peer *peer, bool *try_reconnect)
 {
    spdlog::info("lost connection to server {}", peer->hostname());
    *try_reconnect = true;

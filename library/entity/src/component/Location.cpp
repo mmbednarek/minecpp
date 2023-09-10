@@ -14,14 +14,16 @@ Location::Location(const math::Vector3 &position, const math::Vector3 &extent) :
 {
 }
 
-void Location::serialize_to_proto(proto::entity::Entity *entity) const
+void Location::serialize_to_net(game::NetworkEntity *net_entity) const
 {
-   *entity->mutable_position() = this->m_position.to_proto();
+   assert(net_entity);
+   net_entity->entity_data.position = m_position;
 }
 
-void Location::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
+void Location::serialize_to_net_player(game::NetworkPlayer *net_player) const
 {
-   *entity->mutable_position() = this->m_position.to_proto();
+   assert(net_player);
+   net_player->player_data.position = m_position;
 }
 
 math::Vector3 Location::position() const
@@ -188,14 +190,18 @@ Rotation::Rotation(const math::Rotation &rotation) :
 {
 }
 
-void Rotation::serialize_to_proto(proto::entity::Entity *entity) const
+void Rotation::serialize_to_net(game::NetworkEntity *net_entity) const
 {
-   *entity->mutable_rotation() = m_rotation.to_proto();
+   assert(net_entity);
+   net_entity->entity_data.yaw   = m_rotation.yaw_degrees();
+   net_entity->entity_data.pitch = m_rotation.pitch_degrees();
 }
 
-void Rotation::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
+void Rotation::serialize_to_net_player(game::NetworkPlayer *net_player) const
 {
-   *entity->mutable_rotation() = m_rotation.to_proto();
+   assert(net_player);
+   net_player->player_data.yaw   = m_rotation.yaw_degrees();
+   net_player->player_data.pitch = m_rotation.pitch_degrees();
 }
 
 math::Degrees Rotation::yaw_degrees() const

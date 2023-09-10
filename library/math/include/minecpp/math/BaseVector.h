@@ -1,4 +1,5 @@
 #pragma once
+
 #include <algorithm>
 #include <cmath>
 #include <functional>
@@ -129,36 +130,35 @@ class BaseVector
    }
 
 
-#define MCC_MATH_DEFINE_VECTOR_TRAITS(count)                                \
-   using ValueType             = TValue;                                    \
-   using SelfType              = BaseVector<ValueType, count>;              \
-   using ProtoType             = typename ProtoVector<TValue, count>::Type; \
-   static constexpr auto Count = count;                                     \
-   ValueType m_storage[Count];                                              \
-   MCC_MATH_DECLARE_VEC_BINARY_OP(+, std::plus<ValueType>{})                \
-   MCC_MATH_DECLARE_VEC_BINARY_OP(-, std::minus<ValueType>{})               \
-   MCC_MATH_DECLARE_VEC_BINARY_OP(*, std::multiplies<ValueType>{})          \
-   MCC_MATH_DECLARE_VEC_BINARY_OP(/, std::divides<ValueType>{})             \
-   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(+=, std::plus<ValueType>{})        \
-   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(-=, std::minus<ValueType>{})       \
-   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(*=, std::multiplies<ValueType>{})  \
-   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(/=, std::divides<ValueType>{})     \
-   MCC_MATH_DECLARE_UNIT_BINARY_OP(+)                                       \
-   MCC_MATH_DECLARE_UNIT_BINARY_OP(-)                                       \
-   MCC_MATH_DECLARE_UNIT_BINARY_OP(*)                                       \
-   MCC_MATH_DECLARE_UNIT_BINARY_OP(/)                                       \
-   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(+=)                               \
-   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(-=)                               \
-   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(*=)                               \
-   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(/=)                               \
-   MCC_MATH_DECLARE_EQUAL_OP                                                \
-   MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(floor, ::std::floor)             \
-   MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(ceil, ::std::ceil)               \
-   MCC_MATH_DECLARE_ACCUMULATE_METHOD                                       \
-   MCC_MATH_DECLARE_TRANSFORM_FUNC                                          \
-   MCC_MATH_DECLARE_CAST_FUNC                                               \
-   MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR                                      \
-   MCC_MATH_DECLARE_VEC_LENGTH_METHOD                                       \
-   MCC_MATH_DECLARE_VEC_NORMALIZE_METHOD                                    \
-   MCC_MATH_DECLARE_VEC_BINARY_OP_FUNC(min, std::min<ValueType>)            \
+#define MCC_MATH_DEFINE_VECTOR_TRAITS(count)                               \
+   using ValueType             = TValue;                                   \
+   using SelfType              = BaseVector<ValueType, count>;             \
+   static constexpr auto Count = count;                                    \
+   ValueType m_storage[Count];                                             \
+   MCC_MATH_DECLARE_VEC_BINARY_OP(+, std::plus<ValueType>{})               \
+   MCC_MATH_DECLARE_VEC_BINARY_OP(-, std::minus<ValueType>{})              \
+   MCC_MATH_DECLARE_VEC_BINARY_OP(*, std::multiplies<ValueType>{})         \
+   MCC_MATH_DECLARE_VEC_BINARY_OP(/, std::divides<ValueType>{})            \
+   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(+=, std::plus<ValueType>{})       \
+   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(-=, std::minus<ValueType>{})      \
+   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(*=, std::multiplies<ValueType>{}) \
+   MCC_MATH_DECLARE_VEC_ASSIGN_BINARY_OP(/=, std::divides<ValueType>{})    \
+   MCC_MATH_DECLARE_UNIT_BINARY_OP(+)                                      \
+   MCC_MATH_DECLARE_UNIT_BINARY_OP(-)                                      \
+   MCC_MATH_DECLARE_UNIT_BINARY_OP(*)                                      \
+   MCC_MATH_DECLARE_UNIT_BINARY_OP(/)                                      \
+   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(+=)                              \
+   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(-=)                              \
+   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(*=)                              \
+   MCC_MATH_DECLARE_UNIT_ASSIGN_BINARY_OP(/=)                              \
+   MCC_MATH_DECLARE_EQUAL_OP                                               \
+   MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(floor, ::std::floor)            \
+   MCC_MATH_DECLARE_VEC_TRANSFORM_FUNCTION(ceil, ::std::ceil)              \
+   MCC_MATH_DECLARE_ACCUMULATE_METHOD                                      \
+   MCC_MATH_DECLARE_TRANSFORM_FUNC                                         \
+   MCC_MATH_DECLARE_CAST_FUNC                                              \
+   MCC_MATH_DECLARE_VEC_INDEX_ACCESSOR                                     \
+   MCC_MATH_DECLARE_VEC_LENGTH_METHOD                                      \
+   MCC_MATH_DECLARE_VEC_NORMALIZE_METHOD                                   \
+   MCC_MATH_DECLARE_VEC_BINARY_OP_FUNC(min, std::min<ValueType>)           \
    MCC_MATH_DECLARE_VEC_BINARY_OP_FUNC(max, std::max<ValueType>)

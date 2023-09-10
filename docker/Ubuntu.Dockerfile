@@ -21,9 +21,8 @@ RUN apt-get -y install \
   libssl-dev \
   libfl-dev \
   libbenchmark-dev \
-  libprotobuf-dev \
-  protobuf-compiler \
   libenet-dev \
+  libabsl-dev \
   unzip \
   jq \
   dnsutils \

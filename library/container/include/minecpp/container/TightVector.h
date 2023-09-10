@@ -3,6 +3,7 @@
 #include <functional>
 #include <mb/int.h>
 #include <numeric>
+#include <shared_mutex>
 #include <vector>
 
 namespace minecpp::container {
@@ -15,6 +16,12 @@ class TightVector
    using difference_type = ssize_t;
    using raw_value_type  = mb::u64;
    using bits_type       = mb::u8;
+
+   TightVector(const TightVector &other);
+   TightVector &operator=(const TightVector &other);
+
+   TightVector(TightVector &&other) noexcept;
+   TightVector &operator=(TightVector &&other) noexcept;
 
    template<typename TIter>
    TightVector(bits_type bits, TIter begin, TIter end) :
@@ -95,13 +102,16 @@ class TightVector
    void push_back(value_type value);
 
    void set(size_type i, value_type value);
-   void set_bits(mb::u8 new_bits);
+   void set_bits_internal(std::uint8_t new_bits);
+   void set_bits(std::uint8_t new_bits);
    void increase_bits();
 
    void resize(size_type new_size);
 
    struct Iterator
    {
+      friend TightVector;
+
       using pointer           = TightVector::value_type *;
       using reference         = TightVector::value_type &;
       using iterator_category = std::forward_iterator_tag;
@@ -118,6 +128,10 @@ class TightVector
       bool operator!=(Iterator other) const;
 
       [[nodiscard]] value_type operator*() const;
+
+    private:
+      [[nodiscard]] value_type get_internal() const;
+      void increase_internal();
    };
 
    [[nodiscard]] Iterator begin() const;
@@ -139,6 +153,7 @@ class TightVector
    std::vector<raw_value_type> m_data{};
    bits_type m_bits{};
    size_type m_size{};
+   mutable std::shared_mutex m_mutex;
 };
 
 }// namespace minecpp::container

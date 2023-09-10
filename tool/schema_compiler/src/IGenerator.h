@@ -11,7 +11,7 @@
 
 namespace minecpp::tool::schema_compiler {
 
-constexpr auto g_nbt_generator_name = "nbt";
+constexpr auto g_nbt_generator_name     = "nbt";
 constexpr auto g_network_generator_name = "net";
 
 struct PathInfo
@@ -58,7 +58,8 @@ class GeneratorError : public std::runtime_error
 };
 
 template<typename... TArgs>
-inline void generator_verify(bool check, int line, int column, fmt::format_string<TArgs...> format_str, TArgs &&...args)
+inline void generator_verify(bool check, int line, int column, fmt::format_string<TArgs...> format_str,
+                             TArgs &&...args)
 {
    if (not check) {
       throw GeneratorError(line, column, fmt::format(format_str, std::forward<TArgs>(args)...));

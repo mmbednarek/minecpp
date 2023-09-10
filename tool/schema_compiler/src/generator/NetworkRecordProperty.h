@@ -11,4 +11,4 @@ class NetworkRecordProperty : public INetworkProperty
    void write_deserializer(NetworkDeserializeContext &ctx) override;
 };
 
-}
+}// namespace minecpp::tool::schema_compiler::generator

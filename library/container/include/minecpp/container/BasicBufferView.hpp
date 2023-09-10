@@ -74,6 +74,9 @@ class BasicBufferView
    void read_from(std::istream &stream);
    void write_to(std::ostream &stream);
 
+   TByte *begin();
+   TByte *end();
+
    [[nodiscard]] InputStreamBufferView<BasicBufferView<TByte>> make_stream() const;
 
    static BasicBufferView from_string(std::string_view view);
@@ -83,6 +86,18 @@ class BasicBufferView
    std::size_t m_size{};
    TByte *m_data{};
 };
+
+template<typename TByte>
+TByte *BasicBufferView<TByte>::begin()
+{
+   return m_data;
+}
+
+template<typename TByte>
+TByte *BasicBufferView<TByte>::end()
+{
+   return m_data + m_size;
+}
 
 template<typename TByte>
 BasicBufferView<TByte>::BasicBufferView() :

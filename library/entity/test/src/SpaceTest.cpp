@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
-#include <minecpp/entity/EntitySystem.h>
-#include <minecpp/entity/factory/Player.h>
-#include <minecpp/game/player/Id.h>
-#include <minecpp/world/IChunkSystem.h>
+
+#include "minecpp/entity/EntitySystem.h"
+#include "minecpp/entity/factory/Player.h"
+#include "minecpp/game/EntityData.hpp"
+#include "minecpp/game/player/Id.h"
+#include "minecpp/world/IChunkSystem.h"
 
 using minecpp::entity::EntitySystem;
 
@@ -63,19 +65,19 @@ TEST(Entity, EntitySystem_Nearest)
    EXPECT_NE(std::find(list2.begin(), list2.end(), id3.id()), list2.end());
 }
 
-TEST(Entity, ProtoSerialize)
+TEST(Entity, NetSerialize)
 {
    MockChunkSystem chunk_system;
    EntitySystem system(chunk_system);
    auto entity = system.create_spatial_entity({4, 5, 6}, {1, 1, 1});
 
-   minecpp::proto::entity::Entity proto_entity;
-   entity.serialize_to_proto(&proto_entity);
+   minecpp::game::NetworkEntity net_entity;
+   entity.serialize_to_net(&net_entity);
 
-   EXPECT_EQ(proto_entity.entity_id(), entity.id());
-   EXPECT_EQ(proto_entity.position().x(), 4);
-   EXPECT_EQ(proto_entity.position().y(), 5);
-   EXPECT_EQ(proto_entity.position().z(), 6);
+   EXPECT_EQ(net_entity.entity_data.entity_id, entity.id());
+   EXPECT_EQ(net_entity.entity_data.position.x(), 4);
+   EXPECT_EQ(net_entity.entity_data.position.y(), 5);
+   EXPECT_EQ(net_entity.entity_data.position.z(), 6);
 
    system.destroy_entity(entity.id());
    system.apply_pending_kills();
@@ -83,20 +85,21 @@ TEST(Entity, ProtoSerialize)
 
 TEST(Entity, ProtoPlayerSerialize)
 {
+   auto id = minecpp::game::player::read_id_from_nbt({1, 2, 3, 4});
+
    MockChunkSystem chunk_system;
    EntitySystem system(chunk_system);
-   minecpp::entity::factory::Player player(minecpp::game::player::read_id_from_nbt({1, 2, 3, 4}), "test");
+   minecpp::entity::factory::Player player(id, "test");
    auto entity = player.create_entity({4, 5, 6}, system);
 
-   minecpp::proto::entity::PlayerEntity proto_entity;
-   entity.serialize_player_to_proto(&proto_entity);
+   minecpp::game::NetworkPlayer network_player;
+   entity.serialize_to_net_player(&network_player);
 
-   EXPECT_EQ(proto_entity.entity_id(), entity.id());
-   EXPECT_EQ(proto_entity.uuid().lower(), 8589934593);
-   EXPECT_EQ(proto_entity.uuid().upper(), 17179869187);
-   EXPECT_EQ(proto_entity.position().x(), 4);
-   EXPECT_EQ(proto_entity.position().y(), 5);
-   EXPECT_EQ(proto_entity.position().z(), 6);
+   EXPECT_EQ(network_player.player_data.entity_id, entity.id());
+   EXPECT_EQ(network_player.player_data.player_id, id);
+   EXPECT_EQ(network_player.player_data.position.x(), 4);
+   EXPECT_EQ(network_player.player_data.position.y(), 5);
+   EXPECT_EQ(network_player.player_data.position.z(), 6);
 
    system.destroy_entity(entity.id());
    system.apply_pending_kills();

@@ -1,9 +1,11 @@
 #include "Example2.schema.h"
+#include "minecpp/network/NetworkUtil.h"
 #include <algorithm>
 
 namespace minecpp::example2 {
 
-void Properties::serialize(::minecpp::network::message::Writer &writer) const {
+void Properties::serialize(::minecpp::network::message::Writer &writer) const
+{
    writer.write_string(this->name);
    writer.write_double(this->position);
    writer.write_big_endian(this->count);
@@ -14,16 +16,20 @@ void Properties::serialize(::minecpp::network::message::Writer &writer) const {
    }
 }
 
-Properties Properties::deserialize(::minecpp::network::message::Reader &reader) {
+Properties Properties::deserialize(::minecpp::network::message::Reader &reader)
+{
    Properties result;
-   result.name = reader.read_string();
-   result.position = reader.read_double();
-   result.count = reader.read_big_endian<std::int16_t>();
+   result.name                = reader.read_string();
+   result.position            = reader.read_double();
+   result.count               = reader.read_big_endian<std::int16_t>();
    const auto meta_map_size_0 = reader.read_varint();
-   std::generate_n(std::inserter(result.meta, result.meta.begin()), static_cast<std::size_t>(meta_map_size_0), [&reader]() {
-      return std::make_pair(reader.read_string(), reader.read_string());
-   });
+   std::generate_n(std::inserter(result.meta, result.meta.begin()), static_cast<std::size_t>(meta_map_size_0),
+                   [&reader]() {
+                      std::string meta_key_0;
+                      meta_key_0 = reader.read_string();
+                      return std::make_pair(meta_key_0, reader.read_string());
+                   });
    return result;
 }
 
-}
+}// namespace minecpp::example2

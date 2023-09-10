@@ -5,12 +5,10 @@
 namespace minecpp::tool::schema_compiler::generator {
 
 
-NetworkDeserializeContext::NetworkDeserializeContext(Type type, std::string name,
-                                                     std::unique_ptr<mb::codegen::expression> in_destination,
-                                                     AnnotationList in_annotations, int depth,
-                                                     mb::codegen::statement::collector &collector,
-                                                     NetworkPropertyStorage &property_storage,
-                                                     const SymbolTable &symbol_table, const Document &document) :
+NetworkDeserializeContext::NetworkDeserializeContext(
+        Type type, std::string name, std::unique_ptr<mb::codegen::expression> in_destination,
+        AnnotationList in_annotations, int depth, mb::codegen::statement::collector &collector,
+        NetworkPropertyStorage &property_storage, const SymbolTable &symbol_table, const Document &document) :
     m_type(std::move(type)),
     m_name(std::move(name)),
     m_destination(std::move(in_destination)),
@@ -122,19 +120,20 @@ mb::codegen::statement::collector &NetworkDeserializeContext::operator<<(const m
 
 std::string NetworkDeserializeContext::type_generator() const
 {
-   auto symbol = m_symbol_table.find_symbol(m_document.package_info().full_name(), m_type.full_name());
-   generator_verify(symbol.has_value(), m_type.line(), m_type.column(),
-                    "could not find symbol {} in package {}", m_type.full_name(),
-                    m_document.package_info().full_name());
-   return symbol->generator;
+   return this->symbol().generator;
 }
 
 TypeClass NetworkDeserializeContext::type_class() const
+{
+   return this->symbol().type_class;
+}
+
+Symbol NetworkDeserializeContext::symbol() const
 {
    auto symbol = m_symbol_table.find_symbol(m_document.package_info().full_name(), m_type.full_name());
    generator_verify(symbol.has_value(), m_type.line(), m_type.column(),
                     "could not find symbol {} in package {}", m_type.full_name(),
                     m_document.package_info().full_name());
-   return symbol->type_class;
+   return std::move(*symbol);
 }
 }// namespace minecpp::tool::schema_compiler::generator

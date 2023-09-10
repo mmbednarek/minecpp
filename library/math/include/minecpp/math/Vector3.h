@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseVector.h"
-#include "ProtoTypes.h"
 #include <fmt/format.h>
 
 namespace minecpp::math {
@@ -21,25 +20,11 @@ class BaseVector<TValue, 3>
       return {x(), z()};
    }
 
-   [[nodiscard]] static SelfType from_proto(const ProtoType &proto_vec)
-   {
-      return {proto_vec.x(), proto_vec.y(), proto_vec.z()};
-   }
-
    [[nodiscard]] bool is_correct() const
    {
       return std::all_of(m_storage, m_storage + Count, [](const ValueType value) {
          return not std::isnan(value) and not std::isinf(value);
       });
-   }
-
-   [[nodiscard]] ProtoType to_proto() const
-   {
-      ProtoType result;
-      result.set_x(this->x());
-      result.set_y(this->y());
-      result.set_z(this->z());
-      return result;
    }
 };
 

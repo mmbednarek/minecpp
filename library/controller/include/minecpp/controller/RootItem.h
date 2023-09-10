@@ -1,4 +1,6 @@
-#include <minecpp/game/IItemController.hpp>
+#pragma once
+
+#include "minecpp/game/IItemController.hpp"
 
 namespace minecpp::controller {
 

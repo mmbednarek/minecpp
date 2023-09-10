@@ -9,32 +9,34 @@ Entity::Entity(entt::registry &registry, game::EntityId id) :
 {
 }
 
-void Entity::serialize_to_proto(proto::entity::Entity *entity) const
+void Entity::serialize_to_net(NetworkEntity *net_entity) const
 {
-   assert(entity);
+   assert(net_entity);
 
-   entity->set_entity_id(static_cast<mb::u32>(m_entity));
+   net_entity->entity_data.entity_id = static_cast<mb::u32>(m_entity);
+   net_entity->metadata.entity_id    = static_cast<mb::u32>(m_entity);
 
-   this->for_each_component([entity](const entt::meta_any &obj) mutable {
+   this->for_each_component([net_entity](const entt::meta_any &obj) mutable {
       using namespace entt::literals;
-      auto serialize = obj.type().func("serialize_to_proto"_hs);
+      auto serialize = obj.type().func("serialize_to_net"_hs);
       if (serialize) {
-         serialize.invoke(obj, entity);
+         serialize.invoke(obj, net_entity);
       }
    });
 }
 
-void Entity::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
+void Entity::serialize_to_net_player(NetworkPlayer *net_player) const
 {
-   assert(entity);
+   assert(net_player);
 
-   entity->set_entity_id(static_cast<mb::u32>(m_entity));
+   net_player->player_data.entity_id = static_cast<mb::u32>(m_entity);
+   net_player->metadata.entity_id    = static_cast<mb::u32>(m_entity);
 
-   this->for_each_component([entity](const entt::meta_any &obj) mutable {
+   this->for_each_component([net_player](const entt::meta_any &obj) mutable {
       using namespace entt::literals;
-      auto serialize = obj.type().func("serialize_player_to_proto"_hs);
+      auto serialize = obj.type().func("serialize_to_net_player"_hs);
       if (serialize) {
-         serialize.invoke(obj, entity);
+         serialize.invoke(obj, net_player);
       }
    });
 }

@@ -2,7 +2,6 @@
 #include "Section.h"
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/game/SectionRange.h>
-#include <minecpp/proto/chunk/Chunk.pb.h>
 #include <unordered_map>
 
 namespace minecpp::world {
@@ -21,9 +20,6 @@ class SectionSlice : public game::ISectionSlice
    world::Section &operator[](game::SectionPosition position) override;
 
    [[nodiscard]] game::SectionRange range() const;
-
-   [[nodiscard]] static SectionSlice from_proto(const proto::chunk::SectionSlice &slice);
-   [[nodiscard]] proto::chunk::SectionSlice to_proto();
 
  private:
    game::SectionRange m_range;

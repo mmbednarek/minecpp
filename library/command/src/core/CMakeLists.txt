@@ -5,6 +5,7 @@ target_sources(minecpp_command
     # Source files
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/Cord.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Core.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/DecimateBlocks.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Echo.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Fly.cpp
@@ -20,6 +21,7 @@ target_sources(minecpp_command
     # Header files
     PUBLIC
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Cord.h
+        ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Core.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/DecimateBlocks.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Echo.h
         ${MINECPP_COMMAND_CORE_INCLUDE_DIR}/Fly.h

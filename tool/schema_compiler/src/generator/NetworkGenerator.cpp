@@ -4,6 +4,7 @@
 
 #include "NetworkBasicProperty.h"
 #include "NetworkDeserializeContext.h"
+#include "NetworkExternProperty.h"
 #include "NetworkListProperty.h"
 #include "NetworkMapProperty.h"
 #include "NetworkOptionalProperty.h"
@@ -46,6 +47,7 @@ NetworkGenerator::NetworkGenerator(const Document &document, const SymbolTable &
     m_component{document.package_info().to_cpp_namespace()}
 {
    m_component.source_include_local(this->corresponding_header(this->m_path_info.origin_document_path));
+   m_component.source_include_local("minecpp/network/NetworkUtil.h");
    m_component.source_include("algorithm");
 
    m_component.header_include("cstdint");
@@ -85,10 +87,10 @@ NetworkGenerator::NetworkGenerator(const Document &document, const SymbolTable &
                                                               "reader.read_varint");
    m_property_storage.register_property<NetworkBasicProperty>(TypeClass::Varlong, "writer.write_varlong",
                                                               "reader.read_varlong");
-   m_property_storage.register_property<NetworkBasicProperty>(TypeClass::UnsignedVarint, "writer.write_uvarint",
-                                                              "reader.read_uvarint");
-   m_property_storage.register_property<NetworkBasicProperty>(TypeClass::UnsignedVarlong, "writer.write_uvarlong",
-                                                              "reader.read_uvarlong");
+   m_property_storage.register_property<NetworkBasicProperty>(TypeClass::UnsignedVarint,
+                                                              "writer.write_uvarint", "reader.read_uvarint");
+   m_property_storage.register_property<NetworkBasicProperty>(
+           TypeClass::UnsignedVarlong, "writer.write_uvarlong", "reader.read_uvarlong");
    m_property_storage.register_property<NetworkBasicProperty>(TypeClass::Bool, "writer.write_bool",
                                                               "reader.read_bool");
    m_property_storage.register_property<NetworkBasicProperty>(TypeClass::Uuid, "writer.write_uuid",
@@ -98,8 +100,15 @@ NetworkGenerator::NetworkGenerator(const Document &document, const SymbolTable &
    m_property_storage.register_property<NetworkMapProperty>(TypeClass::Map);
    m_property_storage.register_property<NetworkVariantProperty>(TypeClass::Variant);
    m_property_storage.register_property<NetworkRecordProperty>(TypeClass::Record);
+   m_property_storage.register_property<NetworkExternProperty>(TypeClass::Extern);
 
    int message_count{};
+
+   for (const auto &alias : m_document.aliases()) {
+      if (alias.annotations().has_key("IncludeHeader")) {
+         m_component.header_include_local(alias.annotations().value_at(("IncludeHeader")));
+      }
+   }
 
    for (const auto &record : m_document.records()) {
       class_spec record_class(record.name());
@@ -115,32 +124,32 @@ NetworkGenerator::NetworkGenerator(const Document &document, const SymbolTable &
          record_class.add_public(cpp_attribute.type_name(), cpp_attribute.name());
       }
 
-      record_class.add_public(method(
-              "void", "serialize",
-              {
-                      {"::minecpp::network::message::Writer", "&writer"},
+      record_class.add_public(
+              method("void", "serialize",
+                     {
+                             {"::minecpp::network::message::Writer", "&writer"},
       },
-              true, [this, is_message, &record](statement::collector &col) {
-                 if (is_message) {
-                    col << raw("writer.write_byte({})", record.annotations().value_at("MessageID"));
-                 }
+                     true, [this, is_message, &record](statement::collector &col) {
+                        if (is_message) {
+                           col << raw("writer.write_byte({})", record.annotations().value_at("MessageID"));
+                        }
 
-                 for (const auto &attribute : record.attributes()) {
-                    CppAttribute cpp_attribute(m_document, m_table, attribute);
-                    NetworkSerializeContext ctx{attribute.type(),
-                                                cpp_attribute.name(),
-                                                raw(fmt::format("this->{}", cpp_attribute.name())),
-                                                attribute.annotations(),
-                                                0,
-                                                col,
-                                                m_property_storage,
-                                                m_table,
-                                                m_document};
+                        for (const auto &attribute : record.attributes()) {
+                           CppAttribute cpp_attribute(m_document, m_table, attribute);
+                           NetworkSerializeContext ctx{attribute.type(),
+                                                       cpp_attribute.name(),
+                                                       raw(fmt::format("this->{}", cpp_attribute.name())),
+                                                       attribute.annotations(),
+                                                       0,
+                                                       col,
+                                                       m_property_storage,
+                                                       m_table,
+                                                       m_document};
 
-                    auto &property = m_property_storage.property_of(cpp_attribute.type_class());
-                    property.write_serializer(ctx);
-                 }
-              }));
+                           auto &property = m_property_storage.property_of(cpp_attribute.type_class());
+                           property.write_serializer(ctx);
+                        }
+                     }));
 
       std::vector<mb::codegen::arg> deserialize_arguments{
               {"::minecpp::network::message::Reader", "&reader"}
@@ -165,27 +174,29 @@ NetworkGenerator::NetworkGenerator(const Document &document, const SymbolTable &
          }
       }
 
-      record_class.add_public(static_method(record.name(), "deserialize", deserialize_arguments,
-                                            [this, &record](statement::collector &col) {
-                                               col << raw("{} result", record.name());
-                                               for (const auto &attribute : record.attributes()) {
-                                                  CppAttribute cpp_attribute(m_document, m_table, attribute);
+      record_class.add_public(static_method(
+              record.name(), "deserialize", deserialize_arguments,
+              [this, &record](statement::collector &col) {
+                 col << raw("{} result", record.name());
+                 for (const auto &attribute : record.attributes()) {
+                    CppAttribute cpp_attribute(m_document, m_table, attribute);
 
-                                                  NetworkDeserializeContext ctx{attribute.type(),
-                                                                              cpp_attribute.name(),
-                                                                              std::make_unique<raw>(fmt::format("result.{}", cpp_attribute.name())),
-                                                                              attribute.annotations(),
-                                                                              0,
-                                                                              col,
-                                                                              m_property_storage,
-                                                                              m_table,
-                                                                              m_document};
+                    NetworkDeserializeContext ctx{
+                            attribute.type(),
+                            cpp_attribute.name(),
+                            std::make_unique<raw>(fmt::format("result.{}", cpp_attribute.name())),
+                            attribute.annotations(),
+                            0,
+                            col,
+                            m_property_storage,
+                            m_table,
+                            m_document};
 
-                                                  auto &property = m_property_storage.property_of(cpp_attribute.type_class());
-                                                  property.write_deserializer(ctx);
-                                               }
-                                               col << return_statement(raw("result"));
-                                            }));
+                    auto &property = m_property_storage.property_of(cpp_attribute.type_class());
+                    property.write_deserializer(ctx);
+                 }
+                 col << return_statement(raw("result"));
+              }));
 
       m_component << record_class;
    }

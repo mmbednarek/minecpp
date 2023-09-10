@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Concepts.hpp"
+#include "EntityData.hpp"
 #include "Entt.hpp"
 #include "Types.hpp"
-#include <minecpp/math/Vector3.h>
+
+#include "minecpp/math/Vector3.h"
 
 namespace minecpp::game {
 
@@ -50,8 +52,8 @@ class Entity
       }
    }
 
-   void serialize_to_proto(proto::entity::Entity *entity) const;
-   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
+   void serialize_to_net(NetworkEntity *net_entity) const;
+   void serialize_to_net_player(NetworkPlayer *net_player) const;
    void on_killed(IWorld &world);
    void on_attached_to_world(IWorld &world, const math::Vector3 &position, const math::Vector3 &extent);
 

@@ -3,7 +3,7 @@
 #include <boost/uuid/uuid.hpp>
 #include <mb/int.h>
 #include <minecpp/chat/Chat.h>
-#include <minecpp/game/Abilities.h>
+#include <minecpp/game/Abilities.hpp>
 #include <minecpp/game/Game.h>
 #include <minecpp/math/Rotation.h>
 #include <minecpp/math/Vector3.h>
@@ -23,9 +23,7 @@ using boost::uuids::uuid;
 class IDispatcher
 {
  public:
-   virtual void load_terrain(PlayerId player, const ChunkPosition &central_chunk,
-                             std::vector<ChunkPosition> coords)                                          = 0;
-   virtual void spawn_entity(EntityId entity_id, const math::Vector3 &position)                          = 0;
+   virtual void spawn_entity(EntityId entity_id)                                                         = 0;
    virtual void spawn_entity_for_player(PlayerId player_id, EntityId entity_id)                          = 0;
    virtual void entity_move(EntityId entity_id, const math::Vector3 &position, const math::Vector3s &movement,
                             const math::Rotation &rotation, bool is_on_ground)                           = 0;
@@ -33,8 +31,6 @@ class IDispatcher
                             const math::Rotation &rotation)                                              = 0;
    virtual void send_entities(PlayerId player_id, std::span<EntityId> entities)                          = 0;
    virtual void add_player(PlayerId player, const std::string &name, mb::u32 ping)                       = 0;
-   virtual void spawn_player(PlayerId player, EntityId entity_id, const math::Vector3 &position)         = 0;
-   virtual void spawn_player_for_player(PlayerId receiver, PlayerId spawned_player, EntityId entity_id)  = 0;
    virtual void send_chat(chat::MessageType msg_type, const std::string &msg)                            = 0;
    virtual void send_direct_chat(PlayerId player_id, chat::MessageType msg_type, const std::string &msg) = 0;
    virtual void remove_player(PlayerId player, EntityId entity_id)                                       = 0;
@@ -46,7 +42,7 @@ class IDispatcher
    virtual void acknowledge_block_change(PlayerId player_id, int sequence_id)                            = 0;
    virtual void unload_chunk(PlayerId player, const ChunkPosition &chunk_position)                       = 0;
    virtual void set_inventory_slot(PlayerId player_id, ItemId item_id, SlotId slot_id, int count)        = 0;
-   virtual void update_block_light(ISectionSlice &slice, SectionRange range)                             = 0;
+   virtual void update_block_light(const math::Vector3 &center, game::SectionRange range)                = 0;
    virtual void update_chunk_position(PlayerId player_id, const ChunkPosition &chunk_position)           = 0;
    virtual void synchronise_player_position_and_rotation(PlayerId player_id, math::Vector3 position,
                                                          math::Rotation rotation)                        = 0;
@@ -68,7 +64,7 @@ class IDispatcher
    virtual void set_abilities(PlayerId player_id, const game::Abilities &abilities)                      = 0;
    virtual void send_damage_event(EntityId target, int id, std::optional<EntityId> cause_entity_id,
                                   std::optional<EntityId> direct_entity_id,
-                                  const math::Vector3 &position)                                 = 0;
+                                  const math::Vector3 &position)                                         = 0;
 };
 
 }// namespace minecpp::game

@@ -1,7 +1,0 @@
-syntax = "proto3";
-package minecpp.proto.player;
-
-message PlayerId {
-  uint64 lower = 1;
-  uint64 upper = 2;
-}

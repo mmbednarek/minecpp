@@ -3,7 +3,6 @@
   "has_test": true,
   "dependencies": {
     "public": [
-      "minecpp_api_proto",
       "minecpp_container",
       "minecpp_entity",
       "minecpp_game",

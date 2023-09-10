@@ -64,7 +64,7 @@ int len_varint(int value)
 
 void Writer::write_string(std::string_view s)
 {
-   write_varint(static_cast<std::uint32_t>(s.size()));
+   write_uvarint(static_cast<std::uint32_t>(s.size()));
    m_stream << s;
 }
 
@@ -209,6 +209,13 @@ void Writer::write_bool(bool value)
 std::string_view Writer::view() const
 {
    return m_stream.view();
+}
+
+container::BufferView Writer::buffer_view() const
+{
+   auto view = this->view();
+   return container::BufferView{reinterpret_cast<unsigned char *>(const_cast<char *>(view.data())),
+                                view.size()};
 }
 
 }// namespace minecpp::network::message

@@ -3,7 +3,6 @@
 #include <minecpp/game/IDispatcher.hpp>
 #include <minecpp/game/Mode.h>
 #include <minecpp/math/Vector3.h>
-#include <minecpp/proto/player/Player.pb.h>
 #include <string_view>
 
 namespace minecpp::game {
@@ -28,16 +27,6 @@ struct Status
    std::string name;
    int ping;
    game::Mode mode;
-
-   [[nodiscard]] inline proto::player::Status to_proto() const
-   {
-      proto::player::Status status;
-      *status.mutable_id() = write_id_to_proto(id);
-      status.set_name(name);
-      status.set_ping(ping);
-      status.set_game_mode(game::write_mode_to_proto(mode));
-      return status;
-   }
 };
 
 class Player
@@ -120,8 +109,6 @@ class Player
    }
 
    static Player from_nbt(const nbt::player::Player &player, std::string_view name);
-
-   [[nodiscard]] proto::player::Player to_proto() const;
 };
 
 }// namespace minecpp::game::player

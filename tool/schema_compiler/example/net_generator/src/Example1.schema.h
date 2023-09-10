@@ -1,5 +1,6 @@
 #pragma once
 #include "./ExampleNbt.schema.h"
+#include "minecpp/math/Vector3.h"
 #include "minecpp/network/message/Reader.h"
 #include "minecpp/network/message/Writer.h"
 #include <cstdint>
@@ -8,7 +9,8 @@
 
 namespace minecpp::example1 {
 
-class Item {
+class Item
+{
  public:
    std::string name{};
    std::int16_t count{};
@@ -21,7 +23,8 @@ class Item {
    static Item deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class Person {
+class Person
+{
  public:
    std::string name{};
    std::string surname{};
@@ -30,12 +33,15 @@ class Person {
    std::int32_t dimension_types{};
    ::minecpp::util::Uuid foo{};
    std::variant<float, std::int32_t, Item> opts{};
+   ::minecpp::math::Vector3 position{};
+   ::minecpp::math::Vector3 size{};
    std::map<std::uint8_t, std::string> more{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Person deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class Car {
+class Car
+{
  public:
    std::string brand{};
    std::string vin{};
@@ -44,7 +50,8 @@ class Car {
    static Car deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class PlayerProperty {
+class PlayerProperty
+{
  public:
    std::string key{};
    std::string value{};
@@ -53,7 +60,8 @@ class PlayerProperty {
    static PlayerProperty deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class ActionAddPlayer {
+class ActionAddPlayer
+{
  public:
    std::string name{};
    std::vector<PlayerProperty> properties{};
@@ -61,7 +69,8 @@ class ActionAddPlayer {
    static ActionAddPlayer deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class PlayerChatSignature {
+class PlayerChatSignature
+{
  public:
    ::minecpp::util::Uuid chat_session_id{};
    std::uint64_t public_key_expiry{};
@@ -71,42 +80,48 @@ class PlayerChatSignature {
    static PlayerChatSignature deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class ActionInitializeChat {
+class ActionInitializeChat
+{
  public:
    std::optional<PlayerChatSignature> chat_signature{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ActionInitializeChat deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class ActionSetGameMode {
+class ActionSetGameMode
+{
  public:
    std::int32_t game_mode{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ActionSetGameMode deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class ActionSetIsListed {
+class ActionSetIsListed
+{
  public:
    std::int8_t is_listed{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ActionSetIsListed deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class ActionSetLatency {
+class ActionSetLatency
+{
  public:
    std::int32_t ping{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ActionSetLatency deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class ActionSetDisplayName {
+class ActionSetDisplayName
+{
  public:
    std::optional<std::string> display_name{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static ActionSetDisplayName deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class PlayerInfoChange {
+class PlayerInfoChange
+{
  public:
    ::minecpp::util::Uuid player_id{};
    std::optional<ActionAddPlayer> add_player{};
@@ -116,10 +131,12 @@ class PlayerInfoChange {
    std::optional<ActionSetLatency> set_latency{};
    std::optional<ActionSetDisplayName> set_display_name{};
    void serialize(::minecpp::network::message::Writer &writer) const;
-   static PlayerInfoChange deserialize(::minecpp::network::message::Reader &reader, std::uint32_t action_bits);
+   static PlayerInfoChange deserialize(::minecpp::network::message::Reader &reader,
+                                       std::uint32_t action_bits);
 };
 
-class UpdatePlayerInfo {
+class UpdatePlayerInfo
+{
  public:
    std::uint32_t action_bits{};
    std::vector<PlayerInfoChange> actions{};
@@ -128,7 +145,8 @@ class UpdatePlayerInfo {
 };
 
 template<typename TVisitor, typename TClientInfo>
-void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::network::message::Reader &reader) {
+void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::network::message::Reader &reader)
+{
    auto message_id = reader.read_byte();
    switch (message_id) {
    case 0x01: {
@@ -146,10 +164,8 @@ void visit_message(TVisitor &visitor, TClientInfo &client_info, ::minecpp::netwo
       visitor.on_update_player_info(client_info, message);
       break;
    }
-   default: 
-      visitor.on_failure(client_info, message_id);
-      break;
+   default: visitor.on_failure(client_info, message_id); break;
    }
 }
 
-}
+}// namespace minecpp::example1

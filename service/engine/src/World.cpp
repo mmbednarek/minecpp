@@ -257,4 +257,17 @@ void World::apply_damage_or_kill_entity(game::EntityId id, const game::Damage &d
    entity.component<HealthComponent>().apply_damage(*this, damage);
 }
 
+mb::result<game::Entity> World::player_entity(game::PlayerId player_id)
+{
+   auto player = m_player_manager.get_player(player_id);
+   if (player.has_failed())
+      return std::move(player.err());
+
+   auto entity = m_entity_system.entity(player->entity_id());
+   if (not entity.is_valid())
+      return mb::error("invalid entity");
+
+   return entity;
+}
+
 }// namespace minecpp::service::engine

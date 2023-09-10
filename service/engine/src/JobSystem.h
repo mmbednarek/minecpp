@@ -92,6 +92,9 @@ class JobSystem
    template<typename TCondition, typename... TArgs>
    TicketBuilder when(TArgs &&...args);
 
+   template<typename TCallable>
+   void run(TCallable &&callback);
+
    void process_awaiting_tickets();
 
  private:
@@ -112,6 +115,12 @@ template<typename TJob, typename... TArgs>
 void JobSystem::create_job(TArgs &&...args)
 {
    issue_job(std::make_unique<TJob>(std::forward<TArgs>(args)...));
+}
+
+template<typename TCallable>
+void JobSystem::run(TCallable &&callback)
+{
+   this->issue_job({std::make_unique<FunctorJob>(std::forward<TCallable>(callback))});
 }
 
 template<typename TCondition, typename... TArgs>

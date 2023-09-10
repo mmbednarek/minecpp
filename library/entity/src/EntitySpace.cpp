@@ -1,5 +1,7 @@
 #include "EntitySpace.h"
 
+#include <mutex>
+
 namespace minecpp::entity {
 
 namespace geo = boost::geometry::index;

@@ -25,14 +25,14 @@ void Host::tick()
    while (this->host_service(&event)) {
       switch (event.type) {
       case ENET_EVENT_TYPE_CONNECT: {
-         auto connection = this->new_connection_to_shared_ptr(event.peer);
-         this->on_connected.publish(std::move(connection));
+         auto peer = this->new_connection_to_shared_ptr(event.peer);
+         this->on_connected.publish(peer.get());
          break;
       }
       case ENET_EVENT_TYPE_DISCONNECT: {
          auto *peer         = static_cast<Peer *>(event.peer->data);
          bool try_reconnect = false;
-         this->on_disconnected.publish(this->peer_at(peer->id()), &try_reconnect);
+         this->on_disconnected.publish(peer, &try_reconnect);
 
          if (try_reconnect) {
             peer->reconnect();
@@ -45,7 +45,7 @@ void Host::tick()
       case ENET_EVENT_TYPE_RECEIVE: {
          auto *peer = static_cast<Peer *>(event.peer->data);
          container::BufferView buffer(event.packet->data, event.packet->dataLength);
-         this->on_received.publish(this->peer_at(peer->id()), buffer);
+         this->on_received.publish(peer, buffer);
          break;
       }
       default: continue;

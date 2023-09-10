@@ -1,4 +1,5 @@
 #pragma once
+#include "Entity.h"
 #include "Health.h"
 #include "IDispatcher.hpp"
 #include "Light.h"
@@ -48,10 +49,10 @@ class ILightSystem
 class IWorld : public IBlockContainer
 {
  public:
-   virtual IDispatcher &dispatcher()                                                                  = 0;
-   virtual IEntitySystem &entity_system()                                                             = 0;
-   virtual ILightSystem &light_system()                                                               = 0;
-   virtual player::Provider &players()                                                                = 0;
+   virtual IDispatcher &dispatcher()      = 0;
+   virtual IEntitySystem &entity_system() = 0;
+   virtual ILightSystem &light_system()   = 0;
+   virtual player::Provider &players()    = 0;
 
    virtual mb::result<mb::empty> add_refs(PlayerId player, std::vector<game::ChunkPosition> refs)     = 0;
    virtual mb::result<mb::empty> free_refs(PlayerId player, std::vector<game::ChunkPosition> refs)    = 0;
@@ -66,12 +67,14 @@ class IWorld : public IBlockContainer
    virtual void apply_damage_or_kill_entity(game::EntityId id, const game::Damage &damage)            = 0;
    virtual void destroy_block(const BlockPosition &position)                                          = 0;
 
+   virtual mb::result<game::Entity> player_entity(PlayerId player_id) = 0;
+
    template<typename TEntityFactory, typename... TArgs>
    auto spawn(const math::Vector3 &position, TArgs &&...args)
    {
       TEntityFactory factory{std::forward<TArgs>(args)...};
       auto entity = factory.create_entity(position, this->entity_system());
-      this->dispatcher().spawn_entity(entity.id(), position);
+      this->dispatcher().spawn_entity(entity.id());
       return entity;
    }
 };

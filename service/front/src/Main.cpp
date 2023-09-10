@@ -50,7 +50,7 @@ auto main() -> int
               dynamic_cast<protocol::Handler *>(&status_handler),
               dynamic_cast<protocol::Handler *>(&login_handler));
 
-   EventHandler handler(svr, registry);
+   EventHandler handler(svr);
    Client engine_client(handler);
    engine_client.tick();
 

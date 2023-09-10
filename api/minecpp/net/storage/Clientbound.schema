@@ -1,0 +1,12 @@
+generator = "net"
+package minecpp.net.storage.cb
+
+[MessageID=0x00]
+record ReplyEmptyChunk {
+  position: Vector2i
+}
+
+[MessageID=0x01]
+record ReplyChunk {
+  chunk: Chunk
+}

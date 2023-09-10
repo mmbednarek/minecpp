@@ -6,11 +6,6 @@
 
 namespace minecpp::entity::component {
 
-void Trader::serialize_to_proto(proto::entity::Entity *entity) const
-{
-   entity->set_entity_type(m_entity_type_id);
-}
-
 void Trader::on_interact(game::IWorld &world, game::Entity & /*self*/, game::Entity &other)
 {
    if (not other.has_component<Player>())

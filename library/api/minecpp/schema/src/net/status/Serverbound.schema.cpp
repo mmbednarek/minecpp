@@ -1,3 +1,4 @@
+#include "minecpp/network/NetworkUtil.h"
 #include "net/status/Serverbound.schema.h"
 #include <algorithm>
 
