@@ -558,8 +558,7 @@ void Dispatcher::send_to_player(game::PlayerId player_id, container::BufferView 
    m_events.send_to(message, player_id);
 }
 
-void Dispatcher::send_to_players_visible_by(game::Entity &entity,
-                                            container::BufferView message) const
+void Dispatcher::send_to_players_visible_by(game::Entity &entity, container::BufferView message) const
 {
    assert(entity.has_component<PlayerComponent>());
 
@@ -625,9 +624,9 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
 void Dispatcher::set_abilities(game::PlayerId player_id, const game::Abilities &abilities)
 {
    net::play::cb::PlayerAbilities player_abilities;
-   player_abilities.fly_speed = abilities.fly_speed;
+   player_abilities.fly_speed     = abilities.fly_speed;
    player_abilities.field_of_view = abilities.field_of_view;
-   player_abilities.flags = abilities.flags();
+   player_abilities.flags         = abilities.flags();
    this->send_raw_to_player(player_id, player_abilities);
 }
 

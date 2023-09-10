@@ -9,41 +9,40 @@ namespace minecpp::event {
 namespace clientbound_v1 = proto::event::clientbound;
 
 template<typename T>
-concept ClientboundVisitor =
-        requires(T t) {
-           t.handle_add_player(clientbound_v1::AddPlayer(), RecipientList{});
-           t.handle_spawn_player(clientbound_v1::SpawnPlayer(), RecipientList{});
-           t.handle_spawn_entity(clientbound_v1::SpawnEntity(), RecipientList{});
-           t.handle_entity_move(clientbound_v1::EntityMove(), RecipientList{});
-           t.handle_entity_look(clientbound_v1::EntityLook(), RecipientList{});
-           t.handle_remove_player(clientbound_v1::RemovePlayer(), RecipientList{});
-           t.handle_update_block(clientbound_v1::UpdateBlock(), RecipientList{});
-           t.handle_chat(clientbound_v1::Chat(), RecipientList{});
-           t.handle_animate_entity(clientbound_v1::AnimateEntity(), RecipientList{});
-           t.handle_acknowledge_block_change(clientbound_v1::AcknowledgeBlockChange(), RecipientList{});
-           t.handle_load_terrain(clientbound_v1::LoadTerrain(), RecipientList{});
-           t.handle_unload_chunk(clientbound_v1::UnloadChunk(), RecipientList{});
-           t.handle_player_list(clientbound_v1::PlayerList(), RecipientList{});
-           t.handle_entity_list(clientbound_v1::EntityList(), RecipientList{});
-           t.handle_accept_player(clientbound_v1::AcceptPlayer(), RecipientList{});
-           t.handle_deny_player(clientbound_v1::DenyPlayer(), RecipientList{});
-           t.handle_set_inventory_slot(clientbound_v1::SetInventorySlot(), RecipientList{});
-           t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), RecipientList{});
-           t.handle_chunk_data(clientbound_v1::ChunkData(), RecipientList{});
-           t.handle_set_center_chunk(clientbound_v1::SetCenterChunk(), RecipientList{});
-           t.handle_player_position_rotation(clientbound_v1::PlayerPositionRotation(), RecipientList{});
-           t.handle_set_spawn_position(clientbound_v1::SetSpawnPosition(), RecipientList{});
-           t.handle_set_entity_equipment(clientbound_v1::SetEntityEquipment(), RecipientList{});
-           t.handle_set_health(clientbound_v1::SetHealth(), RecipientList{});
-           t.handle_collect_item(clientbound_v1::CollectItem(), RecipientList{});
-           t.handle_remove_entity(clientbound_v1::RemoveEntity(), RecipientList{});
-           t.handle_set_entity_velocity(clientbound_v1::SetEntityVelocity(), RecipientList{});
-           t.handle_display_death_screen(clientbound_v1::DisplayDeathScreen(), RecipientList{});
-           t.handle_respawn(clientbound_v1::Respawn(), RecipientList{});
-           t.handle_teleport_entity(clientbound_v1::TeleportEntity(), RecipientList{});
-           t.handle_set_abilities(clientbound_v1::SetAbilities(), RecipientList{});
-           t.handle_raw_message(clientbound_v1::RawMessage(), RecipientList{});
-        };
+concept ClientboundVisitor = requires(T t) {
+   t.handle_add_player(clientbound_v1::AddPlayer(), RecipientList{});
+   t.handle_spawn_player(clientbound_v1::SpawnPlayer(), RecipientList{});
+   t.handle_spawn_entity(clientbound_v1::SpawnEntity(), RecipientList{});
+   t.handle_entity_move(clientbound_v1::EntityMove(), RecipientList{});
+   t.handle_entity_look(clientbound_v1::EntityLook(), RecipientList{});
+   t.handle_remove_player(clientbound_v1::RemovePlayer(), RecipientList{});
+   t.handle_update_block(clientbound_v1::UpdateBlock(), RecipientList{});
+   t.handle_chat(clientbound_v1::Chat(), RecipientList{});
+   t.handle_animate_entity(clientbound_v1::AnimateEntity(), RecipientList{});
+   t.handle_acknowledge_block_change(clientbound_v1::AcknowledgeBlockChange(), RecipientList{});
+   t.handle_load_terrain(clientbound_v1::LoadTerrain(), RecipientList{});
+   t.handle_unload_chunk(clientbound_v1::UnloadChunk(), RecipientList{});
+   t.handle_player_list(clientbound_v1::PlayerList(), RecipientList{});
+   t.handle_entity_list(clientbound_v1::EntityList(), RecipientList{});
+   t.handle_accept_player(clientbound_v1::AcceptPlayer(), RecipientList{});
+   t.handle_deny_player(clientbound_v1::DenyPlayer(), RecipientList{});
+   t.handle_set_inventory_slot(clientbound_v1::SetInventorySlot(), RecipientList{});
+   t.handle_update_block_light(clientbound_v1::UpdateBlockLight(), RecipientList{});
+   t.handle_chunk_data(clientbound_v1::ChunkData(), RecipientList{});
+   t.handle_set_center_chunk(clientbound_v1::SetCenterChunk(), RecipientList{});
+   t.handle_player_position_rotation(clientbound_v1::PlayerPositionRotation(), RecipientList{});
+   t.handle_set_spawn_position(clientbound_v1::SetSpawnPosition(), RecipientList{});
+   t.handle_set_entity_equipment(clientbound_v1::SetEntityEquipment(), RecipientList{});
+   t.handle_set_health(clientbound_v1::SetHealth(), RecipientList{});
+   t.handle_collect_item(clientbound_v1::CollectItem(), RecipientList{});
+   t.handle_remove_entity(clientbound_v1::RemoveEntity(), RecipientList{});
+   t.handle_set_entity_velocity(clientbound_v1::SetEntityVelocity(), RecipientList{});
+   t.handle_display_death_screen(clientbound_v1::DisplayDeathScreen(), RecipientList{});
+   t.handle_respawn(clientbound_v1::Respawn(), RecipientList{});
+   t.handle_teleport_entity(clientbound_v1::TeleportEntity(), RecipientList{});
+   t.handle_set_abilities(clientbound_v1::SetAbilities(), RecipientList{});
+   t.handle_raw_message(clientbound_v1::RawMessage(), RecipientList{});
+};
 
 template<typename TEvent, typename TVisitor, typename TCallback>
 void visit_event_type(const clientbound_v1::Event &event, TVisitor *visitor, TCallback callback)

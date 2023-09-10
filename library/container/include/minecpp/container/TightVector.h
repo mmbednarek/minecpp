@@ -17,11 +17,11 @@ class TightVector
    using raw_value_type  = mb::u64;
    using bits_type       = mb::u8;
 
-   TightVector(const TightVector& other);
-   TightVector& operator=(const TightVector& other);
+   TightVector(const TightVector &other);
+   TightVector &operator=(const TightVector &other);
 
-   TightVector(TightVector&& other) noexcept;
-   TightVector& operator=(TightVector&& other) noexcept;
+   TightVector(TightVector &&other) noexcept;
+   TightVector &operator=(TightVector &&other) noexcept;
 
    template<typename TIter>
    TightVector(bits_type bits, TIter begin, TIter end) :

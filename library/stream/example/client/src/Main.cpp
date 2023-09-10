@@ -30,12 +30,12 @@ class ExampleClient
       m_send_thread.emplace(&ExampleClient::send_routine, this, peer);
    }
 
-   void on_received_message(Peer */*peer*/, minecpp::container::BufferView message)
+   void on_received_message(Peer * /*peer*/, minecpp::container::BufferView message)
    {
       spdlog::info("received message: {}", message.to_string());
    }
 
-   void on_disconnected(Peer */*peer*/, bool *try_reconnect)
+   void on_disconnected(Peer * /*peer*/, bool *try_reconnect)
    {
       spdlog::info("disconnected");
 

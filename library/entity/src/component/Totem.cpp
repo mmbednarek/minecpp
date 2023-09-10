@@ -23,7 +23,7 @@ void Totem::on_attached(game::Entity &entity)
 void Totem::serialize_to_net(game::NetworkEntity *net_entity) const
 {
    net_entity->entity_data.entity_type = static_cast<std::int32_t>(m_entity_type_id);
-   net_entity->metadata.data[17] = static_cast<std::int8_t>(m_team.sheep_color());
+   net_entity->metadata.data[17]       = static_cast<std::int8_t>(m_team.sheep_color());
 }
 
 void Totem::on_begin_intersect(game::IWorld &world, game::Entity & /*entity*/, game::Entity &other_entity)

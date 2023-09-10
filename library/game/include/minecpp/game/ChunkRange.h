@@ -18,7 +18,6 @@ class ChunkRange
    class Iterator
    {
     public:
-
       friend ChunkRange;
 
       Iterator &operator++();
@@ -40,10 +39,11 @@ class ChunkRange
 
 }// namespace minecpp::game
 
- template<>
- struct std::iterator_traits<minecpp::game::ChunkRange::Iterator> {
-    using iterator_category = std::forward_iterator_tag;
-    using value_type = minecpp::game::ChunkPosition;
-    using pointer = minecpp::game::ChunkPosition*;
-    using reference = minecpp::game::ChunkPosition&;
- };
+template<>
+struct std::iterator_traits<minecpp::game::ChunkRange::Iterator>
+{
+   using iterator_category = std::forward_iterator_tag;
+   using value_type        = minecpp::game::ChunkPosition;
+   using pointer           = minecpp::game::ChunkPosition *;
+   using reference         = minecpp::game::ChunkPosition &;
+};

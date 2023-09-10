@@ -19,8 +19,8 @@ class IResponseHandler
    virtual ~IResponseHandler() noexcept = default;
 
    virtual void on_reply_empty_chunk(int a, const net::storage::cb::ReplyEmptyChunk &message) = 0;
-   virtual void on_reply_chunk(int a, const net::storage::cb::ReplyChunk &message) = 0;
-   virtual void on_failure(int a, std::uint8_t msg_code) = 0;
+   virtual void on_reply_chunk(int a, const net::storage::cb::ReplyChunk &message)            = 0;
+   virtual void on_failure(int a, std::uint8_t msg_code)                                      = 0;
 };
 
 class Stream

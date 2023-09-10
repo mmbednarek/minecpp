@@ -3,8 +3,8 @@
 #include <minecpp/game/ChunkPosition.h>
 #include <minecpp/game/ChunkRange.h>
 
-using minecpp::game::ChunkRange;
 using minecpp::game::ChunkPosition;
+using minecpp::game::ChunkRange;
 
 void test_position(int x, int y, int z)
 {
@@ -47,29 +47,29 @@ TEST(Block, ChunkRangeTest)
    std::vector<ChunkPosition> expected_values{
            {-2, -2},
            {-1, -2},
-           {0, -2},
-           {1, -2},
-           {2, -2},
+           { 0, -2},
+           { 1, -2},
+           { 2, -2},
            {-2, -1},
            {-1, -1},
-           {0, -1},
-           {1, -1},
-           {2, -1},
-           {-2, 0},
-           {-1, 0},
-           {0, 0},
-           {1, 0},
-           {2, 0},
-           {-2, 1},
-           {-1, 1},
-           {0, 1},
-           {1, 1},
-           {2, 1},
-           {-2, 2},
-           {-1, 2},
-           {0, 2},
-           {1, 2},
-           {2, 2},
+           { 0, -1},
+           { 1, -1},
+           { 2, -1},
+           {-2,  0},
+           {-1,  0},
+           { 0,  0},
+           { 1,  0},
+           { 2,  0},
+           {-2,  1},
+           {-1,  1},
+           { 0,  1},
+           { 1,  1},
+           { 2,  1},
+           {-2,  2},
+           {-1,  2},
+           { 0,  2},
+           { 1,  2},
+           { 2,  2},
    };
 
    EXPECT_EQ(values, expected_values);

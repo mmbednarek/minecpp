@@ -30,7 +30,7 @@ void Service::init_player(Connection &connection, uuid id, std::string_view name
    connection.set_uuid(id);
 
    net::engine::sb::AcceptPlayer accept_player;
-   accept_player.name = name;
+   accept_player.name      = name;
    accept_player.player_id = id;
 
    network::message::Writer writer;

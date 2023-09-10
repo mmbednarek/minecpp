@@ -10,14 +10,16 @@
 
 namespace minecpp::net::play {
 
-class Chat {
+class Chat
+{
  public:
    std::string format{};
    void serialize(::minecpp::network::message::Writer &writer) const;
    static Chat deserialize(::minecpp::network::message::Reader &reader);
 };
 
-class Slot {
+class Slot
+{
  public:
    std::int32_t item_id{};
    std::int8_t item_count{};
@@ -26,4 +28,4 @@ class Slot {
    static Slot deserialize(::minecpp::network::message::Reader &reader);
 };
 
-}
+}// namespace minecpp::net::play

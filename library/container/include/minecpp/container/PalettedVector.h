@@ -107,10 +107,10 @@ class PalettedVector
    }
 
    PalettedVector(PalettedVector &&other) noexcept :
-           m_data(std::move(other.m_data)),
-           m_palette(std::move(other.m_palette)),
-           m_type(std::move(other.m_type)),
-           m_size(std::move(other.m_size))
+       m_data(std::move(other.m_data)),
+       m_palette(std::move(other.m_palette)),
+       m_type(std::move(other.m_type)),
+       m_size(std::move(other.m_size))
    {
    }
 

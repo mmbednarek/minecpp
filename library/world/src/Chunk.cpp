@@ -234,9 +234,11 @@ std::int8_t Chunk::bottom_section() const
 
 void Chunk::read_net_chunk(const net::Chunk &chunk)
 {
-   m_position = game::ChunkPosition(chunk.position);
-   m_motion_blocking_height = HeightContainer::from_raw(chunk.heightmaps.motion_blocking.begin(), chunk.heightmaps.motion_blocking.end());
-   m_world_surface_height = HeightContainer::from_raw(chunk.heightmaps.world_surface.begin(), chunk.heightmaps.world_surface.end());
+   m_position               = game::ChunkPosition(chunk.position);
+   m_motion_blocking_height = HeightContainer::from_raw(chunk.heightmaps.motion_blocking.begin(),
+                                                        chunk.heightmaps.motion_blocking.end());
+   m_world_surface_height   = HeightContainer::from_raw(chunk.heightmaps.world_surface.begin(),
+                                                        chunk.heightmaps.world_surface.end());
 
    container::BufferView buffer(const_cast<unsigned char *>(chunk.data.data()), chunk.data.size());
    auto stream = buffer.make_stream();
@@ -278,7 +280,7 @@ void Chunk::read_net_chunk(const net::Chunk &chunk)
 
 int Chunk::calculate_top_block() const
 {
-   int max_value = 0;
+   int max_value   = 0;
    const auto size = m_world_surface_height.size();
    for (std::size_t i{}; i < size; ++i) {
       auto value = m_world_surface_height.at(i);

@@ -193,14 +193,14 @@ Rotation::Rotation(const math::Rotation &rotation) :
 void Rotation::serialize_to_net(game::NetworkEntity *net_entity) const
 {
    assert(net_entity);
-   net_entity->entity_data.yaw = m_rotation.yaw_degrees();
+   net_entity->entity_data.yaw   = m_rotation.yaw_degrees();
    net_entity->entity_data.pitch = m_rotation.pitch_degrees();
 }
 
 void Rotation::serialize_to_net_player(game::NetworkPlayer *net_player) const
 {
    assert(net_player);
-   net_player->player_data.yaw = m_rotation.yaw_degrees();
+   net_player->player_data.yaw   = m_rotation.yaw_degrees();
    net_player->player_data.pitch = m_rotation.pitch_degrees();
 }
 

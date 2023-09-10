@@ -147,7 +147,7 @@ TEST(PalettedVector, IndirectLoop)
    EXPECT_EQ(values.type(), minecpp::container::PaletteType::Indirect);
 
    int count = 0;
-   int num = 0;
+   int num   = 0;
    for (auto value : values) {
       EXPECT_EQ(value, num++);
       ++count;
@@ -164,7 +164,7 @@ TEST(PalettedVector, DirectLoop)
    EXPECT_EQ(values.type(), minecpp::container::PaletteType::Direct);
 
    int count = 0;
-   int num = 0;
+   int num   = 0;
    for (auto value : values) {
       EXPECT_EQ(value, num++);
       ++count;

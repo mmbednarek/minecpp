@@ -87,8 +87,7 @@ void StorageClient::on_connected(stream::Peer *peer)
    this->send(writer.buffer_view());
 }
 
-void StorageClient::on_received_message(stream::Peer */*peer*/,
-                                        minecpp::container::BufferView message)
+void StorageClient::on_received_message(stream::Peer * /*peer*/, minecpp::container::BufferView message)
 {
    auto stream = message.make_stream();
    network::message::Reader reader(stream);

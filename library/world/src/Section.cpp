@@ -86,8 +86,8 @@ void Section::recalculate_reference_count()
       if (!res.ok())
          return;
 
-//      auto &block = res.unwrap();
-//      if (block.stats().material != &game::block::Material::Air) {
+      //      auto &block = res.unwrap();
+      //      if (block.stats().material != &game::block::Material::Air) {
       if (block_state.block_id() != 0) {
          ++m_reference_count;
       }

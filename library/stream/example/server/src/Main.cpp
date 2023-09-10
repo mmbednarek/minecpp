@@ -30,8 +30,7 @@ class ExampleServer
       m_send_thread.emplace(&ExampleServer::send_routine, this, peer);
    }
 
-   void on_received_message(minecpp::stream::Peer *peer,
-                            minecpp::container::BufferView message)
+   void on_received_message(minecpp::stream::Peer *peer, minecpp::container::BufferView message)
    {
       spdlog::info("received message from peer: {} (id={}), message: {}", peer->hostname(), peer->id(),
                    message.to_string());

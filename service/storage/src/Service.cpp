@@ -63,7 +63,8 @@ void Service::on_subscribe_chunk(ConnectionId connection_id, const net::storage:
       network::message::Writer writer;
       reply.serialize(writer);
 
-      container::BufferView buffer(util::unsafe_cast<unsigned char*>(writer.view().data()), writer.view().size());
+      container::BufferView buffer(util::unsafe_cast<unsigned char *>(writer.view().data()),
+                                   writer.view().size());
       m_server.send(connection_id, buffer);
       return;
    }
@@ -74,7 +75,8 @@ void Service::on_subscribe_chunk(ConnectionId connection_id, const net::storage:
    network::message::Writer writer;
    reply.serialize(writer);
 
-   container::BufferView buffer(util::unsafe_cast<unsigned char*>(writer.view().data()), writer.view().size());
+   container::BufferView buffer(util::unsafe_cast<unsigned char *>(writer.view().data()),
+                                writer.view().size());
    m_server.send(connection_id, buffer);
 
    spdlog::info("sending chunk {} {} to client", message.position.x(), message.position.y());
@@ -90,7 +92,8 @@ void Service::on_store_chunk(ConnectionId /*connection_id*/, const net::storage:
    }
 }
 
-void Service::on_failure(ConnectionId connection_id, std::uint8_t id) {
+void Service::on_failure(ConnectionId connection_id, std::uint8_t id)
+{
    spdlog::warn("failed to parse message from client {}, message id {}", connection_id, id);
 }
 

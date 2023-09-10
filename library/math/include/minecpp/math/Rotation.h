@@ -80,15 +80,15 @@ struct Rotation
       };
    }
 
-    [[nodiscard]] Degrees yaw_degrees() const
-    {
-        return radians_to_degrees(yaw);
-    }
+   [[nodiscard]] Degrees yaw_degrees() const
+   {
+      return radians_to_degrees(yaw);
+   }
 
-    [[nodiscard]] Degrees pitch_degrees() const
-    {
-        return radians_to_degrees(pitch);
-    }
+   [[nodiscard]] Degrees pitch_degrees() const
+   {
+      return radians_to_degrees(pitch);
+   }
 };
 
 }// namespace minecpp::math

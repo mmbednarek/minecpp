@@ -1,8 +1,8 @@
 #pragma once
 
+#include <chrono>
 #include <string>
 #include <vector>
-#include <chrono>
 
 #include "minecpp/game/EntityData.hpp"
 #include "minecpp/game/IDispatcher.hpp"
