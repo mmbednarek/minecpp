@@ -4,21 +4,11 @@
 #include "Entt.hpp"
 
 #include "minecpp/math/Vector3.h"
-#include "minecpp/proto/entity/Entity.pb.h"
 
 namespace minecpp::game {
 
 class Entity;
 class IWorld;
-
-template<typename T>
-concept ProtoSerializable =
-        requires(const T &t, proto::entity::Entity *proto_entity) { t.serialize_to_proto(proto_entity); };
-
-template<typename T>
-concept PlayerProtoSerializable = requires(const T &t, proto::entity::PlayerEntity *proto_entity) {
-   t.serialize_player_to_proto(proto_entity);
-};
 
 template<typename T>
 concept NetSerializable = requires(const T &t, NetworkEntity *net_entity) { t.serialize_to_net(net_entity); };
@@ -45,12 +35,6 @@ void register_component()
    using namespace entt::literals;
 
    auto meta_type = entt::meta<TComponent>();
-   if constexpr (ProtoSerializable<TComponent>) {
-      meta_type.template func<&TComponent::serialize_to_proto>("serialize_to_proto"_hs);
-   }
-   if constexpr (PlayerProtoSerializable<TComponent>) {
-      meta_type.template func<&TComponent::serialize_player_to_proto>("serialize_player_to_proto"_hs);
-   }
    if constexpr (NetSerializable<TComponent>) {
       meta_type.template func<&TComponent::serialize_to_net>("serialize_to_net"_hs);
    }

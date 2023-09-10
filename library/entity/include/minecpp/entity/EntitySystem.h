@@ -3,7 +3,6 @@
 #include <minecpp/game/Entity.h>
 #include <minecpp/game/Entt.hpp>
 #include <minecpp/game/IEntitySystem.hpp>
-#include <minecpp/proto/entity/Entity.pb.h>
 #include <optional>
 #include <shared_mutex>
 

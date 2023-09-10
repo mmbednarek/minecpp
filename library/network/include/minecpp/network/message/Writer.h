@@ -74,7 +74,7 @@ void Writer::write_big_endian_array(std::vector<I> vec)
 template<typename I>
 void Writer::write_big_endian_array(I *data, std::size_t size)
 {
-   write_varint(static_cast<std::uint32_t>(size));
+   write_varint(static_cast<std::int32_t>(size));
    for (std::size_t i = 0; i < size; ++i) {
       write_big_endian(data[i]);
    }

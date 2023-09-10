@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SectionPosition.h"
-#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -20,10 +19,6 @@ class SectionRange
    [[nodiscard]] SectionRange grow(int amount) const;
    [[nodiscard]] int min_section() const;
    [[nodiscard]] int max_section() const;
-
-   [[nodiscard]] proto::common::SectionRange to_proto() const;
-
-   [[nodiscard]] static SectionRange from_proto(const proto::common::SectionRange &range);
 
    [[nodiscard]] ChunkRange to_chunk_range() const;
 

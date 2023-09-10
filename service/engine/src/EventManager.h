@@ -2,7 +2,6 @@
 #include "ApiHandler.h"
 #include "IConnection.h"
 #include <minecpp/game/player/Id.h>
-#include <minecpp/proto/event/clientbound/Clientbound.pb.h>
 #include <minecpp/util/StaticQueue.h>
 #include <queue>
 #include <span>

@@ -2,7 +2,6 @@
 #include "Section.h"
 #include <minecpp/game/IWorld.hpp>
 #include <minecpp/game/SectionRange.h>
-#include <minecpp/proto/chunk/Chunk.pb.h>
 #include <unordered_map>
 
 namespace minecpp::world {

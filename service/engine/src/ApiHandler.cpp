@@ -7,8 +7,6 @@
 
 #include <spdlog/spdlog.h>
 
-using minecpp::proto::event::clientbound::Event;
-
 namespace minecpp::service::engine {
 
 Connection::Connection(std::shared_ptr<stream::Peer> peer) :

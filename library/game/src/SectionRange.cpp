@@ -22,22 +22,6 @@ SectionRange::Iterator SectionRange::end()
    };
 }
 
-SectionRange SectionRange::from_proto(const proto::common::SectionRange &range)
-{
-   return SectionRange{
-           SectionPosition::from_proto(range.from()),
-           SectionPosition::from_proto(range.to()),
-   };
-}
-
-proto::common::SectionRange SectionRange::to_proto() const
-{
-   proto::common::SectionRange result;
-   *result.mutable_from() = m_from.to_proto();
-   *result.mutable_to()   = m_to.to_proto();
-   return result;
-}
-
 SectionRange SectionRange::grow(int amount) const
 {
    return SectionRange{

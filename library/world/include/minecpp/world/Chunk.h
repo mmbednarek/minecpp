@@ -7,7 +7,6 @@
 #include "minecpp/nbt/Reader.h"
 #include "minecpp/nbt/Tag.h"
 #include "minecpp/net/Chunk.schema.h"
-#include "minecpp/proto/chunk/Chunk.pb.h"
 
 #include <boost/uuid/uuid.hpp>
 #include <mb/result.h>

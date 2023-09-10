@@ -3,7 +3,6 @@
 #include "../JobSystem.h"
 
 #include "minecpp/container/BasicBuffer.hpp"
-#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 #include "minecpp/net/engine/Serverbound.schema.h"
 
 namespace minecpp::service::engine {

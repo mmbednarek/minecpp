@@ -5,7 +5,6 @@
 #include "minecpp/game/IWorld.hpp"
 #include "minecpp/nbt/chunk/Chunk.schema.h"
 #include "minecpp/net/Chunk.schema.h"
-#include "minecpp/proto/chunk/Chunk.pb.h"
 
 #include <cstdint>
 #include <functional>

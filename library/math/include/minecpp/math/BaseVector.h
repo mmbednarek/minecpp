@@ -133,7 +133,6 @@ class BaseVector
 #define MCC_MATH_DEFINE_VECTOR_TRAITS(count)                                \
    using ValueType             = TValue;                                    \
    using SelfType              = BaseVector<ValueType, count>;              \
-   using ProtoType             = typename ProtoVector<TValue, count>::Type; \
    static constexpr auto Count = count;                                     \
    ValueType m_storage[Count];                                              \
    MCC_MATH_DECLARE_VEC_BINARY_OP(+, std::plus<ValueType>{})                \

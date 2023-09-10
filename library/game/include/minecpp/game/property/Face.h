@@ -2,7 +2,6 @@
 
 #include <mb/enum.h>
 #include <mb/int.h>
-#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -32,8 +31,6 @@ class Face final : public Face_Base
    MB_ENUM_FIELD(West)
    MB_ENUM_FIELD(East)
 
-   static Face from_proto(proto::common::Face face);
-   proto::common::Face to_proto();
    [[nodiscard]] Face opposite_face();
    [[nodiscard]] FaceMask to_mask();
 };

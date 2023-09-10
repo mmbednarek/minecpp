@@ -1,6 +1,0 @@
-syntax = "proto3";
-package minecpp.proto.test;
-
-message TestMessage {
-  string value = 1;
-}

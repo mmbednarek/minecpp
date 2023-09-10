@@ -80,7 +80,7 @@ class PalettedVector
             return m_vector.palette().at(static_cast<std::size_t>(*m_at));
          }
          case PaletteType::Direct: {
-            return *m_at;
+            return static_cast<value_type>(*m_at);
          }
          default: throw std::runtime_error("paletted-vector: no such item");
          }
@@ -151,7 +151,7 @@ class PalettedVector
 
          auto at = begin;
          for (size_type i{0}; i < data_size; ++i) {
-            m_data.set(i, *at);
+            m_data.set(i, static_cast<int>(*at));
             ++at;
          }
 
@@ -167,7 +167,7 @@ class PalettedVector
 
       if (m_palette.size() == 1) {
          m_type = PaletteType::SingleValue;
-         m_size = end - begin;
+         m_size = static_cast<std::size_t>(end - begin);
          return;
       }
 
@@ -196,7 +196,7 @@ class PalettedVector
          return m_palette.at(palette_index);
       }
       case PaletteType::Direct: {
-         return m_data.at(index);
+         return static_cast<value_type>(m_data.at(static_cast<std::size_t>(index)));
       }
       default: throw std::runtime_error("paletted-vector: no such item");
       }
@@ -261,14 +261,14 @@ class PalettedVector
             if ((m_palette.size() + 1) > (1 << CIndirectLimit)) {
                for (size_type i{}; i < m_data.size(); ++i) {
                   if (index == i) {
-                     m_data.set(i, value);
+                     m_data.set(i, static_cast<int>(value));
                   } else {
-                     m_data.set(i, this->at_internal(i));
+                     m_data.set(i, static_cast<int>(this->at_internal(i)));
                   }
                }
                m_palette.clear();
                m_type = PaletteType::Direct;
-               m_data.set(index, value);
+               m_data.set(index, static_cast<int>(value));
             } else {
                m_palette.push_back(value);
                m_data.set(index, static_cast<index_type>(m_palette.size() - 1ul));
@@ -279,7 +279,7 @@ class PalettedVector
          break;
       }
       case PaletteType::Direct: {
-         m_data.set(index, value);
+         m_data.set(index, static_cast<int>(value));
          break;
       }
       }
@@ -290,7 +290,7 @@ class PalettedVector
       PalettedVector result;
       if (container.single_value_data.has_value()) {
          result.m_type = PaletteType::SingleValue;
-         result.m_palette.push_back(container.single_value_data->value);
+         result.m_palette.push_back(static_cast<value_type>(container.single_value_data->value));
          result.m_size = size;
       }
       if (container.indirect_data.has_value()) {

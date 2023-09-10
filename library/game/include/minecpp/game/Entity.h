@@ -52,8 +52,6 @@ class Entity
       }
    }
 
-   void serialize_to_proto(proto::entity::Entity *entity) const;
-   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
    void serialize_to_net(NetworkEntity *net_entity) const;
    void serialize_to_net_player(NetworkPlayer *net_player) const;
    void on_killed(IWorld &world);

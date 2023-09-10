@@ -3,8 +3,6 @@
 #include "IConnection.h"
 #include "JobSystem.h"
 
-#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
-#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 #include "minecpp/stream/Server.h"
 
 #include <string>

@@ -1,11 +1,8 @@
 #include "Api.h"
 
 #include "minecpp/container/BasicBuffer.hpp"
-#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 
 #include <spdlog/spdlog.h>
-
-namespace gpb = google::protobuf;
 
 namespace minecpp::service::engine {
 

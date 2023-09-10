@@ -1,7 +1,8 @@
 #pragma once
+
 #include <string>
 #include <vector>
-
+#include <chrono>
 
 #include "minecpp/game/EntityData.hpp"
 #include "minecpp/game/IDispatcher.hpp"
@@ -16,7 +17,6 @@ class Player
 
    void on_attached(game::Entity &entity);
 
-   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
    void serialize_to_net_player(game::NetworkPlayer *net_player) const;
 
    [[nodiscard]] game::PlayerId id() const;

@@ -2,8 +2,6 @@
 
 #include "minecpp/net/storage/Clientbound.schema.h"
 #include "minecpp/network/Network.h"
-#include "minecpp/proto/chunk/Chunk.pb.h"
-#include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/stream/Client.h"
 #include "minecpp/world/Chunk.h"
 
@@ -12,12 +10,6 @@
 #include <vector>
 
 namespace minecpp::service::storage {
-
-using proto::service::storage::Request;
-using proto::service::storage::Response;
-
-using proto::service::storage::ResponseChunkData;
-using proto::service::storage::ResponseEmptyChunk;
 
 using ClientId = std::uint64_t;
 

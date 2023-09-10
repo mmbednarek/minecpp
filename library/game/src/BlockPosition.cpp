@@ -37,8 +37,6 @@ namespace {
 
 namespace minecpp::game {
 
-namespace pb_common = minecpp::proto::common;
-
 BlockPosition::BlockPosition() = default;
 
 BlockPosition::BlockPosition(int x, int y, int z) :
@@ -72,11 +70,6 @@ mb::u64 BlockPosition::as_long() const
            z() >= 0 ? static_cast<mb::u64>(z()) : static_cast<mb::u64>(static_cast<mb::i64>(z()) + (1 << 26));
    return ((lx & g_block_position_mask_x) << g_block_position_bit_offset_x) | (ly & g_block_position_mask_y) |
           ((lz & g_block_position_mask_z) << g_block_position_bit_offset_z);
-}
-
-BlockPosition BlockPosition::from_proto(const pb_common::BlockPosition &position)
-{
-   return {position.x(), position.y(), position.z()};
 }
 
 int BlockPosition::x() const
@@ -123,15 +116,6 @@ mb::u32 BlockPosition::offset_within_section() const
 {
    return (static_cast<mb::u32>(section_offset_y()) << 8) | (static_cast<mb::u32>(offset_z()) << 4) |
           static_cast<mb::u32>(offset_x());
-}
-
-pb_common::BlockPosition BlockPosition::to_proto() const
-{
-   pb_common::BlockPosition block_position;
-   block_position.set_x(x());
-   block_position.set_y(y());
-   block_position.set_z(z());
-   return block_position;
 }
 
 BlockPosition BlockPosition::neighbour_at(Face facing) const

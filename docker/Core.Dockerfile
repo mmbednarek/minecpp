@@ -3,12 +3,6 @@ FROM minecpp/ubuntu:latest
 # Copy the source code
 COPY . /root/minecpp
 
-# Generate protos for C++
-WORKDIR /root/minecpp
-
-RUN make proto
-RUN make cmake-files
-
 # Run CMake
 WORKDIR /root/minecpp/build-docker
 RUN cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja
@@ -20,7 +14,7 @@ RUN cmake --build . -j $(nproc) -t minecpp_game  \
   -t minecpp_engine_api  \
   -t minecpp_utils  \
   -t minecpp_game  \
-  -t minecpp_api_proto  \
+  -t minecpp_api_schema  \
   -t minecpp_nbt  \
   -t minecpp_chat  \
   -t minecpp_format  \

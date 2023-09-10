@@ -13,8 +13,6 @@
 #include <boost/uuid/name_generator.hpp>
 #include <spdlog/spdlog.h>
 
-using google::protobuf::Message;
-
 namespace minecpp::service::engine {
 
 Service::Service(service::PlayerInteraction &interaction_service, service::PlayerInterface &interface_service,

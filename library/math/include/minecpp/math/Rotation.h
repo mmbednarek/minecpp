@@ -3,8 +3,6 @@
 #include "Math.h"
 #include "Vector3.h"
 
-#include <minecpp/proto/common/Common.pb.h>
-
 namespace minecpp::math {
 
 using Radians = float;
@@ -56,19 +54,6 @@ struct Rotation
       const auto cos_pitch = std::cos(pitch);
       const auto yaw       = find_angle(norm.x() / cos_pitch, norm.z() / cos_pitch);
       return {static_cast<float>(yaw), static_cast<float>(pitch)};
-   }
-
-   [[nodiscard]] static Rotation from_proto(const proto::common::Rotation &proto_rot)
-   {
-      return Rotation::from_degrees(proto_rot.yaw(), proto_rot.pitch());
-   }
-
-   [[nodiscard]] proto::common::Rotation to_proto() const
-   {
-      proto::common::Rotation out{};
-      out.set_yaw(radians_to_degrees(yaw));
-      out.set_pitch(radians_to_degrees(pitch));
-      return out;
    }
 
    template<typename TValue = float>

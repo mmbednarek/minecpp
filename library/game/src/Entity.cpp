@@ -9,36 +9,6 @@ Entity::Entity(entt::registry &registry, game::EntityId id) :
 {
 }
 
-void Entity::serialize_to_proto(proto::entity::Entity *entity) const
-{
-   assert(entity);
-
-   entity->set_entity_id(static_cast<mb::u32>(m_entity));
-
-   this->for_each_component([entity](const entt::meta_any &obj) mutable {
-      using namespace entt::literals;
-      auto serialize = obj.type().func("serialize_to_proto"_hs);
-      if (serialize) {
-         serialize.invoke(obj, entity);
-      }
-   });
-}
-
-void Entity::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
-{
-   assert(entity);
-
-   entity->set_entity_id(static_cast<mb::u32>(m_entity));
-
-   this->for_each_component([entity](const entt::meta_any &obj) mutable {
-      using namespace entt::literals;
-      auto serialize = obj.type().func("serialize_player_to_proto"_hs);
-      if (serialize) {
-         serialize.invoke(obj, entity);
-      }
-   });
-}
-
 void Entity::serialize_to_net(NetworkEntity *net_entity) const
 {
    assert(net_entity);

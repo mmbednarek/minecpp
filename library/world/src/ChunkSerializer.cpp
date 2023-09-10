@@ -126,10 +126,10 @@ void ChunkSerializer::write_chunk_data(net::ChunkData &out_chunk_data) const
    for (auto at = m_chunk.bottom_section(); at < section_count; ++at) {
       auto section = m_chunk.section(at);
       if (section.has_failed()) {
-         this->write_empty_section(out_chunk_data.sections[at]);
+         this->write_empty_section(out_chunk_data.sections[static_cast<std::size_t>(at)]);
       } else {
          section->recalculate_reference_count();
-         this->write_section(out_chunk_data.sections[at], *section);
+         this->write_section(out_chunk_data.sections[static_cast<std::size_t>(at)], *section);
       }
    }
 }

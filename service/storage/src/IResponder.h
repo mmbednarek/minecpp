@@ -1,6 +1,5 @@
 #pragma once
 #include <cstdint>
-#include <minecpp/proto/service/storage/Storage.pb.h>
 
 namespace minecpp::service::storage {
 

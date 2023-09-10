@@ -2,7 +2,6 @@
 
 #include "minecpp/game/player/Id.h"
 #include "minecpp/net/play/Serverbound.schema.h"
-#include "minecpp/proto/chunk/Chunk.pb.h"
 
 namespace minecpp::service::engine {
 

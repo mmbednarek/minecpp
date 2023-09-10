@@ -14,16 +14,6 @@ Location::Location(const math::Vector3 &position, const math::Vector3 &extent) :
 {
 }
 
-void Location::serialize_to_proto(proto::entity::Entity *entity) const
-{
-   *entity->mutable_position() = this->m_position.to_proto();
-}
-
-void Location::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
-{
-   *entity->mutable_position() = this->m_position.to_proto();
-}
-
 void Location::serialize_to_net(game::NetworkEntity *net_entity) const
 {
    assert(net_entity);
@@ -198,16 +188,6 @@ Rotation::Rotation(float yaw, float pitch) :
 Rotation::Rotation(const math::Rotation &rotation) :
     m_rotation(rotation)
 {
-}
-
-void Rotation::serialize_to_proto(proto::entity::Entity *entity) const
-{
-   *entity->mutable_rotation() = m_rotation.to_proto();
-}
-
-void Rotation::serialize_player_to_proto(proto::entity::PlayerEntity *entity) const
-{
-   *entity->mutable_rotation() = m_rotation.to_proto();
 }
 
 void Rotation::serialize_to_net(game::NetworkEntity *net_entity) const

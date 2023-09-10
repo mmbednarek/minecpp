@@ -1,4 +1,3 @@
-add_subdirectory(api/minecpp/proto)
 add_subdirectory(api/minecpp/schema)
 add_subdirectory(repository)
 add_subdirectory(chat)

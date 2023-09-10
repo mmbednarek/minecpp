@@ -4,8 +4,6 @@
 
 namespace minecpp::entity::component {
 
-void Abilities::serialize_to_proto(proto::entity::Entity * /*entity*/) const {}
-
 void Abilities::on_attached(game::Entity &entity)
 {
    m_entity_id = entity.id();

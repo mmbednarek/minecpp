@@ -10,7 +10,6 @@ class Team
  public:
    explicit Team(game::Team team);
 
-   void serialize_player_to_proto(proto::entity::PlayerEntity *entity) const;
    void send_team_equipment(game::IDispatcher &dispatcher, game::PlayerId player_id);
 
    void increment_used_apples();

@@ -20,14 +20,6 @@ void Totem::on_attached(game::Entity &entity)
    m_intersect_sink.emplace(location.on_begin_intersect.connect<&Totem::on_begin_intersect>(this));
 }
 
-void Totem::serialize_to_proto(proto::entity::Entity *entity) const
-{
-   entity->set_entity_type(m_entity_type_id);
-   auto *meta = entity->add_metadata();
-   meta->set_index(17);
-   meta->set_byte(static_cast<uint32_t>(m_team.sheep_color()));
-}
-
 void Totem::serialize_to_net(game::NetworkEntity *net_entity) const
 {
    net_entity->entity_data.entity_type = static_cast<std::int32_t>(m_entity_type_id);

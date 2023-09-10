@@ -11,7 +11,6 @@ class UniqueId
  public:
    UniqueId();
 
-   void serialize_to_proto(proto::entity::Entity *entity) const;
    void serialize_to_net(game::NetworkEntity *net_entity) const;
 
  private:

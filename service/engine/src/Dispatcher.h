@@ -3,7 +3,7 @@
 #include "ApiHandler.h"
 
 #include "minecpp/chat/Chat.h"
-#include "minecpp/game/Abilities.h"
+#include "minecpp/game/Abilities.hpp"
 #include "minecpp/game/IDispatcher.hpp"
 #include "minecpp/game/player/Id.h"
 #include "minecpp/game/player/Player.h"
@@ -137,9 +137,6 @@ class Dispatcher : public minecpp::game::IDispatcher
       message.serialize(writer);
       this->send_to_player(player_id, writer.buffer_view());
    }
-
-   [[nodiscard]] static proto::event::clientbound::RawMessage
-   make_raw_message(const network::message::Writer &writer);
 
    EventManager &m_events;
    ChunkSystem &m_chunk_system;

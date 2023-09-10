@@ -13,14 +13,11 @@
 #include "minecpp/game/ChunkRange.h"
 #include "minecpp/game/player/Player.h"
 #include "minecpp/net/play/Clientbound.schema.h"
-#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
 #include "minecpp/util/Uuid.h"
 #include "minecpp/world/ChunkSerializer.h"
 #include "minecpp/world/SectionSlice.h"
 
 namespace minecpp::service::engine {
-
-namespace clientbound_v1 = proto::event::clientbound;
 
 Dispatcher::Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system,
                        nbt::repository::Registry &registry) :
@@ -377,7 +374,7 @@ void Dispatcher::set_player_equipment(game::PlayerId player_id, game::EntityId e
    net::play::cb::SetEquipment set_equipment;
    set_equipment.entity_id = entity_id;
    set_equipment.slot_id   = static_cast<std::int8_t>(slot.index());
-   set_equipment.slot      = net::Slot(item.item_id, static_cast<std::int8_t>(item.count), {});
+   set_equipment.slot      = net::Slot{item.item_id, static_cast<std::int8_t>(item.count), {}};
 
    auto entity = m_entity_system.entity(entity_id);
    if (not entity.has_component<entity::component::Location>())
@@ -524,8 +521,8 @@ void Dispatcher::respawn_player(game::PlayerId player_id)
    respawn.dimension_codec      = "minecraft:overworld";
    respawn.dimension_name       = "overworld";
    respawn.seed                 = 0x12345;
-   respawn.game_mode            = proto::common::GameMode::Survival;
-   respawn.previous_game_mode   = proto::common::GameMode::Survival;
+   respawn.game_mode            = 0;
+   respawn.previous_game_mode   = 0;
    respawn.is_debug             = false;
    respawn.is_flat              = false;
    respawn.should_copy_metadata = true;
@@ -623,14 +620,6 @@ void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_i
    }
 
    m_events.send_to_many(message, players);
-}
-
-clientbound_v1::RawMessage Dispatcher::make_raw_message(const network::message::Writer &writer)
-{
-   clientbound_v1::RawMessage raw_msg;
-   raw_msg.mutable_message_data()->resize(writer.view().size());
-   std::copy(writer.view().begin(), writer.view().end(), raw_msg.mutable_message_data()->begin());
-   return raw_msg;
 }
 
 void Dispatcher::set_abilities(game::PlayerId player_id, const game::Abilities &abilities)

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "minecpp/net/Chunk.schema.h"
-#include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/util/Pool.h"
 #include "minecpp/world/Chunk.h"
 #include "minecpp/world/Generator.h"

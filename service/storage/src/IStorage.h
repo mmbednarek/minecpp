@@ -1,8 +1,6 @@
 #pragma once
-#include <minecpp/game/ChunkPosition.h>
-#include <minecpp/proto/chunk/Chunk.pb.h>
-#include <minecpp/proto/service/storage/Storage.pb.h>
 
+#include "minecpp/game/ChunkPosition.h"
 #include "minecpp/net/Chunk.schema.h"
 
 #include <optional>

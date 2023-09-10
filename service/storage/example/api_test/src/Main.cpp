@@ -4,19 +4,17 @@
 #include <spdlog/spdlog.h>
 
 using minecpp::service::storage::IResponseHandler;
-using minecpp::service::storage::ResponseChunkData;
 using minecpp::service::storage::StorageClient;
 using minecpp::world::Chunk;
 
-char map_height(int height) {
-   static constexpr std::array<char, 8> values{
-     ' ', '.', '-', ':', '/', '%', '&', '#'
-   };
+char map_height(int height)
+{
+   static constexpr std::array<char, 8> values{' ', '.', '-', ':', '/', '%', '&', '#'};
    auto level = height / 8;
    if (level >= 8)
       return '@';
 
-   return values[level];
+   return values[static_cast<std::size_t>(level)];
 }
 
 class Handler : public IResponseHandler

@@ -2,16 +2,10 @@
 #include "protocol/Protocol.h"
 #include "Server.h"
 
-#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
-
 #include <boost/uuid/name_generator.hpp>
 #include <spdlog/spdlog.h>
 
-using google::protobuf::Message;
-
 namespace minecpp::service::front {
-
-namespace serverbound_v1 = proto::event::serverbound;
 
 Service::Service(Config & /*config*/) {}
 

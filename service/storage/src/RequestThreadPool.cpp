@@ -1,5 +1,7 @@
 #include "RequestThreadPool.h"
 
+#include <algorithm>
+
 namespace minecpp::service::storage {
 
 RequestThreadPool::RequestThreadPool(IHandler &handler, std::size_t thread_count) :

@@ -19,7 +19,6 @@ target_link_libraries(minecpp_storage
         minecpp_utils
         minecpp_game
         minecpp_stream
-        minecpp_api_proto
         Boost::system
         spdlog::spdlog
         libmb

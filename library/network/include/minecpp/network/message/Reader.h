@@ -17,8 +17,8 @@ class Reader
    int8_t read_sbyte();
    std::int32_t read_varint();
    std::int64_t read_varlong();
-   std::int32_t read_uvarint();
-   std::int64_t read_uvarlong();
+   std::uint32_t read_uvarint();
+   std::uint64_t read_uvarlong();
    std::string read_string();
    void read_bytes(std::uint8_t *data, std::size_t size);
    container::Buffer read_buffer();

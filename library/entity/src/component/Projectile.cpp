@@ -26,11 +26,6 @@ void Projectile::on_attached(game::Entity &entity)
    velocity.on_velocity_change.connect_to<&Projectile::on_velocity_change>(m_velocity_change_sink, this);
 }
 
-void Projectile::serialize_to_proto(proto::entity::Entity *entity) const
-{
-   entity->set_entity_type(static_cast<game::EntityId>(m_entity_type_id));
-}
-
 void Projectile::serialize_to_net(game::NetworkEntity *net_entity) const
 {
    assert(net_entity);

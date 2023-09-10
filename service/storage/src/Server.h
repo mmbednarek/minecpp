@@ -5,12 +5,9 @@
 
 #include "minecpp/container/BasicBuffer.hpp"
 #include "minecpp/network/Network.h"
-#include "minecpp/proto/service/storage/Storage.pb.h"
 #include "minecpp/stream/Server.h"
 
 namespace minecpp::service::storage {
-
-namespace storage_v1 = minecpp::proto::service::storage;
 
 class Connection
 {

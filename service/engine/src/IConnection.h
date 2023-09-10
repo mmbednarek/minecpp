@@ -2,7 +2,6 @@
 
 #include "minecpp/container/BasicBufferView.hpp"
 #include "minecpp/game/Types.hpp"
-#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
 
 #include <span>
 

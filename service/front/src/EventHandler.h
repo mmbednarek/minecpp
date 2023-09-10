@@ -5,15 +5,12 @@
 #include "minecpp/event/Recipient.h"
 #include "minecpp/game/player/Id.h"
 #include "minecpp/nbt/repository/Registry.schema.h"
-#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
 #include "minecpp/service/engine/Api.h"
 
 #include <string>
 #include <vector>
 
 namespace minecpp::service::front {
-
-namespace clientbound_v1 = proto::event::clientbound;
 
 struct RawMsg
 {

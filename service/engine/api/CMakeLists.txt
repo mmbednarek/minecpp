@@ -17,7 +17,6 @@ target_link_libraries(minecpp_engine_api
         LINK_PUBLIC
         minecpp_stream
         LINK_PRIVATE
-        minecpp_api_proto
         minecpp_api_schema
         minecpp_event
         minecpp_game

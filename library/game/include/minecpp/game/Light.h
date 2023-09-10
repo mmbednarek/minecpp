@@ -4,7 +4,6 @@
 
 #include <mb/enum.h>
 #include <mb/int.h>
-#include <minecpp/proto/common/Common.pb.h>
 
 namespace minecpp::game {
 
@@ -23,10 +22,6 @@ class LightType final : public LightType_Base
 
    MB_ENUM_FIELD(Block)
    MB_ENUM_FIELD(Sky)
-
-   [[nodiscard]] proto::common::LightType to_proto();
-
-   [[nodiscard]] static LightType from_proto(proto::common::LightType type);
 };
 
 struct LightSource
@@ -37,10 +32,6 @@ struct LightSource
    LightSource();
 
    LightSource(const BlockPosition &position, mb::u8 strength);
-
-   [[nodiscard]] proto::common::LightSource to_proto() const;
-
-   [[nodiscard]] static LightSource from_proto(const proto::common::LightSource &source);
 };
 
 }// namespace minecpp::game

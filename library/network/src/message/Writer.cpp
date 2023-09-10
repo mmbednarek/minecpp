@@ -64,7 +64,7 @@ int len_varint(int value)
 
 void Writer::write_string(std::string_view s)
 {
-   write_varint(static_cast<std::uint32_t>(s.size()));
+   write_uvarint(static_cast<std::uint32_t>(s.size()));
    m_stream << s;
 }
 
