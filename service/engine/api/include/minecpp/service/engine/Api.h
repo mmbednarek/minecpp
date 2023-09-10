@@ -1,6 +1,7 @@
 #pragma once
 
-#include "minecpp/event/Clientbound.h"
+#include "minecpp/net/engine/Clientbound.schema.h"
+#include "minecpp/net/engine/Serverbound.schema.h"
 #include "minecpp/network/Network.h"
 #include "minecpp/stream/Client.h"
 #include "minecpp/util/StaticQueue.h"
@@ -12,30 +13,40 @@
 
 namespace minecpp::service::engine {
 
-class IVisitor
-{
- public:
-   virtual ~IVisitor() noexcept = default;
-
-   virtual void visit_event(const proto::event::clientbound::Event &event) = 0;
-};
-
 class ClientStream
 {
  public:
    ClientStream(stream::Client &client, const network::Endpoint &address);
 
-   void send(const google::protobuf::Message &message, game::PlayerId id);
+   void send(container::BufferView message);
    [[nodiscard]] bool is_connected() const;
 
  private:
    std::shared_ptr<stream::Peer> m_peer;
 };
 
+class Client;
+
+class IVisitor
+{
+ public:
+   virtual ~IVisitor() noexcept = default;
+
+   virtual void on_send_msg_to_single_player(Client &client,
+                                             const net::engine::cb::SendMsgToSinglePlayer &msg)          = 0;
+   virtual void on_send_msg_to_some_players(Client &client,
+                                            const net::engine::cb::SendMsgToSomePlayers &msg)            = 0;
+   virtual void on_send_msg_to_all_players(Client &client,
+                                           const net::engine::cb::SendMsgToAllPlayers &msg)              = 0;
+   virtual void on_send_msg_to_all_players_except(Client &client,
+                                                  const net::engine::cb::SendMsgToAllPlayersExcept &msg) = 0;
+   virtual void on_failure(Client &client, std::uint8_t message_id)                                      = 0;
+};
+
 class Client
 {
  public:
-   Client(IVisitor &visitor);
+   explicit Client(IVisitor &visitor);
 
    Client(const Client &)                = delete;
    Client &operator=(const Client &)     = delete;
@@ -43,7 +54,7 @@ class Client
    Client &operator=(Client &&) noexcept = delete;
 
    void connect(const network::Endpoint &address);
-   bool send(const google::protobuf::Message &message, game::PlayerId id);
+   bool send(container::BufferView message);
    void tick();
 
  private:

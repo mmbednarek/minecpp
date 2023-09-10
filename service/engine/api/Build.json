@@ -7,6 +7,7 @@
     ],
     "private": [
       "minecpp_api_proto",
+      "minecpp_api_schema",
       "minecpp_event",
       "minecpp_game",
       "libmb",

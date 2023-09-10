@@ -16,12 +16,10 @@ class EventHandler;
 class EventManager
 {
  public:
-   using Message = google::protobuf::Message;
-
-   void send_to(const Message &message, game::PlayerId player_id);
-   void send_to_many(const Message &message, std::span<game::PlayerId> player_id);
-   void send_to_all(const Message &message);
-   void send_to_all_excluding(const Message &message, game::PlayerId player_id);
+   void send_to(container::BufferView message, game::PlayerId player_id);
+   void send_to_many(container::BufferView message, std::span<game::PlayerId> player_id);
+   void send_to_all(container::BufferView message);
+   void send_to_all_excluding(container::BufferView message, game::PlayerId player_id);
 
    [[nodiscard]] IConnection *client(ConnectionId id);
    void add_client(ConnectionId id, std::unique_ptr<IConnection> stream);

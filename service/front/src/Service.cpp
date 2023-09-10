@@ -35,38 +35,44 @@ void Service::init_player(Connection &connection, uuid id, std::string_view name
    connection.set_state(protocol::State::Play);
    connection.set_uuid(id);
 
-   serverbound_v1::AcceptPlayer accept_player;
-   accept_player.set_challenge_id(0);
-   accept_player.set_name(std::string(name));
-   this->send(accept_player, id);
+   net::engine::sb::AcceptPlayer accept_player;
+   accept_player.name = name;
+   accept_player.player_id = id;
+
+   network::message::Writer writer;
+   accept_player.serialize(writer);
+   m_client->send(writer.buffer_view());
 }
 
 void Service::on_player_disconnect(uuid /*engine_id*/, game::PlayerId player_id)
 {
    assert(m_client != nullptr);
 
-   serverbound_v1::RemovePlayer remove_player{};
-   this->send(remove_player, player_id);
+   network::message::Writer writer;
+   net::engine::sb::RemovePlayer remove_player;
+   remove_player.player_id = player_id;
+   remove_player.serialize(writer);
+   m_client->send(writer.buffer_view());
 }
 
-void Service::send(const google::protobuf::Message &message, game::PlayerId id)
+void Service::send(container::BufferView message, game::PlayerId id)
 {
    if (m_client == nullptr)
       throw std::runtime_error("no available engine connection");
 
-   m_client->send(message, id);
+   network::message::Writer writer;
+   net::engine::sb::PlayerMessage player_message;
+   player_message.player_id = id;
+   player_message.data.resize(message.size());
+   std::copy(message.begin(), message.end(), player_message.data.begin());
+
+   player_message.serialize(writer);
+   m_client->send(writer.buffer_view());
 }
 
 void Service::set_client(engine::Client *client)
 {
    m_client = client;
-}
-
-void Service::send_raw_message(game::PlayerId id, container::BufferView data)
-{
-   serverbound_v1::RawMessage raw_message;
-   raw_message.set_data(data.to_string());
-   this->send(raw_message, id);
 }
 
 }// namespace minecpp::service::front

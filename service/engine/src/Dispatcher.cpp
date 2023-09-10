@@ -407,7 +407,7 @@ void Dispatcher::spawn_entity(game::EntityId entity_id)
       auto player_id = entity.component<PlayerComponent>().id();
 
       game::NetworkPlayer net_player{};
-      entity.serialize_player_to_net(&net_player);
+      entity.serialize_to_net_player(&net_player);
 
       this->send_raw_to_players_in_view_distance_except(player_id, position, net_player.player_data);
       this->send_raw_to_players_in_view_distance_except(player_id, position, net_player.metadata);
@@ -486,7 +486,7 @@ void Dispatcher::spawn_entity_for_player(game::PlayerId player_id, game::EntityI
          return;
 
       game::NetworkPlayer net_player;
-      entity.serialize_player_to_net(&net_player);
+      entity.serialize_to_net_player(&net_player);
 
       this->send_raw_to_player(player_id, net_player.player_data);
       this->send_raw_to_player(player_id, net_player.metadata);
@@ -551,18 +551,18 @@ void Dispatcher::teleport_entity(game::EntityId entity_id, const math::Vector3 &
    }
 }
 
-void Dispatcher::send_to_all(const google::protobuf::Message &message) const
+void Dispatcher::send_to_all(container::BufferView message) const
 {
    m_events.send_to_all(message);
 }
 
-void Dispatcher::send_to_player(game::PlayerId player_id, const google::protobuf::Message &message) const
+void Dispatcher::send_to_player(game::PlayerId player_id, container::BufferView message) const
 {
    m_events.send_to(message, player_id);
 }
 
 void Dispatcher::send_to_players_visible_by(game::Entity &entity,
-                                            const google::protobuf::Message &message) const
+                                            container::BufferView message) const
 {
    assert(entity.has_component<PlayerComponent>());
 
@@ -586,7 +586,7 @@ void Dispatcher::send_to_players_visible_by(game::Entity &entity,
 }
 
 void Dispatcher::send_to_players_in_view_distance(const math::Vector3 &position,
-                                                  const google::protobuf::Message &message) const
+                                                  container::BufferView message) const
 {
    auto entities = m_entity_system.list_entities_in_view_distance(position);
    std::vector<game::PlayerId> players;
@@ -605,7 +605,7 @@ void Dispatcher::send_to_players_in_view_distance(const math::Vector3 &position,
 
 void Dispatcher::send_to_players_in_view_distance_except(game::PlayerId player_id,
                                                          const math::Vector3 &position,
-                                                         const google::protobuf::Message &message) const
+                                                         container::BufferView message) const
 {
    auto entities = m_entity_system.list_entities_in_view_distance(position);
    std::vector<game::PlayerId> players;
@@ -635,9 +635,11 @@ clientbound_v1::RawMessage Dispatcher::make_raw_message(const network::message::
 
 void Dispatcher::set_abilities(game::PlayerId player_id, const game::Abilities &abilities)
 {
-   clientbound_v1::SetAbilities set_abilities;
-   *set_abilities.mutable_abilities() = abilities.to_proto();
-   m_events.send_to(set_abilities, player_id);
+   net::play::cb::PlayerAbilities player_abilities;
+   player_abilities.fly_speed = abilities.fly_speed;
+   player_abilities.field_of_view = abilities.field_of_view;
+   player_abilities.flags = abilities.flags();
+   this->send_raw_to_player(player_id, player_abilities);
 }
 
 void Dispatcher::send_damage_event(game::EntityId target, int id,

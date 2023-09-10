@@ -55,7 +55,7 @@ void Entity::serialize_to_net(NetworkEntity *net_entity) const
    });
 }
 
-void Entity::serialize_player_to_net(NetworkPlayer *net_player) const
+void Entity::serialize_to_net_player(NetworkPlayer *net_player) const
 {
    assert(net_player);
 
@@ -64,7 +64,7 @@ void Entity::serialize_player_to_net(NetworkPlayer *net_player) const
 
    this->for_each_component([net_player](const entt::meta_any &obj) mutable {
      using namespace entt::literals;
-     auto serialize = obj.type().func("serialize_player_to_net"_hs);
+     auto serialize = obj.type().func("serialize_to_net_player"_hs);
      if (serialize) {
         serialize.invoke(obj, net_player);
      }

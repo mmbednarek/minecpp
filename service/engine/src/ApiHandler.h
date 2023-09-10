@@ -21,13 +21,13 @@ class Connection : public IConnection
  public:
    explicit Connection(std::shared_ptr<stream::Peer> peer);
 
-   void send_to_many(const google::protobuf::Message &message, std::span<game::PlayerId> player_ids) override;
-   void send_to_player(const google::protobuf::Message &message, game::PlayerId player_id) override;
-   void send_to_all(const google::protobuf::Message &message) override;
-   void send_to_all_excluding(const google::protobuf::Message &message, game::PlayerId player_id) override;
+   void send_to_many(container::BufferView message, std::span<game::PlayerId> player_ids) override;
+   void send_to_player(container::BufferView message, game::PlayerId player_id) override;
+   void send_to_all(container::BufferView message) override;
+   void send_to_all_excluding(container::BufferView message, game::PlayerId player_id) override;
 
  private:
-   void send(const proto::event::clientbound::Event &event);
+   void send(container::BufferView message);
 
    std::shared_ptr<stream::Peer> m_peer;
 };

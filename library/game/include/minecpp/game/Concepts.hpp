@@ -25,7 +25,7 @@ concept NetSerializable = requires(const T &t, NetworkEntity *net_entity) { t.se
 
 template<typename T>
 concept NetPlayerSerializable =
-        requires(const T &t, NetworkPlayer *net_player) { t.serialize_player_to_net(net_player); };
+        requires(const T &t, NetworkPlayer *net_player) { t.serialize_to_net_player(net_player); };
 
 template<typename T>
 concept IsAttachable = requires(T &t, Entity &entity) { t.on_attached(entity); };
@@ -55,7 +55,7 @@ void register_component()
       meta_type.template func<&TComponent::serialize_to_net>("serialize_to_net"_hs);
    }
    if constexpr (NetPlayerSerializable<TComponent>) {
-      meta_type.template func<&TComponent::serialize_player_to_net>("serialize_player_to_net"_hs);
+      meta_type.template func<&TComponent::serialize_to_net_player>("serialize_to_net_player"_hs);
    }
    if constexpr (game::HasOnKilled<TComponent>) {
       meta_type.template func<&TComponent::on_killed>("on_killed"_hs);

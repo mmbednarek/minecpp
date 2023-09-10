@@ -35,12 +35,10 @@ class Service
 
    static LoginResponse login_player(std::string &user_name);
 
-   void send_raw_message(game::PlayerId id, container::BufferView data);
-
    void init_player(Connection &connection, uuid id, std::string_view name);
    void on_player_disconnect(uuid engine_id, game::PlayerId player_id);
    void set_client(engine::Client *stream);
-   void send(const ::google::protobuf::Message &message, game::PlayerId id);
+   void send(container::BufferView message, game::PlayerId id);
 
  private:
    engine::Client *m_client{};

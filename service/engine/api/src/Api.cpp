@@ -1,10 +1,8 @@
 #include "Api.h"
 
 #include "minecpp/container/BasicBuffer.hpp"
-#include "minecpp/proto/event/clientbound/Clientbound.pb.h"
 #include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 
-#include <charconv>
 #include <spdlog/spdlog.h>
 
 namespace gpb = google::protobuf;
@@ -16,17 +14,10 @@ ClientStream::ClientStream(stream::Client &client, const network::Endpoint &endp
 {
 }
 
-void ClientStream::send(const gpb::Message &message, game::PlayerId id)
+void ClientStream::send(container::BufferView message)
 {
    assert(m_peer);
-
-   proto::event::serverbound::Event proto_event;
-   proto_event.mutable_payload()->PackFrom(message);
-   *proto_event.mutable_player_id() = game::player::write_id_to_proto(id);
-
-   container::Buffer buffer(static_cast<std::size_t>(proto_event.ByteSizeLong()));
-   proto_event.SerializeToArray(buffer.data(), static_cast<int>(buffer.size()));
-   m_peer->send_reliable_message(buffer.as_view());
+   m_peer->send_reliable_message(message);
 }
 
 void Client::on_connected(stream::Peer *peer)
@@ -34,11 +25,11 @@ void Client::on_connected(stream::Peer *peer)
    spdlog::info("established connection to server {}", peer->hostname());
 }
 
-void Client::on_received_message(stream::Peer */*peer*/, container::BufferView message)
+void Client::on_received_message(stream::Peer * /*peer*/, container::BufferView message)
 {
-   proto::event::clientbound::Event proto_event;
-   proto_event.ParseFromArray(message.data(), static_cast<int>(message.size()));
-   m_visitor.visit_event(proto_event);
+   auto stream = message.make_stream();
+   network::message::Reader reader(stream);
+   net::engine::cb::visit_message(m_visitor, *this, reader);
 }
 
 void Client::on_disconnected(stream::Peer *peer, bool *try_reconnect)
@@ -66,7 +57,7 @@ void Client::connect(const network::Endpoint &address)
    this->tick();
 }
 
-bool Client::send(const gpb::Message &message, game::PlayerId id)
+bool Client::send(container::BufferView message)
 {
    assert(not m_streams.empty());
 
@@ -78,7 +69,7 @@ bool Client::send(const gpb::Message &message, game::PlayerId id)
    if (limit == 0)
       return false;
 
-   m_streams[m_round].send(message, id);
+   m_streams[m_round].send(message);
    m_round = (m_round + 1) % m_streams.size();
 
    return true;

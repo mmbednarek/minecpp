@@ -14,6 +14,7 @@ target_sources(minecpp_api_schema
 )
 
 # Subdirectories
+add_subdirectory("engine")
 add_subdirectory("login")
 add_subdirectory("play")
 add_subdirectory("status")

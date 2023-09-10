@@ -2,13 +2,12 @@
 
 #include "../Service.h"
 
-#include "minecpp/proto/event/serverbound/Serverbound.pb.h"
 
 #include <spdlog/spdlog.h>
 
 namespace minecpp::service::engine::job {
 
-HandlePlayerMessage::HandlePlayerMessage(Service &service, HandlePlayerMessage::Event event) :
+HandlePlayerMessage::HandlePlayerMessage(Service &service, container::Buffer event) :
     m_service{service},
     m_event{std::move(event)}
 {
@@ -16,31 +15,33 @@ HandlePlayerMessage::HandlePlayerMessage(Service &service, HandlePlayerMessage::
 
 void HandlePlayerMessage::run()
 {
-   try {
-      if (m_event.payload().Is<proto::event::serverbound::RawMessage>()) {
-         proto::event::serverbound::RawMessage raw_message;
-         m_event.payload().UnpackTo(&raw_message);
-         m_service.handle_raw_message(
-                 game::player::read_id_from_proto(m_event.player_id()),
-                 container::BufferView(reinterpret_cast<unsigned char *>(raw_message.mutable_data()->data()),
-                                       raw_message.data().size()));
-      } else if (m_event.payload().Is<proto::event::serverbound::AcceptPlayer>()) {
-         proto::event::serverbound::AcceptPlayer accept_player;
-         m_event.payload().UnpackTo(&accept_player);
-         m_service.on_accept_player(game::player::read_id_from_proto(m_event.player_id()),
-                                    accept_player.name());
-      } else if (m_event.payload().Is<proto::event::serverbound::PreInitialChunks>()) {
-         m_service.on_pre_initial_chunks(game::player::read_id_from_proto(m_event.player_id()));
-      } else if (m_event.payload().Is<proto::event::serverbound::PostInitialChunks>()) {
-         m_service.on_post_initial_chunks(game::player::read_id_from_proto(m_event.player_id()));
-      } else if (m_event.payload().Is<proto::event::serverbound::RemovePlayer>()) {
-         m_service.on_remove_player(game::player::read_id_from_proto(m_event.player_id()));
-      } else {
-         spdlog::error("unknown message: {}", m_event.payload().type_url());
-      }
-   } catch (std::runtime_error &err) {
-      spdlog::error("error while handling request: {}", err.what());
-   }
+   auto stream = m_event.make_stream();
+   network::message::Reader reader(stream);
+
+   int stub{};
+   net::engine::sb::visit_message(*this, stub, reader);
+}
+
+void HandlePlayerMessage::on_accept_player(int stub, const net::engine::sb::AcceptPlayer &accept_player)
+{
+   m_service.on_accept_player(accept_player.player_id, accept_player.name);
+}
+
+void HandlePlayerMessage::on_remove_player(int stub, const net::engine::sb::RemovePlayer &remove_player)
+{
+   m_service.on_remove_player(remove_player.player_id);
+}
+
+void HandlePlayerMessage::on_player_message(int stub, const net::engine::sb::PlayerMessage &player_message)
+{
+   m_service.handle_raw_message(player_message.player_id,
+                                container::BufferView(const_cast<std::uint8_t *>(player_message.data.data()),
+                                                      player_message.data.size()));
+}
+
+void HandlePlayerMessage::on_failure(int stub, std::uint8_t message_id)
+{
+   spdlog::warn("handler-player-message: failed to parse message with id {}", message_id);
 }
 
 }// namespace minecpp::service::engine::job

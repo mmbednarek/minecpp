@@ -13,7 +13,7 @@ void PlayHandler::handle(Connection &connection, Reader &reader)
 {
    connection.async_read_packet(*this);
    auto buffer = container::Buffer::from_istream(reader.raw_stream());
-   service.send_raw_message(connection.uuid(), buffer.as_view());
+   service.send(buffer.as_view(), connection.uuid());
 }
 
 void PlayHandler::handle_disconnect(Connection &conn)

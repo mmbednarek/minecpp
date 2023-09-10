@@ -1,0 +1,25 @@
+generator = "net"
+package minecpp.net.engine.cb
+
+[MessageID=0x00]
+record SendMsgToSinglePlayer {
+    player_id: uuid
+    data: list[uint8]
+}
+
+[MessageID=0x01]
+record SendMsgToSomePlayers {
+    player_ids: list[uuid]
+    data: list[uint8]
+}
+
+[MessageID=0x02]
+record SendMsgToAllPlayers {
+    data: list[uint8]
+}
+
+[MessageID=0x03]
+record SendMsgToAllPlayersExcept {
+    player_id: uuid
+    data: list[uint8]
+}

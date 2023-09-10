@@ -32,7 +32,8 @@ using boost::uuids::uuid;
 class Dispatcher : public minecpp::game::IDispatcher
 {
  public:
-   explicit Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system, nbt::repository::Registry &registry);
+   explicit Dispatcher(EventManager &events, ChunkSystem &chunk_system, entity::EntitySystem &entity_system,
+                       nbt::repository::Registry &registry);
    void spawn_entity(game::EntityId entity_id) override;
    void remove_entity(game::EntityId entity_id) override;
    void remove_entity_for_player(game::PlayerId player_id, game::EntityId entity_id) override;
@@ -66,7 +67,7 @@ class Dispatcher : public minecpp::game::IDispatcher
 
    void set_inventory_slot(game::PlayerId player_id, game::ItemId item_id, game::SlotId slot_id,
                            int count) override;
-   void update_block_light(const math::Vector3& center, game::SectionRange range) override;
+   void update_block_light(const math::Vector3 &center, game::SectionRange range) override;
 
    void send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool is_initial);
    void update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position) override;
@@ -89,20 +90,19 @@ class Dispatcher : public minecpp::game::IDispatcher
                           const math::Vector3 &position) override;
 
  private:
-   void send_to_all(const google::protobuf::Message &message) const;
-   void send_to_player(game::PlayerId player_id, const google::protobuf::Message &message) const;
-   void send_to_players_in_view_distance(const math::Vector3 &position,
-                                         const google::protobuf::Message &message) const;
+   void send_to_all(container::BufferView message) const;
+   void send_to_player(game::PlayerId player_id, container::BufferView message) const;
+   void send_to_players_in_view_distance(const math::Vector3 &position, container::BufferView message) const;
    void send_to_players_in_view_distance_except(game::PlayerId player_id, const math::Vector3 &position,
-                                                const google::protobuf::Message &message) const;
-   void send_to_players_visible_by(game::Entity &entity, const google::protobuf::Message &message) const;
+                                                container::BufferView message) const;
+   void send_to_players_visible_by(game::Entity &entity, container::BufferView message) const;
 
    template<typename TMessage>
    void send_raw_to_players_in_view_distance(const math::Vector3 &position, const TMessage &message) const
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_players_in_view_distance(position, make_raw_message(writer));
+      this->send_to_players_in_view_distance(position, writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -111,7 +111,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_players_in_view_distance_except(player_id, position, make_raw_message(writer));
+      this->send_to_players_in_view_distance_except(player_id, position, writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -119,7 +119,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_players_visible_by(entity, make_raw_message(writer));
+      this->send_to_players_visible_by(entity, writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -127,7 +127,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_all(make_raw_message(writer));
+      this->send_to_all(writer.buffer_view());
    }
 
    template<typename TMessage>
@@ -135,7 +135,7 @@ class Dispatcher : public minecpp::game::IDispatcher
    {
       network::message::Writer writer;
       message.serialize(writer);
-      this->send_to_player(player_id, make_raw_message(writer));
+      this->send_to_player(player_id, writer.buffer_view());
    }
 
    [[nodiscard]] static proto::event::clientbound::RawMessage
