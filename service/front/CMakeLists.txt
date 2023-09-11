@@ -19,8 +19,7 @@ target_link_libraries(minecpp_front
         minecpp_utils
         minecpp_engine_api
         minecpp_entity
-        minecpp_api_schema
-        minecpp_event
+        minecpp_api
         minecpp_network
         minecpp_format
         minecpp_repository

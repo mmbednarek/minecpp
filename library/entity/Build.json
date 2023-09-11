@@ -4,7 +4,7 @@
   "dependencies": {
     "public": [
       "EnTT",
-      "minecpp_api_schema",
+      "minecpp_api",
       "minecpp_game",
       "minecpp_random",
       "minecpp_repository",

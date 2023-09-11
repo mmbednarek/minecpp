@@ -6,8 +6,7 @@
       "minecpp_stream"
     ],
     "private": [
-      "minecpp_api_schema",
-      "minecpp_event",
+      "minecpp_api",
       "minecpp_game",
       "libmb",
       "fmt::fmt",

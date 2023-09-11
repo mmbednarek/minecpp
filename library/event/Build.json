@@ -1,9 +1,0 @@
-{
-  "name": "minecpp_event",
-  "header_only": true,
-  "dependencies": {
-    "interface": [
-      "minecpp_game"
-    ]
-  }
-}

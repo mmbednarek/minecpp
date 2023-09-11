@@ -1,7 +1,11 @@
 #include <gtest/gtest.h>
-#include <minecpp/world/Section.h>
+
+#include "minecpp/world/Chunk.h"
+#include "minecpp/world/ChunkSerializer.h"
+#include "minecpp/world/Section.h"
 
 using minecpp::game::BlockStateId;
+using minecpp::world::Chunk;
 using minecpp::world::Section;
 
 TEST(Section, ProtoTest)
@@ -12,12 +16,22 @@ TEST(Section, ProtoTest)
       ids[i] = i % 22;
    }
 
+   std::array<short, 256> heightmap{};
+   Chunk chunk(0, 0, heightmap);
+   chunk.create_empty_section(0);
+
+   chunk.set_block_at({5, 5, 5}, 1);
+   chunk.set_block_at({5, 5, 6}, 1);
+
+   minecpp::world::ChunkSerializer chunk_serializer{chunk};
+
+   minecpp::net::Chunk out_chunk;
+   chunk_serializer.write_chunk(out_chunk);
+
    Section section{1};
    section.fill_light(minecpp::game::LightType::Block);
    section.fill_light(minecpp::game::LightType::Sky);
    section.data() = {ids.begin(), ids.end()};
-
-   //   auto proto = section.to_proto();
 
    //   ASSERT_EQ(proto.sky_light().size(), 2048);
    //

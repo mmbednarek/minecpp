@@ -1,0 +1,11 @@
+{
+  "name": "minecpp_api",
+  "include_path":  "minecpp",
+  "dependencies": {
+    "public": [
+      "minecpp_nbt",
+      "minecpp_network",
+      "libmb"
+    ]
+  }
+}

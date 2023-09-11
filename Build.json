@@ -1,13 +1,12 @@
 {
   "libraries": [
-    "api/minecpp/schema",
+    "api",
     "chat",
     "crypto",
     "controller",
     "container",
     "command",
     "entity",
-    "event",
     "format",
     "game",
     "lexer",
