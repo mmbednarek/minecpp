@@ -25,7 +25,7 @@ clang-format:
 	./meta/run-clang-format.sh
 
 schema:
-	schema_compiler -i ./api/minecpp -s library/api/minecpp/schema/src -h library/api/minecpp/schema/include/minecpp -I minecpp
+	schema_compiler -i ./api/minecpp -s library/api/src -h library/api/include/minecpp -I minecpp
 
 cmake-files:
 	./meta/cmake-generate.sh

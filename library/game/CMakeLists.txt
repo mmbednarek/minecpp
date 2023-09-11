@@ -17,7 +17,7 @@ target_link_libraries(minecpp_game
         LINK_PUBLIC
         EnTT
         libmb
-        minecpp_api_schema
+        minecpp_api
         minecpp_chat
         minecpp_math
         minecpp_utils

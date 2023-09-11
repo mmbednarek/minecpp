@@ -5,7 +5,7 @@
     "public": [
       "libmb",
       "minecpp_game",
-      "minecpp_api_schema"
+      "minecpp_api"
     ]
   }
 }

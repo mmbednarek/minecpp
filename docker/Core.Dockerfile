@@ -14,7 +14,7 @@ RUN cmake --build . -j $(nproc) -t minecpp_game  \
   -t minecpp_engine_api  \
   -t minecpp_utils  \
   -t minecpp_game  \
-  -t minecpp_api_schema  \
+  -t minecpp_api  \
   -t minecpp_nbt  \
   -t minecpp_chat  \
   -t minecpp_format  \

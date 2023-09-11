@@ -4,7 +4,7 @@
   "dependencies": {
     "public": [
       "libmb",
-      "minecpp_api_schema"
+      "minecpp_api"
     ]
   }
 }

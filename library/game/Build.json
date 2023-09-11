@@ -5,7 +5,7 @@
     "public": [
       "EnTT",
       "libmb",
-      "minecpp_api_schema",
+      "minecpp_api",
       "minecpp_chat",
       "minecpp_math",
       "minecpp_utils",

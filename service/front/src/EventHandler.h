@@ -2,7 +2,6 @@
 
 #include "Server.h"
 
-#include "minecpp/event/Recipient.h"
 #include "minecpp/game/player/Id.h"
 #include "minecpp/nbt/repository/Registry.schema.h"
 #include "minecpp/service/engine/Api.h"
