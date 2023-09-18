@@ -12,6 +12,7 @@
 #include <minecpp/util/Uuid.h>
 #include <minecpp/world/BlockState.h>
 #include <minecpp/world/SectionSlice.h>
+#include <spdlog/spdlog.h>
 #include <utility>
 
 using minecpp::game::Face;
@@ -187,6 +188,7 @@ mb::emptyres World::recalculate_light(game::LightType /*light_type*/, const game
 mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position,
                                          bool is_initial)
 {
+   spdlog::info("world: issued chunk dispatch {} {}", position.x(), position.z());
    ACCESS_CHUNK_AT(position, [this, player_id, is_initial](world::Chunk *chunk) {
       m_dispatcher.send_chunk(player_id, chunk, is_initial);
    });

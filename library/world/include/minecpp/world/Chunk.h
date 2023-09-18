@@ -99,6 +99,7 @@ class Chunk : public game::IBlockContainer
 
  private:
    mb::result<Section &> section_from_y_level(int y);
+   mb::result<Section &> assure_section_at_y_level(int y);
 
    game::ChunkPosition m_position{};
    bool m_is_full = false;

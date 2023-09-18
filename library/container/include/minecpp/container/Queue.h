@@ -1,7 +1,7 @@
 #pragma once
-#include <mutex>
 #include <optional>
 #include <queue>
+#include <shared_mutex>
 
 namespace minecpp::container {
 
@@ -12,14 +12,14 @@ class Queue
    template<typename TPushItem>
    void push(TPushItem &&item)
    {
-      std::lock_guard lock{m_mutex};
+      std::unique_lock lock{m_mutex};
       m_queue.push(std::forward<TPushItem>(item));
    }
 
    template<typename... TArgs>
    void emplace(TArgs &&...args)
    {
-      std::lock_guard lock{m_mutex};
+      std::unique_lock lock{m_mutex};
       m_queue.template emplace(std::forward<TArgs>(args)...);
    }
 
@@ -27,7 +27,7 @@ class Queue
    {
       TValue result;
       {
-         std::lock_guard lock{m_mutex};
+         std::unique_lock lock{m_mutex};
          result = std::move(m_queue.front());
          m_queue.pop();
       }
@@ -36,7 +36,7 @@ class Queue
 
    [[nodiscard]] std::optional<TValue> try_pop()
    {
-      std::lock_guard lock{m_mutex};
+      std::unique_lock lock{m_mutex};
       if (m_queue.empty()) {
          return std::nullopt;
       }
@@ -48,17 +48,13 @@ class Queue
 
    [[nodiscard]] bool is_empty() const
    {
-      bool empty;
-      {
-         std::lock_guard lock{m_mutex};
-         empty = m_queue.empty();
-      }
-      return empty;
+      std::shared_lock lock{m_mutex};
+      return m_queue.empty();
    }
 
  private:
    std::queue<TValue> m_queue;
-   mutable std::mutex m_mutex;
+   mutable std::shared_mutex m_mutex;
 };
 
 }// namespace minecpp::container

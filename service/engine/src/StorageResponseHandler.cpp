@@ -17,6 +17,7 @@ void StorageResponseHandler::set_chunk_system(ChunkSystem *chunk_system)
 
 void StorageResponseHandler::on_reply_empty_chunk(int a, const net::storage::cb::ReplyEmptyChunk &message)
 {
+   spdlog::info("storage-response-handler: handling empty chunk at {} {}", message.position.x(), message.position.y());
    m_job_system.run([this, message]() {
       assert(m_chunk_system);
       m_chunk_system->handle_empty_chunk(game::ChunkPosition(message.position));
@@ -25,6 +26,7 @@ void StorageResponseHandler::on_reply_empty_chunk(int a, const net::storage::cb:
 
 void StorageResponseHandler::on_reply_chunk(int a, const net::storage::cb::ReplyChunk &message)
 {
+   spdlog::info("storage-response-handler: handling chunk data at {} {}", message.chunk.position.x(), message.chunk.position.y());
    m_job_system.run([this, message]() {
       assert(m_chunk_system);
       m_chunk_system->handle_chunk_data(message.chunk);
