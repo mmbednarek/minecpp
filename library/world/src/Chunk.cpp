@@ -41,19 +41,14 @@ void Chunk::create_empty_section(int8_t sec)
 
 mb::emptyres Chunk::set_block_at(const game::BlockPosition &position, game::BlockStateId state)
 {
-   auto sec  = static_cast<std::int8_t>(position.y() / 16);
-   auto iter = m_sections.find(sec);
-   if (iter == m_sections.end()) {
-      create_empty_section(sec);
-      iter = m_sections.find(sec);
-   }
+   auto section = this->assure_section_at_y_level(position.y());
+   MB_VERIFY(section);
 
-   auto &section = iter->second;
-   section.set_block(position, state);
+   section->set_block(position, state);
 
    BlockState block_state{state};
    auto block = repository::Block::the().get_by_id(block_state.block_id());
-   MB_VERIFY(block)
+   MB_VERIFY(block);
 
    if (block_state.solid_faces() & game::FaceMask::Top ||
        block_state.solid_faces() & game::FaceMask::Bottom || block_state.opacity() > 0) {
@@ -89,10 +84,8 @@ mb::result<game::LightValue> Chunk::light_value_at(game::LightType type, const g
 mb::emptyres Chunk::set_light_value_at(game::LightType type, const game::BlockPosition &position,
                                        game::LightValue value)
 {
-   auto section = section_from_y_level(position.y());
-   if (section.has_failed()) {
-      return std::move(section.err());
-   }
+   auto section = this->assure_section_at_y_level(position.y());
+   MB_VERIFY(section);
 
    section->set_light(type, position, value);
    return mb::ok;
@@ -151,6 +144,17 @@ mb::result<Section &> Chunk::section_from_y_level(int y)
    auto iter = m_sections.find(sec);
    if (iter == m_sections.end()) {
       return mb::error("no such section");
+   }
+   return iter->second;
+}
+
+mb::result<Section &> Chunk::assure_section_at_y_level(int y)
+{
+   auto sec  = static_cast<mb::i8>(y / 16);
+   auto iter = m_sections.find(sec);
+   if (iter == m_sections.end()) {
+      create_empty_section(sec);
+      iter = m_sections.find(sec);
    }
    return iter->second;
 }
@@ -248,6 +252,9 @@ void Chunk::read_net_chunk(const net::Chunk &chunk)
 
    std::int8_t section_y = 0;
    for (const auto &section : data.sections) {
+      if (section.block_count == 0)
+         continue;
+
       this->put_section(section_y, world::Section::from_net(section, section_y));
       ++section_y;
    }
