@@ -39,10 +39,10 @@ std::unique_ptr<IGenerator> NbtGeneratorFactory::create_generator(const Document
 }
 
 NbtGenerator::NbtGenerator(const Document &document, const SymbolTable &table, const PathInfo &path_info) :
-    m_document(document),
-    m_table(table),
-    m_path_info(path_info),
-    m_component(document.package_info().to_cpp_namespace())
+   m_document(document),
+   m_table(table),
+   m_path_info(path_info),
+   m_component(document.package_info().to_cpp_namespace())
 {
    m_component.source_include_local(this->corresponding_header(this->m_path_info.origin_document_path));
 
@@ -66,13 +66,16 @@ NbtGenerator::NbtGenerator(const Document &document, const SymbolTable &table, c
    for (const auto &record : m_document.records()) {
       class_spec record_class(record.name());
 
+      auto obj_name = fmt::format("object_name = \"{}\"", record.name());
+      record_class.add_public("static constexpr auto", obj_name, false);
+
       std::map<std::string, std::vector<Attribute>> type_names{};
       for (const auto &attribute : record.attributes()) {
          const auto &cpp_type = this->cpp_type_of(attribute.type());
          record_class.add_public(cpp_type, this->cpp_name(attribute));
 
          auto symbol =
-                 m_table.find_symbol(m_document.package_info().full_name(), attribute.type().full_name());
+            m_table.find_symbol(m_document.package_info().full_name(), attribute.type().full_name());
          generator_verify(symbol.has_value(), attribute.line(), attribute.column(),
                           "could not find symbol {} in package {}", attribute.type().full_name(),
                           m_document.package_info().full_name());
@@ -93,74 +96,74 @@ NbtGenerator::NbtGenerator(const Document &document, const SymbolTable &table, c
 
       // void serialize_no_header()
       record_class.add_public(method(
-              "void", "serialize_no_header",
-              {
-                      {"minecpp::nbt::Writer", "&w"}
-      },
-              true, [this, &record](statement::collector &col) {
-                 for (const auto &attribute : record.attributes()) {
-                    auto value = raw(this->cpp_name(attribute));
+         "void", "serialize_no_header",
+         {
+            {"minecpp::nbt::Writer", "&w"}
+         },
+         true, [this, &record](statement::collector &col) {
+            for (const auto &attribute : record.attributes()) {
+               auto value = raw(this->cpp_name(attribute));
 
-                    auto symbol = m_table.find_symbol(m_document.package_info().full_name(),
-                                                      attribute.type().full_name());
-                    generator_verify(symbol.has_value(), attribute.line(), attribute.column(),
-                                     "could not find symbol {} in package {}", attribute.type().full_name(),
-                                     m_document.package_info().full_name());
+               auto symbol = m_table.find_symbol(m_document.package_info().full_name(),
+                                                 attribute.type().full_name());
+               generator_verify(symbol.has_value(), attribute.line(), attribute.column(),
+                                "could not find symbol {} in package {}", attribute.type().full_name(),
+                                m_document.package_info().full_name());
 
-                    if (symbol->type_class == TypeClass::Optional) {
-                       col << if_statement(method_call(value, "has_value"),
-                                           [this, &attribute, &value](statement::collector &col) {
-                                              auto core_type = attribute.type().template_arg_at(0);
-                                              generator_verify(
-                                                      core_type.has_value(), attribute.line(),
-                                                      attribute.column(),
-                                                      "optional type is missing a template argument");
+               if (symbol->type_class == TypeClass::Optional) {
+                  col << if_statement(method_call(value, "has_value"),
+                                      [this, &attribute, &value](statement::collector &col) {
+                                         auto core_type = attribute.type().template_arg_at(0);
+                                         generator_verify(
+                                            core_type.has_value(), attribute.line(),
+                                            attribute.column(),
+                                            "optional type is missing a template argument");
 
-                                              col << call("w.write_header", raw(this->nbt_tag_id(*core_type)),
-                                                          raw("\"{}\"", this->nbt_name(attribute)));
+                                         col << call("w.write_header", raw(this->nbt_tag_id(*core_type)),
+                                                     raw("\"{}\"", this->nbt_name(attribute)));
 
-                                              put_serialize_logic(col, *core_type, deref{value}, 0);
-                                           });
+                                         put_serialize_logic(col, *core_type, deref{value}, 0);
+                                      });
 
-                    } else if (symbol->type_class == TypeClass::Variant) {
-                       if_switch_statement if_switch;
-                       for (std::size_t arg_index{0}; arg_index < attribute.type().template_args_count();
-                            ++arg_index) {
-                          auto subtype = attribute.type().template_arg_at(arg_index);
-                          generator_verify(subtype.has_value(), attribute.line(), attribute.column(),
-                                           "internal error");
+               } else if (symbol->type_class == TypeClass::Variant) {
+                  if_switch_statement if_switch;
+                  for (std::size_t arg_index{0}; arg_index < attribute.type().template_args_count();
+                       ++arg_index) {
+                     auto subtype = attribute.type().template_arg_at(arg_index);
+                     generator_verify(subtype.has_value(), attribute.line(), attribute.column(),
+                                      "internal error");
 
-                          if_switch.add_case(
-                                  call(fmt::format("std::holds_alternative<{}>", this->cpp_type_of(*subtype)),
-                                       value),
-                                  [this, &subtype, &attribute, &value](statement::collector &col) {
-                                     col << call("w.write_header", raw(this->nbt_tag_id(*subtype)),
-                                                 raw("\"{}\"", this->nbt_name(attribute)));
-                                     this->put_serialize_logic(
-                                             col, *subtype,
-                                             call(fmt::format("std::get<{}>", this->cpp_type_of(*subtype)),
-                                                  value),
-                                             0);
-                                  });
-                       }
-                       col << if_switch;
-                    } else {
-                       col << call("w.write_header", raw(this->nbt_tag_id(attribute.type())),
-                                   raw("\"{}\"", this->nbt_name(attribute)));
-                       put_serialize_logic(col, attribute.type(), value, 0);
-                    }
-                 }
+                     if_switch.add_case(
+                        call(fmt::format("std::holds_alternative<{}>", this->cpp_type_of(*subtype)),
+                             value),
+                        [this, &subtype, &attribute, &value](statement::collector &col) {
+                           col << call("w.write_header", raw(this->nbt_tag_id(*subtype)),
+                                       raw("\"{}\"", this->nbt_name(attribute)));
+                           this->put_serialize_logic(
+                              col, *subtype,
+                              call(fmt::format("std::get<{}>", this->cpp_type_of(*subtype)),
+                                   value),
+                              0);
+                        });
+                  }
+                  col << if_switch;
+               } else {
+                  col << call("w.write_header", raw(this->nbt_tag_id(attribute.type())),
+                              raw("\"{}\"", this->nbt_name(attribute)));
+                  put_serialize_logic(col, attribute.type(), value, 0);
+               }
+            }
 
 
-                 col << call("w.end_compound");
-              }));
+            col << call("w.end_compound");
+         }));
 
       // void serialize()
       record_class.add_public(method("void", "serialize",
                                      {
-                                             {    "std::ostream",      "&out_stream"},
-                                             {"std::string_view", "in_compound_name"}
-      },
+                                        {"std::ostream", "&out_stream"},
+                                        {"std::string_view", "in_compound_name"}
+                                     },
                                      true, [](statement::collector &col) {
                                         col << call("minecpp::nbt::Writer w", raw("out_stream"));
                                         col << call("w.begin_compound", raw("in_compound_name"));
@@ -170,32 +173,34 @@ NbtGenerator::NbtGenerator(const Document &document, const SymbolTable &table, c
       // static Msg deserialize_no_header
       record_class.add_public(static_method(record.name(), "deserialize_no_header",
                                             {
-                                                    {"minecpp::nbt::Reader", "&r"}
-      },
+                                               {"minecpp::nbt::Reader", "&r"}
+                                            },
                                             [this, &record](statement::collector &col) {
                                                col << raw("{} result", record.name());
                                                col << ranged_for_statement(
-                                                       "const auto", "&[tagid, in_field_name]",
-                                                       call("r.iterate_compound"),
-                                                       [this, &record](statement::collector &col) {
-                                                          this->put_deserialize_logic(record, col);
-                                                       });
+                                                  "const auto", "&[tagid, in_field_name]",
+                                                  call("r.iterate_compound"),
+                                                  [this, &record](statement::collector &col) {
+                                                     this->put_deserialize_logic(record, col);
+                                                  });
                                                col << raw("return result");
                                             }));
 
       // static Msg deserialize
       record_class.add_public(static_method(
-              record.name(), "deserialize",
-              {
-                      {"std::istream", "&in"}
-      },
-              [&record](statement::collector &col) {
-                 col << call("minecpp::nbt::Reader r", raw("in"));
-                 col << assign("auto peek", call("r.peek_tag"));
-                 col << if_statement(raw("peek.id != minecpp::nbt::TagId::Compound"),
-                                     [](statement::collector &col) { col << raw("return {}"); });
-                 col << raw("return {}::deserialize_no_header(r)", record.name());
-              }));
+         record.name(), "deserialize",
+         {
+            {"std::istream", "&in"}
+         },
+         [&record](statement::collector &col) {
+            col << call("minecpp::nbt::Reader r", raw("in"));
+            col << assign("auto peek", call("r.peek_tag"));
+            col << if_statement(raw("peek.id != minecpp::nbt::TagId::Compound"),
+                                [](statement::collector &col) {
+                                   col << raw("return {}");
+                                });
+            col << raw("return {}::deserialize_no_header(r)", record.name());
+         }));
 
       // public:
 
@@ -253,7 +258,7 @@ std::set<std::string> NbtGenerator::collect_headers() const
    for (const auto &record : m_document.records()) {
       for (const auto &attribute : record.attributes()) {
          auto symbol =
-                 m_table.find_symbol(m_document.package_info().full_name(), attribute.type().full_name());
+            m_table.find_symbol(m_document.package_info().full_name(), attribute.type().full_name());
          generator_verify(symbol.has_value(), attribute.line(), attribute.column(),
                           "could not find symbol {} in package {}", attribute.type().full_name(),
                           m_document.package_info().full_name());
@@ -389,9 +394,9 @@ raw NbtGenerator::put_deserialize_procedure(const Type &type, statement::collect
          auto subtype = type.template_arg_at(arg_index);
          generator_verify(subtype.has_value(), type.line(), type.column(), "internal error");
          if_switch.add_case(
-                 raw("tagid == {}", this->nbt_tag_id(*subtype)), [this, &subtype](statement::collector &col) {
-                    col << assign("result_variant", this->put_deserialize_procedure(*subtype, col, true));
-                 });
+            raw("tagid == {}", this->nbt_tag_id(*subtype)), [this, &subtype](statement::collector &col) {
+               col << assign("result_variant", this->put_deserialize_procedure(*subtype, col, true));
+            });
       }
       col << if_switch;
       if (should_move) {
@@ -440,12 +445,12 @@ raw NbtGenerator::put_deserialize_procedure(const Type &type, statement::collect
 
       col << call("std::generate", call("list.begin"), call("list.end"),
                   lambda(
-                          {},
-                          [this, &subtype](statement::collector &col) {
-                             col << mb::codegen::return_statement(
-                                     this->put_deserialize_procedure(*subtype, col, false));
-                          },
-                          raw("&r")));
+                     {},
+                     [this, &subtype](statement::collector &col) {
+                        col << mb::codegen::return_statement(
+                           this->put_deserialize_procedure(*subtype, col, false));
+                     },
+                     raw("&r")));
 
       if (should_move) {
          return raw("std::move(list)");
@@ -525,13 +530,20 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
                     type.full_name(), m_document.package_info().full_name());
 
    switch (symbol->type_class) {
-   case TypeClass::Int8: col << call("w.write_byte_content", call("static_cast<std::uint8_t>", value)); break;
-   case TypeClass::Int16: col << call("w.write_short_content", value); break;
-   case TypeClass::Int32: col << call("w.write_int_content", value); break;
-   case TypeClass::Int64: col << call("w.write_long_content", value); break;
-   case TypeClass::String: col << call("w.write_string_content", value); break;
-   case TypeClass::Float32: col << call("w.write_float_content", value); break;
-   case TypeClass::Float64: col << call("w.write_double_content", value); break;
+   case TypeClass::Int8: col << call("w.write_byte_content", call("static_cast<std::uint8_t>", value));
+      break;
+   case TypeClass::Int16: col << call("w.write_short_content", value);
+      break;
+   case TypeClass::Int32: col << call("w.write_int_content", value);
+      break;
+   case TypeClass::Int64: col << call("w.write_long_content", value);
+      break;
+   case TypeClass::String: col << call("w.write_string_content", value);
+      break;
+   case TypeClass::Float32: col << call("w.write_float_content", value);
+      break;
+   case TypeClass::Float64: col << call("w.write_double_content", value);
+      break;
    case TypeClass::List: {
       auto subtype = type.template_arg_at(0);
       generator_verify(subtype.has_value(), type.line(), type.column(),
@@ -543,17 +555,20 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
                        m_document.package_info().full_name());
 
       switch (sub_symbol->type_class) {
-      case TypeClass::UInt8: col << call("w.write_bytes_content", value); break;
-      case TypeClass::Int32: col << call("w.write_ints_content", value); break;
-      case TypeClass::Int64: col << call("w.write_longs_content", value); break;
+      case TypeClass::UInt8: col << call("w.write_bytes_content", value);
+         break;
+      case TypeClass::Int32: col << call("w.write_ints_content", value);
+         break;
+      case TypeClass::Int64: col << call("w.write_longs_content", value);
+         break;
       default: {
          col << call("w.begin_list_no_header", raw(this->nbt_tag_id(*subtype)), method_call(value, "size"));
 
          std::string list_item_name = fmt::format("&list_item_{}", depth);
          col << ranged_for_statement(
-                 "const auto", list_item_name, value, [this, depth, &subtype](statement::collector &col) {
-                    this->put_serialize_logic(col, *subtype, raw("list_item_{}", depth), depth + 1);
-                 });
+            "const auto", list_item_name, value, [this, depth, &subtype](statement::collector &col) {
+               this->put_serialize_logic(col, *subtype, raw("list_item_{}", depth), depth + 1);
+            });
       }
       }
 
@@ -572,10 +587,10 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
 
       std::string key_value_name = fmt::format("&[key_{}, value_{}]", depth, depth);
       col << ranged_for_statement(
-              "const auto", key_value_name, value, [this, depth, &value_type](statement::collector &col) {
-                 col << call("w.write_header", raw(this->nbt_tag_id(*value_type)), raw("key_{}", depth));
-                 this->put_serialize_logic(col, *value_type, raw("value_{}", depth), depth + 1);
-              });
+         "const auto", key_value_name, value, [this, depth, &value_type](statement::collector &col) {
+            col << call("w.write_header", raw(this->nbt_tag_id(*value_type)), raw("key_{}", depth));
+            this->put_serialize_logic(col, *value_type, raw("value_{}", depth), depth + 1);
+         });
       col << call("w.end_compound");
 
       break;
@@ -592,20 +607,20 @@ void NbtGenerator::put_serialize_logic(mb::codegen::statement::collector &col, c
          generator_verify(subtype.has_value(), type.line(), type.column(), "internal error");
 
          col << if_statement(
-                 call(fmt::format("std::holds_alternative<{}>", this->cpp_type_of(*subtype)), value),
-                 [this, &subtype, &value](statement::collector &col) {
-                    this->put_serialize_logic(
-                            col, *subtype,
-                            call(fmt::format("std::get<{}>", this->cpp_type_of(*subtype)), value), 0);
-                 });
+            call(fmt::format("std::holds_alternative<{}>", this->cpp_type_of(*subtype)), value),
+            [this, &subtype, &value](statement::collector &col) {
+               this->put_serialize_logic(
+                  col, *subtype,
+                  call(fmt::format("std::get<{}>", this->cpp_type_of(*subtype)), value), 0);
+            });
       }
-   }
-   case TypeClass::NbtCompoundContent:
-      col << call("minecpp::nbt::serialize_compound_content", raw("w"), value);
       break;
-   default:
-      generator_verify(false, type.line(), type.column(), "type {} is unsupported for NBT generation",
-                       type.full_name());
+   }
+   case TypeClass::NbtCompoundContent: col << call("minecpp::nbt::serialize_compound_content", raw("w"),
+                                                   value);
+      break;
+   default: generator_verify(false, type.line(), type.column(), "type {} is unsupported for NBT generation",
+                             type.full_name());
    }
 }
 }// namespace minecpp::tool::schema_compiler::generator

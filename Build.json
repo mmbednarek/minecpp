@@ -6,6 +6,7 @@
     "controller",
     "container",
     "command",
+    "debug",
     "entity",
     "format",
     "game",
@@ -33,6 +34,7 @@
     "nbtscheme",
     "recipes",
     "snbt_parser",
-    "schema_compiler"
+    "schema_compiler",
+    "trace_tool"
   ]
 }

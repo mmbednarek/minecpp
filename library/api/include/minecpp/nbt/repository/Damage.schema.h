@@ -13,6 +13,7 @@ namespace minecpp::nbt::repository {
 
 class DamageTypeDescription {
  public:
+   static constexpr auto object_name = "DamageTypeDescription";
    float exhaustion{};
    std::string message_id{};
    std::string scaling{};
@@ -25,6 +26,7 @@ class DamageTypeDescription {
 
 class DamageTypeEntry {
  public:
+   static constexpr auto object_name = "DamageTypeEntry";
    DamageTypeDescription element{};
    std::int32_t id{};
    std::string name{};
@@ -37,6 +39,7 @@ class DamageTypeEntry {
 
 class DamageTypes {
  public:
+   static constexpr auto object_name = "DamageTypes";
    std::string type{};
    std::vector<DamageTypeEntry> value{};
    DamageTypes() = default;

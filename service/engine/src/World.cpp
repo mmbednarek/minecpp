@@ -1,17 +1,21 @@
 #include "World.h"
+
 #include "ChunkSystem.h"
 #include "job/ChangeBlock.h"
 #include "job/ChunkIsComplete.h"
 #include "JobSystem.h"
-#include <minecpp/entity/Aliases.hpp>
-#include <minecpp/entity/component/Health.h>
-#include <minecpp/entity/component/Player.h>
-#include <minecpp/entity/EntitySystem.h>
-#include <minecpp/entity/factory/Item.h>
-#include <minecpp/repository/Item.h>
-#include <minecpp/util/Uuid.h>
-#include <minecpp/world/BlockState.h>
-#include <minecpp/world/SectionSlice.h>
+
+#include "minecpp/debug/TraceManager.h"
+#include "minecpp/entity/Aliases.hpp"
+#include "minecpp/entity/component/Health.h"
+#include "minecpp/entity/component/Player.h"
+#include "minecpp/entity/EntitySystem.h"
+#include "minecpp/entity/factory/Item.h"
+#include "minecpp/repository/Item.h"
+#include "minecpp/util/Uuid.h"
+#include "minecpp/world/BlockState.h"
+#include "minecpp/world/SectionSlice.h"
+
 #include <spdlog/spdlog.h>
 #include <utility>
 
@@ -22,24 +26,6 @@ using minecpp::service::engine::job::ChunkIsComplete;
 namespace minecpp::service::engine {
 
 using ItemFactory = entity::factory::Item;
-
-template<typename TFunction>
-void when_chunk_is_complete(ChunkSystem &chunk_system, JobSystem &job_system,
-                            const game::ChunkPosition &position, TFunction &&function)
-{
-   if (chunk_system.chunk_state_at(position) == world::ChunkState::COMPLETE) {
-      function(chunk_system.chunk_at(position));
-   } else {
-      job_system.when<job::ChunkIsComplete>(chunk_system, position).run([&chunk_system, position, function] {
-         auto *chunk = chunk_system.chunk_at(position);
-         assert(chunk);
-         function(chunk);
-      });
-   }
-}
-
-#define ACCESS_CHUNK_AT(position, ...) \
-   when_chunk_is_complete(m_chunk_system, m_job_system, position, __VA_ARGS__)
 
 World::World(ChunkSystem &chunk_system, JobSystem &job_system, Dispatcher &dispatcher,
              PlayerManager &player_manager, entity::EntitySystem &entity_system,
@@ -63,7 +49,8 @@ minecpp::game::IDispatcher &World::dispatcher()
 mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
    for (auto const &position : refs) {
-      ACCESS_CHUNK_AT(position, [player_id](world::Chunk *chunk) { chunk->add_player_reference(player_id); });
+      m_chunk_system.access_chunk(
+              position, [player_id](world::Chunk *chunk) { chunk->add_player_reference(player_id); });
 
       // TODO: Send reference to storage
    }
@@ -73,8 +60,8 @@ mb::result<mb::empty> World::add_refs(game::PlayerId player_id, std::vector<game
 mb::result<mb::empty> World::free_refs(game::PlayerId player_id, std::vector<game::ChunkPosition> refs)
 {
    for (auto const &position : refs) {
-      ACCESS_CHUNK_AT(position,
-                      [player_id](world::Chunk *chunk) { chunk->remove_player_reference(player_id); });
+      m_chunk_system.access_chunk(
+              position, [player_id](world::Chunk *chunk) { chunk->remove_player_reference(player_id); });
 
       // TODO: Send reference removal to storage
    }
@@ -90,11 +77,15 @@ mb::result<int> World::height_at(int x, int z)
    return chunk->height_at(game::HeightType::WorldSurface, {x, 0, z});
 }
 
-mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state)
+mb::result<mb::empty> World::set_block_no_notify(const game::BlockPosition &block_position,
+                                                 game::BlockStateId state)
 {
-   m_job_system.when<ChunkIsComplete>(m_chunk_system, pos.chunk_position())
-           .run_job<ChangeBlock>(*this, m_chunk_system, pos, state);
-   m_dispatcher.update_block(pos, state);
+   m_chunk_system.access_chunk(
+           block_position.chunk_position(), [this, block_position, state](world::Chunk *chunk) {
+              m_job_system.create_job<ChangeBlock>(*this, m_chunk_system, block_position, state);
+           });
+
+   m_dispatcher.update_block(block_position, state);
    return mb::ok;
 }
 
@@ -159,7 +150,7 @@ mb::result<game::LightValue> World::light_value_at(game::LightType light_type, c
 mb::emptyres World::set_light_value_at(game::LightType light_type, const game::BlockPosition &pos,
                                        game::LightValue level)
 {
-   ACCESS_CHUNK_AT(pos.chunk_position(), [light_type, pos, level](world::Chunk *chunk) {
+   m_chunk_system.access_chunk(pos.chunk_position(), [light_type, pos, level](world::Chunk *chunk) {
       chunk->set_light_value_at(light_type, pos, level);
    });
    return mb::ok;
@@ -188,8 +179,10 @@ mb::emptyres World::recalculate_light(game::LightType /*light_type*/, const game
 mb::emptyres World::send_chunk_to_player(game::PlayerId player_id, const game::ChunkPosition &position,
                                          bool is_initial)
 {
-   spdlog::info("world: issued chunk dispatch {} {}", position.x(), position.z());
-   ACCESS_CHUNK_AT(position, [this, player_id, is_initial](world::Chunk *chunk) {
+   MCPP_TRACE(ChunkDispatchRequested, _.chunk_x = position.x(), _.chunk_z = position.z());
+
+   m_chunk_system.access_chunk(position, [this, player_id, is_initial](world::Chunk *chunk) {
+      [[maybe_unused]] auto value = this->m_entity_system.view_distance();
       m_dispatcher.send_chunk(player_id, chunk, is_initial);
    });
    return mb::ok;
@@ -271,5 +264,4 @@ mb::result<game::Entity> World::player_entity(game::PlayerId player_id)
 
    return entity;
 }
-
 }// namespace minecpp::service::engine

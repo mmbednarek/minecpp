@@ -13,6 +13,7 @@ namespace minecpp::nbt::common {
 
 class ChunkPosition {
  public:
+   static constexpr auto object_name = "ChunkPosition";
    std::int32_t x{};
    std::int32_t y{};
    ChunkPosition() = default;
@@ -24,6 +25,7 @@ class ChunkPosition {
 
 class BlockPosition {
  public:
+   static constexpr auto object_name = "BlockPosition";
    std::int32_t x{};
    std::int32_t y{};
    std::int32_t z{};
@@ -36,6 +38,7 @@ class BlockPosition {
 
 class FaceMask {
  public:
+   static constexpr auto object_name = "FaceMask";
    std::int8_t down{};
    std::int8_t east{};
    std::int8_t north{};

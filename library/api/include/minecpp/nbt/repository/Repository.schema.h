@@ -16,6 +16,7 @@ namespace minecpp::nbt::repository {
 
 class BlockEntry {
  public:
+   static constexpr auto object_name = "BlockEntry";
    std::int32_t id{};
    block::Block block{};
    std::string tag{};
@@ -28,6 +29,7 @@ class BlockEntry {
 
 class ItemEntry {
  public:
+   static constexpr auto object_name = "ItemEntry";
    std::int32_t id{};
    item::Item item{};
    std::string tag{};
@@ -40,6 +42,7 @@ class ItemEntry {
 
 class EnumPropertyEntry {
  public:
+   static constexpr auto object_name = "EnumPropertyEntry";
    block::EnumProperty property{};
    std::string tag{};
    EnumPropertyEntry() = default;
@@ -51,6 +54,7 @@ class EnumPropertyEntry {
 
 class IntPropertyEntry {
  public:
+   static constexpr auto object_name = "IntPropertyEntry";
    block::IntProperty property{};
    std::string tag{};
    IntPropertyEntry() = default;
@@ -62,6 +66,7 @@ class IntPropertyEntry {
 
 class BoolPropertyEntry {
  public:
+   static constexpr auto object_name = "BoolPropertyEntry";
    block::BoolProperty property{};
    std::string tag{};
    BoolPropertyEntry() = default;
@@ -73,6 +78,7 @@ class BoolPropertyEntry {
 
 class BlockStateEntry {
  public:
+   static constexpr auto object_name = "BlockStateEntry";
    std::int32_t id{};
    block::BlockState state{};
    std::string tag{};
@@ -85,6 +91,7 @@ class BlockStateEntry {
 
 class Repository {
  public:
+   static constexpr auto object_name = "Repository";
    std::vector<BlockStateEntry> block_states{};
    std::vector<BlockEntry> blocks{};
    std::vector<ItemEntry> items{};

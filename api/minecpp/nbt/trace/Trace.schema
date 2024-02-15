@@ -1,0 +1,45 @@
+generator = "nbt"
+package minecpp.nbt.trace
+
+[NBT]
+record ChunkDispatchRequested {
+   chunk_x: int32
+   chunk_z: int32
+}
+
+[NBT]
+record ChunkSentToPlayer {
+   chunk_x: int32
+   chunk_z: int32
+   player_id: string
+}
+
+[NBT]
+record GeneratingChunk {
+   chunk_x: int32
+   chunk_z: int32
+}
+
+[NBT]
+record HandlingChunkData {
+   chunk_x: int32
+   chunk_z: int32
+}
+
+[NBT]
+record PreHandlingChunkDataJob {
+   chunk_x: int32
+   chunk_z: int32
+}
+
+[NBT]
+record PostHandlingChunkDataJob {
+   chunk_x: int32
+   chunk_z: int32
+}
+
+[NBT]
+record HandlingEmptyChunk {
+   chunk_x: int32
+   chunk_z: int32
+}

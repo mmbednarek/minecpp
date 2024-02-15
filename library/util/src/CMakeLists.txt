@@ -5,6 +5,7 @@ target_sources(minecpp_utils
     # Source files
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/Compression.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/Context.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/File.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Hex.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/Loop.cpp
@@ -21,6 +22,7 @@ target_sources(minecpp_utils
         ${MINECPP_UTIL_INCLUDE_DIR}/Cast.hpp
         ${MINECPP_UTIL_INCLUDE_DIR}/Compression.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Concepts.h
+        ${MINECPP_UTIL_INCLUDE_DIR}/Context.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Hex.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Loop.h
         ${MINECPP_UTIL_INCLUDE_DIR}/Packed.h

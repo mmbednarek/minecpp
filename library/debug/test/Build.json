@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_debug_test",
+  "is_test": true,
+  "resources": [],
+  "dependencies": {
+    "public": [
+      "GTest::gtest",
+      "GTest::gtest_main",
+      "minecpp_debug"
+    ]
+  }
+}

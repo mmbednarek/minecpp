@@ -2,6 +2,7 @@
 #include "JobSystem.h"
 #include "World.h"
 
+#include "minecpp/debug/TraceManager.h"
 #include "minecpp/util/Threading.h"
 
 #include <chrono>
@@ -54,6 +55,8 @@ void TickSystem::run_tick(double delta_time)
       spdlog::debug("system: tps={}", tps);
       m_last_tps = static_cast<int>(tps);
    }
+
+   minecpp::debug::TraceManager::the().flush();
 }
 
 }// namespace minecpp::service::engine

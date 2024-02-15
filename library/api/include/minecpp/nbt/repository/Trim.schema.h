@@ -13,6 +13,7 @@ namespace minecpp::nbt::repository {
 
 class TrimMaterialDescription {
  public:
+   static constexpr auto object_name = "TrimMaterialDescription";
    std::string color{};
    std::string translate{};
    TrimMaterialDescription() = default;
@@ -24,6 +25,7 @@ class TrimMaterialDescription {
 
 class TrimMaterialInfo {
  public:
+   static constexpr auto object_name = "TrimMaterialInfo";
    std::string asset_name{};
    TrimMaterialDescription description{};
    std::string ingredient{};
@@ -38,6 +40,7 @@ class TrimMaterialInfo {
 
 class TrimMaterialEntry {
  public:
+   static constexpr auto object_name = "TrimMaterialEntry";
    TrimMaterialInfo element{};
    std::int32_t id{};
    std::string name{};
@@ -50,6 +53,7 @@ class TrimMaterialEntry {
 
 class TrimMaterialTypes {
  public:
+   static constexpr auto object_name = "TrimMaterialTypes";
    std::string type{};
    std::vector<TrimMaterialEntry> value{};
    TrimMaterialTypes() = default;
@@ -61,6 +65,7 @@ class TrimMaterialTypes {
 
 class TrimPatternDescription {
  public:
+   static constexpr auto object_name = "TrimPatternDescription";
    std::string translate{};
    TrimPatternDescription() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -71,6 +76,7 @@ class TrimPatternDescription {
 
 class TrimPatternInfo {
  public:
+   static constexpr auto object_name = "TrimPatternInfo";
    std::string asset_id{};
    TrimPatternDescription description{};
    std::string template_item{};
@@ -83,6 +89,7 @@ class TrimPatternInfo {
 
 class TrimPatternEntry {
  public:
+   static constexpr auto object_name = "TrimPatternEntry";
    TrimPatternInfo element{};
    std::int32_t id{};
    std::string name{};
@@ -95,6 +102,7 @@ class TrimPatternEntry {
 
 class TrimPatternTypes {
  public:
+   static constexpr auto object_name = "TrimPatternTypes";
    std::string type{};
    std::vector<TrimPatternEntry> value{};
    TrimPatternTypes() = default;

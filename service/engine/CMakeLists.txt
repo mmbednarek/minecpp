@@ -17,6 +17,7 @@ target_link_libraries(minecpp_engine
         LINK_PRIVATE
         minecpp_api
         minecpp_controller
+        minecpp_debug
         minecpp_engine_api
         minecpp_entity
         minecpp_utils

@@ -13,10 +13,10 @@ class AtomicPool
 
  public:
    template<typename... TArgs>
-   [[nodiscard]] T *construct(TArgs... args)
+   [[nodiscard]] T *construct(TArgs &&...args)
    {
       std::lock_guard lock(m_mutex);
-      return m_pool.construct(args...);
+      return m_pool.construct(std::forward<TArgs>(args)...);
    }
 
    void free(T *ptr)

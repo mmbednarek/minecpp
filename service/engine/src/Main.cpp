@@ -14,6 +14,7 @@
 #include "World.h"
 
 #include "minecpp/controller/RootItem.h"
+#include "minecpp/debug/TraceManager.h"
 #include "minecpp/entity/EntitySystem.h"
 #include "minecpp/repository/Repository.h"
 #include "minecpp/service/storage/Storage.h"
@@ -69,6 +70,8 @@ auto main() -> int
    if (config.debug_logger) {
       spdlog::set_level(spdlog::level::debug);
    }
+
+   minecpp::debug::TraceManager::the().initialize();
 
    auto load_repo_res = minecpp::repository::load_repository_from_file(config.resources_data_file);
    if (!load_repo_res.ok()) {

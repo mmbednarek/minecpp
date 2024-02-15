@@ -13,6 +13,7 @@ namespace minecpp::nbt::item {
 
 class Item {
  public:
+   static constexpr auto object_name = "Item";
    std::int8_t is_block{};
    std::string corresponding_block_tag{};
    std::int32_t max_item_stack{};
@@ -25,6 +26,7 @@ class Item {
 
 class StoredEnchantment {
  public:
+   static constexpr auto object_name = "StoredEnchantment";
    std::string id{};
    std::int16_t lvl{};
    StoredEnchantment() = default;
@@ -36,6 +38,7 @@ class StoredEnchantment {
 
 class SlotData {
  public:
+   static constexpr auto object_name = "SlotData";
    std::optional<std::vector<StoredEnchantment>> stored_enchantments{};
    SlotData() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;

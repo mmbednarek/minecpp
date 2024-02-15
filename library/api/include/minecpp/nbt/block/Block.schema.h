@@ -13,6 +13,7 @@ namespace minecpp::nbt::block {
 
 class EnumProperty {
  public:
+   static constexpr auto object_name = "EnumProperty";
    std::string name{};
    std::vector<std::string> values{};
    EnumProperty() = default;
@@ -24,6 +25,7 @@ class EnumProperty {
 
 class IntProperty {
  public:
+   static constexpr auto object_name = "IntProperty";
    std::string name{};
    std::int32_t min_value{};
    std::int32_t max_value{};
@@ -36,6 +38,7 @@ class IntProperty {
 
 class BoolProperty {
  public:
+   static constexpr auto object_name = "BoolProperty";
    std::string name{};
    BoolProperty() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -46,6 +49,7 @@ class BoolProperty {
 
 class Block {
  public:
+   static constexpr auto object_name = "Block";
    std::vector<std::string> property_tags{};
    Block() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -56,6 +60,7 @@ class Block {
 
 class BlockEntityData {
  public:
+   static constexpr auto object_name = "BlockEntityData";
    BlockEntityData() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
    void serialize(std::ostream &out_stream, std::string_view in_compound_name) const;

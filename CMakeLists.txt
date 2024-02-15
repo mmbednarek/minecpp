@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wconversion -Werror -Wno-unknown-pragmas")
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-dangling-reference -fpermissive")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-dangling-reference -Wno-missing-field-initializers -fpermissive")
 endif ()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
@@ -103,7 +103,7 @@ FetchContent_MakeAvailable(libmb)
 FetchContent_Declare(
         libmb_codegen
         GIT_REPOSITORY https://github.com/mmbednarek/codegen
-        GIT_TAG codegen-0.0.40
+        GIT_TAG codegen-0.0.41
 )
 FetchContent_MakeAvailable(libmb_codegen)
 
