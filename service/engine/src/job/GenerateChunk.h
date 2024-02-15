@@ -3,6 +3,7 @@
 #include "../JobSystem.h"
 
 #include "minecpp/game/ChunkPosition.h"
+#include "minecpp/util/Context.h"
 #include "minecpp/world/Generator.h"
 
 namespace minecpp::service::engine::job {
@@ -10,7 +11,7 @@ namespace minecpp::service::engine::job {
 class GenerateChunk : public IJob
 {
  public:
-   GenerateChunk(world::Generator &generator, const game::ChunkPosition &position);
+   GenerateChunk(const util::Context &ctx, world::Generator &generator, const game::ChunkPosition &position);
 
    void run() override;
 

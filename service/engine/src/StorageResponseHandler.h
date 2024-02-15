@@ -1,6 +1,7 @@
 #pragma once
 
-#include <minecpp/service/storage/Storage.h>
+#include "minecpp/service/storage/Storage.h"
+#include "minecpp/util/Context.h"
 
 namespace minecpp::service::engine {
 
@@ -13,9 +14,9 @@ class StorageResponseHandler : public storage::IResponseHandler
    explicit StorageResponseHandler(JobSystem &job_system);
 
    void set_chunk_system(ChunkSystem *chunk_system);
-   void on_reply_empty_chunk(int a, const net::storage::cb::ReplyEmptyChunk &message) override;
-   void on_reply_chunk(int a, const net::storage::cb::ReplyChunk &message) override;
-   void on_failure(int a, std::uint8_t msg_code) override;
+   void on_reply_empty_chunk(util::Context &ctx, const net::storage::cb::ReplyEmptyChunk &message) override;
+   void on_reply_chunk(util::Context &ctx, const net::storage::cb::ReplyChunk &message) override;
+   void on_failure(util::Context &ctx, std::uint8_t msg_code) override;
 
  private:
    ChunkSystem *m_chunk_system{};

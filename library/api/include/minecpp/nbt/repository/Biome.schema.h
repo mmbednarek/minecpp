@@ -13,6 +13,7 @@ namespace minecpp::nbt::repository {
 
 class BiomeMusic {
  public:
+   static constexpr auto object_name = "BiomeMusic";
    std::int8_t replace_current_music{};
    std::string sound{};
    std::int32_t max_delay{};
@@ -26,6 +27,7 @@ class BiomeMusic {
 
 class BiomeAdditionsSound {
  public:
+   static constexpr auto object_name = "BiomeAdditionsSound";
    std::string sound{};
    double tick_chance{};
    BiomeAdditionsSound() = default;
@@ -37,6 +39,7 @@ class BiomeAdditionsSound {
 
 class BiomeMoodSound {
  public:
+   static constexpr auto object_name = "BiomeMoodSound";
    std::string sound{};
    std::int32_t tick_delay{};
    double offset{};
@@ -50,6 +53,7 @@ class BiomeMoodSound {
 
 class BiomeParticleOptions {
  public:
+   static constexpr auto object_name = "BiomeParticleOptions";
    std::string type{};
    BiomeParticleOptions() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -60,6 +64,7 @@ class BiomeParticleOptions {
 
 class BiomeParticle {
  public:
+   static constexpr auto object_name = "BiomeParticle";
    float probability{};
    BiomeParticleOptions type{};
    BiomeParticle() = default;
@@ -71,6 +76,7 @@ class BiomeParticle {
 
 class BiomeEffects {
  public:
+   static constexpr auto object_name = "BiomeEffects";
    std::int32_t sky_color{};
    std::int32_t water_fog_color{};
    std::int32_t fog_color{};
@@ -92,6 +98,7 @@ class BiomeEffects {
 
 class BiomeDescription {
  public:
+   static constexpr auto object_name = "BiomeDescription";
    std::string precipitation{};
    float depth{};
    float temperature{};
@@ -110,6 +117,7 @@ class BiomeDescription {
 
 class BiomeEntry {
  public:
+   static constexpr auto object_name = "BiomeEntry";
    std::string name{};
    std::int32_t id{};
    BiomeDescription element{};
@@ -122,6 +130,7 @@ class BiomeEntry {
 
 class BiomeTypes {
  public:
+   static constexpr auto object_name = "BiomeTypes";
    std::string type{};
    std::vector<BiomeEntry> value{};
    BiomeTypes() = default;

@@ -13,7 +13,7 @@ void SymbolTable::read_document(std::string_view source_file, const Document &do
               .type_class = TypeClass::Record,
               .name{record.name()},
               .package{package_name},
-              .source_file{source_file},
+              .source_file{std::string{source_file}},
               .generator{document.generator()},
               .annotations{record.annotations()},
       });
@@ -34,7 +34,7 @@ void SymbolTable::read_document_for_aliases(std::string_view source_file, const 
               .type_class = symbol->type_class,
               .name{alias.name()},
               .package{package_name},
-              .source_file{source_file},
+              .source_file{std::string{source_file}},
               .generator{symbol->generator},
               .annotations{alias.annotations()},
       });

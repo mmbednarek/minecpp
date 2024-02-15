@@ -1,9 +1,12 @@
 #pragma once
+
+#include "minecpp/container/Queue.h"
+#include "minecpp/util/Context.h"
+
 #include <atomic>
 #include <condition_variable>
 #include <functional>
 #include <memory>
-#include <minecpp/container/Queue.h>
 #include <mutex>
 #include <vector>
 
@@ -14,9 +17,19 @@ class JobSystem;
 class IJob
 {
  public:
+   IJob() = default;
+
+   explicit IJob(util::Context context) :
+       m_context(context)
+   {
+   }
+
    virtual ~IJob() noexcept = default;
 
    virtual void run() = 0;
+
+ protected:
+   util::Context m_context;
 };
 
 class FunctorJob : public IJob

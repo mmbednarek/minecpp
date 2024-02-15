@@ -8,4 +8,5 @@ add_subdirectory("item")
 add_subdirectory("level")
 add_subdirectory("player")
 add_subdirectory("repository")
+add_subdirectory("trace")
 

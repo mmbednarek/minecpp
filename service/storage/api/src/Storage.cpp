@@ -3,6 +3,7 @@
 #include "minecpp/game/ChunkPosition.h"
 #include "minecpp/net/storage/Serverbound.schema.h"
 #include "minecpp/util/Cast.hpp"
+#include "minecpp/util/Context.h"
 #include "minecpp/world/ChunkSerializer.h"
 
 #include <spdlog/spdlog.h>
@@ -92,8 +93,8 @@ void StorageClient::on_received_message(stream::Peer * /*peer*/, minecpp::contai
    auto stream = message.make_stream();
    network::message::Reader reader(stream);
 
-   int a = 0;
-   net::storage::cb::visit_message(m_handler, a, reader);
+   util::Context ctx;
+   net::storage::cb::visit_message(m_handler, ctx, reader);
 }
 
 void StorageClient::on_disconnected(stream::Peer *peer, bool *try_reconnect)

@@ -4,6 +4,7 @@
 #include "EventManager.h"
 
 #include "minecpp/chat/Chat.h"
+#include "minecpp/debug/TraceManager.h"
 #include "minecpp/entity/Aliases.hpp"
 #include "minecpp/entity/component/Abilities.h"
 #include "minecpp/entity/component/Location.h"
@@ -336,8 +337,8 @@ void Dispatcher::send_chunk(game::PlayerId player_id, world::Chunk *chunk, bool 
    serializer.write_chunk(update_chunk.chunk);
    this->send_raw_to_player(player_id, update_chunk);
 
-   spdlog::info("dispatcher: sending chunk {} {}", update_chunk.chunk.position.x(),
-                update_chunk.chunk.position.y());
+   MCPP_TRACE(ChunkSentToPlayer, _.chunk_x = chunk->position().x(), _.chunk_z = chunk->position().z(),
+              _.player_id = boost::uuids::to_string(player_id));
 }
 
 void Dispatcher::update_chunk_position(game::PlayerId player_id, const game::ChunkPosition &chunk_position)

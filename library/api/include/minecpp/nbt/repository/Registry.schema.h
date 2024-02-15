@@ -18,6 +18,7 @@ namespace minecpp::nbt::repository {
 
 class Registry {
  public:
+   static constexpr auto object_name = "Registry";
    ChatTypes chat_types{};
    DamageTypes damage_types{};
    DimensionTypes dimension_types{};

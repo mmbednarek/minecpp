@@ -13,6 +13,7 @@ namespace minecpp::nbt::level {
 
 class Memories {
  public:
+   static constexpr auto object_name = "Memories";
    std::int32_t no_empty{};
    Memories() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -23,6 +24,7 @@ class Memories {
 
 class Brain {
  public:
+   static constexpr auto object_name = "Brain";
    Memories memories{};
    Brain() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -33,6 +35,7 @@ class Brain {
 
 class Abilities {
  public:
+   static constexpr auto object_name = "Abilities";
    float fly_speed{};
    std::int8_t flying{};
    std::int8_t instabuild{};
@@ -49,6 +52,7 @@ class Abilities {
 
 class RecipeBook {
  public:
+   static constexpr auto object_name = "RecipeBook";
    std::int8_t is_blasting_furnace_filtering_craftable{};
    std::int8_t is_blasting_furnace_gui_open{};
    std::int8_t is_filtering_craftable{};
@@ -66,6 +70,7 @@ class RecipeBook {
 
 class Version {
  public:
+   static constexpr auto object_name = "Version";
    std::int32_t id{};
    std::string name{};
    std::int8_t snapshot{};
@@ -78,6 +83,7 @@ class Version {
 
 class BiomeSource {
  public:
+   static constexpr auto object_name = "BiomeSource";
    std::string preset{};
    std::int8_t large_biomes{};
    std::int64_t seed{};
@@ -91,6 +97,7 @@ class BiomeSource {
 
 class Generator {
  public:
+   static constexpr auto object_name = "Generator";
    BiomeSource biome_source{};
    std::int64_t seed{};
    std::string settings{};
@@ -104,6 +111,7 @@ class Generator {
 
 class DimentionData {
  public:
+   static constexpr auto object_name = "DimentionData";
    Generator generator{};
    std::string type{};
    DimentionData() = default;
@@ -115,6 +123,7 @@ class DimentionData {
 
 class Dimentions {
  public:
+   static constexpr auto object_name = "Dimentions";
    DimentionData overworld{};
    DimentionData the_end{};
    DimentionData the_nether{};
@@ -127,6 +136,7 @@ class Dimentions {
 
 class WorldGen {
  public:
+   static constexpr auto object_name = "WorldGen";
    std::int8_t bonus_chest{};
    Dimentions dimensions{};
    std::int8_t generate_features{};
@@ -140,6 +150,7 @@ class WorldGen {
 
 class DataPacks {
  public:
+   static constexpr auto object_name = "DataPacks";
    std::vector<std::int64_t> disabled{};
    DataPacks() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -150,6 +161,7 @@ class DataPacks {
 
 class DragonFight {
  public:
+   static constexpr auto object_name = "DragonFight";
    std::int8_t dragon_killed{};
    std::int8_t previously_killed{};
    DragonFight() = default;
@@ -161,6 +173,7 @@ class DragonFight {
 
 class CustomBossEvents {
  public:
+   static constexpr auto object_name = "CustomBossEvents";
    std::int32_t no_empty{};
    CustomBossEvents() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -171,6 +184,7 @@ class CustomBossEvents {
 
 class Player {
  public:
+   static constexpr auto object_name = "Player";
    float absorption_amount{};
    std::int16_t air{};
    Brain brain{};
@@ -212,6 +226,7 @@ class Player {
 
 class GameRules {
  public:
+   static constexpr auto object_name = "GameRules";
    std::string announce_advancements{};
    std::string command_block_output{};
    std::string disable_elytra_movement_check{};
@@ -254,6 +269,7 @@ class GameRules {
 
 class LevelData {
  public:
+   static constexpr auto object_name = "LevelData";
    double border_center_x{};
    double border_center_z{};
    double border_damage_per_block{};
@@ -302,6 +318,7 @@ class LevelData {
 
 class Level {
  public:
+   static constexpr auto object_name = "Level";
    LevelData data{};
    Level() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;

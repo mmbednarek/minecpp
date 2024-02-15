@@ -6,6 +6,7 @@
 #include "minecpp/controller/BlockManager.h"
 #include "minecpp/game/IWorld.hpp"
 #include "minecpp/random/JavaRandom.h"
+#include "minecpp/signal/Delegate.hpp"
 #include "minecpp/world/LightSystem.h"
 
 #include <boost/uuid/uuid.hpp>
@@ -38,7 +39,8 @@ class World : public minecpp::game::IWorld
    mb::result<mb::empty> add_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<mb::empty> free_refs(game::PlayerId player, std::vector<game::ChunkPosition> refs) override;
    mb::result<int> height_at(int x, int z) override;
-   mb::result<mb::empty> set_block_no_notify(const game::BlockPosition &pos, game::BlockStateId state);
+   mb::result<mb::empty> set_block_no_notify(const game::BlockPosition &block_position,
+                                             game::BlockStateId state);
    mb::result<mb::empty> set_block_at(const game::BlockPosition &pos, game::BlockStateId state) override;
    mb::result<game::BlockStateId> block_at(const game::BlockPosition &pos) override;
    mb::result<game::LightValue> light_value_at(game::LightType light_type,

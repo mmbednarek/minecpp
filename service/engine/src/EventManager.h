@@ -26,7 +26,7 @@ class EventManager
 
  private:
    std::map<ConnectionId, std::unique_ptr<IConnection>> m_queues;
-   std::mutex m_queue_mutex;
+   std::shared_mutex m_queue_mutex;
 };
 
 }// namespace minecpp::service::engine

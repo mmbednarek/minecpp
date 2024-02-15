@@ -13,6 +13,7 @@ namespace minecpp::nbt::player {
 
 class Attribute {
  public:
+   static constexpr auto object_name = "Attribute";
    double base{};
    std::string name{};
    Attribute() = default;
@@ -24,6 +25,7 @@ class Attribute {
 
 class Memories {
  public:
+   static constexpr auto object_name = "Memories";
    std::int32_t no_empty{};
    Memories() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -34,6 +36,7 @@ class Memories {
 
 class Brain {
  public:
+   static constexpr auto object_name = "Brain";
    Memories memories{};
    Brain() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -44,6 +47,7 @@ class Brain {
 
 class InventoryElement {
  public:
+   static constexpr auto object_name = "InventoryElement";
    std::int8_t count{};
    std::int8_t slot{};
    std::string id{};
@@ -56,6 +60,7 @@ class InventoryElement {
 
 class Abilities {
  public:
+   static constexpr auto object_name = "Abilities";
    float fly_speed{};
    std::int8_t flying{};
    std::int8_t instabuild{};
@@ -72,6 +77,7 @@ class Abilities {
 
 class RecipeBook {
  public:
+   static constexpr auto object_name = "RecipeBook";
    std::int8_t is_blasting_furnace_filtering_craftable{};
    std::int8_t is_blasting_furnace_gui_open{};
    std::int8_t is_filtering_craftable{};
@@ -91,6 +97,7 @@ class RecipeBook {
 
 class Player {
  public:
+   static constexpr auto object_name = "Player";
    float absorption_amount{};
    std::int16_t air{};
    std::vector<Attribute> attributes{};

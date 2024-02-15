@@ -14,6 +14,7 @@ namespace minecpp::nbt::block {
 
 class BlockState {
  public:
+   static constexpr auto object_name = "BlockState";
    std::int8_t blocks_movement{};
    std::int32_t luminance{};
    std::int32_t opacity{};

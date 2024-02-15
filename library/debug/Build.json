@@ -1,0 +1,11 @@
+{
+  "name": "minecpp_debug",
+  "has_test": true,
+  "dependencies": {
+    "public": [
+      "minecpp_api",
+      "minecpp_game"
+    ],
+    "private": []
+  }
+}

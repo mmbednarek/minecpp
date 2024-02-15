@@ -13,6 +13,7 @@ namespace minecpp::nbt::repository {
 
 class MonsterSpawnLightLevelValue {
  public:
+   static constexpr auto object_name = "MonsterSpawnLightLevelValue";
    std::int32_t max_inclusive{};
    std::int32_t min_inclusive{};
    MonsterSpawnLightLevelValue() = default;
@@ -24,6 +25,7 @@ class MonsterSpawnLightLevelValue {
 
 class MonsterSpawnLightLevel {
  public:
+   static constexpr auto object_name = "MonsterSpawnLightLevel";
    std::string type{};
    MonsterSpawnLightLevelValue value{};
    MonsterSpawnLightLevel() = default;
@@ -35,6 +37,7 @@ class MonsterSpawnLightLevel {
 
 class DimensionTypeDescription {
  public:
+   static constexpr auto object_name = "DimensionTypeDescription";
    std::int8_t piglin_safe{};
    std::int8_t has_raids{};
    std::int32_t monster_spawn_block_light_limit{};
@@ -62,6 +65,7 @@ class DimensionTypeDescription {
 
 class DimensionTypeEntry {
  public:
+   static constexpr auto object_name = "DimensionTypeEntry";
    std::string name{};
    std::int32_t id{};
    DimensionTypeDescription element{};
@@ -74,6 +78,7 @@ class DimensionTypeEntry {
 
 class DimensionTypes {
  public:
+   static constexpr auto object_name = "DimensionTypes";
    std::string type{};
    std::vector<DimensionTypeEntry> value{};
    DimensionTypes() = default;

@@ -90,7 +90,7 @@ class Context
 template<typename TTypes, char CCondition, typename TRule>
 struct Rule_OnChar
 {
-   static bool run(const char ch, typename TTypes::Context &ctx)
+   static bool run(const char ch, typename TTypes::TypeContext &ctx)
    {
       if (ch == CCondition)
          return TRule::run(ch, ctx);
@@ -101,7 +101,7 @@ struct Rule_OnChar
 template<typename TTypes, typename TTypes::Environment CTargetEnvironment>
 struct Rule_EnterEnvironment
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.enter_environment(CTargetEnvironment);
       return true;
@@ -111,7 +111,7 @@ struct Rule_EnterEnvironment
 template<typename TTypes>
 struct Rule_AddCurrentCharToStash
 {
-   static bool run(const char ch, typename TTypes::Context &ctx)
+   static bool run(const char ch, typename TTypes::TypeContext &ctx)
    {
       ctx.append_to_identifier(ch);
       return true;
@@ -121,7 +121,7 @@ struct Rule_AddCurrentCharToStash
 template<typename TTypes, char CCharToAppend>
 struct Rule_AddToStash
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.append_to_identifier(CCharToAppend);
       return true;
@@ -131,7 +131,7 @@ struct Rule_AddToStash
 template<typename TTypes, typename TFirstRule, typename... TOtherRules>
 struct Rule_Sequence
 {
-   static bool run(const char ch, typename TTypes::Context &ctx)
+   static bool run(const char ch, typename TTypes::TypeContext &ctx)
    {
       if (not TFirstRule::run(ch, ctx))
          return false;
@@ -147,7 +147,7 @@ struct Rule_Sequence
 template<typename TTypes>
 struct Rule_FlushStash
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.push_identifier();
       return true;
@@ -157,7 +157,7 @@ struct Rule_FlushStash
 template<typename TTypes, char CChar, typename TTypes::TokenType CTokenType>
 struct Rule_AddCharToken
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.add_single_char_token(CChar, CTokenType);
       return true;
@@ -167,7 +167,7 @@ struct Rule_AddCharToken
 template<typename TTypes>
 struct Rule_IncreaseLineNumber
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.increase_line();
       return true;
@@ -177,7 +177,7 @@ struct Rule_IncreaseLineNumber
 template<typename TTypes>
 struct Rule_Skip
 {
-   static bool run(const char /*ch*/, typename TTypes::Context & /*ctx*/)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext & /*ctx*/)
    {
       return true;
    }
@@ -186,7 +186,7 @@ struct Rule_Skip
 template<typename TTypes>
 struct Rule_StepBack
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.step_back();
       return true;
@@ -196,7 +196,7 @@ struct Rule_StepBack
 template<typename TTypes, mb::const_string CValue, typename TTypes::TokenType CTokenType>
 struct Rule_AddStringToken
 {
-   static bool run(const char /*ch*/, typename TTypes::Context &ctx)
+   static bool run(const char /*ch*/, typename TTypes::TypeContext &ctx)
    {
       ctx.add_token(CValue.to_string_view(), CTokenType);
       return true;
@@ -206,7 +206,7 @@ struct Rule_AddStringToken
 template<typename TTypes, typename TFirstRule, typename... TOtherRules>
 struct Rule_FirstMatch
 {
-   static bool run(const char ch, typename TTypes::Context &ctx)
+   static bool run(const char ch, typename TTypes::TypeContext &ctx)
    {
       if (TFirstRule::run(ch, ctx))
          return true;
@@ -226,7 +226,7 @@ struct Types
    using TokenType                         = TTokenType;
    using Token                             = TToken;
    using Environment                       = TEnvironmentEnum;
-   using Context                           = Context<Self>;
+   using TypeContext                           = Context<Self>;
    static constexpr auto classify_callback = CClassifyCallback;
 
    template<typename... TRules>
@@ -298,7 +298,7 @@ struct EnvironmentSelector
 {
    int index{};
 
-   bool run(const char ch, typename TTypes::Context &ctx)
+   bool run(const char ch, typename TTypes::TypeContext &ctx)
    {
       if (index == 0) {
          return TFirstEnvironmentRule::run(ch, ctx);
@@ -314,7 +314,7 @@ struct EnvironmentSelector
 template<typename TTypes, typename... TEnvironmentRules>
 std::vector<typename TTypes::Token> lex_from(IReader &reader)
 {
-   typename TTypes::Context context(reader);
+   typename TTypes::TypeContext context(reader);
 
    while (reader.has_next()) {
       auto ch  = reader.next();

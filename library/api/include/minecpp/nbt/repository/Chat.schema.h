@@ -13,6 +13,7 @@ namespace minecpp::nbt::repository {
 
 class ChatDecorationStyle {
  public:
+   static constexpr auto object_name = "ChatDecorationStyle";
    std::string color{};
    std::int8_t italic{};
    std::int8_t bold{};
@@ -25,6 +26,7 @@ class ChatDecorationStyle {
 
 class ChatDetails {
  public:
+   static constexpr auto object_name = "ChatDetails";
    std::vector<std::string> parameters{};
    std::optional<ChatDecorationStyle> style{};
    std::string translation_key{};
@@ -37,6 +39,7 @@ class ChatDetails {
 
 class ChatTypeDescription {
  public:
+   static constexpr auto object_name = "ChatTypeDescription";
    ChatDetails chat{};
    ChatDetails narration{};
    ChatTypeDescription() = default;
@@ -48,6 +51,7 @@ class ChatTypeDescription {
 
 class ChatTypeEntry {
  public:
+   static constexpr auto object_name = "ChatTypeEntry";
    std::string name{};
    std::int32_t id{};
    ChatTypeDescription element{};
@@ -60,6 +64,7 @@ class ChatTypeEntry {
 
 class ChatTypes {
  public:
+   static constexpr auto object_name = "ChatTypes";
    std::string type{};
    std::vector<ChatTypeEntry> value{};
    ChatTypes() = default;

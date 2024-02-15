@@ -1,4 +1,5 @@
 #pragma once
+#include <mutex>
 #include <optional>
 #include <queue>
 #include <shared_mutex>

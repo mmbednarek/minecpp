@@ -1,0 +1,12 @@
+{
+  "name": "minecpp_trace_tool",
+  "dependencies": {
+    "private": [
+      "minecpp_nbt",
+      "minecpp_debug",
+      "libmb",
+      "fmt::fmt",
+      "Boost::program_options"
+    ]
+  }
+}

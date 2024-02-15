@@ -1,9 +1,12 @@
 #include "GenerateChunk.h"
-#include <spdlog/spdlog.h>
+
+#include "minecpp/debug/TraceManager.h"
 
 namespace minecpp::service::engine::job {
 
-GenerateChunk::GenerateChunk(world::Generator &generator, const game::ChunkPosition &position) :
+GenerateChunk::GenerateChunk(const util::Context &ctx, world::Generator &generator,
+                             const game::ChunkPosition &position) :
+    IJob(ctx),
     m_generator(generator),
     m_position(position)
 {
@@ -11,7 +14,7 @@ GenerateChunk::GenerateChunk(world::Generator &generator, const game::ChunkPosit
 
 void GenerateChunk::run()
 {
-   spdlog::debug("generating chunk at {}, {}", m_position.x(), m_position.z());
+   MCPP_TRACE_CTX(GeneratingChunk, m_context, _.chunk_x = m_position.x(), _.chunk_z = m_position.z());
    m_generator.generate_chunk(m_position);
 }
 

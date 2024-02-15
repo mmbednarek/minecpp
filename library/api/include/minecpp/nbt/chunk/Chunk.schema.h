@@ -13,6 +13,7 @@ namespace minecpp::nbt::chunk {
 
 class ArmorItem {
  public:
+   static constexpr auto object_name = "ArmorItem";
    std::int32_t no_empty{};
    ArmorItem() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -23,6 +24,7 @@ class ArmorItem {
 
 class Attribute {
  public:
+   static constexpr auto object_name = "Attribute";
    double base{};
    std::string name{};
    Attribute() = default;
@@ -34,6 +36,7 @@ class Attribute {
 
 class Memories {
  public:
+   static constexpr auto object_name = "Memories";
    std::int32_t no_empty{};
    Memories() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -44,6 +47,7 @@ class Memories {
 
 class Brain {
  public:
+   static constexpr auto object_name = "Brain";
    Memories memories{};
    Brain() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -54,6 +58,7 @@ class Brain {
 
 class HandItem {
  public:
+   static constexpr auto object_name = "HandItem";
    std::int32_t no_empty{};
    HandItem() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -64,6 +69,7 @@ class HandItem {
 
 class Entity {
  public:
+   static constexpr auto object_name = "Entity";
    float absorption_amount{};
    std::int16_t air{};
    std::vector<float> armor_drop_chances{};
@@ -102,6 +108,7 @@ class Entity {
 
 class Heightmaps {
  public:
+   static constexpr auto object_name = "Heightmaps";
    std::vector<std::int64_t> motion_blocking{};
    std::vector<std::int64_t> motion_blocking_no_leaves{};
    std::vector<std::int64_t> ocean_floor{};
@@ -117,6 +124,7 @@ class Heightmaps {
 
 class HeightmapsNet {
  public:
+   static constexpr auto object_name = "HeightmapsNet";
    std::vector<std::int64_t> motion_blocking{};
    std::vector<std::int64_t> world_surface{};
    HeightmapsNet() = default;
@@ -128,6 +136,7 @@ class HeightmapsNet {
 
 class PaletteItem {
  public:
+   static constexpr auto object_name = "PaletteItem";
    std::string name{};
    ::minecpp::nbt::CompoundContent properties{};
    PaletteItem() = default;
@@ -139,6 +148,7 @@ class PaletteItem {
 
 class Section {
  public:
+   static constexpr auto object_name = "Section";
    std::int8_t y{};
    std::vector<std::uint8_t> block_light{};
    std::vector<std::uint8_t> sky_light{};
@@ -153,6 +163,7 @@ class Section {
 
 class Start {
  public:
+   static constexpr auto object_name = "Start";
    std::string id{};
    Start() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -163,6 +174,7 @@ class Start {
 
 class Structures {
  public:
+   static constexpr auto object_name = "Structures";
    std::map<std::string, Start> starts{};
    Structures() = default;
    void serialize_no_header(minecpp::nbt::Writer &w) const;
@@ -173,6 +185,7 @@ class Structures {
 
 class CarvingMasks {
  public:
+   static constexpr auto object_name = "CarvingMasks";
    std::vector<std::uint8_t> air{};
    std::vector<std::uint8_t> liquid{};
    CarvingMasks() = default;
@@ -184,6 +197,7 @@ class CarvingMasks {
 
 class Level {
  public:
+   static constexpr auto object_name = "Level";
    std::vector<std::int32_t> biomes{};
    CarvingMasks carving_masks{};
    std::vector<Entity> entities{};
@@ -207,6 +221,7 @@ class Level {
 
 class Chunk {
  public:
+   static constexpr auto object_name = "Chunk";
    std::int32_t version{};
    Level level{};
    Chunk() = default;
