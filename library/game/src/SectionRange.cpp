@@ -1,5 +1,5 @@
-#include "SectionRange.h"
-#include "ChunkRange.h"
+#include <minecpp/game/SectionRange.h>
+#include <minecpp/game/ChunkRange.h>
 
 namespace minecpp::game {
 

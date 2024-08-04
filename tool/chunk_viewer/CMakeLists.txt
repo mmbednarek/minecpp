@@ -7,7 +7,6 @@ add_executable(minecpp_chunk_viewer)
 # Public include headers
 target_include_directories(minecpp_chunk_viewer
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/chunk_viewer
 )
 
 # Source subdirectory

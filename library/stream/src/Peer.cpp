@@ -1,5 +1,5 @@
-#include "Peer.h"
-#include "Host.h"
+#include <minecpp/stream/Peer.h>
+#include <minecpp/stream/Host.h>
 
 #include "minecpp/container/BasicBuffer.hpp"
 

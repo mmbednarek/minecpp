@@ -1,4 +1,4 @@
-#include "nbt/level/Level.schema.h"
+#include <minecpp/nbt/level/Level.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::level {

@@ -1,4 +1,4 @@
-#include "Threading.h"
+#include <minecpp/util/Threading.h>
 
 #ifdef unix
 #include <pthread.h>

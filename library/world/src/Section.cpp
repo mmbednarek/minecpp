@@ -1,7 +1,7 @@
-#include "Section.h"
+#include <minecpp/world/Section.h>
 
-#include "BlockState.h"
-#include "Util.h"
+#include <minecpp/world/BlockState.h>
+#include <minecpp/world/Util.h>
 
 #include "minecpp/util/Packed.h"
 

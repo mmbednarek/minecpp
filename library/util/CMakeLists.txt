@@ -7,7 +7,6 @@ add_library(minecpp_utils STATIC)
 # Public include headers
 target_include_directories(minecpp_utils
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/util
 )
 
 # Source subdirectory

@@ -1,4 +1,4 @@
-#include "nbt/block/BlockState.schema.h"
+#include <minecpp/nbt/block/BlockState.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::block {

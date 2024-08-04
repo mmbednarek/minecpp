@@ -1,4 +1,4 @@
-#include "NetworkUtil.h"
+#include <minecpp/network/NetworkUtil.h>
 
 namespace minecpp::network {
 

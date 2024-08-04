@@ -1,4 +1,4 @@
-#include "IStreamReader.h"
+#include <minecpp/lexer/IStreamReader.h>
 
 namespace minecpp::lexer {
 

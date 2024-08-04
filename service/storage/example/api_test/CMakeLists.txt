@@ -7,7 +7,6 @@ add_executable(minecpp_storage_example_api_test)
 # Public include headers
 target_include_directories(minecpp_storage_example_api_test
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/storage_example_api_test
 )
 
 # Source subdirectory

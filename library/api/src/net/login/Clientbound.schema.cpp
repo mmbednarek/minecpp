@@ -1,5 +1,5 @@
 #include "minecpp/network/NetworkUtil.h"
-#include "net/login/Clientbound.schema.h"
+#include <minecpp/net/login/Clientbound.schema.h>
 #include <algorithm>
 
 namespace minecpp::net::login::cb {

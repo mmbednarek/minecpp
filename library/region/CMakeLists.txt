@@ -7,7 +7,6 @@ add_library(minecpp_region STATIC)
 # Public include headers
 target_include_directories(minecpp_region
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/region
 )
 
 # Source subdirectory

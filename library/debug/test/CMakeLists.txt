@@ -7,7 +7,6 @@ add_executable(minecpp_debug_test)
 # Public include headers
 target_include_directories(minecpp_debug_test
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/debug_test
 )
 
 # Source subdirectory

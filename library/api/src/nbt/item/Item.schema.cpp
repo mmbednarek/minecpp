@@ -1,4 +1,4 @@
-#include "nbt/item/Item.schema.h"
+#include <minecpp/nbt/item/Item.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::item {

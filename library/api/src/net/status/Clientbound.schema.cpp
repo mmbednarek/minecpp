@@ -1,5 +1,5 @@
 #include "minecpp/network/NetworkUtil.h"
-#include "net/status/Clientbound.schema.h"
+#include <minecpp/net/status/Clientbound.schema.h>
 #include <algorithm>
 
 namespace minecpp::net::status::cb {

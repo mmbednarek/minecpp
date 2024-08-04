@@ -1,5 +1,5 @@
 #include "minecpp/network/NetworkUtil.h"
-#include "net/storage/Clientbound.schema.h"
+#include <minecpp/net/storage/Clientbound.schema.h>
 #include <algorithm>
 
 namespace minecpp::net::storage::cb {

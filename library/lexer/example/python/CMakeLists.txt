@@ -7,7 +7,6 @@ add_executable(minecpp_lexer_example_python)
 # Public include headers
 target_include_directories(minecpp_lexer_example_python
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/lexer_example_python
 )
 
 # Source subdirectory

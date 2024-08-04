@@ -1,4 +1,4 @@
-#include "TraceManager.h"
+#include <minecpp/debug/TraceManager.h>
 
 #include <cassert>
 

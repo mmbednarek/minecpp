@@ -7,7 +7,6 @@ add_executable(minecpp_stream_example_client)
 # Public include headers
 target_include_directories(minecpp_stream_example_client
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/stream_example_client
 )
 
 # Source subdirectory

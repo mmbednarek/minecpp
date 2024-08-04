@@ -1,4 +1,4 @@
-#include "net/play/Common.schema.h"
+#include <minecpp/net/play/Common.schema.h>
 #include "minecpp/network/NetworkUtil.h"
 #include <algorithm>
 

@@ -1,7 +1,6 @@
-#include "ChunkSerializer.h"
-
-#include "Chunk.h"
-#include "Section.h"
+#include <minecpp/world/ChunkSerializer.h>
+#include <minecpp/world/Chunk.h>
+#include <minecpp/world/Section.h>
 
 #include "minecpp/math/Vector2.h"
 

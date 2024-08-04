@@ -7,7 +7,6 @@ add_executable(minecpp_random_test)
 # Public include headers
 target_include_directories(minecpp_random_test
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/random_test
 )
 
 # Source subdirectory

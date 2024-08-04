@@ -7,7 +7,6 @@ add_executable(minecpp_front)
 # Public include headers
 target_include_directories(minecpp_front
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/front
 )
 
 # Source subdirectory

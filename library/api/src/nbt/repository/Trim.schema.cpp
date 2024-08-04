@@ -1,4 +1,4 @@
-#include "nbt/repository/Trim.schema.h"
+#include <minecpp/nbt/repository/Trim.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::repository {

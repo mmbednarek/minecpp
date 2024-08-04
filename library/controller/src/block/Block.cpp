@@ -1,14 +1,14 @@
-#include "block/Block.h"
-#include "block/Door.h"
-#include "block/Fence.h"
-#include "block/Foliage.h"
-#include "block/Grass.h"
-#include "block/Slab.h"
-#include "block/Stairs.h"
-#include "block/Torch.h"
-#include "block/TrapDoor.h"
-#include "block/Wood.h"
-#include "BlockManager.h"
+#include <minecpp/controller/block/Block.h>
+#include <minecpp/controller/block/Door.h>
+#include <minecpp/controller/block/Fence.h>
+#include <minecpp/controller/block/Foliage.h>
+#include <minecpp/controller/block/Grass.h>
+#include <minecpp/controller/block/Slab.h>
+#include <minecpp/controller/block/Stairs.h>
+#include <minecpp/controller/block/Torch.h>
+#include <minecpp/controller/block/TrapDoor.h>
+#include <minecpp/controller/block/Wood.h>
+#include <minecpp/controller/BlockManager.h>
 #include "minecpp/repository/Block.h"
 #include <spdlog/spdlog.h>
 

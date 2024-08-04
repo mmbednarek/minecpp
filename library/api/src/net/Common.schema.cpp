@@ -1,5 +1,5 @@
 #include "minecpp/network/NetworkUtil.h"
-#include "net/Common.schema.h"
+#include <minecpp/net/Common.schema.h>
 #include <algorithm>
 
 namespace minecpp::net {

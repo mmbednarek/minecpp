@@ -7,7 +7,6 @@ add_executable(minecpp_trace_tool)
 # Public include headers
 target_include_directories(minecpp_trace_tool
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/trace_tool
 )
 
 # Source subdirectory

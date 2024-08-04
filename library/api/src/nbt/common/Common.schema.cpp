@@ -1,4 +1,4 @@
-#include "nbt/common/Common.schema.h"
+#include <minecpp/nbt/common/Common.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::common {

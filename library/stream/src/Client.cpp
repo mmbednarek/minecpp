@@ -1,4 +1,4 @@
-#include "Client.h"
+#include <minecpp/stream/Client.h>
 
 #include <boost/endian.hpp>
 #include <enet/enet.h>

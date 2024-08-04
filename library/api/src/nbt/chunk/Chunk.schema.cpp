@@ -1,4 +1,4 @@
-#include "nbt/chunk/Chunk.schema.h"
+#include <minecpp/nbt/chunk/Chunk.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::chunk {

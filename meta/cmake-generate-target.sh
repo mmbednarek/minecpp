@@ -61,7 +61,6 @@ function generate_cmake_target() {
   else
     echo "target_include_directories($targetname"
     echo "  PUBLIC \${CMAKE_CURRENT_SOURCE_DIR}/include"
-    echo "  PRIVATE \${CMAKE_CURRENT_SOURCE_DIR}/include/$include_path"
     echo ")"
     echo ""
     echo "# Source subdirectory"

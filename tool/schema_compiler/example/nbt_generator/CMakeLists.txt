@@ -7,7 +7,6 @@ add_executable(minecpp_schema_compiler_example_nbt_generator)
 # Public include headers
 target_include_directories(minecpp_schema_compiler_example_nbt_generator
   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/minecpp/schema_compiler_example_nbt_generator
 )
 
 # Source subdirectory

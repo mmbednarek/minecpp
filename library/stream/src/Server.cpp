@@ -1,4 +1,4 @@
-#include "Server.h"
+#include <minecpp/stream/Server.h>
 
 #include <enet/enet.h>
 

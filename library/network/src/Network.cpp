@@ -1,4 +1,4 @@
-#include "Network.h"
+#include <minecpp/network/Network.h>
 
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/ip/udp.hpp>

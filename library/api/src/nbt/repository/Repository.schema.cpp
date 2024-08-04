@@ -1,4 +1,4 @@
-#include "nbt/repository/Repository.schema.h"
+#include <minecpp/nbt/repository/Repository.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::repository {

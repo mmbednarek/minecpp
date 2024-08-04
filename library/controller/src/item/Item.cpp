@@ -1,9 +1,9 @@
-#include "item/Item.h"
-#include "item/Bow.h"
-#include "item/Food.h"
-#include "item/Sword.h"
+#include <minecpp/controller/item/Item.h>
+#include <minecpp/controller/item/Bow.h>
+#include <minecpp/controller/item/Food.h>
+#include <minecpp/controller/item/Sword.h>
 #include "minecpp/repository/Item.h"
-#include "RootItem.h"
+#include <minecpp/controller/RootItem.h>
 
 namespace minecpp::controller::item {
 

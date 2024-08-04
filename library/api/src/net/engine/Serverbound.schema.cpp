@@ -1,5 +1,5 @@
 #include "minecpp/network/NetworkUtil.h"
-#include "net/engine/Serverbound.schema.h"
+#include <minecpp/net/engine/Serverbound.schema.h>
 #include <algorithm>
 
 namespace minecpp::net::engine::sb {

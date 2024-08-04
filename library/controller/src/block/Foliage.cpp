@@ -1,4 +1,4 @@
-#include "block/Foliage.h"
+#include <minecpp/controller/block/Foliage.h>
 
 #include "minecpp/world/BlockState.h"
 

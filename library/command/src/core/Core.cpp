@@ -1,18 +1,17 @@
-#include "core/Core.h"
-
-#include "CommandManager.h"
-#include "core/Cord.h"
-#include "core/DecimateBlocks.h"
-#include "core/Echo.h"
-#include "core/Fly.h"
-#include "core/Format.h"
-#include "core/Give.h"
-#include "core/KillAll.h"
-#include "core/ListEntities.h"
-#include "core/ReloadChunk.h"
-#include "core/Spawn.h"
-#include "core/Sync.h"
-#include "core/Teleport.h"
+#include <minecpp/command/core/Core.h>
+#include <minecpp/command/CommandManager.h>
+#include <minecpp/command/core/Cord.h>
+#include <minecpp/command/core/DecimateBlocks.h>
+#include <minecpp/command/core/Echo.h>
+#include <minecpp/command/core/Fly.h>
+#include <minecpp/command/core/Format.h>
+#include <minecpp/command/core/Give.h>
+#include <minecpp/command/core/KillAll.h>
+#include <minecpp/command/core/ListEntities.h>
+#include <minecpp/command/core/ReloadChunk.h>
+#include <minecpp/command/core/Spawn.h>
+#include <minecpp/command/core/Sync.h>
+#include <minecpp/command/core/Teleport.h>
 
 namespace minecpp::command::core {
 

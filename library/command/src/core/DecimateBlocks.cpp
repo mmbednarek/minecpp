@@ -1,5 +1,5 @@
-#include "core/DecimateBlocks.h"
-#include "RuntimeContext.h"
+#include <minecpp/command/core/DecimateBlocks.h>
+#include <minecpp/command/RuntimeContext.h>
 
 #include "minecpp/entity/Aliases.hpp"
 #include "minecpp/entity/component/Abilities.h"

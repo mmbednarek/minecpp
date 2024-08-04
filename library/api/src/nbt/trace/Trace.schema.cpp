@@ -1,4 +1,4 @@
-#include "nbt/trace/Trace.schema.h"
+#include <minecpp/nbt/trace/Trace.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::trace {

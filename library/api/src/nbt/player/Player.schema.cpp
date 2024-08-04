@@ -1,4 +1,4 @@
-#include "nbt/player/Player.schema.h"
+#include <minecpp/nbt/player/Player.schema.h>
 #include <minecpp/nbt/Exception.h>
 
 namespace minecpp::nbt::player {
