@@ -1,0 +1,51 @@
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      # Environment based on docker/Ubuntu.Dockerfile
+      - name: "Setup environment"
+        run: |
+          sudo apt-get -y update 
+          sudo apt-get upgrade -y
+          sudo apt-get -y install \
+                     build-essential \
+                     ninja-build \
+                     cmake \
+                     clang \
+                     git \
+                     pkg-config \
+                     autoconf \
+                     libtool \
+                     libfmt-dev \
+                     libspdlog-dev \
+                     libgtest-dev \
+                     libboost-dev \
+                     libboost-iostreams-dev \
+                     libboost-system-dev \
+                     libboost-program-options-dev \
+                     libssl-dev \
+                     libfl-dev \
+                     libbenchmark-dev \
+                     libenet-dev \
+                     libabsl-dev \
+                     unzip \
+                     jq \
+                     dnsutils \
+                     curl
+          curl -L -o fdb.deb https://github.com/apple/foundationdb/releases/download/7.1.23/foundationdb-clients_7.1.23-1_amd64.deb
+          sudo dpkg -i fdb.deb
+          sudo ldconfig
+      # Build commands based on the README.md
+      - name: "CMake configure and build minecpp"
+        run: |
+          cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j $(nproc)
+        env:
+          CC: /usr/bin/clang
+          CXX: /usr/bin/clang++
