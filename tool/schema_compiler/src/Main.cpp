@@ -89,8 +89,19 @@ int main(int argc, char **argv)
       std::ifstream stream(file);
       if (not stream.is_open())
          return 1;
-
-      auto tokens = minecpp::tool::schema_compiler::lex_input(stream);
+      /**
+       * Internal parser uses std::basic_istream<CharT,Traits>::readsome to read from the stream
+       * which is highly implementation specific and was returning empty on LLVM18 in OSX.
+       *
+       * Therefore we create a stringstream to read from the file into memory, where readsome()
+       * function will then return non-empty, as the contents are in memory.
+       *
+       * https://en.cppreference.com/w/cpp/io/basic_istream/readsome
+       */
+      std::stringstream in_memory_stream;
+      in_memory_stream << stream.rdbuf();
+      in_memory_stream.seekg(0);
+      auto tokens = minecpp::tool::schema_compiler::lex_input(in_memory_stream);
       minecpp::tool::schema_compiler::Parser parser(tokens);
 
       try {
