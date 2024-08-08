@@ -6,6 +6,7 @@
 #include <set>
 #include <string>
 #include <vector>
+#include <iomanip> // for std::put_time
 
 using minecpp::nbt::CompoundContent;
 
